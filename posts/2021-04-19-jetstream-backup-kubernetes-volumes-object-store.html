@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2021-04-19">
+
+<title>zonca.dev - Backup Kubernetes volumes to OpenStorageNetwork object store</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">zonca.dev</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Backup Kubernetes volumes to OpenStorageNetwork object store</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">jetstream</div>
+                <div class="quarto-category">kubernetes</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 19, 2021</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>In my specific scenario, I have users running JupyterHub on top of Kubernetes on the Jetstream XSEDE Cloud resouce. Each user has a persistent volume as their home folder of a few GB. Instead of snapshotting the entire volume, I would like to only backup the data offsite to OpenStorageNetwork and being able to restore them.</p>
+<p>In this tutorial I’ll show how to configure <a href="https://stash.run">Stash</a> for this task. Stash is has a lot of other functionality, so it is really easy to get lost in their documentation. This tutorial is for an advanced topic, it assumes good knowledge of Kubernetes.</p>
+<p>Stash under the hood uses <a href="https://restic.net/"><code>restic</code></a> to backup the data, so that we can also manage the backups outside of Kubernetes, see further down the tutorial. It also automatically decuplicates the data, so if the same file is unchanged in multiple backups, as it is often the case, it is just stored once and referenced by multiple backups.</p>
+<p>All the configuration files are available in the <code>backup_volumes</code> folder of <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/tree/master/backup_volumes">zonca/jupyterhub-deploy-kubernetes-jetstream</a></p>
+<section id="install-stash" class="level2">
+<h2 class="anchored" data-anchor-id="install-stash">Install Stash</h2>
+<p>First we need to request a free license for the community edition of the software, I tested with <code>2021.03.17</code>, replace as needed with a newer version:</p>
+<ul>
+<li><a href="https://stash.run/docs/v2021.03.17/setup/install/community/" class="uri">https://stash.run/docs/v2021.03.17/setup/install/community/</a></li>
+</ul>
+<p>Rename it to <code>license.txt</code>, then install Stash via Helm:</p>
+<pre><code>helm repo add appscode https://charts.appscode.com/stable/
+helm repo update
+bash install_stash.sh</code></pre>
+</section>
+<section id="test-object-store" class="level2">
+<h2 class="anchored" data-anchor-id="test-object-store">Test object store</h2>
+<p>I have used object store from OpenStorageNetwork, which is nice as it is offsite, but also using the Jetstream object store is an option. Both support the AWS S3 protocol.</p>
+<p>It would be useful at this point to test the S3 credentials:</p>
+<p>Install the AWS cli <code>pip install awscli awscli-plugin-endpoint</code></p>
+<p>Then create a configuration profile at <code>~/.aws/config</code>:</p>
+<pre><code>[plugins]
+endpoint = awscli_plugin_endpoint
+
+[profile osn]
+aws_access_key_id=
+aws_secret_access_key=
+s3 =
+    endpoint_url = https://xxxx.osn.xsede.org
+s3api =
+    endpoint_url = https://xxxx.osn.xsede.org</code></pre>
+<p>Then you can list the content of your bucket with:</p>
+<pre><code>aws s3 --profile osn ls s3://your-bucket-name --no-sign-request</code></pre>
+</section>
+<section id="configure-the-s3-backend-for-stash" class="level2">
+<h2 class="anchored" data-anchor-id="configure-the-s3-backend-for-stash">Configure the S3 backend for Stash</h2>
+<p>See the <a href="https://stash.run/docs/v2021.03.17/guides/latest/backends/s3/">Stash documentation about the S3 backend</a>. In summary, we should create 3 text files:</p>
+<ul>
+<li><code>RESTIC_PASSWORD</code> with a random password to encrypt the backups</li>
+<li><code>AWS_ACCESS_KEY_ID</code> and <code>AWS_SECRET_ACCESS_KEY</code> with the S3 style credentials</li>
+</ul>
+<p>Then we can create a Secret in Kubernetes that holds the credentials:</p>
+<pre><code>bash create_aws_secret.sh</code></pre>
+<p>Then, customize <code>stash_repository.yaml</code> and create the Stash repository with:</p>
+<pre><code>kubectl create -f stash_repository.yaml</code></pre>
+<p>Check it was created:</p>
+<pre><code>&gt; kubectl -n jhub get repository
+NAME       INTEGRITY   SIZE   SNAPSHOT-COUNT   LAST-SUCCESSFUL-BACKUP   AGE
+osn-repo                                                                2d15h</code></pre>
+</section>
+<section id="configuring-backup-for-a-standalone-volume" class="level2">
+<h2 class="anchored" data-anchor-id="configuring-backup-for-a-standalone-volume">Configuring backup for a standalone volume</h2>
+<p>Automatic and batch backup require a commercial Stash license. With the community version, we can only use the “standalone volume” functionality, which is enough for our purposes.</p>
+<p>See the <a href="https://stash.run/docs/v2021.03.17/guides/latest/volumes/overview/">relevant documentation</a></p>
+<p>Next we need to create a <a href="https://stash.run/docs/v2021.03.17/concepts/crds/backupconfiguration/">BackupConfiguration</a></p>
+<p>Edit <code>stash_backupconfiguration.yaml</code>, in particular you need to specify which <code>PersistentVolumeClaim</code> you want to backup, for JupyterHub user volumes, these will be <code>claim-username</code>. For testing better leave “each minute” for the schedule, if a backup job is running, the following are skipped. You can also customize excluded folders.</p>
+<p>In order to pause backups, set <code>paused</code> to <code>true</code>:</p>
+<pre><code>kubectl -n jhub edit backupconfiguration test-backup</code></pre>
+<p><code>BackupConfiguration</code> should create a <code>CronJob</code> resource:</p>
+<pre><code>&gt; kubectl -n jhub get cronjob
+NAME                       SCHEDULE    SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+stash-backup-test-backup   * * * * *   True      0        2d15h           2d15h</code></pre>
+<p><code>CronJob</code> then launches a <code>BackupSession</code> for each trigger of the backup:</p>
+<pre><code>&gt; kubectl -n jhub get backupsession
+NAME                     INVOKER-TYPE          INVOKER-NAME   PHASE     AGE
+test-backup-1618875244   BackupConfiguration   test-backup    Succeeded   3m13s
+test-backup-1618875304   BackupConfiguration   test-backup    Succeeded   2m13s
+test-backup-1618875364   BackupConfiguration   test-backup    Succeeded   73s
+test-backup-1618875425   BackupConfiguration   test-backup    Running     12s</code></pre>
+</section>
+<section id="monitor-and-debug-backups" class="level2">
+<h2 class="anchored" data-anchor-id="monitor-and-debug-backups">Monitor and debug backups</h2>
+<p>You can check the logs of a backup with:</p>
+<pre><code>&gt; kubectl -n jhub describe backupsession test-backup-1618869996
+&gt; kubectl -n jhub describe pod stash-backup-test-backup-1618869996-0-rdcdq
+&gt; kubectl -n jhub logs stash-backup-test-backup-1618861992-0-kj2r6</code></pre>
+<p>Once backups succeed, they should appear on object store:</p>
+<pre><code>&gt; aws s3 --profile osn ls s3://your-bucket-name/jetstream-backup/snapshots/
+2021-04-19 16:34:11        340 1753f4c15da9713daeb35a5425e7fbe663e550421ac3be82f79dc508c8cf5849
+2021-04-19 16:35:12        340 22bccac489a69b4cda1828f9777677bc7a83abb546eee486e06c8a8785ca8b2f
+2021-04-19 16:36:11        340 7ef1ba9c8afd0dcf7b89fa127ef14bff68090b5ac92cfe3f68c574df5fc360e3
+2021-04-19 16:37:12        339 da8f0a37c03ddbb6c9a0fcb5b4837e8862fd8e031bcfcfab563c9e59ea58854d
+2021-04-19 16:33:10        339 e2369d441df69bc2809b9c973e43284cde123f8885fe386a7403113f4946c6fa</code></pre>
+</section>
+<section id="restore-from-backup" class="level2">
+<h2 class="anchored" data-anchor-id="restore-from-backup">Restore from backup</h2>
+<p>Backups are encrypted, so it is not possible to access the data directly from object store. We need to restore it to a volume.</p>
+<p>For testing purposes, login to the volume via JupyterHub and delete some files. Then stop the single user server from the JupyterHub dashboard.</p>
+<p>Configure and launch the restoring operation:</p>
+<pre><code>kubectl -n jhub create -f stash_restore.yaml</code></pre>
+<p>This overwrites the content of the target volume with the content of the backup. See the Stash documentation on how to restore to a different volume.</p>
+<pre><code>&gt; kubectl -n jhub get restoresession
+NAME      REPOSITORY   PHASE       AGE
+restore   osn-repo     Succeeded   2m18s</code></pre>
+<p>Then login back to JupyterHub and check that the files previously deleted.</p>
+<p>In the default configuration <code>stash_restore.yaml</code> restores the last backup, independently of username, so if you are backing up volumes of different users, you should tag by usernames, see below, and then restore a specific id (just replace <code>latest</code> in the YAML file with the first 10 or so characters of the ID). See an example of the full restore workflow with screenshots at the end of <a href="https://github.com/det-lab/jupyterhub-deploy-kubernetes-jetstream/issues/44">this Github issue</a>.</p>
+</section>
+<section id="setup-for-production-in-a-small-deployment" class="level2">
+<h2 class="anchored" data-anchor-id="setup-for-production-in-a-small-deployment">Setup for production in a small deployment</h2>
+<p>In a small deployment with tens of users, we can individually identify which users we want to backup, and choose a schedule. The backup service works even the user is currently logged in, anyway, it is good practice to schedule a daily backup at 3am or 4am in the appropriate timezone. We should create 1 <code>BackupConfiguration</code> object for each user, 10 minutes apart, each targeting a different PersistentVolumeClaim.</p>
+</section>
+<section id="template-backup-configuration-creation" class="level2">
+<h2 class="anchored" data-anchor-id="template-backup-configuration-creation">Template backup configuration creation</h2>
+<p>If you like danger, you can also automate the creation of the <code>BackupConfiguration</code> objects. You can create a text file named <code>users_to_backup.txt</code> with 1 username per line of the JupyterHub users you want to backup.</p>
+<p>Then customize the <code>stash_backupconfiguration_template.yaml</code> configuration file, make sure you decide a retention policy, for more information see the Stash or Restic documentation. Unfortunately Stash considers all backups together under 1 retention policy, so if I set to keep 1 weekly backup, it will retain 1 weekly backup of just <strong>one of the users</strong> instead of all of them. I worked around this issue tagging myself the backups after the fact using the <code>restic</code> command line tool, see the next section.</p>
+<p>Then you can launch it:</p>
+<pre><code>bash setup_backups.sh</code></pre>
+<pre><code>******** Setup xxxxxxx at 8:0
+backupconfiguration.stash.appscode.com/backup-xxxxxxx created
+******** Setup xxxxxxx at 8:10
+backupconfiguration.stash.appscode.com/backup-xxxxxxx created
+******** Setup xxxxxxx at 8:20
+backupconfiguration.stash.appscode.com/backup-xxxxxxx created
+******** Setup xxxxxxx at 8:30
+backupconfiguration.stash.appscode.com/backup-xxxxxxx created
+******** Setup xxxxxxx at 8:40
+backupconfiguration.stash.appscode.com/backup-xxxxxxx created</code></pre>
+<p>There is no chance this will work the first time, so:</p>
+<pre><code>kubectl delete backupconfiguration --all</code></pre>
+</section>
+<section id="categorize-the-backups-by-username" class="level2">
+<h2 class="anchored" data-anchor-id="categorize-the-backups-by-username">Categorize the backups by username</h2>
+<p>Unfortunately I couldn’t find a way to tag the backups with the username which own the volume. So I added this line:</p>
+<pre><code>echo $JUPYTERHUB_USER &gt; ~/.username;</code></pre>
+<p>to the <code>zero-to-jupyterhub</code> configuration YAML under:</p>
+<pre><code>singleuser:
+  lifecycleHooks:
+    postStart:
+      exec:
+        command:</code></pre>
+<p>So when the user logs in, we write their username into the volume. Then we can use <code>restic</code> outside of Kubernetes to tag the backups once in a while with the correct usernames, see the <code>restic_tag_usernames.sh</code> script.</p>
+<p>Once we have tags, we can handle pruning old backups manually using the <code>restic forget</code> command.</p>
+</section>
+<section id="manage-backups-outside-of-kubernetes" class="level2">
+<h2 class="anchored" data-anchor-id="manage-backups-outside-of-kubernetes">Manage backups outside of Kubernetes</h2>
+<p>Stash manages backups with <code>restic</code>. It is also possible to access and manage the backups using <code>restic</code> on a machine outside of Kubernetes.</p>
+<p>Install <code>restic</code> <a href="https://restic.readthedocs.io/en/stable/020_installation.html#stable-releases">from the official website</a></p>
+<p>Export the AWS variables:</p>
+<pre><code>export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=</code></pre>
+<p>Have the RESTIC password ready for the prompt:</p>
+<pre><code>restic -r s3:https://ncsa.oss-data/jetstream-backup/ snapshots
+enter password for repository: 
+repository 18a1c421 opened successfully, password is correct
+created new cache in /home/zonca/.cache/restic
+ID        Time                 Host        Tags        Paths
+------------------------------------------------------------------
+026bcce3  2021-05-10 13:17:17  host-0                  /stash-data
+4f71a384  2021-05-10 13:18:16  host-0                  /stash-data
+34ff4677  2021-05-10 13:19:18  host-0                  /stash-data
+9f7337fe  2021-05-10 13:20:08  host-0                  /stash-data
+c130e039  2021-05-10 13:21:08  host-0                  /stash-data
+------------------------------------------------------------------
+5 snapshots</code></pre>
+<p>You can even browse the backups without downloading the data:</p>
+<pre><code>sudo mkdir /mnt/temp
+sudo chown $USER /mnt/temp
+restic -r s3:https://ncsa.osn.xsede.org/xxxxxx/jetstream-backup/ mount /mnt/temp</code></pre>
+<pre><code>/mnt/temp/snapshots/latest/stash-data $ ls
+a  b  Healpix_3.70_2020Jul23.tar.gz  MosfireDRP-2018release.zip  plot_cl_TT.ipynb  Untitled1.ipynb  Untitled2.ipynb  Untitled.ipynb</code></pre>
+</section>
+<section id="troubleshooting" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
+<ul>
+<li><p>Issue: Volume available but also attached in Openstack, works fine on JupyterHub but backing up fails, this can happen while testing.</p></li>
+<li><p>Solution: Delete the PVC, the PV and the volume via Openstack, login through JupyterHub to get another volume assigned.</p></li>
+<li><p>Issue: Volumes cannot be mounted because they are in “Reserved” state in Openstack</p></li>
+<li><p>Solution: Run <code>openstack volume set --state available &lt;uuid&gt;</code>, this is an <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/issues/40">open issue affecting Jetstream</a></p></li>
+</ul>
+</section>
+<section id="setup-monitoring" class="level2">
+<h2 class="anchored" data-anchor-id="setup-monitoring">Setup monitoring</h2>
+<p>See the new tutorial on <a href="https://zonca.dev/2022/04/monitor-restic-backups-kubernetes.html">how to setup a system to monitor that the backups are being executed</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

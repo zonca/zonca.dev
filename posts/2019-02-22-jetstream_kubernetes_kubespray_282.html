@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2019-02-22">
+
+<title>zonca.dev - Deploy Kubernetes with Kubespray 2.8.2 and JupyterHub with helm recipe 0.8 on Jetstream</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">zonca.dev</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Deploy Kubernetes with Kubespray 2.8.2 and JupyterHub with helm recipe 0.8 on Jetstream</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">kubernetes</div>
+                <div class="quarto-category">kubespray</div>
+                <div class="quarto-category">jetstream</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 22, 2019</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p><strong>This tutorial is obsolete, check the <a href="https://zonca.dev/2020/06/kubernetes-jetstream-kubespray.html">updated version of the tutorial</a></strong></p>
+<p>Back in September 2018 I published a <a href="https://zonca.github.io/2018/09/kubernetes-jetstream-kubespray-jupyterhub.html">tutorial to deploy Kubernetes on Jetstream</a> using Kubernetes.</p>
+<p>Software in the Kubernetes space moves very fast, so I decided to update the recipe to use the newer Kubespray 2.8.2 that deploys Kubernetes v1.12.5.</p>
+<p>Please follow the old tutorial and note the updates below.</p>
+<section id="switch-to-kubespray-2.8.2" class="level3">
+<h3 class="anchored" data-anchor-id="switch-to-kubespray-2.8.2">Switch to kubespray 2.8.2</h3>
+<p>Once you get my fork of kubespray with a few fixes for Jetstream:</p>
+<pre><code>git clone https://github.com/zonca/jetstream_kubespray</code></pre>
+<p><strong>switch to the newer 2.8.2 version</strong></p>
+<pre><code>git checkout -b branch_v2.8.2 origin/branch_v2.8.2</code></pre>
+<p>See an <a href="https://github.com/zonca/jetstream_kubespray/pull/5">overview of my changes compared to the standard <code>kubespray</code> release 2.8.2</a>.</p>
+</section>
+<section id="use-ansible-2.7.10" class="level3">
+<h3 class="anchored" data-anchor-id="use-ansible-2.7.10">Use Ansible 2.7.10</h3>
+<p>Newer versions of ansible do not work with Kubespray 2.8.2</p>
+<p>It is available on conda-forge:</p>
+<pre><code>conda install -c conda-forge ansible==2.7.10</code></pre>
+</section>
+<section id="use-the-new-template" class="level3">
+<h3 class="anchored" data-anchor-id="use-the-new-template">Use the new template</h3>
+<p>The name of my template is now just <code>zonca</code> instead of <code>zonca_kubespray</code>:</p>
+<p>Before running Terraform, inside <code>jetstream_kubespray</code>, copy from my template:</p>
+<pre><code>export CLUSTER=$USER
+cp -LRp inventory/zonca inventory/$CLUSTER
+cd inventory/$CLUSTER</code></pre>
+</section>
+<section id="explore-kubernetes" class="level3">
+<h3 class="anchored" data-anchor-id="explore-kubernetes">Explore kubernetes</h3>
+<p>In case you are interested in exploring some of the capabilities of Kubernetes, you can check <a href="https://zonca.github.io/2018/09/kubernetes-jetstream-kubespray-explore.html">the second part of my tutorial</a>, nothing in this section is required to run JupyterHub.</p>
+</section>
+<section id="install-jupyterhub" class="level3">
+<h3 class="anchored" data-anchor-id="install-jupyterhub">Install JupyterHub</h3>
+<p>Finally you can use <code>helm</code> to install JupyterHub, see the <a href="https://zonca.github.io/2018/09/kubernetes-jetstream-kubespray-jupyterhub.html">last part of my tutorial</a>.</p>
+<p>Consider that I have updated the repository <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream" class="uri">https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream</a> to install the <code>0.8.0</code> version of the <code>helm</code> package just released yesterday, see <a href="https://blog.jupyter.org/zero-to-jupyterhub-helm-chart-0-8-b99e0a79fd2a">their blog post with more details</a>.</p>
+</section>
+<section id="thanks" class="level3">
+<h3 class="anchored" data-anchor-id="thanks">Thanks</h3>
+<p>Thanks to the Kubernetes, Kubespray and JupyterHub community for delivering great open-source software and to XSEDE for giving me the opportunity to work on this. Special thanks to my collaborators Julien Chastang and Rich Signell.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

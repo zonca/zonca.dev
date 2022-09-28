@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2017-11-06">
+
+<title>zonca.dev - How to modify Singularity images on a Supercomputer</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">zonca.dev</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">How to modify Singularity images on a Supercomputer</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">singularity</div>
+                <div class="quarto-category">hpc</div>
+                <div class="quarto-category">Comet</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 6, 2017</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p><a href="http://singularity.lbl.gov/">Singularity</a> allows to run your own OS within most Supercomputers, see my previous post about <a href="https://zonca.github.io/2017/01/singularity-hpc-comet.html">Running Ubuntu on Comet via Singularity</a></p>
+<p>Singularity’s adoption by High Performance Computing centers has been driven by its strict security model. It never allows a user in a container to have <code>root</code> privileges unless the user is <code>root</code> on the Host system.</p>
+<p>This means that you can only modify containers on a machine where you have <code>root</code>. Therefore you generally build a container on your local machine and then copy it to a Supercomputer. The process is tedious if you are still tweaking your container and modifying it often, and each time your have to copy back a 4 or maybe 8 GB container image.</p>
+<p>In the next section I’ll investigate possible solutions/workarounds.</p>
+</section>
+<section id="use-dockerhub" class="level2">
+<h2 class="anchored" data-anchor-id="use-dockerhub">Use DockerHub</h2>
+<p>Singularity can pull a container from DockerHub, so it is convenient if you are already using Docker, maybe to provide a simple way to install your software.</p>
+<p>I found out that if you are using the Automatic build of your container by DockerHub itself, this is very slow, sometimes it takes 30 minutes to have your new container build.</p>
+<p>Therefore the best is to manually build your container locally and then push it to DockerHub. A Docker container is organized in layers of the filesystem, so for small tweaks to your image you transfer tens of MB to DockerHub instead of GB.</p>
+<p>Then from the Supercomputer you can run <code>singularity pull docker://ubuntu:latest</code> with no need of <code>root</code> privileges. Singularity keeps a cache of the docker layers, so you would download just the layers modified in the previous step.</p>
+</section>
+<section id="build-your-application-locally" class="level2">
+<h2 class="anchored" data-anchor-id="build-your-application-locally">Build your application locally</h2>
+<p>If you are modifying an application often you could build a Singularity container with all the requirements, copy it to the Supercomputer and then build your application there. This is also useful if the architecture of your CPU is different between your local machine and the Supercomputer and you are worried the compiler would not apply all the possible optimizations.</p>
+<p>In this case you can use <code>singularity shell</code> to get a terminal inside the container, then build your software with the compiler toolchain available <strong>inside the container</strong> and then install it to your <code>$HOME</code> folder, then modify your <code>$PATH</code> and <code>$LD_LIBRARY_PATH</code> to execute and load libraries from this local folder.</p>
+<p>This is also useful in case the container has already an application installed but you want to develop on it. You can follow this process and then mask the installed application with your new version.</p>
+<p>Of course this makes your analysis <strong>not portable</strong>, the software is not available inside the container.</p>
+<section id="freeze-your-application-inside-the-container" class="level3">
+<h3 class="anchored" data-anchor-id="freeze-your-application-inside-the-container">Freeze your application inside the container</h3>
+<p>Once you have completed tweaking the application on the Supercomputer, you can now switch back to your local machine, get the last version of your application and install it system-wide inside the container so that it will be portable.</p>
+<p>On the other hand, you might be concerned about performance and prefer to have the application built on the Supercomputer. You can run the build process (e.g.&nbsp;<code>make</code> or <code>python setup.py build) on the Supercomputer in your home, then sync the build artifacts back to your local machine and run the install process there (e.g</code>sudo make install<code>or</code>sudo python setup.py install<code>). Optionally use</code>sshfs` to mount the build folder on both machines and make the process transparent.</p>
+</section>
+</section>
+<section id="use-a-local-singularity-registry" class="level2">
+<h2 class="anchored" data-anchor-id="use-a-local-singularity-registry">Use a local Singularity registry</h2>
+<p>Singularity released <a href="https://singularityhub.github.io/singularity-registry/inst/"><code>singularity-registry</code></a>, an application to build a local image registry, like DockerHub, that can take care of building containers.</p>
+<p>This can be hosted locally at a Supercomputing Center to provide a local building service. For example Texas Advanced Computing Center <a href="https://www.slideshare.net/JohnFonner1/biocontainers-for-supercomputers-2000-accessible-discoverable-singularity-apps">builds locally Singularity images from BioContainers</a>, software packages for the Life Sciences.</p>
+<p>Otherwise, for example, a user at SDSC could install Singularity Registry on SDSC Cloud and configure it to mount one of Comet’s filesystems and build the container images there. Even installing Singularity Registry on Jetstream could be an option thanks to its fast connection to other XSEDE resources.</p>
+</section>
+<section id="feedback" class="level2">
+<h2 class="anchored" data-anchor-id="feedback">Feedback</h2>
+<p>If you have any feedback, please reach me at <a href="https://twitter.com/andreazonca"><span class="citation" data-cites="andreazonca">@andreazonca</span></a> or find my email from there.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

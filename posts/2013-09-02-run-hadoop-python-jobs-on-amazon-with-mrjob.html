@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2013-09-02">
+
+<title>zonca.dev - Run Hadoop Python jobs on Amazon with MrJob</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">zonca.dev</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Run Hadoop Python jobs on Amazon with MrJob</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">bigdata</div>
+                <div class="quarto-category">github</div>
+                <div class="quarto-category">python</div>
+                <div class="quarto-category">aws</div>
+                <div class="quarto-category">hadoop</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 2, 2013</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<br> First we need to install mrjob with: <br>
+<blockquote class="tr_bq blockquote">
+pip install mrjob
+</blockquote>
+I am starting with a simple example of word counting. Previously I implemented this directly using the hadoop streaming interface, therefore mapper and reducer were scripts that read from standard input and print to standard output, see mapper.py and reducer.py in: <br> <br> <a href="https://github.com/zonca/python-wordcount-hadoop"> https://github.com/zonca/python-wordcount-hadoop </a> <br> <br> With MrJob instead the interface is a little different, we implement the mapper &nbsp;method of our subclass of MrJob that already gets a “line” argument and yields the output as a tuple like (“word”, 1). <br>
+<div>
+<p>MrJob makes the implementation of the reducer particularly simple. Using hadoop-streaming directly, we needed also to first parse back the output of the mapper into python objects, while MrJob does it for you and gives directly the key and the list of count, that we just need to sum.</p>
+</div>
+<div>
+<p><br> <a name="more"> </a></p>
+</div>
+<div>
+The code is pretty simple: <br> <br>
+<script src="http://gist-it.appspot.com/github/zonca/python-wordcount-hadoop/blob/master/mrjob/word_count_mrjob.py">
+ </script>
+<div>
+<br>
+</div>
+First we can test locally with 2 different methods, either: <br> <br>
+<blockquote class="tr_bq blockquote">
+python word_count_mrjob.py gutemberg/20417.txt.utf-8
+</blockquote>
+<br> or: <br> <br>
+<blockquote class="tr_bq blockquote">
+python word_count_mrjob.py –runner=local gutemberg/20417.txt.utf-8
+</blockquote>
+<br> The first is a simple local test, the seconds sets some hadoop variables and uses multiprocessing to run the mapper in parallel. <br>
+<div>
+<br>
+</div>
+<p><span style="font-size: large;"> Run on Amazon Elastic Map Reduce </span> <br> <br></p>
+</div>
+<div>
+Next step is submitting the job to EMR. <br> First get an account on Amazon Web Services from <a href="http://aws.amazon.com/"> aws.amazon.com </a> . <br> <br> Setup MrJob with Amazon: <br> <br> <a href="https://mrjob.readthedocs.io/en/latest/guides/emr-quickstart.html"> https://mrjob.readthedocs.io/en/latest/guides/emr-quickstart.html </a> <br> <br>
+<div>
+Then we just need to choose the “emr” runner for MrJob to take care of:
+</div>
+<div>
+<ul>
+<li>
+Copy the python module to Amazon S3, with requirements
+</li>
+<li>
+Copy the input data to S3
+</li>
+<li>
+Create a small EC2 instance (of course we could set it up to run 1000 instead)
+</li>
+<li>
+Run Hadoop to process the jobs
+</li>
+<li>
+Create a local web service that allows easy monitoring of the cluster
+</li>
+<li>
+When completed, copy the results back (this can be disabled to just leave the results on S3.
+</li>
+</ul>
+</div>
+<div>
+e.g.:
+</div>
+<blockquote class="tr_bq blockquote">
+python word_count_mrjob.py –runner=emr –aws-region=us-west-2 gutemberg/20417.txt.utf-8
+</blockquote>
+<div>
+It is important to make sure that the aws-region used by MrJob is the same we used for creating the SSH key on the EC2 console in the MrJob configuration step, i.e.&nbsp;SSH keys are region-specific. <br> <br> <span style="font-size: large;"> Logs and output of the run </span> <br> <br> MrJob copies the needed files to S3: <br>
+<blockquote class="tr_bq blockquote">
+. runemr.sh <br> using configs in /home/zonca/.mrjob.conf <br> using existing scratch bucket mrjob-ecd1d07aeee083dd <br> using s3://mrjob-ecd1d07aeee083dd/tmp/ as our scratch dir on S3 <br> creating tmp directory /tmp/mrjobjob.zonca.20130901.192250.785550 <br> Copying non-input files into s3://mrjob-ecd1d07aeee083dd/tmp/mrjobjob.zonca.20130901.192250.785550/files/ <br> Waiting 5.0s for S3 eventual consistency <br> Creating Elastic MapReduce job flow <br> Job flow created with ID: j-2E83MO9QZQILB <br> Created new job flow j-2E83MO9QZQILB
+</blockquote>
+Creates the instances: <br>
+<blockquote class="tr_bq blockquote">
+Job launched 30.9s ago, status STARTING: Starting instances <br> Job launched 123.9s ago, status BOOTSTRAPPING: Running bootstrap actions <br> Job launched 250.5s ago, status RUNNING: Running step (mrjobjob.zonca.20130901.192250.785550: Step 1 of 1)
+</blockquote>
+Creates an SSH tunnel to the tracker: <br>
+<blockquote class="tr_bq blockquote">
+Opening ssh tunnel to Hadoop job tracker <br> Connect to job tracker at: http://localhost:40630/jobtracker.jsp
+</blockquote>
+</div>
+Therefore we can connect to that address to check realtime information about the cluster running on EC2, for example: <br> <br>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="../images/run-hadoop-python-jobs-on-amazon-with-mrjob_s1600_awsjobdetails.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"> <img border="0" height="588" src="../images/run-hadoop-python-jobs-on-amazon-with-mrjob_s640_awsjobdetails.png" width="640"> </a>
+</div>
+<br> Once the job completes, MrJob copies the output back to the local machine, here are few lines from the file: <br>
+<blockquote class="tr_bq blockquote">
+“maladies” <span class="Apple-tab-span" style="white-space: pre;"> </span> 1 <br> “malaria” <span class="Apple-tab-span" style="white-space: pre;"> </span> 5 <br> “male” <span class="Apple-tab-span" style="white-space: pre;"> </span> 18 <br> “maleproducing” <span class="Apple-tab-span" style="white-space: pre;"> </span> 1 <br> “males” <span class="Apple-tab-span" style="white-space: pre;"> </span> 5 <br> “mammal” <span class="Apple-tab-span" style="white-space: pre;"> </span> 10 <br> “mammalInstinctive” <span class="Apple-tab-span" style="white-space: pre;"> </span> 1 <br> “mammalian” <span class="Apple-tab-span" style="white-space: pre;"> </span> 4 <br> “mammallike” <span class="Apple-tab-span" style="white-space: pre;"> </span> 1 <br> “mammals” <span class="Apple-tab-span" style="white-space: pre;"> </span> 87 <br> “mammoth” <span class="Apple-tab-span" style="white-space: pre;"> </span> 5 <br> “mammoths” <span class="Apple-tab-span" style="white-space: pre;"> </span> 1 <br> “man” <span class="Apple-tab-span" style="white-space: pre;"> </span> 152
+</blockquote>
+<p>I’ve been positively impressed that it is so easy to implement and run a MapReduce job with MrJob without need of managing directly EC2 instances or the Hadoop installation. <br> This same setup could be used on GB of data with hundreds of instances.</p>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

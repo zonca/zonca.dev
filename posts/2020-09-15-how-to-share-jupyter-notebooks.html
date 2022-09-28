@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2020-09-15">
+
+<title>zonca.dev - How to share Jupyter Notebooks</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">zonca.dev</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">How to share Jupyter Notebooks</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">jupyter</div>
+                <div class="quarto-category">notebook</div>
+                <div class="quarto-category">github</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 15, 2020</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>I tend to preserve and post online all the work I do for later reference and sharing. Jupyter Notebooks are a bit more complex than standard source code because they are natively in a format (JSON) that needs to be rendered to be readable.</p>
+<p>Most of the times you want to share a static copy of your “executed” notebook which contains all the generated plots and outputs.</p>
+<section id="share-on-gist-through-the-browser" class="level2">
+<h2 class="anchored" data-anchor-id="share-on-gist-through-the-browser">Share on gist through the browser</h2>
+<p>The easiest way to share a Jupyter Notebook is to use a <code>gist</code>, which is quick sharing service provided by Github based on copy-paste.</p>
+<p>Navigate to <a href="https://gist.github.com/" class="uri">https://gist.github.com/</a>, it shows a text-area for copy-pasting content, you can drag your <code>ipynb</code> file from your File Manager into the text-area and it will paste its content into the area, then you can click on “Create a public gist” button and it will be uploaded and rendered automatically. If you don’t want the <code>gist</code> to appear under <code>gist.github.com/yourusername</code> and not be findable on Google, select “Create a private gist” instead. You can also upload multiple notebooks to the same <code>gist</code>.</p>
+<p>The good thing is that behind this interface there is an actual <code>git</code> repository, so you can later clone and update it using <code>git</code>. Or you can even use the web interface to copy-paste a newer version of your Notebook.</p>
+</section>
+<section id="share-on-gist-from-the-command-line" class="level2">
+<h2 class="anchored" data-anchor-id="share-on-gist-from-the-command-line">Share on gist from the command line</h2>
+<p>If you are working on a remote machine (e.g.&nbsp;HPC), it is way better to setup the <a href="https://cli.github.com/"><code>gh</code> client for Github</a>, then you can directly create a gist from the command line:</p>
+<pre><code>gh gist create --public -d "My description" *.ipynb</code></pre>
+<p>and it will print to stdout the gist URL.</p>
+</section>
+<section id="render-larger-notebooks-via-nbviewer" class="level2">
+<h2 class="anchored" data-anchor-id="render-larger-notebooks-via-nbviewer">Render larger Notebooks via nbviewer</h2>
+<p>The Github rendering engine is not the most reliable: it fails for larger notebooks, it doesn’t work on mobile and it doesn’t support some JavaScript based libraries, like <code>altair</code>.</p>
+<p>Then after having uploaded your Notebook to <code>gist</code>, you can go to <a href="https://nbviewer.jupyter.org/" class="uri">https://nbviewer.jupyter.org/</a>, paste the full link to your <code>gist</code> and share the <code>nbviewer</code> rendering instead.</p>
+</section>
+<section id="save-clean-notebooks-in-github-repositories" class="level2">
+<h2 class="anchored" data-anchor-id="save-clean-notebooks-in-github-repositories">Save clean Notebooks in Github repositories</h2>
+<p>I also recommend to save a copy of notebooks without any outputs (either doing “Clear all outputs” from the interface or using <code>nbstripout</code>) into a related Github repository, this makes it easier to reference it later on. However don’t save executed notebooks inside Github repositories, they are too large and cause ugly <code>diff</code> between versions (also use <code>nbdime</code> to help manage notebooks inside repos).</p>
+</section>
+<section id="share-related-group-of-notebooks" class="level2">
+<h2 class="anchored" data-anchor-id="share-related-group-of-notebooks">Share related group of notebooks</h2>
+<p>For teaching it is often useful to share a number of related notebooks, in this case you can create a repository full of notebooks and then point <code>nbviewer</code> to the address of that repository, it will automatically create an index where people can navigate through notebooks. See for example <a href="https://nbviewer.jupyter.org/github/zonca/mapsims_tutorials/tree/master/" class="uri">https://nbviewer.jupyter.org/github/zonca/mapsims_tutorials/tree/master/</a>.</p>
+<p>For teaching it is often useful to have the main repository which contains clean versions of the notebooks and then have a Github fork with a version of the notebooks all executed. This is useful for later reference and for people that have trouble executing the notebooks. Better use a fork because if we used a <code>branch</code>, we would make the main repository un-necessarily heavier to download.</p>
+</section>
+<section id="make-notebooks-executable-in-the-browser" class="level2">
+<h2 class="anchored" data-anchor-id="make-notebooks-executable-in-the-browser">Make notebooks executable in the browser</h2>
+<p>Once you have notebooks in a repository, you can also plug them into <a href="https://mybinder.org/" class="uri">https://mybinder.org/</a> to allow people to spin a Virtual Machine on Google Cloud automatically and for free and execute them in their browser. You can also provide a <code>environment.yml</code> file to setup the requirements.</p>
+<p>See for example <a href="https://gist.github.com/zonca/9c114608e0903a3b8ea0bfe41c96f255">the <code>healpy</code> tutorial gist</a>, which can be executed on Binder clicking on the following Icon: <a href="https://mybinder.org/v2/gist/zonca/9c114608e0903a3b8ea0bfe41c96f255/master"><img src="https://mybinder.org/badge_logo.svg" class="img-fluid" alt="Binder logo"></a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

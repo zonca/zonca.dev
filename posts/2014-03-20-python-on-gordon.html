@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2014-03-20">
+
+<title>zonca.dev - Python on Gordon</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">zonca.dev</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Python on Gordon</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">hpc</div>
+                <div class="quarto-category">python</div>
+                <div class="quarto-category">Gordon</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 20, 2014</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>Gordon has already a <code>python</code> environment setup which can be activated by loading the <code>python</code> module:</p>
+<pre><code>module load python # add this to .bashrc to load it at every login</code></pre>
+<section id="install-virtualenv" class="level3">
+<h3 class="anchored" data-anchor-id="install-virtualenv">Install virtualenv</h3>
+<p>Then we need to setup a sandboxed local environment to install other packages, by using <code>virtualenv</code>, get the link to the latest version from <a href="https://pypi.python.org/pypi/virtualenv" class="uri">https://pypi.python.org/pypi/virtualenv</a>, then download it on gordon and unpack it, e.g.</p>
+<pre><code>wget --no-check-certificate https://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.11.2.tar.gz
+tar xzvf virtualenv*tar.gz</code></pre>
+<p>Then create your own virtualenv and load it:</p>
+<pre><code>mkdir ~/venv
+python virtualenv-*/virtualenv.py ~/venv/py
+source ~/venv/py/bin/activate # add this to .bashrc to load it at every login</code></pre>
+<p>you can restore your previous environment by deactivating the virtualenv:</p>
+<pre><code>deactivate # from your bash prompt</code></pre>
+</section>
+<section id="install-ipython" class="level3">
+<h3 class="anchored" data-anchor-id="install-ipython">Install IPython</h3>
+<p>Using <code>pip</code> you can install <code>IPython</code> and all dependencies for the notebook and parallel tools running:</p>
+<pre><code>pip install ipython pyzmq tornado jinja</code></pre>
+</section>
+<section id="configure-the-ipython-notebook" class="level3">
+<h3 class="anchored" data-anchor-id="configure-the-ipython-notebook">Configure the IPython notebook</h3>
+<p>For interactive data exploration, you can run the <code>IPython</code> notebook in a computing node on Gordon and export the web interface to your local machine, which also embeds all the plots. Configuring the tunnelling over SSH is complicated, so I created a script, takes a little time to setup but then is very easy to use, see https://github.com/pyHPC/ipynbhpc.</p>
+</section>
+<section id="configure-ipython-parallel" class="level3">
+<h3 class="anchored" data-anchor-id="configure-ipython-parallel">Configure IPython parallel</h3>
+<p><a href="http://ipython.org/ipython-doc/stable/parallel/">IPython parallel</a> on Gordon allows to launch a <code>PBS</code> job with tens (or hundreds) of Python engines and then easily submit hundreds (or thousands) of serial jobs to be executed with automatic load balancing. First of all create the default configuration files:</p>
+<pre><code>ipython profile create --parallel </code></pre>
+<p>Then, in <code>~/.ipython/profile_default/ipcluster_config.py</code>, you need to setup:</p>
+<pre><code>c.IPClusterStart.controller_launcher_class = 'LocalControllerLauncher' 
+c.IPClusterStart.engine_launcher_class = 'PBS' 
+c.PBSLauncher.batch_template_file = u'/home/REPLACEWITHYOURUSER/.ipython/profile_default/pbs.engine.template' # "~" does not work</code></pre>
+<p>You also need to allow connections to the controller from other hosts, setting in <code>~/.ipython/profile_default/ipcontroller_config.py</code>:</p>
+<pre><code>c.HubFactory.ip = '*'
+c.HubFactory.engine_ip = '*'</code></pre>
+<p>Finally create the PBS template <code>~/.ipython/profile_default/pbs.engine.template</code>:</p>
+<pre><code>#!/bin/bash
+#PBS -q normal
+#PBS -N ipcluster
+#PBS -l nodes={n/16}:ppn={n}:native
+#PBS -l walltime=01:00:00
+#PBS -o ipcluster.out
+#PBS -e ipcluster.err
+#PBS -m abe
+#PBS -V
+mpirun_rsh -np {n} -hostfile $PBS_NODEFILE ipengine</code></pre>
+<p>Here we chose to run 16 IPython engines per Gordon node, so each has access to 4GB of ram, if you need more just change 16 to 8 for example.</p>
+</section>
+<section id="run-ipython-parallel" class="level3">
+<h3 class="anchored" data-anchor-id="run-ipython-parallel">Run IPython parallel</h3>
+<p>You can submit a job to the queue running, <code>n</code> is equal to the number of processes you want to use, so it needs to be a multiple of the <code>ppn</code> chosen in the PBS template:</p>
+<pre><code>ipcluster start --n=32 &amp;</code></pre>
+<p>in this case we are requesting 2 nodes, with 16 IPython engines each, check with:</p>
+<pre><code>qstat -u $USER</code></pre>
+<p>basically <code>ipcluster</code> runs an <code>ipcontroller</code> on the login node and submits a job to PBS for running the <code>ipengines</code> on the computing nodes.</p>
+<p>Once the PBS job is running, check that the engines are connected by opening a IPython on the login node and print the <code>ids</code>:</p>
+<pre><code>In [1]: from IPython.parallel import Client
+In [2]: rc = Client()
+In [3]: rc.ids</code></pre>
+<p>You can stop the cluster (kills <code>ipcontroller</code> and runs <code>qdel</code> on the PBS job) either by sending CTRL-c to <code>ipcluster</code> or running:</p>
+<pre><code>ipcluster stop # from bash console</code></pre>
+</section>
+<section id="submit-jobs-to-ipython-parallel" class="level3">
+<h3 class="anchored" data-anchor-id="submit-jobs-to-ipython-parallel">Submit jobs to IPython parallel</h3>
+<p>As soon as <code>ipcluster</code> is executed, <code>ipcontroller</code> is ready to queue jobs up, which will be then consumed by the engines once they will be running. The easiest method to submit jobs with automatic load balancing is to create a load balanced view:</p>
+<pre><code>In [1]: from IPython.parallel import Client
+In [2]: rc = Client()
+In [3]: lview = rc.load_balanced_view() # default load-balanced view</code></pre>
+<p>and then use its <code>map</code> method:</p>
+<pre><code>def exp_10(x):
+    return x**10
+    
+list_of_args = range(100)
+result = lview.map(exp_10, list_of_args)</code></pre>
+<p>In this code <code>IPython</code> will distribute uniformly the list of arguments to the engines and the function will be evalutated for each of them and the result copied back to the connecting client running on the login node.</p>
+</section>
+<section id="submit-non-python-jobs-to-ipython-parallel" class="level3">
+<h3 class="anchored" data-anchor-id="submit-non-python-jobs-to-ipython-parallel">Submit non-python jobs to IPython parallel</h3>
+<p>Let’s assume you have a list of commands you want to run in a text file, one command per line, those could be implemented in any programming language, e.g.:</p>
+<pre><code>date &amp;&gt; date.log
+hostname &amp;&gt; hostname.log</code></pre>
+<p>Then you create a function that executes one of those commands:</p>
+<pre><code>def run_command(command):
+    import subprocess
+    subprocess.Popen(command, shell = True)</code></pre>
+<p>Then apply this function to the list of commands:</p>
+<pre><code>list_of_commands = open("commands.txt").readlines()
+lview.map(run_command, list_of_commands)</code></pre>
+<p>I created a script that automates this process, see https://gist.github.com/zonca/8994544, you can run as:</p>
+<pre><code>./ipcluster_run_commands.py commands.txt</code></pre>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

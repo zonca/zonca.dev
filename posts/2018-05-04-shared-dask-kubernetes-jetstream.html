@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2018-05-04">
+
+<title>zonca.dev - Launch a shared dask cluster in Kubernetes alongside JupyterHub on Jetstream</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">zonca.dev</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Launch a shared dask cluster in Kubernetes alongside JupyterHub on Jetstream</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">jupyter</div>
+                <div class="quarto-category">jetstream</div>
+                <div class="quarto-category">dask</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 4, 2018</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>Let’s assume we have already a Kubernetes deployment and have installed JupyterHub, see for example my <a href="https://zonca.github.io/2017/12/scalable-jupyterhub-kubernetes-jetstream.html">previous tutorial on Jetstream</a>. Now that users can login and access a Jupyter Notebook, we would also like to provide them more computing power for their interactive data exploration. The easiest way is through <a href="https://dask.pydata.org"><code>dask</code></a>, we can launch a scheduler and any number of workers as containers inside Kubernetes so that users can leverage the computing power of many Jetstream instances at once.</p>
+<p>There are 2 main strategies, we can give each user their own dask cluster with exclusive access and this would be more performant but cause quick spike of usage of the Kubernetes cluster, or just launch a shared cluster and give all users access to that.</p>
+<p>In this tutorial we cover the second scenario, we’ll cover the first scenario in a following tutorial.</p>
+<p>We will deploy first Jupyterhub through the Zero-to-JupyterHub guide, then launch via Helm a fixed size dask clusters and show how users can connect, submit distributed Python jobs and monitor their execution on the dashboard.</p>
+<p>The configuration files mentioned in the tutorial are available in the Github repository <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream">zonca/jupyterhub-deploy-kubernetes-jetstream</a>.</p>
+<section id="deploy-jupyterhub" class="level2">
+<h2 class="anchored" data-anchor-id="deploy-jupyterhub">Deploy JupyterHub</h2>
+<p>First we start from Jupyterhub on Jetstream with Kubernetes at <a href="https://zonca.github.io/2017/12/scalable-jupyterhub-kubernetes-jetstream.html" class="uri">https://zonca.github.io/2017/12/scalable-jupyterhub-kubernetes-jetstream.html</a></p>
+<p>Optionally, for testing purposes, we can simplify the deployment by skipping permanent storage, if this is an option, see the relevant section below.</p>
+<p>We want to install Jupyterhub in the <code>pangeo</code> namespace with the name <code>jupyter</code>, replace the <code>helm install</code> line in the tutorial with:</p>
+<pre><code>sudo helm install --name jupyter jupyterhub/jupyterhub -f config_jupyterhub_pangeo_helm.yaml --namespace pangeo</code></pre>
+<p>The <code>pangeo</code> configuration file is using a different single user image which has the right version of <code>dask</code> for this tutorial.</p>
+</section>
+<section id="optional-simplify-deployment-using-ephemeral-storage" class="level2">
+<h2 class="anchored" data-anchor-id="optional-simplify-deployment-using-ephemeral-storage">(Optional) Simplify deployment using ephemeral storage</h2>
+<p>Instead of installing and configuring rook, we can temporarily disable permanent storage to make the setup quicker and easier to maintain.</p>
+<p>In the JupyterHub configuration <code>yaml</code> set:</p>
+<pre><code>hub:
+   db:
+     type: sqlite-memory
+
+singleuser:
+   storage:
+      type: none</code></pre>
+<p>Now every time a user container is killed and restarted, all data are gone, this is good enough for testing purposes.</p>
+</section>
+<section id="configure-github-authentication" class="level2">
+<h2 class="anchored" data-anchor-id="configure-github-authentication">Configure Github authentication</h2>
+<p>Follow the instructions on the Zero-to-Jupyterhub documentation, at the end you should have in the YAML:</p>
+<pre><code>auth:
+  type: github
+  admin:
+    access: true
+    users: [zonca, otherusername]
+  github:
+    clientId: "xxxxxxxxxxxxxxxxxxxx"
+    clientSecret: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    callbackUrl: "https://js-xxx-xxx.jetstream-cloud.org/hub/oauth_callback"</code></pre>
+</section>
+<section id="test-jupyterhub" class="level2">
+<h2 class="anchored" data-anchor-id="test-jupyterhub">Test Jupyterhub</h2>
+<p>Connect to the master node with your browser at: <code>https://js-xxx-xxx.jetstream-cloud.org</code> Login with your Github credentials, you should get a Jupyter Notebook.</p>
+<p>You can also check that your pod is running:</p>
+<pre><code>sudo kubectl get pods -n pangeo
+NAME                                  READY     STATUS    RESTARTS   AGE
+jupyter-zonca                         1/1       Running   0          2m
+......other pods</code></pre>
+</section>
+<section id="install-dask" class="level2">
+<h2 class="anchored" data-anchor-id="install-dask">Install Dask</h2>
+<p>We want to deploy a single dask cluster that all the users can submit jobs to.</p>
+<p>Customize the <code>dask_shared/dask_config.yaml</code> file available in the repository, for testing purposes I set just 1 GB RAM and 1 CPU limits on each of 3 workers. We can change <code>replicas</code> of the workers to add more.</p>
+<pre><code>sudo helm install stable/dask --name=dask --namespace=pangeo -f dask_config.yaml</code></pre>
+<p>Then check that the <code>dask</code> instances are running:</p>
+<pre><code>$ sudo kubectl get pods --namespace pangeo
+NAME                              READY     STATUS    RESTARTS   AGE
+dask-jupyter-647bdc8c6d-mqhr4     1/1       Running   0          22m
+dask-scheduler-5d98cbf54c-4rtdr   1/1       Running   0          22m
+dask-worker-6457975f74-dqhsh      1/1       Running   0          22m
+dask-worker-6457975f74-lpvk4      1/1       Running   0          22m
+dask-worker-6457975f74-xzcmc      1/1       Running   0          22m
+hub-7f75b59fc5-8c2pg              1/1       Running   0          6d
+jupyter-zonca                     1/1       Running   0          10m
+proxy-6bbf67f6bd-swt7f            2/2       Running   0          6d</code></pre>
+<section id="access-the-scheduler-and-launch-a-distributed-job" class="level3">
+<h3 class="anchored" data-anchor-id="access-the-scheduler-and-launch-a-distributed-job">Access the scheduler and launch a distributed job</h3>
+<p><code>kube-dns</code> gives a name to each service and automatically propagates it to each pod, so we can connect by name</p>
+<pre><code>from dask.distributed import Client
+client = Client("dask-scheduler:8786")
+client</code></pre>
+<p>Now we can access the 3 workers that we launched before:</p>
+<pre><code>Client
+Scheduler: tcp://dask-scheduler:8786
+Dashboard: http://dask-scheduler:8787/status
+Cluster
+Workers: 3
+Cores: 6
+Memory: 12.43 GB</code></pre>
+<p>We can run an example computation with dask array:</p>
+<pre><code>import dask.array as da
+x = da.random.random((20000, 20000), chunks=(2000, 2000)).persist()
+x.sum().compute()</code></pre>
+</section>
+<section id="access-the-dask-dashboard-for-monitoring-job-execution" class="level3">
+<h3 class="anchored" data-anchor-id="access-the-dask-dashboard-for-monitoring-job-execution">Access the Dask dashboard for monitoring job execution</h3>
+<p>We need to setup ingress so that a path points to the Dask dashboard instead of Jupyterhub,</p>
+<p>Checkout the file <code>dask_shared/dask_webui_ingress.yaml</code> in the repository, it routes the path <code>/dask</code> to the <code>dask-scheduler</code> service.</p>
+<p>Create the ingress resource with:</p>
+<pre><code>sudo kubectl create ingress -n pangeo -f dask_webui_ingress.yaml</code></pre>
+<p>All users can now access the dashboard at:</p>
+<ul>
+<li><a href="https://js-xxx-xxx.jetstream-cloud.org/dask/status" class="uri">https://js-xxx-xxx.jetstream-cloud.org/dask/status</a></li>
+</ul>
+<p>Make sure to use <code>/dask/status/</code> and not only <code>/dask</code>. Currently this is not authenticated, so this address is publicly available. A simple way to hide it is to choose a custom name instead of <code>/dask</code> and edit the ingress accordingly with:</p>
+<pre><code>sudo kubectl edit ingress dask -n pangeo</code></pre>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

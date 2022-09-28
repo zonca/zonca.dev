@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2021-03-25">
+
+<title>zonca.dev - Stream video from object store on Jetstream</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">zonca.dev</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Stream video from object store on Jetstream</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">jetstream</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 25, 2021</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>In this tutorial we will serve video stored in Jetstream’s object store (like Amazon S3) as HTTP live streaming to a user’ browser. This makes it difficult for the user to save the whole video as it is served in chunks.</p>
+<section id="load-a-test-video-on-object-store" class="level2">
+<h2 class="anchored" data-anchor-id="load-a-test-video-on-object-store">Load a test video on object store</h2>
+<p>Login to <a href="https://iujetstream.atlassian.net/wiki/spaces/JWT/pages/44826638/Using+the+OpenStack+Horizon+GUI+Interface">Horizon</a></p>
+<p>Go to Project &gt; Object store</p>
+<p>Create a container, for example <code>videostream</code>, make it public</p>
+<p>Upload a test video, for example:</p>
+<p><a href="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_30MB.mp4" class="uri">https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_30MB.mp4</a></p>
+<p>Wait 5 minutes then test you can access the video from your machine and note the base url.</p>
+</section>
+<section id="deploy-the-vm" class="level2">
+<h2 class="anchored" data-anchor-id="deploy-the-vm">Deploy the VM</h2>
+<p>Login to Atmosphere and launch the newest Ubuntu 20.04 image</p>
+<section id="configure-ssl" class="level3">
+<h3 class="anchored" data-anchor-id="configure-ssl">Configure SSL</h3>
+<p>The streaming server will ask for the SSL certificates on setup.</p>
+<p>So, install certbot with:</p>
+<pre><code>sudo apt install certbot</code></pre>
+<p>and get certificates:</p>
+<pre><code>certbot certonly --standalone -d js-xxx-yyy.jetstream-cloud.org</code></pre>
+</section>
+</section>
+<section id="install-the-streaming-server" class="level2">
+<h2 class="anchored" data-anchor-id="install-the-streaming-server">Install the streaming server</h2>
+<p>Kaltura maintains packages for Ubuntu, so it is easy to install it following <a href="https://github.com/kaltura/nginx-vod-module#debianubuntu-deb-package" class="uri">https://github.com/kaltura/nginx-vod-module#debianubuntu-deb-package</a></p>
+<p>For the configuration interactive prompts (I might have set them out of order here):</p>
+<ul>
+<li>Use port 80 instead of 88 (unless you plan to have another NGINX instance on port 80)</li>
+<li>Use port 443 instead of 8443</li>
+<li>For the mode choose “Remote”, we will load from object store</li>
+<li>For the remote url set the base url of the object store (before <code>/swift</code>) and the port</li>
+<li>Say “No” when it asks if you use the Kaltura media service</li>
+<li>For SSL certificate set <code>/etc/letsencrypt/live/js-xxx-yyy.jetstream-cloud.org/fullchain.pem</code></li>
+<li>For SSL key set <code>/etc/letsencrypt/live/js-xxx-yyy.jetstream-cloud.org/privkey.pem</code></li>
+</ul>
+<p>By default it sets the streaming from HTTP instead of HTTPS, so edit <code>/opt/kaltura/nginx/conf/vod-remote.conf</code>, modify:</p>
+<pre><code>proxy_pass http://media/$1;</code></pre>
+<p>into:</p>
+<pre><code>proxy_pass https://media/$1;</code></pre>
+<p>If anything goes wrong in the configuration, check the error log at:</p>
+<pre><code>/opt/kaltura/log/nginx/</code></pre>
+<p>and reset it:</p>
+<pre><code>sudo apt purge kaltura-nginx
+rm -fr /opt/kaltura
+sudo apt install kaltura-nginx</code></pre>
+</section>
+<section id="test-the-streaming" class="level2">
+<h2 class="anchored" data-anchor-id="test-the-streaming">Test the streaming</h2>
+<p>First try to access the stream directly from your browser, browsers don’t know how to display a HLS stream, but if you get to download a file named “index.m3u8” that is a good sign:</p>
+<pre><code>https://js-xxx-yyy.jetstream-cloud.org/hls/swift/v1/videostream/Big_Buck_Bunny_720_10s_30MB/index.m3u8</code></pre>
+<p>In the URL, <code>videostream</code> is the name of the bucket (container), then the filename, <code>index.m3u8</code> tells the server that we want to stream that into HLS format.</p>
+<p>If you get an error message instead, check the Kaltura NGINX logs.</p>
+<p>Finally we can test it into a player, for example VideoJS, go to <a href="https://videojs-http-streaming.netlify.app/" class="uri">https://videojs-http-streaming.netlify.app/</a> and paste the URL of your stream.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2018-09-23">
+
+<title>zonca.dev - Explore a Kubernetes deployment on Jetstream with Kubespray 2/3</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">zonca.dev</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Explore a Kubernetes deployment on Jetstream with Kubespray 2/3</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">kubernetes</div>
+                <div class="quarto-category">kubespray</div>
+                <div class="quarto-category">jetstream</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 23, 2018</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>This is the second part of the tutorial on deploying Kubernetes with <code>kubespray</code> and JupyterHub on Jetstream.</p>
+<p>In the <a href="https://zonca.github.io/2018/09/kubernetes-jetstream-kubespray.html">first part, we installed Kubernetes on Jetstream with <code>kubespray</code></a>.</p>
+<p>It is optional, its main purpose is to familiarize with the Kubernetes deployment on Jetstream and how the different components play together before installing JupyterHub. If you are already familiar with Kubernetes you can skip to <a href="https://zonca.github.io/2018/09/kubernetes-jetstream-kubespray-jupyterhub.html">next part where we will be installing Jupyterhub using the zerotojupyterhub helm recipe</a>.</p>
+<p>All the files for the examples below are available on Github, first SSH to the master node (or do this locally if you setup <code>kubectl</code> locally):</p>
+<pre><code>git clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream
+cd jupyterhub-deploy-kubernetes-jetstream</code></pre>
+<section id="test-persistent-storage-with-cinder" class="level2">
+<h2 class="anchored" data-anchor-id="test-persistent-storage-with-cinder">Test persistent storage with cinder</h2>
+<p>The most important feature that brought me to choose <code>kubespray</code> as method for installing Kubernetes is that it automatically sets up persistent storage exploiting Jetstream Volumes. The Jetstream team already does a great job in providing a persistent storage solution with adequate redundancy via the Cinder project, part of OpenStack.</p>
+<p><code>kubespray</code> sets up a Kubernetes provisioner so that when a container requests persistent storage, it talks to the Openstack API and have a dedicated volume (the same type you can create with the Jetstream Horizon Web interfaces) automatically created and exposed to Kubernetes.</p>
+<p>This is achieved through a storageclass:</p>
+<pre><code>kubectl get storageclass
+NAME                 PROVISIONER            AGE
+standard (default)   kubernetes.io/cinder   1h</code></pre>
+<p>See the file <code>alpine-persistent-volume.yaml</code> in the repository on how we can request a Cinder volume to be created and attached to a pod.</p>
+<pre><code>kubectl create -f alpine-persistent-volume.yaml</code></pre>
+<p>We can test it by getting a terminal inside the container (<code>alpine</code> has no <code>bash</code>):</p>
+<pre><code>kubectl exec -it alpine -- /bin/sh</code></pre>
+<p>look into <code>df -h</code>, check that there is a 5GB mounted file system which is persistent.</p>
+<p>Also, back to the machine with <code>openstack</code> access, see how an Openstack volume was dynamically created and attached to the running instance:</p>
+<pre><code>openstack volume list</code></pre>
+<pre><code>openstack volume list
++--------------------------------------+-------------------------------------------------------------+--------+------+--------------------------------------------------+
+| ID                                   | Name                                                        | Status | Size | Attached to                                      |
++--------------------------------------+-------------------------------------------------------------+--------+------+--------------------------------------------------+
+| 508f1ee7-9654-4c84-b1fc-76dd8751cd6e | kubernetes-dynamic-pvc-e83ec4d6-bb9f-11e8-8344-fa163eb22e63 | in-use |    5 | Attached to kubespray-k8s-node-nf-1 on /dev/sdb  |
++--------------------------------------+-------------------------------------------------------------+--------+------+--------------------------------------------------+</code></pre>
+</section>
+<section id="test-replicasets-services-and-ingress" class="level2">
+<h2 class="anchored" data-anchor-id="test-replicasets-services-and-ingress">Test ReplicaSets, Services and Ingress</h2>
+<p>In this section we will explore how to build redundancy and scale in a service with a simple example included in the book <a href="https://github.com/luksa/kubernetes-in-action/tree/master/Chapter02/kubia">Kubernetes in Action</a>, which by the way I highly recommend to get started with Kubernetes.</p>
+<p>First let’s deploy a service in our Kubernetes cluster, this service just answers to HTTP requests on port 8080 with the message “You’ve hit kubia-manual”:</p>
+<pre><code>cd kubia_test_ingress
+kubectl create -f kubia-manual.yaml</code></pre>
+<p>We can test it by checking at which IP Kubernetes created the pod:</p>
+<pre><code>kubectl get pods -o wide</code></pre>
+<p>and assign it to the <code>KUBIA_MANUAL_IP</code> variable, then on one of the nodes:</p>
+<pre><code>$ curl $KUBIA_MANUAL_IP:8080
+You've hit kubia-manual</code></pre>
+<p>Finally close it:</p>
+<pre><code>kubectl delete -f kubia-manual.yaml</code></pre>
+<section id="load-balancing-with-replicasets-and-services" class="level3">
+<h3 class="anchored" data-anchor-id="load-balancing-with-replicasets-and-services">Load balancing with ReplicaSets and Services</h3>
+<p>Now we want to scale this service up and provide a set of 3 pods instead of just 1:</p>
+<pre><code>kubectl create -f kubia-replicaset.yaml</code></pre>
+<p>Now we could access those services on 3 different IP addresses, but we would like to have a single entry point and automatic load balancing across those instances, so we create a Kubernetes “Service” resource:</p>
+<pre><code>kubectl create -f kubia-service.yaml</code></pre>
+<p>And test it:</p>
+<pre><code>$ kubectl get service
+NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.233.0.1      &lt;none&gt;        443/TCP   22h
+kubia        ClusterIP   10.233.28.205   &lt;none&gt;        80/TCP    45m</code></pre>
+<pre><code>curl $KUBIA_SERVICE_IP</code></pre>
+<p>This is on port 80 so we don’t need <code>:8080</code> in the URL. Run many times and check different kubia services answer.</p>
+</section>
+<section id="publish-service-externally-with-ingress" class="level3">
+<h3 class="anchored" data-anchor-id="publish-service-externally-with-ingress">Publish service externally with ingress</h3>
+<p>Try to open browser and access the hostname of your master node at:</p>
+<pre><code>http://js-XXX-YYY.jetstream-cloud.org</code></pre>
+<p>Where XXX-YYY are the last 2 groups of digits of the floating IP of the master instance, i.e.&nbsp;AAA.BBB.XXX.YYY, each of them could also be 1 or 2 digits instead of 3.</p>
+<p>The connection should respond with 404.</p>
+<p>At this point, edit the <code>kubia-ingress.yaml</code> file and replace the <code>host</code> value with the master node domain name you just derived.</p>
+<p>Now:</p>
+<pre><code>kubectl create -f kubia-ingress.yaml
+kubectl get ingress</code></pre>
+<p>Try again in the browser. You should now see something like:</p>
+<p>“You’ve hit kubia-jqwwp”</p>
+<p>Force reload the browser page a few times and you will see you are hitting a different kubia service.</p>
+<p>Finally,</p>
+<pre><code>kubectl delete -f kubia-ingress.yaml</code></pre>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

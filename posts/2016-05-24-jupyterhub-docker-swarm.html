@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2016-05-24">
+
+<title>zonca.dev - Jupyterhub deployment on multiple nodes with Docker Swarm</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">zonca.dev</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Jupyterhub deployment on multiple nodes with Docker Swarm</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">ipython</div>
+                <div class="quarto-category">jupyterhub</div>
+                <div class="quarto-category">sdsc</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 24, 2016</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>This post is part of a series on deploying Jupyterhub on OpenStack tailored at workshops, in the previous posts I showed:</p>
+<ul>
+<li><a href="http://zonca.github.io/2016/04/jupyterhub-sdsc-cloud.html">How to deploy a Jupyterhub on a single server with Docker and Python/R/Julia support</a></li>
+<li><a href="http://zonca.github.io/2016/04/jupyterhub-image-sdsc-cloud.html">How to deploy the previous server from a pre-built image and customize it</a></li>
+</ul>
+<p>The limitation of a single server setup is that it cannot scale beyond the resources available on that server, especially memory. Therefore for a workshop that requires to load large amount of data or with lots of students it is recommended to use a multi-server setup.</p>
+<p>Fortunately Docker already provides that flexibility thanks to <a href="https://docs.docker.com/swarm/overview/">Docker Swarm</a>. Docker Swarm allows to have a Docker interface that behaves like a normal single server instance but instead launches containers on a pool of servers. Therefore there are mininal changes on the Jupyterhub server.</p>
+<p>Jupyterhub will interface with the Docker Swarm service running locally, Docker Swarm will take care of launching containers across the other nodes. Each container will launch a Jupyter Notebook server for a single user, then Jupyterhub will proxy the container port to the users. Users won’t connect directly to the nodes in the Docker Swarm pool.</p>
+<section id="setup-the-jupyterhub-server" class="level2">
+<h2 class="anchored" data-anchor-id="setup-the-jupyterhub-server">Setup the Jupyterhub server</h2>
+<p>Let’s start from the public image already available, see just the first section “Create a Virtual Machine in OpenStack with the pre-built image” in <a href="http://zonca.github.io/2016/04/jupyterhub-image-sdsc-cloud.html" class="uri">http://zonca.github.io/2016/04/jupyterhub-image-sdsc-cloud.html</a> for instructions on how to get the Jupyterhub single server running.</p>
+<section id="setup-docker-swarm" class="level3">
+<h3 class="anchored" data-anchor-id="setup-docker-swarm">Setup Docker Swarm</h3>
+<p>First of all we need to have Docker accessible remotely so we need to configure it to listen on a TCP port, edit <code>/etc/init/docker.conf</code> and replace <code>DOCKER_OPTS=</code> in the <code>start</code> section with:</p>
+<pre><code>DOCKER_OPTS="-H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock"</code></pre>
+<p>Port 2375 is not open on the OpenStack configuration, so this is not a security issue.</p>
+<p>Then we need to run 2 swarm services in Docker containers, first a distributed key-store listening on port 8500 that is needed for Swarm to store information about all the available nodes, Consul:</p>
+<pre><code>docker run --restart=always  -d -p 8500:8500 --name=consul progrium/consul -server -bootstrap</code></pre>
+<p>the manager which provides the interface to Docker Swarm:</p>
+<pre><code>HUB_LOCAL_IP=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
+docker run --restart=always  -d -p 4000:4000 swarm manage -H :4000 --replication --advertise $HUB_LOCAL_IP:4000 consul://$HUB_LOCAL_IP:8500</code></pre>
+<p>This sets <code>HUB_LOCAL_IP</code> to the internal ip of the instance, then starts the Manager container.</p>
+<p>We are running both with automatic restarting, so that they are launched again in case of failure or after reboot.</p>
+<p>You can check if the containers are running with:</p>
+<pre><code>docker ps -a</code></pre>
+<p>and then you can check if connection works with Docker Swarm on port 4000:</p>
+<pre><code>docker -H :4000 ps -a</code></pre>
+<p>Check the Docker documentation for a more robust setup with multiple Consul services and a backup Manager.</p>
+</section>
+<section id="setup-jupyterhub" class="level3">
+<h3 class="anchored" data-anchor-id="setup-jupyterhub">Setup Jupyterhub</h3>
+<p>Following the work by Jess Hamrick for the <a href="https://github.com/compmodels/jupyterhub">compmodels Jupyterhub deployment</a>, we can get the <code>jupyterhub_config.py</code> from <a href="https://gist.github.com/zonca/83d222df8d0b9eaebd02b83faa676753" class="uri">https://gist.github.com/zonca/83d222df8d0b9eaebd02b83faa676753</a> and copy them into the home of the ubuntu user.</p>
+</section>
+<section id="share-users-home-via-nfs" class="level3">
+<h3 class="anchored" data-anchor-id="share-users-home-via-nfs">Share users home via NFS</h3>
+<p>We have now a distributed system and we need a central location to store the home folders of the users, so that even if they happen to get containers on different server, they can still access their files.</p>
+<p>Install NFS with the package manager:</p>
+<pre><code>sudo apt-get install nfs-kernel-server</code></pre>
+<p>edit <code>/etc/exports</code>, add:</p>
+<pre><code>/home    *(rw,sync,no_root_squash)</code></pre>
+<p>Ports are not open in the NFS configuration.</p>
+</section>
+</section>
+<section id="setup-networking" class="level2">
+<h2 class="anchored" data-anchor-id="setup-networking">Setup networking</h2>
+<p>Before preparing a node, create a new security group under Compute -&gt; Access &amp; Security and name it <code>swarm_group</code>.</p>
+<p>We need to be able to have open traffic between the <code>swarmsecgroup</code> and the group of the Jupyterhub instance, <code>jupyterhubsecgroup</code> in my previous tutorial. So in the new <code>swarmsecgroup</code>, add this rule:</p>
+<ul>
+<li>Add Rule</li>
+<li>Rule: ALL TCP</li>
+<li>Direction: Ingress</li>
+<li>Remote: Security Group</li>
+<li>Security Group: <code>jupyterhubsecgroup</code></li>
+</ul>
+<p>Add another rule replacing Ingress with Egress. Now open the <code>jupyterhubsecgroup</code> group and add the same 2 rules, just make sure to choose as target “Security Group” <code>swarmsecgroup</code>.</p>
+<p>On the <code>swarmsecgroup</code> also add a Rule for SSH traffic from any source choosing CIDR and 0.0.0.0/0, you can disable this after having executed the configuration.</p>
+</section>
+<section id="setup-the-docker-swarm-nodes" class="level2">
+<h2 class="anchored" data-anchor-id="setup-the-docker-swarm-nodes">Setup the Docker Swarm nodes</h2>
+<section id="launch-a-plain-ubuntu-instance" class="level3">
+<h3 class="anchored" data-anchor-id="launch-a-plain-ubuntu-instance">Launch a plain Ubuntu instance</h3>
+<p>Launch a new instance, all it <code>swarmnode</code>, choose the size depending on your requirements, and then choose “Boot from image” and get Ubuntu 14.04 LTS (16.04 should work as well, but I haven’t yet tested it). Remember to choose a Key Pair under Access &amp; Security and assign the Security Group <code>swarmsecgroup</code>.</p>
+<p>Temporarily add a floating IP to this instance in order to SSH into it, see my first tutorial for more details.</p>
+</section>
+<section id="setup-docker-swarm-1" class="level3">
+<h3 class="anchored" data-anchor-id="setup-docker-swarm-1">Setup Docker Swarm</h3>
+<p>First install Docker engine:</p>
+<pre><code>sudo apt update
+sudo apt install apt-transport-https ca-certificates
+sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+echo "deb https://apt.dockerproject.org/repo ubuntu-trusty main" | sudo tee /etc/apt/sources.list.d/docker.list 
+sudo apt update
+sudo apt install -y docker-engine
+sudo usermod -aG docker ubuntu</code></pre>
+<p>Then make the same edit we did on the hub, edit <code>/etc/init/docker.conf</code> and replace <code>DOCKER_OPTS=</code> in the <code>start</code> section with:</p>
+<pre><code>DOCKER_OPTS="-H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock"</code></pre>
+<p>Restart Docker with:</p>
+<pre><code>sudo service docker restart</code></pre>
+<p>Then run the container that interfaces with Swarm:</p>
+<pre><code>HUB_LOCAL_IP=10.XX.XX.XX
+NODE_LOCAL_IP=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
+docker run --restart=always -d swarm join --advertise=$NODE_LOCAL_IP:2375 consul://$HUB_LOCAL_IP:8500    </code></pre>
+<p>Copy the address of the Jupyterhub server in the <code>HUB_LOCAL_IP</code> variable.</p>
+</section>
+<section id="setup-mounting-the-home-filesystem" class="level3">
+<h3 class="anchored" data-anchor-id="setup-mounting-the-home-filesystem">Setup mounting the home filesystem</h3>
+<pre><code>sudo apt-get install autofs</code></pre>
+<p>add in <code>/etc/auto.master</code>:</p>
+<pre><code>/home         /etc/auto.home</code></pre>
+<p>create <code>/etc/auto.home</code>:</p>
+<pre><code>echo "* $HUB_LOCAL_IP:/home/&amp;" | sudo tee /etc/auto.home</code></pre>
+<p>using the internal IP of the hub.</p>
+<pre><code>sudo service autofs restart</code></pre>
+<p>verify by doing:</p>
+<pre><code>ls /home/ubuntu</code></pre>
+<p>or</p>
+<pre><code>ls /home/training01</code></pre>
+<p>you should see the same files that were on the Jupyterhub server.</p>
+</section>
+<section id="create-users" class="level3">
+<h3 class="anchored" data-anchor-id="create-users">Create users</h3>
+<p>As we are using system users and mounting the home filesystem it is important that users have the same UID on all nodes, so we are going to run on the node the same script we ran on the Jupyterhub server:</p>
+<pre><code> bash create_users.sh
+ </code></pre>
+</section>
+<section id="test-jupyterhub" class="level3">
+<h3 class="anchored" data-anchor-id="test-jupyterhub">Test Jupyterhub</h3>
+<p>Login on the Jupyterhub instance with 2 or more different users, then check on the console of the Hub that the containers were launched on the <code>swarmnode</code> instance:</p>
+<pre><code> docker -H :4000 ps -a
+ </code></pre>
+</section>
+</section>
+<section id="create-more-nodes" class="level2">
+<h2 class="anchored" data-anchor-id="create-more-nodes">Create more nodes</h2>
+<p>Now that we created a fully functioning node we can clone it to create more to accomodate more users.</p>
+<section id="create-a-snapshot-of-the-node" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-snapshot-of-the-node">Create a snapshot of the node</h3>
+<p>First we need to delete all Docker containers, ssh into the <code>swarmnode</code> and execute:</p>
+<pre><code> docker rm -f $(docker ps -a -q)</code></pre>
+<p>Docker has a unique identifying key, we need to remove that so that it will be regenerated by the clones.</p>
+<pre><code>sudo service docker stop
+sudo rm /etc/docker/key.json</code></pre>
+<p>Then from Compute-&gt;Instances choose “Create Snapshot”, call it <code>swarmnodeimage</code>.</p>
+</section>
+<section id="launch-other-nodes" class="level3">
+<h3 class="anchored" data-anchor-id="launch-other-nodes">Launch other nodes</h3>
+<p>Click on Launch instance-&gt;“Boot from Snapshot”-&gt;<code>swarmnodeimage</code>, choose the <code>swarmnodesecgroup</code> Security Group. Choose any number of instances you need.</p>
+<p>Each node will need to launch the Swarm container with its own local ip, not the same as our first node. Therefore we need to use the “Post Creation”-&gt;“Direct Input” and add this script:</p>
+<pre><code>#!/bin/bash
+HUB_LOCAL_IP=10.XX.XX.XX
+NODE_LOCAL_IP=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
+docker run --restart=always -d swarm join --advertise=$NODE_LOCAL_IP:2375 consul://$HUB_LOCAL_IP:8500</code></pre>
+<p><code>HUB_LOCAL_IP</code> is the internal network IP address of the Jupyterhub instance and <code>NODE_LOCAL_IP</code> will be filled with the IP of the OpenStack image just created.</p>
+<p>See for example Jupyterhub with 3 remote Swarm nodes running containers for 4 training users:</p>
+<pre><code>$ docker -H :4000 ps -a
+CONTAINER ID        IMAGE                                     COMMAND                  CREATED              STATUS              PORTS                         NAMES
+60189f208df2        zonca/jupyterhub-datascience-systemuser   "tini -- sh /srv/sing"   11 seconds ago       Up 7 seconds        10.128.1.28:32769-&gt;8888/tcp   swarmnodes-1/jupyter-training04
+1d7b05caedb1        zonca/jupyterhub-datascience-systemuser   "tini -- sh /srv/sing"   36 seconds ago       Up 32 seconds       10.128.1.27:32768-&gt;8888/tcp   swarmnodes-2/jupyter-training03
+733c5ff0a5ed        zonca/jupyterhub-datascience-systemuser   "tini -- sh /srv/sing"   58 seconds ago       Up 54 seconds       10.128.1.29:32768-&gt;8888/tcp   swarmnodes-3/jupyter-training02
+282abce201dd        zonca/jupyterhub-datascience-systemuser   "tini -- sh /srv/sing"   About a minute ago   Up About a minute   10.128.1.28:32768-&gt;8888/tcp   swarmnodes-1/jupyter-training01
+29b2d394fab9        swarm                                     "/swarm join --advert"   13 minutes ago       Up 13 minutes       2375/tcp                      swarmnodes-2/romantic_easley
+8fd3d32fe849        swarm                                     "/swarm join --advert"   13 minutes ago       Up 13 minutes       2375/tcp                      swarmnodes-3/clever_mestorf
+1ae073f7b78b        swarm                                     "/swarm join --advert"   13 minutes ago       Up 13 minutes       2375/tcp                      swarmnodes-1/jovial_goldwasser</code></pre>
+</section>
+</section>
+<section id="where-to-go-from-here" class="level2">
+<h2 class="anchored" data-anchor-id="where-to-go-from-here">Where to go from here</h2>
+<p>At this level the deployment is quite complicated, so it is probably worth automating it with an <code>ansible</code> playbook, that will be the subject of the next blog post, I think the result will be a simplified version of <a href="https://github.com/compmodels/jupyterhub-deploy">Jess Hamrick’s compmodels deployment</a>. Still, I recommend starting with a manual setup to understand how the different pieces work.</p>
+</section>
+<section id="troubleshooting" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
+<p>If <code>docker -H :4000 ps -a</code> gives the error:</p>
+<pre><code>Error response from daemon: No elected primary cluster manager</code></pre>
+<p>it means the Consul container is broken, remove it and create it again.</p>
+</section>
+<section id="acknowledgments" class="level2">
+<h2 class="anchored" data-anchor-id="acknowledgments">Acknowledgments</h2>
+<p>Thanks to Jess Hamrick for sharing the setup of her <a href="https://github.com/compmodels">compmodel class on Github</a>, the Jupyter team for releasing such great tools and Kevin Coakley and the rest of the <a href="http://www.sdsc.edu/services/it/cloud.html">SDSC Cloud</a> team for OpenStack support and resources.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

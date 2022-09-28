@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2014-06-05">
+
+<title>zonca.dev - Thoughts on a career as a computational scientist</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">zonca.dev</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Thoughts on a career as a computational scientist</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">career</div>
+                <div class="quarto-category">hpc</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 5, 2014</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>Recently I’ve been asked what are the prospects of a wannabe computational scientist, both in terms of training and in terms of job opportunities.</p>
+<p>So I am writing this blog post about my personal experience.</p>
+<section id="what-is-a-computational-scientist" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-computational-scientist">What is a computational scientist?</h2>
+<p>In my understanding, a computational scientist is a scientist with strong skills in scientific computing who most of the day is building software.</p>
+<p>Usually there are 2 main areas, in any field of science:</p>
+<ol type="1">
+<li><em>Data analysis</em>: historically only few fields of science had to deal with large amount of experimental data, e.g.&nbsp;Astrophysics, nowadays instead every field can generate extremely large amounts of data thanks to modern technology. The task of the computational scientist is generally to analyze the data, i.e.&nbsp;cleanup, check systematic effects, calibrate, understand and reduce to a form to be used for scientific exploitation. Generally a second phase of data analysis involves model fitting, i.e.&nbsp;check which theoretical models best fit the data and estimate their parameters with error bars, this requires knowledge of Statistics and Bayesian techniques, like Markov Chain Monte Carlo (MCMC).</li>
+<li><em>Simulations</em>: production of artificial data used for their own good in the understanding of scientific models or by trying to reproduce experimental data in order to characterize the response of a scientific instrument.</li>
+</ol>
+</section>
+<section id="skills-of-a-computational-scientist" class="level2">
+<h2 class="anchored" data-anchor-id="skills-of-a-computational-scientist">Skills of a computational scientist</h2>
+<p>Starting out as a computational scientist nowadays is quite easy; with a background in any field of science, it is possible to improve computational skills thanks to several learning resources, for example:</p>
+<ul>
+<li>Free online video classes on <a href="https://www.coursera.org/courses?search=python">Coursera</a>, <a href="https://www.udacity.com/courses#!/data-science">Udacity</a> and others</li>
+<li><a href="http://software-carpentry.org">Software Carpentry</a> runs bootcamps for scientists to improve their computational skills</li>
+<li>Online tutorials on <a href="http://scipy-lectures.github.io/">Python for scientific computing</a></li>
+<li>Books, e.g.&nbsp;<a href="http://shop.oreilly.com/product/0636920023784.do">Python for Data Analysis</a></li>
+</ul>
+<p>Basically it is important to have a good experience with at least one programming language, Python is the safest option because:</p>
+<ul>
+<li>it is well enstabilished in many fields of science</li>
+<li>its syntax is easier to learn than most other common programming languages</li>
+<li>it has the largest number of scientific libraries</li>
+<li>it is easy to interface with other languages, i.e.&nbsp;we can reuse legacy code implemented in C/C++/FORTRAN</li>
+<li>it can be used also when developing something unusual for a computational scientist, like web development (<code>django</code>) or interfacing with hardware (<code>pyserial</code>).</li>
+</ul>
+<p>Python performance is comparable to C/C++/Java when we make use of optimized libraries like <code>numpy</code>, <code>pandas</code>, <code>scipy</code>, which have Python frontends to highly optimized C or Fortran code; therefore is necessary to avoid explicit for loops and learn to write “vectorized” code, that allows entire arrays and matrices to be processed in one step.</p>
+<p>Some important Python tools to learn are:</p>
+<ul>
+<li><code>IPython</code> notebooks to write documents with code, documentatin and plots embedded</li>
+<li><code>numpy</code> and <code>pandas</code> for data management</li>
+<li><code>matplotlib</code> for plotting</li>
+<li><code>h5py</code> or <code>pytables</code>, HDF5 binary files manipulation</li>
+<li><a href="http://www.jeffknupp.com/blog/2013/08/16/open-sourcing-a-python-project-the-right-way/">how to publish a Python package</a></li>
+<li><code>emcee</code> for MCMC</li>
+<li><code>scipy</code> for signal processing, FFT, optimization, integration, 2d array processing</li>
+<li><code>scikit-learn</code> for Machine Learning</li>
+<li><code>scikit-image</code> for image processing</li>
+<li>Object oriented programming</li>
+</ul>
+<p>For parallel programming:</p>
+<ul>
+<li><code>IPython parallel</code> for distributing large amount of serial and independent job on a cluster</li>
+<li><code>PyTrilinos</code> for distributed linear algebra (high level operations with data distributed across nodes, automatic MPI communication)</li>
+<li><code>mpi4py</code> for manually create communication of data via MPI</li>
+</ul>
+<p>On top of Python is also useful to learn a bit about shell scripting with <code>bash</code>, which for simple automation tasks is better suited, and it is fundamental to learn version control with git or mercurial.</p>
+</section>
+<section id="my-experience" class="level2">
+<h2 class="anchored" data-anchor-id="my-experience">My experience</h2>
+<p>I trained as Aerospace Engineer for my Master degree, and then moved to a PhD in Astrophysics, in Milano, where I worked in the Planck collaboration and took care of simulating the inband response of the Low Frequency Instrument detectors. During my PhD I developed a good proficiency with Python, mainly using it for task automation and plotting. My previous programming experience was very low, only some Matlab during last year of my Master degree, but I found Python really easy to use, and learned it myself with books and online tutorials. With no formal education in Computer Science, the most complicated concept to grasp is Object Oriented programming; at the time I was moonlighting as a web developer and I familiarized with OO using Django models. After my PhD I got a PostDoc position at the University of California, Santa Barbara, there I had for the first time access to supercomputers and my job involved analyzing large amount of data. During 4 years at UCSB I had the great opportunity of choosing my own tools, implementing my own software for data processing, so I immediately saw the value of improving my understanding of software development best practices.</p>
+<p>Unfortunately in science there is usually a push toward hacking around a quick and dirty solution to get out results and go forward, I instead focused on learning how to build easily-maintenable libraries that I could re-use in the future. This involved learning more advanced Python, version control, unit testing and so on. I learned these tools by reading tutorials and documentation on the web, answers on StackOverflow, blog posts. It also helped that I became one of the core developers of <code>healpy</code>, a Python package for pixelized sky maps processing.</p>
+<p>In 2013, at the 4th year of my PostDoc and with the Planck mission near to the end in 2015, I was looking for a position as a computational scientist, mainly as a research scientist (i.e.&nbsp;doing research/data analysis full time, with a long term contract) at research labs like Berkeley Lab or Jet Propulsion Laboratory, or in a research group in Cosmology/Astrophysics or in High Performance Computing.</p>
+<p>I got hired at the San Diego Supercomputer Center in December 2013 as a permanent staff, mainly thanks to my experience with data analysis, Python and parallel programming, here I collaborate with research groups in any field of Science and help them deploy and optimize their software on supercomputers here at SDSC or in other XSEDE centers.</p>
+</section>
+<section id="thoughts-about-a-career-as-a-computational-scientist" class="level2">
+<h2 class="anchored" data-anchor-id="thoughts-about-a-career-as-a-computational-scientist">Thoughts about a career as a computational scientist</h2>
+<p>After a PhD program, a computational scientist with experience either in data analysis or simulation, especially if has experience in parallel programming, should quite easily find a position as a PostDoc, lots of research groups have huge amount of data and need software development skilled labor.</p>
+<p>I believe what is complicated is the next step, faculty jobs favour scientists with the best scientific publications, and software development generally is not recognized as a first class scientific product. Very interesting opportunities in Academia are Research Scientist positions either at research facilities, for example Lawrence Berkeley Labs and NASA Jet Propulsion Laboratory, or supercomputer centers. These jobs are often permament positions, unless the institution runs out of funding, and allow to work 100% on research. Another opportunity is to work as Research Scientist in a specific research group in a University, this is less common, and depends on their availability of long-term funding.</p>
+<p>Still, the total number of available positions in Academia is not very high, therefore it is very important to also keep open the opportunity of a job in Industry. Fortunately nowadays most skills of a computational scientist are very well recognized in Industry, so I recommend to choose, whenever possible, to learn and use tools that are widely used also outside of Academia, for example Python, version control with Git, shell scripting, unit testing, databases, multi-core programming, parallel programming, GPU programming and so on.</p>
+<p><em>Acknowledgement</em>: thanks to Priscilla Kelly for discussion on this topic and review of the post</p>
+<p><em>Comments/feedback</em>: comment on the blog using Google+ or tweet to <a href="http://twitter.com/andreazonca"><span class="citation" data-cites="andreazonca">@andreazonca</span></a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2020-07-10">
+
+<title>zonca.dev - Deploy a NFS server to share data between JupyterHub users on Jetstream</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">zonca.dev</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Deploy a NFS server to share data between JupyterHub users on Jetstream</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">kubernetes</div>
+                <div class="quarto-category">openstack</div>
+                <div class="quarto-category">jetstream</div>
+                <div class="quarto-category">jupyterhub</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 10, 2020</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>In this tutorial I’ll show how to create a data volume on Jetstream and share it using a NFS server to all JupyterHub users. All JupyterHub users run as the <code>jovyan</code> user, therefore each folder in the shared filesystem can be either read-only, or writable by every user. The main concern is that a user could delete by mistake data of another user, however the users still have access to their own home folder.</p>
+<section id="deploy-kubernetes-and-jupyterhub" class="level1">
+<h1>Deploy Kubernetes and JupyterHub</h1>
+<p>I assume here you already have a deployment of JupyterHub on top of Kubernetes on Jetstream, deployed either <a href="https://zonca.dev/2020/06/kubernetes-jetstream-kubespray.html">via Kubespray</a> or <a href="https://zonca.dev/2020/05/kubernetes-jupyterhub-jetstream-magnum.html">via Magnum</a>.</p>
+</section>
+<section id="deploy-the-nfs-server" class="level1">
+<h1>Deploy the NFS server</h1>
+<p>Clone as usual the repository with all the configuration files:</p>
+<pre><code>git clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream
+cd nfs</code></pre>
+<p>By default the NFS server is configured both for reading and writing, and then using the filesystem permissions we can make some or all folders writable.</p>
+<p>In <code>nfs_server.yaml</code> we use the image <a href="https://hub.docker.com/r/itsthenetwork/nfs-server-alpine/">itsthenetwork/nfs-server-alpine</a>, check their documentation for more configuration options.</p>
+<p>We create a deployment with a replica number of 1 instead of creating directly a pod, so that in case servers are rebooted or a node dies, Kubernetes will take care of spawning another pod.</p>
+<p>Some configuration options you might want to edit:</p>
+<ul>
+<li>I named the shared folder <code>/share</code></li>
+<li>In case you are interested in sharing read-only, uncomment the <code>READ_ONLY</code> flag.</li>
+<li>In the persistent volume claim definition <code>create_nfs_volume.yaml</code>, modify the volume size (default is 10 GB)</li>
+<li>Select the right IP in <code>service_nfs.yaml</code> for either Magnum or Kubespray (or you can delete the line to be assigned an IP by Kubernetes)</li>
+</ul>
+<p>First we create the PersistentVolumeClaim:</p>
+<pre><code>kubectl create -f create_nfs_volume.yaml</code></pre>
+<p>then the service and the pod:</p>
+<pre><code>kubectl create -f service_nfs.yaml
+kubectl create -f nfs_server.yaml</code></pre>
+<p>I separated them so that later on we more easily delete the NFS server, but keep all the data on the (potentially large) NFS volume:</p>
+<pre><code>kubectl delete -f nfs_server.yaml</code></pre>
+<section id="test-the-nfs-server" class="level2">
+<h2 class="anchored" data-anchor-id="test-the-nfs-server">Test the NFS server</h2>
+<p>Edit <code>test_nfs_mount.yaml</code> to set the right IP for the NFS server, then:</p>
+<pre><code>kubectl create -f test_nfs_mount.yaml</code></pre>
+<p>and access the terminal to test:</p>
+<pre><code>bash ../terminal_pod.sh test-nfs-mount
+df -h
+
+...
+10.254.204.67:/       9.8G   36M  9.8G   1% /share
+...</code></pre>
+<p>We have the root user, we can use the terminal to copy or rsync data into the shared volume. We can also create writable folders owned by the user <code>1000</code> which maps to <code>jovyan</code> in JupyterHub:</p>
+<pre><code>sh-4.2# mkdir readonly_folder
+sh-4.2# touch readonly_folder/aaa
+sh-4.2# mkdir writable_folder
+sh-4.2# chown 1000:100 writable_folder
+sh-4.2# ls -l /share
+total 24
+drwx------. 2 root root  16384 Jul 10 06:32 lost+found
+drwxr-xr-x. 2 root root   4096 Jul 10 06:43 readonly_folder
+drwxr-xr-x. 2 1000 users  4096 Jul 10 06:43 writable_folder</code></pre>
+</section>
+<section id="preserve-the-data-volume-across-redeployments" class="level2">
+<h2 class="anchored" data-anchor-id="preserve-the-data-volume-across-redeployments">Preserve the data volume across redeployments</h2>
+<p>The NFS data volume could contain a lot of data that you would want to preserve in case you need to completely tear down the Kubernetes cluster.</p>
+<p>First we find out what is the ID of the <code>PersistentVolume</code> associated with the NFS volume:</p>
+<pre><code>kubectl get pv | grep nfs
+pvc-ee1f02aa-11f8-433f-806f-186f6d622a30   10Gi       RWO            Delete           Bound    default/nfs-share-folder-claim   standard                5m55s</code></pre>
+<p>Then you can save the <code>PersistentVolume</code> and the <code>PersistentVolumeClaim</code> to YAML:</p>
+<pre><code>kubectl get pvc nfs-share-folder-claim -o yaml &gt; existing_nfs_volume_claim.yaml
+kubectl get pv pvc-ee1f02aa-11f8-433f-806f-186f6d622a30 -o yaml &gt; existing_nfs_volume.yaml</code></pre>
+<p>Next we can delete the servers directly from Openstack, be careful not to delete the <code>PersistentVolume</code> or the <code>PersistentVolumeClaim</code> in Kubernetes or the underlying volume in Openstack will be deleted, also do not delete the namespace associated with those resources.</p>
+<p>Finally redeploy everything, and instead of launching <code>create_nfs_volume.yaml</code>, we create first the <code>PersistentVolume</code> then the <code>PersistentVolumeClaim</code>:</p>
+<pre><code>kubectl create -f existing_nfs_volume.yaml
+kubectl create -f existing_nfs_volume_claim.yaml</code></pre>
+</section>
+</section>
+<section id="mount-the-shared-filesystem-on-jupyterhub" class="level1">
+<h1>Mount the shared filesystem on JupyterHub</h1>
+<p>Set the NFS server IP in <code>jupyterhub_nfs.yaml</code>, then add this line to <code>install_jhub.sh</code> (just before the last line, the file is located in the parent folder):</p>
+<pre><code>--values nfs/jupyterhub_nfs.yaml \</code></pre>
+<p>Then run <code>install_jhub.sh</code> to have the NFS filesystem mounted on all JupyterHub single user containers:</p>
+<pre><code>cd ..
+bash install_jhub.sh</code></pre>
+<section id="test-in-jupyter" class="level2">
+<h2 class="anchored" data-anchor-id="test-in-jupyter">Test in Jupyter</h2>
+<p>Now connect to JupyterHub and check in a terminal:</p>
+<pre><code>jovyan@jupyter-zonca2:/share$ pwd
+/share
+jovyan@jupyter-zonca2:/share$ whoami
+jovyan
+jovyan@jupyter-zonca2:/share$ touch readonly_folder/ccc
+touch: cannot touch 'readonly_folder/ccc': Permission denied
+jovyan@jupyter-zonca2:/share$
+jovyan@jupyter-zonca2:/share$ touch writable_folder/ccc
+jovyan@jupyter-zonca2:/share$ ls -l writable_folder/
+total 0
+-rw-r--r--. 1 jovyan root 0 Jul 10 06:50 ccc</code></pre>
+</section>
+</section>
+<section id="expose-a-ssh-server-to-copy-data-to-the-shared-volume" class="level1">
+<h1>Expose a SSH server to copy data to the shared volume</h1>
+<p>The main restriction is that the only way to copy data to the read-only folders is through Kubernetes. Next we will deploy a SSH server which mounts the container and whose user can become root to manage permissions and copy data. We will also expose this service externally so that people with the right SSH certificate can login.</p>
+<p>First edit <code>ssh_server.yaml</code>:</p>
+<ul>
+<li>Set the NFS server IP</li>
+<li>Set the string of the <code>PUBLIC_KEY</code> to the SSH key which will be able to access</li>
+<li>Optionally, you can modify username and ports</li>
+<li>See the <a href="https://hub.docker.com/r/linuxserver/openssh-server"><code>linuxserver/openssh-server</code> documentation for other options</a></li>
+</ul>
+<p>Deploy the pod (also here we create a Deployment with a replica number of 1):</p>
+<pre><code>kubectl create -f ssh_server.yaml</code></pre>
+<p>Open the Horizon interface, go to “Security groups”, open the <code>http_https</code> group, which we use to open ports on the master instance, and add a new rule to open port <code>30022</code> for Ingress TCP traffic.</p>
+<section id="test-the-ssh-server" class="level2">
+<h2 class="anchored" data-anchor-id="test-the-ssh-server">Test the SSH server</h2>
+<p>From a machine external to Jetstream:</p>
+<pre><code>ssh -i path/to/private/key -p 30022 datacopier@js-xxx-xxx.jetstream-cloud.org</code></pre>
+<pre><code>Welcome to OpenSSH Server
+
+ssh-server:~$ whoami
+datacopier
+ssh-server:~$ sudo su
+ssh-server:/config# whoami
+root
+ssh-server:/config# cd /share
+ssh-server:/share# ls
+lost+found  readonly_folder  writable_folder
+ssh-server:/share# touch readonly_folder/moredata
+ssh-server:/share#</code></pre>
+</section>
+</section>
+<section id="troubleshooting" class="level1">
+<h1>Troubleshooting</h1>
+<ul>
+<li>Consider that if you reboot or re-create the NFS server, the user pods need to be restarted, otherwise the NFS volume hangs.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

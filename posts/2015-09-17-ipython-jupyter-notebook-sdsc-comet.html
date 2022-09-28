@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2015-09-17">
+
+<title>zonca.dev - IPython/Jupyter notebook setup on SDSC Comet</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">zonca.dev</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">IPython/Jupyter notebook setup on SDSC Comet</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">ipython</div>
+                <div class="quarto-category">jupyter</div>
+                <div class="quarto-category">ipython-notebook</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 17, 2015</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>This tutorial explains the setup to run an IPython Notebook on a computing node on the supercomputer Comet at the San Diego Supercomputer Center and forward the port encrypted with SSH to the browser on a local laptop.</p>
+</section>
+<section id="quick-reference" class="level2">
+<h2 class="anchored" data-anchor-id="quick-reference">Quick reference</h2>
+<ul>
+<li>Add <code>module load python scipy</code> to <code>.bashrc</code></li>
+<li>Make sure you can ssh passwordless within comet, i.e.&nbsp;<code>ssh comet.sdsc.edu</code> from comet login node works without password</li>
+<li>Get <code>submit_slurm_comet.sh</code> from <a href="https://gist.github.com/zonca/5f8b5ccb826a774d3f89" class="uri">https://gist.github.com/zonca/5f8b5ccb826a774d3f89</a></li>
+<li>Change the port number and customize options (duration)</li>
+<li><code>sbatch submit_slurm_comet.sh</code></li>
+<li>Remember the login node you are using</li>
+<li>From laptop, use <code>bash tunnel_notebook_comet.sh N</code> where N is the Comet login number (e.g.&nbsp;2) from <a href="https://gist.github.com/zonca/5f8b5ccb826a774d3f89" class="uri">https://gist.github.com/zonca/5f8b5ccb826a774d3f89</a></li>
+<li>From laptop, open browser and connect to <code>http://localhost:YOURPORT</code></li>
+</ul>
+</section>
+<section id="detailed-walkthrough" class="level2">
+<h2 class="anchored" data-anchor-id="detailed-walkthrough">Detailed walkthrough</h2>
+<section id="one-time-setup-on-comet" class="level3">
+<h3 class="anchored" data-anchor-id="one-time-setup-on-comet">One time setup on Comet</h3>
+<p>Login into a Comet login node, edit the <code>.bashrc</code> file in your home folder (with <code>nano .bashrc</code> for example) and add <code>module load python scipy</code> at the bottom. This makes sure you always have the Python environment loaded in all your jobs. Logout, log back in, make sure that <code>module list</code> shows <code>python</code> and <code>scipy</code>.</p>
+<p>You need to be able to SSH from a node to another node on comet with no need of a password. Create a new SSH certificate with <code>ssh-keygen</code>, hit enter to keep all default options, DO NOT ENTER A PASSWORD. Then use <code>ssh-copy-id comet.sdsc.edu</code>, enter your password to make sure the key is copied in the authorized hosts. Now you can check it works by executing:</p>
+<pre><code>ssh comet.sdsc.edu</code></pre>
+<p>from the login node and make sure you are NOT asked for your password.</p>
+</section>
+<section id="configure-the-script-for-slurm-and-submit-the-job" class="level3">
+<h3 class="anchored" data-anchor-id="configure-the-script-for-slurm-and-submit-the-job">Configure the script for SLURM and submit the job</h3>
+<p>Copy <code>submit_slurm_comet.sh</code> from <a href="https://gist.github.com/zonca/5f8b5ccb826a774d3f89" class="uri">https://gist.github.com/zonca/5f8b5ccb826a774d3f89</a> on your home on Comet.</p>
+<p>Change the port number in the script to a port of your choosing between 8000 and 9999, referenced as YOURPORT in the rest of the tutorial. Two users on the same login node on the same port would not be allowed to forward, so try to avoid common port numbers as 8000, 9000, 8080 or 8888. Tho</p>
+<p>Choose whether you prefer to use a full node to have access to all 24 cores and 128GB of RAM or if you only need 1 core and 5GB of RAM and change the top of the script accordingly.</p>
+<p>Choose a duration of your job, for initial testing better keep 30 minutes so your job starts straight away.</p>
+<p>Submit the job to the scheduler:</p>
+<pre><code>sbatch submit_slurm_comet.sh</code></pre>
+<p>Wait for the job to start running, you should see <code>R</code> in:</p>
+<pre><code>squeue -u $USER</code></pre>
+<p>The script launches an IPython notebook on a computing node and tunnels its port to the login node.</p>
+<p>You can check that everything worked by checking that no errors show up in the <code>notebook.log</code> file, and that you can access the notebook page with <code>wget</code>:</p>
+<pre><code>wget localhost:YOURPORT</code></pre>
+<p>should download a <code>index.html</code> file in the current folder, and NOT give an error like “Connection refused”.</p>
+<p>Check what login node you were using on comet, i.e.&nbsp;the hostname on your terminal on comet, for example <code>comet-ln2</code>.</p>
+</section>
+<section id="tunnel-the-port-to-your-laptop" class="level3">
+<h3 class="anchored" data-anchor-id="tunnel-the-port-to-your-laptop">Tunnel the port to your laptop</h3>
+<section id="linux-mac" class="level4">
+<h4 class="anchored" data-anchor-id="linux-mac">Linux / MAC</h4>
+<p>Download the <code>tunnel_notebook_comet.sh</code> script from <a href="https://gist.github.com/zonca/5f8b5ccb826a774d3f89" class="uri">https://gist.github.com/zonca/5f8b5ccb826a774d3f89</a>.</p>
+<p>Customize the script with your port number.</p>
+<p>Lauch <code>bash tunnel_notebook_comet.sh N</code> where N is the comet login node number. So if you were on <code>comet-ln2</code>, use <code>bash tunnel_notebook_comet.sh 2</code>.</p>
+<p>The script forwards the port from the login node of comet to your laptop.</p>
+</section>
+<section id="windows" class="level4">
+<h4 class="anchored" data-anchor-id="windows">Windows</h4>
+<p>Install <code>putty</code>.</p>
+<p>Follow tutorial for local port forwarding on <a href="https://www.akadia.com/services/ssh_putty.html/" class="uri">https://www.akadia.com/services/ssh_putty.html/</a></p>
+<ul>
+<li>set <code>comet-ln2.sdsc.edu</code> as remote host, 22 as SSH port</li>
+<li>set YOURPORT as tunnel port, replace both 8080 and 80 in the tutorial with your port number.</li>
+</ul>
+</section>
+</section>
+<section id="connect-to-the-notebook" class="level3">
+<h3 class="anchored" data-anchor-id="connect-to-the-notebook">Connect to the Notebook</h3>
+<p>Open a browser and type <code>http://localhost:YOURPORT</code> in the address bar.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

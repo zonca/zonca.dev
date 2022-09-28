@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2021-03-28">
+
+<title>zonca.dev - Science Gateways Tech blog - Kubernetes and JupyterHub on Jetstream</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">zonca.dev</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Science Gateways Tech blog - Kubernetes and JupyterHub on Jetstream</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">kubernetes</div>
+                <div class="quarto-category">kubespray</div>
+                <div class="quarto-category">jetstream</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 28, 2021</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>This is cross-posted from the <a href="https://sciencegateways.org/-/tech-blog-kubernetes-and-jupyterhub-on-jetstream">Science Gateways Community institute tech blog</a>, thanks to Marlon Pierce and Katherine Lawrence for their feeback.</p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>JupyterHub handles authentication and routing for any number of users that&nbsp;have access to an interactive computational environment, the Jupyter Notebook, via their browser.</p>
+<p>The most high-impact application of JupyterHub in the context of Science Gateways is to deploy it as a companion application for the Science Gateway to enable users to access a pre-configured computing environment. This configuration allows them to use the Gateway programmatically and apply custom processing of the gateway input or outputs. For example, the Gateway users could use the same login credentials to also access a Jupyter Notebook environment with tutorial notebooks displaying example analysis pipelines that show how they can:</p>
+<ul>
+<li>upload raw data</li>
+<li>use packages installed in the Jupyter Notebook environment to pre-process raw data to transform them in the format suitable for the Science Gateway</li>
+<li>submit the data for processing using remote execution APIs</li>
+<li>check the job processing status</li>
+<li>retrieve the results</li>
+<li>load the output data from disk</li>
+<li>post-process and plot the results</li>
+</ul>
+<p>Let’s proceed now to show an overview on how to deploy first Kubernetes and then JupyterHub on Jetstream.</p>
+</section>
+<section id="jetstream" class="level2">
+<h2 class="anchored" data-anchor-id="jetstream">Jetstream</h2>
+<p>Jetstream (and the upcoming <a href="https://news.iu.edu/stories/2020/06/iub/releases/01-jetstream-cloud-computing-awarded-nsf-grant.html">Jetstream 2</a>) is a cloud deployment part of XSEDE, the science community’s equivalent of Amazon Elastic Compute Cloud (EC2) or Google Cloud Platform. Many Science Gateways already run on Jetstream.</p>
+<p>Jetstream allows each user to programmatically launch Virtual Machines with the desired amount of CPU/RAM resources, a pre-configured OS (Ubuntu, CentOS…), connect them together on an internal network and expose them to the Internet with public IPs. Users have then full administrative access to the machines to install any software package.</p>
+<p>Jetstream has extensive documentation and training available both focused on <a href="https://jetstream-cloud.org/support/training.php">using the simplified Atmosphere interface</a> and the <a href="https://iujetstream.atlassian.net/wiki/spaces/JWT/pages/39682057/Using+the+Jetstream+API">programmatic access via web API</a>. Once developers decide to try Jetstream, they can <a href="https://iujetstream.atlassian.net/wiki/spaces/JWT/pages/49184781/Jetstream+Allocations">request a trial or a startup allocation via XSEDE</a>.</p>
+<p>Deployment on Jetstream should begin with gateway developers identifying the scale of their deployment: few-user or test deployment vs.&nbsp;large-memory, many-user deployment.</p>
+<p><img src="../images/jupyterhub-jetstream.png" class="img-fluid"></p>
+<p><em>Architecture of the deployment of JupyterHub on Jetstream: the users connect via their browser to the Jetstream master node virtual machine, they first are redirected to external services for authentication. Once authenticated, JupyterHub spawns a container running the Jupyter Notebook for them in one of the worker nodes managed by Kubernetes. Their own persistent data volume is also mounted there. Kubernetes handles the networking so that the interactive computing session is proxied back to the users’ browser.</em></p>
+</section>
+<section id="single-server-deployment" class="level2">
+<h2 class="anchored" data-anchor-id="single-server-deployment">Single server deployment</h2>
+<p>In the case of a test deployment with a small number of users, each with limited computational resources, we can avoid the complications of a distributed deployment. The most important requirement is memory, a reasonable estimate is to have available 128 MB of RAM for JupyterHub services and then multiply the number of concurrent users by the memory we want to allocate for each user. For example, if we give each user 10 GB of RAM, we could host 11 concurrent users on a Jetstream XXL instance with 128 GB of RAM and have significant margin for system services.&nbsp;</p>
+<p>In this case, we can just spawn a single, large-memory Virtual Machine on Jetstream and then follow the <a href="https://tljh.jupyter.org/en/latest/install/jetstream.html">“Littlest JupyterHub” documentation to install JupyterHub</a>.</p>
+</section>
+<section id="kubernetes" class="level2">
+<h2 class="anchored" data-anchor-id="kubernetes">Kubernetes</h2>
+<p>However, if the sum of the memory needed by all the users is higher than 120GB, we need to deploy JupyterHub across multiple Jetstream Virtual Machines. The recommended way of deploying a distributed instance of JupyterHub is on top of Kubernetes, which is able to provide networking, logging, reliability, and scalability.</p>
+<p>I have configured and adapted the Kubespray tool to deploy Kubernetes to Jetstream and have written a <a href="https://zonca.dev/2021/01/kubernetes-jetstream-kubespray.html">step-by-step tutorial about it</a>, which includes all the necessary configuration files. A Jetstream user can launch this script to programmatically launch any number of Jetstream instances and deploy Kubernetes across them. Consider also that Kubernetes would be a good platform to deploy a Science Gateway itself, especially if it already has a distributed architecture (for example, the gateway website, a database, and worker processes that execute computations). However, Kubernetes itself is a complex system, which requires someone in the Gateway development team to invest significant effort in learning how to configure and administer it.</p>
+<p>After Kubernetes is deployed, we now have a programmatic interface where we can deploy applications packaged as Docker containers, monitor their execution, log their warnings or errors, and scale them based on load.</p>
+</section>
+<section id="jupyterhub" class="level2">
+<h2 class="anchored" data-anchor-id="jupyterhub">JupyterHub</h2>
+<p>Finally, we can leverage the <a href="https://zero-to-jupyterhub.readthedocs.io/">Zero to JupyterHub project</a> and customize their recipe to automatically deploy all the components needed for a distributed JupyterHub deployment on Kubernetes.</p>
+<p>We can configure authentication with Github, Google, XSEDE, or CILogon, choose a Docker container with all the packages needed by the users, decide how much RAM, CPU, and disk each user has access to, configure a public URL, and setup HTTPS.</p>
+<p>Once the deployment is complete, the users can point their browser to the master node of the deployment, authenticate and have a Jupyter Notebook be spawned for them across the cluster of Jetstream instances with a dedicated amount of computing resources.</p>
+<p>We can also pre-populate the computational environment with tutorial notebooks that display example data analysis pipelines that jointly leverage JupyterHub and the Science Gateway. A few hours after a user disconnects, their container is decommissioned to free up resources for other users, but their data is saved as a permanent disk on Jetstream and is mounted again the next time they reconnect.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>This is a basic overview of the different components involved in deploying a distributed instance of JupyterHub on Jetstream. To know more, check out the list of references below. If you have any feedback or would like to collaborate, please <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/issues/new">open an issue in my jupyterhub-deploy-kubernetes-jetstream repository</a>.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li><a href="https://zonca.dev/2020/09/gateways-2020-paper.html">“Gateways 2020” paper and video recording</a></li>
+<li><a href="https://www.youtube.com/watch?v=jiYw4g4RX-w">Video tutorial on Openstack and Kubernetes for the ECSS Symposium</a></li>
+<li><a href="https://zonca.dev/2021/01/kubernetes-jetstream-kubespray.html">Tutorial on how to deploy Kubernetes and JupyterHub on Jetstream via Kubespray</a></li>
+<li><a href="https://zonca.dev/2020/03/setup-https-kubernetes-letsencrypt.html">Tutorial on how to setup SSL for HTTPS connection to JupyterHub</a></li>
+<li><a href="https://zonca.dev/2020/08/dask-gateway-jupyterhub.html">Tutorial on how to deploy Dask for distributed computing</a></li>
+<li><a href="https://zonca.dev/2021/01/autoscaling_script_kubespray_jupyterhub.html">Prototype autoscaler for JupyterHub on Jetstream</a></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

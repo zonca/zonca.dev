@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2018-03-29">
+
+<title>zonca.dev - Install a BOINC server on Jetstream</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">zonca.dev</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Install a BOINC server on Jetstream</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">boinc</div>
+                <div class="quarto-category">jetstream</div>
+                <div class="quarto-category">gateways</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 29, 2018</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p><a href="https://boinc.berkeley.edu/">BOINC</a> is the leading platform for volunteer computing.</p>
+<p>Scientists can create a project on the platform and submit computational jobs that will be executed on computers of volunteers all over the world.</p>
+<p>In this post we’ll deploy a BOINC server on Jetstream. All US scientists can get a free <a href="https://jetstream-cloud.org/allocations.php">allocation on Jetstream via XSEDE</a>.</p>
+<p>The deployment will be based on the <a href="https://github.com/marius311/boinc-server-docker">Docker setup developed by the Cosmology@Home project</a>.</p>
+<section id="prepare-a-jetstream-virtual-machine" class="level2">
+<h2 class="anchored" data-anchor-id="prepare-a-jetstream-virtual-machine">Prepare a Jetstream Virtual Machine</h2>
+<p>First we login on the Atmosphere Jetstream control panel and create a new instance of Ubuntu 16.04 with Docker preinstalled, a “small” size is enough for testing.</p>
+<section id="optional-mount-a-jetstream-volume-for-docker-images" class="level3">
+<h3 class="anchored" data-anchor-id="optional-mount-a-jetstream-volume-for-docker-images">(Optional) Mount a Jetstream Volume for docker images</h3>
+<p>It is ideal to have a dedicated Jetstream Volume and mount it in the location where Docker stores its data. So we have more space, less usage of the root filesystem and no issues on the OS if we get out of disk space.</p>
+<p>We can create a volume of 10/20 GB in the Jetstream control panel and attach it to the running Virtual Machine. This will be automatically mounted to <code>/vol_b</code>, we want to mount instead to <code>/var/lib/docker</code>:</p>
+<pre><code>sudo systemctl stop docker
+sudo mv /var/lib/docker/* /vol_b/
+sudo umount /vol_b</code></pre>
+<p>Replace <code>/vol_b</code> with <code>/var/lib/docker</code> in <code>/etc/fstab</code>, e.g.:</p>
+<pre><code>zonca@js-xxx-xxx:~$ cat /etc/fstab
+LABEL=cloudimg-rootfs   /        ext4   defaults        0 0
+/dev/sdb /var/lib/docker ext4 defaults,nofail 0 2</code></pre>
+<p>Finally:</p>
+<pre><code>sudo mount /var/lib/docker
+sudo systemctl start docker</code></pre>
+</section>
+<section id="update-docker" class="level3">
+<h3 class="anchored" data-anchor-id="update-docker">Update Docker</h3>
+<p>Docker in 16.04 is a bit old, we want to update it to a more recent version.</p>
+<p>We also want to make sure to remove the old <code>docker</code> and <code>docker-compose</code>:</p>
+<pre><code>sudo apt remove docker-compose docker</code></pre>
+<p>Then install a recent version, we can follow the instructions from the docker website or use this script:</p>
+<p><a href="https://gist.github.com/zonca/f5faba190f5285c68dad48e897622e90" class="uri">https://gist.github.com/zonca/f5faba190f5285c68dad48e897622e90</a></p>
+<p>I adapted it from <a href="https://github.com/data-8/kubeadm-bootstrap/blob/master/install-kubeadm.bash">kubeadm-bootstrap</a>.</p>
+<p>Finally install the latest <code>docker-compose</code>, see the <a href="https://docs.docker.com/compose/install/#install-compose">documentation</a></p>
+<p>Last step, add your user to the <code>docker</code> group:</p>
+<pre><code>sudo adduser $USER docker</code></pre>
+<p>logout and back in and make sure you can run <code>docker</code> commands without sudo:</p>
+<pre><code>docker ps</code></pre>
+</section>
+<section id="install-boinc-server-via-docker" class="level3">
+<h3 class="anchored" data-anchor-id="install-boinc-server-via-docker">Install BOINC server via Docker</h3>
+<p>Follow the <a href="https://github.com/marius311/boinc-server-docker">instructions from <code>boinc-server-docker</code></a> to launch a test deployment, in the last step, specify a <code>URL_BASE</code> so that the deployment will be accessible from outside connections:</p>
+<pre><code>URL_BASE=http://$(hostname) docker-compose up -d</code></pre>
+<p>You can check that the 3 containers are running with:</p>
+<pre><code>docker ps</code></pre>
+<p>and inspect their logs with:</p>
+<pre><code>docker logs &lt;container_id&gt;</code></pre>
+<p>After a few minutes you should be able to check that the server is running at the public address of your instance:</p>
+<p><a href="http://js-xxx-xxx.jetstream-cloud.org/boincserver/" class="uri">http://js-xxx-xxx.jetstream-cloud.org/boincserver/</a></p>
+</section>
+</section>
+<section id="optional-mount-jetstream-volumes-on-the-containers" class="level2">
+<h2 class="anchored" data-anchor-id="optional-mount-jetstream-volumes-on-the-containers">(Optional) Mount Jetstream volumes on the containers</h2>
+<p>The Docker compose recipe defines 3 Docker volumes:</p>
+<ul>
+<li><code>mysql</code>: Data of the MySQL database</li>
+<li><code>project</code>: Files about the project</li>
+<li><code>results</code>: Result of the BOINC jobs</li>
+</ul>
+<p>those volumes are managed internally by Docker and stored somewhere inside <code>/var/lib/docker</code> on the host node.</p>
+<p>Docker also allows to mount specific folders from the host into a container, if we back these folders by a Jetstream volume, we can have dedicated detachable Jetstream volumes that live independently from any virtual machine.</p>
+<p>Let’s start by <code>mysql</code>, the same process can then be replicated for the other resources.</p>
+<p>We create another Jetstream volume from the Atmosphere, name it <code>mysql</code> and attach it to the virtual machine, this will be automatically mounted to <code>/vol_c</code>, we can rename it by:</p>
+<pre><code>sudo umount /vol_c</code></pre>
+<p>Replace <code>vol_c</code> with <code>mysql</code> in <code>/etc/fstab</code>, finally:</p>
+<pre><code>sudo mount /mysql</code></pre>
+<p>Finally you can modify the <code>docker-compose.yml</code> to use this folder instead of a Docker Volume:</p>
+<p>In the <code>volumes:</code> section, remove <code>mysql:</code>, in the definition of the MySQL service, replace:</p>
+<pre><code>volumes:
+ - "mysql:/var/lib/mysql"</code></pre>
+<p>with:</p>
+<pre><code>volumes:
+ - "/mysql:/var/lib/mysql"</code></pre>
+<p>So that instead of using a Docker Volume named <code>mysql</code> is creating a bind-mount to <code>/mysql</code> on the host.</p>
+</section>
+<section id="test-jobs" class="level2">
+<h2 class="anchored" data-anchor-id="test-jobs">Test jobs</h2>
+<p>Open a terminal in the BOINC server container:</p>
+<pre><code>docker exec -it &lt;boincserver&gt; /bin/bash
+
+
+bin/boinc2docker_create_work.py \
+    python:alpine python -c "open('/root/shared/results/hello.txt','w').write('Hello BOINC')"</code></pre>
+<p>Then we can test a client connection and execution either with a standard BOINC desktop client or on another Jetstream instance.</p>
+<section id="test-with-a-boinc-desktop-client" class="level3">
+<h3 class="anchored" data-anchor-id="test-with-a-boinc-desktop-client">Test with a BOINC Desktop client</h3>
+<p>Follow the instructions on the <a href="https://boinc.berkeley.edu/">BOINC website</a> to install a client for your OS, install also VirtualBox, then set as the URL of the BOINC server the URL of the server we just created.</p>
+</section>
+<section id="test-with-a-boinc-client-in-another-jetstream-instance" class="level3">
+<h3 class="anchored" data-anchor-id="test-with-a-boinc-client-in-another-jetstream-instance">Test with a BOINC client in another Jetstream instance</h3>
+<p>Create another Ubuntu with Docker tiny instane on Jetstream, login,</p>
+<pre><code>sudo adduser $USER docker</code></pre>
+<p>We need Virtualbox: sudo apt install virtualbox-dkms</p>
+<p>and reboot to make sure VirtualBox is active.</p>
+<pre><code>URL=http://js-xxx-xxx.jetstream-cloud.org/boincserver/
+docker exec boinc boinccmd --create_account $URL email password name
+
+status: Success
+poll status: operation in progress
+poll status: operation in progress
+poll status: operation in progress
+account key: de9c4cc66b8c923d04f834a0609ae742</code></pre>
+<p>We can save the account key in a environment variable:</p>
+<pre><code>URL=http://js-xxx-xxx.jetstream-cloud.org/boincserver/
+URL=http://js-xxx-xxx.jetstream-cloud.org/boincserver/
+account_key=de9c4cc66b8c923d04f834a0609ae742
+docker exec boinc boinccmd --project_attach $URL $account_key</code></pre>
+<p>Then we can check the logs for the job being received and executed:</p>
+<pre><code>docker logs boinc</code></pre>
+<pre><code>30-Mar-2018 13:02:04 [boincserver] Started download of layer_e9e858f6a2ba5a3e5a04b5799ef2de1c21a58602ffd400838ed10599f1b4a42c.tar.manual.gz
+30-Mar-2018 13:02:06 [boincserver] Finished download of layer_10ffed26db733866a346caf7c79558e4addb23ae085a991b5e7237edaa69f8e2.tar.manual.gz
+30-Mar-2018 13:02:06 [boincserver] Finished download of layer_e9e858f6a2ba5a3e5a04b5799ef2de1c21a58602ffd400838ed10599f1b4a42c.tar.manual.gz
+30-Mar-2018 13:02:06 [boincserver] Started download of layer_0e650ab7661f993eff514b84c6e7b775f5be8c6dde8b63eb584f0f22ea24005f.tar.manual.gz
+30-Mar-2018 13:02:06 [boincserver] Started download of image_4fcaf5fb5f2b8230c53b5fd4c4325df00021d45272dc4bfbb2148e5ca91ac166.tar.manual.gz
+30-Mar-2018 13:02:07 [boincserver] Finished download of layer_0e650ab7661f993eff514b84c6e7b775f5be8c6dde8b63eb584f0f22ea24005f.tar.manual.gz
+30-Mar-2018 13:02:07 [boincserver] Finished download of image_4fcaf5fb5f2b8230c53b5fd4c4325df00021d45272dc4bfbb2148e5ca91ac166.tar.manual.gz
+30-Mar-2018 13:02:07 [boincserver] Starting task boinc2docker_3766_1522410497.503524_0
+30-Mar-2018 13:02:07 [boincserver] Sending scheduler request: To fetch work.
+30-Mar-2018 13:02:07 [boincserver] Requesting new tasks for CPU
+30-Mar-2018 13:02:08 [boincserver] Scheduler request completed: got 1 new tasks
+30-Mar-2018 13:02:12 [---] Vbox app stderr indicates CPU VM extensions disabled
+30-Mar-2018 13:02:13 [boincserver] Computation for task boinc2docker_3766_1522410497.503524_0 finished
+30-Mar-2018 13:02:13 [boincserver] Output file boinc2docker_3766_1522410497.503524_0_r207563194_0.tgz for task boinc2docker_3766_1522410497.503524_0 absent
+30-Mar-2018 13:02:13 [boincserver] Starting task boinc2docker_3766_1522410497.503524_1
+30-Mar-2018 13:02:18 [---] Vbox app stderr indicates CPU VM extensions disabled
+30-Mar-2018 13:02:18 [boincserver] Computation for task boinc2docker_3766_1522410497.503524_1 finished
+30-Mar-2018 13:02:18 [boincserver] Output file boinc2docker_3766_1522410497.503524_1_r1095010587_0.tgz for task boinc2docker_3766_1522410497.503524_1 absent</code></pre>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

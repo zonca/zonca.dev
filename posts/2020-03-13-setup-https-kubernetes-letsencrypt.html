@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2020-03-13">
+
+<title>zonca.dev - Setup HTTPS on Kubernetes with Letsencrypt</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">zonca.dev</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Setup HTTPS on Kubernetes with Letsencrypt</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">kubernetes</div>
+                <div class="quarto-category">openstack</div>
+                <div class="quarto-category">jetstream</div>
+                <div class="quarto-category">jupyterhub</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 13, 2020</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p><strong>Updated in August 2022</strong>: Add patching script to run on master node</p>
+<p><strong>Updated in March 2022</strong>: changes for Kubernetes 1.22, I am now creating a Cluster Issuer, which works on all namespaces, notice the related change in the configuration of JupyterHub.</p>
+<p>In this tutorial we will deploy <code>cert-manager</code> in Kubernetes to automatically provide SSL certificates to JupyterHub (and other services).</p>
+<p>First make sure your payload, for example JupyterHub, is working without HTTPS, so that you check that the ports are open, Ingress is working, and JupyterHub itself can accept connections.</p>
+<p>Let’s follow the <a href="https://cert-manager.io/docs/installation/kubernetes/"><code>cert-manager</code> documentation</a>, for convenience I pasted the commands below:</p>
+<pre><code>kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.7.2/cert-manager.yaml</code></pre>
+<p>Once we have <code>cert-manager</code> setup we can create a Issuer in the <code>jhub</code> workspace, (first edit the <code>yml</code> and add your email address):</p>
+<pre><code>kubectl create -f setup_https/https_cluster_issuer.yml</code></pre>
+<p>After this, we can display all the resources in the <code>cert-manager</code> namespace to check that the services and pods are running:</p>
+<pre><code>kubectl get all --namespace=cert-manager</code></pre>
+<p>The result should be something like:</p>
+<pre><code>NAME                                           READY   STATUS    RESTARTS   AGE
+pod/cert-manager-77f4c9d4b-4228j               1/1     Running   0          55s
+pod/cert-manager-cainjector-7cd4857fc7-shlpj   1/1     Running   0          56s
+pod/cert-manager-webhook-586c9597db-t6fqv      1/1     Running   0          54s
+
+NAME                           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/cert-manager           ClusterIP   10.254.78.6     &lt;none&gt;        9402/TCP   56s
+service/cert-manager-webhook   ClusterIP   10.254.237.64   &lt;none&gt;        443/TCP    56s
+
+NAME                                      READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/cert-manager              1/1     1            1           55s
+deployment.apps/cert-manager-cainjector   1/1     1            1           56s
+deployment.apps/cert-manager-webhook      1/1     1            1           54s
+                                                                                                                                     NAME                                                 DESIRED   CURRENT   READY   AGE
+replicaset.apps/cert-manager-77f4c9d4b               1         1         1       55s
+replicaset.apps/cert-manager-cainjector-7cd4857fc7   1         1         1       56s                                                 replicaset.apps/cert-manager-webhook-586c9597db      1         1         1       54s</code></pre>
+<section id="bind-the-pods-to-the-master-node" class="level2">
+<h2 class="anchored" data-anchor-id="bind-the-pods-to-the-master-node">Bind the pods to the master node</h2>
+<p>In Jetstream 2 there are routing restrictions which allow Cert Manager to run only from the master node, <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/issues/52">see the details on Github</a>. At least when the nodes do not have floating IPs, if all your Virtual Machines have a floating IP, you can safely skip this step.</p>
+<p>Unidata has contributed the script they created to patch the 3 Cert Manager pods to have them run on the master node, we can apply it with:</p>
+<pre><code>cd setup_https
+bash deploymentPatch.sh</code></pre>
+<p>Then verify that the pods are redeployed on master:</p>
+<pre><code>kubectl -n cert-manager get pods -o wide</code></pre>
+</section>
+<section id="setup-jupyterhub" class="level2">
+<h2 class="anchored" data-anchor-id="setup-jupyterhub">Setup JupyterHub</h2>
+<p>Then we modify the JupyterHub ingress configuration to use this Issuer, modify <code>secrets.yaml</code> to:</p>
+<pre><code>ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt"
+  hosts:
+      - js-XXX-YYY.jetstream-cloud.org
+  tls:
+      - hosts:
+         - js-XXX-YYY.jetstream-cloud.org
+        secretName: certmanager-tls-jupyterhub</code></pre>
+<p>Finally update the JupyterHub deployment rerunning the deployment script (no need to delete it):</p>
+<pre><code>bash install_jhub.sh</code></pre>
+<p>After a few minutes we should have a certificate resource available:</p>
+<pre><code>&gt; kubectl get certificate --all-namespaces
+
+NAMESPACE   NAME                         READY     SECRET                       AGE
+jhub        certmanager-tls-jupyterhub   True      certmanager-tls-jupyterhub   11m</code></pre>
+<p>for newer versions, check the <code>certificaterequest</code> resource instead:</p>
+<pre><code>kubectl get certificaterequest --all-namespaces
+NAMESPACE   NAME                                   READY   AGE
+jhub        certmanager-tls-jupyterhub-781206586   True    9m5s</code></pre>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

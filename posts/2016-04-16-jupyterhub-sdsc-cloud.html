@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2016-04-16">
+
+<title>zonca.dev - Deploy Jupyterhub on a Virtual Machine for a Workshop</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">zonca.dev</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Deploy Jupyterhub on a Virtual Machine for a Workshop</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">ipython</div>
+                <div class="quarto-category">jupyterhub</div>
+                <div class="quarto-category">sdsc</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 16, 2016</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>This tutorial describes the steps to install a Jupyterhub instance on a single machine suitable for hosting a workshop, suitable for having people login with training accounts on Jupyter Notebooks running Python 2/3, R, Julia with also Terminal access on Docker containers. Details about the setup:</p>
+<ul>
+<li>Jupyterhub installed with Anaconda directly on the host, proxied by NGINX under HTTPS with self-signed certificate</li>
+<li>Login with Linux account credentials created previously by the administrator, data in /home are persistent across sessions</li>
+<li>Each user runs in a separated Docker container with access to Python 2, Python 3, R and Julia kernels, they can also open the Notebook editor and the terminal</li>
+<li>Using a single machine you have to consider that the biggest constraint is going to be memory usage, as a rule of thumb consider 100-200 MB/user plus 5x-10x the amount of data you are loading from disk, depending on the kind of analysis. For a multi-node setup you need to look into Docker Swarm.</li>
+</ul>
+<p>I am using the OpenStack deployment at the San Diego Supercomputer Center, <a href="http://www.sdsc.edu/services/it/cloud.html">SDSC Cloud</a>, AWS deployments should just replace the first section on Creating a VM and setting up Networking, see <a href="https://github.com/jupyterhub/jupyterhub/wiki/Deploying-JupyterHub-on-AWS">the Jupyterhub wiki</a>.</p>
+<p>If you intend to run on SDSC Cloud, I have a pre-built image of this deployment you can setup and run quickly, see <a href="http://zonca.github.io/2016/04/jupyterhub-image-sdsc-cloud.html">see my followup tutorial</a>.</p>
+<section id="create-a-virtual-machine-in-openstack" class="level1">
+<h1>Create a Virtual Machine in OpenStack</h1>
+<p>First of all we need to launch a new Virtual Machine and configure the network.</p>
+<ul>
+<li>Login to the SDSC Cloud OpenStack dashboard</li>
+</ul>
+<section id="network-setup" class="level2">
+<h2 class="anchored" data-anchor-id="network-setup">Network setup</h2>
+<p>Jupyterhub will be proxied to the standard HTTPS port by NGINX and we also want to redirect HTTP to HTTPS, so we open those ports, then SSH for the administrators to login and a custom TCP rule in order for the Docker containers to be able to connect to the Jupyterhub hub running on port 8081, so we are opening that port just to the subnet that is running the Docker containers.</p>
+<ul>
+<li>Compute -&gt; Access &amp; Security -&gt; Security Groups -&gt; Create Security Group and name it <code>jupyterhubsecgroup</code></li>
+<li>Click on Manage Rules</li>
+<li>Click on add rule, choose the HTTP rule and click add</li>
+<li>Repeat the last step with HTTPS and SSH</li>
+<li>Click on add rule again, choose Custom TCP Rule, set port 8081 and set CIDR 172.17.0.0/24 (this is needed so that the containers can connect to the hub)</li>
+</ul>
+</section>
+<section id="create-a-new-virtual-machine" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-new-virtual-machine">Create a new Virtual Machine</h2>
+<p>We choose Ubuntu here, also other distributions should work fine.</p>
+<ul>
+<li>Compute -&gt; Access &amp; Security -&gt; Key Pairs -&gt; Create key pair, name it <code>jupyterhub</code> and download it to your local machine</li>
+<li>Instances -&gt; Launch Instance, Choose a name, Choose “Boot from image” in Boot Source and Ubuntu as Image name, Choose any size, depending on the number of users (TODO add link to Jupyterhub docs)</li>
+<li>Under “Access &amp; Security” choose Key Pair <code>jupyterhub</code> and Security Groups <code>jupyterhubsecgroup</code></li>
+<li>Click <code>Launch</code> to create the instance</li>
+</ul>
+</section>
+<section id="give-public-ip-to-the-instance" class="level2">
+<h2 class="anchored" data-anchor-id="give-public-ip-to-the-instance">Give public IP to the instance</h2>
+<p>By default in SDSC Cloud machines do not have a public IP.</p>
+<ul>
+<li>Compute -&gt; Access &amp; Sewcurity -&gt; Floating IPs -&gt; Allocate IP To Project, “Allocate IP” to request a public IP</li>
+<li>Click on the “Associate” button of the IP just requested and under “Port to be associated” choose the instance just created</li>
+</ul>
+</section>
+</section>
+<section id="setup-jupyterhub-in-the-virtual-machine" class="level1">
+<h1>Setup Jupyterhub in the Virtual Machine</h1>
+<p>In this section we will install and configure Jupyterhub and NGINX to run on the Virtual Machine.</p>
+<ul>
+<li>login into the Virtual Machine with <code>ssh -i jupyterhub.pem ubuntu@xxx.xxx.xxx.xxx</code> using the key file and the public IP setup in the previous steps</li>
+<li>add the hostname of the machine (check by running <code>hostname</code>) to <code>/etc/hosts</code>, i.e.&nbsp;the first line should become something like <code>127.0.0.1 localhost jupyterhub</code> if <code>jupyterhub</code> is the hostname</li>
+</ul>
+<section id="setup-jupyterhub" class="level2">
+<h2 class="anchored" data-anchor-id="setup-jupyterhub">Setup Jupyterhub</h2>
+<pre><code> wget --no-check-certificate https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+ bash Miniconda3-latest-Linux-x86_64.sh</code></pre>
+<p>use all defaults, answer “yes” to modify PATH</p>
+<pre><code>sudo apt-get install npm nodejs-legacy
+sudo npm install -g configurable-http-proxy
+conda install traitlets tornado jinja2 sqlalchemy 
+pip install jupyterhub</code></pre>
+<p>For authentication to work, the <code>ubuntu</code> user needs to be able to read the <code>/etc/shadow</code> file:</p>
+<pre><code>sudo adduser ubuntu shadow</code></pre>
+</section>
+<section id="setup-the-web-server" class="level2">
+<h2 class="anchored" data-anchor-id="setup-the-web-server">Setup the web server</h2>
+<p>We will use the NGINX web server to proxy Jupyterhub and handle HTTPS for us, this is recommended for deployments on the public internet.</p>
+<pre><code>sudo apt install nginx</code></pre>
+<p><strong>SSL Certificate</strong>: Optionally later, once we have assigned a domain to the Virtual Machine, we can install <code>letsencrypt</code> and get a real certificate, <a href="http://zonca.github.io/2016/04/jupyterhub-image-sdsc-cloud.html">see my followup tutorial</a>, for simplicity here we are just using self-signed certificates that will give warnings on the first time users connect to the server, but still will keep the traffic encrypted.</p>
+<pre><code>sudo mkdir /etc/nginx/ssl
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt
+</code></pre>
+<p>Get <code>/etc/nginx/nginx.conf</code> from https://gist.github.com/zonca/08c413a37401bdc9d2a7f65a7af44462</p>
+</section>
+</section>
+<section id="setup-docker-spawner" class="level1">
+<h1>Setup Docker Spawner</h1>
+<p>By default Jupyterhub runs notebooks as processes owned by each system user, for more security and isolation, we want Notebook to run in Docker containers, which are something like lightweight Virtual Machines running inside our server.</p>
+<section id="install-docker" class="level2">
+<h2 class="anchored" data-anchor-id="install-docker">Install Docker</h2>
+<ul>
+<li>Source: https://docs.docker.com/engine/installation/linux/ubuntulinux/#prerequisites</li>
+</ul>
+<pre><code>sudo apt update
+sudo apt install apt-transport-https ca-certificates
+sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+echo "deb https://apt.dockerproject.org/repo ubuntu-trusty main" | sudo tee /etc/apt/sources.list.d/docker.list 
+sudo apt update
+sudo apt install docker-engine
+sudo usermod -aG docker ubuntu</code></pre>
+<p>Logout and login again for the group to take effect</p>
+</section>
+<section id="install-and-configure-dockerspawner" class="level2">
+<h2 class="anchored" data-anchor-id="install-and-configure-dockerspawner">Install and configure DockerSpawner</h2>
+<pre><code>pip install dockerspawner
+docker pull jupyter/systemuser
+conda install ipython jupyter</code></pre>
+<p>Create <code>jupyterhub_config.py</code> in the home folder of the ubuntu user with this content:</p>
+<pre><code>c.JupyterHub.confirm_no_ssl = True
+c.JupyterHub.spawner_class = 'dockerspawner.SystemUserSpawner'
+
+# The docker instances need access to the Hub, so the default loopback port doesn't work:
+from IPython.utils.localinterfaces import public_ips
+c.JupyterHub.hub_ip = public_ips()[0]</code></pre>
+</section>
+</section>
+<section id="connect-to-jupyterhub" class="level1">
+<h1>Connect to Jupyterhub</h1>
+<p>From the home folder of the <code>ubuntu</code> user, type <code>jupyterhub</code> to launch the Jupyterhub process, see below how to start it automatically at boot. Use CTRL-C to stop it.</p>
+<p>Open a browser and connect to the floating IP you set for your instance, this should redirect to the https, click “Advanced” in the warning about safety due to the self signed SSL certificate and login with the training credentials.</p>
+<p>Instead of using the IP, you can use any domain that points to that same IP with a DNS record of type A or get a dymanic DNS for free on a website like http://noip.com. Once you have a custom domain, you can configure letsencrypt to have a proper HTTPS certificate so that users do not get any warning when connecting to the instance. I will add this to the optional steps below.</p>
+</section>
+<section id="optional-automatically-start-jupyterhub-at-boot" class="level1">
+<h1>Optional: Automatically start jupyterhub at boot</h1>
+<p>Save https://gist.github.com/zonca/aaeaf3c4e7339127b482d759866e5f39 as <code>/etc/init.d/jupyterhub</code></p>
+<pre><code>sudo chmod +x /etc/init.d/jupyterhub
+sudo service jupyterhub start
+sudo update-rc.d jupyterhub defaults</code></pre>
+</section>
+<section id="optional-create-training-user-accounts" class="level1">
+<h1>Optional: Create training user accounts</h1>
+<p>Add user accounts on Jupyterhub creating standard Linux users with <code>adduser</code> interactively or with a batch script.</p>
+<p>For example the following batch script creates 10 users all with the same password:</p>
+<pre><code>#!/bin/bash
+PASSWORD=samepasswordforallusers
+NUMBER_OF_USERS=10
+for n in `seq -f "%02g" 1 $NUMBER_OF_USERS`
+do
+    echo creating user training$n
+    echo training$n:$PASSWORD::::/home/training$n:/bin/bash | sudo newusers
+done</code></pre>
+<p>Also add <code>AllowUsers ubuntu</code> to <code>/etc/ssh/sshd_config</code> so that training users cannot SSH into the host machine.</p>
+</section>
+<section id="optional-add-the-r-and-julia-kernels" class="level1">
+<h1>Optional: Add the R and Julia kernels</h1>
+<ul>
+<li>SSH into the instance</li>
+<li><code>git clone https://github.com/jupyter/dockerspawner</code></li>
+<li><code>cd dockerspawner</code></li>
+</ul>
+<p>Modify the file <code>singleuser/Dockerfile</code>, replace <code>FROM jupyter/scipy-notebook</code> with <code>FROM jupyter/datascience-notebook</code></p>
+<pre><code>docker build -t datascience-singleuser singleuser</code></pre>
+<p>Modify the file <code>systemuser/Dockerfile</code>, replace <code>FROM jupyter/singleuser</code> with <code>FROM datascience-singleuser</code></p>
+<pre><code>docker build -t datascience-systemuser systemuser</code></pre>
+<p>Finally in <code>jupyterhub_config.py</code>, select the new docker image:</p>
+<pre><code>c.DockerSpawner.container_image = "datascience-systemuser"</code></pre>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

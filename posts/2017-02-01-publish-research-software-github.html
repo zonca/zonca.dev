@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2017-02-01">
+
+<title>zonca.dev - How to publish your research software to Github</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">zonca.dev</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">How to publish your research software to Github</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">git</div>
+                <div class="quarto-category">github</div>
+                <div class="quarto-category">software-carpentry</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 1, 2017</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<ul>
+<li>Do you want to make your research software available publicly on Github?</li>
+<li>Has your reviewer asked to publish the code described in your paper?</li>
+<li>Would you like to collaborate on your research software with other people, either local or remote?</li>
+</ul>
+<p>Nowadays many journals require that the software used to produce results described in a scientific paper be made available publicly for other peers to be able to reproduce the results or even just explore the analysis more in detail.</p>
+<p>The most popular platform is <a href="http://github.com">Github</a>, it allows to create a homepage for your software, keep track of any future code change and allows people to report issues or contribute patches easily.</p>
+<p>I’ll assume familiarity with working from the command line.</p>
+<section id="prepare-your-software-for-publication" class="level2">
+<h2 class="anchored" data-anchor-id="prepare-your-software-for-publication">Prepare your software for publication</h2>
+<p>First it is necessary to make sure your code is all inside a single root folder (with any number of subfolders), then cleanup any build artifact, data or executable present in your tree of folders. Ideally you should only have the source code and documentation. If you have small datasets (&lt;10MB total) it is convenient to store them inside the repository, otherwise better host them on dedicated free services like <a href="http://figshare.com">Figshare</a>.</p>
+<p>You should cleanup the build and installation process for your code, if any, and ideally you should structure your code in a standard format to ease adoption, for example using a project template generated by <a href="https://github.com/audreyr/cookiecutter">Cookiecutter</a>.</p>
+<p>You should create a <code>README.md</code> file in the root folder of your project, this is very important because it will be transformed into HTML and displayed in the homepage of your software project. Here you should use the Markdown formatting language, see <a href="https://help.github.com/articles/basic-writing-and-formatting-syntax/">a Markdown cheatsheet on Github</a>, to explain:</p>
+<ul>
+<li>short description of your software</li>
+<li>build/usage requirements for your process</li>
+<li>installation instructions (and point to another file <code>INSTALL.md</code> for more details)</li>
+<li>quickstart section</li>
+<li>link to usage examples</li>
+<li>link to your paper about the project</li>
+<li>list of developers</li>
+<li>optionally: how users can get support (i.e.&nbsp;a mailing list)</li>
+</ul>
+<p>Finally you should choose a license, otherwise even if the project is public, nobody is allowed to modify and re-use it legally. Create a <code>LICENSE</code> file in the root of folder tree and paste the content of the license. I recommend MIT license which is very permissive and simple: <a href="https://choosealicense.com/licenses/mit/" class="uri">https://choosealicense.com/licenses/mit/</a></p>
+</section>
+<section id="create-an-account-on-github" class="level2">
+<h2 class="anchored" data-anchor-id="create-an-account-on-github">Create an account on Github</h2>
+<p>Second step is to create an account on Github: this just requires a username, email and password, choose your username carefully because it will become the root internet address of all your software projects, i.e.&nbsp;<code>https://github.com/username/software-name</code>.</p>
+<p>A Github account is free and allows any number of public software projects, private repositories are generally available only on paid account, however who has a <code>.edu</code> email address can apply for unlimited private repositories by applying for the <a href="https://education.github.com/discount_requests/new">academic discount</a>.</p>
+</section>
+<section id="create-a-repository-on-github" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-repository-on-github">Create a repository on Github</h2>
+<p>Github hosts software inside a version control system, <code>git</code>, so that it stores the complete history of all the incremental changes over time and allows to easily recover previous versions of the software. Each software project is stored in a repository, which includes both the current version and all previous versions of the software.<code>git</code> is a more modern alternative to <code>subversion</code>.</p>
+<p>First you need to create a repository on Github: authenticate on Github.com and click on the “New Repository” button, choose a name for your software project and leave all other options as default.</p>
+</section>
+<section id="publish-your-software-on-github" class="level2">
+<h2 class="anchored" data-anchor-id="publish-your-software-on-github">Publish your software on Github</h2>
+<p>Make sure that the <code>git</code> command line tool is available on the machine where your code is stored, install it from your package manager or see <a href="https://git-scm.com/downloads">installation instructions on the git website</a>.</p>
+<p>Finally you can follow the instructions on the repository homepage <code>https://github.com/username/software-name</code> in the section <strong>..or create a new repository on the command line</strong>, make sure you are in the root folder of your repository and follow this steps:</p>
+<p>Turn the current folder into a <code>git</code> repository:</p>
+<pre><code>git init</code></pre>
+<p>Add recursively all files and folders, otherwise specify filenames or wildcard to pick only some, <strong>be careful not to accidentally upload sensitive content like passwords</strong>:</p>
+<pre><code>git add *</code></pre>
+<p>Store into the repository a first version of the software:</p>
+<pre><code>git commit -m "first version of the software"</code></pre>
+<p>Tell <code>git</code> the address of the remote repository on Github (make sure to use your username and the name you chose for your software project):</p>
+<pre><code>git remote add origin https://github.com/username/software-name</code></pre>
+<p>Upload the software to Github:</p>
+<pre><code>git push -u origin master</code></pre>
+<p>You can then check in your browser that all the code you meant to publish is available on Github</p>
+</section>
+<section id="update-your-software" class="level2">
+<h2 class="anchored" data-anchor-id="update-your-software">Update your software</h2>
+<p>Whenever in the future you need to make modifications to the software:</p>
+<ul>
+<li>edit the files</li>
+<li><code>git add filename1 filename2</code> to prepare them for commit</li>
+<li><code>git commit -m "bugfix"</code> create a version in the history with a explanatory commit message</li>
+<li><code>git push</code> to publish to Github</li>
+</ul>
+<p>For more details on <code>git</code>, check the <a href="https://swcarpentry.github.io/git-novice/">Software Carpentry lessons</a>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

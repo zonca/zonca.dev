@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2019-01-24">
+
+<title>zonca.dev - Use the distributed file format Zarr on Jetstream Swift object storage, 2019</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">zonca.dev</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Use the distributed file format Zarr on Jetstream Swift object storage, 2019</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">jupyter</div>
+                <div class="quarto-category">jetstream</div>
+                <div class="quarto-category">zarr</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 24, 2019</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>This is an updated version of the 2018 edition</p>
+<section id="zarr" class="level2">
+<h2 class="anchored" data-anchor-id="zarr">Zarr</h2>
+<p>Zarr is a pretty new file format designed for cloud computing, see <a href="http://zarr.readthedocs.io">documentation</a> and <a href="https://www.youtube.com/watch?v=np_p4JBAIYI">a webinar</a> for more details.</p>
+<p>Zarr is also supported by <a href="http://dask.pydata.org">dask</a>, the parallel computing framework for Python, and the Dask team implemented storage backends for <a href="https://github.com/dask/gcsfs">Google Cloud Storage</a> and <a href="https://github.com/dask/s3fs">Amazon S3</a>.</p>
+</section>
+<section id="use-openstack-swift-on-jetstream-for-object-storage" class="level2">
+<h2 class="anchored" data-anchor-id="use-openstack-swift-on-jetstream-for-object-storage">Use OpenStack swift on Jetstream for object storage</h2>
+<p>Jetstream also offers (currently in beta) access to object storage via OpenStack Swift. This is a separate service from the Jetstream Virtual Machines, so you do not need to spin any Virtual Machine dedicated to storing the data but just use the object storage already provided by Jetstream.</p>
+</section>
+<section id="read-zarr-files-from-object-store" class="level2">
+<h2 class="anchored" data-anchor-id="read-zarr-files-from-object-store">Read Zarr files from object store</h2>
+<p>If somebody else has already made available some files on object store and set their visibility to “public”, anybody can read them.</p>
+<p>See the <a href="https://gist.github.com/zonca/bda69ab917bde831845d530e52eae6e5">example Notebook to read Zarr files</a>.</p>
+<p>OpenStack Swift already provides an endpoint which has an interface compatible with Amazon S3, therefore we can directly use the <code>S3FileSystem</code> provided by <code>s3fs</code>.</p>
+<p>Then we can build a <code>S3Map</code> object which <code>zarr</code> and <code>xarray</code> can access. I removed the endpoint url from the Notebook to avoid test traffic. You can request it to the XSEDE helpdesk.</p>
+<p>In this example I am using the <code>distributed</code> scheduler on a single node, you can scale up your computation having workers distributed on multiple nodes, just make sure that all the workers have access to the <code>zarr</code>, <code>xarray</code>, <code>s3fs</code> packages.</p>
+</section>
+<section id="write-zarr-files-or-read-private-files" class="level2">
+<h2 class="anchored" data-anchor-id="write-zarr-files-or-read-private-files">Write Zarr files or read private files</h2>
+<p>In this case we need authentication.</p>
+<p>First you need to ask to the XSEDE helpdesk API access to Jetstream, this also gives access to the Horizon interface, which has many advanced features that are not available in Atmosphere.</p>
+<section id="create-a-bucket" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-bucket">Create a bucket</h3>
+<p>Object store systems are organized on buckets, which are like root folders of our filesystem. From the Horizon interface, we can choose Object Store -&gt; Containers (quite confusing way of referring to buckets in OpenStack). Here we can check content of existing buckets or create a new one.</p>
+</section>
+<section id="get-credentials" class="level3">
+<h3 class="anchored" data-anchor-id="get-credentials">Get credentials</h3>
+<p>From Horizon, choose the project you want to charge usage from the dropdown menu at the top.</p>
+<p>Then download the openstack RC file version 3 from: <a href="https://iu.jetstream-cloud.org/project/api_access/" class="uri">https://iu.jetstream-cloud.org/project/api_access/</a></p>
+<p>At this point we need to transform it into Amazon-style credentials, you can do this on any host, not necessarily on Jetstream, install OpenStack client:</p>
+<pre><code>pip install python-openstackclient</code></pre>
+<p>source the openstackRC file, put the password, this is the TACC password (the same used to access Horizon), NOT the XSEDE Password.</p>
+<p>Now we can check the content of the bucket we created above:</p>
+<pre><code>openstack object list my_bucket</code></pre>
+<p>Now create ec2 credentials with:</p>
+<pre><code>openstack ec2 credentials create</code></pre>
+<p>This is going to display AWS access key and AWS secret, we can save credentials in <code>~/.aws/config</code> in the machine we want then use to write to object store.</p>
+<pre><code>[default]
+region=RegionOne
+aws_access_key_id=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+aws_secret_access_key=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</code></pre>
+</section>
+<section id="test-access" class="level3">
+<h3 class="anchored" data-anchor-id="test-access">Test access</h3>
+<p>We can check if we can successfully login using <code>s3fs</code>, notice we <strong>do not use</strong> <code>anon=True</code> as we did before:</p>
+<pre><code>import s3fs
+fs = s3fs.S3FileSystem(client_kwargs=dict(endpoint_url="JETSTREAM_SWIFT_ENDPOINT"))
+fs.ls("my_bucket")</code></pre>
+<p>Make sure that <code>JETSTREAM_SWIFT_ENDPOINT</code> <strong>does not</strong> include <code>/swift/v1</code>!</p>
+</section>
+<section id="read-a-file-from-local-filesystem-and-write-to-object-store" class="level3">
+<h3 class="anchored" data-anchor-id="read-a-file-from-local-filesystem-and-write-to-object-store">Read a file from local filesystem and write to Object store</h3>
+<p>See <a href="https://gist.github.com/zonca/f7cb1c7845f6b821dc8d178f84253ba3">this notebook as an example of writing to object store</a>, first we make sure to have the necessary Python packages, then we use <code>xarray</code> to read data from NetCDF and then write back to Zarr first locally and then via <code>s3fs</code> to Openstack Swift.</p>
+<p>See the Zarr documentation about how to tweak, compression, data transformations and chunking.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

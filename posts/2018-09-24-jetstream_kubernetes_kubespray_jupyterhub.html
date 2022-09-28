@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2018-09-24">
+
+<title>zonca.dev - Deploy JupyterHub on Kubernetes deployment on Jetstream created with Kubespray 3/3</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">zonca.dev</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Deploy JupyterHub on Kubernetes deployment on Jetstream created with Kubespray 3/3</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">kubernetes</div>
+                <div class="quarto-category">kubespray</div>
+                <div class="quarto-category">jetstream</div>
+                <div class="quarto-category">jupyterhub</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 24, 2018</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>All of the following assumes you are logged in to the master node of the <a href="https://zonca.github.io/2018/09/kubernetes-jetstream-kubespray.html">Kubernetes cluster deployed with kubespray</a> and checked out the repository:</p>
+<p><a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream" class="uri">https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream</a></p>
+<section id="install-jupyterhub" class="level2">
+<h2 class="anchored" data-anchor-id="install-jupyterhub">Install Jupyterhub</h2>
+<p>First run</p>
+<pre><code>bash create_secrets.sh</code></pre>
+<p>to create the secret strings needed by JupyterHub then edit its output <code>secrets.yaml</code> to make sure it is consistent, edit the <code>hosts</code> lines if needed. For example, supply the Jetstream DNS name of the master node <code>js-XXX-YYY.jetstream-cloud.org</code> (XXX and YYY are the last 2 groups of the floating IP of the instance AAA.BBB.XXX.YYY). See <a href="https://zonca.github.io/2018/09/kubernetes-jetstream-kubespray-explore.html">part 2</a>, “Publish service externally with ingress”.</p>
+<pre><code>bash configure_helm_jupyterhub.sh
+bash install_jhub.sh</code></pre>
+<p>Check some preliminary pods running with:</p>
+<pre><code>kubectl get pods -n jhub</code></pre>
+<p>Once the <code>proxy</code> is running, even if <code>hub</code> is still in preparation, you can check in browser, you should get “Service Unavailable” which is a good sign that the proxy is working.</p>
+</section>
+<section id="customize-jupyterhub" class="level2">
+<h2 class="anchored" data-anchor-id="customize-jupyterhub">Customize JupyterHub</h2>
+<p>After JupyterHub is deployed and integrated with Cinder for persistent volumes, for any other customizations, first authentication, you are in good hands as the <a href="https://zero-to-jupyterhub.readthedocs.io/en/stable/extending-jupyterhub.html">Zero-to-Jupyterhub documentation</a> is great.</p>
+<p>The only setup that could be peculiar to the deployment on top of <code>kubespray</code> is setup with HTTPS, see the next section.</p>
+</section>
+<section id="setup-https-with-letsencrypt" class="level2">
+<h2 class="anchored" data-anchor-id="setup-https-with-letsencrypt">Setup HTTPS with letsencrypt</h2>
+<p><strong>this is outdated as of March 2020</strong> Follow <a href="https://zonca.dev/2020/03/setup-https-kubernetes-letsencrypt.html">this tutorial to deploy letsencrypt</a></p>
+<p>Letsencrypt won’t issue certificates anymore with the old version of <code>cert-manager</code> installed by our version of Kubespray. I disabled the installation of <code>cert-manager</code>, please follow <a href="https://zonca.dev/2020/03/setup-https-kubernetes-letsencrypt.html">this newer tutorial on how to setup a recent <code>cert-manager</code></a></p>
+<p>Kubespray instead of installing <code>kube-lego</code>, installs <a href="https://cert-manager.readthedocs.io/en/latest/index.html"><code>certmanager</code></a> to handle HTTPS certificates.</p>
+<p>First we need to create a Issuer, set your email inside <code>setup_https_kubespray/https_issuer.yml</code> and create it with the usual:</p>
+<pre><code>kubectl create -f setup_https_kubespray/https_issuer.yml</code></pre>
+<p>Then we can manually create a HTTPS certificate, <code>certmanager</code> can be configured to handle this automatically, but as we only need a domain this is pretty quick, edit <code>setup_https_kubespray/https_certificate.yml</code> and set the domain name of your master node, then create the certificate resource with:</p>
+<pre><code>kubectl create -f setup_https_kubespray/https_certificate.yml</code></pre>
+<p>Finally we can configure JupyterHub to use this certificate, first edit your <code>secrets.yaml</code> following as an example the file <code>setup_https_kubespray/example_letsencrypt_secrets.yaml</code>, then update your JupyterHub configuration running again:</p>
+<pre><code>bash install_jhub.sh</code></pre>
+</section>
+<section id="setup-https-with-custom-certificates" class="level2">
+<h2 class="anchored" data-anchor-id="setup-https-with-custom-certificates">Setup HTTPS with custom certificates</h2>
+<p>In case you have custom certificates for your domain, first create a secret in the jupyterhub namespace with:</p>
+<pre><code>kubectl create secret tls cert-secret --key ssl.key --cert ssl.crt -n jhub</code></pre>
+<p>Then setup ingress to use this in <code>secrets.yaml</code>:</p>
+<pre><code>ingress:
+  enabled: true
+  hosts:
+    - js-XX-YYY.jetstream-cloud.org
+  tls:
+  - hosts:
+    - js-XX-YYY.jetstream-cloud.org
+    secretName: cert-secret</code></pre>
+<p>Eventually, you may need to update the certificate. This can be achieved with:</p>
+<pre><code>kubectl create secret tls cert-secret --key ssl.key --cert ssl.crt -n jhub \
+    --dry-run -o yaml | kubectl apply -f -</code></pre>
+</section>
+<section id="setup-custom-http-headers" class="level2">
+<h2 class="anchored" data-anchor-id="setup-custom-http-headers">Setup custom HTTP headers</h2>
+<p>After you have deployed JupyterHub, edit ingress:</p>
+<pre><code>kubectl edit ingress -n jhub</code></pre>
+<p>Add a <code>configuration-snippet</code> line inside annotations:</p>
+<pre><code>metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "X-Frame-Options: DENY";
+      more_set_headers "X-Xss-Protection: 1";</code></pre>
+<p>This doesn’t require to restart or modify any other resource.</p>
+</section>
+<section id="modify-the-kubernetes-cluster-size" class="level2">
+<h2 class="anchored" data-anchor-id="modify-the-kubernetes-cluster-size">Modify the Kubernetes cluster size</h2>
+<p>See a followup short tutorial on <a href="https://zonca.github.io/2019/02/scale-kubernetes-jupyterhub-manually.html">scaling Kubernetes manually</a>.</p>
+</section>
+<section id="persistence-of-user-data" class="level2">
+<h2 class="anchored" data-anchor-id="persistence-of-user-data">Persistence of user data</h2>
+<p>When a JupyterHub user logs in for the first time, a Kubernetes <code>PersistentVolumeClaim</code> of the size defined in the configuration file is created. This is a Kubernetes resource that defines a request for storage.</p>
+<pre><code>kubectl get pvc -n jhub
+NAME          STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+claim-zonca   Bound    pvc-c469967a-3968-11e9-aaad-fa163e9c7d08   1Gi        RWO            standard       2m34s
+hub-db-dir    Bound    pvc-353114a7-3968-11e9-aaad-fa163e9c7d08   1Gi        RWO            standard       6m34s</code></pre>
+<p>Inspecting the claims we find out that we have a claim for the user and a claim to store the database of JupyterHub. Currently they are already Bound because they are already satistied.</p>
+<p>Those claims are then satisfied by our Openstack Cinder provisioner to create a Openstack volume and wrap it into a Kubernetes <code>PersistentVolume</code> resource:</p>
+<pre><code>kubectl get pv -n jhub
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM              STORAGECLASS   REASON   AGE
+pvc-353114a7-3968-11e9-aaad-fa163e9c7d08   1Gi        RWO            Delete           Bound    jhub/hub-db-dir    standard                8m52s
+pvc-c469967a-3968-11e9-aaad-fa163e9c7d08   1Gi        RWO            Delete           Bound    jhub/claim-zonca   standard                5m4s</code></pre>
+<p>This corresponds to Openstack volumes automatically mounted onto the node that is executing the user pod:</p>
+<pre><code>+--------------------------------------+-------------------------------------------------------------+-----------+------+----------------------------------------------+
+| ID                                   | Name                                                        | Status    | Size | Attached to                                  |
++--------------------------------------+-------------------------------------------------------------+-----------+------+----------------------------------------------+
+| e6eddaaa-d40d-4832-addd-a05343ec3a80 | kubernetes-dynamic-pvc-c469967a-3968-11e9-aaad-fa163e9c7d08 | in-use    |    1 | Attached to zonca-k8s-node-nf-1 on /dev/sdc  |
+| 00f1e822-8098-4633-804e-46ba44d7de7e | kubernetes-dynamic-pvc-353114a7-3968-11e9-aaad-fa163e9c7d08 | in-use    |    1 | Attached to zonca-k8s-node-nf-1 on /dev/sdb  |</code></pre>
+<p>If the user disconnects, the Openstack volume is un-attached from the instance but it is not delete and it is mounted back, optionally on another instance, if the user logs back in.</p>
+<section id="delete-and-reinstall-jupyterhub" class="level3">
+<h3 class="anchored" data-anchor-id="delete-and-reinstall-jupyterhub">Delete and reinstall JupyterHub</h3>
+<p>Helm release deleted:</p>
+<pre><code>helm delete --purge jhub</code></pre>
+<p>As long as you do not delete the whole namespace, the volumes are not deleted, therefore you can re-deploy the same version or a newer version using <code>helm</code> and the same volume is mounted back for the user</p>
+</section>
+<section id="delete-and-recreate-openstack-instances" class="level3">
+<h3 class="anchored" data-anchor-id="delete-and-recreate-openstack-instances">Delete and recreate Openstack instances</h3>
+<p>When we run terraform to delete all Openstack resources:</p>
+<pre><code>bash terraform_destroy.sh</code></pre>
+<p>this does not include the Openstack volumes that are created by the Kubernetes persistent volume provisioner.</p>
+<p>In case we are interested in keeping the same ip address, run instead:</p>
+<pre><code>bash terraform_destroy_keep_floatingip.sh</code></pre>
+<p>The problem is that if we recreate Kubernetes again, it doesn’t know how to link the Openstack volume to the Persistent Volume of a user. Therefore we need to backup the Persistent Volumes and the Persistent Volume Claims resources before tearing Kubernetes down:</p>
+<pre><code>kubectl get pvc -n jhub -o yaml &gt; pvc.yaml
+kubectl get pv -n jhub -o yaml &gt; pv.yaml</code></pre>
+<p>I recommend always to run <code>kubectl</code> on the local machine instead of the master node, because if you delete the master instance you loose any temporary modification to your scripts. In this case, even more importantly, if you are running on the master node please backup <code>pvc.yaml</code> and <code>pv.yaml</code> locally before running <code>terraform_destroy.sh</code> or they will be wiped out.</p>
+<p>Then open the files with a text editor and delete the Persistent Volume and the Persistent Volume Claim related to <code>hub-db-dir</code>.</p>
+<p>Edit <code>pv.yaml</code> and set:</p>
+<pre><code>  persistentVolumeReclaimPolicy:Retain</code></pre>
+<p>Otherwise if you create the PV first, it is deleted because there is no PVC.</p>
+<p>Also remove the <code>claimRef</code> section of all the volumes in <code>pv.yaml</code>, otherwise you get the error “two claims are bound to the same volume, this one is bound incorrectly” on the PVC.</p>
+<p>Now we can proceed to create the cluster again and then restore the volumes with:</p>
+<pre><code>kubectl apply -f pv.yaml
+kubectl apply -f pvc.yaml</code></pre>
+</section>
+</section>
+<section id="feedback" class="level2">
+<h2 class="anchored" data-anchor-id="feedback">Feedback</h2>
+<p>Feedback on this is very welcome, please open an issue on the <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream">Github repository</a> or email me at <code>zonca</code> on the domain of the San Diego Supercomputer Center (sdsc.edu).</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
