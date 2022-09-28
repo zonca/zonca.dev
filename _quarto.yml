@@ -1,5 +1,8 @@
 project:
   type: website
+  resources:
+    - "*.jpg"
+    - "*.png"
 
 website:
   title: "zonca.dev"
