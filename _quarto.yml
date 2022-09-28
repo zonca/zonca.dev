@@ -5,7 +5,7 @@ project:
     - "*.png"
 
 website:
-  title: "zonca.dev"
+  title: "Andrea Zonca"
   navbar:
     right:
       - about.qmd
