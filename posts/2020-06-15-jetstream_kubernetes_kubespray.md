@@ -3,7 +3,6 @@ aliases:
 - /2020/06/jetstream_kubernetes_kubespray
 categories:
 - kubernetes
-- kubespray
 - jetstream
 date: '2020-06-15'
 layout: post

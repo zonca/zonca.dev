@@ -2,7 +2,6 @@
 aliases:
 - /2020/04/jetstream-object-store
 categories:
-- openstack
 - jetstream
 date: '2020-04-01'
 layout: post

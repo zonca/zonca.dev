@@ -1,8 +1,6 @@
 ---
 aliases:
 - /2010/01/correlation
-categories:
-- physics
 date: 2010-01-28 00:45
 layout: post
 slug: correlation

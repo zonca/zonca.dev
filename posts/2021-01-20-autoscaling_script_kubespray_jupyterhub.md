@@ -3,7 +3,6 @@ aliases:
 - /2021/01/autoscaling_script_kubespray_jupyterhub
 categories:
 - kubernetes
-- kubespray
 - jetstream
 date: '2021-01-20'
 layout: post

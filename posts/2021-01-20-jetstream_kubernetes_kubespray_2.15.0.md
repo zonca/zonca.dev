@@ -3,7 +3,6 @@ aliases:
 - /2021/01/jetstream_kubernetes_kubespray_2.15.0
 categories:
 - kubernetes
-- kubespray
 - jetstream
 date: '2021-01-20'
 layout: post
