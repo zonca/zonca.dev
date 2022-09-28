@@ -1,9 +1,7 @@
 {
   "listing": "/index.html",
   "items": [
-    "/posts/post-with-code/index.html",
     "/posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html",
-    "/posts/welcome/index.html",
     "/posts/2022-06-06-mariadb.html",
     "/posts/2022-05-17-remove-cell-id-jupyter-notebook.html",
     "/posts/2022-05-02-ssh-github-action.html",
@@ -89,8 +87,8 @@
     "/posts/2018-05-12-pearc18-paper-preprint-arxiv.html",
     "/posts/2018-05-04-shared-dask-kubernetes-jetstream.html",
     "/posts/2018-03-29-boinc-server-jetstream.html",
-    "/posts/2018-03-03-zarr-on-jetstream.html",
     "/posts/2018-03-03-zarr.html",
+    "/posts/2018-03-03-zarr-on-jetstream.html",
     "/posts/2017-12-21-custom-conda-python-jupyter-nersc.html",
     "/posts/2017-12-19-ecss-symposium.html",
     "/posts/2017-12-05-scalable-jupyterhub-kubernetes-jetstream.html",

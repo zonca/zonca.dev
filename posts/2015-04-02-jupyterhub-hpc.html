@@ -160,31 +160,31 @@ ul.task-list li input[type="checkbox"] {
 <p>Jupyterhub is accessed publicly via browser and the user can login. Jupyterhub supports authentication for <code>PAM</code>/<code>LDAP</code> so it could be integrated with XSEDE credential, at the moment I am testing with local authentication.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../images/jupyterhub-hpc-login.png" class="img-fluid figure-img"></p>
+<p><img src="jupyterhub-hpc-login.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">jupyterhub-hpc-login.png</figcaption><p></p>
 </figure>
 </div>
 <p>Once the user is authenticated, Jupyterhub connects via <code>SSH</code> to a login node on Gordon and submits a batch serial job using <code>qsub</code>. The web interface waits for the job to start running. A dedicated queue with a quick turnaround would be useful for this kind of jobs.</p>
-<p><img src="../images/jupyterhub-hpc-refresh.png" class="img-fluid" alt="jupyterhub-hpc-refresh.png"> <img src="../images/jupyterhub-hpc-job.png" class="img-fluid" alt="jupyterhub-hpc-job.png"></p>
+<p><img src="jupyterhub-hpc-refresh.png" class="img-fluid" alt="jupyterhub-hpc-refresh.png"> <img src="jupyterhub-hpc-job.png" class="img-fluid" alt="jupyterhub-hpc-job.png"></p>
 <p>When the job starts running, it first sets up <code>SSH</code> tunneling between the Jupyterhub host and the computing node, then starts the Jupyter Notebook. As soon as the web interface detects that the job is running, proxies the tunneled HTTP port for the user. From this point the Jupyter Notebook works exactly like it would on a local machine.</p>
 <p>See an example Notebook printing the hostname of the computing node:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../images/jupyterhub-hpc-testnotebook.png" class="img-fluid figure-img"></p>
+<p><img src="jupyterhub-hpc-testnotebook.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">jupyterhub-hpc-testnotebook.png</figcaption><p></p>
 </figure>
 </div>
 <p>Other two useful features of the Jupyter Notebook are a terminal:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../images/jupyterhub-hpc-terminal.png" class="img-fluid figure-img"></p>
+<p><img src="jupyterhub-hpc-terminal.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">jupyterhub-hpc-terminal.png</figcaption><p></p>
 </figure>
 </div>
 <p>and an editor that run in the browser:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../images/jupyterhub-hpc-editor.png" class="img-fluid figure-img"></p>
+<p><img src="jupyterhub-hpc-editor.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">jupyterhub-hpc-editor.png</figcaption><p></p>
 </figure>
 </div>
@@ -195,7 +195,7 @@ ul.task-list li input[type="checkbox"] {
 <p>In the Notebook interface, in the <code>Clusters</code> tab, is it possible to choose the number of engines and click start to submit a job to the queue system:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../images/jupyterhub-hpc-clusterlaunch.png" class="img-fluid figure-img"></p>
+<p><img src="jupyterhub-hpc-clusterlaunch.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">jupyterhub-hpc-clusterlaunch.png</figcaption><p></p>
 </figure>
 </div>
