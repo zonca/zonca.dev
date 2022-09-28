@@ -7,5 +7,14 @@
 .quarto-title-banner {
     margin-bottom: 1em;
     color: #605e5e;
-    background: #f8f9fa;
+    background: rgba(233,236,239,.65);
+}
+
+.page-item.active .page-link {
+    background-color: #605e5e;
+    border-color: #605e5e;
+}
+
+.page-link {
+    color: #605e5e;
 }
