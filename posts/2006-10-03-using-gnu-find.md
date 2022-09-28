@@ -3,7 +3,6 @@ aliases:
 - /2006/10/using-gnu-find
 categories:
 - linux
-- bash
 date: 2006-10-03 14:00
 layout: post
 slug: using-gnu-find

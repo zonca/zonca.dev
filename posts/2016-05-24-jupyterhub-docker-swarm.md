@@ -2,9 +2,8 @@
 aliases:
 - /2016/05/jupyterhub-docker-swarm
 categories:
-- ipython
 - jupyterhub
-- sdsc
+- cloudcomputing
 date: 2016-05-24 12:00
 layout: post
 slug: jupyterhub-docker-swarm

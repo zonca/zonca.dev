@@ -3,7 +3,7 @@ aliases:
 - /2018/07/updated-singularity-2.5-comet
 categories:
 - singularity
-- comet
+- hpc
 date: 2018-07-22 12:00
 layout: post
 slug: singularity-2.5-comet

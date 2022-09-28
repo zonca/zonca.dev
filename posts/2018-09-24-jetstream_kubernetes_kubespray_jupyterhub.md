@@ -3,7 +3,6 @@ aliases:
 - /2018/09/jetstream_kubernetes_kubespray_jupyterhub
 categories:
 - kubernetes
-- kubespray
 - jetstream
 - jupyterhub
 date: 2018-09-24 1:00

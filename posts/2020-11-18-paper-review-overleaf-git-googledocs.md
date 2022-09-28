@@ -2,7 +2,7 @@
 aliases:
 - /2020/11/paper-review-overleaf-git-googledocs
 categories:
-- latex
+- openscience
 - git
 date: '2020-11-18'
 layout: post

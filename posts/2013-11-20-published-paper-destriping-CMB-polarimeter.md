@@ -3,9 +3,7 @@ aliases:
 - /2013/11/published-paper-destriping-CMB-polarimeter
 categories:
 - python
-- paper
-- destriping
-- openscience
+- cosmology
 date: 2013-11-20 21:30
 layout: post
 slug: published-paper-destriping-CMB-polarimeter

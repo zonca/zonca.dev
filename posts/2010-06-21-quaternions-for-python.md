@@ -3,7 +3,6 @@ aliases:
 - /2010/06/quaternions-for-python
 categories:
 - python
-- physics
 date: 2010-06-21 07:21
 layout: post
 slug: quaternions-for-python

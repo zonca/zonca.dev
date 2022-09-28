@@ -3,7 +3,6 @@ aliases:
 - /2020/03/setup-https-kubernetes-letsencrypt
 categories:
 - kubernetes
-- openstack
 - jetstream
 - jupyterhub
 date: '2020-03-13'

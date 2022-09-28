@@ -3,7 +3,6 @@ aliases:
 - /2013/10/jiffylab-multiuser-ipython-notebooks
 categories:
 - python
-- ipython-notebook
 date: 2013-10-14 10:30
 layout: post
 slug: jiffylab-multiuser-ipython-notebooks

@@ -3,7 +3,6 @@ aliases:
 - /2017/09/continous-integration-travis-ci-github
 categories:
 - github
-- travis
 - git
 date: 2017-09-06 18:00
 layout: post

@@ -3,7 +3,6 @@ aliases:
 - /2019/09/jetstream_kubernetes_magnum_autoscaler
 categories:
 - kubernetes
-- openstack
 - jetstream
 - jupyterhub
 date: 2019-09-12 12:00

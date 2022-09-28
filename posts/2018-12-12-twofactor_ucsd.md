@@ -1,9 +1,6 @@
 ---
 aliases:
 - /2018/12/twofactor_ucsd
-categories:
-- security
-- ucsd
 date: 2018-12-12 18:00
 layout: post
 slug: twofactor-auth-ucsd

@@ -3,7 +3,6 @@ aliases:
 - /2006/09/software-libero-per-il-trattamento-di
 categories:
 - linux
-- physics
 date: 2006-09-22 13:35
 layout: post
 slug: software-libero-per-il-trattamento-di

@@ -2,7 +2,6 @@
 aliases:
 - /2010/06/parallel-computing-python-way
 categories:
-- parallel programming
 - python
 date: 2010-06-21 07:27
 layout: post

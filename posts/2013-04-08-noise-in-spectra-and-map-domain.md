@@ -2,9 +2,8 @@
 aliases:
 - /2013/04/noise-in-spectra-and-map-domain
 categories:
-- map
-- power spectra
-- noise
+- healpy
+- astrophysics
 date: 2013-04-08 01:32
 layout: post
 slug: noise-in-spectra-and-map-domain

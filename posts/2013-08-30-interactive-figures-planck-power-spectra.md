@@ -2,11 +2,8 @@
 aliases:
 - /2013/08/interactive-figures-planck-power-spectra
 categories:
-- javascript
-- d3
-- power spectra
 - astrophysics
-- Planck
+- healpy
 date: 2013-08-30 08:52
 layout: post
 slug: interactive-figures-planck-power-spectra

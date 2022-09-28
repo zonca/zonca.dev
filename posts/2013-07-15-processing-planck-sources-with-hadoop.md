@@ -3,10 +3,7 @@ aliases:
 - /2013/07/processing-planck-sources-with-hadoop
 categories:
 - hpc
-- supercomputing
 - python
-- Planck
-- hadoop
 date: 2013-07-15 08:16
 layout: post
 slug: processing-planck-sources-with-hadoop

@@ -2,10 +2,8 @@
 aliases:
 - /2019/05/webinar_python_hpc
 categories:
-- webinar
 - python
 - hpc
-- comet
 date: 2019-05-30 15:00
 layout: post
 slug: webinar-python-hpc

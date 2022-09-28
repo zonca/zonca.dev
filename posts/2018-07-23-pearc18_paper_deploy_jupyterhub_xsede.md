@@ -3,9 +3,9 @@ aliases:
 - /2018/07/pearc18_paper_deploy_jupyterhub_xsede
 categories:
 - singularity
-- comet
 - jetstream
 - jupyterhub
+- kubernetes
 date: 2018-07-23 12:00
 layout: post
 slug: pearc18-paper-deploy-jupyterhub-xsede

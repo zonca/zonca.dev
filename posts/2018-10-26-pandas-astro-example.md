@@ -3,8 +3,7 @@ aliases:
 - /2018/10/pandas-astro-example
 categories:
 - jupyter
-- pandas
-- binder
+- astrophysics
 date: 2018-10-26 18:00
 layout: post
 slug: pandas-astro-example

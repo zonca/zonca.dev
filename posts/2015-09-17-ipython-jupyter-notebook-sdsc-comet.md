@@ -2,9 +2,9 @@
 aliases:
 - /2015/09/ipython-jupyter-notebook-sdsc-comet
 categories:
-- ipython
+- python
+- hpc
 - jupyter
-- ipython-notebook
 date: 2015-09-17 20:00
 layout: post
 slug: ipython-jupyter-notebook-sdsc-comet

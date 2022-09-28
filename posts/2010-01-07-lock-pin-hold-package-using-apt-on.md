@@ -3,7 +3,6 @@ aliases:
 - /2010/01/lock-pin-hold-package-using-apt-on
 categories:
 - linux
-- ubuntu
 date: 2010-01-07 13:49
 layout: post
 slug: lock-pin-hold-package-using-apt-on

@@ -2,7 +2,7 @@
 aliases:
 - /2017/02/customize-your-python-environment-in-jupyterhub
 categories:
-- ipython
+- python
 - jupyterhub
 date: 2017-02-24 12:00
 layout: post

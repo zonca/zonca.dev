@@ -3,7 +3,6 @@ aliases:
 - /2006/09/tar-quickref
 categories:
 - linux
-- bash
 date: 2006-09-25 13:19
 layout: post
 slug: tar-quickref

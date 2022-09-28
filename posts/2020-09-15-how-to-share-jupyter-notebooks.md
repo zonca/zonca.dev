@@ -3,7 +3,6 @@ aliases:
 - /2020/09/how-to-share-jupyter-notebooks
 categories:
 - jupyter
-- notebook
 - github
 date: '2020-09-15'
 layout: post

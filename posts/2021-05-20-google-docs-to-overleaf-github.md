@@ -2,8 +2,7 @@
 aliases:
 - /2021/05/google-docs-to-overleaf-github
 categories:
-- latex
-- git
+- github
 date: '2021-05-20'
 layout: post
 title: Migrate from Google Docs to Overleaf and Github

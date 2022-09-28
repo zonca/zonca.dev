@@ -3,8 +3,7 @@ aliases:
 - /2017/02/automated-deployment-jupyterhub-ansible
 categories:
 - jupyterhub
-- ansible
-- sdsc
+- cloudcomputing
 date: 2017-02-03 18:00
 layout: post
 slug: automated-deployment-jupyterhub-ansible

@@ -3,8 +3,7 @@ aliases:
 - /2018/01/deploy_jupyterhub_supercomputer_2018
 categories:
 - jupyterhub
-- comet
-- xsede
+- hpc
 date: 2018-11-7 11:00
 layout: post
 slug: jupyterhub-supercomputer

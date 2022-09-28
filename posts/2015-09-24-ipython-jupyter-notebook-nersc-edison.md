@@ -2,9 +2,9 @@
 aliases:
 - /2015/09/ipython-jupyter-notebook-nersc-edison
 categories:
-- ipython
 - jupyter
-- ipython-notebook
+- python
+- hpc
 date: 2015-09-24 20:00
 layout: post
 slug: ipython-jupyter-notebook-nersc-edison

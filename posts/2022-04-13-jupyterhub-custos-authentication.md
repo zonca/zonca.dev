@@ -3,7 +3,6 @@ aliases:
 - /2022/04/jupyterhub-custos-authentication
 categories:
 - kubernetes
-- openstack
 - jetstream2
 - jupyterhub
 date: '2022-04-13'

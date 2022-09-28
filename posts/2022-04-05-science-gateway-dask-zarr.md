@@ -3,7 +3,6 @@ aliases:
 - /2022/04/science-gateway-dask-zarr
 categories:
 - kubernetes
-- openstack
 - jetstream2
 - jupyterhub
 - dask

@@ -3,7 +3,6 @@ aliases:
 - /2013/10/how-to-log-exceptions-in-python
 categories:
 - python
-- exceptions
 date: 2013-10-01 10:30
 layout: post
 slug: how-to-log-exceptions-in-python

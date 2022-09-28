@@ -4,7 +4,6 @@ aliases:
 categories:
 - singularity
 - hpc
-- Comet
 date: 2017-11-06 18:00
 layout: post
 slug: modify-singularity-images

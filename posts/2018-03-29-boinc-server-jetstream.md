@@ -2,9 +2,8 @@
 aliases:
 - /2018/03/boinc-server-jetstream
 categories:
-- boinc
 - jetstream
-- gateways
+- cloudcomputing
 date: 2018-03-29 18:00
 layout: post
 slug: boinc-server-jetstream

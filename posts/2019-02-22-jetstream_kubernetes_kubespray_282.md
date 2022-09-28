@@ -3,7 +3,6 @@ aliases:
 - /2019/02/jetstream_kubernetes_kubespray_282
 categories:
 - kubernetes
-- kubespray
 - jetstream
 date: 2019-02-22 18:00
 layout: post

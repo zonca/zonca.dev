@@ -2,10 +2,9 @@
 aliases:
 - /2017/05/jupyterhub-batchspawner-ssh
 categories:
-- ipython
+- python
 - jupyterhub
 - hpc
-- comet
 date: 2017-05-16 22:00
 layout: post
 slug: jupyterhub-hpc-batchspawner-ssh

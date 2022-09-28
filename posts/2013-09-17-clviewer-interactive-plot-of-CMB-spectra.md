@@ -2,11 +2,8 @@
 aliases:
 - /2013/09/clviewer-interactive-plot-of-CMB-spectra
 categories:
-- cosmology
 - python
 - astrophysics
-- Planck
-- dotastronomy
 date: 2013-09-17 18:30
 layout: post
 slug: clviewer-interactive-plot-of-CMB-spectra

@@ -4,7 +4,6 @@ aliases:
 categories:
 - linux
 - python
-- numpy
 date: 2010-03-03 22:49
 layout: post
 slug: using-numpy-dtype-with-loadtxt

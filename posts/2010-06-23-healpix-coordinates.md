@@ -3,7 +3,6 @@ aliases:
 - /2010/06/healpix-coordinates
 categories:
 - astrophysics
-- physics
 date: 2010-06-23 01:01
 layout: post
 slug: healpix-coordinates

@@ -4,7 +4,7 @@ aliases:
 categories:
 - jupyterhub
 - python
-- nersc
+- hpc
 date: 2017-12-21 18:00
 layout: post
 slug: custom-conda-python-jupyter-nersc

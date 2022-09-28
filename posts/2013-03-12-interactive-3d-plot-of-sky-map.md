@@ -2,7 +2,6 @@
 aliases:
 - /2013/03/interactive-3d-plot-of-sky-map
 categories:
-- mayavi
 - python
 - astrophysics
 date: 2013-03-12 19:49

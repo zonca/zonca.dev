@@ -3,7 +3,6 @@ aliases:
 - /2006/10/beginners-bash-guide
 categories:
 - linux
-- bash
 date: 2006-10-03 13:56
 layout: post
 slug: beginners-bash-guide

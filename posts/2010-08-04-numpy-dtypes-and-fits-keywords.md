@@ -3,7 +3,6 @@ aliases:
 - /2010/08/numpy-dtypes-and-fits-keywords
 categories:
 - python
-- numpy
 date: 2010-08-04 21:57
 layout: post
 slug: numpy-dtypes-and-fits-keywords

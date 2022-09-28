@@ -3,7 +3,6 @@ aliases:
 - /2011/05/pink-noise-1f-noise-simulations-in-numpy
 categories:
 - python
-- physics
 date: 2011-05-18 23:49
 layout: post
 slug: pink-noise-1f-noise-simulations-in-numpy

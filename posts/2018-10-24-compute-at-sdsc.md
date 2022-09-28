@@ -2,9 +2,7 @@
 aliases:
 - /2018/10/compute-at-sdsc
 categories:
-- comet
-- sdsc
-- xsede
+- hpc
 date: 2018-10-24 18:00
 layout: post
 slug: compute-at-sdsc

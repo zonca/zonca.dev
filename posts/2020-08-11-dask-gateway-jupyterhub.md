@@ -3,7 +3,7 @@ aliases:
 - /2020/08/dask-gateway-jupyterhub
 categories:
 - kubernetes
-- openstack
+- cloudcomputing
 - jetstream
 - jupyterhub
 - dask

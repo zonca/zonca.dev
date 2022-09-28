@@ -3,7 +3,6 @@ aliases:
 - /2020/06/twitter-blocklist
 categories:
 - python
-- twitter
 date: '2020-06-01'
 layout: post
 title: Import and export list of blocked users on Twitter

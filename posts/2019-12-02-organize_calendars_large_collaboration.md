@@ -2,7 +2,7 @@
 aliases:
 - /2019/12/organize_calendars_large_collaboration
 categories:
-- google-calendar
+- openscience
 date: 2019-12-02 12:00
 layout: post
 slug: organize-calendar-collaboration

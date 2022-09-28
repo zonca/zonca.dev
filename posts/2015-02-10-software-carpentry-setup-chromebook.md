@@ -2,9 +2,8 @@
 aliases:
 - /2015/02/software-carpentry-setup-chromebook
 categories:
-- software-carpentry
-- chromebook
-- ipython
+- linux
+- python
 date: 2015-02-10 20:00
 layout: post
 slug: software-carpentry-setup-chromebook

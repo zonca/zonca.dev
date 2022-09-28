@@ -2,9 +2,8 @@
 aliases:
 - /2013/12/run-ipython-notebook-on-HPC-cluster-via-PBS
 categories:
-- ipython
-- ipython-notebook
-- HPC
+- python
+- hpc
 date: 2013-12-18 16:30
 layout: post
 slug: run-ipython-notebook-on-HPC-cluster-via-PBS

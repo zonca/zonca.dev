@@ -3,7 +3,6 @@ aliases:
 - /2022/04/dask-gateway-jupyterhub
 categories:
 - kubernetes
-- openstack
 - jetstream2
 - jupyterhub
 - dask

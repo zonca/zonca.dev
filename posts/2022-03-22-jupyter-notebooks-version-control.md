@@ -2,7 +2,7 @@
 aliases:
 - /2022/03/jupyter-notebooks-version-control
 categories:
-- jupyter-notebook
+- jupyter
 - git
 date: '2022-03-22'
 layout: post

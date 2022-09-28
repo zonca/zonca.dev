@@ -2,9 +2,8 @@
 aliases:
 - /2022/04/zarr_jetstream2
 categories:
-- jupyter
+- dask
 - jetstream2
-- zarr
 date: 2022-04-04 18:00
 layout: post
 slug: zarr-jetstream2

@@ -3,7 +3,6 @@ aliases:
 - /2015/03/numba-groupby-pixels
 categories:
 - python
-- numba
 - astrophysics
 date: 2015-03-24 9:00
 layout: post

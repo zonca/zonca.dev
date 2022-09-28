@@ -3,7 +3,6 @@ aliases:
 - /2010/08/gnome-alt-f2-popup-launcher
 categories:
 - linux
-- ubuntu
 date: 2010-08-31 18:14
 layout: post
 slug: gnome-alt-f2-popup-launcher

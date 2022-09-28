@@ -3,7 +3,6 @@ aliases:
 - /2006/09/command-line-processing
 categories:
 - linux
-- bash
 date: 2006-09-22 13:34
 layout: post
 slug: command-line-processing

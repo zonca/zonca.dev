@@ -2,7 +2,7 @@
 aliases:
 - /2015/10/use-own-python-in-jupyterhub
 categories:
-- ipython
+- python
 - jupyterhub
 date: 2015-10-05 12:00
 layout: post

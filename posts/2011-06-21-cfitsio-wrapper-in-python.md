@@ -3,7 +3,6 @@ aliases:
 - /2011/06/cfitsio-wrapper-in-python
 categories:
 - python
-- numpy
 date: 2011-06-21 04:43
 layout: post
 slug: cfitsio-wrapper-in-python

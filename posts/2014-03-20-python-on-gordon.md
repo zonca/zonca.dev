@@ -4,7 +4,6 @@ aliases:
 categories:
 - hpc
 - python
-- Gordon
 date: 2014-03-20 19:30
 layout: post
 slug: setup-ipython-notebook-parallel-Gordon

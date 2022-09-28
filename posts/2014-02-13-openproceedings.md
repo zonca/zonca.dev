@@ -3,7 +3,6 @@ aliases:
 - /2014/02/openproceedings
 categories:
 - python
-- pelican
 - openscience
 date: 2014-02-13 23:30
 layout: post

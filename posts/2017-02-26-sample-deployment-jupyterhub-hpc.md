@@ -2,10 +2,9 @@
 aliases:
 - /2017/02/sample-deployment-jupyterhub-hpc
 categories:
-- ipython
+- python
 - jupyterhub
 - hpc
-- comet
 date: 2017-02-26 12:00
 layout: post
 slug: sample-deployment-jupyterhub-hpc

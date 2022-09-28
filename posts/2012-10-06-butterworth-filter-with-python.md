@@ -2,8 +2,6 @@
 aliases:
 - /2012/10/butterworth-filter-with-python
 categories:
-- ipython
-- scipy
 - python
 date: 2012-10-06 00:00
 layout: post

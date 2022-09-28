@@ -4,7 +4,6 @@ aliases:
 categories:
 - jupyterhub
 - jetstream
-- gateways
 - kubernetes
 date: '2020-09-04'
 layout: post

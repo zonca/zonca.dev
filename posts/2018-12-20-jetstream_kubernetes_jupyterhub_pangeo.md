@@ -3,7 +3,6 @@ aliases:
 - /2018/12/jetstream_kubernetes_jupyterhub_pangeo
 categories:
 - kubernetes
-- kubespray
 - jetstream
 - jupyterhub
 date: 2018-12-20 1:00

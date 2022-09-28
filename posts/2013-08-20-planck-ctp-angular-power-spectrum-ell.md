@@ -2,8 +2,7 @@
 aliases:
 - /2013/08/planck-ctp-angular-power-spectrum-ell
 categories:
-- power spectra
-- Planck
+- healpy
 date: 2013-08-20 23:03
 layout: post
 slug: planck-ctp-angular-power-spectrum-ell

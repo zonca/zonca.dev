@@ -3,7 +3,6 @@ aliases:
 - /2006/09/pillole-di-astrofisica
 categories:
 - astrophysics
-- physics
 date: 2006-09-20 13:39
 layout: post
 slug: pillole-di-astrofisica

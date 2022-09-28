@@ -2,6 +2,8 @@
 aliases:
 - /2013/08/healpix-map-of-earth-using-healpy
 date: 2013-08-08 19:07
+categories:
+- healpy
 layout: post
 slug: healpix-map-of-earth-using-healpy
 title: HEALPix map of the Earth using healpy

@@ -2,9 +2,8 @@
 aliases:
 - /2016/10/dockerspawner-cuda
 categories:
-- ipython
+- python
 - jupyterhub
-- cuda
 date: 2016-10-12 12:00
 layout: post
 slug: dockerspawner-cuda

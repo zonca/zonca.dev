@@ -2,9 +2,8 @@
 aliases:
 - /2016/04/jupyterhub-image-sdsc-cloud
 categories:
-- ipython
+- python
 - jupyterhub
-- sdsc
 date: 2016-04-28 12:00
 layout: post
 slug: jupyterhub-image-sdsc-cloud

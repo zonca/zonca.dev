@@ -4,7 +4,7 @@ aliases:
 categories:
 - git
 - github
-- software-carpentry
+- openscience
 date: 2017-02-01 18:00
 layout: post
 slug: publish-research-software-github

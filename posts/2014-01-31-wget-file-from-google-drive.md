@@ -2,7 +2,7 @@
 aliases:
 - /2014/01/wget-file-from-google-drive
 categories:
-- bash
+- linux
 date: 2014-01-31 18:00
 layout: post
 slug: wget-file-from-google-drive

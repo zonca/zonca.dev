@@ -3,7 +3,7 @@ aliases:
 - /2014/03/machine-learning-at-scale-with-python
 categories:
 - python
-- machine-learning
+- hpc
 date: 2014-03-20 20:00
 layout: post
 slug: machine-learning-at-scale-with-python

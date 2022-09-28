@@ -2,9 +2,9 @@
 aliases:
 - /2019/01/zarr_jetstream_2019
 categories:
-- jupyter
+- jupyterhub
 - jetstream
-- zarr
+- dask
 date: 2019-01-24 18:00
 layout: post
 slug: zarr-on-jetstream

@@ -3,8 +3,6 @@ aliases:
 - /2013/04/ipython-parallell-setup-on-carver-at
 categories:
 - hpc
-- supercomputing
-- ipython
 - python
 date: 2013-04-11 05:53
 layout: post

@@ -3,7 +3,6 @@ aliases:
 - /2020/09/redirect-readthedocs
 categories:
 - python
-- docs
 date: '2020-09-01'
 layout: post
 title: Redirect readthedocs documentation to another website

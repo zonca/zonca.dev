@@ -3,7 +3,6 @@ aliases:
 - /2020/09/migrate-travisci-readthedocs-github-actions
 categories:
 - python
-- docs
 - github
 date: '2020-09-01'
 layout: post

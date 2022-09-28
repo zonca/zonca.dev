@@ -3,7 +3,6 @@ aliases:
 - /2015/04/jupyterhub-hpc
 categories:
 - python
-- ipython
 - jupyterhub
 - hpc
 date: 2015-04-02 9:00

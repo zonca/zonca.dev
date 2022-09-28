@@ -1,8 +1,6 @@
 ---
 aliases:
 - /2021/06/dreamhost-email
-categories:
-- dreamhost
 date: '2021-06-27'
 layout: post
 title: Configure dreamhost email

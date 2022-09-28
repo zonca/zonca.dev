@@ -3,9 +3,8 @@ aliases:
 - /2017/08/jupyterhub-globus-comet-singularity
 categories:
 - jupyterhub
-- ansible
-- sdsc
 - singularity
+- hpc
 date: 2017-08-11 18:00
 layout: post
 slug: jupyterhub-globus-comet-singularity

@@ -2,9 +2,8 @@
 aliases:
 - /2020/10/install-healpix-polspice-conda-nersc
 categories:
-- conda
 - healpy
-- nersc
+- hpc
 date: '2020-10-14'
 layout: post
 title: Install HEALPix and PolSpice in a conda environment

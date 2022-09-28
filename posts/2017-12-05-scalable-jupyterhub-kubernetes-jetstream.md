@@ -4,7 +4,7 @@ aliases:
 categories:
 - jupyterhub
 - jetstream
-- gateways
+- cloudcomputing
 date: 2017-12-05 18:00
 layout: post
 slug: scalable-jupyterhub-kubernetes-jetstream

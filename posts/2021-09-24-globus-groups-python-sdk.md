@@ -3,7 +3,7 @@ aliases:
 - /2021/09/globus-groups-python-sdk
 categories:
 - python
-- globus
+- hpc
 date: '2021-09-24'
 layout: post
 title: Manage Globus groups with the Python SDK

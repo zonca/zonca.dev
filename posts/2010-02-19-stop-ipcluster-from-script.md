@@ -2,7 +2,6 @@
 aliases:
 - /2010/02/stop-ipcluster-from-script
 categories:
-- parallel programming
 - python
 date: 2010-02-19 02:23
 layout: post

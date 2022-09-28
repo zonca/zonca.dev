@@ -4,6 +4,7 @@ aliases:
 categories:
 - git
 - github
+- cloudcomputing
 date: 2017-06-30 11:00
 layout: post
 slug: quick-github-pull-requests

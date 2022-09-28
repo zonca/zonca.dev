@@ -3,7 +3,6 @@ aliases:
 - /2019/04/jetstream_kubernetes_monitoring
 categories:
 - kubernetes
-- kubespray
 - jetstream
 - jupyterhub
 date: 2019-04-20 0:00

@@ -5,7 +5,6 @@ categories:
 - github
 - git
 - openscience
-- software-carpentry
 date: 2014-08-28 17:00
 layout: post
 slug: code-review-for-scientific-computing

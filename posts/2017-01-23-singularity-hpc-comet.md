@@ -3,7 +3,7 @@ aliases:
 - /2017/01/singularity-hpc-comet
 categories:
 - singularity
-- comet
+- hpc
 date: 2017-01-13 12:00
 layout: post
 slug: singularity-hpc-comet

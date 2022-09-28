@@ -3,7 +3,6 @@ aliases:
 - /2006/09/awk-made-easy
 categories:
 - linux
-- bash
 date: 2006-09-22 13:20
 layout: post
 slug: awk-made-easy

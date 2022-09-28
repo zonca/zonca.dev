@@ -1,8 +1,7 @@
 ---
 categories:
 - jupyterhub
-- comet
-- xsede
+- hpc
 date: 2018-11-7 11:00
 layout: post
 slug: jupyterhub-supercomputer

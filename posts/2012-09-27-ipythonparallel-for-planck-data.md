@@ -2,9 +2,7 @@
 aliases:
 - /2012/09/ipythonparallel-for-planck-data
 categories:
-- ipython
 - python
-- Planck
 date: 2012-09-27 06:24
 layout: post
 slug: ipythonparallel-for-planck-data

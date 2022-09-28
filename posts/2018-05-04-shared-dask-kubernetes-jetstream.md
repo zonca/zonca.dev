@@ -2,7 +2,7 @@
 aliases:
 - /2018/05/shared-dask-kubernetes-jetstream
 categories:
-- jupyter
+- jupyterhub
 - jetstream
 - dask
 date: 2018-05-04 18:00

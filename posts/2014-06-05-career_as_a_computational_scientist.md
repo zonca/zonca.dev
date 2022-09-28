@@ -2,7 +2,6 @@
 aliases:
 - /2014/06/career_as_a_computational_scientist
 categories:
-- career
 - hpc
 date: 2014-06-05 14:00
 layout: post

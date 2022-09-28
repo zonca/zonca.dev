@@ -3,7 +3,6 @@ aliases:
 - /2011/01/memory-map-npy-files
 categories:
 - python
-- numpy
 date: 2011-01-07 21:04
 layout: post
 slug: memory-map-npy-files

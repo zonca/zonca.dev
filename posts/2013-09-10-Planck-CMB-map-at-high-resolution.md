@@ -2,10 +2,9 @@
 aliases:
 - /2013/09/Planck-CMB-map-at-high-resolution
 categories:
-- cosmology
 - python
 - astrophysics
-- Planck
+- healpy
 date: 2013-09-10 14:00
 layout: post
 slug: Planck-CMB-map-at-high-resolution

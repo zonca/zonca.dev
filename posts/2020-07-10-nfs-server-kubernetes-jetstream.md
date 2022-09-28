@@ -3,9 +3,9 @@ aliases:
 - /2020/07/nfs-server-kubernetes-jetstream
 categories:
 - kubernetes
-- openstack
 - jetstream
 - jupyterhub
+- linux
 date: '2020-07-10'
 layout: post
 title: Deploy a NFS server to share data between JupyterHub users on Jetstream

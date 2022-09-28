@@ -3,7 +3,7 @@ aliases:
 - /2013/06/how-to-use-ipython-notebook-on-small
 categories:
 - hpc
-- ipython
+- python
 date: 2013-06-22 11:12
 layout: post
 slug: how-to-use-ipython-notebook-on-small

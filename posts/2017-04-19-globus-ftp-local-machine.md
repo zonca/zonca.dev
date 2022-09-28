@@ -2,8 +2,7 @@
 aliases:
 - /2017/04/globus-ftp-local-machine
 categories:
-- ipython
-- jupyterhub
+- linux
 date: 2017-04-19 12:00
 layout: post
 slug: globus-gridftp-local

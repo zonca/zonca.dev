@@ -2,7 +2,6 @@
 aliases:
 - /2018/07/docker-auto-build
 categories:
-- docker
 - github
 date: 2018-07-19 18:00
 layout: post

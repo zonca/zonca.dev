@@ -2,7 +2,8 @@
 aliases:
 - /2021/08/joss-to-arxiv
 categories:
-- writing
+- github
+- openscience
 date: '2021-08-01'
 layout: post
 title: Upload a JOSS paper to Arxiv

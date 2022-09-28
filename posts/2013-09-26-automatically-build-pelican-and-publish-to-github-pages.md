@@ -3,8 +3,7 @@ aliases:
 - /2013/09/automatically-build-pelican-and-publish-to-github-pages
 categories:
 - python
-- travis-ci
-- github
+- git
 date: 2013-09-26 13:45
 layout: post
 slug: automatically-build-pelican-and-publish-to-github-pages

@@ -2,7 +2,7 @@
 aliases:
 - /2018/06/organize-code-simulations-nersc
 categories:
-- nersc
+- hpc
 - python
 date: 2018-06-20 18:00
 layout: post

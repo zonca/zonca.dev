@@ -2,8 +2,8 @@
 aliases:
 - /2021/01/github-overleaf-large-document
 categories:
-- latex
 - git
+- github
 date: '2021-01-28'
 layout: post
 title: Coordinate a large Latex document with multiple Overleaf projects and Github

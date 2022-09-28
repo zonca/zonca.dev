@@ -3,7 +3,7 @@ aliases:
 - /2022/05/remove-cell-id-jupyter-notebook
 categories:
 - git
-- notebook
+- jupyter
 date: '2022-05-17'
 layout: post
 title: Remove unique cell id from Jupyter Notebooks

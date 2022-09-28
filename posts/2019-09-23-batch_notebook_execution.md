@@ -3,8 +3,6 @@ aliases:
 - /2019/09/batch_notebook_execution
 categories:
 - jupyter
-- notebook
-- condor
 date: 2019-09-23 12:00
 layout: post
 slug: batch-notebook-execution

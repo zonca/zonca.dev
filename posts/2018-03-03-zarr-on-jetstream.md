@@ -4,7 +4,7 @@ aliases:
 categories:
 - jupyter
 - jetstream
-- zarr
+- cloudcomputing
 date: 2018-03-03 18:00
 layout: post
 slug: zarr-on-jetstream

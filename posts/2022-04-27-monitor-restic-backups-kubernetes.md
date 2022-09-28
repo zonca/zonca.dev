@@ -2,7 +2,7 @@
 aliases:
 - /2022/04/monitor-restic-backups-kubernetes
 categories:
-- jetstream
+- jetstream2
 - kubernetes
 date: '2022-04-27'
 layout: post

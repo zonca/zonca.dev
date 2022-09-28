@@ -4,7 +4,7 @@ aliases:
 categories:
 - jupyterhub
 - jetstream
-- gateways
+- kubernetes
 date: '2020-04-20'
 layout: post
 title: ECSS Symposium introduction to cloud computing with Jetstream and deployment

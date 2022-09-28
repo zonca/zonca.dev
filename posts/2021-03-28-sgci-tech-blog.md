@@ -3,7 +3,6 @@ aliases:
 - /2021/03/sgci-tech-blog
 categories:
 - kubernetes
-- kubespray
 - jetstream
 date: '2021-03-28'
 layout: post

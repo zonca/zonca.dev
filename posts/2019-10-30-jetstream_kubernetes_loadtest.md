@@ -3,7 +3,6 @@ aliases:
 - /2019/10/jetstream_kubernetes_loadtest
 categories:
 - kubernetes
-- openstack
 - jetstream
 - jupyterhub
 date: 2019-10-30 12:00

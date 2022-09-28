@@ -2,11 +2,8 @@
 aliases:
 - /2013/09/run-hadoop-python-jobs-on-amazon-with-mrjob
 categories:
-- bigdata
-- github
+- git
 - python
-- aws
-- hadoop
 date: 2013-09-02 02:36
 layout: post
 slug: run-hadoop-python-jobs-on-amazon-with-mrjob

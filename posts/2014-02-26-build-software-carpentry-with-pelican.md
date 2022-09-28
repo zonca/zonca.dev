@@ -3,8 +3,7 @@ aliases:
 - /2014/02/build-software-carpentry-with-pelican
 categories:
 - python
-- software-carpentry
-- pelican
+- openscience
 date: 2014-02-26 23:00
 layout: post
 slug: build-software-carpentry-with-pelican

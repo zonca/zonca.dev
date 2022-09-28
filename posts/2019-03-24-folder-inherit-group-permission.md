@@ -2,9 +2,8 @@
 aliases:
 - /2019/03/folder-inherit-group-permission
 categories:
-- jupyter
-- jetstream
-- zarr
+- hpc
+- linux
 date: 2019-03-24 18:00
 layout: post
 slug: folder-inherit-group-permission

@@ -3,7 +3,6 @@ aliases:
 - /2020/05/jetstream_kubernetes_magnum
 categories:
 - kubernetes
-- openstack
 - jetstream
 - jupyterhub
 date: '2020-05-21'

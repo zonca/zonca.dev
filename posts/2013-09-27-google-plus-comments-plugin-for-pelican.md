@@ -3,7 +3,6 @@ aliases:
 - /2013/09/google-plus-comments-plugin-for-pelican
 categories:
 - python
-- pelican
 - github
 date: 2013-09-27 17:45
 layout: post

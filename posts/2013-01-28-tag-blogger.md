@@ -2,9 +2,7 @@
 aliases:
 - /2013/01/tag-blogger
 categories:
-- javascript
-- hackideas
-- healpix
+- linux
 date: 2013-01-28 21:06
 layout: post
 slug: tag:blogger

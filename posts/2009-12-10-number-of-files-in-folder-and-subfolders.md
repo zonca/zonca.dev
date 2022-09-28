@@ -3,7 +3,6 @@ aliases:
 - /2009/12/number-of-files-in-folder-and-subfolders
 categories:
 - linux
-- bash
 date: 2009-12-10 18:16
 layout: post
 slug: number-of-files-in-folder-and-subfolders

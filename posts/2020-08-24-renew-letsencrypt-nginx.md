@@ -2,7 +2,7 @@
 aliases:
 - /2020/08/renew-letsencrypt-nginx
 categories:
-- letsencrypt
+- linux
 date: '2020-08-24'
 layout: post
 title: Renew letsencrypt certificate with NGINX

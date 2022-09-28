@@ -3,7 +3,6 @@ aliases:
 - /2006/09/software-carpentry
 categories:
 - linux
-- physics
 date: 2006-09-25 12:51
 layout: post
 slug: software-carpentry

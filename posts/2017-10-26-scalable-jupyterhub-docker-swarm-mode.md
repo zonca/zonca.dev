@@ -3,9 +3,8 @@ aliases:
 - /2017/10/scalable-jupyterhub-docker-swarm-mode
 categories:
 - jupyterhub
-- docker
 - jetstream
-- gateways
+- cloudcomputing
 date: 2017-10-26 18:00
 layout: post
 slug: scalable-jupyterhub-docker-swarm-mode

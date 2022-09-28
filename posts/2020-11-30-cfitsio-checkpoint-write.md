@@ -2,7 +2,7 @@
 aliases:
 - /2020/11/cfitsio-checkpoint-write
 categories:
-- astropy
+- astrophysics
 date: '2020-11-30'
 layout: post
 title: CFITSIO file writing with checkpointing

@@ -2,7 +2,7 @@
 aliases:
 - /2008/03/decibels-db-and-dbm-in-terms-of-power
 categories:
-- physics
+- astrophysics
 date: 2008-03-29 02:13
 layout: post
 slug: decibels-db-and-dbm-in-terms-of-power

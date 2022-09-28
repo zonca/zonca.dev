@@ -2,8 +2,8 @@
 aliases:
 - /2012/12/ubuntu-ppa-for-healpix-and-healpy
 categories:
-- healpix
-- ubuntu
+- healpy
+- linux
 date: 2012-12-17 10:37
 layout: post
 slug: ubuntu-ppa-for-healpix-and-healpy

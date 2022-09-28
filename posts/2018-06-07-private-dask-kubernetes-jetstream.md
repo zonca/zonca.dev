@@ -2,7 +2,8 @@
 aliases:
 - /2018/06/private-dask-kubernetes-jetstream
 categories:
-- jupyter
+- jupyterhub
+- kubernetes
 - jetstream
 - dask
 date: 2018-06-07 18:00

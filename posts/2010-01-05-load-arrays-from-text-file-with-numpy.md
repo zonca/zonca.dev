@@ -3,7 +3,6 @@ aliases:
 - /2010/01/load-arrays-from-text-file-with-numpy
 categories:
 - python
-- numpy
 date: 2010-01-05 16:32
 layout: post
 slug: load-arrays-from-text-file-with-numpy

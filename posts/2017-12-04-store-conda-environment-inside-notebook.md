@@ -2,7 +2,8 @@
 aliases:
 - /2017/12/store-conda-environment-inside-notebook
 categories:
-- jupyter-notebook
+- jupyter
+- python
 date: 2017-12-04 18:00
 layout: post
 slug: store-conda-environment-inside-notebook

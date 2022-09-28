@@ -3,7 +3,6 @@ aliases:
 - /2013/04/basic-forkpull-git-workflow
 categories:
 - git
-- github
 date: 2013-04-06 07:52
 layout: post
 slug: basic-forkpull-git-workflow
