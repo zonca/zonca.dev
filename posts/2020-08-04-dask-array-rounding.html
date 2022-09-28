@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2020-08-04">
+<meta name="description" content="Dask array rounding float32">
+
+<title>zonca.dev - Dask array rounding</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">zonca.dev</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Dask array rounding</h1>
+                  <div>
+        <div class="description">
+          Dask array rounding float32
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">python</div>
+                <div class="quarto-category">dask</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 4, 2020</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>This notebook is an extract from the <a href="https://github.com/dask/dask-tutorial/blob/master/03_array.ipynb">Dask array Tutorial notebook</a>, see also the Youtube SciPy 2020 class at <a href="https://www.youtube.com/watch?v=mqdglv9GnM8" class="uri">https://www.youtube.com/watch?v=mqdglv9GnM8</a>.</p>
+<p>We notice that <code>dask</code> is automatically rounding <code>float32</code> numbers to machine precision, which I think is the most sensible choice, but surprising difference compared to <code>numpy</code>.</p>
+<section id="create-the-input-data" class="level2">
+<h2 class="anchored" data-anchor-id="create-the-input-data">Create the input data</h2>
+<p>Needs only to be done once, defaults to ~4GB of data, you can reduce it by setting <code>blocksize</code> to a smaller number, e.g.&nbsp;1000</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> h5py</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>blocksize <span class="op">=</span> <span class="dv">1000000</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>nblocks <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>shape <span class="op">=</span> nblocks <span class="op">*</span> blocksize</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> os.path.exists(<span class="st">'random.hdf5'</span>):</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> h5py.File(<span class="st">'random.hdf5'</span>, mode<span class="op">=</span><span class="st">'w'</span>) <span class="im">as</span> f:</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        dset <span class="op">=</span> f.create_dataset(<span class="st">'/x'</span>, shape<span class="op">=</span>(shape,), dtype<span class="op">=</span><span class="st">'f4'</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, shape, blocksize):</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>            dset[i: i <span class="op">+</span> blocksize] <span class="op">=</span> np.random.exponential(size<span class="op">=</span>blocksize)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dask.distributed <span class="im">import</span> Client</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> Client(n_workers<span class="op">=</span><span class="dv">24</span>, processes<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data with h5py</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># this creates a pointer to the data, but does not actually load</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> h5py</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> h5py.File(<span class="st">'random.hdf5'</span>, mode<span class="op">=</span><span class="st">'r'</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>dset <span class="op">=</span> f[<span class="st">'/x'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dset.dtype</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>dtype('&lt;f4')</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>ls <span class="op">-</span>lah data<span class="op">/</span>random.hdf5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>-rw-r--r-- 1 zonca csb148 3.8G Jul 24 22:51 data/random.hdf5</code></pre>
+</div>
+</div>
+<p><strong>Compute sum using blocked algorithm</strong></p>
+<p>Before using dask, lets consider the concept of blocked algorithms. We can compute the sum of a large number of elements by loading them chunk-by-chunk, and keeping a running total.</p>
+<p>Here we compute the sum of this large array on disk by</p>
+<ol type="1">
+<li>Computing the sum of each 1,000,000 sized chunk of the array</li>
+<li>Computing the sum of the 1,000 intermediate sums</li>
+</ol>
+<p>Note that this is a sequential process in the notebook kernel, both the loading and summing.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(dset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>1000000000</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute sum of large array, one million numbers at a time</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sums <span class="op">=</span> []</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">1000000000</span>, <span class="dv">1000000</span>):</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    chunk <span class="op">=</span> dset[i: i <span class="op">+</span> <span class="dv">1000000</span>]  <span class="co"># pull out numpy array</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    sums.append(chunk.<span class="bu">sum</span>())</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> <span class="bu">sum</span>(sums)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(total)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>999976587.6875</code></pre>
+</div>
+</div>
+<p><strong>Create <code>dask.array</code> object</strong></p>
+<p>You can create a <code>dask.array</code> <code>Array</code> object with the <code>da.from_array</code> function. This function accepts</p>
+<ol type="1">
+<li><code>data</code>: Any object that supports NumPy slicing, like <code>dset</code></li>
+<li><code>chunks</code>: A chunk size to tell us how to block up our array, like <code>(1000000,)</code></li>
+</ol>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dask.array <span class="im">as</span> da</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> da.from_array(dset, chunks<span class="op">=</span>(<span class="dv">10000000</span>,))</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+
+<table>
+<tbody><tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 4.00 GB </td> <td> 40.00 MB </td></tr>
+    <tr><th> Shape </th><td> (1000000000,) </td> <td> (10000000,) </td></tr>
+    <tr><th> Count </th><td> 101 Tasks </td><td> 100 Chunks </td></tr>
+    <tr><th> Type </th><td> float32 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="170" height="75" style="stroke:rgb(0,0,0);stroke-width:1">
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2"></line>
+  <line x1="0" y1="25" x2="120" y2="25" style="stroke-width:2"></line>
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2"></line>
+  <line x1="1" y1="0" x2="1" y2="25"></line>
+  <line x1="2" y1="0" x2="2" y2="25"></line>
+  <line x1="3" y1="0" x2="3" y2="25"></line>
+  <line x1="4" y1="0" x2="4" y2="25"></line>
+  <line x1="6" y1="0" x2="6" y2="25"></line>
+  <line x1="7" y1="0" x2="7" y2="25"></line>
+  <line x1="8" y1="0" x2="8" y2="25"></line>
+  <line x1="9" y1="0" x2="9" y2="25"></line>
+  <line x1="10" y1="0" x2="10" y2="25"></line>
+  <line x1="12" y1="0" x2="12" y2="25"></line>
+  <line x1="13" y1="0" x2="13" y2="25"></line>
+  <line x1="14" y1="0" x2="14" y2="25"></line>
+  <line x1="15" y1="0" x2="15" y2="25"></line>
+  <line x1="16" y1="0" x2="16" y2="25"></line>
+  <line x1="18" y1="0" x2="18" y2="25"></line>
+  <line x1="19" y1="0" x2="19" y2="25"></line>
+  <line x1="20" y1="0" x2="20" y2="25"></line>
+  <line x1="21" y1="0" x2="21" y2="25"></line>
+  <line x1="22" y1="0" x2="22" y2="25"></line>
+  <line x1="24" y1="0" x2="24" y2="25"></line>
+  <line x1="25" y1="0" x2="25" y2="25"></line>
+  <line x1="26" y1="0" x2="26" y2="25"></line>
+  <line x1="27" y1="0" x2="27" y2="25"></line>
+  <line x1="28" y1="0" x2="28" y2="25"></line>
+  <line x1="30" y1="0" x2="30" y2="25"></line>
+  <line x1="31" y1="0" x2="31" y2="25"></line>
+  <line x1="32" y1="0" x2="32" y2="25"></line>
+  <line x1="33" y1="0" x2="33" y2="25"></line>
+  <line x1="34" y1="0" x2="34" y2="25"></line>
+  <line x1="36" y1="0" x2="36" y2="25"></line>
+  <line x1="37" y1="0" x2="37" y2="25"></line>
+  <line x1="38" y1="0" x2="38" y2="25"></line>
+  <line x1="39" y1="0" x2="39" y2="25"></line>
+  <line x1="40" y1="0" x2="40" y2="25"></line>
+  <line x1="42" y1="0" x2="42" y2="25"></line>
+  <line x1="43" y1="0" x2="43" y2="25"></line>
+  <line x1="44" y1="0" x2="44" y2="25"></line>
+  <line x1="45" y1="0" x2="45" y2="25"></line>
+  <line x1="46" y1="0" x2="46" y2="25"></line>
+  <line x1="48" y1="0" x2="48" y2="25"></line>
+  <line x1="49" y1="0" x2="49" y2="25"></line>
+  <line x1="50" y1="0" x2="50" y2="25"></line>
+  <line x1="51" y1="0" x2="51" y2="25"></line>
+  <line x1="52" y1="0" x2="52" y2="25"></line>
+  <line x1="54" y1="0" x2="54" y2="25"></line>
+  <line x1="55" y1="0" x2="55" y2="25"></line>
+  <line x1="56" y1="0" x2="56" y2="25"></line>
+  <line x1="57" y1="0" x2="57" y2="25"></line>
+  <line x1="58" y1="0" x2="58" y2="25"></line>
+  <line x1="60" y1="0" x2="60" y2="25"></line>
+  <line x1="61" y1="0" x2="61" y2="25"></line>
+  <line x1="62" y1="0" x2="62" y2="25"></line>
+  <line x1="63" y1="0" x2="63" y2="25"></line>
+  <line x1="64" y1="0" x2="64" y2="25"></line>
+  <line x1="66" y1="0" x2="66" y2="25"></line>
+  <line x1="67" y1="0" x2="67" y2="25"></line>
+  <line x1="68" y1="0" x2="68" y2="25"></line>
+  <line x1="69" y1="0" x2="69" y2="25"></line>
+  <line x1="70" y1="0" x2="70" y2="25"></line>
+  <line x1="72" y1="0" x2="72" y2="25"></line>
+  <line x1="73" y1="0" x2="73" y2="25"></line>
+  <line x1="74" y1="0" x2="74" y2="25"></line>
+  <line x1="75" y1="0" x2="75" y2="25"></line>
+  <line x1="76" y1="0" x2="76" y2="25"></line>
+  <line x1="78" y1="0" x2="78" y2="25"></line>
+  <line x1="79" y1="0" x2="79" y2="25"></line>
+  <line x1="80" y1="0" x2="80" y2="25"></line>
+  <line x1="81" y1="0" x2="81" y2="25"></line>
+  <line x1="82" y1="0" x2="82" y2="25"></line>
+  <line x1="84" y1="0" x2="84" y2="25"></line>
+  <line x1="85" y1="0" x2="85" y2="25"></line>
+  <line x1="86" y1="0" x2="86" y2="25"></line>
+  <line x1="87" y1="0" x2="87" y2="25"></line>
+  <line x1="88" y1="0" x2="88" y2="25"></line>
+  <line x1="90" y1="0" x2="90" y2="25"></line>
+  <line x1="91" y1="0" x2="91" y2="25"></line>
+  <line x1="92" y1="0" x2="92" y2="25"></line>
+  <line x1="93" y1="0" x2="93" y2="25"></line>
+  <line x1="94" y1="0" x2="94" y2="25"></line>
+  <line x1="96" y1="0" x2="96" y2="25"></line>
+  <line x1="97" y1="0" x2="97" y2="25"></line>
+  <line x1="98" y1="0" x2="98" y2="25"></line>
+  <line x1="99" y1="0" x2="99" y2="25"></line>
+  <line x1="100" y1="0" x2="100" y2="25"></line>
+  <line x1="102" y1="0" x2="102" y2="25"></line>
+  <line x1="103" y1="0" x2="103" y2="25"></line>
+  <line x1="104" y1="0" x2="104" y2="25"></line>
+  <line x1="105" y1="0" x2="105" y2="25"></line>
+  <line x1="106" y1="0" x2="106" y2="25"></line>
+  <line x1="108" y1="0" x2="108" y2="25"></line>
+  <line x1="109" y1="0" x2="109" y2="25"></line>
+  <line x1="110" y1="0" x2="110" y2="25"></line>
+  <line x1="111" y1="0" x2="111" y2="25"></line>
+  <line x1="112" y1="0" x2="112" y2="25"></line>
+  <line x1="114" y1="0" x2="114" y2="25"></line>
+  <line x1="115" y1="0" x2="115" y2="25"></line>
+  <line x1="116" y1="0" x2="116" y2="25"></line>
+  <line x1="117" y1="0" x2="117" y2="25"></line>
+  <line x1="118" y1="0" x2="118" y2="25"></line>
+  <line x1="120" y1="0" x2="120" y2="25" style="stroke-width:2"></line>
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.000000,0.000000 120.000000,0.000000 120.000000,25.412617 0.000000,25.412617" style="fill:#ECB172A0;stroke-width:0"></polygon>
+
+  <!-- Text -->
+  <text x="60.000000" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle">1000000000</text>
+  <text x="140.000000" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,12.706308)">1</text>
+</svg>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>x_float64 <span class="op">=</span> x.astype(np.float64)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>x.<span class="bu">sum</span>().compute()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>999976700.0</code></pre>
+</div>
+</div>
+<p>The machine resolution of <code>float32</code> is <code>1e-6</code>, therefore everything after the 7th digit is garbage, so it is reasonable to remove it, otherwise it gives you the impression that the computation is more precise than it actually it. Still I am surprised <code>dask</code> does it, <code>numpy</code> above instead doesn’t care about that and prints all the digits.</p>
+<p>If we need more precision, we need to increase the precision of the calculation, see below, but we are going to use a lot more memory, also, the input data were <code>float32</code>, so it is not very useful anyway, we should generate again the input with higher precision.</p>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>np.finfo(np.float32)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>finfo(resolution=1e-06, min=-3.4028235e+38, max=3.4028235e+38, dtype=float32)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>x_float64.<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+
+<table>
+<tbody><tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 8 B </td> <td> 8 B </td></tr>
+    <tr><th> Shape </th><td> () </td> <td> () </td></tr>
+    <tr><th> Count </th><td> 336 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Type </th><td> float64 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>x_float64.<span class="bu">sum</span>().compute()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>999976584.1788422</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>client.shutdown()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

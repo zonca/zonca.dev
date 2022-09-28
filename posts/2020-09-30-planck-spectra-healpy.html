@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2020-09-30">
+
+<title>zonca.dev - Read and process Planck CMB power spectra with healpy</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">zonca.dev</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Read and process Planck CMB power spectra with <code>healpy</code></h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">healpy</div>
+                <div class="quarto-category">cmb</div>
+                <div class="quarto-category">cosmology</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 30, 2020</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>In this tutorial we will load CMB power spectra generated by the cosmological parameters measured by Planck, we will create a realization of the Spherical Harmonics coefficients <span class="math inline">\(a_{\ell m}\)</span>, save it to disk, and use them to create maps at different resolutions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> healpy <span class="im">as</span> hp</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter out all warnings</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(plt.style.available)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'seaborn-talk'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>First we go to the Planck data release page at IPAC, I prefer plain web pages instead of the funky javascript interface of the Planck Legacy Archive. The spectra are relegated to the <strong>Ancillary data</strong> section:</p>
+<p><a href="https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/" class="uri">https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/</a></p>
+<p>We can choose one of the available spectra, I would like the spectrum from theory, <code>BaseSpectra</code>, and download it locally:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>wget https:<span class="op">//</span>irsa.ipac.caltech.edu<span class="op">/</span>data<span class="op">/</span>Planck<span class="op">/</span>release_3<span class="op">/</span>ancillary<span class="op">-</span>data<span class="op">/</span>cosmoparams<span class="op">/</span>COM_PowerSpect_CMB<span class="op">-</span>base<span class="op">-</span>plikHM<span class="op">-</span>TTTEEE<span class="op">-</span>lowl<span class="op">-</span>lowE<span class="op">-</span>lensing<span class="op">-</span>minimum<span class="op">-</span>theory_R3<span class="fl">.01</span>.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, I couldn’t find any documentation about the format of those spectra, there are no units and we don’t know if those spectra are just the <span class="math inline">\(C_\ell\)</span> or <span class="math inline">\(\dfrac{\ell(\ell+1)}{2\pi} C_\ell\)</span>, it is probably a standard output of the <code>CAMB</code> software, anyway I prefer to cross check with some public plot.</p>
+<p><code>pandas</code> has trouble with the <code>#</code> at the beginning of the title line, the easiest is to edit that out with a file editor.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>head <span class="op">-</span><span class="dv">3</span> COM_PowerSpect_CMB<span class="op">-</span>base<span class="op">-</span>plikHM<span class="op">-</span>TTTEEE<span class="op">-</span>lowl<span class="op">-</span>lowE<span class="op">-</span>lensing<span class="op">-</span>minimum<span class="op">-</span>theory_R3<span class="fl">.01</span>.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You should not have <code>#</code> at the beginning of the first line</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>input_cl <span class="op">=</span> pd.read_csv(<span class="st">"COM_PowerSpect_CMB-base-plikHM-TTTEEE-lowl-lowE-lensing-minimum-theory_R3.01.txt"</span>,</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                       delim_whitespace<span class="op">=</span><span class="va">True</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>input_cl.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>input_cl.plot(logx<span class="op">=</span><span class="va">True</span>, logy<span class="op">=</span><span class="va">True</span>, grid<span class="op">=</span><span class="va">True</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can compare this to one of the plots from the Planck wiki:</p>
+<p><img src="https://wiki.cosmos.esa.int/planckpla/images/a/a5/Mission_spectrum.png" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>input_cl.TT.plot(logx<span class="op">=</span><span class="va">False</span>, logy<span class="op">=</span><span class="va">False</span>, grid<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"$\dfrac{\ell(\ell+1)}{2\pi} C_\ell~[\mu K^2]$"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"$\ell$"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>plt.xlim([<span class="dv">50</span>, <span class="dv">2500</span>])<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Very good, they agree, therefore the data are in $ C_$, let’s transform to <span class="math inline">\(C_\ell [K^2]\)</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>input_cl.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(input_cl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>lmax <span class="op">=</span> input_cl.index[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(lmax)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>cl <span class="op">=</span> input_cl.divide(input_cl.index <span class="op">*</span> (input_cl.index<span class="op">+</span><span class="dv">1</span>) <span class="op">/</span> (np.pi<span class="op">*</span><span class="dv">2</span>), axis<span class="op">=</span><span class="st">"index"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>cl <span class="op">/=</span> <span class="fl">1e12</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>cl.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><span class="math inline">\(\ell\)</span> starts at 2, but all the <code>healpy</code> tools expect an array starting from zero, so let’s extend that.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>cl <span class="op">=</span> cl.reindex(np.arange(<span class="dv">0</span>, lmax<span class="op">+</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>cl.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>cl <span class="op">=</span> cl.fillna(<span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>cl.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="generate-a-cmb-map-realization" class="level2">
+<h2 class="anchored" data-anchor-id="generate-a-cmb-map-realization">Generate a CMB map realization</h2>
+<p>The power spectrum gives us the distribution of power with the angular scale, if we want to create a map we could use <code>hp.synfast</code>, however the realization will be different each time that we run <code>synfast</code>, we could always use the same seed to make it reproducible. However, in case we want to have the same realization of a CMB map at different resolutions (<span class="math inline">\(N_{side}\)</span>), it is better to generate a realization of the spectrum in Spherical Harmonics space, creating a set of <span class="math inline">\(a_{\ell m}\)</span>, and then when needed transform them to a map with <code>hp.alm2map</code>.</p>
+<p>We also want to make sure that the <span class="math inline">\(a_{\ell m}\)</span> have the same <span class="math inline">\(\ell_{max}\)</span> of the input <span class="math inline">\(C_\ell\)</span>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>seed <span class="op">=</span> <span class="dv">583</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(seed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>alm <span class="op">=</span> hp.synalm((cl.TT, cl.EE, cl.BB, cl.TE), lmax<span class="op">=</span>lmax, new<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>high_nside <span class="op">=</span> <span class="dv">1024</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>cmb_map <span class="op">=</span> hp.alm2map(alm, nside<span class="op">=</span>high_nside, lmax<span class="op">=</span>lmax)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can double check that we got the order of magnitude correct, for example we can compare with one of the <a href="https://www.cosmos.esa.int/documents/387566/425793/2015_SMICA_CMB/c8c4c802-4b76-49da-b80a-0fb8d02c62b7?t=1423083319437">published Planck maps</a>, the scale is <span class="math inline">\(\pm 300 \mu K\)</span>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>hp.mollview(cmb_map[<span class="dv">0</span>], <span class="bu">min</span><span class="op">=-</span><span class="dv">300</span><span class="op">*</span><span class="fl">1e-6</span>, <span class="bu">max</span><span class="op">=</span><span class="dv">300</span><span class="op">*</span><span class="fl">1e-6</span>, unit<span class="op">=</span><span class="st">"K"</span>, title<span class="op">=</span><span class="st">"CMB Temperature"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Polarization is generally an order of magnitude lower:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> m <span class="kw">in</span> cmb_map[<span class="dv">1</span>:]:</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    hp.mollview(m, <span class="bu">min</span><span class="op">=-</span><span class="dv">30</span><span class="op">*</span><span class="fl">1e-6</span>, <span class="bu">max</span><span class="op">=</span><span class="dv">30</span><span class="op">*</span><span class="fl">1e-6</span>, unit<span class="op">=</span><span class="st">"K"</span>, title<span class="op">=</span><span class="st">"CMB Polarization"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="double-check-the-spectra-of-the-maps" class="level2">
+<h2 class="anchored" data-anchor-id="double-check-the-spectra-of-the-maps">Double check the spectra of the maps</h2>
+<p>As a final check, we can compare the spectra of the output maps to the input spectra.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>cl_from_map <span class="op">=</span> hp.anafast(cmb_map, lmax<span class="op">=</span>lmax, use_pixel_weights<span class="op">=</span><span class="va">True</span>) <span class="op">*</span> <span class="fl">1e12</span> <span class="co"># in muK^2</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>ell <span class="op">=</span> np.arange(cl_from_map.shape[<span class="dv">1</span>])</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>cl_from_map <span class="op">*=</span> ell <span class="op">*</span> (ell<span class="op">+</span><span class="dv">1</span>) <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>np.pi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>np.median(cl_from_map, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>plt.plot(cl_from_map[<span class="dv">0</span>], label<span class="op">=</span><span class="st">"map TT"</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>input_cl.TT.plot(logx<span class="op">=</span><span class="va">False</span>, logy<span class="op">=</span><span class="va">False</span>, grid<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>plt.legend()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>input_cl.plot(logx<span class="op">=</span><span class="va">True</span>, logy<span class="op">=</span><span class="va">True</span>, grid<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>plt.plot(cl_from_map[<span class="dv">0</span>], label<span class="op">=</span><span class="st">"map TT"</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>plt.plot(cl_from_map[<span class="dv">1</span>], label<span class="op">=</span><span class="st">"map EE"</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>plt.plot(cl_from_map[<span class="dv">2</span>], label<span class="op">=</span><span class="st">"map BB"</span>)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>plt.plot(cl_from_map[<span class="dv">3</span>], label<span class="op">=</span><span class="st">"map TE"</span>)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co">#plt.plot(cl_from_map[4], label="map EB")</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="co">#plt.plot(cl_from_map[5], label="map TB")</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"$\dfrac{\ell(\ell+1)}{2\pi} C_\ell~[\mu K^2]$"</span>)</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"$\ell$"</span>)</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>plt.legend()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The scale is fine, we notice below that going through the discretization step of mapping the Spherical Harmonics into a map in pixel space and then trying to estimate the power spectrum again from that introduces some noise, on top of that, there is the issue of “Cosmic variance”, i.e.&nbsp;the <span class="math inline">\(C_\ell\)</span> estimates the variance of the <span class="math inline">\(a_{\ell m}\)</span> coefficients, but large angular scales, low <span class="math inline">\(\ell\)</span>, there are only a small number of such coefficients, so the estimation itself is noisy <a href="https://www.slac.stanford.edu/econf/C030908/papers/THAT004.pdf">see this work by Benjamin Wandelt</a>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>plt.plot(cl_from_map[<span class="dv">0</span>][:<span class="op">-</span><span class="dv">2</span>], label<span class="op">=</span><span class="st">"map TT"</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>input_cl.TT.plot(logx<span class="op">=</span><span class="va">False</span>, logy<span class="op">=</span><span class="va">False</span>, grid<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"$\dfrac{\ell(\ell+1)}{2\pi} C_\ell~[\mu K^2]$"</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"$\ell$"</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>plt.legend()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>plt.plot(cl_from_map[<span class="dv">1</span>][:<span class="op">-</span><span class="dv">2</span>], label<span class="op">=</span><span class="st">"map EE"</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>input_cl.EE.plot(logx<span class="op">=</span><span class="va">False</span>, logy<span class="op">=</span><span class="va">False</span>, grid<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"$\dfrac{\ell(\ell+1)}{2\pi} C_\ell~[\mu K^2]$"</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"$\ell$"</span>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>plt.legend()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>plt.plot(cl_from_map[<span class="dv">2</span>], label<span class="op">=</span><span class="st">"map BB"</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>input_cl.BB.plot(logx<span class="op">=</span><span class="va">False</span>, logy<span class="op">=</span><span class="va">False</span>, grid<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"$\dfrac{\ell(\ell+1)}{2\pi} C_\ell~[\mu K^2]$"</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"$\ell$"</span>)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>plt.legend()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="save-the-a_ell-m-to-disk" class="level2">
+<h2 class="anchored" data-anchor-id="save-the-a_ell-m-to-disk">Save the <span class="math inline">\(a_{\ell m}\)</span> to disk</h2>
+<p>We can save in a standard FITS format</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>hp.write_alm(<span class="ss">f"Planck_bestfit_alm_seed_</span><span class="sc">{</span>seed<span class="sc">}</span><span class="ss">.fits"</span>, alm, overwrite<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>ls <span class="op">*</span>alm<span class="op">*</span>fits</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="create-a-lower-resolution-map-from-the-same-a_ell-m" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-lower-resolution-map-from-the-same-a_ell-m">Create a lower resolution map from the same <span class="math inline">\(a_{\ell m}\)</span></h2>
+<p>The <span class="math inline">\(a_{\ell m}\)</span> can now be used to create the same realization of the CMB power spectrum at different resolution, it is not as straightforward as it might seem:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>low_nside <span class="op">=</span> <span class="dv">32</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>low_nside_lmax <span class="op">=</span> <span class="dv">3</span><span class="op">*</span>low_nside <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>low_nside_cmb_map <span class="op">=</span> hp.alm2map(alm, nside<span class="op">=</span>low_nside)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>cl_low_nside <span class="op">=</span> hp.anafast(low_nside_cmb_map, use_pixel_weights<span class="op">=</span><span class="va">True</span>, lmax<span class="op">=</span>low_nside_lmax) <span class="op">*</span> <span class="fl">1e12</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>ell_low_nside <span class="op">=</span> np.arange(cl_low_nside.shape[<span class="dv">1</span>])</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>cl_low_nside <span class="op">*=</span> ell_low_nside <span class="op">*</span> (ell_low_nside<span class="op">+</span><span class="dv">1</span>) <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>np.pi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>plt.plot(cl_from_map[<span class="dv">0</span>], label<span class="op">=</span><span class="st">"map TT"</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>plt.plot(cl_low_nside[<span class="dv">0</span>], label<span class="op">=</span><span class="st">"low nside map TT"</span>)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>input_cl.TT.plot(logx<span class="op">=</span><span class="va">False</span>, logy<span class="op">=</span><span class="va">False</span>, grid<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>plt.axhline(low_nside_cmb_map.std()<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"$\dfrac{\ell(\ell+1)}{2\pi} C_\ell~[\mu K^2]$"</span>)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"$\ell$"</span>)</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>plt.legend()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We notice that the spectra is dominated by noise. The issue arises from the fact that Spherical Harmonics transforms are well defined only for band-limited signals, that means that at high <span class="math inline">\(\ell\)</span> the signal should be very low otherwise we are going to create artifacts, because we used <span class="math inline">\(a_{\ell m}\)</span> with a <span class="math inline">\(\ell_{max}\)</span> of ~2500 to create a map which could only represent a signal with a <span class="math inline">\(\ell_{max} &lt; 3 N_{side} - 1\)</span> (or <span class="math inline">\(\ell_{max} &lt; 2 N_{side}\)</span> to be conservative).</p>
+<p>Unfortunately the <code>lmax</code> argument of <code>hp.map2alm</code> doesn’t help because it is designed to specify the <span class="math inline">\(\ell_{max}\)</span> of the input <span class="math inline">\(a_{\ell m}\)</span>.</p>
+<p>We can fix the issue by zeroing the <span class="math inline">\(a_{\ell m}\)</span> coefficients above a specific <span class="math inline">\(\ell\)</span> using <code>hp.almxfl</code>, it automatically assumes that if a input <span class="math inline">\(\ell\)</span> is not provided, it is zero, therefore we can just provide an array of ones with the length of our target <span class="math inline">\(\ell_{max}\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>clip <span class="op">=</span> np.ones(low_nside_lmax<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>alm_clipped <span class="op">=</span> np.array([hp.almxfl(each, clip) <span class="cf">for</span> each <span class="kw">in</span> alm])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>low_nside_cmb_map_clipped <span class="op">=</span> hp.alm2map(alm_clipped, nside<span class="op">=</span>low_nside)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>cl_low_nside_clipped <span class="op">=</span> hp.anafast(low_nside_cmb_map_clipped, use_pixel_weights<span class="op">=</span><span class="va">True</span>, lmax<span class="op">=</span>low_nside_lmax) <span class="op">*</span> <span class="fl">1e12</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>cl_low_nside_clipped <span class="op">*=</span> ell_low_nside <span class="op">*</span> (ell_low_nside<span class="op">+</span><span class="dv">1</span>) <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>np.pi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>plt.plot(cl_from_map[<span class="dv">0</span>], label<span class="op">=</span><span class="st">"map TT"</span>, alpha<span class="op">=</span><span class="fl">.5</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>plt.plot(cl_low_nside_clipped[<span class="dv">0</span>], label<span class="op">=</span><span class="st">"low nside map TT clipped"</span>, alpha<span class="op">=</span><span class="fl">.8</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>input_cl.TT.plot(logx<span class="op">=</span><span class="va">False</span>, logy<span class="op">=</span><span class="va">False</span>, grid<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>plt.axvline(<span class="dv">2</span><span class="op">*</span>low_nside, color<span class="op">=</span><span class="st">"black"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, label<span class="op">=</span><span class="st">"ell=2*N_side"</span>)</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>plt.xlim([<span class="dv">0</span>, <span class="dv">800</span>])</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"$\dfrac{\ell(\ell+1)}{2\pi} C_\ell~[\mu K^2]$"</span>)</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"$\ell$"</span>)</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>plt.legend()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Thanks to this the spectra is accurate at least up to <span class="math inline">\(2 N_{side}\)</span> and it looks has a small bias towards higher values at higher <span class="math inline">\(\ell\)</span>.</p>
+<p>Finally we can check by eye that the large scale features of the map (focus on a hot or cold spot) are the same in the 2 maps</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>hp.mollview(cmb_map[<span class="dv">0</span>], title<span class="op">=</span><span class="st">"CMB T map at $N_</span><span class="sc">{side}</span><span class="st">$= "</span> <span class="op">+</span> <span class="bu">str</span>(high_nside))</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>hp.mollview(low_nside_cmb_map_clipped[<span class="dv">0</span>], title<span class="op">=</span><span class="st">"CMB T map at $N_</span><span class="sc">{side}</span><span class="st">$= "</span> <span class="op">+</span> <span class="bu">str</span>(low_nside))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>hp.write_map(<span class="ss">f"map_nside_</span><span class="sc">{</span>low_nside<span class="sc">}</span><span class="ss">_from_Planck_bestfit_alm_seed_</span><span class="sc">{</span>seed<span class="sc">}</span><span class="ss">_K_CMB.fits"</span>, low_nside_cmb_map_clipped, overwrite<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>ls <span class="op">*</span>.fits</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="clip-a_ell-m-to-a-lower-ell_max" class="level2">
+<h2 class="anchored" data-anchor-id="clip-a_ell-m-to-a-lower-ell_max">Clip <span class="math inline">\(a_{\ell m}\)</span> to a lower <span class="math inline">\(\ell_{max}\)</span></h2>
+<p>It was easy to use <code>hp.almxfl</code> to zero the coefficient above a threshold, however, the array remains very large, especially inconvenient if you need to save it to disk.</p>
+<p>We want instead to actually clip the coefficients using the <code>hp.Alm.getidx</code> function which gives us the indices of a specific <span class="math inline">\(\ell,m\)</span> pair (they can be array):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>lclip <span class="op">=</span> low_nside_lmax</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>clipping_indices <span class="op">=</span> []</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> m <span class="kw">in</span> <span class="bu">range</span>(lclip<span class="op">+</span><span class="dv">1</span>):</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>    clipping_indices.append(hp.Alm.getidx(lmax, np.arange(m, lclip<span class="op">+</span><span class="dv">1</span>), m))</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(clipping_indices[:<span class="dv">2</span>])</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>clipping_indices <span class="op">=</span> np.concatenate(clipping_indices)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>alm_really_clipped <span class="op">=</span> [each[clipping_indices] <span class="cf">for</span> each <span class="kw">in</span> alm]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>low_nside_cmb_map_really_clipped <span class="op">=</span> hp.alm2map(alm_clipped, nside<span class="op">=</span>low_nside)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>hp.mollview(low_nside_cmb_map_clipped[<span class="dv">0</span>], title<span class="op">=</span><span class="st">"zeroed - CMB T map at $N_</span><span class="sc">{side}</span><span class="st">$= "</span> <span class="op">+</span> <span class="bu">str</span>(low_nside))</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>hp.mollview(low_nside_cmb_map_really_clipped[<span class="dv">0</span>], title<span class="op">=</span><span class="st">"clipped - CMB T map at $N_</span><span class="sc">{side}</span><span class="st">$= "</span> <span class="op">+</span> <span class="bu">str</span>(low_nside))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>(low_nside_cmb_map_clipped[<span class="dv">0</span>] <span class="op">-</span> low_nside_cmb_map_really_clipped[<span class="dv">0</span>]).<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>hp.write_alm(<span class="ss">f"Planck_bestfit_alm_seed_</span><span class="sc">{</span>seed<span class="sc">}</span><span class="ss">_lmax_</span><span class="sc">{</span>lclip<span class="sc">}</span><span class="ss">_K_CMB.fits"</span>, alm_really_clipped, overwrite<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>ls <span class="op">*</span>.fits</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
