@@ -72,8 +72,8 @@ Yeah, for posterity, growing older I get more nostalgic.
 
 The homepage:
 
-![Old blog homepage](/images/old_blog_homepage.png)
+![Old blog homepage](old_blog_homepage.png)
 
 A section of an article page:
 
-![Old blog article page](/images/old_blog_article_page.png)
+![Old blog article page](old_blog_article_page.png)

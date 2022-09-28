@@ -69,7 +69,7 @@ kubectl --namespace monitoring port-forward svc/grafana 3000
 Access `localhost:3000` with your browser and you should be able to navigate through all the statistics of your cluster,
 see for example this screenshot. The credentials are user `admin` and password `admin`.
 
-![Screenshot of the Grafana UI](/images/grafana.png)
+![Screenshot of the Grafana UI](grafana.png)
 
 From the "Home" page, you can access all the preconfigured dashboards by clicking on the top "Home" button, it will show
 a searchable list of all available dashboards.
@@ -91,7 +91,7 @@ from the laptop and then run the `port-forward` command locally on the laptop.
 Once we have [deployed JupyterHub with Helm](https://zonca.github.io/2019/02/kubernetes-jupyterhub-jetstream-kubespray.html), we can pull up the
 "namespace" monitor and select the `jhub` namespace to visualize resource usage but also usage requests and limits of all pods created by JupyterHub and its users. See a screenshot below.
 
-![Screenshot of the Grafana namespace UI](/images/grafana_jhub.png)
+![Screenshot of the Grafana namespace UI](grafana_jhub.png)
 
 ## Setup alerts
 
@@ -105,7 +105,7 @@ Follow the [instructions for slack on the Grafana documentation](https://grafana
 * Create a incoming webhook in the workspace and channel your prefer on Slack
 * In the Grafana Alerting menu, set the webhook incoming url, the channel name
 
-![Screenshot of the Grafana slack notification](/images/grafana_slack.png)
+![Screenshot of the Grafana slack notification](grafana_slack.png)
 
 ## Configure ingress
 

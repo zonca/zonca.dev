@@ -90,4 +90,4 @@ proxy-66576956d7-r926j       1/1     Running   0          55m
 
 And also access the Dask GUI, using the menu on the left or the link provided by `dask_kubernetes` inside the Notebook.
 
-![Screenshot of the Dask UI](/images/dask_ui_workers.png)
+![Screenshot of the Dask UI](dask_ui_workers.png)

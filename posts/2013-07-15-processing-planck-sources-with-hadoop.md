@@ -295,8 +295,8 @@ All files are available on github:
 <div>
  <br/>
  <div class="separator" style="clear: both; text-align: left;">
-  <a href="/images/processing-planck-sources-with-hadoop_s1600_download.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">
-   <img border="0" src="/images/processing-planck-sources-with-hadoop_s1600_download.png"/>
+  <a href="processing-planck-sources-with-hadoop_s1600_download.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">
+   <img border="0" src="processing-planck-sources-with-hadoop_s1600_download.png"/>
   </a>
  </div>
  <h2>

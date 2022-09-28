@@ -34,7 +34,7 @@ Still, we can embed all of the calendars in a single webpage, see an example bel
 <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FLos_Angeles&amp;src=dTI2dnBkNnZvcm1qNHVucnVtajMzZzdwcGNAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;src=c2FwazM1OTVmcHRiZHVtOWdqZnJwdWxkbnNAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%23DD4477&amp;color=%236633CC" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
 
 Users can click on the bottom "Add to Google Calendar" button and subscribe to a subset or all the calendars.
-See the screenshot below, ![screenshot of add to Google Calendar](/images/add_google_calendar.png).
+See the screenshot below, ![screenshot of add to Google Calendar](add_google_calendar.png).
 
 As an additional benefit, we can compartimentalize permissions more easily, e.g. leads of a working group
 get writing access only to their relevant calendar/calendars.

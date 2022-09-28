@@ -25,7 +25,7 @@ The map is a PNG at a resolution of 17469x8796 pixels, which is suitable for pri
 
 * Small size preview:
 
-![Preview of Planck CMB map](/images/Planck-CMB-map-at-high-resolution_planck_cmb_map.jpg)
+![Preview of Planck CMB map](Planck-CMB-map-at-high-resolution_planck_cmb_map.jpg)
 
 * Python code:
 

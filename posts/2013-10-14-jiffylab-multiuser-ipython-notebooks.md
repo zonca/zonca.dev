@@ -49,13 +49,13 @@ I think that just adding the common filesystem would be enough to make the proje
 
 ### Login page
 
-<img src="/images/jiffylab_intro.png" alt="Jiffylab Login page" style="width: 730px;"/>
+<img src="jiffylab_intro.png" alt="Jiffylab Login page" style="width: 730px;"/>
 
 
 ### IPython notebook dashboard
 
-<img src="/images/jiffylab_dashboard.png" alt="Jiffylab IPython notebook dashboard" style="width: 730px;"/>
+<img src="jiffylab_dashboard.png" alt="Jiffylab IPython notebook dashboard" style="width: 730px;"/>
 
 ### IPython notebook
 
-<img src="/images/jiffylab_notebook.png" alt="Jiffylab IPython notebook" style="width: 730px;"/>
+<img src="jiffylab_notebook.png" alt="Jiffylab IPython notebook" style="width: 730px;"/>

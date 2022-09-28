@@ -174,8 +174,8 @@ https://mrjob.readthedocs.io/en/latest/guides/emr-quickstart.html
  <br/>
  <br/>
  <div class="separator" style="clear: both; text-align: center;">
-  <a href="/images/run-hadoop-python-jobs-on-amazon-with-mrjob_s1600_awsjobdetails.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">
-   <img border="0" height="588" src="/images/run-hadoop-python-jobs-on-amazon-with-mrjob_s640_awsjobdetails.png" width="640"/>
+  <a href="run-hadoop-python-jobs-on-amazon-with-mrjob_s1600_awsjobdetails.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">
+   <img border="0" height="588" src="run-hadoop-python-jobs-on-amazon-with-mrjob_s640_awsjobdetails.png" width="640"/>
   </a>
  </div>
  <br/>

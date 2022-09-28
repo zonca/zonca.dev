@@ -40,7 +40,7 @@ Jetstream has extensive documentation and training available both focused on [us
 
 Deployment on Jetstream should begin with gateway developers identifying the scale of their deployment: few-user or test deployment vs. large-memory, many-user deployment.
 
-![](/images/jupyterhub-jetstream.png)
+![](jupyterhub-jetstream.png)
 
 _Architecture of the deployment of JupyterHub on Jetstream: the users connect via their browser to the Jetstream master node virtual machine, they first are redirected to external services for authentication. Once authenticated, JupyterHub spawns a container running the Jupyter Notebook for them in one of the worker nodes managed by Kubernetes. Their own persistent data volume is also mounted there. Kubernetes handles the networking so that the interactive computing session is proxied back to the users' browser._
 

@@ -32,8 +32,8 @@ title: HEALPix map of the Earth using healpy
  <br/>
 </p>
 <div class="separator" style="clear: both; text-align: center;">
- <a href="/images/healpix-map-of-earth-using-healpy_s1600_download.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">
-  <img border="0" height="230" src="/images/healpix-map-of-earth-using-healpy_s400_download.png" width="400"/>
+ <a href="healpix-map-of-earth-using-healpy_s1600_download.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">
+  <img border="0" height="230" src="healpix-map-of-earth-using-healpy_s400_download.png" width="400"/>
  </a>
 </div>
 <br/>
