@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Use the distributed file format Zarr on Jetstream Swift object storage, 2019
+aliases:
+- /2019/01/zarr_jetstream_2019
+categories:
+- jupyter
+- jetstream
+- zarr
 date: 2019-01-24 18:00
-categories: [jupyter, jetstream, zarr]
+layout: post
 slug: zarr-on-jetstream
+title: Use the distributed file format Zarr on Jetstream Swift object storage, 2019
+
 ---
 
 This is an updated version of the 2018 edition

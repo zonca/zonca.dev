@@ -1,9 +1,16 @@
 ---
-layout: post
-title: Run Jupyterhub on a Supercomputer
+aliases:
+- /2015/04/jupyterhub-hpc
+categories:
+- python
+- ipython
+- jupyterhub
+- hpc
 date: 2015-04-02 9:00
-categories: [python, ipython, jupyterhub, hpc]
+layout: post
 slug: jupyterhub-hpc
+title: Run Jupyterhub on a Supercomputer
+
 ---
 
 > **Summary**: I developed a plugin for [Jupyterhub](https://github.com/jupyter/jupyterhub "jupyterhub"): [RemoteSpawner](https://github.com/zonca/remotespawner), it has a proof-of-concept interface with the Supercomputer Gordon at UC San Diego to spawn IPython Notebook instances as jobs throught the queue and tunnel the interface back to the Jupyterhub instance.

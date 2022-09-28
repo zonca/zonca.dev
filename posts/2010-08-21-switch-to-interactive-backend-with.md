@@ -1,9 +1,13 @@
 ---
-layout: post
-title: switch to interactive backend with ipython -pylab
+aliases:
+- /2010/08/switch-to-interactive-backend-with
+categories:
+- python
 date: 2010-08-21 00:33
-categories: [python]
+layout: post
 slug: switch-to-interactive-backend-with
+title: switch to interactive backend with ipython -pylab
+
 ---
 
 <p>

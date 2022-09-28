@@ -1,7 +1,13 @@
 ---
+aliases:
+- /2020/04/jetstream-object-store
+categories:
+- openstack
+- jetstream
+date: '2020-04-01'
 layout: post
 title: Use the Jetstream object store
-categories: [openstack, jetstream]
+
 ---
 
 I plan to collect here notes about using the Openstack object store

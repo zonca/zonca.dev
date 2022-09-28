@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Setup automated testing on a Github repository with Travis-ci
+aliases:
+- /2017/09/continous-integration-travis-ci-github
+categories:
+- github
+- travis
+- git
 date: 2017-09-06 18:00
-categories: [github, travis, git]
+layout: post
 slug: automated-testing-travis-ci-github
+title: Setup automated testing on a Github repository with Travis-ci
+
 ---
 
 ## Introduction

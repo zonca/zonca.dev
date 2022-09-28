@@ -1,7 +1,14 @@
 ---
+aliases:
+- /2020/09/migrate-travisci-readthedocs-github-actions
+categories:
+- python
+- docs
+- github
+date: '2020-09-01'
 layout: post
 title: Migrate from Travis-CI and Readthedocs to Github actions
-categories: [python, docs, github]
+
 ---
 
 For a number of years I have been concerned about the duplication of work having to maintain

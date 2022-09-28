@@ -1,7 +1,13 @@
 ---
+aliases:
+- /2022/04/monitor-restic-backups-kubernetes
+categories:
+- jetstream
+- kubernetes
+date: '2022-04-27'
 layout: post
 title: Monitor Restic backups on Kubernetes
-categories: [jetstream, kubernetes]
+
 ---
 
 For one of my production JupyterHub deployments on Kubernetes, I have setup an automated

@@ -1,7 +1,13 @@
 ---
+aliases:
+- /2021/04/jetstream-backup-kubernetes-volumes-object-store
+categories:
+- jetstream
+- kubernetes
+date: '2021-04-19'
 layout: post
 title: Backup Kubernetes volumes to OpenStorageNetwork object store
-categories: [jetstream, kubernetes]
+
 ---
 
 In my specific scenario, I have users running JupyterHub on top of Kubernetes

@@ -1,9 +1,14 @@
 ---
-layout: post
-title: cfitsio wrapper in python
+aliases:
+- /2011/06/cfitsio-wrapper-in-python
+categories:
+- python
+- numpy
 date: 2011-06-21 04:43
-categories: [python, numpy]
+layout: post
 slug: cfitsio-wrapper-in-python
+title: cfitsio wrapper in python
+
 ---
 
 <p>

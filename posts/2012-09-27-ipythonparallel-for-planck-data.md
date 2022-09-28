@@ -1,9 +1,15 @@
 ---
-layout: post
-title: IPython.parallel for Planck data analysis at NERSC
+aliases:
+- /2012/09/ipythonparallel-for-planck-data
+categories:
+- ipython
+- python
+- Planck
 date: 2012-09-27 06:24
-categories: [ipython, python, Planck]
+layout: post
 slug: ipythonparallel-for-planck-data
+title: IPython.parallel for Planck data analysis at NERSC
+
 ---
 
 <a href="http://www.esa.int/planck">

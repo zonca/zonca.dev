@@ -1,9 +1,13 @@
 ---
-layout: post
-title: wget file from google drive
+aliases:
+- /2014/01/wget-file-from-google-drive
+categories:
+- bash
 date: 2014-01-31 18:00
-categories: [bash]
+layout: post
 slug: wget-file-from-google-drive
+title: wget file from google drive
+
 ---
 
 Sometimes it is useful, even more if you have a chromebook, to upload a file to Google Drive and then use `wget` to retrieve it from a server remotely.

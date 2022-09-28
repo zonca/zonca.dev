@@ -1,9 +1,14 @@
 ---
-layout: post
-title: memory map npy files
+aliases:
+- /2011/01/memory-map-npy-files
+categories:
+- python
+- numpy
 date: 2011-01-07 21:04
-categories: [python, numpy]
+layout: post
 slug: memory-map-npy-files
+title: memory map npy files
+
 ---
 
 <p>

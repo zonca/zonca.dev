@@ -1,9 +1,14 @@
 ---
-layout: post
-title: How to create pull requests on Github
+aliases:
+- /2017/06/quick-github-pull-requests
+categories:
+- git
+- github
 date: 2017-06-30 11:00
-categories: [git, github]
+layout: post
 slug: quick-github-pull-requests
+title: How to create pull requests on Github
+
 ---
 
 Pull Requests are the web-based version of sending software patches via email to code maintainers.

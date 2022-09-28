@@ -1,9 +1,16 @@
 ---
-layout: post
-title: Simulate users on JupyterHub
+aliases:
+- /2019/10/jetstream_kubernetes_loadtest
+categories:
+- kubernetes
+- openstack
+- jetstream
+- jupyterhub
 date: 2019-10-30 12:00
-categories: [kubernetes, openstack, jetstream, jupyterhub]
+layout: post
 slug: loadtest-jupyterhub
+title: Simulate users on JupyterHub
+
 ---
 
 **Updated January 2021**

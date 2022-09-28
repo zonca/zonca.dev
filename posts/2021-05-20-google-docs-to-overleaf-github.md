@@ -1,7 +1,13 @@
 ---
+aliases:
+- /2021/05/google-docs-to-overleaf-github
+categories:
+- latex
+- git
+date: '2021-05-20'
 layout: post
 title: Migrate from Google Docs to Overleaf and Github
-categories: [latex,git]
+
 ---
 
 Once a document on Google Docs becomes too big and complicated to make sure it is consistent, it is a good idea to migrate it to Latex.

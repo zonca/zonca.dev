@@ -1,9 +1,13 @@
 ---
-layout: post
-title: some python resources
+aliases:
+- /2011/11/some-python-resources
+categories:
+- python
 date: 2011-11-01 23:02
-categories: [python]
+layout: post
 slug: some-python-resources
+title: some python resources
+
 ---
 
 <p>

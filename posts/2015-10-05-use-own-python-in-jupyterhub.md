@@ -1,9 +1,14 @@
 ---
-layout: post
-title: Use your own Python installation (kernel) in Jupyterhub
+aliases:
+- /2015/10/use-own-python-in-jupyterhub
+categories:
+- ipython
+- jupyterhub
 date: 2015-10-05 12:00
-categories: [ipython, jupyterhub]
+layout: post
 slug: use-own-python-in-jupyterhub
+title: Use your own Python installation (kernel) in Jupyterhub
+
 ---
 
 **Updated February 2017**

@@ -1,9 +1,16 @@
 ---
-layout: post
-title: Kubernetes monitoring with Dashboard, Prometheus, and Grafana
+aliases:
+- /2019/02/kubernetes-monitoring
+categories:
+- kubernetes
+- kubespray
+- jetstream
+- jupyterhub
 date: 2019-02-22 21:00
-categories: [kubernetes, kubespray, jetstream, jupyterhub]
+layout: post
 slug: scale-kubernetes-jupyterhub-manually
+title: Kubernetes monitoring with Dashboard, Prometheus, and Grafana
+
 ---
 
 ## Monitoring Prometheus and Grafana

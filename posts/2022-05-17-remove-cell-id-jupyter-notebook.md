@@ -1,7 +1,13 @@
 ---
+aliases:
+- /2022/05/remove-cell-id-jupyter-notebook
+categories:
+- git
+- notebook
+date: '2022-05-17'
 layout: post
 title: Remove unique cell id from Jupyter Notebooks
-categories: [git, notebook]
+
 ---
 
 I know! Jupyter is littering your `git diff` with randomly generated cell ids and `nbstripout` doesn't remove them, (I'm sure they are useful for some reason).

@@ -1,9 +1,14 @@
 ---
-layout: post
-title: Create DockerHub auto build
+aliases:
+- /2018/07/docker-auto-build
+categories:
+- docker
+- github
 date: 2018-07-19 18:00
-categories: [docker, github]
+layout: post
 slug: create-dockerhub-autobuild
+title: Create DockerHub auto build
+
 ---
 
 It is very convenient to create Autobuild repositories on DockerHub linked to

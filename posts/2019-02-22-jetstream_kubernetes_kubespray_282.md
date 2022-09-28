@@ -1,9 +1,16 @@
 ---
-layout: post
-title: Deploy Kubernetes with Kubespray 2.8.2 and JupyterHub with helm recipe 0.8 on Jetstream
+aliases:
+- /2019/02/jetstream_kubernetes_kubespray_282
+categories:
+- kubernetes
+- kubespray
+- jetstream
 date: 2019-02-22 18:00
-categories: [kubernetes, kubespray, jetstream]
+layout: post
 slug: kubernetes-jupyterhub-jetstream-kubespray
+title: Deploy Kubernetes with Kubespray 2.8.2 and JupyterHub with helm recipe 0.8
+  on Jetstream
+
 ---
 
 **This tutorial is obsolete, check the [updated version of the tutorial](https://zonca.dev/2020/06/kubernetes-jetstream-kubespray.html)**

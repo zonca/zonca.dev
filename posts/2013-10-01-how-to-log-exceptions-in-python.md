@@ -1,9 +1,14 @@
 ---
-layout: post
-title: How to log exceptions in Python
+aliases:
+- /2013/10/how-to-log-exceptions-in-python
+categories:
+- python
+- exceptions
 date: 2013-10-01 10:30
-categories: [python, exceptions]
+layout: post
 slug: how-to-log-exceptions-in-python
+title: How to log exceptions in Python
+
 ---
 
 Sometimes it is useful to just catch any exception, write details to a log file and continue execution.

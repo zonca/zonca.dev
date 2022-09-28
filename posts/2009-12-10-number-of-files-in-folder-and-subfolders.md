@@ -1,9 +1,14 @@
 ---
-layout: post
-title: number of files in a folder and subfolders
+aliases:
+- /2009/12/number-of-files-in-folder-and-subfolders
+categories:
+- linux
+- bash
 date: 2009-12-10 18:16
-categories: [linux, bash]
+layout: post
 slug: number-of-files-in-folder-and-subfolders
+title: number of files in a folder and subfolders
+
 ---
 
 <p>

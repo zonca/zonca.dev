@@ -1,9 +1,14 @@
 ---
-layout: post
-title: ipython and PyTrilinos
+aliases:
+- /2011/02/ipython-and-pytrilinos
+categories:
+- parallel programming
+- python
 date: 2011-02-16 19:10
-categories: [parallel programming, python]
+layout: post
 slug: ipython-and-pytrilinos
+title: ipython and PyTrilinos
+
 ---
 
 <ol>

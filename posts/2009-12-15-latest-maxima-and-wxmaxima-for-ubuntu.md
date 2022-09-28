@@ -1,9 +1,14 @@
 ---
-layout: post
-title: Latest Maxima and WxMaxima for Ubuntu Karmic
+aliases:
+- /2009/12/latest-maxima-and-wxmaxima-for-ubuntu
+categories:
+- linux
+- ubuntu
 date: 2009-12-15 11:20
-categories: [linux, ubuntu]
+layout: post
 slug: latest-maxima-and-wxmaxima-for-ubuntu
+title: Latest Maxima and WxMaxima for Ubuntu Karmic
+
 ---
 
 <a href="http://zeus.nyf.hu/~blahota/maxima/karmic/" title="maxima for ubuntu">

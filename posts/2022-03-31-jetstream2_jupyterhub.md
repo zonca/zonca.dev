@@ -1,8 +1,15 @@
 ---
+aliases:
+- /2022/03/jetstream2_jupyterhub
+categories:
+- kubernetes
+- jupyterhub
+- jetstream2
+date: '2022-03-31'
 layout: post
-title: Deploy JupyterHub on Jetstream 2 on top of Kubernetes
-categories: [kubernetes, jupyterhub, jetstream2]
 slug: jetstream2-jupyterhub
+title: Deploy JupyterHub on Jetstream 2 on top of Kubernetes
+
 ---
 
 This tutorial is a followup to: [Deploy Kubernetes on Jetstream 2 with Kubespray 2.18.0](https://zonca.dev/2022/03/kubernetes-jetstream2-kubespray.html), so I'll assume Kubernetes is already deployed with a default storageclass.

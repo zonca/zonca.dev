@@ -1,9 +1,14 @@
 ---
-layout: post
-title: Customize your Python environment in Jupyterhub
+aliases:
+- /2017/02/customize-your-python-environment-in-jupyterhub
+categories:
+- ipython
+- jupyterhub
 date: 2017-02-24 12:00
-categories: [ipython, jupyterhub]
+layout: post
 slug: customize-python-environment-jupyterhub
+title: Customize your Python environment in Jupyterhub
+
 ---
 
 Usecase: You have access to a Jupyterhub server and you would like to install some packages but cannot use `pip install` and modify the systemwide Python installation.

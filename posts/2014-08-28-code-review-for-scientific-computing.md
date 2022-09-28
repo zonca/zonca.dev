@@ -1,9 +1,16 @@
 ---
-layout: post
-title: How to perform code review for scientific software
+aliases:
+- /2014/08/code-review-for-scientific-computing
+categories:
+- github
+- git
+- openscience
+- software-carpentry
 date: 2014-08-28 17:00
-categories: [github, git, openscience, software-carpentry]
+layout: post
 slug: code-review-for-scientific-computing
+title: How to perform code review for scientific software
+
 ---
 
 Code review is the formal process where a programmer inspects in detail a piece of software developed by somebody else in order to improve code quality by catching bugs, improve readibility and usability.

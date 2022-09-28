@@ -1,9 +1,14 @@
 ---
-layout: post
-title: count hits with numpy
+aliases:
+- /2010/07/count-hits-with-numpy
+categories:
+- python
+- numpy
 date: 2010-07-23 15:18
-categories: [python, numpy]
+layout: post
 slug: count-hits-with-numpy
+title: count hits with numpy
+
 ---
 
 <p>

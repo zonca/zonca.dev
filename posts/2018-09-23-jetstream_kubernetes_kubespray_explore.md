@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Explore a Kubernetes deployment on Jetstream with Kubespray 2/3
+aliases:
+- /2018/09/jetstream_kubernetes_kubespray_explore
+categories:
+- kubernetes
+- kubespray
+- jetstream
 date: 2018-09-23 23:00
-categories: [kubernetes, kubespray, jetstream]
+layout: post
 slug: kubernetes-jetstream-kubespray-explore
+title: Explore a Kubernetes deployment on Jetstream with Kubespray 2/3
+
 ---
 
 This is the second part of the tutorial on deploying Kubernetes with `kubespray` and JupyterHub

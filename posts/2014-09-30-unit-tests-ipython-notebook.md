@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Write unit tests as cells of IPython notebooks
+aliases:
+- /2014/09/unit-tests-ipython-notebook
+categories:
+- unit-test
+- ipython
+- ipython-notebook
 date: 2014-09-30 14:00
-categories: [unit-test, ipython, ipython-notebook]
+layout: post
 slug: unit-tests-ipython-notebook
+title: Write unit tests as cells of IPython notebooks
+
 ---
 
 ## What?

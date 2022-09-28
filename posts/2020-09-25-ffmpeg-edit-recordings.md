@@ -1,6 +1,10 @@
 ---
+aliases:
+- /2020/09/ffmpeg-edit-recordings
+date: '2020-09-25'
 layout: post
 title: Edit video recordings with ffmpeg
+
 ---
 
 A few scripts to speedup, concatenate and possibly

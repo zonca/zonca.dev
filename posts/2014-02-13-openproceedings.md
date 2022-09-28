@@ -1,9 +1,16 @@
 ---
-layout: post
-title: openproceedings - Github/FigShare based publishing platform for conference proceedings
+aliases:
+- /2014/02/openproceedings
+categories:
+- python
+- pelican
+- openscience
 date: 2014-02-13 23:30
-categories: [python, pelican, openscience]
+layout: post
 slug: openproceedings-github-figshare-pelican-conference-proceedings
+title: openproceedings - Github/FigShare based publishing platform for conference
+  proceedings
+
 ---
 
 Github provides a great interface for gathering, peer reviewing and accepting papers for conference proceedings, the second step is to publish them on a website either in HTML or PDF form or both.

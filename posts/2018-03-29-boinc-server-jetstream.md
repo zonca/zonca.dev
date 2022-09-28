@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Install a BOINC server on Jetstream
+aliases:
+- /2018/03/boinc-server-jetstream
+categories:
+- boinc
+- jetstream
+- gateways
 date: 2018-03-29 18:00
-categories: [boinc, jetstream, gateways]
+layout: post
 slug: boinc-server-jetstream
+title: Install a BOINC server on Jetstream
+
 ---
 
 [BOINC](https://boinc.berkeley.edu/) is the leading platform for volunteer computing.

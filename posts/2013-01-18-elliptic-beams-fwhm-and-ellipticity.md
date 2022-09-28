@@ -1,9 +1,13 @@
 ---
-layout: post
-title: Elliptic beams, FWHM and ellipticity
+aliases:
+- /2013/01/elliptic-beams-fwhm-and-ellipticity
+categories:
+- astrophysics
 date: 2013-01-18 00:58
-categories: [astrophysics]
+layout: post
 slug: elliptic-beams-fwhm-and-ellipticity
+title: Elliptic beams, FWHM and ellipticity
+
 ---
 
 <span style="background-color: white; color: #222222; font-family: arial, sans-serif; font-size: 13px;">

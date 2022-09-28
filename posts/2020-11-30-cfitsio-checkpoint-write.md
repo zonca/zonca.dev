@@ -1,7 +1,12 @@
 ---
+aliases:
+- /2020/11/cfitsio-checkpoint-write
+categories:
+- astropy
+date: '2020-11-30'
 layout: post
 title: CFITSIO file writing with checkpointing
-categories: [astropy]
+
 ---
 
 I wrote a prototype implementation of writing FITS files in C

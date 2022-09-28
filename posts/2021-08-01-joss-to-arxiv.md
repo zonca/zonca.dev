@@ -1,7 +1,12 @@
 ---
+aliases:
+- /2021/08/joss-to-arxiv
+categories:
+- writing
+date: '2021-08-01'
 layout: post
 title: Upload a JOSS paper to Arxiv
-categories: [writing]
+
 ---
 
 If you are in Astrophysics, you probably want to have your [JOSS](https://joss.theoj.org/) paper published to the [Arxiv](https://arxiv.org/).

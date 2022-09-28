@@ -1,9 +1,17 @@
 ---
-layout: post
-title: Deploy JupyterHub on Kubernetes deployment on Jetstream created with Kubespray 3/3
+aliases:
+- /2018/09/jetstream_kubernetes_kubespray_jupyterhub
+categories:
+- kubernetes
+- kubespray
+- jetstream
+- jupyterhub
 date: 2018-09-24 1:00
-categories: [kubernetes, kubespray, jetstream, jupyterhub]
+layout: post
 slug: kubernetes-jetstream-kubespray-jupyterhub
+title: Deploy JupyterHub on Kubernetes deployment on Jetstream created with Kubespray
+  3/3
+
 ---
 
 All of the following assumes you are logged in to the master node of the [Kubernetes cluster deployed with kubespray](https://zonca.github.io/2018/09/kubernetes-jetstream-kubespray.html) and checked out the repository:

@@ -1,9 +1,17 @@
 ---
-layout: post
-title: Interactive figures in the browser - CMB Power Spectra
+aliases:
+- /2013/08/interactive-figures-planck-power-spectra
+categories:
+- javascript
+- d3
+- power spectra
+- astrophysics
+- Planck
 date: 2013-08-30 08:52
-categories: [javascript, d3, power spectra, astrophysics, Planck]
+layout: post
 slug: interactive-figures-planck-power-spectra
+title: Interactive figures in the browser - CMB Power Spectra
+
 ---
 
 <p>

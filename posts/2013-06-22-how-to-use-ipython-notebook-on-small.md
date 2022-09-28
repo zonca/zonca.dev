@@ -1,9 +1,14 @@
 ---
-layout: post
-title: How to use the IPython notebook on a small computing cluster
+aliases:
+- /2013/06/how-to-use-ipython-notebook-on-small
+categories:
+- hpc
+- ipython
 date: 2013-06-22 11:12
-categories: [hpc, ipython]
+layout: post
 slug: how-to-use-ipython-notebook-on-small
+title: How to use the IPython notebook on a small computing cluster
+
 ---
 
 [The IPython notebook](http://ipython.org/ipython-doc/dev/interactive/htmlnotebook.html) is a powerful and easy to use interface for using Python and particularly useful when running remotely, because it allows the interface to run locally in your browser, while the computing kernel runs remotely on the cluster.

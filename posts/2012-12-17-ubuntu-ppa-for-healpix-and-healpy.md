@@ -1,9 +1,14 @@
 ---
-layout: post
-title: Ubuntu PPA for HEALPix and healpy
+aliases:
+- /2012/12/ubuntu-ppa-for-healpix-and-healpy
+categories:
+- healpix
+- ubuntu
 date: 2012-12-17 10:37
-categories: [healpix, ubuntu]
+layout: post
 slug: ubuntu-ppa-for-healpix-and-healpy
+title: Ubuntu PPA for HEALPix and healpy
+
 ---
 
 <br/>

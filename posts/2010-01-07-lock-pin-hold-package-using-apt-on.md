@@ -1,9 +1,14 @@
 ---
-layout: post
-title: lock pin hold a package using apt on ubuntu
+aliases:
+- /2010/01/lock-pin-hold-package-using-apt-on
+categories:
+- linux
+- ubuntu
 date: 2010-01-07 13:49
-categories: [linux, ubuntu]
+layout: post
 slug: lock-pin-hold-package-using-apt-on
+title: lock pin hold a package using apt on ubuntu
+
 ---
 
 <p>

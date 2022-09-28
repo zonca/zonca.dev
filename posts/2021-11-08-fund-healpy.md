@@ -1,7 +1,12 @@
 ---
+aliases:
+- /2021/11/fund-healpy
+categories:
+- healpy
+date: '2021-11-08'
 layout: post
 title: Fund healpy via Github Sponsors
-categories: [healpy]
+
 ---
 
 [**Github Sponsor page**](https://github.com/sponsors/zonca)

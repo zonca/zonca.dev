@@ -1,9 +1,14 @@
 ---
-layout: post
-title: using gnu find
+aliases:
+- /2006/10/using-gnu-find
+categories:
+- linux
+- bash
 date: 2006-10-03 14:00
-categories: [linux, bash]
+layout: post
 slug: using-gnu-find
+title: using gnu find
+
 ---
 
 <p>

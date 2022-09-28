@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Python on Gordon
+aliases:
+- /2014/03/python-on-gordon
+categories:
+- hpc
+- python
+- Gordon
 date: 2014-03-20 19:30
-categories: [hpc, python, Gordon]
+layout: post
 slug: setup-ipython-notebook-parallel-Gordon
+title: Python on Gordon
+
 ---
 
 Gordon has already a `python` environment setup which can be activated by loading the `python` module:

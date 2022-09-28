@@ -1,9 +1,14 @@
 ---
-layout: post
-title: Software libero per il trattamento di dati scientifici
+aliases:
+- /2006/09/software-libero-per-il-trattamento-di
+categories:
+- linux
+- physics
 date: 2006-09-22 13:35
-categories: [linux, physics]
+layout: post
 slug: software-libero-per-il-trattamento-di
+title: Software libero per il trattamento di dati scientifici
+
 ---
 
 <p>

@@ -1,9 +1,14 @@
 ---
-layout: post
-title: Jiffylab multiuser IPython notebooks
+aliases:
+- /2013/10/jiffylab-multiuser-ipython-notebooks
+categories:
+- python
+- ipython-notebook
 date: 2013-10-14 10:30
-categories: [python, ipython-notebook]
+layout: post
 slug: jiffylab-multiuser-ipython-notebooks
+title: Jiffylab multiuser IPython notebooks
+
 ---
 
 [jiffylab](https://github.com/ptone/jiffylab) is a very interesting project by [Preston Holmes](https://twitter.com/ptone) to provide sandboxed IPython notebooks instances on a server using [docker](http://www.docker.io/).

@@ -1,7 +1,13 @@
 ---
+aliases:
+- /2022/03/jupyter-notebooks-version-control
+categories:
+- jupyter-notebook
+- git
+date: '2022-03-22'
 layout: post
 title: Workflow for Jupyter Notebooks under version control
-categories: [jupyter-notebook,git]
+
 ---
 
 I'll present here my strategy for keeping Jupyter Notebooks under version control.

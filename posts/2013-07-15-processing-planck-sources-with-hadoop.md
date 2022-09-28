@@ -1,9 +1,17 @@
 ---
-layout: post
-title: Processing sources in Planck maps with Hadoop and Python
+aliases:
+- /2013/07/processing-planck-sources-with-hadoop
+categories:
+- hpc
+- supercomputing
+- python
+- Planck
+- hadoop
 date: 2013-07-15 08:16
-categories: [hpc, supercomputing, python, Planck, hadoop]
+layout: post
 slug: processing-planck-sources-with-hadoop
+title: Processing sources in Planck maps with Hadoop and Python
+
 ---
 
 <h2>

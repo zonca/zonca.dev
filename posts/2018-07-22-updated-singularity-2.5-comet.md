@@ -1,9 +1,14 @@
 ---
-layout: post
-title: Updated Singularity images for Comet
+aliases:
+- /2018/07/updated-singularity-2.5-comet
+categories:
+- singularity
+- comet
 date: 2018-07-22 12:00
-categories: [singularity, comet]
+layout: post
 slug: singularity-2.5-comet
+title: Updated Singularity images for Comet
+
 ---
 
 Back in January 2017 I wrote a [blog post about running Singularity on Comet](https://zonca.github.io/2017/01/singularity-hpc-comet.html).

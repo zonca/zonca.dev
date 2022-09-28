@@ -1,7 +1,13 @@
 ---
+aliases:
+- /2020/05/readthedocs-conda
+categories:
+- python
+- conda
+date: '2020-05-27'
 layout: post
 title: Minimal example of readthedocs configuration for conda
-categories: [python, conda]
+
 ---
 
 Prompted by the [announced better support of conda in readthedocs](https://blog.readthedocs.com/better-conda-support/),

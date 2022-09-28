@@ -1,9 +1,14 @@
 ---
-layout: post
-title: Run Ubuntu in HPC with Singularity
+aliases:
+- /2017/01/singularity-hpc-comet
+categories:
+- singularity
+- comet
 date: 2017-01-13 12:00
-categories: [singularity, comet]
+layout: post
 slug: singularity-hpc-comet
+title: Run Ubuntu in HPC with Singularity
+
 ---
 
 * Ever wanted to `sudo apt install` packages on a Supercomputer?

@@ -1,9 +1,13 @@
 ---
-layout: post
-title: force local install of python module
+aliases:
+- /2010/12/force-local-install-of-python-module
+categories:
+- python
 date: 2010-12-03 22:18
-categories: [python]
+layout: post
 slug: force-local-install-of-python-module
+title: force local install of python module
+
 ---
 
 <code>

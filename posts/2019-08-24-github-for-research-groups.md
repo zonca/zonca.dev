@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Create a Github account for your research group with free private repositories
+aliases:
+- /2019/08/github-for-research-groups
+categories:
+- github
+- git
+- openscience
 date: 2019-08-24 15:00
-categories: [github, git, openscience]
+layout: post
 slug: github-for-research-groups
+title: Create a Github account for your research group with free private repositories
+
 ---
 
 [Github](https://github.com/) allows a research group to create their own webpage where they can host, share and develop their software using the `git` version control system and the powerful Github online issue-tracking interface.

@@ -1,8 +1,15 @@
 ---
+aliases:
+- /2021/01/jetstream_kubernetes_kubespray_2.15.0
+categories:
+- kubernetes
+- kubespray
+- jetstream
+date: '2021-01-20'
 layout: post
-title: Deploy Kubernetes on Jetstream with Kubespray 2.15.0
-categories: [kubernetes, kubespray, jetstream]
 slug: kubernetes-jetstream-kubespray
+title: Deploy Kubernetes on Jetstream with Kubespray 2.15.0
+
 ---
 
 This is an update to previous tutorials, focused on deploying Kubernetes 1.19.7 (released in Jan 2021, based on 1.19.0 released in August 2020), compared to 1.17.6 of the previous version of the tutorial.

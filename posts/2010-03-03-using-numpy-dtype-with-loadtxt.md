@@ -1,9 +1,15 @@
 ---
-layout: post
-title: using numpy dtype with loadtxt
+aliases:
+- /2010/03/using-numpy-dtype-with-loadtxt
+categories:
+- linux
+- python
+- numpy
 date: 2010-03-03 22:49
-categories: [linux, python, numpy]
+layout: post
 slug: using-numpy-dtype-with-loadtxt
+title: using numpy dtype with loadtxt
+
 ---
 
 <p>

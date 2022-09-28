@@ -1,9 +1,14 @@
 ---
-layout: post
-title: beginners bash guide
+aliases:
+- /2006/10/beginners-bash-guide
+categories:
+- linux
+- bash
 date: 2006-10-03 13:56
-categories: [linux, bash]
+layout: post
 slug: beginners-bash-guide
+title: beginners bash guide
+
 ---
 
 <p>

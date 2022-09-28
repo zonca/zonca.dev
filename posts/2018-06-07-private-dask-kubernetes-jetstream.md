@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Setup private dask clusters in Kubernetes alongside JupyterHub on Jetstream
+aliases:
+- /2018/06/private-dask-kubernetes-jetstream
+categories:
+- jupyter
+- jetstream
+- dask
 date: 2018-06-07 18:00
-categories: [jupyter, jetstream, dask]
+layout: post
 slug: private-dask-kubernetes-jetstream
+title: Setup private dask clusters in Kubernetes alongside JupyterHub on Jetstream
+
 ---
 
 In this post we will leverage software made available by the [Pangeo community](https://pangeo-data.github.io) to allow each user of a [Jupyterhub instance deployed on Jetstream on top of Kubernetes](https://zonca.github.io/2017/12/scalable-jupyterhub-kubernetes-jetstream.html) to launch a set of [`dask`](https://dask.pydata.org) workers as containers running inside Kubernetes itself and use them for distributed computing.

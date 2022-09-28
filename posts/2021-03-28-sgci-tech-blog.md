@@ -1,8 +1,15 @@
 ---
+aliases:
+- /2021/03/sgci-tech-blog
+categories:
+- kubernetes
+- kubespray
+- jetstream
+date: '2021-03-28'
 layout: post
-title: Science Gateways Tech blog - Kubernetes and JupyterHub on Jetstream
-categories: [kubernetes, kubespray, jetstream]
 slug: sgci-tech-blog-kubernetes-jupyterhub-jetstream
+title: Science Gateways Tech blog - Kubernetes and JupyterHub on Jetstream
+
 ---
 
 This is cross-posted from the [Science Gateways Community institute tech blog](https://sciencegateways.org/-/tech-blog-kubernetes-and-jupyterhub-on-jetstream), thanks to Marlon Pierce and Katherine Lawrence for their feeback.

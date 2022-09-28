@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Deploy Jupyterhub on a Virtual Machine for a Workshop
+aliases:
+- /2016/04/jupyterhub-sdsc-cloud
+categories:
+- ipython
+- jupyterhub
+- sdsc
 date: 2016-04-16 12:00
-categories: [ipython, jupyterhub, sdsc]
+layout: post
 slug: jupyterhub-sdsc-cloud
+title: Deploy Jupyterhub on a Virtual Machine for a Workshop
+
 ---
 
 This tutorial describes the steps to install a Jupyterhub instance on a single machine suitable for hosting a workshop, suitable for having people login with training accounts on Jupyter Notebooks running Python 2/3, R, Julia with also Terminal access on Docker containers.

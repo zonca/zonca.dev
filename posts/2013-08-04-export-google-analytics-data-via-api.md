@@ -1,9 +1,13 @@
 ---
-layout: post
-title: Export google analytics data via API with Python
+aliases:
+- /2013/08/export-google-analytics-data-via-api
+categories:
+- python
 date: 2013-08-04 17:47
-categories: [python]
+layout: post
 slug: export-google-analytics-data-via-api
+title: Export google analytics data via API with Python
+
 ---
 
 <p>

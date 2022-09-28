@@ -1,9 +1,15 @@
 ---
-layout: post
-title: IPython/Jupyter notebook setup on SDSC Comet
+aliases:
+- /2015/09/ipython-jupyter-notebook-sdsc-comet
+categories:
+- ipython
+- jupyter
+- ipython-notebook
 date: 2015-09-17 20:00
-categories: [ipython, jupyter, ipython-notebook]
+layout: post
 slug: ipython-jupyter-notebook-sdsc-comet
+title: IPython/Jupyter notebook setup on SDSC Comet
+
 ---
 
 ## Introduction

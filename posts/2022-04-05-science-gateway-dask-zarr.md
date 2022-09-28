@@ -1,7 +1,16 @@
 ---
+aliases:
+- /2022/04/science-gateway-dask-zarr
+categories:
+- kubernetes
+- openstack
+- jetstream2
+- jupyterhub
+- dask
+date: '2022-04-05'
 layout: post
 title: Science Gateway with Dask and Zarr
-categories: [kubernetes, openstack, jetstream2, jupyterhub, dask]
+
 ---
 
 This material was presented on April 2022 at the [MiniGateways 2022 conference](https://sciencegateways.org/minigateways2022) organized by the wonderful Science Gateways Community Institute (SGCI).

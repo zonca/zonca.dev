@@ -1,9 +1,17 @@
 ---
-layout: post
-title: Deployment of Jupyterhub with Globus Auth to spawn Notebook on Comet in Singularity containers
+aliases:
+- /2017/08/jupyterhub-globus-comet-singularity
+categories:
+- jupyterhub
+- ansible
+- sdsc
+- singularity
 date: 2017-08-11 18:00
-categories: [jupyterhub, ansible, sdsc, singularity]
+layout: post
 slug: jupyterhub-globus-comet-singularity
+title: Deployment of Jupyterhub with Globus Auth to spawn Notebook on Comet in Singularity
+  containers
+
 ---
 
 ## Build Singularity containers to run single user notebook applications

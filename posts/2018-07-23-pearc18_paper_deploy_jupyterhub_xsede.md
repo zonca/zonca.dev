@@ -1,9 +1,16 @@
 ---
-layout: post
-title: PEARC18 Paper on Deploying Jupyterhub at scale on XSEDE
+aliases:
+- /2018/07/pearc18_paper_deploy_jupyterhub_xsede
+categories:
+- singularity
+- comet
+- jetstream
+- jupyterhub
 date: 2018-07-23 12:00
-categories: [singularity, comet, jetstream, jupyterhub]
+layout: post
 slug: pearc18-paper-deploy-jupyterhub-xsede
+title: PEARC18 Paper on Deploying Jupyterhub at scale on XSEDE
+
 ---
 
 Bob Sinkovits and I are presenting a paper at PEARC18 about:

@@ -1,9 +1,14 @@
 ---
-layout: post
-title: numpy dtypes and fits keywords
+aliases:
+- /2010/08/numpy-dtypes-and-fits-keywords
+categories:
+- python
+- numpy
 date: 2010-08-04 21:57
-categories: [python, numpy]
+layout: post
 slug: numpy-dtypes-and-fits-keywords
+title: numpy dtypes and fits keywords
+
 ---
 
 <code>

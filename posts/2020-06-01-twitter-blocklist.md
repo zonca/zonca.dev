@@ -1,7 +1,13 @@
 ---
+aliases:
+- /2020/06/twitter-blocklist
+categories:
+- python
+- twitter
+date: '2020-06-01'
 layout: post
 title: Import and export list of blocked users on Twitter
-categories: [python, twitter]
+
 ---
 
 [Back in 2015](https://blog.twitter.com/en_us/a/2015/sharing-block-lists-to-help-make-twitter-safer.html), Twitter

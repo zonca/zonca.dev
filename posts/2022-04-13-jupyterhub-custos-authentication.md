@@ -1,7 +1,15 @@
 ---
+aliases:
+- /2022/04/jupyterhub-custos-authentication
+categories:
+- kubernetes
+- openstack
+- jetstream2
+- jupyterhub
+date: '2022-04-13'
 layout: post
 title: Custos authentication for JupyterHub
-categories: [kubernetes, openstack, jetstream2, jupyterhub]
+
 ---
 
 [Custos](https://airavata.apache.org/custos/) is a security middleware used to

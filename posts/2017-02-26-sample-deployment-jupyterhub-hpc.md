@@ -1,9 +1,16 @@
 ---
-layout: post
-title: Sample deployment of Jupyterhub in HPC on SDSC Comet
+aliases:
+- /2017/02/sample-deployment-jupyterhub-hpc
+categories:
+- ipython
+- jupyterhub
+- hpc
+- comet
 date: 2017-02-26 12:00
-categories: [ipython, jupyterhub, hpc, comet]
+layout: post
 slug: sample-deployment-jupyterhub-hpc
+title: Sample deployment of Jupyterhub in HPC on SDSC Comet
+
 ---
 
 I have deployed an experimental Jupyterhub service (ask me privately if you would like access) installed on a [SDSC Cloud](http://www.sdsc.edu/services/it/cloud.html) virtual machine that spawns single user Jupyter notebooks on Comet computing nodes using [`batchspawner`](https://github.com/jupyterhub/batchspawner) and then proxies the Notebook back to the user using SSH-tunneling.

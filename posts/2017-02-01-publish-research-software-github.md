@@ -1,9 +1,15 @@
 ---
-layout: post
-title: How to publish your research software to Github
+aliases:
+- /2017/02/publish-research-software-github
+categories:
+- git
+- github
+- software-carpentry
 date: 2017-02-01 18:00
-categories: [git, github, software-carpentry]
+layout: post
 slug: publish-research-software-github
+title: How to publish your research software to Github
+
 ---
 
 * Do you want to make your research software available publicly on Github?

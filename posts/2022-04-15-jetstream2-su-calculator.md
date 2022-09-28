@@ -1,7 +1,12 @@
 ---
+aliases:
+- /2022/04/jetstream2-su-calculator
+categories:
+- jetstream2
+date: '2022-04-15'
 layout: post
 title: Jetstream2 SU calculator
-categories: [jetstream2]
+
 ---
 
 Jupyter Notebook to compute daily, monthly, yearly consumption of SU based on the number and type of Virtual Machines:

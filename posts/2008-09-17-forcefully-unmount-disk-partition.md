@@ -1,9 +1,13 @@
 ---
-layout: post
-title: forcefully unmount a disk partition
+aliases:
+- /2008/09/forcefully-unmount-disk-partition
+categories:
+- linux
 date: 2008-09-17 15:14
-categories: [linux]
+layout: post
 slug: forcefully-unmount-disk-partition
+title: forcefully unmount a disk partition
+
 ---
 
 <p>

@@ -1,9 +1,13 @@
 ---
-layout: post
-title: Decibels, dB and dBm, in terms of Power and Amplitude
+aliases:
+- /2008/03/decibels-db-and-dbm-in-terms-of-power
+categories:
+- physics
 date: 2008-03-29 02:13
-categories: [physics]
+layout: post
 slug: decibels-db-and-dbm-in-terms-of-power
+title: Decibels, dB and dBm, in terms of Power and Amplitude
+
 ---
 
 <p>

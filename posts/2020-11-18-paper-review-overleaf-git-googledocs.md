@@ -1,7 +1,13 @@
 ---
+aliases:
+- /2020/11/paper-review-overleaf-git-googledocs
+categories:
+- latex
+- git
+date: '2020-11-18'
 layout: post
 title: Paper review workflow with Overleaf, git and Google Docs
-categories: [latex,git]
+
 ---
 
 In this blog post I propose a workflow to use the collaborative features of Google Docs

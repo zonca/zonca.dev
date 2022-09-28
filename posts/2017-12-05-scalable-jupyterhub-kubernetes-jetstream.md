@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Deploy scalable Jupyterhub with Kubernetes on Jetstream
+aliases:
+- /2017/12/scalable-jupyterhub-kubernetes-jetstream
+categories:
+- jupyterhub
+- jetstream
+- gateways
 date: 2017-12-05 18:00
-categories: [jupyterhub, jetstream, gateways]
+layout: post
 slug: scalable-jupyterhub-kubernetes-jetstream
+title: Deploy scalable Jupyterhub with Kubernetes on Jetstream
+
 ---
 
 * **Tested in June 2018 with Ubuntu 18.04 and Kubernetes 1.10**

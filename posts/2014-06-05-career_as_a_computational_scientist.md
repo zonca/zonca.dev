@@ -1,9 +1,14 @@
 ---
-layout: post
-title: Thoughts on a career as a computational scientist
+aliases:
+- /2014/06/career_as_a_computational_scientist
+categories:
+- career
+- hpc
 date: 2014-06-05 14:00
-categories: [career, hpc]
+layout: post
 slug: career-as-a-computational-scientist
+title: Thoughts on a career as a computational scientist
+
 ---
 
 Recently I've been asked what are the prospects of a wannabe computational scientist, 

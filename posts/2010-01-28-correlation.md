@@ -1,9 +1,13 @@
 ---
-layout: post
-title: Correlation
+aliases:
+- /2010/01/correlation
+categories:
+- physics
 date: 2010-01-28 00:45
-categories: [physics]
+layout: post
 slug: correlation
+title: Correlation
+
 ---
 
 <strong>

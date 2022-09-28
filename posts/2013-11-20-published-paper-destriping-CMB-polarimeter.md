@@ -1,9 +1,16 @@
 ---
-layout: post
-title: Published paper on Destriping Cosmic Microwave Background Polarimeter data
+aliases:
+- /2013/11/published-paper-destriping-CMB-polarimeter
+categories:
+- python
+- paper
+- destriping
+- openscience
 date: 2013-11-20 21:30
-categories: [python, paper, destriping, openscience]
+layout: post
 slug: published-paper-destriping-CMB-polarimeter
+title: Published paper on Destriping Cosmic Microwave Background Polarimeter data
+
 ---
 
 TL;DR version:

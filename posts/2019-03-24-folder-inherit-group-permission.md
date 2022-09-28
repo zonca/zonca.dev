@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Inherit group permission in folder
+aliases:
+- /2019/03/folder-inherit-group-permission
+categories:
+- jupyter
+- jetstream
+- zarr
 date: 2019-03-24 18:00
-categories: [jupyter, jetstream, zarr]
+layout: post
 slug: folder-inherit-group-permission
+title: Inherit group permission in folder
+
 ---
 
 I have googled this so many times...

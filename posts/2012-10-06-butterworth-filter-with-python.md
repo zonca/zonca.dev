@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Butterworth filter with Python
+aliases:
+- /2012/10/butterworth-filter-with-python
+categories:
+- ipython
+- scipy
+- python
 date: 2012-10-06 00:00
-categories: [ipython, scipy, python]
+layout: post
 slug: butterworth-filter-with-python
+title: Butterworth filter with Python
+
 ---
 
 <p>

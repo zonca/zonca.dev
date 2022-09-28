@@ -1,9 +1,13 @@
 ---
-layout: post
-title: Zero based indexing
+aliases:
+- /2014/10/zero-based-indexing
+categories:
+- python
 date: 2014-10-22 10:00
-categories: [python]
+layout: post
 slug: zero-based-indexing
+title: Zero based indexing
+
 ---
 
 ## Reads

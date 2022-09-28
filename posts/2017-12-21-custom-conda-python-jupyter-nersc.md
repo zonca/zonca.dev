@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Install custom Python environment on Jupyter Notebooks at NERSC
+aliases:
+- /2017/12/custom-conda-python-jupyter-nersc
+categories:
+- jupyterhub
+- python
+- nersc
 date: 2017-12-21 18:00
-categories: [jupyterhub, python, nersc]
+layout: post
 slug: custom-conda-python-jupyter-nersc
+title: Install custom Python environment on Jupyter Notebooks at NERSC
+
 ---
 
 ## Jupyter Notebooks at NERSC

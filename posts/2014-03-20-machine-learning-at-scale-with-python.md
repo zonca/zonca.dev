@@ -1,9 +1,14 @@
 ---
-layout: post
-title: Machine learning at scale with Python
+aliases:
+- /2014/03/machine-learning-at-scale-with-python
+categories:
+- python
+- machine-learning
 date: 2014-03-20 20:00
-categories: [python, machine-learning]
+layout: post
 slug: machine-learning-at-scale-with-python
+title: Machine learning at scale with Python
+
 ---
 
 My talk for the San Diego Data Science meetup: [http://www.meetup.com/San-Diego-Data-Science-R-Users-Group/events/170967362/](http://www.meetup.com/San-Diego-Data-Science-R-Users-Group/events/170967362/)

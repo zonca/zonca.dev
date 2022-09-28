@@ -1,9 +1,14 @@
 ---
-layout: post
-title: Planck CTP angular power spectrum ell binning
+aliases:
+- /2013/08/planck-ctp-angular-power-spectrum-ell
+categories:
+- power spectra
+- Planck
 date: 2013-08-20 23:03
-categories: [power spectra, Planck]
+layout: post
 slug: planck-ctp-angular-power-spectrum-ell
+title: Planck CTP angular power spectrum ell binning
+
 ---
 
 <p>

@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Jupyterhub deployment on multiple nodes with Docker Swarm
+aliases:
+- /2016/05/jupyterhub-docker-swarm
+categories:
+- ipython
+- jupyterhub
+- sdsc
 date: 2016-05-24 12:00
-categories: [ipython, jupyterhub, sdsc]
+layout: post
 slug: jupyterhub-docker-swarm
+title: Jupyterhub deployment on multiple nodes with Docker Swarm
+
 ---
 
 This post is part of a series on deploying Jupyterhub on OpenStack tailored at workshops, in the previous posts I showed:

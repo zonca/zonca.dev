@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Bring your computing to the San Diego Supercomputer Center
+aliases:
+- /2018/10/compute-at-sdsc
+categories:
+- comet
+- sdsc
+- xsede
 date: 2018-10-24 18:00
-categories: [comet, sdsc, xsede]
+layout: post
 slug: compute-at-sdsc
+title: Bring your computing to the San Diego Supercomputer Center
+
 ---
 
 I am often asked what computing resources are available at the San Diego Supercomputer Center for scientists and what is the best way to be granted access. I decided to write a blog post with an overview of all the options, consider that I'm writing this in October 2018, so please cross-check on the official websites.

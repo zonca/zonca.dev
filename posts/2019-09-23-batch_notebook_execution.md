@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Execute Jupyter Notebooks not interactively
+aliases:
+- /2019/09/batch_notebook_execution
+categories:
+- jupyter
+- notebook
+- condor
 date: 2019-09-23 12:00
-categories: [jupyter, notebook, condor]
+layout: post
 slug: batch-notebook-execution
+title: Execute Jupyter Notebooks not interactively
+
 ---
 
 Over the years, I have explored how to scale up easily computation through

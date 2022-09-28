@@ -1,8 +1,15 @@
 ---
+aliases:
+- /2020/06/jetstream_kubernetes_kubespray
+categories:
+- kubernetes
+- kubespray
+- jetstream
+date: '2020-06-15'
 layout: post
-title: Deploy Kubernetes on Jetstream with Kubespray
-categories: [kubernetes, kubespray, jetstream]
 slug: kubernetes-jetstream-kubespray
+title: Deploy Kubernetes on Jetstream with Kubespray
+
 ---
 
 **This tutorial is obsolete, check the [updated version of the tutorial](https://zonca.dev/2021/01/kubernetes-jetstream-kubespray.html)**

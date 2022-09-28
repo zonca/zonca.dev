@@ -1,9 +1,17 @@
 ---
-layout: post
-title: clviewer, interactive plot of CMB spectra
+aliases:
+- /2013/09/clviewer-interactive-plot-of-CMB-spectra
+categories:
+- cosmology
+- python
+- astrophysics
+- Planck
+- dotastronomy
 date: 2013-09-17 18:30
-categories: [cosmology, python, astrophysics, Planck, dotastronomy]
+layout: post
 slug: clviewer-interactive-plot-of-CMB-spectra
+title: clviewer, interactive plot of CMB spectra
+
 ---
 
 Today it was HackDay at [.Astronomy](http://dotastronomy.com), so I felt compelled to hack something around myself,

@@ -1,8 +1,13 @@
 ---
+aliases:
+- /2021/03/jetstream-video-stream-object-store
+categories:
+- jetstream
+date: '2021-03-25'
 layout: post
-title: Stream video from object store on Jetstream
-categories: [jetstream]
 slug: video-streaming-jetstream
+title: Stream video from object store on Jetstream
+
 ---
 
 In this tutorial we will serve video stored in Jetstream's object store (like Amazon S3)

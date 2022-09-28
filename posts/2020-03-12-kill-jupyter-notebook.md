@@ -1,8 +1,14 @@
 ---
+aliases:
+- /2020/03/kill-jupyter-notebook
+categories:
+- python
+- jupyter
+date: '2020-03-12'
 layout: post
-title: Kill Jupyter Notebook servers
-categories: [python, jupyter]
 slug: kill-jupyter-notebook
+title: Kill Jupyter Notebook servers
+
 ---
 
 Just today I learned how to properly stop previously running Jupyter Notebook

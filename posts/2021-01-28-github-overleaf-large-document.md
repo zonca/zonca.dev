@@ -1,7 +1,13 @@
 ---
+aliases:
+- /2021/01/github-overleaf-large-document
+categories:
+- latex
+- git
+date: '2021-01-28'
 layout: post
 title: Coordinate a large Latex document with multiple Overleaf projects and Github
-categories: [latex,git]
+
 ---
 
 In case we need to build a large document (~hundreds of pages) and we have a large number of collaborators (more than 50), it is convenient to have each section of the document be a

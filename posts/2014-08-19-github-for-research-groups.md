@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Create a Github account for your research group with free private repositories
+aliases:
+- /2014/08/github-for-research-groups
+categories:
+- github
+- git
+- openscience
 date: 2014-08-19 15:00
-categories: [github, git, openscience]
+layout: post
 slug: github-for-research-groups
+title: Create a Github account for your research group with free private repositories
+
 ---
 
 See the **updated version** at <https://zonca.github.io/2019/08/github-for-research-groups.html>

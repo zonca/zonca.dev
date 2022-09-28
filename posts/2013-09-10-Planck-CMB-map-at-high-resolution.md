@@ -1,9 +1,16 @@
 ---
-layout: post
-title: Planck CMB map at high resolution
+aliases:
+- /2013/09/Planck-CMB-map-at-high-resolution
+categories:
+- cosmology
+- python
+- astrophysics
+- Planck
 date: 2013-09-10 14:00
-categories: [cosmology, python, astrophysics, Planck]
+layout: post
 slug: Planck-CMB-map-at-high-resolution
+title: Planck CMB map at high resolution
+
 ---
 
 Prompted by a colleague, I created a high-resolution version of the Cosmic Microwave Background map in MollWeide projection released by the Planck collaboration, available on the [Planck Data Release Website](http://irsa.ipac.caltech.edu/data/Planck/release_1/all-sky-maps/previews/COM_CompMap_CMB-smica_2048_R1.20/index.html) in FITS format.

@@ -1,9 +1,14 @@
 ---
-layout: post
-title: Setup two factor authentication for UCSD, and Lastpass
+aliases:
+- /2018/12/twofactor_ucsd
+categories:
+- security
+- ucsd
 date: 2018-12-12 18:00
-categories: [security, ucsd]
+layout: post
 slug: twofactor-auth-ucsd
+title: Setup two factor authentication for UCSD, and Lastpass
+
 ---
 
 Starting at the end of January 2019 UCSD requires every employee to have activated

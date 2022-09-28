@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Jupyterhub Docker Spawner with GPU support
+aliases:
+- /2016/10/dockerspawner-cuda
+categories:
+- ipython
+- jupyterhub
+- cuda
 date: 2016-10-12 12:00
-categories: [ipython, jupyterhub, cuda]
+layout: post
 slug: dockerspawner-cuda
+title: Jupyterhub Docker Spawner with GPU support
+
 ---
 
 [Docker Spawner](https://github.com/jupyterhub/dockerspawner) allows users of Jupyterhub to run Jupyter Notebook inside isolated Docker Containers.

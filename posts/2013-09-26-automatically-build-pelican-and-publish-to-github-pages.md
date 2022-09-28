@@ -1,9 +1,15 @@
 ---
-layout: post
-title: How to automatically build your Pelican blog and publish it to Github Pages
+aliases:
+- /2013/09/automatically-build-pelican-and-publish-to-github-pages
+categories:
+- python
+- travis-ci
+- github
 date: 2013-09-26 13:45
-categories: [python, travis-ci, github]
+layout: post
 slug: automatically-build-pelican-and-publish-to-github-pages
+title: How to automatically build your Pelican blog and publish it to Github Pages
+
 ---
 
 Something I like a lot about Jekyll, the Github static blog generator, is that you just push commits to your repository and Github takes care of re-building and publishing your website.

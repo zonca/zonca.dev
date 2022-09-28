@@ -1,9 +1,14 @@
 ---
-layout: post
-title: command line processing
+aliases:
+- /2006/09/command-line-processing
+categories:
+- linux
+- bash
 date: 2006-09-22 13:34
-categories: [linux, bash]
+layout: post
 slug: command-line-processing
+title: command line processing
+
 ---
 
 <p>

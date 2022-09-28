@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Build Software Carpentry lessons with Pelican
+aliases:
+- /2014/02/build-software-carpentry-with-pelican
+categories:
+- python
+- software-carpentry
+- pelican
 date: 2014-02-26 23:00
-categories: [python, software-carpentry, pelican]
+layout: post
 slug: build-software-carpentry-with-pelican
+title: Build Software Carpentry lessons with Pelican
+
 ---
 
 [Software Carpentry](http://www.software-carpentry.org) offers bootcamps for scientist to teach basic programming skills.

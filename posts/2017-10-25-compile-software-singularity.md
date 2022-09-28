@@ -1,9 +1,15 @@
 ---
-layout: post
-title: How to modify Singularity images on a Supercomputer
+aliases:
+- /2017/10/compile-software-singularity
+categories:
+- singularity
+- hpc
+- Comet
 date: 2017-11-06 18:00
-categories: [singularity, hpc, Comet]
+layout: post
 slug: modify-singularity-images
+title: How to modify Singularity images on a Supercomputer
+
 ---
 
 ## Introduction

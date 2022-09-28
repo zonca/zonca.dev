@@ -1,9 +1,14 @@
 ---
-layout: post
-title: healpix coordinates
+aliases:
+- /2010/06/healpix-coordinates
+categories:
+- astrophysics
+- physics
 date: 2010-06-23 01:01
-categories: [astrophysics, physics]
+layout: post
 slug: healpix-coordinates
+title: healpix coordinates
+
 ---
 
 <p>

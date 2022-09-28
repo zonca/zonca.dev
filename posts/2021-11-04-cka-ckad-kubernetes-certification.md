@@ -1,8 +1,13 @@
 ---
+aliases:
+- /2021/11/cka-ckad-kubernetes-certification
+categories:
+- kubernetes
+date: '2021-11-04'
 layout: post
-title: Kubernetes certifications CKA and CKAD
-categories: [kubernetes]
 slug: cka-ckad-kubernetes-certification
+title: Kubernetes certifications CKA and CKAD
+
 ---
 
 I recently pursued 2 Kubernetes certifications by Linux Foundation:

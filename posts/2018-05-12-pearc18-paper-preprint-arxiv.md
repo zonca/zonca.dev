@@ -1,9 +1,14 @@
 ---
-layout: post
-title: How to post a PEARC18 paper pre-print to Arxiv
+aliases:
+- /2018/05/pearc18-paper-preprint-arxiv
+categories:
+- pearc18
+- openscience
 date: 2018-05-12 18:00
-categories: [pearc18, openscience]
+layout: post
 slug: pearc18-preprint-arxiv
+title: How to post a PEARC18 paper pre-print to Arxiv
+
 ---
 
 ## Quick version

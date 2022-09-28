@@ -1,9 +1,14 @@
 ---
-layout: post
-title: execute bash script remotely with ssh
+aliases:
+- /2010/01/execute-bash-script-remotely-with-ssh
+categories:
+- linux
+- bash
 date: 2010-01-07 14:37
-categories: [linux, bash]
+layout: post
 slug: execute-bash-script-remotely-with-ssh
+title: execute bash script remotely with ssh
+
 ---
 
 <p>

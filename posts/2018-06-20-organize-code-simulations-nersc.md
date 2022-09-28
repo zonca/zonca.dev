@@ -1,9 +1,14 @@
 ---
-layout: post
-title: How to organize code and data for simulations at NERSC
+aliases:
+- /2018/06/organize-code-simulations-nersc
+categories:
+- nersc
+- python
 date: 2018-06-20 18:00
-categories: [nersc, python]
+layout: post
 slug: organize-code-data-simulations-nersc
+title: How to organize code and data for simulations at NERSC
+
 ---
 
 I recently improved my strategy for organizing code and data for simulations run at NERSC,

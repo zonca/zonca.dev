@@ -1,7 +1,13 @@
 ---
+aliases:
+- /2021/09/globus-groups-python-sdk
+categories:
+- python
+- globus
+date: '2021-09-24'
 layout: post
 title: Manage Globus groups with the Python SDK
-categories: [python, globus]
+
 ---
 
 [Globus](https://globus.org) is the best tool to transfer quickly Terabytes data between Supercomputers because it automatically parallelizes the transfer to saturate the network (yeah I know I always simplify too much).

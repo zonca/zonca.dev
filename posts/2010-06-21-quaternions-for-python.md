@@ -1,9 +1,14 @@
 ---
-layout: post
-title: quaternions for python
+aliases:
+- /2010/06/quaternions-for-python
+categories:
+- python
+- physics
 date: 2010-06-21 07:21
-categories: [python, physics]
+layout: post
 slug: quaternions-for-python
+title: quaternions for python
+
 ---
 
 <p>

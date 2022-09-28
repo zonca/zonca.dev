@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Accelerate groupby operation on pixels with Numba
+aliases:
+- /2015/03/numba-groupby-pixels
+categories:
+- python
+- numba
+- astrophysics
 date: 2015-03-24 9:00
-categories: [python, numba, astrophysics]
+layout: post
 slug: numba-groupby-pixels
+title: Accelerate groupby operation on pixels with Numba
+
 ---
 
 [Download the original IPython notebook](/notebooks/numba_groupby_pixels.ipynb)

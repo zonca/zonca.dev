@@ -1,7 +1,16 @@
 ---
+aliases:
+- /2020/08/dask-gateway-jupyterhub
+categories:
+- kubernetes
+- openstack
+- jetstream
+- jupyterhub
+- dask
+date: '2020-08-11'
 layout: post
 title: Deploy Dask Gateway with JupyterHub on Kubernetes
-categories: [kubernetes, openstack, jetstream, jupyterhub, dask]
+
 ---
 
 **This tutorial is obsolete, please follow <https://zonca.dev/2022/01/dask-gateway-jupyterhub.html>**

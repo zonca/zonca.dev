@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Use the distributed file format Zarr on Jetstream 2 object storage
+aliases:
+- /2022/04/zarr_jetstream2
+categories:
+- jupyter
+- jetstream2
+- zarr
 date: 2022-04-04 18:00
-categories: [jupyter, jetstream2, zarr]
+layout: post
 slug: zarr-jetstream2
+title: Use the distributed file format Zarr on Jetstream 2 object storage
+
 ---
 
 ## Zarr

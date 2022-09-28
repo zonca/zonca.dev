@@ -1,9 +1,16 @@
 ---
-layout: post
-title: Scale Kubernetes manually on Jetstream
+aliases:
+- /2019/02/scale-kubernetes-jupyterhub-manually
+categories:
+- kubernetes
+- kubespray
+- jetstream
+- jupyterhub
 date: 2019-02-22 21:00
-categories: [kubernetes, kubespray, jetstream, jupyterhub]
+layout: post
 slug: scale-kubernetes-jupyterhub-manually
+title: Scale Kubernetes manually on Jetstream
+
 ---
 
 We would like to modify the number of Openstack virtual machines available to Kubernetes.

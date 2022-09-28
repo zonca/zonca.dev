@@ -1,9 +1,16 @@
 ---
-layout: post
-title: Deploy Cluster Autoscaler for Kubernetes on Jetstream
+aliases:
+- /2019/09/jetstream_kubernetes_magnum_autoscaler
+categories:
+- kubernetes
+- openstack
+- jetstream
+- jupyterhub
 date: 2019-09-12 12:00
-categories: [kubernetes, openstack, jetstream, jupyterhub]
+layout: post
 slug: kubernetes-jetstream-autoscaler
+title: Deploy Cluster Autoscaler for Kubernetes on Jetstream
+
 ---
 
 The [Kubernetes Cluster Autoscaler](https://github.com/kubernetes/autoscaler) is a service

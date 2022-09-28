@@ -1,8 +1,11 @@
 ---
-layout: post
-title: How to cite HDF5 in bibtex
+aliases:
+- /2013/02/how-to-cite-hdf5-in-bibtex
 date: 2013-02-27 00:42
+layout: post
 slug: how-to-cite-hdf5-in-bibtex
+title: How to cite HDF5 in bibtex
+
 ---
 
 <p>

@@ -1,7 +1,13 @@
 ---
+aliases:
+- /2020/09/redirect-readthedocs
+categories:
+- python
+- docs
+date: '2020-09-01'
 layout: post
 title: Redirect readthedocs documentation to another website
-categories: [python, docs]
+
 ---
 
 This is useful if you switch to hosting your own documentation, for example using [Sphinx Multiversion](https://pypi.org/project/sphinx-multiversion/) on Github pages, tutorial coming soon.

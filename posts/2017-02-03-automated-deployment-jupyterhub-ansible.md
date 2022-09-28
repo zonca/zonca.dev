@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Automated deployment of Jupyterhub with Ansible
+aliases:
+- /2017/02/automated-deployment-jupyterhub-ansible
+categories:
+- jupyterhub
+- ansible
+- sdsc
 date: 2017-02-03 18:00
-categories: [jupyterhub, ansible, sdsc]
+layout: post
 slug: automated-deployment-jupyterhub-ansible
+title: Automated deployment of Jupyterhub with Ansible
+
 ---
 
 Last year I wrote some tutorials on simple deployments of Jupyterhub on Ubuntu 16.04 on the OpenStack deployment [SDSC Cloud](http://www.sdsc.edu/services/it/cloud.html), even if most of the steps would also be suitable on other resources like Amazon EC2.

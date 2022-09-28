@@ -1,9 +1,14 @@
 ---
-layout: post
-title: awk made easy
+aliases:
+- /2006/09/awk-made-easy
+categories:
+- linux
+- bash
 date: 2006-09-22 13:20
-categories: [linux, bash]
+layout: post
 slug: awk-made-easy
+title: awk made easy
+
 ---
 
 <strong>

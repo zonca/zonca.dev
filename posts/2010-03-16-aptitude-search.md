@@ -1,9 +1,14 @@
 ---
-layout: post
-title: aptitude search 'and'
+aliases:
+- /2010/03/aptitude-search
+categories:
+- linux
+- ubuntu
 date: 2010-03-16 22:50
-categories: [linux, ubuntu]
+layout: post
 slug: aptitude-search
+title: aptitude search 'and'
+
 ---
 
 <p>

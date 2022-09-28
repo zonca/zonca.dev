@@ -1,9 +1,13 @@
 ---
-layout: post
-title: Organize calendars for a large scientific collaboration
+aliases:
+- /2019/12/organize_calendars_large_collaboration
+categories:
+- google-calendar
 date: 2019-12-02 12:00
-categories: [google-calendar]
+layout: post
 slug: organize-calendar-collaboration
+title: Organize calendars for a large scientific collaboration
+
 ---
 
 Many scientific collaborations have a central calendar, often hosted on Google Calendar,

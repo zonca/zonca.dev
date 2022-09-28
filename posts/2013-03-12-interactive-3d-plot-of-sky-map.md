@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Interactive 3D plot of a sky map
+aliases:
+- /2013/03/interactive-3d-plot-of-sky-map
+categories:
+- mayavi
+- python
+- astrophysics
 date: 2013-03-12 19:49
-categories: [mayavi, python, astrophysics]
+layout: post
 slug: interactive-3d-plot-of-sky-map
+title: Interactive 3D plot of a sky map
+
 ---
 
 <a href="http://code.enthought.com/projects/mayavi/">

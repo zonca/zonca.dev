@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Noise in spectra and map domain
+aliases:
+- /2013/04/noise-in-spectra-and-map-domain
+categories:
+- map
+- power spectra
+- noise
 date: 2013-04-08 01:32
-categories: [map, power spectra, noise]
+layout: post
 slug: noise-in-spectra-and-map-domain
+title: Noise in spectra and map domain
+
 ---
 
 <h3>

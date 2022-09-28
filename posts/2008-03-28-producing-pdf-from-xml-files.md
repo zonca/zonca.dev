@@ -1,9 +1,13 @@
 ---
-layout: post
-title: Producing PDF from XML files
+aliases:
+- /2008/03/producing-pdf-from-xml-files
+categories:
+- linux
 date: 2008-03-28 16:27
-categories: [linux]
+layout: post
 slug: producing-pdf-from-xml-files
+title: Producing PDF from XML files
+
 ---
 
 <p>

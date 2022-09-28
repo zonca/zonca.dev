@@ -1,9 +1,14 @@
 ---
-layout: post
-title: parallel computing the python way
+aliases:
+- /2010/06/parallel-computing-python-way
+categories:
+- parallel programming
+- python
 date: 2010-06-21 07:27
-categories: [parallel programming, python]
+layout: post
 slug: parallel-computing-python-way
+title: parallel computing the python way
+
 ---
 
 <p>

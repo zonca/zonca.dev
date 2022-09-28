@@ -1,9 +1,16 @@
 ---
-layout: post
-title: Deploy Pangeo on Kubernetes deployment on Jetstream created with Kubespray
+aliases:
+- /2018/12/jetstream_kubernetes_jupyterhub_pangeo
+categories:
+- kubernetes
+- kubespray
+- jetstream
+- jupyterhub
 date: 2018-12-20 1:00
-categories: [kubernetes, kubespray, jetstream, jupyterhub]
+layout: post
 slug: kubernetes-jetstream-kubespray-pangeo
+title: Deploy Pangeo on Kubernetes deployment on Jetstream created with Kubespray
+
 ---
 
 The [Pangeo collaboration for Big Data Geoscience](http://pangeo.io/) maintains a helm

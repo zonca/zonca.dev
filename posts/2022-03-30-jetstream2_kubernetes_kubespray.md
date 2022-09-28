@@ -1,8 +1,15 @@
 ---
+aliases:
+- /2022/03/jetstream2_kubernetes_kubespray
+categories:
+- kubernetes
+- kubespray
+- jetstream2
+date: '2022-03-30'
 layout: post
-title: Deploy Kubernetes on Jetstream 2 with Kubespray 2.18.0
-categories: [kubernetes, kubespray, jetstream2]
 slug: kubernetes-jetstream2-kubespray
+title: Deploy Kubernetes on Jetstream 2 with Kubespray 2.18.0
+
 ---
 
 * Updated in August 2022 to add automatic jetstream-cloud.org subdomains

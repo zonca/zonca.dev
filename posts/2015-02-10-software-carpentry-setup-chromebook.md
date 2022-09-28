@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Software Carpentry setup for Chromebook
+aliases:
+- /2015/02/software-carpentry-setup-chromebook
+categories:
+- software-carpentry
+- chromebook
+- ipython
 date: 2015-02-10 20:00
-categories: [software-carpentry, chromebook, ipython]
+layout: post
 slug: software-carpentry-setup-chromebook
+title: Software Carpentry setup for Chromebook
+
 ---
 
 In this post I'll provide instructions on how to install the main requirements of a [Software Carpentry workshop](http://software-carpentry.org) on

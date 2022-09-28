@@ -1,8 +1,14 @@
 ---
+aliases:
+- /2021/10/kubernetes-hadoop
+categories:
+- kubernetes
+- jetstream
+date: '2021-10-12'
 layout: post
-title: Deploy Hadoop on Kubernetes on Jetstream
-categories: [kubernetes, jetstream]
 slug: hadoop-kubernetes-jetstream
+title: Deploy Hadoop on Kubernetes on Jetstream
+
 ---
 
 We are deploying the good old Hadoop on top of Kubernetes on Jetstream. Don't ask why.

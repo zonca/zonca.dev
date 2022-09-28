@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Launch a shared dask cluster in Kubernetes alongside JupyterHub on Jetstream
+aliases:
+- /2018/05/shared-dask-kubernetes-jetstream
+categories:
+- jupyter
+- jetstream
+- dask
 date: 2018-05-04 18:00
-categories: [jupyter, jetstream, dask]
+layout: post
 slug: shared-dask-kubernetes-jetstream
+title: Launch a shared dask cluster in Kubernetes alongside JupyterHub on Jetstream
+
 ---
 
 Let's assume we have already a Kubernetes deployment and have installed JupyterHub, see for example my [previous tutorial on Jetstream](https://zonca.github.io/2017/12/scalable-jupyterhub-kubernetes-jetstream.html).

@@ -1,9 +1,13 @@
 ---
-layout: post
-title: netcat, quickly send binaries through network
+aliases:
+- /2008/04/netcat-quickly-send-binaries-through
+categories:
+- linux
 date: 2008-04-29 12:25
-categories: [linux]
+layout: post
 slug: netcat-quickly-send-binaries-through
+title: netcat, quickly send binaries through network
+
 ---
 
 <p>

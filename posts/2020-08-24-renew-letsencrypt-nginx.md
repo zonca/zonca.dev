@@ -1,7 +1,12 @@
 ---
+aliases:
+- /2020/08/renew-letsencrypt-nginx
+categories:
+- letsencrypt
+date: '2020-08-24'
 layout: post
 title: Renew letsencrypt certificate with NGINX
-categories: [letsencrypt]
+
 ---
 
 If you have a default domain already configured with NGINX,

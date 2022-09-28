@@ -1,9 +1,13 @@
 ---
-layout: post
-title: vim costumization
+aliases:
+- /2006/10/vim-costumization
+categories:
+- linux
 date: 2006-10-17 10:49
-categories: [linux]
+layout: post
 slug: vim-costumization
+title: vim costumization
+
 ---
 
 <p>

@@ -1,8 +1,13 @@
 ---
+aliases:
+- /2020/03/pelican-to-fastpages
+categories:
+- python
+date: '2020-03-09'
 layout: post
-title: Migrate from Pelican to Fastpages
-categories: [python]
 slug: pelican-to-fastpages
+title: Migrate from Pelican to Fastpages
+
 ---
 
 I have been using the Pelican static website generator for a few years,

@@ -1,9 +1,14 @@
 ---
-layout: post
-title: pillole di astrofisica
+aliases:
+- /2006/09/pillole-di-astrofisica
+categories:
+- astrophysics
+- physics
 date: 2006-09-20 13:39
-categories: [astrophysics, physics]
+layout: post
 slug: pillole-di-astrofisica
+title: pillole di astrofisica
+
 ---
 
 <p>

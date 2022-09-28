@@ -1,9 +1,16 @@
 ---
-layout: post
-title: Deploy scalable Jupyterhub on Docker Swarm mode
+aliases:
+- /2017/10/scalable-jupyterhub-docker-swarm-mode
+categories:
+- jupyterhub
+- docker
+- jetstream
+- gateways
 date: 2017-10-26 18:00
-categories: [jupyterhub, docker, jetstream, gateways]
+layout: post
 slug: scalable-jupyterhub-docker-swarm-mode
+title: Deploy scalable Jupyterhub on Docker Swarm mode
+
 ---
 
 ## Introduction

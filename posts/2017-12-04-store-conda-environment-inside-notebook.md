@@ -1,9 +1,13 @@
 ---
-layout: post
-title: Store a conda environment inside a Notebook
+aliases:
+- /2017/12/store-conda-environment-inside-notebook
+categories:
+- jupyter-notebook
 date: 2017-12-04 18:00
-categories: [jupyter-notebook]
+layout: post
 slug: store-conda-environment-inside-notebook
+title: Store a conda environment inside a Notebook
+
 ---
 
 Last August, during the Container Analysis Environments Workshop held at Urbana-Champaign,

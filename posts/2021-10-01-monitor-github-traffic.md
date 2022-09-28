@@ -1,7 +1,12 @@
 ---
+aliases:
+- /2021/10/monitor-github-traffic
+categories:
+- github
+date: '2021-10-01'
 layout: post
 title: Monitor traffic on Github repositories
-categories: [github]
+
 ---
 
 Github only shows traffic data for the last 2 weeks.

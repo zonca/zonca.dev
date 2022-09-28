@@ -1,9 +1,14 @@
 ---
-layout: post
-title: Basic fork/pull git workflow
+aliases:
+- /2013/04/basic-forkpull-git-workflow
+categories:
+- git
+- github
 date: 2013-04-06 07:52
-categories: [git, github]
+layout: post
 slug: basic-forkpull-git-workflow
+title: Basic fork/pull git workflow
+
 ---
 
 <div dir="ltr">

@@ -1,9 +1,13 @@
 ---
-layout: post
-title: set python logging level
+aliases:
+- /2011/04/set-python-logging-level
+categories:
+- python
 date: 2011-04-13 01:02
-categories: [python]
+layout: post
 slug: set-python-logging-level
+title: set python logging level
+
 ---
 
 <p>

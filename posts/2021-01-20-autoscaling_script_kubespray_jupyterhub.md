@@ -1,7 +1,14 @@
 ---
+aliases:
+- /2021/01/autoscaling_script_kubespray_jupyterhub
+categories:
+- kubernetes
+- kubespray
+- jetstream
+date: '2021-01-20'
 layout: post
 title: Autoscaling script for JupyterHub on top of Kubespray
-categories: [kubernetes, kubespray, jetstream]
+
 ---
 
 I think the most reliable way of deploying Kubernetes on Openstack is Kubespray,

@@ -1,9 +1,13 @@
 ---
-layout: post
-title: Vim regular expressions
+aliases:
+- /2011/04/vim-regular-expressions
+categories:
+- linux
 date: 2011-04-29 02:14
-categories: [linux]
+layout: post
 slug: vim-regular-expressions
+title: Vim regular expressions
+
 ---
 
 <p>

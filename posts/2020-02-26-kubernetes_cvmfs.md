@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Deploy CVMFS on Kubernetes
+aliases:
+- /2020/02/kubernetes_cvmfs
+categories:
+- kubernetes
+- jetstream
+- jupyterhub
 date: 2020-02-26 13:00
-categories: [kubernetes, jetstream, jupyterhub]
+layout: post
 slug: cvmfs-kubernetes
+title: Deploy CVMFS on Kubernetes
+
 ---
 
 [CVMFS](https://cvmfs.readthedocs.io/) is a software distribution service, it is used by High Energy Physics experiments at CERN

@@ -1,8 +1,16 @@
 ---
+aliases:
+- /2020/05/jetstream_kubernetes_magnum
+categories:
+- kubernetes
+- openstack
+- jetstream
+- jupyterhub
+date: '2020-05-21'
 layout: post
-title: Deploy Kubernetes and JupyterHub on Jetstream with Magnum
-categories: [kubernetes, openstack, jetstream, jupyterhub]
 slug: kubernetes-jupyterhub-jetstream-magnum
+title: Deploy Kubernetes and JupyterHub on Jetstream with Magnum
+
 ---
 
 This tutorial deploys Kubernetes on Jetstream with Magnum and then

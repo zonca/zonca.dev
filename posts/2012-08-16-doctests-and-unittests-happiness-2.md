@@ -1,9 +1,13 @@
 ---
-layout: post
-title: doctests and unittests happiness 2
+aliases:
+- /2012/08/doctests-and-unittests-happiness-2
+categories:
+- python
 date: 2012-08-16 14:07
-categories: [python]
+layout: post
 slug: doctests-and-unittests-happiness-2
+title: doctests and unittests happiness 2
+
 ---
 
 <blockquote>

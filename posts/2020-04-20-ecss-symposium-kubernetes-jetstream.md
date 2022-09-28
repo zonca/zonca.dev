@@ -1,7 +1,15 @@
 ---
+aliases:
+- /2020/04/ecss-symposium-kubernetes-jetstream
+categories:
+- jupyterhub
+- jetstream
+- gateways
+date: '2020-04-20'
 layout: post
-title: ECSS Symposium introduction to cloud computing with Jetstream and deployment of Kubernetes
-categories: [jupyterhub, jetstream, gateways]
+title: ECSS Symposium introduction to cloud computing with Jetstream and deployment
+  of Kubernetes
+
 ---
 
 ECSS Symposium, April 2020, Web presentation to the XSEDE [Extended Collaborative Support Services](https://www.xsede.org/for-users/ecss).

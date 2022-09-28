@@ -1,9 +1,13 @@
 ---
-layout: post
-title: Simple Mixin usage in python
+aliases:
+- /2013/04/simple-mixin-usage-in-python
+categories:
+- python
 date: 2013-04-08 01:34
-categories: [python]
+layout: post
 slug: simple-mixin-usage-in-python
+title: Simple Mixin usage in python
+
 ---
 
 <p>

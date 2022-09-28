@@ -1,9 +1,13 @@
 ---
-layout: post
-title: change column name in a fits with pyfits
+aliases:
+- /2010/06/change-column-name-in-fits-with-pyfits
+categories:
+- python
 date: 2010-06-30 22:06
-categories: [python]
+layout: post
 slug: change-column-name-in-fits-with-pyfits
+title: change column name in a fits with pyfits
+
 ---
 
 <p>

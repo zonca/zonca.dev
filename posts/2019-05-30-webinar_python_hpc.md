@@ -1,9 +1,16 @@
 ---
-layout: post
-title: Webinar about distributed computing with Python
+aliases:
+- /2019/05/webinar_python_hpc
+categories:
+- webinar
+- python
+- hpc
+- comet
 date: 2019-05-30 15:00
-categories: [webinar, python, hpc, comet]
+layout: post
 slug: webinar-python-hpc
+title: Webinar about distributed computing with Python
+
 ---
 
 Recording available of the webinar I gave about "Distributed computing with Python":

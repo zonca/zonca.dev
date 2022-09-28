@@ -1,7 +1,12 @@
 ---
+aliases:
+- /2021/10/healpix-plot-pixel-boundaries
+categories:
+- healpy
+date: '2021-10-06'
 layout: post
 title: Plot HEALPix pixel boundaries
-categories: [healpy]
+
 ---
 
 Some time ago I created a Jupyter Notebook based on `plotly` to create a 3D visualization of the boundaries of HEALPix pixels on the sphere.

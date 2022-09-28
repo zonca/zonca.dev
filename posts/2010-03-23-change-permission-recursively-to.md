@@ -1,9 +1,13 @@
 ---
-layout: post
-title: change permission recursively to folders only
+aliases:
+- /2010/03/change-permission-recursively-to
+categories:
+- linux
 date: 2010-03-23 17:58
-categories: [linux]
+layout: post
 slug: change-permission-recursively-to
+title: change permission recursively to folders only
+
 ---
 
 <code>

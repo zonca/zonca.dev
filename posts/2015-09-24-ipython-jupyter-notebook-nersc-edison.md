@@ -1,9 +1,15 @@
 ---
-layout: post
-title: IPython/Jupyter notebook setup on NERSC Edison
+aliases:
+- /2015/09/ipython-jupyter-notebook-nersc-edison
+categories:
+- ipython
+- jupyter
+- ipython-notebook
 date: 2015-09-24 20:00
-categories: [ipython, jupyter, ipython-notebook]
+layout: post
 slug: ipython-jupyter-notebook-nersc-edison
+title: IPython/Jupyter notebook setup on NERSC Edison
+
 ---
 
 ## Introduction

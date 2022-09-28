@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Deploy JupyterHub on a Supercomputer for a workshop or tutorial 2018 edition
-categories: [jupyterhub, comet, xsede]
+aliases:
+- /2018/01/deploy_jupyterhub_supercomputer_2018
+categories:
+- jupyterhub
+- comet
+- xsede
 date: 2018-11-7 11:00
+layout: post
 slug: jupyterhub-supercomputer
+title: Deploy JupyterHub on a Supercomputer for a workshop or tutorial 2018 edition
+
 ---
 
 I described how to deploy JupyterHub with each user session running on a different

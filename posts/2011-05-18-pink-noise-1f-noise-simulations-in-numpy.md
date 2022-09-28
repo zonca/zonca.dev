@@ -1,9 +1,14 @@
 ---
-layout: post
-title: Pink noise (1/f noise) simulations in numpy
+aliases:
+- /2011/05/pink-noise-1f-noise-simulations-in-numpy
+categories:
+- python
+- physics
 date: 2011-05-18 23:49
-categories: [python, physics]
+layout: post
 slug: pink-noise-1f-noise-simulations-in-numpy
+title: Pink noise (1/f noise) simulations in numpy
+
 ---
 
 <a href="https://gist.github.com/979729">

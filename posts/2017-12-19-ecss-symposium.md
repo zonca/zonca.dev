@@ -1,9 +1,15 @@
 ---
-layout: post
-title: ECSS Symposium about Jupyterhub deployments on XSEDE
+aliases:
+- /2017/12/ecss-symposium
+categories:
+- jupyterhub
+- jetstream
+- gateways
 date: 2017-12-15 18:00
-categories: [jupyterhub, jetstream, gateways]
+layout: post
 slug: ecss-symposium
+title: ECSS Symposium about Jupyterhub deployments on XSEDE
+
 ---
 
 ## Jupyter Notebooks at scale for Gateways and Workshops

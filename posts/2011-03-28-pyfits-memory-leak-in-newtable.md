@@ -1,9 +1,14 @@
 ---
-layout: post
-title: pyfits memory leak in new_table
+aliases:
+- /2011/03/pyfits-memory-leak-in-newtable
+categories:
+- python
+- astrophysics
 date: 2011-03-28 17:22
-categories: [python, astrophysics]
+layout: post
 slug: pyfits-memory-leak-in-newtable
+title: pyfits memory leak in new_table
+
 ---
 
 <p>

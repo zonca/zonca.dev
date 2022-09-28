@@ -1,9 +1,14 @@
 ---
-layout: post
-title: software carpentry
+aliases:
+- /2006/09/software-carpentry
+categories:
+- linux
+- physics
 date: 2006-09-25 12:51
-categories: [linux, physics]
+layout: post
 slug: software-carpentry
+title: software carpentry
+
 ---
 
 <p>

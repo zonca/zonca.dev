@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Compile healpix C++ to javascript
+aliases:
+- /2013/01/tag-blogger
+categories:
+- javascript
+- hackideas
+- healpix
 date: 2013-01-28 21:06
-categories: [javascript, hackideas, healpix]
+layout: post
 slug: tag:blogger
+title: Compile healpix C++ to javascript
+
 ---
 
 <p>

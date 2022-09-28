@@ -1,7 +1,15 @@
 ---
+aliases:
+- /2020/07/nfs-server-kubernetes-jetstream
+categories:
+- kubernetes
+- openstack
+- jetstream
+- jupyterhub
+date: '2020-07-10'
 layout: post
 title: Deploy a NFS server to share data between JupyterHub users on Jetstream
-categories: [kubernetes, openstack, jetstream, jupyterhub]
+
 ---
 
 In this tutorial I'll show how to create a data volume on Jetstream and share it

@@ -1,7 +1,12 @@
 ---
+aliases:
+- /2021/06/learn-italian-in-san-diego
+categories:
+- italian
+date: '2021-06-17'
 layout: post
 title: Learn Italian in San Diego
-categories: [italian]
+
 ---
 
 My wife Maura D'Andrea recently opened a new [Italian language school in San Diego](https://www.italianschoolsd.com/about/).

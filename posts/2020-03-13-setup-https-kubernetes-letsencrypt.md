@@ -1,7 +1,15 @@
 ---
+aliases:
+- /2020/03/setup-https-kubernetes-letsencrypt
+categories:
+- kubernetes
+- openstack
+- jetstream
+- jupyterhub
+date: '2020-03-13'
 layout: post
 title: Setup HTTPS on Kubernetes with Letsencrypt
-categories: [kubernetes, openstack, jetstream, jupyterhub]
+
 ---
 
 **Updated in August 2022**: Add patching script to run on master node

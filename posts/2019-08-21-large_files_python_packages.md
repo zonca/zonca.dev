@@ -1,9 +1,13 @@
 ---
-layout: post
-title: Ship large files with Python packages
+aliases:
+- /2019/08/large_files_python_packages
+categories:
+- python
 date: 2019-08-21 18:00
-categories: [python]
+layout: post
 slug: large-files-python-packages
+title: Ship large files with Python packages
+
 ---
 
 It is often useful to ship large data files together with a Python package,

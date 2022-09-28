@@ -1,9 +1,14 @@
 ---
-layout: post
-title: Configure Globus on your local machine for GridFTP with XSEDE authentication
+aliases:
+- /2017/04/globus-ftp-local-machine
+categories:
+- ipython
+- jupyterhub
 date: 2017-04-19 12:00
-categories: [ipython, jupyterhub]
+layout: post
 slug: globus-gridftp-local
+title: Configure Globus on your local machine for GridFTP with XSEDE authentication
+
 ---
 
 All the commands are executed on your local machine, the purpose of this tutorial is to be able to use `globus-url-copy` to copy efficiently data back and forth between your local machine and a XSEDE Supercomputer on the command line.

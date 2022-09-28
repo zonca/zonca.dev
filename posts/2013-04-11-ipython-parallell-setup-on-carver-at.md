@@ -1,9 +1,16 @@
 ---
-layout: post
-title: IPython parallell setup on Carver at NERSC
+aliases:
+- /2013/04/ipython-parallell-setup-on-carver-at
+categories:
+- hpc
+- supercomputing
+- ipython
+- python
 date: 2013-04-11 05:53
-categories: [hpc, supercomputing, ipython, python]
+layout: post
 slug: ipython-parallell-setup-on-carver-at
+title: IPython parallell setup on Carver at NERSC
+
 ---
 
 <p>

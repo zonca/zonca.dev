@@ -1,8 +1,11 @@
 ---
-layout: post
-title: homepage on about.me
+aliases:
+- /2012/09/homepage-on-aboutme
 date: 2012-09-26 22:19
+layout: post
 slug: homepage-on-aboutme
+title: homepage on about.me
+
 ---
 
 <p>

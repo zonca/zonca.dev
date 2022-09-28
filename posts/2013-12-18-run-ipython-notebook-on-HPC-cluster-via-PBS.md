@@ -1,9 +1,15 @@
 ---
-layout: post
-title: Run IPython Notebook on a HPC Cluster via PBS
+aliases:
+- /2013/12/run-ipython-notebook-on-HPC-cluster-via-PBS
+categories:
+- ipython
+- ipython-notebook
+- HPC
 date: 2013-12-18 16:30
-categories: [ipython, ipython-notebook, HPC]
+layout: post
 slug: run-ipython-notebook-on-HPC-cluster-via-PBS
+title: Run IPython Notebook on a HPC Cluster via PBS
+
 ---
 
 The [IPython notebook](http://ipython.org/notebook.html) is a great tool for data exploration

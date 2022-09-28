@@ -1,9 +1,14 @@
 ---
-layout: post
-title: Stop ipcluster from a script
+aliases:
+- /2010/02/stop-ipcluster-from-script
+categories:
+- parallel programming
+- python
 date: 2010-02-19 02:23
-categories: [parallel programming, python]
+layout: post
 slug: stop-ipcluster-from-script
+title: Stop ipcluster from a script
+
 ---
 
 <p>

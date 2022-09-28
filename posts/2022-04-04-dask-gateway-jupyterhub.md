@@ -1,7 +1,16 @@
 ---
+aliases:
+- /2022/04/dask-gateway-jupyterhub
+categories:
+- kubernetes
+- openstack
+- jetstream2
+- jupyterhub
+- dask
+date: '2022-04-04'
 layout: post
 title: Deploy Dask Gateway with JupyterHub on Kubernetes
-categories: [kubernetes, openstack, jetstream2, jupyterhub, dask]
+
 ---
 
 **Updated 28 April 2022**: switched to Dask Gateway 2022.4.0

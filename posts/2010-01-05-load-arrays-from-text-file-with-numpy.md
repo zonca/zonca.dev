@@ -1,9 +1,14 @@
 ---
-layout: post
-title: load arrays from a text file with numpy
+aliases:
+- /2010/01/load-arrays-from-text-file-with-numpy
+categories:
+- python
+- numpy
 date: 2010-01-05 16:32
-categories: [python, numpy]
+layout: post
 slug: load-arrays-from-text-file-with-numpy
+title: load arrays from a text file with numpy
+
 ---
 
 <p>

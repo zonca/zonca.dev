@@ -1,9 +1,13 @@
 ---
-layout: post
-title: git make local branch tracking origin
+aliases:
+- /2011/02/git-make-local-branch-tracking-origin
+categories:
+- git
 date: 2011-02-02 02:58
-categories: [git]
+layout: post
 slug: git-make-local-branch-tracking-origin
+title: git make local branch tracking origin
+
 ---
 
 <code>
