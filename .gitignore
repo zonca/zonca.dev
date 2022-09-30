@@ -1,1 +1,3 @@
 /.quarto/
+*.swp
+_site
