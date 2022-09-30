@@ -9,6 +9,7 @@ website:
   navbar:
     right:
       - about.qmd
+      - consult.qmd
       - icon: github
         href: https://github.com/zonca
       - icon: twitter
