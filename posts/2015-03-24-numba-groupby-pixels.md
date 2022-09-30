@@ -11,7 +11,7 @@ title: Accelerate groupby operation on pixels with Numba
 
 ---
 
-[Download the original IPython notebook](/notebooks/numba_groupby_pixels.ipynb)
+[Download the original IPython notebook](https://gist.github.com/zonca/37b4423e507d5dc2fc3b8b5d4db6d316)
 
 ## Astrophysics background
 
