@@ -4011,48 +4011,6 @@
     "text": "Screenshots of the old blog\nSometimes I get nostalgic."
   },
   {
-    "objectID": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html",
-    "href": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html",
-    "title": "Deploy JupyterHub on a Supercomputer for a workshop or tutorial 2018 edition",
-    "section": "",
-    "text": "I described how to deploy JupyterHub with each user session running on a different node of a Supercomputer in my paper for PEARC18, however things are moving fast in the space and I am employing a different strategy this year, in particular relying on the littlest JupyterHub project for the initial deployment."
-  },
-  {
-    "objectID": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html#initial-deployment-of-jupyterhub",
-    "href": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html#initial-deployment-of-jupyterhub",
-    "title": "Deploy JupyterHub on a Supercomputer for a workshop or tutorial 2018 edition",
-    "section": "Initial deployment of JupyterHub",
-    "text": "Initial deployment of JupyterHub\nThe littlest JupyterHub project has great documentation on how to deploy JupyterHub working on a single server on a wide array of providers.\nIn my case I logged in to the dashboard of SDSC Cloud, a OpenStack deployment at the San Diego Supercomputer Center, and requested an instance with 16 GB of RAM and 6 vCPUs with Ubuntu 18.04. Make sure you attach a floating public IP to the instance and open up ports 22 for SSH and 80,443 for HTTP/HTTPS.\nThen I followed the installation tutorial for custom servers, just make sure that you first create in the virtual machine the admin user you specify in the installation script, also make sure to use the same username of your Github account, as we will later setup Github Authentication.\nYou can connect to the instance and check JupyterHub is working and you can login with your user and access the admin panel, for SDSC Cloud the address is http://xxx-xxx-xxx-xxx.compute.cloud.sdsc.edu, filled in with the instance floating IP address.\n\nSetup HTTPS\nFollow the Littlest JupyterHub documentation on how to get a SSL certificate through Letsencrypt automatically, after this you should be able to access JupyterHub from https://xxx-xxx-xxx-xxx.compute.cloud.sdsc.edu or a custom domain you pointed there."
-  },
-  {
-    "objectID": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html#authentication-with-github",
-    "href": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html#authentication-with-github",
-    "title": "Deploy JupyterHub on a Supercomputer for a workshop or tutorial 2018 edition",
-    "section": "Authentication with Github",
-    "text": "Authentication with Github\nFollow the Littlest JupyterHub documentation, just make sure to set the http address and not the https address."
-  },
-  {
-    "objectID": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html#interface-with-comet-via-batchspawner",
-    "href": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html#interface-with-comet-via-batchspawner",
-    "title": "Deploy JupyterHub on a Supercomputer for a workshop or tutorial 2018 edition",
-    "section": "Interface with Comet via batchspawner",
-    "text": "Interface with Comet via batchspawner\nWe want all users to run on Comet as a single “Gateway” user, as JupyterHub executes as the root user on the server, we want to create a SSH key for the root user and copy the public key to the home folder of the gateway user on Comet so that we can SSH without a password.\nInstead, if you would like each user to utilize their own XSEDE account, you need them to authenticate via XSEDE and get a certificate from the XSEDE API that can be used to login to Comet on behalf of the user, see an example deployment of this.\nFirst install batchspawner with pip in the Python environment of the hub, this is different than the Python environment of the user, you can have access to it logging in with the root user and running:\nexport PATH=/opt/tljh/hub/bin:${PATH}\nSet the configuration file, see spawner.py on this Gist and copy it into the /opt/tljh/config/jupyterhub_config.d folder, then add the private SSH key of the tunnelbot user, which is a user on the Virtual Machine with no shell (set /bin/false in /etc/passwd) but that can setup a SSH tunnel from Comet back to the Hub.\nAlso customize all paths and usernames in the file.\nReload the Jupyterhub configuration with:\ntljh-config reload\nYou can then check the Hub logs with sudo journalctl -r -u jupyterhub\nThe most complicated part is making sure that the environment variables defined by JupyterHub, the most important is the token which allows the singleuser server to authenticate itself with the Hub, are correctly propagated through SSH. See in spawner.py how I explicitely pass the variables over SSH.\nAlso, as all workshop participants access Comet with the same user account, I automatically create a folder with their Github username and checkout the Notebooks for the workshop in that folder. Then start JupyterLab in that folder, so that the users do not interfere, we are not worrying about security here, with the current setup a user can open a terminal inside JupyterLab and access the folder of another person."
-  },
-  {
-    "objectID": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html#how-to-setup-the-tunnelbot-user",
-    "href": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html#how-to-setup-the-tunnelbot-user",
-    "title": "Deploy JupyterHub on a Supercomputer for a workshop or tutorial 2018 edition",
-    "section": "How to setup the tunnelbot user",
-    "text": "How to setup the tunnelbot user\n\nOn the JupyterHub virtual machine, create a user named tunnelbot\nsudo su tunnelbot to act as that user, then create a key with ssh-keygen\nenter the .ssh folder and cp id_rsa.pub authorized_keys so that the ssh key can be used from Comet to ssh passwordless to the server\nnow get the private key from /home/tunnelbot/.ssh/id_rsa and paste it into spawner.py\nnow make sure you set the shell of tunnelbot to /bin/false in /etc/passwd/\nfor increased security, please also follow the steps in this stackoverflow answer"
-  },
-  {
-    "objectID": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html#acknowledgments",
-    "href": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html#acknowledgments",
-    "title": "Deploy JupyterHub on a Supercomputer for a workshop or tutorial 2018 edition",
-    "section": "Acknowledgments",
-    "text": "Acknowledgments\nThanks to the Jupyter and JupyterHub teams for releasing great software with outstanding documentation, in particular Yuvi Panda for the simplicity and elegance in the design of the Littlest JupyterHub deployment."
-  },
-  {
     "objectID": "posts/2020-03-16-raise-check-flag-numpy.html",
     "href": "posts/2020-03-16-raise-check-flag-numpy.html",
     "title": "Raise and check a flag array with numpy",
@@ -4443,6 +4401,48 @@
     "title": "Compare HEALPix and Gauss-Legendre pixelizations for sky emission modelling",
     "section": "Compare the 2 approaches",
     "text": "Compare the 2 approaches\nWe want to compute errors just until the target \\(N_{side}\\):\n\nL2_GL = ducc0.misc.l2error(alm_target[0, 1:], alm2[0, 1:])\nL2_healpix = ducc0.misc.l2error(alm_target[0, 1:], alm_from_m[1:])\n\n\ntarget_ell = np.arange(target_lmax + 1)\ntarget_ell_norm = target_ell * (target_ell + 1) / (2*np.pi)\ntarget_ell_norm[0] = 1\n\nWe can compare the output spectra and the error, the output power spectra are the same within machine precision, but the \\(a_{\\ell m}\\) are not:\n\nplt.plot(cl_GL[0]  - cl_from_m)\nplt.legend()\nplt.grid()\nplt.title(\"Difference between the power spectra\");\n\nNo handles with labels found to put in legend.\n\n\n\n\n\n\nplt.figure(figsize=(9, 5))\n\ncl = cl_from_m*target_ell_norm/input_power_law[:len(target_ell)]\ncl[0] = 0\nstd = cl.std()\nplt.axvline(np.pi/hp.nside2resol(target_nside), color=\"gray\")\n\nplt.plot(target_ell, cl, label=f\"HEALPix N_side {modelling_nside} Error: {L2_healpix:.2g}\")\nplt.plot(target_ell, cl_GL[0] * target_ell_norm / input_power_law[:len(target_ell)], label=f\"Gauss-Legendre Error: {L2_GL:.2g}\")\n\nplt.legend()\nplt.grid()\nplt.title(f\"output / input spectrum, input map nside {modelling_nside} powerlaw gamma={gamma}\")\nplt.ylabel(\"$\\ell(\\ell+1)C_\\ell/2\\pi [\\mu K_{RJ}]$\")\nplt.xlabel((\"$\\ell$\"))\nplt.axhline(1, color=\"black\")\nplt.savefig(f\"spec_ratio_HEALPix_GL.png\")\nplt.xlim(1, target_lmax+100);\n\n\n\n\n\nTime necessary for the transforms\nIn seconds\n\ntimings\n\n{'H_alm2map': 34, 'H_map2alm': 23, 'GL_alm2map': 6, 'GL_map2alm': 6}\n\n\n\n\nMemory usage in pixel space\nSize of temperature-only maps with the requested \\(\\ell_{max}\\) for GL and \\(N_{side}\\) for HEALPix\n\n(GL_map.nbytes * u.byte).to(u.GB)\n\n\\(0.60397978 \\; \\mathrm{Gbyte}\\)\n\n\n\n(healpix_map.nbytes * u.byte).to(u.GB)\n\n\\(1.6106127 \\; \\mathrm{Gbyte}\\)"
+  },
+  {
+    "objectID": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html",
+    "href": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html",
+    "title": "Deploy JupyterHub on a Supercomputer for a workshop or tutorial 2018 edition",
+    "section": "",
+    "text": "I described how to deploy JupyterHub with each user session running on a different node of a Supercomputer in my paper for PEARC18, however things are moving fast in the space and I am employing a different strategy this year, in particular relying on the littlest JupyterHub project for the initial deployment."
+  },
+  {
+    "objectID": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html#initial-deployment-of-jupyterhub",
+    "href": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html#initial-deployment-of-jupyterhub",
+    "title": "Deploy JupyterHub on a Supercomputer for a workshop or tutorial 2018 edition",
+    "section": "Initial deployment of JupyterHub",
+    "text": "Initial deployment of JupyterHub\nThe littlest JupyterHub project has great documentation on how to deploy JupyterHub working on a single server on a wide array of providers.\nIn my case I logged in to the dashboard of SDSC Cloud, a OpenStack deployment at the San Diego Supercomputer Center, and requested an instance with 16 GB of RAM and 6 vCPUs with Ubuntu 18.04. Make sure you attach a floating public IP to the instance and open up ports 22 for SSH and 80,443 for HTTP/HTTPS.\nThen I followed the installation tutorial for custom servers, just make sure that you first create in the virtual machine the admin user you specify in the installation script, also make sure to use the same username of your Github account, as we will later setup Github Authentication.\nYou can connect to the instance and check JupyterHub is working and you can login with your user and access the admin panel, for SDSC Cloud the address is http://xxx-xxx-xxx-xxx.compute.cloud.sdsc.edu, filled in with the instance floating IP address.\n\nSetup HTTPS\nFollow the Littlest JupyterHub documentation on how to get a SSL certificate through Letsencrypt automatically, after this you should be able to access JupyterHub from https://xxx-xxx-xxx-xxx.compute.cloud.sdsc.edu or a custom domain you pointed there."
+  },
+  {
+    "objectID": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html#authentication-with-github",
+    "href": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html#authentication-with-github",
+    "title": "Deploy JupyterHub on a Supercomputer for a workshop or tutorial 2018 edition",
+    "section": "Authentication with Github",
+    "text": "Authentication with Github\nFollow the Littlest JupyterHub documentation, just make sure to set the http address and not the https address."
+  },
+  {
+    "objectID": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html#interface-with-comet-via-batchspawner",
+    "href": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html#interface-with-comet-via-batchspawner",
+    "title": "Deploy JupyterHub on a Supercomputer for a workshop or tutorial 2018 edition",
+    "section": "Interface with Comet via batchspawner",
+    "text": "Interface with Comet via batchspawner\nWe want all users to run on Comet as a single “Gateway” user, as JupyterHub executes as the root user on the server, we want to create a SSH key for the root user and copy the public key to the home folder of the gateway user on Comet so that we can SSH without a password.\nInstead, if you would like each user to utilize their own XSEDE account, you need them to authenticate via XSEDE and get a certificate from the XSEDE API that can be used to login to Comet on behalf of the user, see an example deployment of this.\nFirst install batchspawner with pip in the Python environment of the hub, this is different than the Python environment of the user, you can have access to it logging in with the root user and running:\nexport PATH=/opt/tljh/hub/bin:${PATH}\nSet the configuration file, see spawner.py on this Gist and copy it into the /opt/tljh/config/jupyterhub_config.d folder, then add the private SSH key of the tunnelbot user, which is a user on the Virtual Machine with no shell (set /bin/false in /etc/passwd) but that can setup a SSH tunnel from Comet back to the Hub.\nAlso customize all paths and usernames in the file.\nReload the Jupyterhub configuration with:\ntljh-config reload\nYou can then check the Hub logs with sudo journalctl -r -u jupyterhub\nThe most complicated part is making sure that the environment variables defined by JupyterHub, the most important is the token which allows the singleuser server to authenticate itself with the Hub, are correctly propagated through SSH. See in spawner.py how I explicitely pass the variables over SSH.\nAlso, as all workshop participants access Comet with the same user account, I automatically create a folder with their Github username and checkout the Notebooks for the workshop in that folder. Then start JupyterLab in that folder, so that the users do not interfere, we are not worrying about security here, with the current setup a user can open a terminal inside JupyterLab and access the folder of another person."
+  },
+  {
+    "objectID": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html#how-to-setup-the-tunnelbot-user",
+    "href": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html#how-to-setup-the-tunnelbot-user",
+    "title": "Deploy JupyterHub on a Supercomputer for a workshop or tutorial 2018 edition",
+    "section": "How to setup the tunnelbot user",
+    "text": "How to setup the tunnelbot user\n\nOn the JupyterHub virtual machine, create a user named tunnelbot\nsudo su tunnelbot to act as that user, then create a key with ssh-keygen\nenter the .ssh folder and cp id_rsa.pub authorized_keys so that the ssh key can be used from Comet to ssh passwordless to the server\nnow get the private key from /home/tunnelbot/.ssh/id_rsa and paste it into spawner.py\nnow make sure you set the shell of tunnelbot to /bin/false in /etc/passwd/\nfor increased security, please also follow the steps in this stackoverflow answer"
+  },
+  {
+    "objectID": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html#acknowledgments",
+    "href": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html#acknowledgments",
+    "title": "Deploy JupyterHub on a Supercomputer for a workshop or tutorial 2018 edition",
+    "section": "Acknowledgments",
+    "text": "Acknowledgments\nThanks to the Jupyter and JupyterHub teams for releasing great software with outstanding documentation, in particular Yuvi Panda for the simplicity and elegance in the design of the Littlest JupyterHub deployment."
   },
   {
     "objectID": "nb/2020-03-16-raise-check-flag-numpy.html",
