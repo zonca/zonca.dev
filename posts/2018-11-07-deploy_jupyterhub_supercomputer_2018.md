@@ -1,4 +1,6 @@
 ---
+aliases:
+- /2018/11/jupyterhub-supercomputer.html
 categories:
 - jupyterhub
 - hpc

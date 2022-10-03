@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/09/clviewer-interactive-plot-of-CMB-spectra
+- /2013/09/clviewer-interactive-plot-of-CMB-spectra.html
 categories:
 - python
 - astrophysics

@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2021/03/sgci-tech-blog
+- /2021/03/sgci-tech-blog.html
 categories:
 - kubernetes
 - jetstream

@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/08/interactive-figures-planck-power-spectra
+- /2013/08/interactive-figures-planck-power-spectra.html
 categories:
 - astrophysics
 - healpy

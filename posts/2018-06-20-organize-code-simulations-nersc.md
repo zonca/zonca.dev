@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2018/06/organize-code-simulations-nersc
+- /2018/06/organize-code-simulations-nersc.html
 categories:
 - hpc
 - python

@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/09/Planck-CMB-map-at-high-resolution
+- /2013/09/Planck-CMB-map-at-high-resolution.html
 categories:
 - python
 - astrophysics

@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2006/09/command-line-processing
+- /2006/09/command-line-processing.html
 categories:
 - linux
 date: 2006-09-22 13:34

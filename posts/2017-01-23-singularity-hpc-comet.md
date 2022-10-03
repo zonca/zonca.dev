@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2017/01/singularity-hpc-comet
+- /2017/01/singularity-hpc-comet.html
 categories:
 - singularity
 - hpc

@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2020/03/pelican-to-fastpages
+- /2020/03/pelican-to-fastpages.html
 categories:
 - python
 date: '2020-03-09'

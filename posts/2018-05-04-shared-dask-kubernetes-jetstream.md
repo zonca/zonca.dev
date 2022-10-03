@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2018/05/shared-dask-kubernetes-jetstream
+- /2018/05/shared-dask-kubernetes-jetstream.html
 categories:
 - jupyterhub
 - jetstream

@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/12/joining-sandiego-supercomputer-center
+- /2013/12/joining-sandiego-supercomputer-center.html
 date: 2013-12-10 13:30
 layout: post
 slug: joining-sandiego-supercomputer-center

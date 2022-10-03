@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2019/03/folder-inherit-group-permission
+- /2019/03/folder-inherit-group-permission.html
 categories:
 - hpc
 - linux

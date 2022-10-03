@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2018/07/updated-singularity-2.5-comet
+- /2018/07/updated-singularity-2.5-comet.html
 categories:
 - singularity
 - hpc

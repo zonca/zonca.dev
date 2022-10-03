@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2017/12/custom-conda-python-jupyter-nersc
+- /2017/12/custom-conda-python-jupyter-nersc.html
 categories:
 - jupyterhub
 - python

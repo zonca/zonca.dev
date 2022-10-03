@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2010/12/force-local-install-of-python-module
+- /2010/12/force-local-install-of-python-module.html
 categories:
 - python
 date: 2010-12-03 22:18

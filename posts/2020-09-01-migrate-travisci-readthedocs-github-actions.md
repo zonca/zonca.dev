@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2020/09/migrate-travisci-readthedocs-github-actions
+- /2020/09/migrate-travisci-readthedocs-github-actions.html
 categories:
 - python
 - github

@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/02/how-to-cite-hdf5-in-bibtex
+- /2013/02/how-to-cite-hdf5-in-bibtex.html
 date: 2013-02-27 00:42
 layout: post
 slug: how-to-cite-hdf5-in-bibtex

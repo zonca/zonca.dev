@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2012/12/ubuntu-ppa-for-healpix-and-healpy
+- /2012/12/ubuntu-ppa-for-healpix-and-healpy.html
 categories:
 - healpy
 - linux

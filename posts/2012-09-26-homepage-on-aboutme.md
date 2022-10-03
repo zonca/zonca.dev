@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2012/09/homepage-on-aboutme
+- /2012/09/homepage-on-aboutme.html
 date: 2012-09-26 22:19
 layout: post
 slug: homepage-on-aboutme

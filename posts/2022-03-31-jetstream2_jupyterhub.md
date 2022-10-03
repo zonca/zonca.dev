@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2022/03/jetstream2_jupyterhub
+- /2022/03/jetstream2_jupyterhub.html
 categories:
 - kubernetes
 - jupyterhub

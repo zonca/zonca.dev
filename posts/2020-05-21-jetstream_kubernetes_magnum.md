@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2020/05/jetstream_kubernetes_magnum
+- /2020/05/jetstream_kubernetes_magnum.html
 categories:
 - kubernetes
 - jetstream

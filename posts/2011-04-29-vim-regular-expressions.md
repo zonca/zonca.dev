@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2011/04/vim-regular-expressions
+- /2011/04/vim-regular-expressions.html
 categories:
 - linux
 date: 2011-04-29 02:14

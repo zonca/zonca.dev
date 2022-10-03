@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2015/09/ipython-jupyter-notebook-sdsc-comet
+- /2015/09/ipython-jupyter-notebook-sdsc-comet.html
 categories:
 - python
 - hpc

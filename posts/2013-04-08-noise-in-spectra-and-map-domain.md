@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/04/noise-in-spectra-and-map-domain
+- /2013/04/noise-in-spectra-and-map-domain.html
 categories:
 - healpy
 - astrophysics

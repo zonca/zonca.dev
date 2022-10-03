@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2017/04/globus-ftp-local-machine
+- /2017/04/globus-ftp-local-machine.html
 categories:
 - linux
 date: 2017-04-19 12:00

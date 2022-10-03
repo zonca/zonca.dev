@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2017/09/continous-integration-travis-ci-github
+- /2017/09/continous-integration-travis-ci-github.html
 categories:
 - github
 - git

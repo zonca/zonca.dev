@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2008/03/relation-between-power-density-and
+- /2008/03/relation-between-power-density-and.html
 categories:
 - astrophysics
 date: 2008-03-28 18:29

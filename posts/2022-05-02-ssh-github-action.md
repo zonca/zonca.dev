@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2022/05/ssh-github-action
+- /2022/05/ssh-github-action.html
 categories:
 - github
 date: '2022-05-02'

@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2018/05/pearc18-paper-preprint-arxiv
+- /2018/05/pearc18-paper-preprint-arxiv.html
 categories:
 - openscience
 date: 2018-05-12 18:00

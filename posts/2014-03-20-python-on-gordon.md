@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2014/03/python-on-gordon
+- /2014/03/python-on-gordon.html
 categories:
 - hpc
 - python

@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2014/10/zero-based-indexing
+- /2014/10/zero-based-indexing.html
 categories:
 - python
 date: 2014-10-22 10:00

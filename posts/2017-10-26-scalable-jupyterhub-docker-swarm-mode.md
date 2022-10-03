@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2017/10/scalable-jupyterhub-docker-swarm-mode
+- /2017/10/scalable-jupyterhub-docker-swarm-mode.html
 categories:
 - jupyterhub
 - jetstream

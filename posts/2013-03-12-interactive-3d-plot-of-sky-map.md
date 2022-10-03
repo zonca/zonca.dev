@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/03/interactive-3d-plot-of-sky-map
+- /2013/03/interactive-3d-plot-of-sky-map.html
 categories:
 - python
 - astrophysics

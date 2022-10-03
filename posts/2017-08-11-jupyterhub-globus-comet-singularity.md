@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2017/08/jupyterhub-globus-comet-singularity
+- /2017/08/jupyterhub-globus-comet-singularity.html
 categories:
 - jupyterhub
 - singularity

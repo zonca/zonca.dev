@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2006/09/pillole-di-astrofisica
+- /2006/09/pillole-di-astrofisica.html
 categories:
 - astrophysics
 date: 2006-09-20 13:39

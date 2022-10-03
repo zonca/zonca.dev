@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2010/08/numpy-dtypes-and-fits-keywords
+- /2010/08/numpy-dtypes-and-fits-keywords.html
 categories:
 - python
 date: 2010-08-04 21:57

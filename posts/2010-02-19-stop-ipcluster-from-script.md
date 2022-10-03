@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2010/02/stop-ipcluster-from-script
+- /2010/02/stop-ipcluster-from-script.html
 categories:
 - python
 date: 2010-02-19 02:23

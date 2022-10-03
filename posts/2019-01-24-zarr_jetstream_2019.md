@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2019/01/zarr_jetstream_2019
+- /2019/01/zarr_jetstream_2019.html
 categories:
 - jupyterhub
 - jetstream

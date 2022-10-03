@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2014/01/wget-file-from-google-drive
+- /2014/01/wget-file-from-google-drive.html
 categories:
 - linux
 date: 2014-01-31 18:00

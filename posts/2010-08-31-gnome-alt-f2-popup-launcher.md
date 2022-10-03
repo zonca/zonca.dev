@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2010/08/gnome-alt-f2-popup-launcher
+- /2010/08/gnome-alt-f2-popup-launcher.html
 categories:
 - linux
 date: 2010-08-31 18:14

@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2011/01/memory-map-npy-files
+- /2011/01/memory-map-npy-files.html
 categories:
 - python
 date: 2011-01-07 21:04

@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/09/google-plus-comments-plugin-for-pelican
+- /2013/09/google-plus-comments-plugin-for-pelican.html
 categories:
 - python
 - github

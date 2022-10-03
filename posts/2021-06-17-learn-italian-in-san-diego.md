@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2021/06/learn-italian-in-san-diego
+- /2021/06/learn-italian-in-san-diego.html
 categories:
 - italian
 date: '2021-06-17'

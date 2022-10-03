@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2014/08/github-for-research-groups
+- /2014/08/github-for-research-groups.html
 categories:
 - github
 - git

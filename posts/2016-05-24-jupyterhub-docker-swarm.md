@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2016/05/jupyterhub-docker-swarm
+- /2016/05/jupyterhub-docker-swarm.html
 categories:
 - jupyterhub
 - cloudcomputing

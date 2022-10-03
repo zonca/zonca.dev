@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2014/02/openproceedings
+- /2014/02/openproceedings.html
 categories:
 - python
 - openscience

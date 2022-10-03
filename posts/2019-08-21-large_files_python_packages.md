@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2019/08/large_files_python_packages
+- /2019/08/large_files_python_packages.html
 categories:
 - python
 date: 2019-08-21 18:00

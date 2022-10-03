@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2008/03/decibels-db-and-dbm-in-terms-of-power
+- /2008/03/decibels-db-and-dbm-in-terms-of-power.html
 categories:
 - astrophysics
 date: 2008-03-29 02:13

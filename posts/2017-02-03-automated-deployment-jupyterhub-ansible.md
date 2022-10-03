@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2017/02/automated-deployment-jupyterhub-ansible
+- /2017/02/automated-deployment-jupyterhub-ansible.html
 categories:
 - jupyterhub
 - cloudcomputing

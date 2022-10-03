@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2021/01/autoscaling_script_kubespray_jupyterhub
+- /2021/01/autoscaling_script_kubespray_jupyterhub.html
 categories:
 - kubernetes
 - jetstream

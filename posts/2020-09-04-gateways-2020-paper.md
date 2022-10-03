@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2020/09/gateways-2020-paper
+- /2020/09/gateways-2020-paper.html
 categories:
 - jupyterhub
 - jetstream

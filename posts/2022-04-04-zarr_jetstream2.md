@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2022/04/zarr_jetstream2
+- /2022/04/zarr_jetstream2.html
 categories:
 - dask
 - jetstream2

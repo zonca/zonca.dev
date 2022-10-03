@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2017/07/xstream-tutorial-notes-pearc17
+- /2017/07/xstream-tutorial-notes-pearc17.html
 categories:
 - git
 - github

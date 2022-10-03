@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2018/12/jetstream_kubernetes_jupyterhub_pangeo
+- /2018/12/jetstream_kubernetes_jupyterhub_pangeo.html
 categories:
 - kubernetes
 - jetstream

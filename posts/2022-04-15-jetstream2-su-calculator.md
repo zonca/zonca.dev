@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2022/04/jetstream2-su-calculator
+- /2022/04/jetstream2-su-calculator.html
 categories:
 - jetstream2
 date: '2022-04-15'

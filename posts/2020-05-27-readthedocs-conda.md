@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2020/05/readthedocs-conda
+- /2020/05/readthedocs-conda.html
 categories:
 - python
 date: '2020-05-27'

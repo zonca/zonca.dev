@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2017/12/ecss-symposium
+- /2017/12/ecss-symposium.html
 categories:
 - jupyterhub
 - jetstream

@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2022/04/science-gateway-dask-zarr
+- /2022/04/science-gateway-dask-zarr.html
 categories:
 - kubernetes
 - jetstream2

@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2017/10/compile-software-singularity
+- /2017/10/compile-software-singularity.html
 categories:
 - singularity
 - hpc

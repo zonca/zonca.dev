@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2010/01/load-arrays-from-text-file-with-numpy
+- /2010/01/load-arrays-from-text-file-with-numpy.html
 categories:
 - python
 date: 2010-01-05 16:32

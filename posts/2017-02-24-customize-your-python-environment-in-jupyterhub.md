@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2017/02/customize-your-python-environment-in-jupyterhub
+- /2017/02/customize-your-python-environment-in-jupyterhub.html
 categories:
 - python
 - jupyterhub

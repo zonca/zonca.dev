@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2020/08/dask-gateway-jupyterhub
+- /2020/08/dask-gateway-jupyterhub.html
 categories:
 - kubernetes
 - cloudcomputing

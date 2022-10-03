@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2021/10/healpix-plot-pixel-boundaries
+- /2021/10/healpix-plot-pixel-boundaries.html
 categories:
 - healpy
 date: '2021-10-06'

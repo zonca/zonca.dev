@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2021/10/kubernetes-hadoop
+- /2021/10/kubernetes-hadoop.html
 categories:
 - kubernetes
 - jetstream

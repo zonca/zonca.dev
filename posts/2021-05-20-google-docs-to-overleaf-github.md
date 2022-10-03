@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2021/05/google-docs-to-overleaf-github
+- /2021/05/google-docs-to-overleaf-github.html
 categories:
 - github
 date: '2021-05-20'

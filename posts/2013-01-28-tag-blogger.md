@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/01/tag-blogger
+- /2013/01/tag-blogger.html
 categories:
 - linux
 date: 2013-01-28 21:06

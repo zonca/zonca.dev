@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2012/10/butterworth-filter-with-python
+- /2012/10/butterworth-filter-with-python.html
 categories:
 - python
 date: 2012-10-06 00:00

@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2022/04/jupyterhub-custos-authentication
+- /2022/04/jupyterhub-custos-authentication.html
 categories:
 - kubernetes
 - jetstream2

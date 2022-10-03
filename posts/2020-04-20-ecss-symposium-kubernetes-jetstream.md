@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2020/04/ecss-symposium-kubernetes-jetstream
+- /2020/04/ecss-symposium-kubernetes-jetstream.html
 categories:
 - jupyterhub
 - jetstream

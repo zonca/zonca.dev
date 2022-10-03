@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2018/09/jetstream_kubernetes_kubespray_explore
+- /2018/09/jetstream_kubernetes_kubespray_explore.html
 categories:
 - kubernetes
 - jetstream

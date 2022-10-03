@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2020/09/how-to-share-jupyter-notebooks
+- /2020/09/how-to-share-jupyter-notebooks.html
 categories:
 - jupyter
 - github

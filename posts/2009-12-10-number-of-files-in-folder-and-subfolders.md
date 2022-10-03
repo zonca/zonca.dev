@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2009/12/number-of-files-in-folder-and-subfolders
+- /2009/12/number-of-files-in-folder-and-subfolders.html
 categories:
 - linux
 date: 2009-12-10 18:16

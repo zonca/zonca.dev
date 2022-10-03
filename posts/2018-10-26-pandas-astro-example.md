@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2018/10/pandas-astro-example
+- /2018/10/pandas-astro-example.html
 categories:
 - jupyter
 - astrophysics

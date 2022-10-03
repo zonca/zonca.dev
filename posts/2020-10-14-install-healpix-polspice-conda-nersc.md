@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2020/10/install-healpix-polspice-conda-nersc
+- /2020/10/install-healpix-polspice-conda-nersc.html
 categories:
 - healpy
 - hpc

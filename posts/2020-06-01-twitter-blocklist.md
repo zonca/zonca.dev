@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2020/06/twitter-blocklist
+- /2020/06/twitter-blocklist.html
 categories:
 - python
 date: '2020-06-01'

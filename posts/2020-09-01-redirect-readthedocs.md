@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2020/09/redirect-readthedocs
+- /2020/09/redirect-readthedocs.html
 categories:
 - python
 date: '2020-09-01'

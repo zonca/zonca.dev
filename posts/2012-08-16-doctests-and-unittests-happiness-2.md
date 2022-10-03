@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2012/08/doctests-and-unittests-happiness-2
+- /2012/08/doctests-and-unittests-happiness-2.html
 categories:
 - python
 date: 2012-08-16 14:07

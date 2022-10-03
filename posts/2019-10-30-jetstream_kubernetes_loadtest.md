@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2019/10/jetstream_kubernetes_loadtest
+- /2019/10/jetstream_kubernetes_loadtest.html
 categories:
 - kubernetes
 - jetstream

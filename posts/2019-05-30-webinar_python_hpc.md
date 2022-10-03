@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2019/05/webinar_python_hpc
+- /2019/05/webinar_python_hpc.html
 categories:
 - python
 - hpc

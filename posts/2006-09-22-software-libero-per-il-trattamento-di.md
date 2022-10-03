@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2006/09/software-libero-per-il-trattamento-di
+- /2006/09/software-libero-per-il-trattamento-di.html
 categories:
 - linux
 date: 2006-09-22 13:35

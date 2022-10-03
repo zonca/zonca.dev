@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2014/08/code-review-for-scientific-computing
+- /2014/08/code-review-for-scientific-computing.html
 categories:
 - github
 - git

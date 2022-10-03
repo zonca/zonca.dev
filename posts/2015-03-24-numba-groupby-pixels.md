@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2015/03/numba-groupby-pixels
+- /2015/03/numba-groupby-pixels.html
 categories:
 - python
 - astrophysics

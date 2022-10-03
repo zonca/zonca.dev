@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2008/04/netcat-quickly-send-binaries-through
+- /2008/04/netcat-quickly-send-binaries-through.html
 categories:
 - linux
 date: 2008-04-29 12:25

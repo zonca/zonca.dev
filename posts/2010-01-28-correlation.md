@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2010/01/correlation
+- /2010/01/correlation.html
 date: 2010-01-28 00:45
 layout: post
 slug: correlation

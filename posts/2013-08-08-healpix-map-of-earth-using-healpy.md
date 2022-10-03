@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/08/healpix-map-of-earth-using-healpy
+- /2013/08/healpix-map-of-earth-using-healpy.html
 date: 2013-08-08 19:07
 categories:
 - healpy

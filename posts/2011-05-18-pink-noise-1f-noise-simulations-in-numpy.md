@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2011/05/pink-noise-1f-noise-simulations-in-numpy
+- /2011/05/pink-noise-1f-noise-simulations-in-numpy.html
 categories:
 - python
 date: 2011-05-18 23:49

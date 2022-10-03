@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2011/06/unit-testing-happiness
+- /2011/06/unit-testing-happiness.html
 categories:
 - python
 date: 2011-06-21 04:39

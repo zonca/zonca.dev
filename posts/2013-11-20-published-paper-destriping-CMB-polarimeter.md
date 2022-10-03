@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/11/published-paper-destriping-CMB-polarimeter
+- /2013/11/published-paper-destriping-CMB-polarimeter.html
 categories:
 - python
 - cosmology
