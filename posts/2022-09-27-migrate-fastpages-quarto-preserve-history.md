@@ -7,9 +7,10 @@ title: Migrate from fastpages to quarto preserving git history
 
 ---
 
-Most of my blog posts are in Markdown. However, there are cases where
+Most of my blog posts are in Markdown...however, there are cases where
 plotting and code are very important, and nothing beats a Jupyter Notebook
 for that.
+
 This blog was based on `fastpages`, a static blog generator by `fast.ai`.
 Unfortunately they are discontinuing it and they recommended to migrate
 to [Quarto](https://quarto.org), so here we are.
@@ -81,6 +82,6 @@ In `_fp_convert`, I modified the line about aliases into:
 
 Sometimes I get nostalgic.
 
-![Screenshot of old blog](../fastpages_zoncadev_1.png)
-![Screenshot of old blog](../fastpages_zoncadev_2.png)
-![Screenshot of old blog](../fastpages_zoncadev_3.png)
+![Screenshot of old blog](fastpages_zoncadev_1.png)
+![Screenshot of old blog](fastpages_zoncadev_2.png)
+![Screenshot of old blog](fastpages_zoncadev_3.png)
