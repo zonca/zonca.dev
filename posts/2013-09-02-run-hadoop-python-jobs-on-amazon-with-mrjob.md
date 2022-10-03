@@ -39,8 +39,7 @@ With MrJob instead the interface is a little different, we implement the mapper 
  The code is pretty simple:
  <br/>
  <br/>
- <script src="http://gist-it.appspot.com/github/zonca/python-wordcount-hadoop/blob/master/mrjob/word_count_mrjob.py">
- </script>
+ <p><a>https://github.com/zonca/python-wordcount-hadoop/blob/master/mrjob/word_count_mrjob.py</a></p>
  <div>
   <br/>
  </div>
