@@ -3987,7 +3987,7 @@
     "href": "posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html",
     "title": "Migrate from fastpages to quarto preserving git history",
     "section": "",
-    "text": "Most of my blog posts are in Markdown. However, there are cases where plotting and code are very important, and nothing beats a Jupyter Notebook for that. This blog was based on fastpages, a static blog generator by fast.ai. Unfortunately they are discontinuing it and they recommended to migrate to Quarto, so here we are.\nHamel Husain wrote a great tutorial on how to migrate from Fastpages to Quarto (and saved me so much work):\nhttps://nbdev.fast.ai/tutorials/blogging.html#migrating-from-fastpages\nFollowing I describe a couple of tips that were useful for my migration."
+    "text": "Most of my blog posts are in Markdown…however, there are cases where plotting and code are very important, and nothing beats a Jupyter Notebook for that.\nThis blog was based on fastpages, a static blog generator by fast.ai. Unfortunately they are discontinuing it and they recommended to migrate to Quarto, so here we are.\nHamel Husain wrote a great tutorial on how to migrate from Fastpages to Quarto (and saved me so much work):\nhttps://nbdev.fast.ai/tutorials/blogging.html#migrating-from-fastpages\nFollowing I describe a couple of tips that were useful for my migration."
   },
   {
     "objectID": "posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html#preserve-git-history",
