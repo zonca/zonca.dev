@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2022-10-05-singularity-expanse-tutorial.html",
       "/posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html",
       "/posts/2022-06-06-mariadb.html",
       "/posts/2022-05-17-remove-cell-id-jupyter-notebook.html",
@@ -116,8 +117,8 @@
       "/posts/2017-10-25-cudak8s.html",
       "/posts/2017-09-06-continous-integration-travis-ci-github.html",
       "/posts/2017-08-11-jupyterhub-globus-comet-singularity.html",
-      "/posts/2017-07-12-xstream-tutorial-notes-pearc17.html",
       "/posts/2017-06-30-quick-github-pull-requests.html",
+      "/posts/2017-07-12-xstream-tutorial-notes-pearc17.html",
       "/posts/2017-05-16-jupyterhub-batchspawner-ssh.html",
       "/posts/2017-04-19-globus-ftp-local-machine.html",
       "/posts/2017-02-26-sample-deployment-jupyterhub-hpc.html",
