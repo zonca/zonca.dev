@@ -2,6 +2,10 @@
 date: '2022-10-05'
 layout: post
 title: Singularity on Expanse tutorial
+categories:
+- singularity
+- hpc
+- jetstream2
 
 ---
 
