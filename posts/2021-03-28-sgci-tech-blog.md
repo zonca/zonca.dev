@@ -1,6 +1,7 @@
 ---
 aliases:
 - /2021/03/sgci-tech-blog
+- /2021/03/sgci-tech-blog-kubernetes-jupyterhub-jetstream
 categories:
 - kubernetes
 - jetstream

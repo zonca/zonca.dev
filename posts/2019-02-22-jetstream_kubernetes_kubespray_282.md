@@ -1,6 +1,7 @@
 ---
 aliases:
 - /2019/02/jetstream_kubernetes_kubespray_282
+- /2019/02/jetstream-kubernetes-kubespray-282
 categories:
 - kubernetes
 - jetstream
