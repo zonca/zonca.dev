@@ -1,6 +1,7 @@
 ---
 aliases:
 - /2018/07/pearc18_paper_deploy_jupyterhub_xsede
+- /2018/07/pearc18-paper-deploy-jupyterhub-xsede
 categories:
 - singularity
 - jetstream

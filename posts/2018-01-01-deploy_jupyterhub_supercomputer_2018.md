@@ -1,6 +1,7 @@
 ---
 aliases:
 - /2018/01/deploy_jupyterhub_supercomputer_2018
+- /2018/01/deploy-jupyterhub-supercomputer-2018
 categories:
 - jupyterhub
 - hpc
