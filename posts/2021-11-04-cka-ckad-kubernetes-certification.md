@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2021/11/cka-ckad-kubernetes-certification.html
+- /2021/11/cka-ckad-kubernetes-certification
 categories:
 - kubernetes
 date: '2021-11-04'

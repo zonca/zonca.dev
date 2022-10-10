@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2011/02/ipython-and-pytrilinos.html
+- /2011/02/ipython-and-pytrilinos
 categories:
 - python
 date: 2011-02-16 19:10

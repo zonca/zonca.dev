@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2010/01/execute-bash-script-remotely-with-ssh.html
+- /2010/01/execute-bash-script-remotely-with-ssh
 categories:
 - linux
 date: 2010-01-07 14:37

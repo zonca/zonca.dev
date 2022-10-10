@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2021/08/joss-to-arxiv.html
+- /2021/08/joss-to-arxiv
 categories:
 - github
 - openscience

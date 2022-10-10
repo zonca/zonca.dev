@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/09/automatically-build-pelican-and-publish-to-github-pages.html
+- /2013/09/automatically-build-pelican-and-publish-to-github-pages
 categories:
 - python
 - git

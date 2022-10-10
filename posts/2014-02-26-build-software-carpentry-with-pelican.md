@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2014/02/build-software-carpentry-with-pelican.html
+- /2014/02/build-software-carpentry-with-pelican
 categories:
 - python
 - openscience

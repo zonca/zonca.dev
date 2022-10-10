@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/07/processing-planck-sources-with-hadoop.html
+- /2013/07/processing-planck-sources-with-hadoop
 categories:
 - hpc
 - python

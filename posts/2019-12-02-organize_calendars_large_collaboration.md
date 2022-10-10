@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2019/12/organize_calendars_large_collaboration.html
+- /2019/12/organize_calendars_large_collaboration
 categories:
 - openscience
 date: 2019-12-02 12:00

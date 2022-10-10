@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2019/04/jetstream_kubernetes_monitoring.html
+- /2019/04/jetstream_kubernetes_monitoring
 categories:
 - kubernetes
 - jetstream

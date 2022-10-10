@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2020/08/renew-letsencrypt-nginx.html
+- /2020/08/renew-letsencrypt-nginx
 categories:
 - linux
 date: '2020-08-24'

@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2010/03/using-numpy-dtype-with-loadtxt.html
+- /2010/03/using-numpy-dtype-with-loadtxt
 categories:
 - linux
 - python

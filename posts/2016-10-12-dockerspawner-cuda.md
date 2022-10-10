@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2016/10/dockerspawner-cuda.html
+- /2016/10/dockerspawner-cuda
 categories:
 - python
 - jupyterhub

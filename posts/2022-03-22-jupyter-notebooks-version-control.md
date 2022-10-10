@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2022/03/jupyter-notebooks-version-control.html
+- /2022/03/jupyter-notebooks-version-control
 categories:
 - jupyter
 - git

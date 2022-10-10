@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2021/04/jetstream-backup-kubernetes-volumes-object-store.html
+- /2021/04/jetstream-backup-kubernetes-volumes-object-store
 categories:
 - jetstream
 - kubernetes

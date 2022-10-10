@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2018/03/zarr-on-jetstream.html
+- /2018/03/zarr-on-jetstream
 categories:
 - jupyter
 - jetstream

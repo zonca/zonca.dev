@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2015/10/use-own-python-in-jupyterhub.html
+- /2015/10/use-own-python-in-jupyterhub
 categories:
 - python
 - jupyterhub

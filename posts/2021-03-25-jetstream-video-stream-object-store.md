@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2021/03/jetstream-video-stream-object-store.html
+- /2021/03/jetstream-video-stream-object-store
 categories:
 - jetstream
 date: '2021-03-25'

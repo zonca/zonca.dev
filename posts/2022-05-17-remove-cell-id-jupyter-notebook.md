@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2022/05/remove-cell-id-jupyter-notebook.html
+- /2022/05/remove-cell-id-jupyter-notebook
 categories:
 - git
 - jupyter

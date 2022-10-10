@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2020/03/setup-https-kubernetes-letsencrypt.html
+- /2020/03/setup-https-kubernetes-letsencrypt
 categories:
 - kubernetes
 - jetstream

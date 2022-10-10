@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/12/run-ipython-notebook-on-HPC-cluster-via-PBS.html
+- /2013/12/run-ipython-notebook-on-HPC-cluster-via-PBS
 categories:
 - python
 - hpc

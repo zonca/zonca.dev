@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2010/03/change-permission-recursively-to.html
+- /2010/03/change-permission-recursively-to
 categories:
 - linux
 date: 2010-03-23 17:58

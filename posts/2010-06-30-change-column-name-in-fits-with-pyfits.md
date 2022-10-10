@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2010/06/change-column-name-in-fits-with-pyfits.html
+- /2010/06/change-column-name-in-fits-with-pyfits
 categories:
 - python
 date: 2010-06-30 22:06

@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2006/09/awk-made-easy.html
+- /2006/09/awk-made-easy
 categories:
 - linux
 date: 2006-09-22 13:20

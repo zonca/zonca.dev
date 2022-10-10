@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2019/09/jetstream_kubernetes_magnum_autoscaler.html
+- /2019/09/jetstream_kubernetes_magnum_autoscaler
 categories:
 - kubernetes
 - jetstream

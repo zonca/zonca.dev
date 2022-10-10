@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2017/05/jupyterhub-batchspawner-ssh.html
+- /2017/05/jupyterhub-batchspawner-ssh
 categories:
 - python
 - jupyterhub

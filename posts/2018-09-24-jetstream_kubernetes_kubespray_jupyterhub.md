@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2018/09/jetstream_kubernetes_kubespray_jupyterhub.html
+- /2018/09/jetstream_kubernetes_kubespray_jupyterhub
 categories:
 - kubernetes
 - jetstream

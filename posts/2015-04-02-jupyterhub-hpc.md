@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2015/04/jupyterhub-hpc.html
+- /2015/04/jupyterhub-hpc
 categories:
 - python
 - jupyterhub

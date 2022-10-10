@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2008/09/forcefully-unmount-disk-partition.html
+- /2008/09/forcefully-unmount-disk-partition
 categories:
 - linux
 date: 2008-09-17 15:14

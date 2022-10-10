@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2020/11/cfitsio-checkpoint-write.html
+- /2020/11/cfitsio-checkpoint-write
 categories:
 - astrophysics
 date: '2020-11-30'

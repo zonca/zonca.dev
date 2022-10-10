@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2020/11/paper-review-overleaf-git-googledocs.html
+- /2020/11/paper-review-overleaf-git-googledocs
 categories:
 - openscience
 - git

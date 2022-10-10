@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/01/elliptic-beams-fwhm-and-ellipticity.html
+- /2013/01/elliptic-beams-fwhm-and-ellipticity
 categories:
 - astrophysics
 date: 2013-01-18 00:58

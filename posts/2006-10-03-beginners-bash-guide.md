@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2006/10/beginners-bash-guide.html
+- /2006/10/beginners-bash-guide
 categories:
 - linux
 date: 2006-10-03 13:56

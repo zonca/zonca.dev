@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2017/02/sample-deployment-jupyterhub-hpc.html
+- /2017/02/sample-deployment-jupyterhub-hpc
 categories:
 - python
 - jupyterhub

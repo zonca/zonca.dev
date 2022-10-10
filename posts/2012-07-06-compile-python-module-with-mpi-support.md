@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2012/07/compile-python-module-with-mpi-support.html
+- /2012/07/compile-python-module-with-mpi-support
 date: 2012-07-06 16:08
 layout: post
 slug: compile-python-module-with-mpi-support

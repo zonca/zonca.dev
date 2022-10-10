@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2010/03/aptitude-search.html
+- /2010/03/aptitude-search
 categories:
 - linux
 date: 2010-03-16 22:50

@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2011/04/set-python-logging-level.html
+- /2011/04/set-python-logging-level
 categories:
 - python
 date: 2011-04-13 01:02

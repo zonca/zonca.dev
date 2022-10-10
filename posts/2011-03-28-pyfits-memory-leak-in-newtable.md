@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2011/03/pyfits-memory-leak-in-newtable.html
+- /2011/03/pyfits-memory-leak-in-newtable
 categories:
 - python
 - astrophysics

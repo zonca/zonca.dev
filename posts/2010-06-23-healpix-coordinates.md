@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2010/06/healpix-coordinates.html
+- /2010/06/healpix-coordinates
 categories:
 - astrophysics
 date: 2010-06-23 01:01

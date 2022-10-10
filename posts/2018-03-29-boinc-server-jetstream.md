@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2018/03/boinc-server-jetstream.html
+- /2018/03/boinc-server-jetstream
 categories:
 - jetstream
 - cloudcomputing

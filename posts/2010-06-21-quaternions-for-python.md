@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2010/06/quaternions-for-python.html
+- /2010/06/quaternions-for-python
 categories:
 - python
 date: 2010-06-21 07:21

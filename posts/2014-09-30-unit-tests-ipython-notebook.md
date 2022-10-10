@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2014/09/unit-tests-ipython-notebook.html
+- /2014/09/unit-tests-ipython-notebook
 categories:
 - python
 - jupyter

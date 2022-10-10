@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2016/04/jupyterhub-sdsc-cloud.html
+- /2016/04/jupyterhub-sdsc-cloud
 categories:
 - python
 - jupyterhub

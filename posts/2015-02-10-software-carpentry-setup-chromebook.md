@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2015/02/software-carpentry-setup-chromebook.html
+- /2015/02/software-carpentry-setup-chromebook
 categories:
 - linux
 - python

@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2021/09/globus-groups-python-sdk.html
+- /2021/09/globus-groups-python-sdk
 categories:
 - python
 - hpc

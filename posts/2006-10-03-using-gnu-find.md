@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2006/10/using-gnu-find.html
+- /2006/10/using-gnu-find
 categories:
 - linux
 date: 2006-10-03 14:00

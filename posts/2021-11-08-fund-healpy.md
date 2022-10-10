@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2021/11/fund-healpy.html
+- /2021/11/fund-healpy
 categories:
 - healpy
 date: '2021-11-08'

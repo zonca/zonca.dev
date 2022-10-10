@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2006/09/software-carpentry.html
+- /2006/09/software-carpentry
 categories:
 - linux
 date: 2006-09-25 12:51

@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2020/03/kill-jupyter-notebook.html
+- /2020/03/kill-jupyter-notebook
 categories:
 - python
 - jupyter

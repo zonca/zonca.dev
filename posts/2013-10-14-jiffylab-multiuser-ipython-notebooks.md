@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/10/jiffylab-multiuser-ipython-notebooks.html
+- /2013/10/jiffylab-multiuser-ipython-notebooks
 categories:
 - python
 date: 2013-10-14 10:30

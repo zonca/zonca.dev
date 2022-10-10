@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2022/09/migrate-fastpages-quarto-preserve-history.html
+- /2022/09/migrate-fastpages-quarto-preserve-history
 date: '2022-09-27'
 layout: post
 title: Migrate from fastpages to quarto preserving git history

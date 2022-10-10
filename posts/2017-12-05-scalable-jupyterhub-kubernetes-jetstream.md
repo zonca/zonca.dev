@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2017/12/scalable-jupyterhub-kubernetes-jetstream.html
+- /2017/12/scalable-jupyterhub-kubernetes-jetstream
 categories:
 - jupyterhub
 - jetstream

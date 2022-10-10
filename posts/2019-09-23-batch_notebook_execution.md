@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2019/09/batch_notebook_execution.html
+- /2019/09/batch_notebook_execution
 categories:
 - jupyter
 date: 2019-09-23 12:00

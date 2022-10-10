@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2006/10/vim-costumization.html
+- /2006/10/vim-costumization
 categories:
 - linux
 date: 2006-10-17 10:49

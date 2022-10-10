@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2010/06/parallel-computing-python-way.html
+- /2010/06/parallel-computing-python-way
 categories:
 - python
 date: 2010-06-21 07:27

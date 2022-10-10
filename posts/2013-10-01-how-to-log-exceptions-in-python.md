@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/10/how-to-log-exceptions-in-python.html
+- /2013/10/how-to-log-exceptions-in-python
 categories:
 - python
 date: 2013-10-01 10:30

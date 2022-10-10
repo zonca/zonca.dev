@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/04/simple-mixin-usage-in-python.html
+- /2013/04/simple-mixin-usage-in-python
 categories:
 - python
 date: 2013-04-08 01:34

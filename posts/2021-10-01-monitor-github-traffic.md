@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2021/10/monitor-github-traffic.html
+- /2021/10/monitor-github-traffic
 categories:
 - github
 date: '2021-10-01'

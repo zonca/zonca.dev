@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/04/basic-forkpull-git-workflow.html
+- /2013/04/basic-forkpull-git-workflow
 categories:
 - git
 date: 2013-04-06 07:52

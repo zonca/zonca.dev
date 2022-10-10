@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2011/11/some-python-resources.html
+- /2011/11/some-python-resources
 categories:
 - python
 date: 2011-11-01 23:02

@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2022/04/monitor-restic-backups-kubernetes.html
+- /2022/04/monitor-restic-backups-kubernetes
 categories:
 - jetstream2
 - kubernetes

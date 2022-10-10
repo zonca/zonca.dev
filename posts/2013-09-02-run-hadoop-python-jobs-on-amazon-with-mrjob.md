@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/09/run-hadoop-python-jobs-on-amazon-with-mrjob.html
+- /2013/09/run-hadoop-python-jobs-on-amazon-with-mrjob
 categories:
 - git
 - python

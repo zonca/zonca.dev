@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2019/02/scale-kubernetes-jupyterhub-manually.html
+- /2019/02/scale-kubernetes-jupyterhub-manually
 categories:
 - kubernetes
 - jetstream

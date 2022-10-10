@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/06/how-to-use-ipython-notebook-on-small.html
+- /2013/06/how-to-use-ipython-notebook-on-small
 categories:
 - hpc
 - python

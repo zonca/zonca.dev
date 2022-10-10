@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2010/07/count-hits-with-numpy.html
+- /2010/07/count-hits-with-numpy
 categories:
 - python
 date: 2010-07-23 15:18

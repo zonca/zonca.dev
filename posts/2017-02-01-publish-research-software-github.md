@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2017/02/publish-research-software-github.html
+- /2017/02/publish-research-software-github
 categories:
 - git
 - github

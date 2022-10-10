@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2020/07/nfs-server-kubernetes-jetstream.html
+- /2020/07/nfs-server-kubernetes-jetstream
 categories:
 - kubernetes
 - jetstream

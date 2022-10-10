@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/04/ipython-parallell-setup-on-carver-at.html
+- /2013/04/ipython-parallell-setup-on-carver-at
 categories:
 - hpc
 - python

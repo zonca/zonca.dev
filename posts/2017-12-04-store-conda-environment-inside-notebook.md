@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2017/12/store-conda-environment-inside-notebook.html
+- /2017/12/store-conda-environment-inside-notebook
 categories:
 - jupyter
 - python

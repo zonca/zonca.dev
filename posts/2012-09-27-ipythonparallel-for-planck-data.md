@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2012/09/ipythonparallel-for-planck-data.html
+- /2012/09/ipythonparallel-for-planck-data
 categories:
 - python
 date: 2012-09-27 06:24

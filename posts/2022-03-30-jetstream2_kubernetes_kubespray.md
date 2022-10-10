@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2022/03/jetstream2_kubernetes_kubespray.html
+- /2022/03/jetstream2_kubernetes_kubespray
 categories:
 - kubernetes
 - jetstream2

@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2015/09/ipython-jupyter-notebook-nersc-edison.html
+- /2015/09/ipython-jupyter-notebook-nersc-edison
 categories:
 - jupyter
 - python

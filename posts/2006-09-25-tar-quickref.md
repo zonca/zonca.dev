@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2006/09/tar-quickref.html
+- /2006/09/tar-quickref
 categories:
 - linux
 date: 2006-09-25 13:19

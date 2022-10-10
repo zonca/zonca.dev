@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2020/04/jetstream-object-store.html
+- /2020/04/jetstream-object-store
 categories:
 - jetstream
 date: '2020-04-01'

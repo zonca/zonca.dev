@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2018/10/compute-at-sdsc.html
+- /2018/10/compute-at-sdsc
 categories:
 - hpc
 date: 2018-10-24 18:00

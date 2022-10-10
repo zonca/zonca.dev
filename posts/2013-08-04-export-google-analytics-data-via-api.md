@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/08/export-google-analytics-data-via-api.html
+- /2013/08/export-google-analytics-data-via-api
 categories:
 - python
 date: 2013-08-04 17:47

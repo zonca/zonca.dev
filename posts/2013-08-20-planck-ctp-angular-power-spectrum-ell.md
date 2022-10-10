@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2013/08/planck-ctp-angular-power-spectrum-ell.html
+- /2013/08/planck-ctp-angular-power-spectrum-ell
 categories:
 - healpy
 date: 2013-08-20 23:03

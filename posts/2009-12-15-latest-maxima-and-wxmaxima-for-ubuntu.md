@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2009/12/latest-maxima-and-wxmaxima-for-ubuntu.html
+- /2009/12/latest-maxima-and-wxmaxima-for-ubuntu
 categories:
 - linux
 date: 2009-12-15 11:20

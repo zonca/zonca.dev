@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2011/06/cfitsio-wrapper-in-python.html
+- /2011/06/cfitsio-wrapper-in-python
 categories:
 - python
 date: 2011-06-21 04:43

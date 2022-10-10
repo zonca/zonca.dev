@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2010/08/switch-to-interactive-backend-with.html
+- /2010/08/switch-to-interactive-backend-with
 categories:
 - python
 date: 2010-08-21 00:33

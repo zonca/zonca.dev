@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2021/01/github-overleaf-large-document.html
+- /2021/01/github-overleaf-large-document
 categories:
 - git
 - github

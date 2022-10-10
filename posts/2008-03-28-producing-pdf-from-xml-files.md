@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2008/03/producing-pdf-from-xml-files.html
+- /2008/03/producing-pdf-from-xml-files
 categories:
 - linux
 date: 2008-03-28 16:27

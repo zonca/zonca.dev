@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2018/06/private-dask-kubernetes-jetstream.html
+- /2018/06/private-dask-kubernetes-jetstream
 categories:
 - jupyterhub
 - kubernetes

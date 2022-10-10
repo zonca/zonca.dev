@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2014/03/machine-learning-at-scale-with-python.html
+- /2014/03/machine-learning-at-scale-with-python
 categories:
 - python
 - hpc

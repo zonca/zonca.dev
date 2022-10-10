@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2017/06/quick-github-pull-requests.html
+- /2017/06/quick-github-pull-requests
 categories:
 - git
 - github

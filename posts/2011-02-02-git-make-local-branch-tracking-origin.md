@@ -1,6 +1,6 @@
 ---
 aliases:
-- /2011/02/git-make-local-branch-tracking-origin.html
+- /2011/02/git-make-local-branch-tracking-origin
 categories:
 - git
 date: 2011-02-02 02:58
