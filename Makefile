@@ -8,3 +8,5 @@ publish:
 
 render:
 	quarto render
+
+all: render publish

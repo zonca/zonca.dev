@@ -1,6 +1,7 @@
 ---
 aliases:
 - /2019/04/jetstream_kubernetes_monitoring
+- /2019/04/kubernetes-monitoring-prometheus-grafana
 categories:
 - kubernetes
 - jetstream

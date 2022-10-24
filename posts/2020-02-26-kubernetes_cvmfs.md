@@ -1,6 +1,7 @@
 ---
 aliases:
 - /2020/02/kubernetes_cvmfs
+- /2020/02/cvmfs-kubernetes
 categories:
 - kubernetes
 - jetstream
