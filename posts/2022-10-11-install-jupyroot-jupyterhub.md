@@ -2,6 +2,7 @@
 categories:
 - jupyterhub
 layout: post
+date: '2022-10-11'
 title: Install the JupyROOT Python kernel in JupyterHub
 
 ---
