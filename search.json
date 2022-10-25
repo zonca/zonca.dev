@@ -4417,13 +4417,6 @@
     "text": "Compare the 2 approaches\nWe want to compute errors just until the target \\(N_{side}\\):\n\nL2_GL = ducc0.misc.l2error(alm_target[0, 1:], alm2[0, 1:])\nL2_healpix = ducc0.misc.l2error(alm_target[0, 1:], alm_from_m[1:])\n\n\ntarget_ell = np.arange(target_lmax + 1)\ntarget_ell_norm = target_ell * (target_ell + 1) / (2*np.pi)\ntarget_ell_norm[0] = 1\n\nWe can compare the output spectra and the error, the output power spectra are the same within machine precision, but the \\(a_{\\ell m}\\) are not:\n\nplt.plot(cl_GL[0]  - cl_from_m)\nplt.legend()\nplt.grid()\nplt.title(\"Difference between the power spectra\");\n\nNo handles with labels found to put in legend.\n\n\n\n\n\n\nplt.figure(figsize=(9, 5))\n\ncl = cl_from_m*target_ell_norm/input_power_law[:len(target_ell)]\ncl[0] = 0\nstd = cl.std()\nplt.axvline(np.pi/hp.nside2resol(target_nside), color=\"gray\")\n\nplt.plot(target_ell, cl, label=f\"HEALPix N_side {modelling_nside} Error: {L2_healpix:.2g}\")\nplt.plot(target_ell, cl_GL[0] * target_ell_norm / input_power_law[:len(target_ell)], label=f\"Gauss-Legendre Error: {L2_GL:.2g}\")\n\nplt.legend()\nplt.grid()\nplt.title(f\"output / input spectrum, input map nside {modelling_nside} powerlaw gamma={gamma}\")\nplt.ylabel(\"$\\ell(\\ell+1)C_\\ell/2\\pi [\\mu K_{RJ}]$\")\nplt.xlabel((\"$\\ell$\"))\nplt.axhline(1, color=\"black\")\nplt.savefig(f\"spec_ratio_HEALPix_GL.png\")\nplt.xlim(1, target_lmax+100);\n\n\n\n\n\nTime necessary for the transforms\nIn seconds\n\ntimings\n\n{'H_alm2map': 34, 'H_map2alm': 23, 'GL_alm2map': 6, 'GL_map2alm': 6}\n\n\n\n\nMemory usage in pixel space\nSize of temperature-only maps with the requested \\(\\ell_{max}\\) for GL and \\(N_{side}\\) for HEALPix\n\n(GL_map.nbytes * u.byte).to(u.GB)\n\n\\(0.60397978 \\; \\mathrm{Gbyte}\\)\n\n\n\n(healpix_map.nbytes * u.byte).to(u.GB)\n\n\\(1.6106127 \\; \\mathrm{Gbyte}\\)"
   },
   {
-    "objectID": "posts/2022-10-05-singularity-expanse-tutorial.html",
-    "href": "posts/2022-10-05-singularity-expanse-tutorial.html",
-    "title": "Singularity on Expanse tutorial",
-    "section": "",
-    "text": "As one of my last tasks in XSEDE, I updated and improved the tutorial about running Singularity containers in the HPC system Espanse at my institution the San Diego Supercomputer Center.\nThe new version of the tutorial is available on the Github repository zonca/expanse_singularity\nSee the README.md file for the table of contents linking to the subsection.\nThe most important changes were focused on using pre-built containers, either from DockerHub or from the repository maintained by SDSC’s Marty Kandes, and on building custom images either via Sylabs Builder, a cloud-based service that builds containers on demand, or using a Virtual Machine on Jetstream 2, the NSF-funded Openstack cloud deployment."
-  },
-  {
     "objectID": "posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html",
     "href": "posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html",
     "title": "Migrate from fastpages to quarto preserving git history",
@@ -4450,6 +4443,13 @@
     "title": "Migrate from fastpages to quarto preserving git history",
     "section": "Screenshots of the old blog",
     "text": "Screenshots of the old blog\nSometimes I get nostalgic."
+  },
+  {
+    "objectID": "posts/2022-10-05-singularity-expanse-tutorial.html",
+    "href": "posts/2022-10-05-singularity-expanse-tutorial.html",
+    "title": "Singularity on Expanse tutorial",
+    "section": "",
+    "text": "As one of my last tasks in XSEDE, I updated and improved the tutorial about running Singularity containers in the HPC system Espanse at my institution the San Diego Supercomputer Center.\nThe new version of the tutorial is available on the Github repository zonca/expanse_singularity\nSee the README.md file for the table of contents linking to the subsection.\nThe most important changes were focused on using pre-built containers, either from DockerHub or from the repository maintained by SDSC’s Marty Kandes, and on building custom images either via Sylabs Builder, a cloud-based service that builds containers on demand, or using a Virtual Machine on Jetstream 2, the NSF-funded Openstack cloud deployment."
   },
   {
     "objectID": "posts/2022-10-24-numba-closures.html",
