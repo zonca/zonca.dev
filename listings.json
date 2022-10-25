@@ -3,6 +3,8 @@
     "listing": "/index.html",
     "items": [
       "/posts/2022-10-11-install-jupyroot-jupyterhub.html",
+      "/posts/2022-10-21-binderhub-jetstream2.html",
+      "/posts/2022-10-24-numba-closures.html",
       "/posts/2022-10-05-singularity-expanse-tutorial.html",
       "/posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html",
       "/posts/2022-06-06-mariadb.html",
