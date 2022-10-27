@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2022-10-26-click-commandline-class-arguments.html",
       "/posts/2022-10-24-numba-closures.html",
       "/posts/2022-10-11-install-jupyroot-jupyterhub.html",
       "/posts/2022-10-05-singularity-expanse-tutorial.html",
