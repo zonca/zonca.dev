@@ -10,3 +10,4 @@ listing:
 page-layout: full
 title-block-banner: true
 ---
+<a style="display:none" rel="me" href="https://mastodon.online/@zonca">Mastodon</a>

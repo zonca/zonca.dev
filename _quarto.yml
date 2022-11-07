@@ -14,6 +14,8 @@ website:
         href: https://github.com/zonca
       - icon: twitter
         href: https://twitter.com/andreazonca
+      - icon: mastodon
+        href: https://mastodon.online/@zonca
 format:
   html:
     theme: litera
