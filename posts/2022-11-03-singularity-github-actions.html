@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2012-07-06">
+<meta name="dcterms.date" content="2022-11-03">
 
-<title>Andrea Zonca - compile python module with mpi support</title>
+<title>Andrea Zonca - Build and host Singularity containers on Github</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -113,8 +113,11 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">compile python module with mpi support</h1>
-                      </div>
+      <h1 class="title">Build and host Singularity containers on Github</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">singularity</div>
+              </div>
+                  </div>
   </div>
     
   
@@ -124,7 +127,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 6, 2012</p>
+        <p class="date">November 3, 2022</p>
       </div>
     </div>
     
@@ -142,9 +145,14 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>
-CC=mpicc LDSHARED=“mpicc -shared” python setup.py build_ext -i
-</p>
+<p>I present a demo repository configured to build Singularity containers using Github actions and then host them using the Github container registry:</p>
+<ul>
+<li><a href="https://github.com/zonca/singularity_github_ci/" class="uri">https://github.com/zonca/singularity_github_ci/</a></li>
+</ul>
+<p>See how the <a href="https://github.com/zonca/singularity_github_ci/blob/main/.github/workflows/native-install.yml">Github action workflow</a> is configured, based on the <a href="https://github.com/singularityhub/github-ci">Singularity Builder GitHub CI</a>.</p>
+<p>See the <a href="https://github.com/zonca/singularity_github_ci/runs/6718361783?check_suite_focus=true">logs of a Ubuntu container build process</a>.</p>
+<p>Once the container is built, it is shown <a href="https://github.com/zonca/singularity_github_ci/pkgs/container/singularity_github_ci">in the “Packages” section of the Github repository</a>, it can then be pulled locally with:</p>
+<pre><code>singularity pull oras://ghcr.io/zonca/singularity_github_ci:ubuntu-20.04</code></pre>
 
 
 

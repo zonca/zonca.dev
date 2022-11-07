@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2012-07-06">
 
-<title>Andrea Zonca - compile python module with mpi support</title>
+<title>Andrea Zonca – kubernetes_gpu</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -110,29 +109,7 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">compile python module with mpi support</h1>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">July 6, 2012</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
@@ -141,10 +118,11 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-
-<p>
-CC=mpicc LDSHARED=“mpicc -shared” python setup.py build_ext -i
-</p>
+<p><code>group_vars/all/docker.yml</code> Uncomment docker_storage_options: -s overlay2</p>
+<p>it is required by kubespray nvidia</p>
+<p>NVIDIA-SMI 510.85.02 Driver Version: 510.85.02 CUDA Version: 11.6 |</p>
+<p>uncommented nvidia in <code>group_vars/k8s_cluster/k8s-cluster.yml</code> and added the node name</p>
+<p>https://github.com/NVIDIA/k8s-device-plugin#configure-containerd</p>
 
 
 

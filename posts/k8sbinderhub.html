@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2012-07-06">
 
-<title>Andrea Zonca - compile python module with mpi support</title>
+<title>Andrea Zonca – k8sbinderhub</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -110,29 +109,7 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">compile python module with mpi support</h1>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">July 6, 2012</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
@@ -141,12 +118,83 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<section id="deploy-binderhub-on-top-of-kubernetes-on-jetstream-2" class="level1">
+<h1>Deploy BinderHub on top of Kubernetes on Jetstream 2</h1>
+<p>BinderHub is a kubernetes-based cloud service that allows users to share reproducible interactive computing environments from code repositories. See for example <a href="https://mybinder.org" class="uri">https://mybinder.org</a>.</p>
+<p>When pointed to a Github repository, it builds a Docker container from the metadata in that repository (for example a <code>requirements.txt</code> file), then it gives the user a live Jupyter Notebook session with this custom computing environment and the checked-out repository. The user can then browse the repository and execute Notebooks.</p>
+<p>On top of Kubernetes, it also needs a Container Registry to store the Docker containers it builds, in the following tutorial we rely on Google Cloud.</p>
+<section id="setup-kubernetes" class="level2">
+<h2 class="anchored" data-anchor-id="setup-kubernetes">Setup Kubernetes</h2>
+<p>The first step is to have a Kubernetes deployment on Jetstream 2, for example deployed with Kubespray using <a href="https://www.zonca.dev/posts/2022-03-30-jetstream2_kubernetes_kubespray">this tutorial</a></p>
+</section>
+<section id="enable-the-google-container-registry" class="level2">
+<h2 class="anchored" data-anchor-id="enable-the-google-container-registry">Enable the Google Container registry</h2>
+<p>We first need to activate the Google Container Registry in the Google Cloud account:</p>
+<ul>
+<li>Go to the <a href="https://console.cloud.google.com/apis/library">API Library</a></li>
+<li>Search for Google Container Registry API</li>
+<li>Click on Enable</li>
+<li>It will ask to configure billing</li>
+<li>It will ask for credit card information, but you will have $300 free credits for 90 days and the card won’t be charged unless you manually switch to a paid account</li>
+<li>Go to the <a href="https://console.cloud.google.com/gcr/settings">Google Container registry settings</a>, set the images to public, so that they can be pulled back from BinderHub to the container dedicated to execution</li>
+</ul>
+</section>
+<section id="setup-permissions-on-the-google-container-registry" class="level2">
+<h2 class="anchored" data-anchor-id="setup-permissions-on-the-google-container-registry">Setup permissions on the Google Container Registry</h2>
+<p>Follow <a href="https://binderhub.readthedocs.io/en/latest/zero-to-binderhub/setup-registry.html#set-up-google-container-registry">the instructions on “Zero to BinderHub” to setup the Google Container Registry</a> some notes:</p>
+<ul>
+<li>Better to create a dedicated project just for BinderHub</li>
+<li>“Create key” is under “Actions”-&gt;“Manage keys”</li>
+</ul>
+</section>
+<section id="setup-ingress-with-https-support" class="level2">
+<h2 class="anchored" data-anchor-id="setup-ingress-with-https-support">Setup ingress with HTTPS support</h2>
+<p>On Jetstream 2 we do not have a Load Balancer service like public clouds, therefore we need to use Ingress.</p>
+<p>First we need to setup <code>Cert-Manager</code> to provide HTTPS certificates via Letsencrypt.</p>
+<p>Follow the instructions at <a href="https://zonca.dev/2020/03/setup-https-kubernetes-letsencrypt.html" class="uri">https://zonca.dev/2020/03/setup-https-kubernetes-letsencrypt.html</a> to install a cluster issuer</p>
+</section>
+<section id="configure-the-domains" class="level2">
+<h2 class="anchored" data-anchor-id="configure-the-domains">Configure the domains</h2>
+<p>BinderHub requires 2 subdomains, one for BinderHub and one for JupyterHub. For the initial testing I recommend to use Jetstream 2 provided domains, once they are working it is easy to replace them with custom domains.</p>
+<p>Login to <a href="https://js2.jetstream-cloud.org/">the Jetstream 2 Horizon instance</a>, choose the right allocation, click on DNS, Zones, choose the Zone which starts with <code>tg</code>, then click on “Create Record Set”.</p>
+<p>Create a “A” record where name is <code>binder.tg-xxx000000.projects.jetstream-cloud.org</code> and record is the IP of your master instance. Create a second A record with the name <code>hub.tg-xxx000000.projects.jetstream-cloud.org</code> and the same record.</p>
+<p>These should be ready to be used in a few minutes.</p>
+</section>
+<section id="install-binderhub-with-helm" class="level2">
+<h2 class="anchored" data-anchor-id="install-binderhub-with-helm">Install BinderHub with Helm</h2>
+<p>Checkout the repository with the configuration files:</p>
+<pre><code>git clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/</code></pre>
+<p>Enter the <code>binderhub</code> folder.</p>
+<p>Follow the <a href="https://binderhub.readthedocs.io/en/latest/zero-to-binderhub/setup-binderhub.html">instructions on how to create just the <code>secret.yaml</code> file</a>.</p>
+<p>The repository provides a template named <code>config_template.yaml</code> to create <code>config.yaml</code>, this file contains all of the configuration items needed to setup the following items, see the links for the relevant documentation:</p>
+<ul>
+<li><a href="https://binderhub.readthedocs.io/en/latest/zero-to-binderhub/setup-binderhub.html">BinderHub with Google Container Registry</a></li>
+<li><a href="https://binderhub.readthedocs.io/en/latest/https.html">Configure HTTPS ingress for BinderHub and JupyterHub</a></li>
+<li><a href="https://binderhub.readthedocs.io/en/latest/zero-to-binderhub/setup-binderhub.html#use-docker-inside-docker-dind">Use Docker-in-Docker to build the containers</a>, which is necessary because the Jetstream 2 Kubernetes deployment uses <code>containerd</code>.</li>
+</ul>
+<p>Create a file named <code>config_vars.sh</code> in the same folder which defines your Jetstream allocation and Google Project IDs:</p>
+<pre><code>export ALLOCATION=xxx000000
+export GOOGLE_PROJECT=binderhub-000000</code></pre>
+<p>Then deploy BinderHub running:</p>
+<pre><code>bash install_binderhub.sh</code></pre>
+<p>This script first creates <code>config.yaml</code> (and overwrites it, so keep your changes in <code>config_template.yaml</code>), then deploys or updates the deploy of BinderHub via Helm.</p>
+</section>
+<section id="test-the-deployment" class="level2">
+<h2 class="anchored" data-anchor-id="test-the-deployment">Test the deployment</h2>
+<p>Connect to <a href="https://binder.tg-xxx000000.projects.jetstream-cloud.org" class="uri">https://binder.tg-xxx000000.projects.jetstream-cloud.org</a>, you should see the binder login page:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/binderloginpage.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Binder login page</figcaption><p></p>
+</figure>
+</div>
+<p>You can then test with one of the binder examples:</p>
+<p><a href="https://binder.tg-xxx000000.projects.jetstream-cloud.org/v2/gh/binder-examples/requirements/master" class="uri">https://binder.tg-xxx000000.projects.jetstream-cloud.org/v2/gh/binder-examples/requirements/master</a></p>
+<p>This should build the container using the Docker-in-Docker pod, push it to the registry on Google Cloud, then spawn a Jupyter Notebook instance inside JupyterHub and redirect you to <a href="https://hub.tg-xxx000000.projects.jetstream-cloud.org" class="uri">https://hub.tg-xxx000000.projects.jetstream-cloud.org</a>.</p>
 
-<p>
-CC=mpicc LDSHARED=“mpicc -shared” python setup.py build_ext -i
-</p>
 
-
+</section>
+</section>
 
 </main> <!-- /main -->
 <div>
