@@ -1,3 +1,11 @@
+# Deploy BinderHub on top of Kubernetes on Jetstream 2
+
+BinderHub is a kubernetes-based cloud service that allows users to share reproducible interactive computing environments from code repositories. See for example <https://mybinder.org>.
+
+When pointed to a Github repository, it builds a Docker container from the metadata in that repository (for example a `requirements.txt` file), then it gives the user a live Jupyter Notebook session with this custom computing environment and the checked-out repository. The user can then browse the repository and execute Notebooks.
+
+On top of Kubernetes, it also needs a Container Registry to store the Docker containers it builds, in the following tutorial we rely on Google Cloud.
+
 ## Setup Kubernetes
 
 The first step is to have a Kubernetes deployment on Jetstream 2, for example deployed with Kubespray using [this tutorial](https://www.zonca.dev/posts/2022-03-30-jetstream2_kubernetes_kubespray)
@@ -15,10 +23,10 @@ We first need to activate the Google Container Registry in the Google Cloud acco
 
 ## Setup permissions on the Google Container Registry
 
-Follow [the instructions on "Zero to Binderhub" to setup the Google Container Registry](https://binderhub.readthedocs.io/en/latest/zero-to-binderhub/setup-registry.html#set-up-google-container-registry)
+Follow [the instructions on "Zero to BinderHub" to setup the Google Container Registry](https://binderhub.readthedocs.io/en/latest/zero-to-binderhub/setup-registry.html#set-up-google-container-registry)
 some notes:
 
-* Better to create a dedicated project just for Binderhub
+* Better to create a dedicated project just for BinderHub
 * "Create key" is under "Actions"->"Manage keys"
 
 ## Setup ingress with HTTPS support
@@ -34,7 +42,7 @@ Follow the instructions at <https://zonca.dev/2020/03/setup-https-kubernetes-let
 BinderHub requires 2 subdomains, one for BinderHub and one for JupyterHub.
 For the initial testing I recommend to use Jetstream 2 provided domains, once they are working it is easy to replace them with custom domains.
 
-Login to [the Jestream 2 Horizon instance](https://js2.jetstream-cloud.org/), choose the right allocation, click on DNS, Zones, choose the Zone which starts with `tg`, then click on "Create Record Set".
+Login to [the Jetstream 2 Horizon instance](https://js2.jetstream-cloud.org/), choose the right allocation, click on DNS, Zones, choose the Zone which starts with `tg`, then click on "Create Record Set".
 
 Create a "A" record where name is `binder.tg-xxx000000.projects.jetstream-cloud.org` and record is the IP of your master instance. Create a second A record with the name `hub.tg-xxx000000.projects.jetstream-cloud.org` and the same record.
 
@@ -71,7 +79,7 @@ This script first creates `config.yaml` (and overwrites it, so keep your changes
 
 Connect to <https://binder.tg-xxx000000.projects.jetstream-cloud.org>, you should see the binder login page:
 
-![Binder login page](binderloginpage.png)
+![Binder login page](../../images/binderloginpage.png)
 
 You can then test with one of the binder examples:
 
