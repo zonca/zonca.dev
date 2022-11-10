@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2015-03-24">
+<meta name="dcterms.date" content="2022-11-08">
 
-<title>Andrea Zonca - Accelerate groupby operation on pixels with Numba</title>
+<title>Andrea Zonca - Setup a conda environment at NERSC</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -113,10 +113,9 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Accelerate groupby operation on pixels with Numba</h1>
+      <h1 class="title">Setup a conda environment at NERSC</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">python</div>
-                <div class="quarto-category">astrophysics</div>
               </div>
                   </div>
   </div>
@@ -128,7 +127,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 24, 2015</p>
+        <p class="date">November 8, 2022</p>
       </div>
     </div>
     
@@ -146,87 +145,29 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p><a href="https://gist.github.com/zonca/37b4423e507d5dc2fc3b8b5d4db6d316">Download the original IPython notebook</a></p>
-<section id="astrophysics-background" class="level2">
-<h2 class="anchored" data-anchor-id="astrophysics-background">Astrophysics background</h2>
-<p>It is very common in Astrophysics to work with sky pixels. The sky is tassellated in patches with specific properties and a sky map is then a collection of intensity values for each pixel. The most common pixelization used in Cosmology is <a href="http://healpix.jpl.nasa.gov">HEALPix</a>.</p>
-<p>Measurements from telescopes are then represented as an array of pixels that encode the pointing of the instrument at each timestamp and the measurement output.</p>
-</section>
-<section id="sample-timeline" class="level2">
-<h2 class="anchored" data-anchor-id="sample-timeline">Sample timeline</h2>
-<pre><code>import pandas as pd
-import numba
-import numpy as np</code></pre>
-<p>For simplicity let’s assume we have a sky with 50K pixels:</p>
-<pre><code>NPIX = 50000</code></pre>
-<p>And we have 50 million measurement from our instrument:</p>
-<pre><code>NTIME = int(50 * 1e6)</code></pre>
-<p>The pointing of our instrument is an array of pixels, random in our sample case:</p>
-<pre><code>pixels = np.random.randint(0, NPIX-1, NTIME)</code></pre>
-<p>Our data are also random:</p>
-<pre><code>timeline = np.random.randn(NTIME)</code></pre>
-</section>
-<section id="create-a-map-of-the-sky-with-pandas" class="level2">
-<h2 class="anchored" data-anchor-id="create-a-map-of-the-sky-with-pandas">Create a map of the sky with pandas</h2>
-<p>One of the most common operations is to sum all of our measurements in a sky map, so the value of each pixel in our sky map will be the sum of each individual measurement. The easiest way is to use the <code>groupby</code> operation in <code>pandas</code>:</p>
-<pre><code>timeline_pandas = pd.Series(timeline, index=pixels)
-
-timeline_pandas.head()
-46889    0.407097
-3638     1.300001
-6345     0.174931
-15742   -0.255958
-34308    1.147338
-dtype: float64
-
-%time m = timeline_pandas.groupby(level=0).sum()
-
-CPU times: user 4.09 s, sys: 471 ms, total: 4.56 s
-Wall time: 4.55 s</code></pre>
-</section>
-<section id="create-a-map-of-the-sky-with-numba" class="level2">
-<h2 class="anchored" data-anchor-id="create-a-map-of-the-sky-with-numba">Create a map of the sky with numba</h2>
-<p>We would like to improve the performance of this operation using <code>numba</code>, which allows to produce automatically C-speed compiled code from pure python functions.</p>
-<p>First we need to develop a pure python version of the code, test it, and then have <code>numba</code> optimize it:</p>
-<pre><code>def groupby_python(index, value, output):
-    for i in range(index.shape[0]):
-        output[index[i]] += value[i]
-
-m_python = np.zeros_like(m)
+<p>NERSC recommends to use the <a href="https://docs.nersc.gov/filesystems/global-common/">“Global Common”</a> to store Conda environments, because it is optimized to store lots of small files. Consider that it is mounted read-only on computing nodes. The filesystem is organized by groups, so choose one of your groups:</p>
+<pre><code>groups</code></pre>
+<p>for example for me it is the <code>cmb</code> group.</p>
+<pre><code>GROUP=cmb
+mkdir -p /global/common/software/$GROUP/$USER/conda
+cd ~
+ln -s /global/common/software/$GROUP/$USER c</code></pre>
+<p>So we can access it quickly under <code>~/c</code>.</p>
+<p>Then we create a Conda environment with <code>mamba</code>, specifying the version of python and other packages:</p>
+<pre><code>module load python3 # it should load the latest Anaconda
+mamba create --prefix /global/common/software/$GROUP/$USER/conda/pycmb python==3.10 numpy astropy matplotlib ipykernel numba  pytest toml cython scipy namaster -c conda-forge     </code></pre>
+<p>We can also set that path for <code>conda</code> to automatically search into, this will pickup also future Conda environments on the same path:</p>
+<pre><code>conda config --append envs_dirs /global/common/software/$GROUP/$USER/conda</code></pre>
+<p>We do not want that long path in our prompt, so:</p>
+<pre><code>conda config --set env_prompt '({name}) '</code></pre>
+<p>So we can activate the environment specifying only the name:</p>
+<pre><code>conda activate pycmb</code></pre>
+<p>In order to use it also on <code>Jupyter@NERSC</code> you will need to register the kernel:</p>
+<pre><code>ipython kernel install --name KERNEL_NAME --user</code></pre>
+<p>Tip for CMB people, make sure you build <code>healpy</code> from source to get the best performance on Spherical Harmonics Transforms:</p>
+<pre><code>CC=gcc CXX=g++ CFLAGS="-fPIC -O3 -march=native" CXXFLAGS="-fPIC -O3 -march=native" pip3 install --user --no-binary healpy healpy</code></pre>
 
 
-%time groupby_python(pixels, timeline, m_python)
-
-CPU times: user 37.5 s, sys: 0 ns, total: 37.5 s
-Wall time: 37.6 s
-
-np.testing.assert_allclose(m_python, m)</code></pre>
-<p>Pure Python is slower than the <code>pandas</code> version implemented in <code>cython</code>.</p>
-<section id="optimize-the-function-with-numba.jit" class="level3">
-<h3 class="anchored" data-anchor-id="optimize-the-function-with-numba.jit">Optimize the function with numba.jit</h3>
-<p><code>numba.jit</code> gets an input function and creates an compiled version with does not depend on slow Python calls, this is enforced by <code>nopython=True</code>, <code>numba</code> would throw an error if it would not be possible to run in <code>nopython</code> mode.</p>
-<pre><code>groupby_numba = numba.jit(groupby_python, nopython=True)
-
-m_numba = np.zeros_like(m)
-
-%time groupby_numba(pixels, timeline, m_numba)
-CPU times: user 274 ms, sys: 5 ms, total: 279 ms
-Wall time: 278 ms
-
-np.testing.assert_allclose(m_numba, m)</code></pre>
-<p>Performance improvement is about 100x compared to Python and 20x compared to Pandas, pretty good!</p>
-</section>
-</section>
-<section id="use-numba.jit-as-a-decorator" class="level2">
-<h2 class="anchored" data-anchor-id="use-numba.jit-as-a-decorator">Use numba.jit as a decorator</h2>
-<p>The exact same result is obtained if we use <code>numba.jit</code> as a decorator:</p>
-<pre><code>@numba.jit(nopython=True)
-def groupby_numba(index, value, output):
-    for i in range(index.shape[0]):
-        output[index[i]] += value[i]</code></pre>
-
-
-</section>
 
 </main> <!-- /main -->
 <div>

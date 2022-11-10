@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2022-11-08-python-nersc-conda.html",
       "/posts/2022-11-03-singularity-github-actions.html",
       "/posts/2022-10-26-click-commandline-class-arguments.html",
       "/posts/2022-10-24-numba-closures.html",
