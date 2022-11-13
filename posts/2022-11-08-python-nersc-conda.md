@@ -21,10 +21,12 @@ for example for me it is the `cmb` group.
 
 So we can access it quickly under `~/c`.
 
+
 Then we create a Conda environment with `mamba`, specifying the version of python and other packages:
 
+    export ENV=pycmb
     module load python3 # it should load the latest Anaconda
-    mamba create --prefix /global/common/software/$GROUP/$USER/conda/pycmb python==3.10 numpy astropy matplotlib ipykernel numba  pytest toml cython scipy namaster -c conda-forge     
+    mamba create --prefix /global/common/software/$GROUP/$USER/conda/$ENV python==3.10 numpy astropy matplotlib ipykernel numba  pytest toml cython scipy namaster -c conda-forge
 
 We can also set that path for `conda` to automatically search into, this will pickup also future Conda environments on the same path:
 
@@ -36,11 +38,11 @@ We do not want that long path in our prompt, so:
 
 So we can activate the environment specifying only the name:
 
-    conda activate pycmb
+    conda activate $ENV
 
 In order to use it also on `Jupyter@NERSC` you will need to register the kernel:
 
-    ipython kernel install --name KERNEL_NAME --user
+    ipython kernel install --name $ENV --user
 
 Tip for CMB people, make sure you build `healpy` from source to get the best performance on Spherical Harmonics Transforms:
 
