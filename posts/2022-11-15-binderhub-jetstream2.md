@@ -1,4 +1,14 @@
+---
+categories:
+- jetstream2
+layout: post
+date: '2022-11-15'
+title: Deploy BinderHub on top of Kubernetes on Jetstream 2
+
+---
 # Deploy BinderHub on top of Kubernetes on Jetstream 2
+
+This work has been supported by Indiana University and is cross-posted on the <a href="https://docs.jetstream-cloud.org/general/k8sbinderhub" rel="canonical">Jetstream 2 official documentation website</a>.
 
 BinderHub is a kubernetes-based cloud service that allows users to share reproducible interactive computing environments from code repositories. See for example <https://mybinder.org>.
 
