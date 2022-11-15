@@ -46,4 +46,4 @@ In order to use it also on `Jupyter@NERSC` you will need to register the kernel:
 
 Tip for CMB people, make sure you build `healpy` from source to get the best performance on Spherical Harmonics Transforms:
 
-    CC=gcc CXX=g++ CFLAGS="-fPIC -O3 -march=native" CXXFLAGS="-fPIC -O3 -march=native" pip3 install --user --no-binary healpy healpy
+    CC=gcc CXX=g++ CFLAGS="-fPIC -O3 -march=native" CXXFLAGS="-fPIC -O3 -march=native" pip3 install --user --no-binary healpy --ignore-installed healpy
