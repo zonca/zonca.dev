@@ -1,6 +1,6 @@
+Jetstream 2 
+
 `group_vars/all/docker.yml`
-Uncomment
-    docker_storage_options: -s overlay2
 
 it is required by kubespray nvidia
 
