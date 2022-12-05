@@ -3,6 +3,7 @@
     "listing": "/index.html",
     "items": [
       "/posts/log_powerlaw.html",
+      "/posts/2022-12-05-jetstream2-kubernetes-manila.html",
       "/posts/2022-11-15-binderhub-jetstream2.html",
       "/posts/2022-11-08-python-nersc-conda.html",
       "/posts/2022-11-03-singularity-github-actions.html",
