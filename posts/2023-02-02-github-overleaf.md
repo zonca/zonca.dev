@@ -4,7 +4,7 @@ categories:
 - github
 date: '2023-02-02'
 layout: post
-title: Work on Latex Document with Github and Overleaf
+title: Work on a Latex Document with Github and Overleaf
 
 ---
 
