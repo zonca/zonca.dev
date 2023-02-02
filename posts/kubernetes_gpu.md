@@ -1,4 +1,14 @@
-Jetstream 2 
+---
+categories:
+- jetstream2
+- jupyterhub
+layout: post
+date: '2023-01-23'
+title: Deploy Kubernetes on Jetstream 2 with GPU support
+
+---
+
+The Jetstream 2 cloud system includes 90 GPU nodes with 4 NVIDIA A100 each](https://docs.jetstream-cloud.org/overview/config/)
 
 `group_vars/all/docker.yml`
 
