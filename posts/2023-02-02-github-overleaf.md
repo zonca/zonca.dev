@@ -2,7 +2,7 @@
 categories:
 - git
 - github
-date: '2022-02-02'
+date: '2023-02-02'
 layout: post
 title: Work on Latex Document with Github and Overleaf
 
