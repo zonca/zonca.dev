@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2023-02-02">
+<meta name="dcterms.date" content="2023-01-23">
 
-<title>Andrea Zonca - Work on a Latex Document with Github and Overleaf</title>
+<title>Andrea Zonca - Deploy Kubernetes on Jetstream 2 with GPU support</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -113,10 +113,10 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Work on a Latex Document with Github and Overleaf</h1>
+      <h1 class="title">Deploy Kubernetes on Jetstream 2 with GPU support</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">git</div>
-                <div class="quarto-category">github</div>
+                <div class="quarto-category">jetstream2</div>
+                <div class="quarto-category">jupyterhub</div>
               </div>
                   </div>
   </div>
@@ -128,7 +128,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">February 2, 2023</p>
+        <p class="date">January 23, 2023</p>
       </div>
     </div>
     
@@ -146,60 +146,56 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>In the past I have written about <a href="https://www.zonca.dev/posts/2021-01-28-github-overleaf-large-document">coordinating a large document using multiple overleaf documents and Github repositories</a>. In this post I will just layout the simpler case where we have a Latex document on Overleaf and we also want users to be able to work on it from Github and we want Github Actions to automatically build a PDF for every commit.</p>
-<section id="create-less-privileged-user-on-github" class="level2">
-<h2 class="anchored" data-anchor-id="create-less-privileged-user-on-github">Create less privileged user on Github</h2>
-<p>A concern about using Overleaf is that to have the convenience of pushing and pulling from Github, it asks for write permissions to all repositories.</p>
-<p>So just to play it safe, it is useful to create a new user on Github, for example mine is called <code>@zoncaoverleafbot</code>, which has write access only to this repository.</p>
-<p>It is useful to be logged in with your official Github user in your browser and be logged in inside an Incognito window with your “Overleaf bot” user.</p>
+<p>This work has been supported by Indiana University and is cross-posted on the <a href="https://docs.jetstream-cloud.org/general/k8sgpu" rel="canonical">Jetstream 2 official documentation website</a>.</p>
+<p>The Jetstream 2 cloud includes <a href="https://docs.jetstream-cloud.org/overview/config/" target="_blank">90 GPU nodes with 4 NVIDIA A100 each</a>. If we want to leverage the GPUs inside Kubernetes pods, for example JupyterHub users, we both need to have a GPU-enabled ContainerD runtime and a compatible Docker image based off NVIDIA images.</p>
+<section id="deploy-kubernetes-with-nvidia-runtime" class="level2">
+<h2 class="anchored" data-anchor-id="deploy-kubernetes-with-nvidia-runtime">Deploy Kubernetes with NVIDIA runtime</h2>
+<p>Kubespray has built-in support for NVIDIA runtime, therefore it is just a matter of following the <a href="https://www.zonca.dev/posts/2022-03-31-jetstream2_jupyterhub" target="_blank">standard Kubespray deployment tutorial</a>, but using the <code>branch_v2.18.0_gpu</code> branch of the <code>zonca/jetstream_kubespray</code> Github repository instead of the <code>branch_v2.18.0</code> branch. You can also check in detail what are the changes required by looking at <a href="https://github.com/zonca/jetstream_kubespray/pull/20" target="_blank">this Pull Request</a></p>
+<p>Next we need to install the <code>k8s-device-plugin</code>, at the moment it is just necessary to execute:</p>
+<pre><code>kubectl create -f https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/v0.13.0/nvidia-device-plugin.yml</code></pre>
+<p>However, make sure you check the latest <a href="https://github.com/NVIDIA/k8s-device-plugin" target="_blank"><code>k8s-device-plugin</code> documentation</a>.</p>
+<p>For testing, you can run a simple GPU job:</p>
+<pre><code>cat &lt;&lt;EOF | kubectl apply -f -
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gpu-pod
+spec:
+  restartPolicy: Never
+  containers:
+    - name: cuda-container
+      image: nvcr.io/nvidia/k8s/cuda-sample:vectoradd-cuda10.2
+      resources:
+        limits:
+          nvidia.com/gpu: 1 # requesting 1 GPU
+  tolerations:
+  - key: nvidia.com/gpu
+    operator: Exists
+    effect: NoSchedule
+EOF</code></pre>
+<p>and check the logs:</p>
+<pre><code>kubectl logs gpu-pod</code></pre>
+<p>The output should be:</p>
+<pre><code>[Vector addition of 50000 elements]
+Copy input data from the host memory to the CUDA device
+CUDA kernel launch with 196 blocks of 256 threads
+Copy output data from the CUDA device to the host memory
+Test PASSED
+Done</code></pre>
 </section>
-<section id="create-repository-on-github" class="level2">
-<h2 class="anchored" data-anchor-id="create-repository-on-github">Create repository on Github</h2>
-<p>Let’s start with a Latex document on Overleaf, for example I used the <a href="https://www.overleaf.com/read/vtmsqrxpnhzn">“Astronomy &amp; Astrophysics” template</a> for testing.</p>
-<p>Starting with a project on Overleaf is more complicated because of permission issues, so in case you have an Overleaf project, just download it locally.</p>
-<p>Create a new repository on Github, this should be under your “real” Github account or any organization you have access to, upload the Latex document and all ancillary files.</p>
-<p>See for example my repository <a href="https://github.com/zonca/overleaf_github" class="uri">https://github.com/zonca/overleaf_github</a>, you could also fork this repository under your account.</p>
-<p>Finally, give “Write” access to your Overleaf bot user.</p>
-</section>
-<section id="create-the-linked-project-on-overleaf" class="level2">
-<h2 class="anchored" data-anchor-id="create-the-linked-project-on-overleaf">Create the linked project on Overleaf</h2>
-<p>Now login to Github with your “Overleaf bot” account, then login to Overleaf.</p>
-<p>Click on “New project” =&gt; “Import from Github”, select your repository.</p>
-<p>This will create a project on Overleaf that is automatically linked to the Github repository.</p>
-</section>
-<section id="how-to-edit-on-overleaf" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-edit-on-overleaf">How to edit on Overleaf</h2>
-<p>Now both you and all your collaborators, can use Overleaf to edit the document and then push to Github using your “Overleaf bot” user, they do not need to link their own Github user.</p>
-<ul>
-<li>use the Overleaf “Write”</li>
-<li><strong>Before making any edits</strong>, click on Menu =&gt; Github =&gt; Pull changes from Github</li>
-<li>Make edits on Overleaf</li>
-<li><strong>Once you are finished editing</strong>, even just for 1 or 2 hours, click on Menu =&gt; Github =&gt; Push changes to Github</li>
-<li>Edits will show up on Github as made by the “Overleaf bot” user , which avoids giving too much permissions to Overleaf</li>
-<li>Github is supposed to have the latest version of the document always</li>
-</ul>
-</section>
-<section id="build-the-pdf-on-github-optional" class="level2">
-<h2 class="anchored" data-anchor-id="build-the-pdf-on-github-optional">Build the PDF on Github (Optional)</h2>
-<p>The easiest way to access the PDF is to get it from Overleaf. However, it might be useful to also have it available on Github. We can have Github actions build it and make it available as an artifact.</p>
-<p>Customize the <a href="https://github.com/zonca/overleaf_github/blob/main/.github/workflows/build_latex.yml"><code>build_latex.yml</code></a> file to have Github actions build your PDF.</p>
-<p>The only downside is that the PDF is hidden inside the Github actions, to simplify access we can get a direct link to the latest PDF using the <a href="https://nightly.link" class="uri">https://nightly.link</a> service, just paste the URL to the <code>build_latex.yml</code>, for my repository:</p>
-<ul>
-<li><code>https://github.com/zonca/overleaf_github/blob/main/.github/workflows/build_latex.yml</code></li>
-</ul>
-<p>This will provide a link of the form:</p>
-<p><code>https://nightly.link/zonca/overleaf_github/workflows/build_latex/main/PDF.zip</code></p>
-<p>which provides 1-click access to the latest PDF.</p>
-<section id="create-releases-with-attached-pdf-on-github-optional" class="level3">
-<h3 class="anchored" data-anchor-id="create-releases-with-attached-pdf-on-github-optional">Create releases with attached PDF on Github (Optional)</h3>
-<p>The Github Actions workflow also handles tagging releases, so if you create a tagged version in the repository, like <code>0,1</code> in git, for example:</p>
-<pre><code>git tag -a 0.1 -m "Tagging version 0.1"
-git push --tags</code></pre>
-<p>This is going to create a Release on Github, which is visible on the homepage and attach the PDF to it, see <a href="https://github.com/zonca/overleaf_github/releases/tag/0.1">the example on my repository</a>.</p>
-<p>To make this work, you need to grant writing permissions Github Action workflows, in the repository “Settings” =&gt; “Actions” =&gt; “General”, select “Read and write permissions” under “Workflow permissions”.</p>
+<section id="access-gpus-from-jupyterhub" class="level2">
+<h2 class="anchored" data-anchor-id="access-gpus-from-jupyterhub">Access GPUs from JupyterHub</h2>
+<p>A Docker image derived from the NVIDIA Tensorflow image is available <a href="https://hub.docker.com/r/zonca/nvidia-tensorflow-jupyterhub" target="_blank">on DockerHub as <code>zonca/nvidia-tensorflow-jupyterhub</code></a>, the relevant <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/blob/master/gpu/nvidia-tensorflow-jupyterhub/Dockerfile" target="_blank">Dockerfile is available on Github</a>.</p>
+<p>Also notice that this is configured to run JupyterHub <code>3.0.0</code> which should be used in conjunction with the Zero to JupyterHub Helm chart version <code>2.0.0</code>.</p>
+<p>Then it is just a matter of modifying the <code>install_jhub.sh</code> script to pickup the additional configuration file by adding:</p>
+<pre><code>--values gpu/jupyterhub_gpu.yaml</code></pre>
+<p>For testing, I have modified the Tensorflow tutorial for beginners to run on GPU, it is available <a href="https://gist.github.com/zonca/3da7896544da9881fe9081a441964a26" target="_blank">in this Gist</a>.</p>
+<p>You can download it to your local machine and upload it to the GPU-enabled single user instance on Jetstream.</p>
+<p>During execution, the 3rd cell should show the available GPU device:</p>
+<pre><code>[PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]</code></pre>
+<p>then the Notebook should execute to completion with no errors, printing for each operation the device which executed it, i.e.&nbsp;the GPU.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

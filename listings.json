@@ -2,8 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/log_powerlaw.html",
       "/posts/2023-02-02-github-overleaf.html",
+      "/posts/2023-01-23-kubernetes-gpu-jetstream2.html",
       "/posts/2022-12-01-radio-galaxies-websky-planck.html",
       "/posts/2022-12-05-jetstream2-kubernetes-manila.html",
       "/posts/2022-11-15-binderhub-jetstream2.html",
