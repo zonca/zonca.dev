@@ -3,7 +3,6 @@
     "listing": "/index.html",
     "items": [
       "/posts/log_powerlaw.html",
-      "/posts/k8sgpu.html",
       "/posts/2023-01-23-kubernetes-gpu.html",
       "/posts/2022-12-01-radio-galaxies-websky-planck.html",
       "/posts/2022-12-05-jetstream2-kubernetes-manila.html",
@@ -27,6 +26,7 @@
       "/posts/2022-03-31-jetstream2_jupyterhub.html",
       "/posts/2022-03-30-jetstream2_kubernetes_kubespray.html",
       "/posts/2022-03-22-jupyter-notebooks-version-control.html",
+      "/posts/2023-02-02-github-overleaf.html",
       "/posts/2022-01-27-dask-gateway-jupyterhub.html",
       "/posts/2022-01-07-make.html",
       "/posts/2021-11-08-fund-healpy.html",
