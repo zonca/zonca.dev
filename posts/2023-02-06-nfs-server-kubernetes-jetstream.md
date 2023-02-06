@@ -71,6 +71,7 @@ then:
 
 and access the terminal to test:
 
+    export N=default #set namespace
     bash ../terminal_pod.sh test-nfs-mount
     df -h
 
