@@ -182,7 +182,8 @@ kubectl create -f nfs_server.yaml</code></pre>
 <p>Edit <code>test_nfs_mount.yaml</code> to set the right IP for the NFS server, then:</p>
 <pre><code>kubectl create -f test_nfs_mount.yaml</code></pre>
 <p>and access the terminal to test:</p>
-<pre><code>bash ../terminal_pod.sh test-nfs-mount
+<pre><code>export N=default #set namespace
+bash ../terminal_pod.sh test-nfs-mount
 df -h
 
 ...
