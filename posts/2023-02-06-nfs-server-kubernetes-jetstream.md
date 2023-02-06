@@ -1,18 +1,18 @@
 ---
-aliases:
-- /2020/07/nfs-server-kubernetes-jetstream
 categories:
 - kubernetes
 - jetstream
 - jupyterhub
 - linux
-date: '2020-07-10'
+date: '2023-02-06'
 layout: post
 title: Deploy a NFS server to share data between JupyterHub users on Jetstream
 
 ---
 
-**Important**: This tutorial is obsolete, please refer to [the new version from February 2023](./2023-02-06-nfs-server-kubernetes-jetstream.md)
+This tutorial is a minor update of <https://www.zonca.dev/posts/2020-07-10-nfs-server-kubernetes-jetstream>.
+
+Also consider that a more robust and low-maintenance way of providing shared data volumes is [to rely on Manila shares provided by Jetstream 2, see the tutorial](https://www.zonca.dev/posts/2022-12-05-jetstream2-kubernetes-manila)
 
 In this tutorial I'll show how to create a data volume on Jetstream and share it
 using a NFS server to all JupyterHub users.
@@ -23,8 +23,8 @@ however the users still have access to their own home folder.
 
 # Deploy Kubernetes and JupyterHub
 
-I assume here you already have a deployment of JupyterHub on top of Kubernetes on Jetstream,
-deployed either [via Kubespray](https://zonca.dev/2020/06/kubernetes-jetstream-kubespray.html) or [via Magnum](https://zonca.dev/2020/05/kubernetes-jupyterhub-jetstream-magnum.html).
+I assume here you already have a deployment of JupyterHub on top of Kubernetes on Jetstream, currently, the recommended method [is via Kubespray 2.18](https://www.zonca.dev/posts/2022-03-30-jetstream2_kubernetes_kubespray).
+
 
 # Deploy the NFS server
 
@@ -174,7 +174,7 @@ Deploy the pod (also here we create a Deployment with a replica number of 1):
 
     kubectl create -f ssh_server.yaml
 
-Open the Horizon interface, go to "Security groups", open the `http_https` group,
+Open the Horizon interface, go to "Security groups", open the `$CLUSTER-k8s-master` group,
 which we use to open ports on the master instance, and add a new rule to open port
 `30022` for Ingress TCP traffic.
 
