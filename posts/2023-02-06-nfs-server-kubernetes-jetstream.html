@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2020-07-10">
+<meta name="dcterms.date" content="2023-02-06">
 
 <title>Andrea Zonca - Deploy a NFS server to share data between JupyterHub users on Jetstream</title>
 <style>
@@ -130,7 +130,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 10, 2020</p>
+        <p class="date">February 6, 2023</p>
       </div>
     </div>
     
@@ -148,11 +148,12 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p><strong>Important</strong>: This tutorial is obsolete, please refer to <a href="../posts/2023-02-06-nfs-server-kubernetes-jetstream.html">the new version from February 2023</a></p>
+<p>This tutorial is a minor update of <a href="https://www.zonca.dev/posts/2020-07-10-nfs-server-kubernetes-jetstream" class="uri">https://www.zonca.dev/posts/2020-07-10-nfs-server-kubernetes-jetstream</a>.</p>
+<p>Also consider that a more robust and low-maintenance way of providing shared data volumes is <a href="https://www.zonca.dev/posts/2022-12-05-jetstream2-kubernetes-manila">to rely on Manila shares provided by Jetstream 2, see the tutorial</a></p>
 <p>In this tutorial I’ll show how to create a data volume on Jetstream and share it using a NFS server to all JupyterHub users. All JupyterHub users run as the <code>jovyan</code> user, therefore each folder in the shared filesystem can be either read-only, or writable by every user. The main concern is that a user could delete by mistake data of another user, however the users still have access to their own home folder.</p>
 <section id="deploy-kubernetes-and-jupyterhub" class="level1">
 <h1>Deploy Kubernetes and JupyterHub</h1>
-<p>I assume here you already have a deployment of JupyterHub on top of Kubernetes on Jetstream, deployed either <a href="https://zonca.dev/2020/06/kubernetes-jetstream-kubespray.html">via Kubespray</a> or <a href="https://zonca.dev/2020/05/kubernetes-jupyterhub-jetstream-magnum.html">via Magnum</a>.</p>
+<p>I assume here you already have a deployment of JupyterHub on top of Kubernetes on Jetstream, currently, the recommended method <a href="https://www.zonca.dev/posts/2022-03-30-jetstream2_kubernetes_kubespray">is via Kubespray 2.18</a>.</p>
 </section>
 <section id="deploy-the-nfs-server" class="level1">
 <h1>Deploy the NFS server</h1>
@@ -248,7 +249,7 @@ total 0
 </ul>
 <p>Deploy the pod (also here we create a Deployment with a replica number of 1):</p>
 <pre><code>kubectl create -f ssh_server.yaml</code></pre>
-<p>Open the Horizon interface, go to “Security groups”, open the <code>http_https</code> group, which we use to open ports on the master instance, and add a new rule to open port <code>30022</code> for Ingress TCP traffic.</p>
+<p>Open the Horizon interface, go to “Security groups”, open the <code>$CLUSTER-k8s-master</code> group, which we use to open ports on the master instance, and add a new rule to open port <code>30022</code> for Ingress TCP traffic.</p>
 <section id="test-the-ssh-server" class="level2">
 <h2 class="anchored" data-anchor-id="test-the-ssh-server">Test the SSH server</h2>
 <p>From a machine external to Jetstream:</p>
