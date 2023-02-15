@@ -203,3 +203,4 @@ ssh-server:/share#
 # Troubleshooting
 
 * Consider that if you reboot or re-create the NFS server, the user pods need to be restarted, otherwise the NFS volume hangs.
+* If you get the error `bad option; for several filesystems (e.g. nfs, cifs) you might need a /sbin/mount.<type> helper program.`, it means you do not have a NFS client on the host. Make sure you install the right package, for Ubuntu/Debian it is `nfs-common`. This should be taken care of by Kubespray if using my deployment tutorial.
