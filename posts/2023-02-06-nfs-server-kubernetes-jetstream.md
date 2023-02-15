@@ -46,7 +46,7 @@ Some configuration options you might want to edit:
 * I named the shared folder `/share`
 * In case you are interested in sharing read-only, uncomment the `READ_ONLY` flag.
 * In the persistent volume claim definition `create_nfs_volume.yaml`, modify the volume size (default is 10 GB)
-* Select the right IP in `service_nfs.yaml` for either Magnum or Kubespray (or you can delete the line to be assigned an IP by Kubernetes)
+* Select the right IP in `service_nfs.yaml` for either Magnum or Kubespray (or you can delete the line to be assigned an IP by Kubernetes), this is an arbitrary IP, it just needs to be in the same subnet of other Kubernetes services. You can find it looking at the output of `kubectl get services`. So you could have 2 NFS servers in the same cluster with 2 different IPs.
 
 First we create the PersistentVolumeClaim:
 
