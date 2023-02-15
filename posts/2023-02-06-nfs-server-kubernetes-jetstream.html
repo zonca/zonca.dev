@@ -168,7 +168,7 @@ cd nfs</code></pre>
 <li>I named the shared folder <code>/share</code></li>
 <li>In case you are interested in sharing read-only, uncomment the <code>READ_ONLY</code> flag.</li>
 <li>In the persistent volume claim definition <code>create_nfs_volume.yaml</code>, modify the volume size (default is 10 GB)</li>
-<li>Select the right IP in <code>service_nfs.yaml</code> for either Magnum or Kubespray (or you can delete the line to be assigned an IP by Kubernetes)</li>
+<li>Select the right IP in <code>service_nfs.yaml</code> for either Magnum or Kubespray (or you can delete the line to be assigned an IP by Kubernetes), this is an arbitrary IP, it just needs to be in the same subnet of other Kubernetes services. You can find it looking at the output of <code>kubectl get services</code>. So you could have 2 NFS servers in the same cluster with 2 different IPs.</li>
 </ul>
 <p>First we create the PersistentVolumeClaim:</p>
 <pre><code>kubectl create -f create_nfs_volume.yaml</code></pre>
@@ -273,6 +273,7 @@ ssh-server:/share#</code></pre>
 <h1>Troubleshooting</h1>
 <ul>
 <li>Consider that if you reboot or re-create the NFS server, the user pods need to be restarted, otherwise the NFS volume hangs.</li>
+<li>If you get the error <code>bad option; for several filesystems (e.g. nfs, cifs) you might need a /sbin/mount.&lt;type&gt; helper program.</code>, it means you do not have a NFS client on the host. Make sure you install the right package, for Ubuntu/Debian it is <code>nfs-common</code>. This should be taken care of by Kubespray if using my deployment tutorial.</li>
 </ul>
 
 
