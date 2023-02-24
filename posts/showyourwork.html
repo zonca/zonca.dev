@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2020-10-14">
 
-<title>Andrea Zonca - Install HEALPix and PolSpice in a conda environment</title>
+<title>Andrea Zonca – showyourwork</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -110,34 +109,7 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Install HEALPix and PolSpice in a conda environment</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">healpy</div>
-                <div class="quarto-category">hpc</div>
-                <div class="quarto-category">nersc</div>
-              </div>
-                  </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">October 14, 2020</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
@@ -146,68 +118,12 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-
-<p>Some notes on how to install HEALPix and PolSpice inside a conda environment, with some details about doing it at NERSC, but most of the tutorial is independent of that.</p>
-<section id="setup-the-conda-environment-and-the-compilers" class="level2">
-<h2 class="anchored" data-anchor-id="setup-the-conda-environment-and-the-compilers">Setup the conda environment and the compilers</h2>
-<p>I assume here we are installing it into a custom conda environement the possibly contains all other cosmology packages, like <code>healpy</code>.</p>
-<p>For example created with:</p>
-<pre><code>module load python
-conda create -n pycmb python==3.7 healpy matplotlib ipykernel</code></pre>
-<p>When you activate the conda environment, the variable <code>$CONDA_PREFIX</code> is automatically set to the base folder of the environment, something like:</p>
-<pre><code>~/anaconda/envs/pycmb</code></pre>
-<p>To make it simpler, I am using <code>gcc</code> and <code>gfortran</code>, if at NERSC run:</p>
-<pre><code>module load PrgEnv-gnu</code></pre>
-<p>if that fails, probably you need first to unload the Intel environment:</p>
-<pre><code>module unload PrgEnv-intel
-module load PrgEnv-gnu</code></pre>
-</section>
-<section id="install-cfitsio" class="level2">
-<h2 class="anchored" data-anchor-id="install-cfitsio">Install cfitsio</h2>
-<p><code>cfitsio</code> is quite easy, better download the version included in <code>healpy</code> because it has a couple of fixes:</p>
-<pre><code>git clone https://github.com/healpy/cfitsio
-cd cfitsio</code></pre>
-<p>We want to install it into a dedicated folder, not the same <code>lib</code> folder of the conda environment, so that we don’t risk to have conflicts with the compiler libraries during the build process:</p>
-<pre><code>./configure --prefix=$CONDA_PREFIX/cfitsio
-make -j8 shared install</code></pre>
-</section>
-<section id="install-healpix" class="level2">
-<h2 class="anchored" data-anchor-id="install-healpix">Install HEALPix</h2>
-<p>HEALPix installs itself in the same folder where it is unpacked, and then modifies the bash profile to make things work. As we want to keep things isolated, let’s unpack the Healpix package into the conda environment folder, so it will be something like:</p>
-<pre><code>$CONDA_PREFIX/Healpix_3.70
-
-./configure</code></pre>
-<p>configure the C, the Fortran packages, the Fortran package requires <code>libsharp</code>, set everything to default except location of <code>cfitsio</code> where you need (notice <code>lib</code> at the end):</p>
-<pre><code>$CONDA_PREFIX/cfitsio/lib</code></pre>
-<p>When the installer asks whether to modify <code>.profile</code> respond no. Now the installer will create some scripts in the <code>~/.healpix</code> folder and modify <code>.profile</code>, we want to only activate HEALPix in our conda environment so we should modify <code>.profile</code> and remove the lines added by HEALPix.</p>
-<p>Finally we can have HEALPix automatically activated when the conda environment is initialized (notice we need the script to end in <code>.sh</code>):</p>
-<pre><code>mkdir -p ${CONDA_PREFIX}/etc/conda/activate.d
-ln -s ~/.healpix/3_70_Linux/config ${CONDA_PREFIX}/etc/conda/activate.d/config.sh</code></pre>
-<p>Restart the conda environment, and try to run <code>anafast</code> to check that it works. If you are at NERSC, make sure that you are always loading the GNU programming environment by having:</p>
-<pre><code>module swap PrgEnv-intel PrgEnv-gnu</code></pre>
-<p>in <code>.bashrc.ext</code>.</p>
-</section>
-<section id="install-polspice" class="level2">
-<h2 class="anchored" data-anchor-id="install-polspice">Install PolSpice</h2>
-<p>Create a <code>build</code> folder inside the source folder and create a <code>run.sh</code> file with this content:</p>
-<pre><code>cmake .. -DCFITSIO=${CONDA_PREFIX}/cfitsio/lib -DCMAKE_Fortran_COMPILER=gfortran -DCMAKE_C_COMPILER=gcc</code></pre>
-<p>Then:</p>
-<pre><code>bash run.sh
-make -j8</code></pre>
-<p>This will put the <code>spice</code> executable into the <code>../bin</code> folder, just copy it to the conda environment bin folder:</p>
-<pre><code>cd ..
-cp bin/spice ${CONDA_PREFIX}/bin/</code></pre>
-<p>We can also copy the 2 python modules into the environment:</p>
-<pre><code>cp bin/bin_llcl.py bin/ispice.py ${CONDA_PREFIX}/lib/python3.*/site-packages/</code></pre>
-<p>Check it works:</p>
-<pre><code>spice -usage</code></pre>
-<section id="uninstall-polspice" class="level3">
-<h3 class="anchored" data-anchor-id="uninstall-polspice">Uninstall PolSpice</h3>
-<pre><code>rm ${CONDA_PREFIX}/bin/spice ${CONDA_PREFIX}/lib/python3.*/site-packages/bin_llcl.py ${CONDA_PREFIX}/lib/python3.*/site-packages/ispice.py</code></pre>
+<p>globus endpoint show ffc65d7a-0bf9-11ec-90b4-41052087bc27 -F json</p>
+<p>gsiftp://dtn-ro.nersc.gov:2811</p>
+<p>https://stackoverflow.com/questions/70659821/how-to-make-snakemake-recognize-globus-remote-files-using-globus-cli</p>
+<p>zonca@cori02:~/p/software/showyourwork_globus_demo&gt; micromamba create –prefix ~/s/showyourwork python==3.10 n umpy matplotlib scipy snakemake globus-cli -c conda-forge -c bioconda</p>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <div>
