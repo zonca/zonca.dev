@@ -4,6 +4,7 @@ aliases:
 categories:
 - hpc
 - python
+- nersc
 date: 2018-06-20 18:00
 layout: post
 slug: organize-code-data-simulations-nersc

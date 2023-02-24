@@ -4,6 +4,7 @@ aliases:
 categories:
 - healpy
 - hpc
+- nersc
 date: '2020-10-14'
 layout: post
 title: Install HEALPix and PolSpice in a conda environment

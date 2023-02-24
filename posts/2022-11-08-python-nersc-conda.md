@@ -1,6 +1,7 @@
 ---
 categories:
 - python
+- nersc
 date: '2022-11-08'
 layout: post
 title: Setup a conda environment at NERSC
