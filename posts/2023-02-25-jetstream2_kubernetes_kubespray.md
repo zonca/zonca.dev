@@ -1,25 +1,19 @@
 ---
-aliases:
-- /2022/03/jetstream2_kubernetes_kubespray
-- /2022/03/kubernetes-jetstream2-kubespray
 categories:
 - kubernetes
 - jetstream2
-date: '2022-03-30'
+date: '2023-02-22'
 layout: post
 slug: kubernetes-jetstream2-kubespray
-title: Deploy Kubernetes on Jetstream 2 with Kubespray 2.18.0
+title: Deploy Kubernetes on Jetstream 2 with Kubespray 2.21.0
 
 ---
 
-* Updated in August 2022 to add automatic jetstream-cloud.org subdomains
+This tutorial will explain how to install Kubernetes on the [Jetstream 2 Openstack cloud](https://jetstream-cloud.org/) relying on Kubespray. The other strategy for deploying Kubernetes is Openstack Magnum, which being integrated in Openstack is generally easier, however, it is not operational yet on Jetstream 2 yet.
 
-This is the first tutorial targeted at Jetstream 2.
-The system is in early access and will be soon made available, see <https://jetstream-cloud.org/>.
+Kubespray is a project built on top of Terraform, for creating Openstack resources, and Ansible, for configuring the Virtual Machines for Kubernetes.
 
-My latest tutorial on Jetstream 1 executed Kubespray 2.15.0, here we are also switching to Kubespray 2.18.0, which installs Kubernetes v1.22.5, released in December 2021.
-
-For an overview of my work on deploying Kubernetes and JupyterHub on Jetstream, see [my Gateways 2020 paper](https://zonca.dev/2020/09/gateways-2020-paper.html).
+The latest Kubespray release v2.21.0 was published in January 2023, which installs Kubernetes v1.25.6, released in December 2022.
 
 ## Create Jetstream Virtual machines with Terraform
 
@@ -27,9 +21,10 @@ Terraform allows to execute recipes that describe a set of OpenStack resources a
 
 ### Requirements
 
-I have been testing with `python-openstackclient` version 5.8.0, but any recent openstack client should work.
+I have been testing with `python-openstackclient` version 6.1.0, but any recent openstack client should work.
 install `terraform` by copying the correct binary to `/usr/local/bin/`, see <https://www.terraform.io/intro/getting-started/install.html>.
-The requirement is a terraform version `> 0.12`, I tested with `0.14.4`. Newer versions, for example I tried 1.1.7, **do not work** with Kubespray.
+The requirement is a terraform version `> 0.14`, this tutorial has been tested with `0.14.4`.
+[Terraform `1.1.9` and `1.2.9` do not work](https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/issues/46)
 
 ### Request API access
 
@@ -56,20 +51,24 @@ otherwise Ansible will fail with `you must either set external_openstack_usernam
 I needed to make a few modifications to `kubespray` to adapt it to Jetstream:
 
     git clone https://github.com/zonca/jetstream_kubespray
-    git checkout -b branch_v2.18.0 origin/branch_v2.18.0
+    git checkout -b branch_v2.21.0 origin/branch_v2.21.0
 
-See an [overview of my changes compared to the standard `kubespray` release 2.18.0](https://github.com/zonca/jetstream_kubespray/pull/15),
-compared to Jetstream 1, there are no actual changes to the `kubespray` software itself, it is just a matter of configuring it.
-Anyway, it is convenient to just clone the repository.
+See an [overview of my changes compared to the standard `kubespray` release 2.21.0](https://github.com/zonca/jetstream_kubespray/pull/21),
 
-Notice also that the most important change compared to Jetstream 1 is that we are using the new External Openstack provider, instead of the internal Openstack provider which is being discontinued. This also pushed me to use the Cinder CSI plugin, which also has a more modern architecture.
+Inside `jetstream_kubespray`, choose a name for the cluster and copy from my template:
+
+    export CLUSTER=yourclustername
+    cp -r inventory/kubejetstream inventory/$CLUSTER
+    cd inventory/$CLUSTER
+
+also `export CLUSTER=yourclustername` is useful to add to the `app*openrc.sh`.
 
 ### Get a projects.jetstream-cloud.org subdomain
 
 One option is to use the Designate Openstack service deployed by Jetstream to get an automatically created domain for the instances.
 In this case the DNS name will be of the form:
 
-    kubejs2-1.tg-xxxxxxxxx.projects.jetstream-cloud.org
+    kubejetstream-1.tg-xxxxxxxxx.projects.jetstream-cloud.org
 
 where `tg-xxxxxxxxx` is the ID of your Jestream 2 allocation,
 you need to specify it at the bottom of `cluster.tfvars` before running Terraform.
@@ -99,14 +98,6 @@ It is useful to save the IP into the `app*openrc.sh`, so that every time you loa
     export IP=149.xxx.xxx.xxx
 
 ### Run Terraform
-
-Inside `jetstream_kubespray`, choose a name for the cluster and copy from my template:
-
-    export CLUSTER=yourclustername
-    cp -r inventory/kubejetstream inventory/$CLUSTER
-    cd inventory/$CLUSTER
-
-also `export CLUSTER=yourclustername` is useful to add to the `app*openrc.sh`.
 
 Open and modify `cluster.tfvars`, choose your image (by default Ubuntu 20) and number of nodes and the flavor of the nodes, by default they are medium instances (`"4"`).
 
@@ -138,7 +129,7 @@ You can cleanup the virtual machines and all other Openstack resources (all data
 
 Change folder back to the root of the `jetstream_kubespray` repository,
 
-First make sure you have a recent version of `ansible` installed, you also need additional modules,
+First make sure you have a recent version of `ansible` installed, tested with `2.10.15`, you also need additional modules,
 so first run:
 
     pip install -r requirements.txt
@@ -158,7 +149,7 @@ Test the connection through ansible:
 
 In `inventory/$CLUSTER/group_vars/k8s_cluster/k8s-cluster.yml`, set the public floating IP of the master instance in `supplementary_addresses_in_ssl_keys`.
 
-Finally run the full playbook, it is going to take a good 10 minutes, go make coffee:
+Finally run the full playbook, it is going to take a good 20 minutes:
 
     bash k8s_install.sh
 
@@ -208,19 +199,17 @@ HTTP request sent, awaiting response... 404 Not Found
 ```
 
 Error 404 is a good sign, the service is up and serving requests, currently there is nothing to deliver.
-If any of the tests hangs or cannot connect, there is probably a networking issue.
+If you get any other type of error, check that the `nginx` controller is running:
+
+    kubectl get pods -n ingress-nginx
 
 ## Set the default storage class
 
-Kubespray sets up the `cinder-csi` storage class, but it is not set as default, we can fix it with:
-
-    kubectl patch storageclass cinder-csi -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
-
-so that we don't need to explicitely configure it in the applications we deploy.
+This is not needed anymore, setting Cinder CSI as default storage class is included in the modifications to Kubespray.
 
 ## (Optional) Setup kubectl locally
 
-Install `kubectl` locally, I am currently using `1.20`.
+Install `kubectl` locally, the tutorial has been tested with `1.26`.
 
 We also set `kubeconfig_localhost: true`, which copies the `kubectl` configuration  `admin.conf` to:
 
@@ -238,8 +227,4 @@ Finally edit again the `app*openrc.sh` and add:
 
 Install helm 3 from [the release page on Github](https://github.com/helm/helm/releases)
 
-I tested with `v3.8.1`.
-
-## Install Jupyterhub
-
-Follow up in the next tutorial: [Install JupyterHub on Jetstream 2 on top of Kubernetes](https://zonca.dev/2022/03/jetstream2-jupyterhub.html)
+The tutorial was tested with `v3.8.1`.
