@@ -68,17 +68,33 @@ also `export CLUSTER=yourclustername` is useful to add to the `app*openrc.sh`.
 One option is to use the Designate Openstack service deployed by Jetstream to get an automatically created domain for the instances.
 In this case the DNS name will be of the form:
 
-    kubejetstream-1.tg-xxxxxxxxx.projects.jetstream-cloud.org
+    kubejetstream-1.$PROJ.projects.jetstream-cloud.org
 
-where `tg-xxxxxxxxx` is the ID of your Jestream 2 allocation,
-you need to specify it at the bottom of `cluster.tfvars` before running Terraform.
+where `PROJ` is the ID of your Jestream 2 allocation:
+
+    export PROJ="xxx000000"
+
 The first part of the URL is the instance name, we shortened it removing `k8s-master` because domains too long do not work with Letsencrypt.
+
+Unfortunately the way Terraform creates the Openstack resources breaks the automatic assignment of a DNS record, however this can be easily fixed by disassociating and immediately reassociating the floating IP from the master node (and other nodes is useful):
+
+    export IP= #paste from the output of Terraform
+    openstack server remove floating ip $CLUSTER-1 $IP
+    openstack server add floating ip $CLUSTER-1 $IP
 
 After having executed Terraform, you can pip install on your local machine the package `python-designateclient` to check what records were created (mind the final period):
 
-    openstack recordset list tg-xxxxxxxxx.projects.jetstream-cloud.org.
+    openstack recordset list $PROJ.projects.jetstream-cloud.org.
 
 As usual with stuff related to DNS, there are delays, so your record could take up to 1 hour to work, or if you delete the instance and create it again with another IP it could take hours to update.
+
+For debugging purposes it is useful to use `nslookup`:
+
+    nslookup ${CLUSTER}-1.$PROJ.projects.jetstream-cloud.org
+
+also directly at the source nameservers:
+
+    nslookup ${CLUSTER}-1.$PROJ.projects.jetstream-cloud.org js2.jetstream-cloud.org
 
 Instead, if you have a way of getting a domain outside of Jetstream, better reserve a floating IP, see below.
 
