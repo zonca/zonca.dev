@@ -209,8 +209,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<section id="gzipping-or-not-gzipping-healpix-maps" class="level1">
-<h1>Gzipping or not Gzipping HEALPix maps</h1>
 <p>HEALPix maps are generally stored in FITS format, they can be Gzipped to save disk space. Reading gzipped maps is natively supported in <code>healpy</code>, however, it takes longer because maps are uncompressed on the fly.</p>
 <p>As usual, the best way to assess this is to test. In this case, I am testing using the JupyterHub@NERSC running on a Cori shared CPU server, the maps have about 30% of unobserved pixels and are stored in double precision.</p>
 <p>For this case, the performance loss due to compression is significant, in particular if accessing just a subset of the maps. Therefore it is hard to justify compression, unless storage is really a limiting factor.</p>
@@ -392,7 +390,6 @@ Wall time: 2min 28s</code></pre>
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
