@@ -18,7 +18,7 @@ This is handled via "Project folders", so the requirement is to be part of a "pr
 
 So you should be able to create folders on the Community File System, if not already present, also ma
 
-    > mkdir -p /global/project/projectdirs/$PWD/www
+    > mkdir -p /global/project/projectdirs/$PRJ/www
 
 Also make sure it files are world-readable, folders are world-readable and world-executable:
 
