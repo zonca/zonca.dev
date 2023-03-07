@@ -31,4 +31,4 @@ Now any files and any subfolder of `www` will be available publicly displaying f
 
 See for example:
 
-    * <https://portal.nersc.gov/project/cmb/dirlist/>
+    * [https://portal.nersc.gov/project/cmb/dirlist/](https://portal.nersc.gov/project/cmb/dirlist/)
