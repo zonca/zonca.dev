@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2023-02-24">
+<meta name="dcterms.date" content="2023-02-21">
 
-<title>Andrea Zonca - Share data from NERSC publicly via web</title>
+<title>Andrea Zonca - Showyourwork! Globus demo</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -113,9 +113,9 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Share data from NERSC publicly via web</h1>
+      <h1 class="title">Showyourwork! Globus demo</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">nersc</div>
+                <div class="quarto-category">python</div>
               </div>
                   </div>
   </div>
@@ -127,7 +127,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">February 24, 2023</p>
+        <p class="date">February 21, 2023</p>
       </div>
     </div>
     
@@ -145,21 +145,9 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>NERSC allows to make data which is on their Community File System publicly available via a web interface.</p>
-<p>This is handled via “Project folders”, so the requirement is to be part of a “project”, for example most scientists working on Cosmic Microwave Background are part of the <code>cmb</code> project (and of the <code>cmb</code> Unix group at NERSC):</p>
-<pre><code>&gt; groups
-zonca cmb
-
-&gt; export PRJ=cmb</code></pre>
-<p>So you should be able to create folders on the Community File System, if not already present, also ma</p>
-<pre><code>&gt; mkdir -p /global/project/projectdirs/$PRJ/www</code></pre>
-<p>Also make sure it files are world-readable, folders are world-readable and world-executable:</p>
-<pre><code>&gt; chmod 755 !$
-&gt; chmod 644 !$/*</code></pre>
-<p>Now any files and any subfolder of <code>www</code> will be available publicly displaying filenames and file sizes and will allow navigation at the address:</p>
-<pre><code>&gt; echo https://portal.nersc.gov/project/$PRJ</code></pre>
-<p>See for example:</p>
-<pre><code>* [https://portal.nersc.gov/project/cmb/dirlist/](https://portal.nersc.gov/project/cmb/dirlist/)</code></pre>
+<p><a href="https://github.com/showyourwork/showyourwork">Showyourwork!</a> is a great project to make scientific articles reproducible.</p>
+<p>I participated to its first Hack Day, I focused on building a simple recipe in SnakeMake (the workflow engine behind Showyourwork!) to interface with data stored on Globus.</p>
+<p><a href="https://github.com/zonca/showyourwork_globus_demo/tree/main/snakemake_globus_demo">See the repository on Github</a></p>
 
 
 
