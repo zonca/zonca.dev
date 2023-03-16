@@ -66,14 +66,23 @@ For testing purposes, you could use the container I have already built (tag `202
 To build instead, see the repository <https://github.com/zonca/singularity_jupyterhub> on Github,
 then (replace `nerdctl` with `docker` if necessary):
 
-    gh repo clone zonca/singularity_jupyterhub
-    mv jupyterhub_singleuser.sif singularity_jupyterhub/
-    sudo nerdctl build -t $USER/singularity_jupyterhub singularity_jupyterhub/
+```
+# set DockerHub username
+export DU=
+
+gh repo clone zonca/singularity_jupyterhub
+mv jupyterhub_singleuser.sif singularity_jupyterhub/
+sudo nerdctl build -t $DU/singularity_jupyterhub singularity_jupyterhub/
+```
 
 Test it:
 
-    sudo nerdctl run -d --privileged $USER/singularity_jupyterhub
+    sudo nerdctl run -d --privileged $DU/singularity_jupyterhub
     sudo nerdctl logs xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+or interactively:
+
+    sudo nerdctl run -it --entrypoint /bin/sh $DU/singularity_jupyterhub:latest 
 
 This should fail with this error message, which is a sign that we just need to configure the environment right but the container is working:
 
@@ -82,7 +91,7 @@ This should fail with this error message, which is a sign that we just need to c
 Publish it:
 
     sudo nerdctl login
-    sudo nerdctl push $USER/singularity_jupyterhub
+    sudo nerdctl push $DU/singularity_jupyterhub
 
 ### Built the image on a Kubernetes node
 
@@ -104,6 +113,8 @@ Unpack and install:
 
 Finally launch the daemon:
 
-    sudo /usr/local/bin/buildkitd &
+```
+sudo /usr/local/bin/buildkitd &
+```
 
 ## Build a Docker container with the JupyterHub Singleuser server
