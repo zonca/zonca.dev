@@ -3483,7 +3483,7 @@
     "href": "posts/2021-09-24-globus-groups-python-sdk.html",
     "title": "Manage Globus groups with the Python SDK",
     "section": "",
-    "text": "Globus is the best tool to transfer quickly Terabytes data between Supercomputers because it automatically parallelizes the transfer to saturate the network (yeah I know I always simplify too much).\nIf you want to share a folder with collaborators, you can create a Globus endpoint and give them access, see how to do that at NERSC.\nNow, it’s handy to create a group and share the endpoint directly with the group instead of individual users.\nThe web interface of Globus allows you to create groups, but you have to add people one at a time, and this is where the Globus Python SDK comes handy.\nInstall globus_sdk with pip and follow the tutorial to have it configured.\nClone my repository of scripts, assuming you use gh:\nCreate a file globus_config.toml with your client ID and the name of the group you already created with the web interface:"
+    "text": "Tested in March 2023, still working fine\nGlobus is the best tool to transfer quickly Terabytes data between Supercomputers because it automatically parallelizes the transfer to saturate the network (yeah I know I always simplify too much).\nIf you want to share a folder with collaborators, you can create a Globus endpoint and give them access, see how to do that at NERSC.\nNow, it’s handy to create a group and share the endpoint directly with the group instead of individual users.\nThe web interface of Globus allows you to create groups, but you have to add people one at a time, and this is where the Globus Python SDK comes handy.\nInstall globus_sdk with pip and follow the tutorial to have it configured.\nClone my repository of scripts, assuming you use gh:\nCreate a file globus_config.toml with your client ID and the name of the group you already created with the web interface:"
   },
   {
     "objectID": "posts/2021-09-24-globus-groups-python-sdk.html#create-the-tokens",
@@ -3497,7 +3497,7 @@
     "href": "posts/2021-09-24-globus-groups-python-sdk.html#batch-add-members-to-group",
     "title": "Manage Globus groups with the Python SDK",
     "section": "Batch add members to group",
-    "text": "Batch add members to group\nI assume you have a users.csv file with a column named “Email Address”.\npython add_users_to_group.csv\nis going to read that CSV, then grab 50 emails at a time, contact the Globus API to get the members ID if they have one, otherwise they are just skipped. Then it batch-adds them to the group."
+    "text": "Batch add members to group\nI assume you have a users.csv file with a column named “Email Address”.\npython add_users_to_group.py users.csv\nis going to read that CSV, then grab 50 emails at a time, contact the Globus API to get the members ID if they have one, otherwise they are just skipped. Then it batch-adds them to the group."
   },
   {
     "objectID": "posts/2021-09-24-globus-groups-python-sdk.html#contribute",

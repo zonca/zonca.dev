@@ -146,6 +146,9 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<ul>
+<li>Tested in March 2023, still working fine</li>
+</ul>
 <p><a href="https://globus.org">Globus</a> is the best tool to transfer quickly Terabytes data between Supercomputers because it automatically parallelizes the transfer to saturate the network (yeah I know I always simplify too much).</p>
 <p>If you want to share a folder with collaborators, you can create a Globus endpoint and give them access, see <a href="https://docs.nersc.gov/services/globus/#sharing-data-with-globus">how to do that at NERSC</a>.</p>
 <p>Now, it’s handy to create a group and share the endpoint directly with the group instead of individual users.</p>
@@ -166,7 +169,7 @@ GROUP_NAME = "My group name"</code></pre>
 <section id="batch-add-members-to-group" class="level2">
 <h2 class="anchored" data-anchor-id="batch-add-members-to-group">Batch add members to group</h2>
 <p>I assume you have a <code>users.csv</code> file with a column named “Email Address”.</p>
-<pre><code>python add_users_to_group.csv</code></pre>
+<pre><code>python add_users_to_group.py users.csv</code></pre>
 <p>is going to read that CSV, then grab 50 emails at a time, contact the Globus API to get the members ID if they have one, otherwise they are just skipped. Then it batch-adds them to the group.</p>
 </section>
 <section id="contribute" class="level2">
