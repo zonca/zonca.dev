@@ -10,6 +10,8 @@ title: Manage Globus groups with the Python SDK
 
 ---
 
+* Tested in March 2023, still working fine
+
 [Globus](https://globus.org) is the best tool to transfer quickly Terabytes data between Supercomputers because it automatically parallelizes the transfer to saturate the network (yeah I know I always simplify too much).
 
 If you want to share a folder with collaborators, you can create a Globus endpoint and give them access, see [how to do that at NERSC](https://docs.nersc.gov/services/globus/#sharing-data-with-globus).
@@ -43,7 +45,7 @@ This will save the authentication tokens in 3 TOML files, those are sensitive, D
 
 I assume you have a `users.csv` file with a column named "Email Address".
 
-    python add_users_to_group.csv
+    python add_users_to_group.py users.csv
 
 is going to read that CSV, then grab 50 emails at a time, contact the Globus API to get the members ID if they have one, otherwise they are just skipped.
 Then it batch-adds them to the group.
