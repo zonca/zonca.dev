@@ -19,3 +19,9 @@ just run:
 and the script:
 
 <script src="https://gist.github.com/zonca/3bfe7bceb1f7b1a01c2048361aaf87cd.js"></script>
+
+Then paste:
+
+* `cert.pem` in certificate
+* `privkey.pem` in private key
+* `chain.pem` in intermediate certificates
