@@ -4764,7 +4764,7 @@
     "href": "posts/2023-04-01-dreamhost-letsencrypt.html",
     "title": "Get a Letsencrypt certificate for Dreamhost with certbot",
     "section": "",
-    "text": "Dreamhost has discontinued offering free Letsecrypt certificated in their shared hosting.\nHowever, they support pasting a manually created certificate, so we can generate one on a different machine with the manual mode of certbot and then deploy it.\nThe issue that costed me 1 hour today is that certbot generated a ECDSA key by default instead of RSA, so here the script to generate the right key, just run:\nexport DOMAIN=www.yourdomain.com\nand the script:"
+    "text": "Dreamhost has discontinued offering free Letsecrypt certificated in their shared hosting.\nHowever, they support pasting a manually created certificate, so we can generate one on a different machine with the manual mode of certbot and then deploy it.\nThe issue that costed me 1 hour today is that certbot generated a ECDSA key by default instead of RSA, so here the script to generate the right key, just run:\nexport DOMAIN=www.yourdomain.com\nand the script:\n\nThen paste:\n\ncert.pem in certificate\nprivkey.pem in private key\nchain.pem in intermediate certificates"
   },
   {
     "objectID": "consult.html",
