@@ -4491,7 +4491,7 @@
     "href": "posts/2023-02-02-github-overleaf.html#create-repository-on-github",
     "title": "Work on a Latex Document with Github and Overleaf",
     "section": "Create repository on Github",
-    "text": "Create repository on Github\nLet’s start with a Latex document on Overleaf, for example I used the “Astronomy & Astrophysics” template for testing.\nStarting with a project on Overleaf is more complicated because of permission issues, so in case you have an Overleaf project, just download it locally.\nCreate a new repository on Github, this should be under your “real” Github account or any organization you have access to, upload the Latex document and all ancillary files.\nSee for example my repository https://github.com/zonca/overleaf_github, you could also fork this repository under your account.\nFinally, give “Write” access to your Overleaf bot user."
+    "text": "Create repository on Github\nLet’s start with a Latex document for testing purposes, for example I used the “Astronomy & Astrophysics” template.\nStarting with a project on Overleaf is more complicated because of permission issues, so in case you have an Overleaf project, first download it locally.\nCreate a new repository on Github, this should be under your “real” Github account or any organization you have access to, upload the Latex document and all ancillary files.\nSee for example my repository https://github.com/zonca/overleaf_github, you could also fork this repository under your account.\nFinally, give “Write” access to your Overleaf bot user."
   },
   {
     "objectID": "posts/2023-02-02-github-overleaf.html#create-the-linked-project-on-overleaf",
