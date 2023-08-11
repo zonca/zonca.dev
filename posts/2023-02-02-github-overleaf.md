@@ -21,9 +21,9 @@ It is useful to be logged in with your official Github user in your browser and 
 
 ## Create repository on Github
 
-Let's start with a Latex document on Overleaf, for example I used the ["Astronomy & Astrophysics" template](https://www.overleaf.com/read/vtmsqrxpnhzn) for testing.
+Let's start with a Latex document for testing purposes, for example I used the ["Astronomy & Astrophysics" template](https://www.overleaf.com/read/vtmsqrxpnhzn).
 
-Starting with a project on Overleaf is more complicated because of permission issues, so in case you have an Overleaf project, just download it locally.
+Starting with a project on Overleaf is more complicated because of permission issues, so in case you have an Overleaf project, first download it locally.
 
 Create a new repository on Github, this should be under your "real" Github account or any organization you have access to, upload the Latex document and all ancillary files.
 
