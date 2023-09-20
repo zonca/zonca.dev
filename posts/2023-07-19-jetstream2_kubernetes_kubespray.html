@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2022-03-30">
+<meta name="dcterms.date" content="2023-06-19">
 
-<title>Andrea Zonca - Deploy Kubernetes on Jetstream 2 with Kubespray 2.18.0</title>
+<title>Andrea Zonca - Deploy Kubernetes on Jetstream 2 with Kubespray 2.21.0</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -113,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Deploy Kubernetes on Jetstream 2 with Kubespray 2.18.0</h1>
+      <h1 class="title">Deploy Kubernetes on Jetstream 2 with Kubespray 2.21.0</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">kubernetes</div>
                 <div class="quarto-category">jetstream2</div>
@@ -128,7 +128,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 30, 2022</p>
+        <p class="date">June 19, 2023</p>
       </div>
     </div>
     
@@ -146,24 +146,21 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p><strong>Obsolete</strong>: please use the <a href="../posts/2023-07-19-jetstream2_kubernetes_kubespray.html">updated release of this tutorial</a>.</p>
-<ul>
-<li>Updated in August 2022 to add automatic jetstream-cloud.org subdomains</li>
-</ul>
-<p>This is the first tutorial targeted at Jetstream 2. The system is in early access and will be soon made available, see <a href="https://jetstream-cloud.org/" class="uri">https://jetstream-cloud.org/</a>.</p>
-<p>My latest tutorial on Jetstream 1 executed Kubespray 2.15.0, here we are also switching to Kubespray 2.18.0, which installs Kubernetes v1.22.5, released in December 2021.</p>
-<p>For an overview of my work on deploying Kubernetes and JupyterHub on Jetstream, see <a href="https://zonca.dev/2020/09/gateways-2020-paper.html">my Gateways 2020 paper</a>.</p>
+<p>This work has been supported by Indiana University and is cross-posted on the <a href="https://docs.jetstream-cloud.org/general/k8kubernetes" rel="canonical">Jetstream 2 official documentation website</a>.</p>
+<p>This tutorial will explain how to install Kubernetes on Jetstream 2 relying on Kubespray.</p>
+<p>Kubespray is a project built on top of Terraform, for creating Openstack resources, and Ansible, for configuring the Virtual Machines for Kubernetes.</p>
+<p>This work is based on Kubespray v2.21.0 which was published in January 2023, which installs Kubernetes v1.25.6, released in December 2022.</p>
 <section id="create-jetstream-virtual-machines-with-terraform" class="level2">
 <h2 class="anchored" data-anchor-id="create-jetstream-virtual-machines-with-terraform">Create Jetstream Virtual machines with Terraform</h2>
 <p>Terraform allows to execute recipes that describe a set of OpenStack resources and their relationship. In the context of this tutorial, we do not need to learn much about Terraform, we will configure and execute the recipe provided by <code>kubespray</code>.</p>
 <section id="requirements" class="level3">
 <h3 class="anchored" data-anchor-id="requirements">Requirements</h3>
-<p>I have been testing with <code>python-openstackclient</code> version 5.8.0, but any recent openstack client should work. install <code>terraform</code> by copying the correct binary to <code>/usr/local/bin/</code>, see <a href="https://www.terraform.io/intro/getting-started/install.html" class="uri">https://www.terraform.io/intro/getting-started/install.html</a>. The requirement is a terraform version <code>&gt; 0.12</code>, I tested with <code>0.14.4</code>. Newer versions, for example I tried 1.1.7, <strong>do not work</strong> with Kubespray.</p>
+<p>We have been testing with <code>python-openstackclient</code> version 6.1.0, but any recent openstack client should work. install <code>terraform</code> by copying the correct binary to <code>/usr/local/bin/</code>, see <a href="https://www.terraform.io/intro/getting-started/install.html" class="uri">https://www.terraform.io/intro/getting-started/install.html</a>. The requirement is a terraform version <code>&gt; 0.14</code>, this tutorial has been tested with <code>0.14.4</code>. <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/issues/46">Terraform <code>1.1.9</code> and <code>1.2.9</code> do not work</a></p>
 </section>
 <section id="request-api-access" class="level3">
 <h3 class="anchored" data-anchor-id="request-api-access">Request API access</h3>
-<p>The procedure to configure API access has changed since Jetstream, make sure you follow <a href="https://docs.jetstream-cloud.org/ui/cli/openrc/">the instructions in the Jetstream 2 documentation to create application credentials</a></p>
-<p>Also make sure you are not hitting any of the <a href="https://docs.jetstream-cloud.org/ui/cli/troubleshooting/">issues in the Troubleshooting page</a>, in particular, it is a good idea to set your password within single quotes to avoid special characters being interpreted by the shell:</p>
+<p>Follow <a href="https://docs.jetstream-cloud.org/ui/cli/auth/#openrc-files-are-allocation-specific">the instructions in the Jetstream 2 documentation to create application credentials</a>.</p>
+<p>Also make sure you are not hitting any of the <a href="https://docs.jetstream-cloud.org/faq/trouble/">issues in the Troubleshooting page</a>, in particular, it is a good idea to set your password within single quotes to avoid special characters being interpreted by the shell:</p>
 <pre><code>export OS_APPLICATION_CREDENTIAL_SECRET='xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'</code></pre>
 <p>Test with:</p>
 <pre><code>openstack flavor list</code></pre>
@@ -174,20 +171,30 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="clone-kubespray" class="level3">
 <h3 class="anchored" data-anchor-id="clone-kubespray">Clone kubespray</h3>
-<p>I needed to make a few modifications to <code>kubespray</code> to adapt it to Jetstream:</p>
+<p>We needed to make a few modifications to <code>kubespray</code> to adapt it to Jetstream:</p>
 <pre><code>git clone https://github.com/zonca/jetstream_kubespray
-git checkout -b branch_v2.18.0 origin/branch_v2.18.0</code></pre>
-<p>See an <a href="https://github.com/zonca/jetstream_kubespray/pull/15">overview of my changes compared to the standard <code>kubespray</code> release 2.18.0</a>, compared to Jetstream 1, there are no actual changes to the <code>kubespray</code> software itself, it is just a matter of configuring it. Anyway, it is convenient to just clone the repository.</p>
-<p>Notice also that the most important change compared to Jetstream 1 is that we are using the new External Openstack provider, instead of the internal Openstack provider which is being discontinued. This also pushed me to use the Cinder CSI plugin, which also has a more modern architecture.</p>
+git checkout -b branch_v2.21.0 origin/branch_v2.21.0</code></pre>
+<p>See an <a href="https://github.com/zonca/jetstream_kubespray/pull/21">overview of my changes compared to the standard <code>kubespray</code> release 2.21.0</a>, compared to previous releases of this tutorial, now the changes in the Terraform recipes are extensive, the good news is that the deployment itself is simpler. We are having all networking handled automatically by Jetstream 2, i.e.&nbsp;instances are automatically assigned to the <code>auto_allocated_network</code>, <code>auto_allocated_router</code> and <code>auto_allocated_subnet</code>, instead of creating dedicated resources with Terraform.</p>
+<p>Inside <code>jetstream_kubespray</code>, choose a name for the cluster and copy from my template:</p>
+<pre><code>export CLUSTER=yourclustername
+cp -r inventory/kubejetstream inventory/$CLUSTER
+cd inventory/$CLUSTER</code></pre>
+<p>also <code>export CLUSTER=yourclustername</code> is useful to add to the <code>app*openrc.sh</code>.</p>
 </section>
-<section id="get-a-projects.jetstream-cloud.org-subdomain" class="level3">
-<h3 class="anchored" data-anchor-id="get-a-projects.jetstream-cloud.org-subdomain">Get a projects.jetstream-cloud.org subdomain</h3>
+<section id="use-a-projects.jetstream-cloud.org-subdomain" class="level3">
+<h3 class="anchored" data-anchor-id="use-a-projects.jetstream-cloud.org-subdomain">Use a projects.jetstream-cloud.org subdomain</h3>
 <p>One option is to use the Designate Openstack service deployed by Jetstream to get an automatically created domain for the instances. In this case the DNS name will be of the form:</p>
-<pre><code>kubejs2-1.tg-xxxxxxxxx.projects.jetstream-cloud.org</code></pre>
-<p>where <code>tg-xxxxxxxxx</code> is the ID of your Jestream 2 allocation, you need to specify it at the bottom of <code>cluster.tfvars</code> before running Terraform. The first part of the URL is the instance name, we shortened it removing <code>k8s-master</code> because domains too long do not work with Letsencrypt.</p>
+<pre><code>kubejetstream-1.$PROJ.projects.jetstream-cloud.org</code></pre>
+<p>where <code>PROJ</code> is the ID of your Jestream 2 allocation:</p>
+<pre><code>export PROJ="xxx000000"</code></pre>
+<p>The first part of the URL is the instance name, we shortened it removing <code>k8s-master</code> because domains too long do not work with Letsencrypt.</p>
 <p>After having executed Terraform, you can pip install on your local machine the package <code>python-designateclient</code> to check what records were created (mind the final period):</p>
-<pre><code>openstack recordset list tg-xxxxxxxxx.projects.jetstream-cloud.org.</code></pre>
+<pre><code>openstack recordset list $PROJ.projects.jetstream-cloud.org.</code></pre>
 <p>As usual with stuff related to DNS, there are delays, so your record could take up to 1 hour to work, or if you delete the instance and create it again with another IP it could take hours to update.</p>
+<p>For debugging purposes it is useful to use <code>nslookup</code>:</p>
+<pre><code>nslookup ${CLUSTER}-1.$PROJ.projects.jetstream-cloud.org</code></pre>
+<p>also directly at the source nameservers:</p>
+<pre><code>nslookup ${CLUSTER}-1.$PROJ.projects.jetstream-cloud.org js2.jetstream-cloud.org</code></pre>
 <p>Instead, if you have a way of getting a domain outside of Jetstream, better reserve a floating IP, see below.</p>
 </section>
 <section id="reserve-a-floating-ip" class="level3">
@@ -201,13 +208,8 @@ git checkout -b branch_v2.18.0 origin/branch_v2.18.0</code></pre>
 </section>
 <section id="run-terraform" class="level3">
 <h3 class="anchored" data-anchor-id="run-terraform">Run Terraform</h3>
-<p>Inside <code>jetstream_kubespray</code>, choose a name for the cluster and copy from my template:</p>
-<pre><code>export CLUSTER=yourclustername
-cp -r inventory/kubejetstream inventory/$CLUSTER
-cd inventory/$CLUSTER</code></pre>
-<p>also <code>export CLUSTER=yourclustername</code> is useful to add to the <code>app*openrc.sh</code>.</p>
-<p>Open and modify <code>cluster.tfvars</code>, choose your image (by default Ubuntu 20) and number of nodes and the flavor of the nodes, by default they are medium instances (<code>"4"</code>).</p>
-<p>Paste the floating ip created previously into <code>k8s_master_fips</code>, unless you are using a projects.jetstream-cloud.org subdomain. Make also sure you add your auto allocated router ID, see instructions inside <code>cluster.tfvars</code>.</p>
+<p>Open and modify <code>cluster.tfvars</code>, choose your image (by default Ubuntu 20) and number of nodes and the flavor of the nodes, by default they are medium instances (<code>"4"</code>). See the entries marked as <code>REPLACE</code> and replace them according to the instructions provided.</p>
+<p>Paste the floating ip created previously into <code>k8s_master_fips</code>, unless you are using a projects.jetstream-cloud.org subdomain.</p>
 <p>Initialize Terraform:</p>
 <pre><code>bash terraform_init.sh</code></pre>
 <p>Create the resources:</p>
@@ -224,7 +226,7 @@ openstack network list</code></pre>
 <section id="install-and-test-ansible" class="level2">
 <h2 class="anchored" data-anchor-id="install-and-test-ansible">Install and test Ansible</h2>
 <p>Change folder back to the root of the <code>jetstream_kubespray</code> repository,</p>
-<p>First make sure you have a recent version of <code>ansible</code> installed, you also need additional modules, so first run:</p>
+<p>First make sure you have a recent version of <code>ansible</code> installed, tested with <code>2.10.15</code>, you also need additional modules, so first run:</p>
 <pre><code>pip install -r requirements.txt</code></pre>
 <p>This <code>pip</code> script installs a predefined version of ansible, currently <code>2.10.15</code>, so it is useful to create a <code>virtualenv</code> or a conda environment and install packages inside that.</p>
 <p>Then following the <a href="https://github.com/kubernetes-incubator/kubespray/blob/master/contrib/terraform/openstack/README.md#ansible"><code>kubespray</code> documentation</a>, we setup <code>ssh-agent</code> so that <code>ansible</code> can SSH from the machine with public IP to the others:</p>
@@ -236,7 +238,7 @@ ssh-add ~/.ssh/id_rsa</code></pre>
 <section id="install-kubernetes-with-kubespray" class="level2">
 <h2 class="anchored" data-anchor-id="install-kubernetes-with-kubespray">Install Kubernetes with <code>kubespray</code></h2>
 <p>In <code>inventory/$CLUSTER/group_vars/k8s_cluster/k8s-cluster.yml</code>, set the public floating IP of the master instance in <code>supplementary_addresses_in_ssl_keys</code>.</p>
-<p>Finally run the full playbook, it is going to take a good 10 minutes, go make coffee:</p>
+<p>Finally run the full playbook, it is going to take a good 20 minutes:</p>
 <pre><code>bash k8s_install.sh</code></pre>
 <p>If the playbook fails with “cannot lock the administrative directory”, it is due to the fact that the Virtual Machine is automatically updating so it has locked the APT directory. Just wait a minute and launch it again. It is always safe to run <code>ansible</code> multiple times.</p>
 <p>If the playbook gives any error, try to retry the above command, sometimes there are temporary failed tasks, Ansible is designed to be executed multiple times with consistent results.</p>
@@ -271,20 +273,19 @@ Resolving localhost (localhost)... 127.0.0.1
 Connecting to localhost (localhost)|127.0.0.1|:80... connected.
 HTTP request sent, awaiting response... 404 Not Found
 2022-03-31 06:51:20 ERROR 404: Not Found.</code></pre>
-<p>Error 404 is a good sign, the service is up and serving requests, currently there is nothing to deliver. If any of the tests hangs or cannot connect, there is probably a networking issue.</p>
+<p>Error 404 is a good sign, the service is up and serving requests, currently there is nothing to deliver. If you get any other type of error, check that the <code>nginx</code> controller is running:</p>
+<pre><code>kubectl get pods -n ingress-nginx</code></pre>
 </section>
 <section id="set-the-default-storage-class" class="level2">
 <h2 class="anchored" data-anchor-id="set-the-default-storage-class">Set the default storage class</h2>
-<p>Kubespray sets up the <code>cinder-csi</code> storage class, but it is not set as default, we can fix it with:</p>
-<pre><code>kubectl patch storageclass cinder-csi -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'</code></pre>
-<p>so that we don’t need to explicitely configure it in the applications we deploy.</p>
+<p>This is not needed anymore, setting Cinder CSI as default storage class is included in the modifications to Kubespray.</p>
 </section>
 <section id="optional-setup-kubectl-locally" class="level2">
 <h2 class="anchored" data-anchor-id="optional-setup-kubectl-locally">(Optional) Setup kubectl locally</h2>
-<p>Install <code>kubectl</code> locally, I am currently using <code>1.20</code>.</p>
+<p>Install <code>kubectl</code> locally, the tutorial has been tested with <code>1.26</code>.</p>
 <p>We also set <code>kubeconfig_localhost: true</code>, which copies the <code>kubectl</code> configuration <code>admin.conf</code> to:</p>
 <pre><code>inventory/$CLUSTER/artifacts</code></pre>
-<p>I have a script to replace the IP with the floating IP of the master node, for this script to work make sure you have exported the variable IP:</p>
+<p>We have a script to replace the IP with the floating IP of the master node, for this script to work make sure you have exported the variable IP:</p>
 <pre><code>bash k8s_configure_kubectl_locally.sh</code></pre>
 <p>Finally edit again the <code>app*openrc.sh</code> and add:</p>
 <pre><code>export KUBECONFIG=$(pwd -P)/"jetstream_kubespray/inventory/$CLUSTER/artifacts/admin.conf"</code></pre>
@@ -292,11 +293,7 @@ HTTP request sent, awaiting response... 404 Not Found
 <section id="optional-setup-helm-locally" class="level2">
 <h2 class="anchored" data-anchor-id="optional-setup-helm-locally">(Optional) Setup helm locally</h2>
 <p>Install helm 3 from <a href="https://github.com/helm/helm/releases">the release page on Github</a></p>
-<p>I tested with <code>v3.8.1</code>.</p>
-</section>
-<section id="install-jupyterhub" class="level2">
-<h2 class="anchored" data-anchor-id="install-jupyterhub">Install Jupyterhub</h2>
-<p>Follow up in the next tutorial: <a href="https://zonca.dev/2022/03/jetstream2-jupyterhub.html">Install JupyterHub on Jetstream 2 on top of Kubernetes</a></p>
+<p>The tutorial was tested with <code>v3.8.1</code>.</p>
 
 
 </section>
