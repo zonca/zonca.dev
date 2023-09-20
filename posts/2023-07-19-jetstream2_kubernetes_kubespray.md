@@ -9,7 +9,7 @@ title: Deploy Kubernetes on Jetstream 2 with Kubespray 2.21.0
 
 ---
 
-This work has been supported by Indiana University and is cross-posted on the <a href="https://docs.jetstream-cloud.org/general/k8kubernetes" rel="canonical">Jetstream 2 official documentation website</a>.
+This work has been supported by Indiana University and is cross-posted on the <a href="https://docs.jetstream-cloud.org/general/k8skubespray/" rel="canonical">Jetstream 2 official documentation website</a>.
 
 This tutorial will explain how to install Kubernetes on Jetstream 2 relying on Kubespray.
 
