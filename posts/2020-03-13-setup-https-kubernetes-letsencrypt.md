@@ -11,6 +11,8 @@ title: Setup HTTPS on Kubernetes with Letsencrypt
 
 ---
 
+**This tutorial is obsolete since September 2023**, see [the updated tutorial](./2023-09-26-https-kubernetes-letsencrypt.md).
+
 **Updated in August 2022**: Add patching script to run on master node
 
 **Updated in March 2022**: changes for Kubernetes 1.22, I am now creating a Cluster Issuer, which works on all namespaces, notice the related change in the configuration of JupyterHub.
