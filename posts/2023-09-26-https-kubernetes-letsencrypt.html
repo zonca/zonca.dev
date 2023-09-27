@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2020-03-13">
+<meta name="dcterms.date" content="2023-09-26">
 
-<title>Andrea Zonca - Setup HTTPS on Kubernetes with Letsencrypt</title>
+<title>Andrea Zonca - Setup HTTPS on Kubernetes with cert-manager</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -113,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Setup HTTPS on Kubernetes with Letsencrypt</h1>
+      <h1 class="title">Setup HTTPS on Kubernetes with cert-manager</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">kubernetes</div>
                 <div class="quarto-category">jetstream</div>
@@ -129,7 +129,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 13, 2020</p>
+        <p class="date">September 26, 2023</p>
       </div>
     </div>
     
@@ -147,43 +147,34 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p><strong>This tutorial is obsolete since September 2023</strong>, see <a href="../posts/2023-09-26-https-kubernetes-letsencrypt.html">the updated tutorial</a>.</p>
-<p><strong>Updated in August 2022</strong>: Add patching script to run on master node</p>
-<p><strong>Updated in March 2022</strong>: changes for Kubernetes 1.22, I am now creating a Cluster Issuer, which works on all namespaces, notice the related change in the configuration of JupyterHub.</p>
 <p>In this tutorial we will deploy <code>cert-manager</code> in Kubernetes to automatically provide SSL certificates to JupyterHub (and other services).</p>
+<p>This tutorial replaces <a href="../posts/2020-03-13-setup-https-kubernetes-letsencrypt.html">the 2020 version</a>, as there is <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/pull/53#issuecomment-1730677988">no need anymore to force the <code>cert-manager</code> pod to run on the master node</a>.</p>
 <p>First make sure your payload, for example JupyterHub, is working without HTTPS, so that you check that the ports are open, Ingress is working, and JupyterHub itself can accept connections.</p>
-<p>Let’s follow the <a href="https://cert-manager.io/docs/installation/kubernetes/"><code>cert-manager</code> documentation</a>, for convenience I pasted the commands below:</p>
-<pre><code>kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.7.2/cert-manager.yaml</code></pre>
-<p>Once we have <code>cert-manager</code> setup we can create a Issuer in the <code>jhub</code> workspace, (first edit the <code>yml</code> and add your email address):</p>
+<p>Let’s follow the <a href="https://cert-manager.io/docs/installation/kubectl/"><code>cert-manager</code> documentation</a>, for convenience I pasted the commands below:</p>
+<pre><code>kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.0/cert-manager.yaml</code></pre>
+<p>Once we have <code>cert-manager</code> setup we can create a Cluster Issuer that works for all namespaces (first edit the <code>yml</code> and add your email address):</p>
 <pre><code>kubectl create -f setup_https/https_cluster_issuer.yml</code></pre>
 <p>After this, we can display all the resources in the <code>cert-manager</code> namespace to check that the services and pods are running:</p>
 <pre><code>kubectl get all --namespace=cert-manager</code></pre>
 <p>The result should be something like:</p>
-<pre><code>NAME                                           READY   STATUS    RESTARTS   AGE
-pod/cert-manager-77f4c9d4b-4228j               1/1     Running   0          55s
-pod/cert-manager-cainjector-7cd4857fc7-shlpj   1/1     Running   0          56s
-pod/cert-manager-webhook-586c9597db-t6fqv      1/1     Running   0          54s
+<pre><code>NAME                                          READY   STATUS    RESTARTS         AGE
+pod/cert-manager-56c667df87-vcj8v             1/1     Running   6 (2d23h ago)    5d
+pod/cert-manager-cainjector-8559b6f5d-rpl74   1/1     Running   11 (2d23h ago)   5d
+pod/cert-manager-webhook-79f4b558b8-bxc86     1/1     Running   0                5d
 
 NAME                           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
-service/cert-manager           ClusterIP   10.254.78.6     &lt;none&gt;        9402/TCP   56s
-service/cert-manager-webhook   ClusterIP   10.254.237.64   &lt;none&gt;        443/TCP    56s
+service/cert-manager           ClusterIP   10.233.35.148   &lt;none&gt;        9402/TCP   5d
+service/cert-manager-webhook   ClusterIP   10.233.8.95     &lt;none&gt;        443/TCP    5d
 
 NAME                                      READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/cert-manager              1/1     1            1           55s
-deployment.apps/cert-manager-cainjector   1/1     1            1           56s
-deployment.apps/cert-manager-webhook      1/1     1            1           54s
-                                                                                                                                     NAME                                                 DESIRED   CURRENT   READY   AGE
-replicaset.apps/cert-manager-77f4c9d4b               1         1         1       55s
-replicaset.apps/cert-manager-cainjector-7cd4857fc7   1         1         1       56s                                                 replicaset.apps/cert-manager-webhook-586c9597db      1         1         1       54s</code></pre>
-<section id="bind-the-pods-to-the-master-node" class="level2">
-<h2 class="anchored" data-anchor-id="bind-the-pods-to-the-master-node">Bind the pods to the master node</h2>
-<p>In Jetstream 2 there are routing restrictions which allow Cert Manager to run only from the master node, <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/issues/52">see the details on Github</a>. At least when the nodes do not have floating IPs, if all your Virtual Machines have a floating IP, you can safely skip this step.</p>
-<p>Unidata has contributed the script they created to patch the 3 Cert Manager pods to have them run on the master node, we can apply it with:</p>
-<pre><code>cd setup_https
-bash deploymentPatch.sh</code></pre>
-<p>Then verify that the pods are redeployed on master:</p>
-<pre><code>kubectl -n cert-manager get pods -o wide</code></pre>
-</section>
+deployment.apps/cert-manager              1/1     1            1           5d
+deployment.apps/cert-manager-cainjector   1/1     1            1           5d
+deployment.apps/cert-manager-webhook      1/1     1            1           5d
+
+NAME                                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/cert-manager-56c667df87             1         1         1       5d
+replicaset.apps/cert-manager-cainjector-8559b6f5d   1         1         1       5d
+replicaset.apps/cert-manager-webhook-79f4b558b8     1         1         1       5d</code></pre>
 <section id="setup-jupyterhub" class="level2">
 <h2 class="anchored" data-anchor-id="setup-jupyterhub">Setup JupyterHub</h2>
 <p>Then we modify the JupyterHub ingress configuration to use this Issuer, modify <code>secrets.yaml</code> to:</p>
@@ -200,15 +191,10 @@ bash deploymentPatch.sh</code></pre>
         secretName: certmanager-tls-jupyterhub</code></pre>
 <p>Finally update the JupyterHub deployment rerunning the deployment script (no need to delete it):</p>
 <pre><code>bash install_jhub.sh</code></pre>
-<p>After a few minutes we should have a certificate resource available:</p>
-<pre><code>&gt; kubectl get certificate --all-namespaces
-
-NAMESPACE   NAME                         READY     SECRET                       AGE
-jhub        certmanager-tls-jupyterhub   True      certmanager-tls-jupyterhub   11m</code></pre>
-<p>for newer versions, check the <code>certificaterequest</code> resource instead:</p>
+<p>After a few minutes we should have a certificate available:</p>
 <pre><code>kubectl get certificaterequest --all-namespaces
-NAMESPACE   NAME                                   READY   AGE
-jhub        certmanager-tls-jupyterhub-781206586   True    9m5s</code></pre>
+NAMESPACE   NAME                           APPROVED   DENIED   READY   ISSUER        REQUESTOR                                         AGE
+jhub        certmanager-tls-jupyterhub-1   True                True    letsencrypt   system:serviceaccount:cert-manager:cert-manager   5d</code></pre>
 
 
 </section>
