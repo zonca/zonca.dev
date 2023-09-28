@@ -1,22 +1,16 @@
 ---
-aliases:
-- /2022/04/dask-gateway-jupyterhub
 categories:
 - kubernetes
 - jetstream2
 - jupyterhub
 - dask
-date: '2022-04-04'
+date: '2023-09-28'
 layout: post
 title: Deploy Dask Gateway with JupyterHub on Kubernetes
 
 ---
 
-Tutorial obsolete, see [the new version of the tutorial](./2023-09-28-dask-gateway-jupyterhub.md)
-
-**Updated 28 April 2022**: switched to Dask Gateway 2022.4.0
-
-In this tutorial we will install [Dask Gateway](https://gateway.dask.org/index.html) on Kubernetes and configure JupyterHub so
+In this tutorial we will install [Dask Gateway](https://gateway.dask.org/index.html), currently version `2023.9.0`, on Kubernetes and configure JupyterHub so
 Jupyter Notebook users can launch private Dask cluster and connect to them.
 
 I assume to start from a Kubernetes cluster already running and
@@ -30,16 +24,9 @@ with the configuration files and scripts:
 
 	git clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/
 
-Then you need to setup one API token, create it with:
-
-	openssl rand -hex 32
-
-Then paste it both in `dask_gateway/config_jupyterhub.yaml` and `dask_gateway/config_dask-gateway.yaml`,
-look for the string `TOKEN` and replace it.
-
 ## Launch dask gateway
 
-We can install version 2022.4.0 with:
+We can install version 2023.9.0 with:
 
 	$ bash install_dask-gateway.sh
 
@@ -58,7 +45,6 @@ After this you should see the 3 dask gateway pods running, e.g.:
 Only 2 options need to be changed in JupyterHub:
 
 * We need to run a image which has the same version of `dask-gateway` we installed on Kubernetes (currently `0.9.0`)
-* We need to proxy `dask-gateway` through JupyterHub so the users can access the Dask dashboard
 
 If you are using my `install_jhub.sh` script to deploy JupyterHub,
 you can modify it and add another `values` option at the end, `--values dask_gateway/config_jupyterhub.yaml`.
@@ -71,12 +57,7 @@ Then redeploy JupyterHub:
 
 	bash install_jhub.sh && cd dask_gateway && bash install_dask-gateway.sh
 
-Check that the service is working correctly,
-if open a browser tab and access <https://js-XXX-YYY.jetstream-cloud.org/services/dask-gateway/api/health>, you should see:
-
-	{"status": "pass"}
-
-If this is not working, you can open login to JupyterHub, get a terminal and first check if the service is working:
+Login to JupyterHub, get a terminal and first check if the service is working:
 
     >  curl http://traefik-dask-gateway/services/dask-gateway/api/health
 
@@ -84,6 +65,22 @@ Should give:
 
     {"status": "pass"}
 
+if `curl` is not available in your image, you can do the same in a Python Notebook:
+
+    import requests
+    requests.get("http://traefik-dask-gateway/services/dask-gateway/api/health").content
+
+## Identify the dask gateway address
+
+Jetstream 2 now supports "Load Balancing as a service", therefore the dask gateway address gets a public IP that can be accessed from outside, this is very convenient for users viewing the Dask Dashboard.
+
+First let's get the IP:
+
+    kubectl --namespace=jhub get service traefik-dask-gateway
+    NAME                   TYPE           CLUSTER-IP     EXTERNAL-IP       PORT(S)        AGE
+    traefik-dask-gateway   LoadBalancer   10.233.43.51   149.165.xxx.xxx   80:32752/TCP   36m
+
+External IP is the address to be used in the next section.
 
 ## Create a dask cluster
 
@@ -92,8 +89,7 @@ You can now login to JupyterHub and check you can connect properly to `dask-gate
 ```python
 from dask_gateway import Gateway
 gateway = Gateway(
-    address="http://traefik-dask-gateway/services/dask-gateway/",
-    public_address="https://js-XXX-YYY.jetstream-cloud.org/services/dask-gateway/",
+    address="http://xxx.xxx.xxx.xxx",
     auth="jupyterhub")
 gateway.list_clusters()
 ```
@@ -111,8 +107,6 @@ through the cluster.
 
 Printing the `cluster` object gives the link to the Dask dashboard.
 
-For a full example and screenshots of the widgets and of the dashboard see:
-
-<https://gist.github.com/zonca/355a7ec6b5bd3f84b1413a8c29fbc877>
+For a full example see [this Jupyter Notebook](https://gist.github.com/zonca/e5aff9b8a1aa525b772cb2532cd720d0)
 
 (Click on the `Raw` button to download notebook and upload it to your session).
