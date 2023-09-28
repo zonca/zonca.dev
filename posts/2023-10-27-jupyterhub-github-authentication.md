@@ -14,7 +14,7 @@ the main reference is [the Zero to JupyterHub docs](https://z2jh.jupyter.org/en/
 
 First create a Oauth app on Github, see under "Settings" and "Developer options", set your Hub Callback url, see for example the configuration file below.
 
-Next add to your YAML JupyterHub configuration file:
+Save this configuration file as `config_github_auth.yaml`:
 
 
 ```
@@ -33,3 +33,5 @@ hub:
 ```
 
 Switch `allow_all` to `true` to allow any valid Github user to be able to login (this took me some time to figure out...)
+
+Add the configuration file to the `helm upgrade --install` call as `--values config_github_auth.yaml`, you can have multiple `--values` arguments.
