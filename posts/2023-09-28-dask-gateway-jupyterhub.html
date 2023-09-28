@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2022-04-04">
+<meta name="dcterms.date" content="2023-09-28">
 
 <title>Andrea Zonca - Deploy Dask Gateway with JupyterHub on Kubernetes</title>
 <style>
@@ -193,7 +193,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">April 4, 2022</p>
+        <p class="date">September 28, 2023</p>
       </div>
     </div>
     
@@ -211,21 +211,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<p>Tutorial obsolete, see <a href="../posts/2023-09-28-dask-gateway-jupyterhub.html">the new version of the tutorial</a></p>
-<p><strong>Updated 28 April 2022</strong>: switched to Dask Gateway 2022.4.0</p>
-<p>In this tutorial we will install <a href="https://gateway.dask.org/index.html">Dask Gateway</a> on Kubernetes and configure JupyterHub so Jupyter Notebook users can launch private Dask cluster and connect to them.</p>
+<p>In this tutorial we will install <a href="https://gateway.dask.org/index.html">Dask Gateway</a>, currently version <code>2023.9.0</code>, on Kubernetes and configure JupyterHub so Jupyter Notebook users can launch private Dask cluster and connect to them.</p>
 <p>I assume to start from a Kubernetes cluster already running and JupyterHub deployed on top of it via Helm. And SSL encryption also activated (it isn’t probably necessary, but I haven’t tested that). I tested on Jetstream 2, but the recipe should be agnostic of that.</p>
 <section id="preparation" class="level2">
 <h2 class="anchored" data-anchor-id="preparation">Preparation</h2>
 <p>Clone on the machine you use to run <code>helm</code> and <code>kubectl</code> the repository with the configuration files and scripts:</p>
 <pre><code>git clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/</code></pre>
-<p>Then you need to setup one API token, create it with:</p>
-<pre><code>openssl rand -hex 32</code></pre>
-<p>Then paste it both in <code>dask_gateway/config_jupyterhub.yaml</code> and <code>dask_gateway/config_dask-gateway.yaml</code>, look for the string <code>TOKEN</code> and replace it.</p>
 </section>
 <section id="launch-dask-gateway" class="level2">
 <h2 class="anchored" data-anchor-id="launch-dask-gateway">Launch dask gateway</h2>
-<p>We can install version 2022.4.0 with:</p>
+<p>We can install version 2023.9.0 with:</p>
 <pre><code>$ bash install_dask-gateway.sh</code></pre>
 <p>You might want to check <code>config_dask-gateway.yaml</code> for extra configuration options, but for initial setup and testing it shouldn’t be necessary.</p>
 <p>After this you should see the 3 dask gateway pods running, e.g.:</p>
@@ -240,37 +235,44 @@ traefik-dask-gateway-5bbd68c5fd-5drm8      1/1     Running   0          23m</cod
 <p>Only 2 options need to be changed in JupyterHub:</p>
 <ul>
 <li>We need to run a image which has the same version of <code>dask-gateway</code> we installed on Kubernetes (currently <code>0.9.0</code>)</li>
-<li>We need to proxy <code>dask-gateway</code> through JupyterHub so the users can access the Dask dashboard</li>
 </ul>
 <p>If you are using my <code>install_jhub.sh</code> script to deploy JupyterHub, you can modify it and add another <code>values</code> option at the end, <code>--values dask_gateway/config_jupyterhub.yaml</code>.</p>
 <p>You can modify the image you are using for Jupyterhub in <code>dask_gateway/config_jupyterhub.yaml</code>.</p>
 <p>To assure that there are not compatibility issues, the “Client” (JupyterHub session), the dask gateway server, the scheduler and the workers should all have the same version of Python and the same version of <code>dask</code>, <code>distributed</code> and <code>dask_gateway</code>. If this is not possible, you can test different combinations and they might work.</p>
 <p>Then redeploy JupyterHub:</p>
 <pre><code>bash install_jhub.sh &amp;&amp; cd dask_gateway &amp;&amp; bash install_dask-gateway.sh</code></pre>
-<p>Check that the service is working correctly, if open a browser tab and access <a href="https://js-XXX-YYY.jetstream-cloud.org/services/dask-gateway/api/health" class="uri">https://js-XXX-YYY.jetstream-cloud.org/services/dask-gateway/api/health</a>, you should see:</p>
-<pre><code>{"status": "pass"}</code></pre>
-<p>If this is not working, you can open login to JupyterHub, get a terminal and first check if the service is working:</p>
+<p>Login to JupyterHub, get a terminal and first check if the service is working:</p>
 <pre><code>&gt;  curl http://traefik-dask-gateway/services/dask-gateway/api/health</code></pre>
 <p>Should give:</p>
 <pre><code>{"status": "pass"}</code></pre>
+<p>if <code>curl</code> is not available in your image, you can do the same in a Python Notebook:</p>
+<pre><code>import requests
+requests.get("http://traefik-dask-gateway/services/dask-gateway/api/health").content</code></pre>
+</section>
+<section id="identify-the-dask-gateway-address" class="level2">
+<h2 class="anchored" data-anchor-id="identify-the-dask-gateway-address">Identify the dask gateway address</h2>
+<p>Jetstream 2 now supports “Load Balancing as a service”, therefore the dask gateway address gets a public IP that can be accessed from outside, this is very convenient for users viewing the Dask Dashboard.</p>
+<p>First let’s get the IP:</p>
+<pre><code>kubectl --namespace=jhub get service traefik-dask-gateway
+NAME                   TYPE           CLUSTER-IP     EXTERNAL-IP       PORT(S)        AGE
+traefik-dask-gateway   LoadBalancer   10.233.43.51   149.165.xxx.xxx   80:32752/TCP   36m</code></pre>
+<p>External IP is the address to be used in the next section.</p>
 </section>
 <section id="create-a-dask-cluster" class="level2">
 <h2 class="anchored" data-anchor-id="create-a-dask-cluster">Create a dask cluster</h2>
 <p>You can now login to JupyterHub and check you can connect properly to <code>dask-gateway</code>:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dask_gateway <span class="im">import</span> Gateway</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>gateway <span class="op">=</span> Gateway(</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    address<span class="op">=</span><span class="st">"http://traefik-dask-gateway/services/dask-gateway/"</span>,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    public_address<span class="op">=</span><span class="st">"https://js-XXX-YYY.jetstream-cloud.org/services/dask-gateway/"</span>,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    auth<span class="op">=</span><span class="st">"jupyterhub"</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>gateway.list_clusters()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    address<span class="op">=</span><span class="st">"http://xxx.xxx.xxx.xxx"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    auth<span class="op">=</span><span class="st">"jupyterhub"</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>gateway.list_clusters()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then create a cluster and use it:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cluster <span class="op">=</span> gateway.new_cluster()</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>cluster.scale(<span class="dv">2</span>)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> cluster.get_client()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Client is a standard <code>distributed</code> client and all subsequent calls to dask will go through the cluster.</p>
 <p>Printing the <code>cluster</code> object gives the link to the Dask dashboard.</p>
-<p>For a full example and screenshots of the widgets and of the dashboard see:</p>
-<p><a href="https://gist.github.com/zonca/355a7ec6b5bd3f84b1413a8c29fbc877" class="uri">https://gist.github.com/zonca/355a7ec6b5bd3f84b1413a8c29fbc877</a></p>
+<p>For a full example see <a href="https://gist.github.com/zonca/e5aff9b8a1aa525b772cb2532cd720d0">this Jupyter Notebook</a></p>
 <p>(Click on the <code>Raw</code> button to download notebook and upload it to your session).</p>
 
 
