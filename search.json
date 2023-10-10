@@ -4715,7 +4715,7 @@
     "href": "posts/2023-09-21-gateways-2023-dask-jupyterhub.html",
     "title": "Gateways 2023 tutorial about Dask and JupyterHub on Kubernetes on Jetstream",
     "section": "",
-    "text": "Deployment of Kubernetes via Kubespray on Jetstream 2\nInstall cert-manager to provide HTTPS support\nGithub Authentication\nDask Gateway"
+    "text": "Deployment of Kubernetes via Kubespray on Jetstream 2\n[Deploy JupyterHub on top of Kubernetes](https://www.zonca.dev/posts/2022-03-31-jetstream2_jupyterhub.htmlg\nInstall cert-manager to provide HTTPS support\nGithub Authentication\nDask Gateway\nConfigure access to object store"
   },
   {
     "objectID": "posts/2022-10-11-install-jupyroot-jupyterhub.html",
