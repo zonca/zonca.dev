@@ -20,8 +20,6 @@ title: Gateways 2023 tutorial about Dask and JupyterHub on Kubernetes on Jetstre
 
 [Video on Youtube](https://www.youtube.com/watch?v=GqyK_fwrKRo)
 
-{{< youtube GqyK_fwrKRo >}}
-
 ## Support
 
 I have funding from Jetstream to help developers deploy Kubernetes and any related service to Jetstream, [please contact me](https://www.sdsc.edu/research/researcher_spotlight/zonca_andrea.html) if you need any help or even just to check if any of this could fit your use-case.
