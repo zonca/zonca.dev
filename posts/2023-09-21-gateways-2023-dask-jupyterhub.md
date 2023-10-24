@@ -11,7 +11,24 @@ title: Gateways 2023 tutorial about Dask and JupyterHub on Kubernetes on Jetstre
 
 ---
 
+## Tutorial
+
+* [Tutorial slides](https://docs.google.com/presentation/d/1ZPvA-ybYHxBn5ky2mPbeLNnZzMJs6t9-UWtz3EdRHPA/edit?usp=sharing)
+* Jupyter notebooks on Github:[`zonca/dask-jetstream-tutorial`](https://github.com/zonca/dask-jetstream-tutorial)
+
+### Tutorial recording
+
+[Video on Youtube](https://www.youtube.com/watch?v=GqyK_fwrKRo)
+
+{{< youtube GqyK_fwrKRo >}}
+
+## Support
+
+I have funding from Jetstream to help developers deploy Kubernetes and any related service to Jetstream, [please contact me](https://www.sdsc.edu/research/researcher_spotlight/zonca_andrea.html) if you need any help or even just to check if any of this could fit your use-case.
+
 ## Deployment of the tutorial infrastructure
+
+Here is the reference to all the step-by-step tutorial on how to deploy the infrastructure used in the tutorial:
 
 * [Deployment of Kubernetes via Kubespray on Jetstream 2](./2023-07-19-jetstream2_kubernetes_kubespray.md) 
 * [Deploy JupyterHub on top of Kubernetes](https://www.zonca.dev/posts/2022-03-31-jetstream2_jupyterhub.html)
@@ -19,8 +36,3 @@ title: Gateways 2023 tutorial about Dask and JupyterHub on Kubernetes on Jetstre
 * [Github Authentication](./2023-10-27-jupyterhub-github-authentication.md)
 * [Dask Gateway](./2023-09-28-dask-gateway-jupyterhub.md)
 * [Configure access to object store](https://www.zonca.dev/posts/2022-04-04-zarr_jetstream2)
-
-## Tutorial
-
-* [Tutorial slides](https://docs.google.com/presentation/d/1ZPvA-ybYHxBn5ky2mPbeLNnZzMJs6t9-UWtz3EdRHPA/edit?usp=sharing)
-* Jupyter notebooks on Github:[`zonca/dask-jetstream-tutorial`](https://github.com/zonca/dask-jetstream-tutorial)
