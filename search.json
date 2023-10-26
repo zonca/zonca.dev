@@ -4715,7 +4715,7 @@
     "href": "posts/2023-09-21-gateways-2023-dask-jupyterhub.html",
     "title": "Gateways 2023 tutorial about Dask and JupyterHub on Kubernetes on Jetstream",
     "section": "",
-    "text": "Tutorial slides\nJupyter notebooks on Github:zonca/dask-jetstream-tutorial\n\n\n\nVideo on Youtube"
+    "text": "Tutorial slides\nJupyter notebooks on Github:zonca/dask-jetstream-tutorial\nTutorial notebooks complete with output cells as executed after the tutorial, in a gist\n\n\n\nVideo on Youtube"
   },
   {
     "objectID": "posts/2023-09-21-gateways-2023-dask-jupyterhub.html#support",
