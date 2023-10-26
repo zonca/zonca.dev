@@ -15,6 +15,7 @@ title: Gateways 2023 tutorial about Dask and JupyterHub on Kubernetes on Jetstre
 
 * [Tutorial slides](https://docs.google.com/presentation/d/1ZPvA-ybYHxBn5ky2mPbeLNnZzMJs6t9-UWtz3EdRHPA/edit?usp=sharing)
 * Jupyter notebooks on Github:[`zonca/dask-jetstream-tutorial`](https://github.com/zonca/dask-jetstream-tutorial)
+* Tutorial notebooks complete with output cells as executed after the tutorial, in a [gist](https://gist.github.com/zonca/ab3f9f3db475331f6d8d68731636a70e)
 
 ### Tutorial recording
 
