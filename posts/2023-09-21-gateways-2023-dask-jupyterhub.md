@@ -4,6 +4,7 @@ categories:
 - jetstream
 - kubernetes
 aliases:
+- /gw23
 - gw23
 date: '2023-10-11'
 layout: post
