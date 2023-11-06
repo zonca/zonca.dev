@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2023-10-13">
+<meta name="dcterms.date" content="2023-11-06">
 
 <title>Andrea Zonca - Deploy JupyterHub on Jetstream 2 with a Load Balancer</title>
 <style>
@@ -128,7 +128,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 13, 2023</p>
+        <p class="date">November 6, 2023</p>
       </div>
     </div>
     
@@ -150,7 +150,7 @@ ul.task-list li input[type="checkbox"] {
 <p>It has been a few months that the Jetstream 2 team has made available Octavia, a load balancing service for Openstack. Relying on Octavia, we can publish a Kubernetes service, like JupyterHub, on another IP which is independent of the IPs of the Openstack instances. This also allows us to run multiple master nodes to have more resilience against malfunctioning instances.</p>
 <p>Compared to the normal deployment mentioned above we need just a few steps to make use of this service:</p>
 <ul>
-<li><p>before running <code>ansible</code>, edit <code>inventory/$CLUSTER/k8s_cluster/addons.yml</code> and comment out all the configuration related to <code>Ingress</code>.</p></li>
+<li><p>before running <code>ansible</code>, edit <code>inventory/$CLUSTER/group_vars/k8s_cluster/addons.yml</code> and comment out all the configuration related to <code>Ingress</code>.</p></li>
 <li><p>reserve a floating ip you would like to use for JupyterHub</p>
 <pre><code>  openstack floating ip create public</code></pre></li>
 <li><p>edit the JupyterHub Helm configuration file <code>secrets.yaml</code>, add:</p>
