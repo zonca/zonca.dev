@@ -24,8 +24,8 @@ Terraform allows to execute recipes that describe a set of OpenStack resources a
 ### Requirements
 
 We have been testing with `python-openstackclient` version 6.1.0, but any recent openstack client should work.
-install `terraform` by copying the correct binary to `/usr/local/bin/`, see <https://www.terraform.io/intro/getting-started/install.html>.
-The requirement is a terraform version `> 0.14`, this tutorial has been tested with `0.14.4`.
+install `terraform` by copying the correct binary to `/usr/local/bin/`.
+The requirement is a terraform version `> 0.14`, this tutorial has been tested with `0.14.4`, which can be dowloaded from [the release page](https://releases.hashicorp.com/terraform/0.14.4/).
 [Terraform `1.1.9` and `1.2.9` do not work](https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/issues/46)
 
 ### Request API access
