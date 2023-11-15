@@ -309,7 +309,7 @@ See documentation of healpy.synalm.
 </div>
 <p>$<em>{dust}()= A</em>{dust}(_0)g() ( )^2 d$</p>
 <p>$<em>{dust}()= A</em>{dust}(_0)g() ( )^2 d$</p>
-<p><span class="math inline">\(\tilde{I}_{dust}(\nu)[K_{CMB}] = \dfrac{ A_{dust}(\nu_0)\left[\frac{MJy}{/sr}\right] \int g(\nu) \left( \dfrac{\nu}{\nu_0} \right)^2 d\nu} { \int C_{K_{CMB}}^{Jy~sr^{-1}}(\nu) g(\nu) d\nu}\)</span></p>
+<p><span class="math inline">\(\tilde{I}_{dust}(\nu)[K_{CMB}] = \dfrac{ A_{dust}(\nu_0)\left[\frac{MJy}{sr}\right] \int g(\nu) \left( \dfrac{\nu}{\nu_0} \right)^2 d\nu} { \int C_{K_{CMB}}^{Jy~sr^{-1}}(\nu) g(\nu) d\nu}\)</span></p>
 <div class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>I_dust_bandpass <span class="op">=</span> A_dust_delta_bandpass <span class="op">*</span> np.trapz(weights <span class="op">*</span> (freq<span class="op">**</span><span class="dv">2</span><span class="op">/</span>center_frequency<span class="op">**</span><span class="dv">2</span>), freq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
