@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.171">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,9 +19,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -48,43 +49,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -120,7 +91,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
@@ -142,36 +114,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <span class="navbar-title">Andrea Zonca</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../about.html">
+    <a class="nav-link" href="../about.html" rel="" target="">
  <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../consult.html">
+    <a class="nav-link" href="../consult.html" rel="" target="">
  <span class="menu-text">Consulting</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/zonca"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/zonca" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/andreazonca"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/andreazonca" rel="" target=""><i class="bi bi-twitter" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://mastodon.online/@zonca"><i class="bi bi-mastodon" role="img">
+    <a class="nav-link" href="https://mastodon.online/@zonca" rel="" target=""><i class="bi bi-mastodon" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -309,142 +283,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> da.from_array(dset, chunks<span class="op">=</span>(<span class="dv">10000000</span>,))</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
-
-<table>
-<tbody><tr>
-<td>
-<table>
-  <thead>
-    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
-  </thead>
-  <tbody>
-    <tr><th> Bytes </th><td> 4.00 GB </td> <td> 40.00 MB </td></tr>
-    <tr><th> Shape </th><td> (1000000000,) </td> <td> (10000000,) </td></tr>
-    <tr><th> Count </th><td> 101 Tasks </td><td> 100 Chunks </td></tr>
-    <tr><th> Type </th><td> float32 </td><td> numpy.ndarray </td></tr>
-  </tbody>
-</table>
-</td>
-<td>
-<svg width="170" height="75" style="stroke:rgb(0,0,0);stroke-width:1">
-
-  <!-- Horizontal lines -->
-  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2"></line>
-  <line x1="0" y1="25" x2="120" y2="25" style="stroke-width:2"></line>
-
-  <!-- Vertical lines -->
-  <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2"></line>
-  <line x1="1" y1="0" x2="1" y2="25"></line>
-  <line x1="2" y1="0" x2="2" y2="25"></line>
-  <line x1="3" y1="0" x2="3" y2="25"></line>
-  <line x1="4" y1="0" x2="4" y2="25"></line>
-  <line x1="6" y1="0" x2="6" y2="25"></line>
-  <line x1="7" y1="0" x2="7" y2="25"></line>
-  <line x1="8" y1="0" x2="8" y2="25"></line>
-  <line x1="9" y1="0" x2="9" y2="25"></line>
-  <line x1="10" y1="0" x2="10" y2="25"></line>
-  <line x1="12" y1="0" x2="12" y2="25"></line>
-  <line x1="13" y1="0" x2="13" y2="25"></line>
-  <line x1="14" y1="0" x2="14" y2="25"></line>
-  <line x1="15" y1="0" x2="15" y2="25"></line>
-  <line x1="16" y1="0" x2="16" y2="25"></line>
-  <line x1="18" y1="0" x2="18" y2="25"></line>
-  <line x1="19" y1="0" x2="19" y2="25"></line>
-  <line x1="20" y1="0" x2="20" y2="25"></line>
-  <line x1="21" y1="0" x2="21" y2="25"></line>
-  <line x1="22" y1="0" x2="22" y2="25"></line>
-  <line x1="24" y1="0" x2="24" y2="25"></line>
-  <line x1="25" y1="0" x2="25" y2="25"></line>
-  <line x1="26" y1="0" x2="26" y2="25"></line>
-  <line x1="27" y1="0" x2="27" y2="25"></line>
-  <line x1="28" y1="0" x2="28" y2="25"></line>
-  <line x1="30" y1="0" x2="30" y2="25"></line>
-  <line x1="31" y1="0" x2="31" y2="25"></line>
-  <line x1="32" y1="0" x2="32" y2="25"></line>
-  <line x1="33" y1="0" x2="33" y2="25"></line>
-  <line x1="34" y1="0" x2="34" y2="25"></line>
-  <line x1="36" y1="0" x2="36" y2="25"></line>
-  <line x1="37" y1="0" x2="37" y2="25"></line>
-  <line x1="38" y1="0" x2="38" y2="25"></line>
-  <line x1="39" y1="0" x2="39" y2="25"></line>
-  <line x1="40" y1="0" x2="40" y2="25"></line>
-  <line x1="42" y1="0" x2="42" y2="25"></line>
-  <line x1="43" y1="0" x2="43" y2="25"></line>
-  <line x1="44" y1="0" x2="44" y2="25"></line>
-  <line x1="45" y1="0" x2="45" y2="25"></line>
-  <line x1="46" y1="0" x2="46" y2="25"></line>
-  <line x1="48" y1="0" x2="48" y2="25"></line>
-  <line x1="49" y1="0" x2="49" y2="25"></line>
-  <line x1="50" y1="0" x2="50" y2="25"></line>
-  <line x1="51" y1="0" x2="51" y2="25"></line>
-  <line x1="52" y1="0" x2="52" y2="25"></line>
-  <line x1="54" y1="0" x2="54" y2="25"></line>
-  <line x1="55" y1="0" x2="55" y2="25"></line>
-  <line x1="56" y1="0" x2="56" y2="25"></line>
-  <line x1="57" y1="0" x2="57" y2="25"></line>
-  <line x1="58" y1="0" x2="58" y2="25"></line>
-  <line x1="60" y1="0" x2="60" y2="25"></line>
-  <line x1="61" y1="0" x2="61" y2="25"></line>
-  <line x1="62" y1="0" x2="62" y2="25"></line>
-  <line x1="63" y1="0" x2="63" y2="25"></line>
-  <line x1="64" y1="0" x2="64" y2="25"></line>
-  <line x1="66" y1="0" x2="66" y2="25"></line>
-  <line x1="67" y1="0" x2="67" y2="25"></line>
-  <line x1="68" y1="0" x2="68" y2="25"></line>
-  <line x1="69" y1="0" x2="69" y2="25"></line>
-  <line x1="70" y1="0" x2="70" y2="25"></line>
-  <line x1="72" y1="0" x2="72" y2="25"></line>
-  <line x1="73" y1="0" x2="73" y2="25"></line>
-  <line x1="74" y1="0" x2="74" y2="25"></line>
-  <line x1="75" y1="0" x2="75" y2="25"></line>
-  <line x1="76" y1="0" x2="76" y2="25"></line>
-  <line x1="78" y1="0" x2="78" y2="25"></line>
-  <line x1="79" y1="0" x2="79" y2="25"></line>
-  <line x1="80" y1="0" x2="80" y2="25"></line>
-  <line x1="81" y1="0" x2="81" y2="25"></line>
-  <line x1="82" y1="0" x2="82" y2="25"></line>
-  <line x1="84" y1="0" x2="84" y2="25"></line>
-  <line x1="85" y1="0" x2="85" y2="25"></line>
-  <line x1="86" y1="0" x2="86" y2="25"></line>
-  <line x1="87" y1="0" x2="87" y2="25"></line>
-  <line x1="88" y1="0" x2="88" y2="25"></line>
-  <line x1="90" y1="0" x2="90" y2="25"></line>
-  <line x1="91" y1="0" x2="91" y2="25"></line>
-  <line x1="92" y1="0" x2="92" y2="25"></line>
-  <line x1="93" y1="0" x2="93" y2="25"></line>
-  <line x1="94" y1="0" x2="94" y2="25"></line>
-  <line x1="96" y1="0" x2="96" y2="25"></line>
-  <line x1="97" y1="0" x2="97" y2="25"></line>
-  <line x1="98" y1="0" x2="98" y2="25"></line>
-  <line x1="99" y1="0" x2="99" y2="25"></line>
-  <line x1="100" y1="0" x2="100" y2="25"></line>
-  <line x1="102" y1="0" x2="102" y2="25"></line>
-  <line x1="103" y1="0" x2="103" y2="25"></line>
-  <line x1="104" y1="0" x2="104" y2="25"></line>
-  <line x1="105" y1="0" x2="105" y2="25"></line>
-  <line x1="106" y1="0" x2="106" y2="25"></line>
-  <line x1="108" y1="0" x2="108" y2="25"></line>
-  <line x1="109" y1="0" x2="109" y2="25"></line>
-  <line x1="110" y1="0" x2="110" y2="25"></line>
-  <line x1="111" y1="0" x2="111" y2="25"></line>
-  <line x1="112" y1="0" x2="112" y2="25"></line>
-  <line x1="114" y1="0" x2="114" y2="25"></line>
-  <line x1="115" y1="0" x2="115" y2="25"></line>
-  <line x1="116" y1="0" x2="116" y2="25"></line>
-  <line x1="117" y1="0" x2="117" y2="25"></line>
-  <line x1="118" y1="0" x2="118" y2="25"></line>
-  <line x1="120" y1="0" x2="120" y2="25" style="stroke-width:2"></line>
-
-  <!-- Colored Rectangle -->
-  <polygon points="0.000000,0.000000 120.000000,0.000000 120.000000,25.412617 0.000000,25.412617" style="fill:#ECB172A0;stroke-width:0"></polygon>
-
-  <!-- Text -->
-  <text x="60.000000" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle">1000000000</text>
-  <text x="140.000000" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,12.706308)">1</text>
-</svg>
-</td>
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th></th>
+<th data-quarto-table-cell-role="th">Array</th>
+<th data-quarto-table-cell-role="th">Chunk</th>
 </tr>
-</tbody></table>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Bytes</td>
+<td>4.00 GB</td>
+<td>40.00 MB</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Shape</td>
+<td>(1000000000,)</td>
+<td>(10000000,)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Count</td>
+<td>101 Tasks</td>
+<td>100 Chunks</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Type</td>
+<td>float32</td>
+<td>numpy.ndarray</td>
+</tr>
+</tbody>
+</table></td>
+<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTcwIiBoZWlnaHQ9Ijc1IiBzdHlsZT0ic3Ryb2tlOnJnYigwLDAsMCk7c3Ryb2tlLXdpZHRoOjEiPgoKICA8IS0tIEhvcml6b250YWwgbGluZXMgLS0+CiAgPGxpbmUgeDE9IjAiIHkxPSIwIiB4Mj0iMTIwIiB5Mj0iMCIgc3R5bGU9InN0cm9rZS13aWR0aDoyIj48L2xpbmU+CiAgPGxpbmUgeDE9IjAiIHkxPSIyNSIgeDI9IjEyMCIgeTI9IjI1IiBzdHlsZT0ic3Ryb2tlLXdpZHRoOjIiPjwvbGluZT4KCiAgPCEtLSBWZXJ0aWNhbCBsaW5lcyAtLT4KICA8bGluZSB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMjUiIHN0eWxlPSJzdHJva2Utd2lkdGg6MiI+PC9saW5lPgogIDxsaW5lIHgxPSIxIiB5MT0iMCIgeDI9IjEiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIyIiB5MT0iMCIgeDI9IjIiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIzIiB5MT0iMCIgeDI9IjMiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI0IiB5MT0iMCIgeDI9IjQiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI2IiB5MT0iMCIgeDI9IjYiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI3IiB5MT0iMCIgeDI9IjciIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI4IiB5MT0iMCIgeDI9IjgiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI5IiB5MT0iMCIgeDI9IjkiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIxMCIgeTE9IjAiIHgyPSIxMCIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjEyIiB5MT0iMCIgeDI9IjEyIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMTMiIHkxPSIwIiB4Mj0iMTMiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIxNCIgeTE9IjAiIHgyPSIxNCIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjE1IiB5MT0iMCIgeDI9IjE1IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMTYiIHkxPSIwIiB4Mj0iMTYiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIxOCIgeTE9IjAiIHgyPSIxOCIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjE5IiB5MT0iMCIgeDI9IjE5IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMjAiIHkxPSIwIiB4Mj0iMjAiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIyMSIgeTE9IjAiIHgyPSIyMSIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjIyIiB5MT0iMCIgeDI9IjIyIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMjQiIHkxPSIwIiB4Mj0iMjQiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIyNSIgeTE9IjAiIHgyPSIyNSIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjI2IiB5MT0iMCIgeDI9IjI2IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMjciIHkxPSIwIiB4Mj0iMjciIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIyOCIgeTE9IjAiIHgyPSIyOCIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjMwIiB5MT0iMCIgeDI9IjMwIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMzEiIHkxPSIwIiB4Mj0iMzEiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIzMiIgeTE9IjAiIHgyPSIzMiIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjMzIiB5MT0iMCIgeDI9IjMzIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMzQiIHkxPSIwIiB4Mj0iMzQiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIzNiIgeTE9IjAiIHgyPSIzNiIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjM3IiB5MT0iMCIgeDI9IjM3IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMzgiIHkxPSIwIiB4Mj0iMzgiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIzOSIgeTE9IjAiIHgyPSIzOSIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjQwIiB5MT0iMCIgeDI9IjQwIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iNDIiIHkxPSIwIiB4Mj0iNDIiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI0MyIgeTE9IjAiIHgyPSI0MyIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjQ0IiB5MT0iMCIgeDI9IjQ0IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iNDUiIHkxPSIwIiB4Mj0iNDUiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI0NiIgeTE9IjAiIHgyPSI0NiIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjQ4IiB5MT0iMCIgeDI9IjQ4IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iNDkiIHkxPSIwIiB4Mj0iNDkiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI1MCIgeTE9IjAiIHgyPSI1MCIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjUxIiB5MT0iMCIgeDI9IjUxIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iNTIiIHkxPSIwIiB4Mj0iNTIiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI1NCIgeTE9IjAiIHgyPSI1NCIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjU1IiB5MT0iMCIgeDI9IjU1IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iNTYiIHkxPSIwIiB4Mj0iNTYiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI1NyIgeTE9IjAiIHgyPSI1NyIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjU4IiB5MT0iMCIgeDI9IjU4IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iNjAiIHkxPSIwIiB4Mj0iNjAiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI2MSIgeTE9IjAiIHgyPSI2MSIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjYyIiB5MT0iMCIgeDI9IjYyIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iNjMiIHkxPSIwIiB4Mj0iNjMiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI2NCIgeTE9IjAiIHgyPSI2NCIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjY2IiB5MT0iMCIgeDI9IjY2IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iNjciIHkxPSIwIiB4Mj0iNjciIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI2OCIgeTE9IjAiIHgyPSI2OCIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjY5IiB5MT0iMCIgeDI9IjY5IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iNzAiIHkxPSIwIiB4Mj0iNzAiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI3MiIgeTE9IjAiIHgyPSI3MiIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjczIiB5MT0iMCIgeDI9IjczIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iNzQiIHkxPSIwIiB4Mj0iNzQiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI3NSIgeTE9IjAiIHgyPSI3NSIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9Ijc2IiB5MT0iMCIgeDI9Ijc2IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iNzgiIHkxPSIwIiB4Mj0iNzgiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI3OSIgeTE9IjAiIHgyPSI3OSIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjgwIiB5MT0iMCIgeDI9IjgwIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iODEiIHkxPSIwIiB4Mj0iODEiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI4MiIgeTE9IjAiIHgyPSI4MiIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9Ijg0IiB5MT0iMCIgeDI9Ijg0IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iODUiIHkxPSIwIiB4Mj0iODUiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI4NiIgeTE9IjAiIHgyPSI4NiIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9Ijg3IiB5MT0iMCIgeDI9Ijg3IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iODgiIHkxPSIwIiB4Mj0iODgiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI5MCIgeTE9IjAiIHgyPSI5MCIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjkxIiB5MT0iMCIgeDI9IjkxIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iOTIiIHkxPSIwIiB4Mj0iOTIiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI5MyIgeTE9IjAiIHgyPSI5MyIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9Ijk0IiB5MT0iMCIgeDI9Ijk0IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iOTYiIHkxPSIwIiB4Mj0iOTYiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI5NyIgeTE9IjAiIHgyPSI5NyIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9Ijk4IiB5MT0iMCIgeDI9Ijk4IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iOTkiIHkxPSIwIiB4Mj0iOTkiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIxMDAiIHkxPSIwIiB4Mj0iMTAwIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMTAyIiB5MT0iMCIgeDI9IjEwMiIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjEwMyIgeTE9IjAiIHgyPSIxMDMiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIxMDQiIHkxPSIwIiB4Mj0iMTA0IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMTA1IiB5MT0iMCIgeDI9IjEwNSIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjEwNiIgeTE9IjAiIHgyPSIxMDYiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIxMDgiIHkxPSIwIiB4Mj0iMTA4IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMTA5IiB5MT0iMCIgeDI9IjEwOSIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjExMCIgeTE9IjAiIHgyPSIxMTAiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIxMTEiIHkxPSIwIiB4Mj0iMTExIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMTEyIiB5MT0iMCIgeDI9IjExMiIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjExNCIgeTE9IjAiIHgyPSIxMTQiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIxMTUiIHkxPSIwIiB4Mj0iMTE1IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMTE2IiB5MT0iMCIgeDI9IjExNiIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjExNyIgeTE9IjAiIHgyPSIxMTciIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIxMTgiIHkxPSIwIiB4Mj0iMTE4IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMTIwIiB5MT0iMCIgeDI9IjEyMCIgeTI9IjI1IiBzdHlsZT0ic3Ryb2tlLXdpZHRoOjIiPjwvbGluZT4KCiAgPCEtLSBDb2xvcmVkIFJlY3RhbmdsZSAtLT4KICA8cG9seWdvbiBwb2ludHM9IjAuMDAwMDAwLDAuMDAwMDAwIDEyMC4wMDAwMDAsMC4wMDAwMDAgMTIwLjAwMDAwMCwyNS40MTI2MTcgMC4wMDAwMDAsMjUuNDEyNjE3IiBzdHlsZT0iZmlsbDojRUNCMTcyQTA7c3Ryb2tlLXdpZHRoOjAiPjwvcG9seWdvbj4KCiAgPCEtLSBUZXh0IC0tPgogIDx0ZXh0IHg9IjYwLjAwMDAwMCIgeT0iNDUuNDEyNjE3IiBmb250LXNpemU9IjEuMHJlbSIgZm9udC13ZWlnaHQ9IjEwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+MTAwMDAwMDAwMDwvdGV4dD4KICA8dGV4dCB4PSIxNDAuMDAwMDAwIiB5PSIxMi43MDYzMDgiIGZvbnQtc2l6ZT0iMS4wcmVtIiBmb250LXdlaWdodD0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiB0cmFuc2Zvcm09InJvdGF0ZSgwLDE0MC4wMDAwMDAsMTIuNzA2MzA4KSI+MTwvdGV4dD4KPC9zdmc+" class="img-fluid"></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="cell" data-execution_count="17">
@@ -467,27 +347,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>x_float64.<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="20">
-
-<table>
-<tbody><tr>
-<td>
-<table>
-  <thead>
-    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
-  </thead>
-  <tbody>
-    <tr><th> Bytes </th><td> 8 B </td> <td> 8 B </td></tr>
-    <tr><th> Shape </th><td> () </td> <td> () </td></tr>
-    <tr><th> Count </th><td> 336 Tasks </td><td> 1 Chunks </td></tr>
-    <tr><th> Type </th><td> float64 </td><td> numpy.ndarray </td></tr>
-  </tbody>
-</table>
-</td>
-<td>
-
-</td>
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th></th>
+<th data-quarto-table-cell-role="th">Array</th>
+<th data-quarto-table-cell-role="th">Chunk</th>
 </tr>
-</tbody></table>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Bytes</td>
+<td>8 B</td>
+<td>8 B</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Shape</td>
+<td>()</td>
+<td>()</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Count</td>
+<td>336 Tasks</td>
+<td>1 Chunks</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Type</td>
+<td>float64</td>
+<td>numpy.ndarray</td>
+</tr>
+</tbody>
+</table></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="cell" data-execution_count="21">
@@ -534,9 +435,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -601,6 +516,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
