@@ -296,8 +296,8 @@ See documentation of healpy.synalm.
 <section id="dust-model" class="level2">
 <h2 class="anchored" data-anchor-id="dust-model">Dust model</h2>
 <p>Let’s assume for the dust a power-law model with a spectral index of 2 (more realistic models use a modified black body), i.e.:</p>
-<p>$I_{dust}()[MJy/sr] = A_{dust}(_0)[MJy/sr] ( )^2 $</p>
-<p>in the case of a delta-bandpass, $A_{dust}(_0)[MJy/sr] $ would coincide with the measured value:</p>
+<p>$I_{dust}()= A_{dust}(_0)( )^2 $</p>
+<p>in the case of a delta-bandpass, $A_{dust}(_0)$ would coincide with the measured value:</p>
 <div class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>A_dust_delta_bandpass <span class="op">=</span> calibrated_dust_amplitude.to(u.MJy<span class="op">/</span>u.sr, equivalencies<span class="op">=</span>u.cmb_equivalencies(center_frequency))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -307,9 +307,9 @@ See documentation of healpy.synalm.
 <p><span class="math inline">\(2.7608912 \; \mathrm{\frac{MJy}{sr}}\)</span></p>
 </div>
 </div>
-<p>$<em>{dust}()[MJy/sr] = A</em>{dust}(_0)[MJy/sr] g() ( )^2 d$</p>
-<p>$<em>{dust}()[MJy/sr] = A</em>{dust}(_0)[MJy/sr] g() ( )^2 d$</p>
-<p>$<em>{dust}()[K_{CMB}] = { C</em>{K_{CMB}}<sup>{Jy~sr</sup>{-1}}() g() d} $</p>
+<p>$<em>{dust}()= A</em>{dust}(_0)g() ( )^2 d$</p>
+<p>$<em>{dust}()= A</em>{dust}(_0)g() ( )^2 d$</p>
+<p><span class="math inline">\(\tilde{I}_{dust}(\nu)[K_{CMB}] = \dfrac{ A_{dust}(\nu_0)\left[\frac{MJy}{/sr}\right] \int g(\nu) \left( \dfrac{\nu}{\nu_0} \right)^2 d\nu} { \int C_{K_{CMB}}^{Jy~sr^{-1}}(\nu) g(\nu) d\nu}\)</span></p>
 <div class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>I_dust_bandpass <span class="op">=</span> A_dust_delta_bandpass <span class="op">*</span> np.trapz(weights <span class="op">*</span> (freq<span class="op">**</span><span class="dv">2</span><span class="op">/</span>center_frequency<span class="op">**</span><span class="dv">2</span>), freq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
