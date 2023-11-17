@@ -3,6 +3,7 @@ project:
   resources:
     - "*.jpg"
     - "*.png"
+    - "docs"
 
 website:
   title: "Andrea Zonca"
