@@ -2,6 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2024-02-02-soft-scaling-kubernetes-jetstream.html",
+      "/posts/2024-01-12-pdf-from-screenshots.html",
       "/posts/2023-11-02-desouza-award.html",
       "/posts/2023-10-27-buy-us-reasury-bonds-fidelity.html",
       "/posts/2023-09-21-gateways-2023-dask-jupyterhub.html",
