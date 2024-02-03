@@ -141,4 +141,4 @@ Just as a reference, here are time measurements I took executing the default con
 * Unshelve 9 nodes: <5m
 * Uncordon 9 nodes: 3s
 
-This technique is quite impressive, bring the time needed to scale a cluster from 1 to 9 nodes from 43m down to less than 5m.
+This technique is quite impressive, bring the time needed to scale a cluster from 1 to 10 nodes from 43m down to less than 5m.
