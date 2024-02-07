@@ -43,7 +43,7 @@ nodes](https://github.com/zonca/jetstream_kubespray/blob/branch_v2.21.0/k8s_remo
 from the cluster then re-running Terraform with fewer nodes. When it's time to
 run the workshop again, the reverse process is done: run Terraform to re-create
 the previously destroyed nodes, then running
-[k8s_scale.sh](https://github.com/zonca/jetstream_kubespray/blob/branch_v2.21.0/k8s_scale.sh)
+[`k8s_scale.sh`](https://github.com/zonca/jetstream_kubespray/blob/branch_v2.21.0/k8s_scale.sh)
 to re-add these nodes to the still existing cluster. 
 
 This however, can be a lengthy process as this involves reinstalling Kubernetes
@@ -124,7 +124,7 @@ Your node's status should now be `Ready,Schedulable`.
 
 Since the node names for worker nodes created using
 Kubespray/Jetstream_Kubespray are of the form
-`$CLUSTER-k8s-node-<number>`, we can use a `bash` for loop to soft
+`$CLUSTER-k8s-node-<number>` or `$CLUSTER-k8s-node-nf-<number>`, we can use a `bash` for loop to soft
 scale multiple nodes at once.
 
 See the [`k8s_softscale.sh`](https://github.com/zonca/jetstream_kubespray/blob/branch_v2.21.0/k8s_softscale.sh) script in the repository. It is recommended to execute one step at a time and verify that it executed to completion before rerunning the script uncommenting the next step.
