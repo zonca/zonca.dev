@@ -201,7 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="hard-scaling-the-cluster-the-slow-way" class="level2">
 <h2 class="anchored" data-anchor-id="hard-scaling-the-cluster-the-slow-way">“Hard Scaling” the Cluster (the Slow Way)</h2>
-<p>To conserve SUs, one might consider <a href="https://github.com/zonca/jetstream_kubespray/blob/branch_v2.21.0/k8s_remove_node.sh">removing the extra nodes</a> from the cluster then re-running Terraform with fewer nodes. When it’s time to run the workshop again, the reverse process is done: run Terraform to re-create the previously destroyed nodes, then running <a href="https://github.com/zonca/jetstream_kubespray/blob/branch_v2.21.0/k8s_scale.sh">k8s_scale.sh</a> to re-add these nodes to the still existing cluster.</p>
+<p>To conserve SUs, one might consider <a href="https://github.com/zonca/jetstream_kubespray/blob/branch_v2.21.0/k8s_remove_node.sh">removing the extra nodes</a> from the cluster then re-running Terraform with fewer nodes. When it’s time to run the workshop again, the reverse process is done: run Terraform to re-create the previously destroyed nodes, then running <a href="https://github.com/zonca/jetstream_kubespray/blob/branch_v2.21.0/k8s_scale.sh"><code>k8s_scale.sh</code></a> to re-add these nodes to the still existing cluster.</p>
 <p>This however, can be a lengthy process as this involves reinstalling Kubernetes dependencies on the freshly recreated nodes.</p>
 </section>
 <section id="soft-scaling-the-cluster-the-fast-way" class="level2">
@@ -235,7 +235,7 @@ kube-system/csi-cinder-controllerplugin-xxxxxxxxx, continuing command...</code><
 </section>
 <section id="scaling-many-nodes-at-once" class="level3">
 <h3 class="anchored" data-anchor-id="scaling-many-nodes-at-once">Scaling Many Nodes at Once</h3>
-<p>Since the node names for worker nodes created using Kubespray/Jetstream_Kubespray are of the form <code>$CLUSTER-k8s-node-&lt;number&gt;</code>, we can use a <code>bash</code> for loop to soft scale multiple nodes at once.</p>
+<p>Since the node names for worker nodes created using Kubespray/Jetstream_Kubespray are of the form <code>$CLUSTER-k8s-node-&lt;number&gt;</code> or <code>$CLUSTER-k8s-node-nf-&lt;number&gt;</code>, we can use a <code>bash</code> for loop to soft scale multiple nodes at once.</p>
 <p>See the <a href="https://github.com/zonca/jetstream_kubespray/blob/branch_v2.21.0/k8s_softscale.sh"><code>k8s_softscale.sh</code></a> script in the repository. It is recommended to execute one step at a time and verify that it executed to completion before rerunning the script uncommenting the next step.</p>
 </section>
 </section>
@@ -251,7 +251,7 @@ kube-system/csi-cinder-controllerplugin-xxxxxxxxx, continuing command...</code><
 <li>Unshelve 9 nodes: &lt;5m</li>
 <li>Uncordon 9 nodes: 3s</li>
 </ul>
-<p>This technique is quite impressive, bring the time needed to scale a cluster from 1 to 9 nodes from 43m down to less than 5m.</p>
+<p>This technique is quite impressive, bring the time needed to scale a cluster from 1 to 10 nodes from 43m down to less than 5m.</p>
 
 
 </section>

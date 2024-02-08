@@ -240,7 +240,7 @@ ssh-add ~/.ssh/id_rsa</code></pre>
 </section>
 <section id="install-kubernetes-with-kubespray" class="level2">
 <h2 class="anchored" data-anchor-id="install-kubernetes-with-kubespray">Install Kubernetes with <code>kubespray</code></h2>
-<p>In <code>inventory/$CLUSTER/group_vars/k8s_cluster/k8s-cluster.yml</code>, set the public floating IP of the master instance in <code>supplementary_addresses_in_ssl_keys</code>.</p>
+<p>In <code>inventory/$CLUSTER/group_vars/k8s_cluster/k8s-cluster.yml</code>, set the public floating IP of the master instance in <code>supplementary_addresses_in_ssl_keys</code>. <strong>Update February 2024</strong>: this step is not needed anymore, make sure you have the <code>IP</code> environmental variable set and it will be automatically passed to Ansible by the <code>k8s_install.sh</code> script.</p>
 <p>Finally run the full playbook, it is going to take a good 20 minutes:</p>
 <pre><code>bash k8s_install.sh</code></pre>
 <p>If the playbook fails with “cannot lock the administrative directory”, it is due to the fact that the Virtual Machine is automatically updating so it has locked the APT directory. Just wait a minute and launch it again. It is always safe to run <code>ansible</code> multiple times.</p>
