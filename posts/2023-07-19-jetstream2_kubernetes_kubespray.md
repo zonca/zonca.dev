@@ -160,6 +160,7 @@ Test the connection through ansible:
 ## Install Kubernetes with `kubespray`
 
 In `inventory/$CLUSTER/group_vars/k8s_cluster/k8s-cluster.yml`, set the public floating IP of the master instance in `supplementary_addresses_in_ssl_keys`.
+**Update February 2024**: this step is not needed anymore, make sure you have the `IP` environmental variable set and it will be automatically passed to Ansible by the `k8s_install.sh` script.
 
 Finally run the full playbook, it is going to take a good 20 minutes:
 
