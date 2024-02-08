@@ -111,7 +111,7 @@ It is useful to save the IP into the `app*openrc.sh`, so that every time you loa
 
 ### Run Terraform
 
-Open and modify `cluster.tfvars`, choose your image (by default Ubuntu 20) and number of nodes and the flavor of the nodes, by default they are medium instances (`"4"`).
+Open and modify `cluster.tfvars`, choose your image (by default Ubuntu 20, **Update February 2024: Ubuntu 22**) and number of nodes and the flavor of the nodes, by default they are medium instances (`"4"`).
 See the entries marked as `REPLACE` and replace them according to the instructions provided.
 
 Paste the floating ip created previously into `k8s_master_fips`, unless you are using a projects.jetstream-cloud.org subdomain.
