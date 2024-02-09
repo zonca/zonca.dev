@@ -30,7 +30,12 @@ bash create_secrets.sh
 ```
 
 to create the secret strings needed by JupyterHub then edit its output
-`secrets.yaml` to make sure it is consistent, edit the `hosts` lines if needed. For example, at the moment Jetstream 2 doesn't yet provide DNS entries like Jetstream 1 did (`js-XXX-YYY.jetstream-cloud.org`, they are working on it, I'll update the tutorial when it comes available), so you will need to create a A record that points to the IP of the master node. Most universities offer this service.
+`secrets.yaml` to make sure it is consistent, edit the `hosts` lines if needed.
+**Update February 2024**: if you are using Designate to have a url of the form:
+
+    kubejetstream-1.$PROJ.projects.jetstream-cloud.org
+
+set this on the hosts line. If you have another domain provider, make sure you create an A record pointing to your instance and then set the subdomain name here.
 
     bash configure_helm_jupyterhub.sh
     kubectl create namespace jhub
@@ -43,7 +48,7 @@ Finally run `helm` to install JupyterHub:
 
     bash install_jhub.sh
 
-This is installing `zero-to-jupyterhub` `1.2.0`, you can check [on the zero-to-jupyterhub release page](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/releases) if a newer version is available, generally transitioning to new releases is painless, they document any breaking changes very well.
+This is installing `zero-to-jupyterhub` `2.0.0`, you can check [on the zero-to-jupyterhub release page](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/releases) if a newer version is available, generally transitioning to new releases is painless, they document any breaking changes very well.
 
 Check pods running with:
 
