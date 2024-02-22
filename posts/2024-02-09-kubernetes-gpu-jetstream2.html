@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2022-03-31">
+<meta name="dcterms.date" content="2024-02-08">
 
-<title>Andrea Zonca - Deploy JupyterHub on Jetstream 2 on top of Kubernetes</title>
+<title>Andrea Zonca - Deploy Kubernetes on Jetstream 2 with GPU support</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,11 +116,10 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Deploy JupyterHub on Jetstream 2 on top of Kubernetes</h1>
+      <h1 class="title">Deploy Kubernetes on Jetstream 2 with GPU support</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">kubernetes</div>
-                <div class="quarto-category">jupyterhub</div>
                 <div class="quarto-category">jetstream2</div>
+                <div class="quarto-category">jupyterhub</div>
               </div>
                   </div>
   </div>
@@ -132,7 +131,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 31, 2022</p>
+        <p class="date">February 8, 2024</p>
       </div>
     </div>
     
@@ -150,52 +149,76 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>This tutorial is a followup to: <a href="https://zonca.dev/2022/03/kubernetes-jetstream2-kubespray.html">Deploy Kubernetes on Jetstream 2 with Kubespray 2.18.0</a>, so I’ll assume Kubernetes is already deployed with a default storageclass.</p>
-<section id="clone-the-configuration-files-repository" class="level2">
-<h2 class="anchored" data-anchor-id="clone-the-configuration-files-repository">Clone the configuration files repository</h2>
-<pre><code>git clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream</code></pre>
-<p>This is the main repository which contains configuration files for all the tutorials I write, I usually always work with this folder as the root folder.</p>
+<p>This work has been supported by Indiana University and is cross-posted on the <a href="https://docs.jetstream-cloud.org/general/k8sgpu" rel="canonical">Jetstream 2 official documentation website</a>.</p>
+<p>Thanks to work by <a href="https://github.com/ana-v-espinoza">Ana Espinoza</a>, the standard recipe now supports GPUs out of the box and also supports hybrid clusters where some nodes are standard CPU nodes and some nodes have GPU.</p>
+<p>The Jetstream 2 cloud includes <a href="https://docs.jetstream-cloud.org/overview/config/" target="_blank">90 GPU nodes with 4 NVIDIA A100 each</a>. If we want to leverage the GPUs inside Kubernetes pods, for example JupyterHub users, we both need to have a GPU-enabled ContainerD runtime and a compatible Docker image based off NVIDIA images.</p>
+<section id="deploy-kubernetes-with-nvidia-runtime" class="level2">
+<h2 class="anchored" data-anchor-id="deploy-kubernetes-with-nvidia-runtime">Deploy Kubernetes with NVIDIA runtime</h2>
+<p>Kubespray has built-in support for NVIDIA runtime, in a previous version of this tutorial I had a specific branch dedicated to supporting a cluster where all worker nodes had GPUs.</p>
+<p>Therefore it is just a matter of following the <a href="https://www.zonca.dev/posts/2023-07-19-jetstream2_kubernetes_kubespray" target="_blank">standard Kubespray deployment tutorial</a>, configuring properly the variables in <code>cluster.tfvars</code> following the comments available there. In summary, for a GPU-only cluster we only set:</p>
+<pre><code> supplementary_node_groups = "gpu-node"</code></pre>
+<p>Instead for a hybrid cluster we need to set the number of worker nodes to zero and instead list explicitly all the nodes we want Terraform to create, specifying their name and if they should have a GPU or not.</p>
+<p>If we deploy a hybrid GPU-CPU cluster in the default configuration from <code>cluster.tfvars</code>, we will have 2 CPU and 2 GPU nodes:</p>
+<pre><code>&gt; kubectl get nodes
+NAME                              STATUS   ROLES           AGE   VERSION
+kubejetstream-1                   Ready    control-plane   44m   v1.25.6
+kubejetstream-k8s-node-nf-cpu-1   Ready    &lt;none&gt;          43m   v1.25.6
+kubejetstream-k8s-node-nf-cpu-2   Ready    &lt;none&gt;          43m   v1.25.6
+kubejetstream-k8s-node-nf-gpu-1   Ready    &lt;none&gt;          43m   v1.25.6
+kubejetstream-k8s-node-nf-gpu-2   Ready    &lt;none&gt;          43m   v1.25.6</code></pre>
+<p>Next we need to install the <code>k8s-device-plugin</code>, at the moment it is just necessary to execute:</p>
+<pre><code>kubectl create -f https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/v0.14.4/nvidia-device-plugin.yml</code></pre>
+<p>However, make sure you check the latest <a href="https://github.com/NVIDIA/k8s-device-plugin" target="_blank"><code>k8s-device-plugin</code> documentation</a>.</p>
+<p>For testing, you can run a simple GPU job, this is requesting a GPU, so it will automatically run on a GPU node if we have an hybrid cluster:</p>
+<pre><code>cat &lt;&lt;EOF | kubectl apply -f -
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gpu-pod
+spec:
+  restartPolicy: Never
+  containers:
+    - name: cuda-container
+      image: nvcr.io/nvidia/k8s/cuda-sample:vectoradd-cuda10.2
+      resources:
+        limits:
+          nvidia.com/gpu: 1 # requesting 1 GPU
+  tolerations:
+  - key: nvidia.com/gpu
+    operator: Exists
+    effect: NoSchedule
+EOF</code></pre>
+<p>and check the logs:</p>
+<pre><code>kubectl logs gpu-pod</code></pre>
+<p>The output should be:</p>
+<pre><code>[Vector addition of 50000 elements]
+Copy input data from the host memory to the CUDA device
+CUDA kernel launch with 196 blocks of 256 threads
+Copy output data from the CUDA device to the host memory
+Test PASSED
+Done</code></pre>
 </section>
-<section id="install-jupyterhub" class="level2">
-<h2 class="anchored" data-anchor-id="install-jupyterhub">Install Jupyterhub</h2>
-<p>Inside the repository root, first run</p>
-<pre><code>bash create_secrets.sh</code></pre>
-<p>to create the secret strings needed by JupyterHub then edit its output <code>secrets.yaml</code> to make sure it is consistent, edit the <code>hosts</code> lines if needed. <strong>Update February 2024</strong>: if you are using Designate to have a url of the form:</p>
-<pre><code>kubejetstream-1.$PROJ.projects.jetstream-cloud.org</code></pre>
-<p>set this on the hosts line. If you have another domain provider, make sure you create an A record pointing to your instance and then set the subdomain name here.</p>
-<pre><code>bash configure_helm_jupyterhub.sh
-kubectl create namespace jhub</code></pre>
-<p>The newest Kubespray version doesn’t install the CSI driver on the master node, so we cannot run the Hub pod on the master node, I have therefore removed the <code>nodeSelector</code> and tolerances I had on the configuration for Jetstream 1.</p>
-<p>In any case, the Kubernetes ingress automatically handles network routing.</p>
-<p>Finally run <code>helm</code> to install JupyterHub:</p>
-<pre><code>bash install_jhub.sh</code></pre>
-<p>This is installing <code>zero-to-jupyterhub</code> <code>2.0.0</code>, you can check <a href="https://github.com/jupyterhub/zero-to-jupyterhub-k8s/releases">on the zero-to-jupyterhub release page</a> if a newer version is available, generally transitioning to new releases is painless, they document any breaking changes very well.</p>
-<p>Check pods running with:</p>
-<pre><code>kubectl get pods -n jhub</code></pre>
-<p>Once the <code>proxy</code> is running, even if <code>hub</code> is still in preparation, you can check in browser, you should get “Service Unavailable” which is a good sign that the proxy is working.</p>
-<p>You can finally connect with your browser to the domain you have configured and check if the Hub is working fine, after that, the pods running using:</p>
-<pre><code>kubectl get pods -n jhub</code></pre>
-<p>shoud be:</p>
-<pre><code>NAME                              READY   STATUS    RESTARTS   AGE
-continuous-image-puller-xlkf6     1/1     Running   0          18m
-hub-554bf64f9b-kc2h9              1/1     Running   0          2m26s
-jupyter-zonca                     1/1     Running   0          12s
-proxy-567d5d9f8d-jr4k9            1/1     Running   0          18m
-user-scheduler-79c85f98dd-jpl9l   1/1     Running   0          18m
-user-scheduler-79c85f98dd-sg78t   1/1     Running   0          18m</code></pre>
+<section id="access-gpus-from-jupyterhub" class="level2">
+<h2 class="anchored" data-anchor-id="access-gpus-from-jupyterhub">Access GPUs from JupyterHub</h2>
+<p>A Docker image derived from the NVIDIA Tensorflow image is available <a href="https://hub.docker.com/r/zonca/nvidia-tensorflow-jupyterhub" target="_blank">on DockerHub as <code>zonca/nvidia-tensorflow-jupyterhub</code></a>, the relevant <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/blob/master/gpu/nvidia-tensorflow-jupyterhub/Dockerfile" target="_blank">Dockerfile is available on Github</a>.</p>
+<p>Also notice that this is configured to run JupyterHub <code>3.0.0</code> which should be used in conjunction with the Zero to JupyterHub Helm chart version <code>2.0.0</code>.</p>
+<p>Then it is just a matter of modifying the <code>install_jhub.sh</code> script to pickup the additional configuration file by adding:</p>
+<pre><code>--values gpu/jupyterhub_gpu.yaml</code></pre>
+<p>Notice that some Docker images designed for GPU do not work on CPU, for example the official <code>tensorflow</code> image (as tested in February 2024). The image used here works fine on either type of node.</p>
 </section>
-<section id="customize-jupyterhub" class="level2">
-<h2 class="anchored" data-anchor-id="customize-jupyterhub">Customize JupyterHub</h2>
-<p>After JupyterHub is deployed and integrated with Cinder for persistent volumes, for any other customizations, first authentication, you are in good hands as the <a href="https://zero-to-jupyterhub.readthedocs.io/en/stable/extending-jupyterhub.html">Zero-to-Jupyterhub documentation</a> is great.</p>
+<section id="test-execution-on-gpu" class="level2">
+<h2 class="anchored" data-anchor-id="test-execution-on-gpu">Test execution on GPU</h2>
+<p>For testing, I have modified the Tensorflow tutorial for beginners to run on GPU, it is available <a href="https://gist.github.com/zonca/3da7896544da9881fe9081a441964a26" target="_blank">in this Gist</a>.</p>
+<p>You can download it to your local machine and upload it to the GPU-enabled single user instance on Jetstream.</p>
+<p>During execution, the 3rd cell should show the available GPU device:</p>
+<pre><code>[PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]</code></pre>
+<p>then the Notebook should execute to completion with no errors, printing for each operation the device which executed it, i.e.&nbsp;the GPU. After checking that commands are properly executed on GPU, you should comment out <code>tf.debugging.set_log_device_placement(True)</code> to speed-up training.</p>
 </section>
-<section id="setup-https-with-letsencrypt" class="level2">
-<h2 class="anchored" data-anchor-id="setup-https-with-letsencrypt">Setup HTTPS with letsencrypt</h2>
-<p>Kubespray has the option of deploying also <code>cert-manager</code>, but I had trouble deploying an issuer, it was easier to just deploy it afterwards following <a href="https://zonca.dev/2020/03/setup-https-kubernetes-letsencrypt.html">my previous tutorial</a>, recently updated.</p>
-<p>Note the new step about binding the Cert Manager pods to the master node.</p>
-</section>
-<section id="feedback" class="level2">
-<h2 class="anchored" data-anchor-id="feedback">Feedback</h2>
-<p>Feedback on this is very welcome, please open an issue on the <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream">Github repository</a>.</p>
+<section id="hybrid-cluster-avoid-cpu-pods-running-on-gpu-nodes" class="level2">
+<h2 class="anchored" data-anchor-id="hybrid-cluster-avoid-cpu-pods-running-on-gpu-nodes">Hybrid cluster: avoid CPU pods running on GPU nodes</h2>
+<p>One problem of the above configuration is that users requesting a CPU pod could be spawned on a GPU node, therefore occupying resources that might be useful for GPU users. A possible fix is to taint all the GPU nodes creating a simple script to apply this command to all GPU nodes:</p>
+<pre><code>kubectl taint node kubejetstream-k8s-node-nf-gpu-1 "gpu=true:NoSchedule"</code></pre>
+<p>Then, I have already added a toleration to the GPU profile of <code>jupyterhub_gpu.yaml</code>, so now only users that select the GPU profile will spwan on GPU nodes.</p>
 
 
 </section>

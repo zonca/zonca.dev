@@ -211,7 +211,7 @@ cd inventory/$CLUSTER</code></pre>
 </section>
 <section id="run-terraform" class="level3">
 <h3 class="anchored" data-anchor-id="run-terraform">Run Terraform</h3>
-<p>Open and modify <code>cluster.tfvars</code>, choose your image (by default Ubuntu 20) and number of nodes and the flavor of the nodes, by default they are medium instances (<code>"4"</code>). See the entries marked as <code>REPLACE</code> and replace them according to the instructions provided.</p>
+<p>Open and modify <code>cluster.tfvars</code>, choose your image (by default Ubuntu 20, **Update February 2024, currently Ubuntu 22 works on CPU but <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/issues/73">broken on GPU</a>) and number of nodes and the flavor of the nodes, by default they are medium instances (<code>"4"</code>). See the entries marked as <code>REPLACE</code> and replace them according to the instructions provided.</p>
 <p>Paste the floating ip created previously into <code>k8s_master_fips</code>, unless you are using a projects.jetstream-cloud.org subdomain.</p>
 <p>Initialize Terraform:</p>
 <pre><code>bash terraform_init.sh</code></pre>
