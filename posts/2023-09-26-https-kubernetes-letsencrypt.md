@@ -9,9 +9,9 @@ title: Setup HTTPS on Kubernetes with cert-manager
 
 ---
 
-In this tutorial we will deploy `cert-manager` in Kubernetes to automatically provide SSL certificates to JupyterHub (and other services).
+**Update March 2024**: the routing issue that force cert-manager pods to run on the control-plane are back, see [this Github issue](https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/issues/75), so we had to add back the pinning of cert-manager services on one of the nodes in the control plane.
 
-This tutorial replaces [the 2020 version](./2020-03-13-setup-https-kubernetes-letsencrypt.md), as there is [no need anymore to force the `cert-manager` pod to run on the master node](https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/pull/53#issuecomment-1730677988).
+In this tutorial we will deploy `cert-manager` in Kubernetes to automatically provide SSL certificates to JupyterHub (and other services).
 
 First make sure your payload, for example JupyterHub, is working without HTTPS, so that you check that the ports are open, Ingress is working, and JupyterHub itself can accept connections.
 
