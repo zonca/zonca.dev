@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2023-01-23">
 
-<title>Andrea Zonca - Deploy Kubernetes on Jetstream 2 with GPU support</title>
+<title>Andrea Zonca – setup-ssl-web-host-jetstream2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -113,33 +112,7 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Deploy Kubernetes on Jetstream 2 with GPU support</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">jetstream2</div>
-                <div class="quarto-category">jupyterhub</div>
-              </div>
-                  </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">January 23, 2023</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
@@ -149,57 +122,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>This tutorial is obsolete, see <a href="../posts/2024-02-09-kubernetes-gpu-jetstream2.html">the new version of the tutorial</a>.</p>
-<p>The Jetstream 2 cloud includes <a href="https://docs.jetstream-cloud.org/overview/config/" target="_blank">90 GPU nodes with 4 NVIDIA A100 each</a>. If we want to leverage the GPUs inside Kubernetes pods, for example JupyterHub users, we both need to have a GPU-enabled ContainerD runtime and a compatible Docker image based off NVIDIA images.</p>
-<section id="deploy-kubernetes-with-nvidia-runtime" class="level2">
-<h2 class="anchored" data-anchor-id="deploy-kubernetes-with-nvidia-runtime">Deploy Kubernetes with NVIDIA runtime</h2>
-<p>Kubespray has built-in support for NVIDIA runtime, therefore it is just a matter of following the <a href="https://www.zonca.dev/posts/2022-03-31-jetstream2_jupyterhub" target="_blank">standard Kubespray deployment tutorial</a>, but using the <code>branch_v2.18.0_gpu</code> branch of the <code>zonca/jetstream_kubespray</code> Github repository instead of the <code>branch_v2.18.0</code> branch. You can also check in detail what are the changes required by looking at <a href="https://github.com/zonca/jetstream_kubespray/pull/20" target="_blank">this Pull Request</a></p>
-<p>Next we need to install the <code>k8s-device-plugin</code>, at the moment it is just necessary to execute:</p>
-<pre><code>kubectl create -f https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/v0.13.0/nvidia-device-plugin.yml</code></pre>
-<p>However, make sure you check the latest <a href="https://github.com/NVIDIA/k8s-device-plugin" target="_blank"><code>k8s-device-plugin</code> documentation</a>.</p>
-<p>For testing, you can run a simple GPU job:</p>
-<pre><code>cat &lt;&lt;EOF | kubectl apply -f -
-apiVersion: v1
-kind: Pod
-metadata:
-  name: gpu-pod
-spec:
-  restartPolicy: Never
-  containers:
-    - name: cuda-container
-      image: nvcr.io/nvidia/k8s/cuda-sample:vectoradd-cuda10.2
-      resources:
-        limits:
-          nvidia.com/gpu: 1 # requesting 1 GPU
-  tolerations:
-  - key: nvidia.com/gpu
-    operator: Exists
-    effect: NoSchedule
-EOF</code></pre>
-<p>and check the logs:</p>
-<pre><code>kubectl logs gpu-pod</code></pre>
-<p>The output should be:</p>
-<pre><code>[Vector addition of 50000 elements]
-Copy input data from the host memory to the CUDA device
-CUDA kernel launch with 196 blocks of 256 threads
-Copy output data from the CUDA device to the host memory
-Test PASSED
-Done</code></pre>
-</section>
-<section id="access-gpus-from-jupyterhub" class="level2">
-<h2 class="anchored" data-anchor-id="access-gpus-from-jupyterhub">Access GPUs from JupyterHub</h2>
-<p>A Docker image derived from the NVIDIA Tensorflow image is available <a href="https://hub.docker.com/r/zonca/nvidia-tensorflow-jupyterhub" target="_blank">on DockerHub as <code>zonca/nvidia-tensorflow-jupyterhub</code></a>, the relevant <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/blob/master/gpu/nvidia-tensorflow-jupyterhub/Dockerfile" target="_blank">Dockerfile is available on Github</a>.</p>
-<p>Also notice that this is configured to run JupyterHub <code>3.0.0</code> which should be used in conjunction with the Zero to JupyterHub Helm chart version <code>2.0.0</code>.</p>
-<p>Then it is just a matter of modifying the <code>install_jhub.sh</code> script to pickup the additional configuration file by adding:</p>
-<pre><code>--values gpu/jupyterhub_gpu.yaml</code></pre>
-<p>For testing, I have modified the Tensorflow tutorial for beginners to run on GPU, it is available <a href="https://gist.github.com/zonca/3da7896544da9881fe9081a441964a26" target="_blank">in this Gist</a>.</p>
-<p>You can download it to your local machine and upload it to the GPU-enabled single user instance on Jetstream.</p>
-<p>During execution, the 3rd cell should show the available GPU device:</p>
-<pre><code>[PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]</code></pre>
-<p>then the Notebook should execute to completion with no errors, printing for each operation the device which executed it, i.e.&nbsp;the GPU.</p>
 
-
-</section>
 
 </main> <!-- /main -->
 <div>
