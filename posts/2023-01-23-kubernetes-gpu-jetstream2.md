@@ -8,7 +8,7 @@ title: Deploy Kubernetes on Jetstream 2 with GPU support
 
 ---
 
-This work has been supported by Indiana University and is cross-posted on the <a href="https://docs.jetstream-cloud.org/general/k8sgpu" rel="canonical">Jetstream 2 official documentation website</a>.
+This tutorial is obsolete, see [the new version of the tutorial](./2024-02-09-kubernetes-gpu-jetstream2.md).
 
 The Jetstream 2 cloud includes [90 GPU nodes with 4 NVIDIA A100 each](https://docs.jetstream-cloud.org/overview/config/){target=\_blank}.
 If we want to leverage the GPUs inside Kubernetes pods, for example JupyterHub users, we both need to have a GPU-enabled ContainerD runtime and a compatible Docker image based off NVIDIA images.
