@@ -150,8 +150,8 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<p><strong>Update March 2024</strong>: the routing issue that force cert-manager pods to run on the control-plane are back, see <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/issues/75">this Github issue</a>, so we had to add back the pinning of cert-manager services on one of the nodes in the control plane.</p>
 <p>In this tutorial we will deploy <code>cert-manager</code> in Kubernetes to automatically provide SSL certificates to JupyterHub (and other services).</p>
-<p>This tutorial replaces <a href="../posts/2020-03-13-setup-https-kubernetes-letsencrypt.html">the 2020 version</a>, as there is <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/pull/53#issuecomment-1730677988">no need anymore to force the <code>cert-manager</code> pod to run on the master node</a>.</p>
 <p>First make sure your payload, for example JupyterHub, is working without HTTPS, so that you check that the ports are open, Ingress is working, and JupyterHub itself can accept connections.</p>
 <p>Let’s follow the <a href="https://cert-manager.io/docs/installation/kubectl/"><code>cert-manager</code> documentation</a>, for convenience I pasted the commands below:</p>
 <pre><code>kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.0/cert-manager.yaml</code></pre>
@@ -178,6 +178,15 @@ NAME                                                DESIRED   CURRENT   READY   
 replicaset.apps/cert-manager-56c667df87             1         1         1       5d
 replicaset.apps/cert-manager-cainjector-8559b6f5d   1         1         1       5d
 replicaset.apps/cert-manager-webhook-79f4b558b8     1         1         1       5d</code></pre>
+<section id="bind-the-pods-to-the-master-node" class="level2">
+<h2 class="anchored" data-anchor-id="bind-the-pods-to-the-master-node">Bind the pods to the master node</h2>
+<p>In Jetstream 2 there are routing restrictions which allow Cert Manager to run only from the master node, <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/issues/75">see the details on Github</a>. At least when the nodes do not have floating IPs, if all your Virtual Machines have a floating IP, you can safely skip this step.</p>
+<p>Unidata has contributed the script they created to patch the 3 Cert Manager pods to have them run on the master node, we can apply it with:</p>
+<pre><code>cd setup_https
+bash deploymentPatch.sh</code></pre>
+<p>Then verify that the pods are redeployed on master:</p>
+<pre><code>kubectl -n cert-manager get pods -o wide</code></pre>
+</section>
 <section id="setup-jupyterhub" class="level2">
 <h2 class="anchored" data-anchor-id="setup-jupyterhub">Setup JupyterHub</h2>
 <p>Then we modify the JupyterHub ingress configuration to use this Issuer, modify <code>secrets.yaml</code> to:</p>

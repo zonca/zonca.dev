@@ -4953,7 +4953,14 @@
     "href": "posts/2023-09-26-https-kubernetes-letsencrypt.html",
     "title": "Setup HTTPS on Kubernetes with cert-manager",
     "section": "",
-    "text": "In this tutorial we will deploy cert-manager in Kubernetes to automatically provide SSL certificates to JupyterHub (and other services).\nThis tutorial replaces the 2020 version, as there is no need anymore to force the cert-manager pod to run on the master node.\nFirst make sure your payload, for example JupyterHub, is working without HTTPS, so that you check that the ports are open, Ingress is working, and JupyterHub itself can accept connections.\nLet’s follow the cert-manager documentation, for convenience I pasted the commands below:\nOnce we have cert-manager setup we can create a Cluster Issuer that works for all namespaces (first edit the yml and add your email address):\nAfter this, we can display all the resources in the cert-manager namespace to check that the services and pods are running:\nThe result should be something like:"
+    "text": "Update March 2024: the routing issue that force cert-manager pods to run on the control-plane are back, see this Github issue, so we had to add back the pinning of cert-manager services on one of the nodes in the control plane.\nIn this tutorial we will deploy cert-manager in Kubernetes to automatically provide SSL certificates to JupyterHub (and other services).\nFirst make sure your payload, for example JupyterHub, is working without HTTPS, so that you check that the ports are open, Ingress is working, and JupyterHub itself can accept connections.\nLet’s follow the cert-manager documentation, for convenience I pasted the commands below:\nOnce we have cert-manager setup we can create a Cluster Issuer that works for all namespaces (first edit the yml and add your email address):\nAfter this, we can display all the resources in the cert-manager namespace to check that the services and pods are running:\nThe result should be something like:"
+  },
+  {
+    "objectID": "posts/2023-09-26-https-kubernetes-letsencrypt.html#bind-the-pods-to-the-master-node",
+    "href": "posts/2023-09-26-https-kubernetes-letsencrypt.html#bind-the-pods-to-the-master-node",
+    "title": "Setup HTTPS on Kubernetes with cert-manager",
+    "section": "Bind the pods to the master node",
+    "text": "Bind the pods to the master node\nIn Jetstream 2 there are routing restrictions which allow Cert Manager to run only from the master node, see the details on Github. At least when the nodes do not have floating IPs, if all your Virtual Machines have a floating IP, you can safely skip this step.\nUnidata has contributed the script they created to patch the 3 Cert Manager pods to have them run on the master node, we can apply it with:\ncd setup_https\nbash deploymentPatch.sh\nThen verify that the pods are redeployed on master:\nkubectl -n cert-manager get pods -o wide"
   },
   {
     "objectID": "posts/2023-09-26-https-kubernetes-letsencrypt.html#setup-jupyterhub",
