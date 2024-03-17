@@ -10,6 +10,8 @@ title: Deploy JupyterHub on Jetstream 2 with a Load Balancer
 
 ---
 
+**Usage of Load Balancer discouraged**: Deploying load balancers through Kubespray is not reliable, not sure what is the reason for this behaviour. Once created Load Balancers switch between Pending Update and Pending Delete state and cannot be deleted anymore by the user.
+
 The main weakness of the [deployment of Kubernetes and JupyterHub on Jetstream 2](./2023-07-19-jetstream2_kubernetes_kubespray.md) is that it supports only 1 master node and the public IP of that node is used to connect to JupyterHub. Therefore in case of issues on that instance, the whole deployment is not reachable.
 
 It has been a few months that the Jetstream 2 team has made available Octavia, a load balancing service for Openstack.
