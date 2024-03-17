@@ -16,6 +16,10 @@ It has been a few months that the Jetstream 2 team has made available Octavia, a
 Relying on Octavia, we can publish a Kubernetes service, like JupyterHub, on another IP which is independent of the IPs of the Openstack instances.
 This also allows us to run multiple master nodes to have more resilience against malfunctioning instances.
 
+In order to enable load balancer support in the Openstack CLI, install `python-octaviaclient`, then can query current running loadbalancers:
+
+    openstack loadbalancer list
+
 Compared to the normal deployment mentioned above we need just a few steps to make use of this service:
 
 * before running `ansible`, edit `inventory/$CLUSTER/group_vars/k8s_cluster/addons.yml` and comment out all the configuration related to `Ingress`.
