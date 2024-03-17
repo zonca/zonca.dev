@@ -149,8 +149,11 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<p><strong>Usage of Load Balancer discouraged</strong>: Deploying load balancers through Kubespray is not reliable, not sure what is the reason for this behaviour. Once created Load Balancers switch between Pending Update and Pending Delete state and cannot be deleted anymore by the user.</p>
 <p>The main weakness of the <a href="../posts/2023-07-19-jetstream2_kubernetes_kubespray.html">deployment of Kubernetes and JupyterHub on Jetstream 2</a> is that it supports only 1 master node and the public IP of that node is used to connect to JupyterHub. Therefore in case of issues on that instance, the whole deployment is not reachable.</p>
 <p>It has been a few months that the Jetstream 2 team has made available Octavia, a load balancing service for Openstack. Relying on Octavia, we can publish a Kubernetes service, like JupyterHub, on another IP which is independent of the IPs of the Openstack instances. This also allows us to run multiple master nodes to have more resilience against malfunctioning instances.</p>
+<p>In order to enable load balancer support in the Openstack CLI, install <code>python-octaviaclient</code>, then can query current running loadbalancers:</p>
+<pre><code>openstack loadbalancer list</code></pre>
 <p>Compared to the normal deployment mentioned above we need just a few steps to make use of this service:</p>
 <ul>
 <li><p>before running <code>ansible</code>, edit <code>inventory/$CLUSTER/group_vars/k8s_cluster/addons.yml</code> and comment out all the configuration related to <code>Ingress</code>.</p></li>
