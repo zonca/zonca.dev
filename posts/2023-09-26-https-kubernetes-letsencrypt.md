@@ -94,3 +94,9 @@ kubectl get certificaterequest --all-namespaces
 NAMESPACE   NAME                           APPROVED   DENIED   READY   ISSUER        REQUESTOR                                         AGE
 jhub        certmanager-tls-jupyterhub-1   True                True    letsencrypt   system:serviceaccount:cert-manager:cert-manager   5d
 ```
+
+You can also check the state of the certificate with:
+
+```
+kubectl -n jhub describe certificate certmanager-tls-jupyterhub
+```
