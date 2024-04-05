@@ -47,7 +47,11 @@ and connect to it with:
 
 Now we can pull a Docker image into a Singularity image file:
 
-    singularity pull jupyterhub_singleuser.sif docker://jupyterhub/singleuser:3.1.0
+    singularity pull jupyterhub_singleuser.sif docker://jupyterhub/singleuser:4.1.2
+
+## Run on a machine with Docker
+
+docker run -it --entrypoint /bin/sh  --privileged quay.io/singularity/singularity:v4.1.0
 
 ## Build a Docker container with the JupyterHub Singleuser server
 
