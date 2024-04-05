@@ -2,7 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/setup-ssl-web-host-jetstream2.html",
+      "/posts/2024-04-04-run-pytorch-gpu-expanse.html",
       "/posts/2024-02-09-kubernetes-gpu-jetstream2.html",
       "/posts/2024-02-02-soft-scaling-kubernetes-jetstream.html",
       "/posts/2024-01-12-pdf-from-screenshots.html",

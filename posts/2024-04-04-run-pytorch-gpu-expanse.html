@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2024-04-04">
 
-<title>Andrea Zonca – setup-ssl-web-host-jetstream2</title>
+<title>Andrea Zonca - Run PyTorch with GPU support on Expanse</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -112,7 +113,33 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Run PyTorch with GPU support on Expanse</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">hpc</div>
+                <div class="quarto-category">jupyter</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 4, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
@@ -121,6 +148,23 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+
+<p>In this tutorial we will create a Python environment with PyTorch and see how to get Jupyterlab running on a GPU node.</p>
+<p>First of all we want to create an isolated Python environment, I generally favor <code>micromamba</code>, see <a href="https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html#automatic-install">the documentation on how to install it</a></p>
+<p>Once installed, create an environment:</p>
+<pre><code>micromamba create -n pytorch python==3.10 jupyterlab</code></pre>
+<p>Do not install <code>pytorch</code> with Mamba, it won’t recognize the GPU, not sure why.</p>
+<p>Install <code>pytorch</code> with <code>pip</code>:</p>
+<pre><code>micromamba activate pytorch
+pip install pytorch</code></pre>
+<p>The tool to launch JupyterLab on Expanse currently doesn’t support mamba, so the easiest way is to activate this environment at login, therefore add:</p>
+<pre><code>micromamba activate pytorch</code></pre>
+<p>at the end of <code>.bashrc</code>.</p>
+<p>Finally we can launch a job on the GPU-shared partition with Galyleo to get JupyterLab proxied to a public url:</p>
+<pre><code>/cm/shared/apps/sdsc/galyleo/galyleo.sh launch -Q -p gpu-shared -A sds166 -t 120 -c 8 -M 16 -G 1 -j lab</code></pre>
+<p>Check in a Notebook that <code>pytorch</code> detects the GPU:</p>
+<pre><code>import torch
+torch.cuda.is_available()</code></pre>
 
 
 
