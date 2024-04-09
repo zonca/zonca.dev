@@ -1148,6 +1148,13 @@
     "text": "Only checkout a subset of files stored in git LFS\nGIT_LFS_SKIP_SMUDGE=1 gh repo clone orgname/reponame\nThen checkout only specific files:\ngit lfs fetch --include=\"pattern*\" --exclude=\"\"\ngit lfs checkout"
   },
   {
+    "objectID": "posts/2020-06-01-git.html#configure-git-to-automatically-run-git-submodule-update",
+    "href": "posts/2020-06-01-git.html#configure-git-to-automatically-run-git-submodule-update",
+    "title": "My own git cheatsheet",
+    "section": "Configure git to automatically run git submodule update",
+    "text": "Configure git to automatically run git submodule update\nThis works when switching branches:\ngit config --global submodule.recurse true"
+  },
+  {
     "objectID": "posts/2020-05-21-jetstream_kubernetes_magnum.html",
     "href": "posts/2020-05-21-jetstream_kubernetes_magnum.html",
     "title": "Deploy Kubernetes and JupyterHub on Jetstream with Magnum",

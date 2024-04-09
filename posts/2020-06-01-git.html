@@ -166,6 +166,11 @@ git commit -c ORIG_HEAD</code></pre>
 <p>Then checkout only specific files:</p>
 <pre><code>git lfs fetch --include="pattern*" --exclude=""
 git lfs checkout</code></pre>
+</section>
+<section id="configure-git-to-automatically-run-git-submodule-update" class="level2">
+<h2 class="anchored" data-anchor-id="configure-git-to-automatically-run-git-submodule-update">Configure git to automatically run git submodule update</h2>
+<p>This works when switching branches:</p>
+<pre><code>git config --global submodule.recurse true</code></pre>
 
 
 </section>
