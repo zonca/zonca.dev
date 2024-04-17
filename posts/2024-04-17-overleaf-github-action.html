@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2024-04-17">
 
-<title>Andrea Zonca - 2-way Synchronization of Overleaf and Github via Github action</title>
+<title>Andrea Zonca - 2-way Synchronization of Overleaf and Github via a Github Action</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -150,7 +150,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">2-way Synchronization of Overleaf and Github via Github action</h1>
+      <h1 class="title">2-way Synchronization of Overleaf and Github via a Github Action</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">git</div>
                 <div class="quarto-category">github</div>
@@ -184,11 +184,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>In the past I wrote tutorials on how to handle Github and Overleaf, the latest for example is <a href="../posts/2023-02-02-github-overleaf.html">this</a>. However the Github button in Overleaf is fragile, it often gets disconnected for unknown reasons, and it cannot be reconnected, it forces deletion of the Github repository. Moreover, it seems it is now a Premium feature. Finally, it needs to be triggered manually, and nobody remembers to do that.</p>
-<p>I therefore decided to write a Github action that can be configured to run automatically every hour to pull changes from Overleaf into Github using the <code>git</code> interface, which instead seems solid.</p>
+<p>I therefore decided to write a Github Action that can be configured to run automatically every hour to pull changes from Overleaf into Github using the <code>git</code> interface, which instead seems solid.</p>
 <p>The action also runs on Pull Requests, and in this case runs the rebase operation on Overleaf to check that there are no merge conflicts, but it does not push neither to the local branch nor to Overleaf. Therefore it is useful for contributors to manually rebase on <code>main</code> once in a while to keep the pull request current, it is not strictly necessary, we can wait for the pull request to be merged to handle that.</p>
 <p>When the action runs on the Github <code>main</code> branch, if after the rebasing on Overleaf there are any local commits, those commits are also pushed to Overleaf (this is not a force-push, so it will fail is something is not matching, this is intendend behaviour).</p>
-<p>The action needs 2 secrets to be configured in the repository, <code>OVERLEAF_PROJECT_ID</code> is in the overleaf project url <code>https://www.overleaf.com/project/xxxxxxxxxxxxxxxxxxxxxxxx</code>, <code>OVERLEAF_TOKEN</code> can be <a href="https://www.overleaf.com/learn/how-to/Git_integration_authentication_tokens#How_to_generate_authentication_tokens">generated in Account Settings</a>.</p>
-<p>Here is the entire action:</p>
+<p>The Action needs 2 secrets to be configured in the repository, <code>OVERLEAF_PROJECT_ID</code> is in the Overleaf project url <code>https://www.overleaf.com/project/xxxxxxxxxxxxxxxxxxxxxxxx</code>, <code>OVERLEAF_TOKEN</code> can be <a href="https://www.overleaf.com/learn/how-to/Git_integration_authentication_tokens#How_to_generate_authentication_tokens">generated in Account Settings</a>.</p>
+<p>Here is the entire Action:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Overleaf Sync with Git</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">schedule</span><span class="kw">:</span></span>
