@@ -9,7 +9,7 @@ title: 2-way Synchronization of Overleaf and Github via Github action
 ---
 
 In the past I wrote tutorials on how to handle Github and Overleaf, the latest for example is [this](./2023-02-02-github-overleaf.md).
-However the Github button in Overleaf is fragile, it often gets disconnected for unknown reasons, and it cannot be reconnected, it forces deletion of the Github repository. Moreover, it seems it is now a Premium feature.
+However the Github button in Overleaf is fragile, it often gets disconnected for unknown reasons, and it cannot be reconnected, it forces deletion of the Github repository. Moreover, it seems it is now a Premium feature. Finally, it needs to be triggered manually, and nobody remembers to do that.
 
 I therefore decided to write a Github action that can be configured to run automatically every hour to pull changes from Overleaf into Github using the `git` interface, which instead seems solid.
 
