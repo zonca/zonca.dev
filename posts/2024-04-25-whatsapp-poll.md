@@ -12,11 +12,11 @@ Best workaround I found is to use [`WPPConnect/WA-JS`](https://github.com/wppcon
 
 This creates a sort of API in the browser console that can be used to just copy-paste from an editor to create a poll.
 
-* Install Tampermonkey in your browser (I tested with Chrome) https://www.tampermonkey.net/
+* Install [Tampermonkey](https://www.tampermonkey.net/) in your browser (I tested with Chrome) 
 * Select "Create new script"
-* Paste from https://github.com/wppconnect-team/wa-js?tab=readme-ov-file#tampermonkey-or-greasemonkey, do not need to write anything where it says "Your code here"
+* Paste from <https://github.com/wppconnect-team/wa-js?tab=readme-ov-file#tampermonkey-or-greasemonkey>, do not need to write anything where it says "Your code here"
 
-Now after we login to https://web.whatsapp.com/ and select the target group chat,
+Now after we login to [WhatsApp Web](https://web.whatsapp.com/) and select the target group chat,
 we can open the "Developer tools", paste and execute:
 
 ```javascript
