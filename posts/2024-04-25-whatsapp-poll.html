@@ -183,11 +183,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Best workaround I found is to use <a href="https://github.com/wppconnect-team/wa-js"><code>WPPConnect/WA-JS</code></a></p>
 <p>This creates a sort of API in the browser console that can be used to just copy-paste from an editor to create a poll.</p>
 <ul>
-<li>Install Tampermonkey in your browser (I tested with Chrome) https://www.tampermonkey.net/</li>
+<li>Install <a href="https://www.tampermonkey.net/">Tampermonkey</a> in your browser (I tested with Chrome)</li>
 <li>Select “Create new script”</li>
-<li>Paste from https://github.com/wppconnect-team/wa-js?tab=readme-ov-file#tampermonkey-or-greasemonkey, do not need to write anything where it says “Your code here”</li>
+<li>Paste from <a href="https://github.com/wppconnect-team/wa-js?tab=readme-ov-file#tampermonkey-or-greasemonkey" class="uri">https://github.com/wppconnect-team/wa-js?tab=readme-ov-file#tampermonkey-or-greasemonkey</a>, do not need to write anything where it says “Your code here”</li>
 </ul>
-<p>Now after we login to https://web.whatsapp.com/ and select the target group chat, we can open the “Developer tools”, paste and execute:</p>
+<p>Now after we login to <a href="https://web.whatsapp.com/">WhatsApp Web</a> and select the target group chat, we can open the “Developer tools”, paste and execute:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> WPP<span class="op">.</span><span class="at">chat</span><span class="op">.</span><span class="fu">getActiveChat</span>()</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>WPP<span class="op">.</span><span class="at">chat</span><span class="op">.</span><span class="fu">sendCreatePollMessage</span>(</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>c<span class="op">.</span><span class="at">id</span><span class="op">,</span></span>

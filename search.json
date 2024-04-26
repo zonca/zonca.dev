@@ -105,137 +105,200 @@
     "text": "Test the SSH server\nFrom a machine external to Jetstream:\nssh -i path/to/private/key -p 30022 datacopier@js-xxx-xxx.jetstream-cloud.org\nWelcome to OpenSSH Server\n\nssh-server:~$ whoami\ndatacopier\nssh-server:~$ sudo su\nssh-server:/config# whoami\nroot\nssh-server:/config# cd /share\nssh-server:/share# ls\nlost+found  readonly_folder  writable_folder\nssh-server:/share# touch readonly_folder/moredata\nssh-server:/share#"
   },
   {
-    "objectID": "posts/2022-10-11-install-jupyroot-jupyterhub.html",
-    "href": "posts/2022-10-11-install-jupyroot-jupyterhub.html",
-    "title": "Install the JupyROOT Python kernel in JupyterHub",
+    "objectID": "posts/2024-04-25-whatsapp-poll.html",
+    "href": "posts/2024-04-25-whatsapp-poll.html",
+    "title": "Automate sending polls via WhatsApp",
     "section": "",
-    "text": "After installing ROOT’s conda package, for example with micromamba:\nmicromamba create -n root -c conda-forge root python==3.8 matplotlib\nand then installing the kernel for JupyterHub:\nipython kernel install --name root --user\nUnfortunately import ROOT gives the error:\nERROR in cling::CIFactory::createCI(): cannot extract standard library include paths!\nInvoking:\n  LC_ALL=C x86_64-conda-linux-gnu-c++   -DNDEBUG -xc++ -E -v /dev/null 2&gt;&1 | sed -n -e '/^.include/,${' -e '/^ \\/.*++/p' -e '}'\nResults was:\nWith exit code 0\nThe fix, found after more than 1 hour of search, is at https://root-forum.cern.ch/t/jupyroot-in-jupyterhub-cling-init-can-not-extract-standard-include-library-paths/46890:\nEdit the kernel.json file and modify the PATH variable:\n{\n \"argv\": [\n  \"/home/jovyan/micromamba/envs/root/bin/python3.8\",\n  \"-m\",\n  \"ipykernel_launcher\",\n  \"-f\",\n  \"{connection_file}\"\n ],\n \"display_name\": \"root\",\n \"language\": \"python\",\n \"metadata\": {\n  \"debugger\": true\n },\n \"env\": {\n   \"PATH\": \"/home/jovyan/micromamba/envs/root/bin/:${PATH}\"    \n }\n}"
+    "text": "Polls in WhatsApp are so convenient for the users, but so painful for group admins. Cannot modify them, cannot re-use or replicate them.\nBest workaround I found is to use WPPConnect/WA-JS\nThis creates a sort of API in the browser console that can be used to just copy-paste from an editor to create a poll.\n\nInstall Tampermonkey in your browser (I tested with Chrome)\nSelect “Create new script”\nPaste from https://github.com/wppconnect-team/wa-js?tab=readme-ov-file#tampermonkey-or-greasemonkey, do not need to write anything where it says “Your code here”\n\nNow after we login to WhatsApp Web and select the target group chat, we can open the “Developer tools”, paste and execute:\nc = WPP.chat.getActiveChat()\nWPP.chat.sendCreatePollMessage(\nc.id,\n'Title of the poll',\n['9am', '9:30am', '10am', '2pm', '2:30pm', '3pm', 'No', 'Maybe']\n);\nThis is very convenient especially if you send many polls that have mostly the same options."
   },
   {
-    "objectID": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html",
-    "href": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html",
-    "title": "Deploy Kubernetes on Jetstream 2 with Kubespray 2.21.0",
+    "objectID": "posts/2023-11-02-desouza-award.html",
+    "href": "posts/2023-11-02-desouza-award.html",
+    "title": "Received DeSouza award for work on deploying software infrastructure on Jetstream",
     "section": "",
-    "text": "This work has been supported by Indiana University and is cross-posted on the Jetstream 2 official documentation website.\nThis tutorial will explain how to install Kubernetes on Jetstream 2 relying on Kubespray.\nKubespray is a project built on top of Terraform, for creating Openstack resources, and Ansible, for configuring the Virtual Machines for Kubernetes.\nThis work is based on Kubespray v2.21.0 which was published in January 2023, which installs Kubernetes v1.25.6, released in December 2022."
+    "text": "I am honored to have received the 2023 DeSouza award from Unidata, a NSF-funded center providing data, software and support for the field of Geoscience. The award celebrates the impact of Jeremy Fischer’s and my work on deploying a software platform based on Kubernetes and JupyterHub (in particular Zero to JupyterHub) on the NSF-funded cloud computing system Jetstream 2.\n\nPage about the award on the Unidata website\nVideo of the seminar on Youtube\nSlides of the seminar"
   },
   {
-    "objectID": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#create-jetstream-virtual-machines-with-terraform",
-    "href": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#create-jetstream-virtual-machines-with-terraform",
-    "title": "Deploy Kubernetes on Jetstream 2 with Kubespray 2.21.0",
-    "section": "Create Jetstream Virtual machines with Terraform",
-    "text": "Create Jetstream Virtual machines with Terraform\nTerraform allows to execute recipes that describe a set of OpenStack resources and their relationship. In the context of this tutorial, we do not need to learn much about Terraform, we will configure and execute the recipe provided by kubespray.\n\nRequirements\nWe have been testing with python-openstackclient version 6.1.0, but any recent openstack client should work. install terraform by copying the correct binary to /usr/local/bin/. The requirement is a terraform version &gt; 0.14, this tutorial has been tested with 0.14.4, which can be dowloaded from the release page. Terraform 1.1.9 and 1.2.9 do not work\n\n\nRequest API access\nFollow the instructions in the Jetstream 2 documentation to create application credentials.\nAlso make sure you are not hitting any of the issues in the Troubleshooting page, in particular, it is a good idea to set your password within single quotes to avoid special characters being interpreted by the shell:\nexport OS_APPLICATION_CREDENTIAL_SECRET='xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'\nTest with:\nopenstack flavor list\nThis should return the list of available “sizes” of the Virtual Machines.\nYou also need to add to the app*openrc.sh also this line:\nexport OS_APPLICATION_CREDENTIAL_NAME=$OS_APPLICATION_CREDENTIAL_ID\notherwise Ansible will fail with you must either set external_openstack_username or external_openstack_application_credential_name.\n\n\nClone kubespray\nWe needed to make a few modifications to kubespray to adapt it to Jetstream:\ngit clone https://github.com/zonca/jetstream_kubespray\ngit checkout -b branch_v2.21.0 origin/branch_v2.21.0\nSee an overview of my changes compared to the standard kubespray release 2.21.0, compared to previous releases of this tutorial, now the changes in the Terraform recipes are extensive, the good news is that the deployment itself is simpler. We are having all networking handled automatically by Jetstream 2, i.e. instances are automatically assigned to the auto_allocated_network, auto_allocated_router and auto_allocated_subnet, instead of creating dedicated resources with Terraform.\nInside jetstream_kubespray, choose a name for the cluster and copy from my template:\nexport CLUSTER=yourclustername\ncp -r inventory/kubejetstream inventory/$CLUSTER\ncd inventory/$CLUSTER\nalso export CLUSTER=yourclustername is useful to add to the app*openrc.sh.\n\n\nUse a projects.jetstream-cloud.org subdomain\nOne option is to use the Designate Openstack service deployed by Jetstream to get an automatically created domain for the instances. In this case the DNS name will be of the form:\nkubejetstream-1.$PROJ.projects.jetstream-cloud.org\nwhere PROJ is the ID of your Jestream 2 allocation:\nexport PROJ=\"xxx000000\"\nThe first part of the URL is the instance name, we shortened it removing k8s-master because domains too long do not work with Letsencrypt.\nAfter having executed Terraform, you can pip install on your local machine the package python-designateclient to check what records were created (mind the final period):\nopenstack recordset list $PROJ.projects.jetstream-cloud.org.\nAs usual with stuff related to DNS, there are delays, so your record could take up to 1 hour to work, or if you delete the instance and create it again with another IP it could take hours to update.\nFor debugging purposes it is useful to use nslookup:\nnslookup ${CLUSTER}-1.$PROJ.projects.jetstream-cloud.org\nalso directly at the source nameservers:\nnslookup ${CLUSTER}-1.$PROJ.projects.jetstream-cloud.org js2.jetstream-cloud.org\nInstead, if you have a way of getting a domain outside of Jetstream, better reserve a floating IP, see below.\n\n\nReserve a floating IP\nWe prefer not to have a floating IP handled by Terraform, otherwise it would be released every time we need to redeploy the cluster, better create it beforehand:\nopenstack floating ip create public\nThis will return a public floating IP address, it can also be accessed with:\nopenstack floating ip list\nIt is useful to save the IP into the app*openrc.sh, so that every time you load the credentials you also get the address of the master node.\nexport IP=149.xxx.xxx.xxx\n\n\nRun Terraform\nOpen and modify cluster.tfvars, choose your image (by default Ubuntu 20, **Update February 2024, currently Ubuntu 22 works on CPU but broken on GPU) and number of nodes and the flavor of the nodes, by default they are medium instances (\"4\"). See the entries marked as REPLACE and replace them according to the instructions provided.\nPaste the floating ip created previously into k8s_master_fips, unless you are using a projects.jetstream-cloud.org subdomain.\nInitialize Terraform:\nbash terraform_init.sh\nCreate the resources:\nbash terraform_apply.sh\nTerraform is very fast in building all the resources, sometimes resources are not ready yet, so the Apply command fails, just run it again, it happens regularly, nothing to worry about.\nYou can SSH into the master node with:\nssh ubuntu@$IP\nInspect with Openstack the resources created:\nopenstack server list\nopenstack network list\nYou can cleanup the virtual machines and all other Openstack resources (all data is lost) with bash terraform_destroy.sh. The floating IP won’t be released so we can create a cluster again from scratch with the same IP address."
-  },
-  {
-    "objectID": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#install-and-test-ansible",
-    "href": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#install-and-test-ansible",
-    "title": "Deploy Kubernetes on Jetstream 2 with Kubespray 2.21.0",
-    "section": "Install and test Ansible",
-    "text": "Install and test Ansible\nChange folder back to the root of the jetstream_kubespray repository,\nFirst make sure you have a recent version of ansible installed, tested with 2.10.15, you also need additional modules, so first run:\npip install -r requirements.txt\nThis pip script installs a predefined version of ansible, currently 2.10.15, so it is useful to create a virtualenv or a conda environment and install packages inside that.\nThen following the kubespray documentation, we setup ssh-agent so that ansible can SSH from the machine with public IP to the others:\neval $(ssh-agent -s)\nssh-add ~/.ssh/id_rsa\nTest the connection through ansible:\nansible -i inventory/$CLUSTER/hosts -m ping all"
-  },
-  {
-    "objectID": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#install-kubernetes-with-kubespray",
-    "href": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#install-kubernetes-with-kubespray",
-    "title": "Deploy Kubernetes on Jetstream 2 with Kubespray 2.21.0",
-    "section": "Install Kubernetes with kubespray",
-    "text": "Install Kubernetes with kubespray\nIn inventory/$CLUSTER/group_vars/k8s_cluster/k8s-cluster.yml, set the public floating IP of the master instance in supplementary_addresses_in_ssl_keys. Update February 2024: this step is not needed anymore, make sure you have the IP environmental variable set and it will be automatically passed to Ansible by the k8s_install.sh script.\nFinally run the full playbook, it is going to take a good 20 minutes:\nbash k8s_install.sh\nIf the playbook fails with “cannot lock the administrative directory”, it is due to the fact that the Virtual Machine is automatically updating so it has locked the APT directory. Just wait a minute and launch it again. It is always safe to run ansible multiple times.\nIf the playbook gives any error, try to retry the above command, sometimes there are temporary failed tasks, Ansible is designed to be executed multiple times with consistent results.\nYou should have now a Kubernetes cluster running, test it:\n$ ssh ubuntu@$IP\n$ sudo su\n$ kubectl get pods --all-namespaces\nNAMESPACE       NAME                                           READY   STATUS    RESTARTS   AGE\ningress-nginx   ingress-nginx-controller-4xd64                 1/1     Running   0          27m\nkube-system     coredns-8474476ff8-9gd8w                       1/1     Running   0          27m\nkube-system     coredns-8474476ff8-qtshk                       1/1     Running   0          27m\nkube-system     csi-cinder-controllerplugin-9fb5946bf-hwfhp    6/6     Running   0          26m\nkube-system     csi-cinder-nodeplugin-r69nl                    3/3     Running   0          26m\nkube-system     dns-autoscaler-5ffdc7f89d-s4sj4                1/1     Running   0          27m\nkube-system     kube-apiserver-kubejs2-k8s-master-1            1/1     Running   1          66m\nkube-system     kube-controller-manager-kubejs2-k8s-master-1   1/1     Running   1          66m\nkube-system     kube-flannel-2clqv                             1/1     Running   0          29m\nkube-system     kube-flannel-2wbtq                             1/1     Running   0          29m\nkube-system     kube-proxy-hmz6t                               1/1     Running   0          30m\nkube-system     kube-proxy-xkhjx                               1/1     Running   0          30m\nkube-system     kube-scheduler-kubejs2-k8s-master-1            1/1     Running   1          66m\nkube-system     nginx-proxy-kubejs2-k8s-node-1                 1/1     Running   0          64m\nkube-system     nodelocaldns-jwxg8                             1/1     Running   0          27m\nkube-system     nodelocaldns-z4sjl                             1/1     Running   0          27m\nkube-system     openstack-cloud-controller-manager-6q28z       1/1     Running   0          29m\nkube-system     snapshot-controller-786647474f-7x8zx           1/1     Running   0          25m\n\nCompare that you have all those services running also in your cluster. We have also configured NGINX to proxy any service that we will later deploy on Kubernetes, test it with:\n$ wget localhost\n--2022-03-31 06:51:20--  http://localhost/\nResolving localhost (localhost)... 127.0.0.1\nConnecting to localhost (localhost)|127.0.0.1|:80... connected.\nHTTP request sent, awaiting response... 404 Not Found\n2022-03-31 06:51:20 ERROR 404: Not Found.\nError 404 is a good sign, the service is up and serving requests, currently there is nothing to deliver. If you get any other type of error, check that the nginx controller is running:\nkubectl get pods -n ingress-nginx"
-  },
-  {
-    "objectID": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#set-the-default-storage-class",
-    "href": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#set-the-default-storage-class",
-    "title": "Deploy Kubernetes on Jetstream 2 with Kubespray 2.21.0",
-    "section": "Set the default storage class",
-    "text": "Set the default storage class\nThis is not needed anymore, setting Cinder CSI as default storage class is included in the modifications to Kubespray."
-  },
-  {
-    "objectID": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#optional-setup-kubectl-locally",
-    "href": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#optional-setup-kubectl-locally",
-    "title": "Deploy Kubernetes on Jetstream 2 with Kubespray 2.21.0",
-    "section": "(Optional) Setup kubectl locally",
-    "text": "(Optional) Setup kubectl locally\nInstall kubectl locally, the tutorial has been tested with 1.26.\nWe also set kubeconfig_localhost: true, which copies the kubectl configuration admin.conf to:\ninventory/$CLUSTER/artifacts\nWe have a script to replace the IP with the floating IP of the master node, for this script to work make sure you have exported the variable IP:\nbash k8s_configure_kubectl_locally.sh\nFinally edit again the app*openrc.sh and add:\nexport KUBECONFIG=$(pwd -P)/\"jetstream_kubespray/inventory/$CLUSTER/artifacts/admin.conf\""
-  },
-  {
-    "objectID": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#optional-setup-helm-locally",
-    "href": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#optional-setup-helm-locally",
-    "title": "Deploy Kubernetes on Jetstream 2 with Kubespray 2.21.0",
-    "section": "(Optional) Setup helm locally",
-    "text": "(Optional) Setup helm locally\nInstall helm 3 from the release page on Github\nThe tutorial was tested with v3.8.1."
-  },
-  {
-    "objectID": "posts/2024-04-12-pysm-figures.html",
-    "href": "posts/2024-04-12-pysm-figures.html",
-    "title": "Generate figures for PySM emissions",
+    "objectID": "posts/2022-10-24-numba-closures.html",
+    "href": "posts/2022-10-24-numba-closures.html",
+    "title": "Closures in Numba",
     "section": "",
-    "text": "Generate figures for PySM\nThis notebook generates some figures of Galactic and Extra-Galactic emissions using PySM. Mostly for displaying purposes.\nThis notebook is designed to work on Google Colab, remove the apt lines if executing locally but make sure you have a Latex environment.\n\n# Install Latex to render labels\n!apt install texlive texlive-latex-extra texlive-fonts-recommended cm-super-minimal dvipng\n\n\n%pip install pysm3\n\n\nimport pysm3\nfrom pysm3 import units as u\nimport healpy as hp\n\n\nsky = pysm3.Sky(nside=128, preset_strings=[\"c3\"], output_unit=u.uK_CMB)\n\n\ncmb = sky.get_emission(100 * u.GHz)\n\n\nimport matplotlib.pyplot as plt\nplt.rcParams['text.usetex'] = True\n\n\nfontsize={\"title\":30, \"cbar_label\":20, \"cbar_tick_label\":20}\n\n\nhp.projview(cmb[0].value, min=-250, max=250,\n            fontsize=fontsize,\n            unit=r'$\\mu K_{CMB}$', title=\"Cosmic Microwave Background\");\nplt.savefig(\"1.jpg\", bbox_inches=\"tight\")\n\n\n\n\n\nsky = pysm3.Sky(nside=256, preset_strings=[\"s5\"], output_unit=u.mK_RJ)\nsync = sky.get_emission(23 * u.GHz)[0]\n\n\nhp.projview(sync.value, min=0.02, max=2,\n            fontsize=fontsize, norm=\"symlog2\", cmap=\"planck_log\",\n            unit=r'$mK$', title=r\"Synchrotron at $23 GHz$\");\nplt.savefig(\"2.jpg\", bbox_inches=\"tight\")\n\n\n\n\n\nsky = pysm3.Sky(nside=256, preset_strings=[\"f1\"], output_unit=u.mK_RJ)\nfreefree = sky.get_emission(30 * u.GHz)[0]\n\n\nfreefree.min(), freefree.max()\n\n(&lt;Quantity 1.9947761e-07 mK_RJ&gt;, &lt;Quantity 212.05362 mK_RJ&gt;)\n\n\n\nhp.projview(freefree.value, min=0, max=10,\n            fontsize=fontsize,\n            #norm=\"hist\",\n            cmap = \"plasma\",\n            #norm=\"symlog2\", cmap=\"planck_log\",\n            unit=r'$mK$', title=r\"Free-free emission at $30 GHz$\");\n\n\n\n\n\nsky = pysm3.Sky(nside=256, preset_strings=[\"a1\"], output_unit=u.mK_RJ)\name = sky.get_emission(30 * u.GHz)[0]\n\n\nhp.projview(ame.value, min=0.01, max=10,\n            fontsize=fontsize,\n            norm=\"log\",\n            cmap = \"magma\",\n            #norm=\"symlog2\", cmap=\"planck_log\",\n            unit=r'$mK_{RJ}$', title=r\"Spinning dust at $30 GHz$\");\nplt.savefig(\"3.jpg\", bbox_inches=\"tight\")\n\n\n\n\n\nsky = pysm3.Sky(nside=256, preset_strings=[\"d10\"], output_unit=u.mK_RJ)\ndust = sky.get_emission(545 * u.GHz)[0]\n\n\ndust.value.min()\n\n0.03938505\n\n\n\nhp.projview(dust.value-dust.value.min(), min=0.001, max=10,\n            fontsize=fontsize,\n            norm=\"log\",\n            cmap = \"inferno\",\n            #norm=\"symlog2\", cmap=\"planck_log\",\n            unit=r'$mK_{RJ}$', title=r\"Thermal Dust at $545 GHz$\");\nplt.savefig(\"4.jpg\", bbox_inches=\"tight\")\n\n\n\n\n\nsky = pysm3.Sky(nside=256, preset_strings=[\"co1\"], output_unit=u.mK_RJ)\nco = sky.get_emission(sky.components[0].line_frequency['10'])[0]\n\n\nc=sky.components[0]\n\n\nc.line_frequency\n\n{'10': &lt;Quantity 115.271 GHz&gt;,\n '21': &lt;Quantity 230.538 GHz&gt;,\n '32': &lt;Quantity 345.796 GHz&gt;}\n\n\n\nhp.projview(co.value, min=0.01, max=1,\n            fontsize=fontsize,\n            #norm=\"log\",\n            cmap = \"Greys_r\",\n            #norm=\"symlog2\", cmap=\"planck_log\",\n            unit=r'$mK_{RJ}$', title=r\"Carbon Monoxyde line at $115 GHz$\");\nplt.savefig(\"5.jpg\", bbox_inches=\"tight\")\n\n\n\n\n\nsky = pysm3.Sky(nside=2048, preset_strings=[\"rg1\"], output_unit=u.uK_RJ)\nrg = sky.get_emission(353*u.GHz)[0]\n\n\npysm3.apply_smoothing_and_coord_transform?\n\n\nrg_smoothed = pysm3.apply_smoothing_and_coord_transform(rg, output_nside=256,\n\n                                                        fwhm=3 * u.arcmin)\n\n\nhp.projview(rg_smoothed.value, min=0, max=10,\n            fontsize=fontsize,\n            #norm=\"log\",\n            cmap = \"Oranges_r\",\n            #norm=\"symlog2\", cmap=\"planck_log\",\n            unit=r'$\\mu K_{RJ}$', title=r\"Radio galaxies at $353 GHz$\");\nplt.savefig(\"6.jpg\", bbox_inches=\"tight\")\n\n\n\n\n\n!apt install imagemagick\n\nReading package lists... Done\nBuilding dependency tree... Done\nReading state information... Done\nimagemagick is already the newest version (8:6.9.11.60+dfsg-1.3ubuntu0.22.04.3).\n0 upgraded, 0 newly installed, 0 to remove and 45 not upgraded.\n\n\n\n!rm -f montage.jpg\n!montage -geometry -0+0 -size 2000 *.jpg montage.jpg\n\n\nfrom IPython.display import Image\nImage(filename='montage.jpg')"
+    "text": "!pip install numba\n\nLooking in indexes: https://pypi.org/simple, https://us-python.pkg.dev/colab-wheels/public/simple/\nRequirement already satisfied: numba in /usr/local/lib/python3.7/dist-packages (0.56.3)\nRequirement already satisfied: llvmlite&lt;0.40,&gt;=0.39.0dev0 in /usr/local/lib/python3.7/dist-packages (from numba) (0.39.1)\nRequirement already satisfied: setuptools in /usr/local/lib/python3.7/dist-packages (from numba) (57.4.0)\nRequirement already satisfied: importlib-metadata in /usr/local/lib/python3.7/dist-packages (from numba) (4.13.0)\nRequirement already satisfied: numpy&lt;1.24,&gt;=1.18 in /usr/local/lib/python3.7/dist-packages (from numba) (1.21.6)\nRequirement already satisfied: typing-extensions&gt;=3.6.4 in /usr/local/lib/python3.7/dist-packages (from importlib-metadata-&gt;numba) (4.1.1)\nRequirement already satisfied: zipp&gt;=0.5 in /usr/local/lib/python3.7/dist-packages (from importlib-metadata-&gt;numba) (3.9.0)\nfrom numba.core import types\nfrom numba.typed import Dict\nfrom numba import njit"
   },
   {
-    "objectID": "posts/2023-04-23-hyper-supreme-cam-cosmology.html",
-    "href": "posts/2023-04-23-hyper-supreme-cam-cosmology.html",
-    "title": "Cosmology webinar Hyper Supreme Cam",
+    "objectID": "posts/2022-10-24-numba-closures.html#parameter-is-a-simple-type",
+    "href": "posts/2022-10-24-numba-closures.html#parameter-is-a-simple-type",
+    "title": "Closures in Numba",
+    "section": "Parameter is a simple type",
+    "text": "Parameter is a simple type\nIn this case numba supports a closure without any issue, in this case have a function which defines a cut on an array, we can create different versions of this function dinamically.\n\ndef MB_cut_factory(limit):\n    def cut(value):\n        return value &lt; limit\n    return cut\n\n\nMB_cut_factory(4)(3)\n\nTrue\n\n\n\nnjit(MB_cut_factory(4))(3)\n\nTrue"
+  },
+  {
+    "objectID": "posts/2022-10-24-numba-closures.html#parameter-is-a-complex-type",
+    "href": "posts/2022-10-24-numba-closures.html#parameter-is-a-complex-type",
+    "title": "Closures in Numba",
+    "section": "Parameter is a complex type",
+    "text": "Parameter is a complex type\nIf the parameter is a complex type, unfortunately numba throws a NotImplementedError:\n\ndict_ranges = Dict.empty(\n    key_type=types.int64,\n    value_type=types.Tuple((types.float64, types.float64))\n    )\n\ndict_ranges[3] = (1, 3)\n\ndef MB_cut_factory(dict_ranges):\n    def cut(series, value):\n        return dict_ranges[series][0] &lt; value &lt; dict_ranges[series][1]\n    return cut\n\nMB_cut_factory(dict_ranges)(3,2)\n\nTrue\n\n\n\nnjit(MB_cut_factory(dict_ranges))(3,2)\n\nNumbaNotImplementedError: ignored"
+  },
+  {
+    "objectID": "posts/2022-10-24-numba-closures.html#the-ugly-workaround",
+    "href": "posts/2022-10-24-numba-closures.html#the-ugly-workaround",
+    "title": "Closures in Numba",
+    "section": "The ugly workaround",
+    "text": "The ugly workaround\nUsing exec we can brutally create the function definition injecting the dictionary as a string into the function definition itself.\nIt is ugly but works and gives back a function that can be tested in pure Python before passing it to numba for optimization.\nNotice we need to use globals() in the call to exec to have the cut function available in the namespace.\n\ndef MB_cut_factory(dict_ranges):\n    exec(\"def cut(series, value):\\n    dict_ranges=\" +\\\n         dict_ranges.__str__() +\\\n        \"\\n    return dict_ranges[series][0] &lt; value &lt; dict_ranges[series][1]\", globals())\n    return cut\n\n\nMB_cut_factory(dict_ranges)(3,2)\n\nTrue\n\n\n\nnjit(MB_cut_factory(dict_ranges))(3,2)\n\nTrue"
+  },
+  {
+    "objectID": "posts/2022-10-24-numba-closures.html#questions-on-stackoverflow",
+    "href": "posts/2022-10-24-numba-closures.html#questions-on-stackoverflow",
+    "title": "Closures in Numba",
+    "section": "Questions on Stackoverflow",
+    "text": "Questions on Stackoverflow\nTrying to find solutions I posted 2 related questions to Stackoverflow, plase contribute there if you have better suggestions:\n\nnumba and variables defined in a closure\nTransform a partial function into a normal function"
+  },
+  {
+    "objectID": "posts/2023-09-26-https-kubernetes-letsencrypt.html",
+    "href": "posts/2023-09-26-https-kubernetes-letsencrypt.html",
+    "title": "Setup HTTPS on Kubernetes with cert-manager",
     "section": "",
-    "text": "Webinar about Cosmology results, in particular tension in \\(S_8\\) by the Hyper Supreme Cam collaboration:\nVideo on Youtube"
+    "text": "Update March 2024: the routing issue that force cert-manager pods to run on the control-plane are back, see this Github issue, so we had to add back the pinning of cert-manager services on one of the nodes in the control plane.\nIn this tutorial we will deploy cert-manager in Kubernetes to automatically provide SSL certificates to JupyterHub (and other services).\nFirst make sure your payload, for example JupyterHub, is working without HTTPS, so that you check that the ports are open, Ingress is working, and JupyterHub itself can accept connections.\nLet’s follow the cert-manager documentation, for convenience I pasted the commands below:\nOnce we have cert-manager setup we can create a Cluster Issuer that works for all namespaces (first edit the yml and add your email address):\nAfter this, we can display all the resources in the cert-manager namespace to check that the services and pods are running:\nThe result should be something like:"
   },
   {
-    "objectID": "posts/2023-03-16-latex-github-codespaces.html",
-    "href": "posts/2023-03-16-latex-github-codespaces.html",
-    "title": "Work on a Latex Document in Github Codespaces",
+    "objectID": "posts/2023-09-26-https-kubernetes-letsencrypt.html#bind-the-pods-to-the-master-node",
+    "href": "posts/2023-09-26-https-kubernetes-letsencrypt.html#bind-the-pods-to-the-master-node",
+    "title": "Setup HTTPS on Kubernetes with cert-manager",
+    "section": "Bind the pods to the master node",
+    "text": "Bind the pods to the master node\nIn Jetstream 2 there are routing restrictions which allow Cert Manager to run only from the master node, see the details on Github. At least when the nodes do not have floating IPs, if all your Virtual Machines have a floating IP, you can safely skip this step.\nUnidata has contributed the script they created to patch the 3 Cert Manager pods to have them run on the master node, we can apply it with:\ncd setup_https\nbash deploymentPatch.sh\nThen verify that the pods are redeployed on master:\nkubectl -n cert-manager get pods -o wide"
+  },
+  {
+    "objectID": "posts/2023-09-26-https-kubernetes-letsencrypt.html#setup-jupyterhub",
+    "href": "posts/2023-09-26-https-kubernetes-letsencrypt.html#setup-jupyterhub",
+    "title": "Setup HTTPS on Kubernetes with cert-manager",
+    "section": "Setup JupyterHub",
+    "text": "Setup JupyterHub\nThen we modify the JupyterHub ingress configuration to use this Issuer, modify secrets.yaml to:\ningress:\n  enabled: true\n  annotations:\n    kubernetes.io/ingress.class: \"nginx\"\n    cert-manager.io/cluster-issuer: \"letsencrypt\"\n  hosts:\n      - js-XXX-YYY.jetstream-cloud.org\n  tls:\n      - hosts:\n         - js-XXX-YYY.jetstream-cloud.org\n        secretName: certmanager-tls-jupyterhub\nFinally update the JupyterHub deployment rerunning the deployment script (no need to delete it):\nbash install_jhub.sh\nAfter a few minutes we should have a certificate available:\nkubectl get certificaterequest --all-namespaces\nNAMESPACE   NAME                           APPROVED   DENIED   READY   ISSUER        REQUESTOR                                         AGE\njhub        certmanager-tls-jupyterhub-1   True                True    letsencrypt   system:serviceaccount:cert-manager:cert-manager   5d\nYou can also check the state of the certificate with:\nkubectl -n jhub describe certificate certmanager-tls-jupyterhub"
+  },
+  {
+    "objectID": "posts/2023-03-23-update-openstack-credentials-kubernetes.html",
+    "href": "posts/2023-03-23-update-openstack-credentials-kubernetes.html",
+    "title": "Update Openstack credentials in Kubernetes",
     "section": "",
-    "text": "I was exploring using Github Codespaces instead of Overleaf to work on a Latex document.\nThe most important missing component is the Latex editor, and the other downside is that it is free only for 90 hours per month (with a Pro academic account). However, the other useful features of Overleaf are present:\nOn top of that, Codespace is a full machine, so you could run a Python script or a Jupyter Notebook to generate images for example.\nSee a screenshot of the environment"
+    "text": "If you are deploying Kubernetes on top of Openstack, the Openstack External cloud provider stores the ID and Secret necessary to authenticate with the cloud infrastructure in a Secret.\nLet’s see how to replece those credentials, for example if they expired.\nFirst dump the base64 encoded secret to the terminal:\nkubectl get secret -n kube-system external-openstack-cloud-config -o jsonpath='{.data}'\nThen copy-paste just the encoded part:\necho xxxxxx | base64 –decode &gt; cloud.conf\nNow we can edit it to replace the credentials\nSet the new OS_APPLICATION_CREDENTIAL_ID in application-credential-id and application-credential-name. Set the value of OS_APPLICATION_CREDENTIAL_SECRET in application-credential-secret.\nFinally encode the content of the file again (-w0 gives the output in 1 line without wrapping):\ncat cloud.conf | base64 -w0\nand overwrite the cloud.conf value in the secret:\nkubectl edit secret -n kube-system external-openstack-cloud-config\nNow repeat the process with the cloud-config secret, which is used by Cinder CSI, you can copy the 3 relevant lines from the previous file.\nFinally we need to restart the affected pods, however, to make it easier I just rebooted all the nodes via openstack server reboot."
   },
   {
-    "objectID": "posts/2023-03-16-latex-github-codespaces.html#how-to-set-github-codespaces-for-latex",
-    "href": "posts/2023-03-16-latex-github-codespaces.html#how-to-set-github-codespaces-for-latex",
-    "title": "Work on a Latex Document in Github Codespaces",
-    "section": "How to set Github Codespaces for Latex",
-    "text": "How to set Github Codespaces for Latex\nOn the repository where you store the Latex project, click on the Code button and open a new Codespace.\nIn the terminal, install the Latex environment:\nsudo apt install texlive texlive-science texlive-latex-extra latexmk\nIn the “Extensions” window, install the extension “Latex Workshop”.\nOpen the “Tex” menu on the left bar to build the project with latexmk and open a tab within VS Code to visualize the PDF."
-  },
-  {
-    "objectID": "posts/2023-02-24-nersc-share-files-html.html",
-    "href": "posts/2023-02-24-nersc-share-files-html.html",
-    "title": "Share data from NERSC publicly via web",
+    "objectID": "posts/2023-02-02-github-overleaf.html",
+    "href": "posts/2023-02-02-github-overleaf.html",
+    "title": "Work on a Latex Document with Github and Overleaf",
     "section": "",
-    "text": "NERSC allows to make data which is on their Community File System publicly available via a web interface.\nThis is handled via “Project folders”, so the requirement is to be part of a “project”, for example most scientists working on Cosmic Microwave Background are part of the cmb project (and of the cmb Unix group at NERSC):\n&gt; groups\nzonca cmb\n\n&gt; export PRJ=cmb\nSo you should be able to create folders on the Community File System, if not already present, also ma\n&gt; mkdir -p /global/project/projectdirs/$PRJ/www\nAlso make sure it files are world-readable, folders are world-readable and world-executable:\n&gt; chmod 755 !$\n&gt; chmod 644 !$/*\nNow any files and any subfolder of www will be available publicly displaying filenames and file sizes and will allow navigation at the address:\n&gt; echo https://portal.nersc.gov/project/$PRJ\nSee for example:\n* [https://portal.nersc.gov/project/cmb/dirlist/](https://portal.nersc.gov/project/cmb/dirlist/)"
+    "text": "In the past I have written about coordinating a large document using multiple overleaf documents and Github repositories. In this post I will just layout the simpler case where we have a Latex document on Overleaf and we also want users to be able to work on it from Github and we want Github Actions to automatically build a PDF for every commit."
   },
   {
-    "objectID": "posts/2024-04-17-overleaf-github-action.html",
-    "href": "posts/2024-04-17-overleaf-github-action.html",
-    "title": "2-way Synchronization of Overleaf and Github via a Github Action",
+    "objectID": "posts/2023-02-02-github-overleaf.html#create-less-privileged-user-on-github",
+    "href": "posts/2023-02-02-github-overleaf.html#create-less-privileged-user-on-github",
+    "title": "Work on a Latex Document with Github and Overleaf",
+    "section": "Create less privileged user on Github",
+    "text": "Create less privileged user on Github\nA concern about using Overleaf is that to have the convenience of pushing and pulling from Github, it asks for write permissions to all repositories.\nSo just to play it safe, it is useful to create a new user on Github, for example mine is called @zoncaoverleafbot, which has write access only to this repository.\nIt is useful to be logged in with your official Github user in your browser and be logged in inside an Incognito window with your “Overleaf bot” user."
+  },
+  {
+    "objectID": "posts/2023-02-02-github-overleaf.html#create-repository-on-github",
+    "href": "posts/2023-02-02-github-overleaf.html#create-repository-on-github",
+    "title": "Work on a Latex Document with Github and Overleaf",
+    "section": "Create repository on Github",
+    "text": "Create repository on Github\nLet’s start with a Latex document for testing purposes, for example I used the “Astronomy & Astrophysics” template.\nStarting with a project on Overleaf is more complicated because of permission issues, so in case you have an Overleaf project, first download it locally.\nCreate a new repository on Github, this should be under your “real” Github account or any organization you have access to, upload the Latex document and all ancillary files.\nSee for example my repository https://github.com/zonca/overleaf_github, you could also fork this repository under your account.\nFinally, give “Write” access to your Overleaf bot user."
+  },
+  {
+    "objectID": "posts/2023-02-02-github-overleaf.html#create-the-linked-project-on-overleaf",
+    "href": "posts/2023-02-02-github-overleaf.html#create-the-linked-project-on-overleaf",
+    "title": "Work on a Latex Document with Github and Overleaf",
+    "section": "Create the linked project on Overleaf",
+    "text": "Create the linked project on Overleaf\nNow login to Github with your “Overleaf bot” account, then login to Overleaf.\nClick on “New project” =&gt; “Import from Github”, select your repository.\nThis will create a project on Overleaf that is automatically linked to the Github repository."
+  },
+  {
+    "objectID": "posts/2023-02-02-github-overleaf.html#how-to-edit-on-overleaf",
+    "href": "posts/2023-02-02-github-overleaf.html#how-to-edit-on-overleaf",
+    "title": "Work on a Latex Document with Github and Overleaf",
+    "section": "How to edit on Overleaf",
+    "text": "How to edit on Overleaf\nNow both you and all your collaborators, can use Overleaf to edit the document and then push to Github using your “Overleaf bot” user, they do not need to link their own Github user.\n\nuse the Overleaf “Write”\nBefore making any edits, click on Menu =&gt; Github =&gt; Pull changes from Github\nMake edits on Overleaf\nOnce you are finished editing, even just for 1 or 2 hours, click on Menu =&gt; Github =&gt; Push changes to Github\nEdits will show up on Github as made by the “Overleaf bot” user , which avoids giving too much permissions to Overleaf\nGithub is supposed to have the latest version of the document always"
+  },
+  {
+    "objectID": "posts/2023-02-02-github-overleaf.html#build-the-pdf-on-github-optional",
+    "href": "posts/2023-02-02-github-overleaf.html#build-the-pdf-on-github-optional",
+    "title": "Work on a Latex Document with Github and Overleaf",
+    "section": "Build the PDF on Github (Optional)",
+    "text": "Build the PDF on Github (Optional)\nThe easiest way to access the PDF is to get it from Overleaf. However, it might be useful to also have it available on Github. We can have Github actions build it and make it available as an artifact.\nCustomize the build_latex.yml file to have Github actions build your PDF.\nThe only downside is that the PDF is hidden inside the Github actions, to simplify access we can get a direct link to the latest PDF using the https://nightly.link service, just paste the URL to the build_latex.yml, for my repository:\n\nhttps://github.com/zonca/overleaf_github/blob/main/.github/workflows/build_latex.yml\n\nThis will provide a link of the form:\nhttps://nightly.link/zonca/overleaf_github/workflows/build_latex/main/PDF.zip\nwhich provides 1-click access to the latest PDF.\n\nCreate releases with attached PDF on Github (Optional)\nThe Github Actions workflow also handles tagging releases, so if you create a tagged version in the repository, like 0,1 in git, for example:\ngit tag -a 0.1 -m \"Tagging version 0.1\"\ngit push --tags\nThis is going to create a Release on Github, which is visible on the homepage and attach the PDF to it, see the example on my repository.\nTo make this work, you need to grant writing permissions Github Action workflows, in the repository “Settings” =&gt; “Actions” =&gt; “General”, select “Read and write permissions” under “Workflow permissions”."
+  },
+  {
+    "objectID": "posts/2022-12-01-radio-galaxies-websky-planck.html",
+    "href": "posts/2022-12-01-radio-galaxies-websky-planck.html",
+    "title": "Compare WebSky Radio Galaxies maps from PySM to Planck",
     "section": "",
-    "text": "In the past I wrote tutorials on how to handle Github and Overleaf, the latest for example is this. However the Github button in Overleaf is fragile, it often gets disconnected for unknown reasons, and it cannot be reconnected, it forces deletion of the Github repository. Moreover, it seems it is now a Premium feature. Finally, it needs to be triggered manually, and nobody remembers to do that.\nI therefore decided to write a Github Action that can be configured to run automatically every hour to pull changes from Overleaf into Github using the git interface, which instead seems solid.\nThe action also runs on Pull Requests, and in this case runs the rebase operation on Overleaf to check that there are no merge conflicts, but it does not push neither to the local branch nor to Overleaf. Therefore it is useful for contributors to manually rebase on main once in a while to keep the pull request current, it is not strictly necessary, we can wait for the pull request to be merged to handle that.\nWhen the action runs on the Github main branch, if after the rebasing on Overleaf there are any local commits, those commits are also pushed to Overleaf (this is not a force-push, so it will fail is something is not matching, this is intendend behaviour).\nThe Action needs 2 secrets to be configured in the repository, OVERLEAF_PROJECT_ID is in the Overleaf project url https://www.overleaf.com/project/xxxxxxxxxxxxxxxxxxxxxxxx, OVERLEAF_TOKEN can be generated in Account Settings.\nHere is the entire Action:\nname: Overleaf Sync with Git\non:\n  schedule:\n    - cron: \"0 * * * *\"\n  push:\n  workflow_dispatch:\n      \njobs:\n  sync-overleaf:\n    name: Synchronize with Overleaf\n    runs-on: ubuntu-latest\n    steps:\n    - uses: actions/checkout@v4\n      with:\n          fetch-depth: 0 # need to fetch history to rebase\n    - name: Configure Overleaf remote\n      run: git remote add overleaf https://git:${OVERLEAF_TOKEN}@git.overleaf.com/${OVERLEAF_PROJECT_ID}\n      env:\n        OVERLEAF_PROJECT_ID: ${{ secrets.OVERLEAF_PROJECT_ID }}\n        OVERLEAF_TOKEN: ${{ secrets.OVERLEAF_TOKEN }}\n    - name: Pull changes from Overleaf\n      run: git pull --rebase overleaf master \n    - name: Push changes to Github and Overleaf (only from main)\n      run: git push --force origin main && git push overleaf HEAD:master\n      if: ${{ github.ref == 'refs/heads/main' }}"
+    "text": "I need to check that the amplitude of the maps of Radio Galaxies produced by WebSky are reasonable if compared to experimental results. The main worry is that being point sources, when we apply a beam using Spherical Harmonics transform we get spurious results due to the input maps not being band-limited.\npip install pysm3 --pre\n\nRequirement already satisfied: pysm3 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (3.4.0b4.dev138+g864a61e.d20221114)\nRequirement already satisfied: toml in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from pysm3) (0.10.2)\nRequirement already satisfied: astropy in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from pysm3) (5.1.1)\nRequirement already satisfied: numba in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from pysm3) (0.56.3)\nRequirement already satisfied: healpy in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from pysm3) (1.16.1)\nRequirement already satisfied: numpy&gt;=1.18 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from astropy-&gt;pysm3) (1.23.4)\nRequirement already satisfied: packaging&gt;=19.0 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from astropy-&gt;pysm3) (21.3)\nRequirement already satisfied: pyerfa&gt;=2.0 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from astropy-&gt;pysm3) (2.0.0.1)\nRequirement already satisfied: PyYAML&gt;=3.13 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from astropy-&gt;pysm3) (6.0)\nRequirement already satisfied: scipy in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from healpy-&gt;pysm3) (1.9.3)\nRequirement already satisfied: matplotlib in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from healpy-&gt;pysm3) (3.6.2)\nRequirement already satisfied: llvmlite&lt;0.40,&gt;=0.39.0dev0 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from numba-&gt;pysm3) (0.39.1)\nRequirement already satisfied: setuptools in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from numba-&gt;pysm3) (65.5.1)\nRequirement already satisfied: pyparsing!=3.0.5,&gt;=2.0.2 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from packaging&gt;=19.0-&gt;astropy-&gt;pysm3) (3.0.9)\nRequirement already satisfied: contourpy&gt;=1.0.1 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from matplotlib-&gt;healpy-&gt;pysm3) (1.0.6)\nRequirement already satisfied: kiwisolver&gt;=1.0.1 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from matplotlib-&gt;healpy-&gt;pysm3) (1.4.4)\nRequirement already satisfied: python-dateutil&gt;=2.7 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from matplotlib-&gt;healpy-&gt;pysm3) (2.8.2)\nRequirement already satisfied: pillow&gt;=6.2.0 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from matplotlib-&gt;healpy-&gt;pysm3) (9.2.0)\nRequirement already satisfied: cycler&gt;=0.10 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from matplotlib-&gt;healpy-&gt;pysm3) (0.11.0)\nRequirement already satisfied: fonttools&gt;=4.22.0 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from matplotlib-&gt;healpy-&gt;pysm3) (4.38.0)\nRequirement already satisfied: six&gt;=1.5 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from python-dateutil&gt;=2.7-&gt;matplotlib-&gt;healpy-&gt;pysm3) (1.16.0)\nNote: you may need to restart the kernel to use updated packages.\nimport healpy as hp\nimport pysm3\nfrom pysm3 import units as u\n%matplotlib inline"
   },
   {
-    "objectID": "posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html",
-    "href": "posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html",
-    "title": "Migrate from fastpages to quarto preserving git history",
+    "objectID": "posts/2022-12-01-radio-galaxies-websky-planck.html#get-the-planck-beam-widths",
+    "href": "posts/2022-12-01-radio-galaxies-websky-planck.html#get-the-planck-beam-widths",
+    "title": "Compare WebSky Radio Galaxies maps from PySM to Planck",
+    "section": "Get the Planck beam widths",
+    "text": "Get the Planck beam widths\n\n!wget -nc https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/LFI_RIMO_R3.31.fits\n\nFile ‘LFI_RIMO_R3.31.fits’ already there; not retrieving.\n\n\n\n\n!wget -nc https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/HFI_RIMO_R3.00.fits\n\nFile ‘HFI_RIMO_R3.00.fits’ already there; not retrieving.\n\n\n\n\nfrom astropy.io import fits\n\n\nfwhm = {}\n\nwith fits.open(\"LFI_RIMO_R3.31.fits\") as f:\n  for ch, ch_fwhm in zip(f[2].data[\"FREQUENCY\"], f[2].data[\"FWHM\"]):\n    fwhm[ch[0]] = ch_fwhm * u.arcmin\n\n\nwith fits.open(\"HFI_RIMO_R3.00.fits\") as f:\n  for ch, ch_fwhm in zip(f[1].data[\"FREQUENCY\"], f[1].data[\"FWHM\"]):\n    fwhm[ch[0]] = ch_fwhm * u.arcmin"
+  },
+  {
+    "objectID": "posts/2022-12-01-radio-galaxies-websky-planck.html#select-a-channel",
+    "href": "posts/2022-12-01-radio-galaxies-websky-planck.html#select-a-channel",
+    "title": "Compare WebSky Radio Galaxies maps from PySM to Planck",
+    "section": "Select a channel",
+    "text": "Select a channel\n“030” or “143”\n\nch = \"030\"\nfreq = float(ch) * u.GHz\n\n\ninstrument = \"LFI\" if freq &lt; 100 * u.GHz else \"HFI\"\nnside = 1024 if instrument == \"LFI\" else 2048\nrel = \"R3\" if instrument == \"LFI\" else \"R4\""
+  },
+  {
+    "objectID": "posts/2022-12-01-radio-galaxies-websky-planck.html#load-planck-maps",
+    "href": "posts/2022-12-01-radio-galaxies-websky-planck.html#load-planck-maps",
+    "title": "Compare WebSky Radio Galaxies maps from PySM to Planck",
+    "section": "Load Planck maps",
+    "text": "Load Planck maps\n\n!wget -nc https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/LFI_SkyMap_030_1024_R3.00_full.fits\n\nFile ‘LFI_SkyMap_030_1024_R3.00_full.fits’ already there; not retrieving.\n\n\n\n\n!wget -nc https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/HFI_SkyMap_143_2048_R4.00_full.fits\n\nFile ‘HFI_SkyMap_143_2048_R4.00_full.fits’ already there; not retrieving.\n\n\n\n\nm_planck = hp.read_map(f\"{instrument}_SkyMap_{ch}_{nside}_{rel}.00_full.fits\")\n\n\nm_planck = (m_planck * u.K_CMB).to(u.uK_CMB)\n\n\nhp.mollview(hp.remove_dipole(m_planck), max=1e3)"
+  },
+  {
+    "objectID": "posts/2022-12-01-radio-galaxies-websky-planck.html#create-maps-with-pysm",
+    "href": "posts/2022-12-01-radio-galaxies-websky-planck.html#create-maps-with-pysm",
+    "title": "Compare WebSky Radio Galaxies maps from PySM to Planck",
+    "section": "Create maps with PySM",
+    "text": "Create maps with PySM\n\nsky = pysm3.Sky(nside=nside, preset_strings=[\"rg1\"])\n\n\nm_pysm = sky.get_emission(freq)\n\n\nm_pysm_smoothed = pysm3.apply_smoothing_and_coord_transform(m_pysm, fwhm=fwhm[ch])\n\nhp.map2alm_lsq did not converge in 10 iterations, residual relative error is 0.69\n\n\n\nhp.mollview(m_pysm_smoothed[0], max=1e3)"
+  },
+  {
+    "objectID": "posts/2022-12-01-radio-galaxies-websky-planck.html#visualize-a-point-source",
+    "href": "posts/2022-12-01-radio-galaxies-websky-planck.html#visualize-a-point-source",
+    "title": "Compare WebSky Radio Galaxies maps from PySM to Planck",
+    "section": "Visualize a point source",
+    "text": "Visualize a point source\nCheck for ringing around point sources\n\nmax_pix = m_pysm_smoothed[0].argmax()\n\n\nlon,lat= hp.pix2ang(nside, max_pix, lonlat=True)\n\n\nlon\n\n275.2809917355372\n\n\n\nlat\n\n-62.0850844513906\n\n\n\nhp.gnomview(m_pysm_smoothed[0], rot=(lon,lat))\n\n\n\n\n\nm_pysm_smoothed[0].max()\n\n\\(156551.45 \\; \\mathrm{\\mu K_{{RJ}}}\\)\n\n\n\nm_planck.max()\n\n\\(215075.31 \\; \\mathrm{\\mu K_{{CMB}}}\\)"
+  },
+  {
+    "objectID": "posts/2022-10-05-singularity-expanse-tutorial.html",
+    "href": "posts/2022-10-05-singularity-expanse-tutorial.html",
+    "title": "Singularity on Expanse tutorial",
     "section": "",
-    "text": "Most of my blog posts are in Markdown…however, there are cases where plotting and code are very important, and nothing beats a Jupyter Notebook for that.\nThis blog was based on fastpages, a static blog generator by fast.ai. Unfortunately they are discontinuing it and they recommended to migrate to Quarto, so here we are.\nHamel Husain wrote a great tutorial on how to migrate from Fastpages to Quarto (and saved me so much work):\nhttps://nbdev.fast.ai/tutorials/blogging.html#migrating-from-fastpages\nFollowing I describe a couple of tips that were useful for my migration."
+    "text": "As one of my last tasks in XSEDE, I updated and improved the tutorial about running Singularity containers in the HPC system Espanse at my institution the San Diego Supercomputer Center.\nThe new version of the tutorial is available on the Github repository zonca/expanse_singularity\nSee the README.md file for the table of contents linking to the subsection.\nThe most important changes were focused on using pre-built containers, either from DockerHub or from the repository maintained by SDSC’s Marty Kandes, and on building custom images either via Sylabs Builder, a cloud-based service that builds containers on demand, or using a Virtual Machine on Jetstream 2, the NSF-funded Openstack cloud deployment."
   },
   {
-    "objectID": "posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html#preserve-git-history",
-    "href": "posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html#preserve-git-history",
-    "title": "Migrate from fastpages to quarto preserving git history",
-    "section": "Preserve git history",
-    "text": "Preserve git history\nI wanted to keep the commit history of my blog, so I replaced this step:\ncp -r ../blog/_notebooks/* posts\ncp -r ../blog/_posts/* posts\nwith a more complicated procedure based on git filter-branch. git expertise recommended, continue at your own risk.\nI was inspired by this tutorial about git, even if I simplified a bit the procedure.\nAfter we initialize the website/blog based on quarto, we commit it to the main branch of the repository (for the new blog).\n\nIn the same repository we create another branch which points to the old fastpages-powered blog:\n\ngit remote add old git@github.com:you/yourfastpagesrepo.git\ngit fetch old\ngit checkout -b oldposts old/master\n\nThen we only keep the history of the _posts folder\ngit filter-branch –subdirectory-filter _posts – –all\nFinally we move it into a folder\nmkdir oldposts mv * oldposts git add . git commit -m “move posts into folder”\nNow we can merge it back into the main branch\n\ngit checkout main\ngit merge oldposts --allow-unrelated-histories\ngit mv oldposts/* posts/\n\nIf necessary, repeat this step with the _notebooks folder"
-  },
-  {
-    "objectID": "posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html#no-categories-in-url",
-    "href": "posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html#no-categories-in-url",
-    "title": "Migrate from fastpages to quarto preserving git history",
-    "section": "No categories in URL",
-    "text": "No categories in URL\nIn my old blog I didn’t have categories in my URL, so the aliases generated by nbdev_migrate were wrong.\nI modified migrate.py in my nbdev install.\nIn _fp_convert, I modified the line about aliases into:\nfm['aliases'] = [f'{fs'}]"
-  },
-  {
-    "objectID": "posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html#screenshots-of-the-old-blog",
-    "href": "posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html#screenshots-of-the-old-blog",
-    "title": "Migrate from fastpages to quarto preserving git history",
-    "section": "Screenshots of the old blog",
-    "text": "Screenshots of the old blog\nSometimes I get nostalgic."
-  },
-  {
-    "objectID": "posts/2024-04-04-run-pytorch-gpu-expanse.html",
-    "href": "posts/2024-04-04-run-pytorch-gpu-expanse.html",
-    "title": "Run PyTorch with GPU support on Expanse",
+    "objectID": "posts/2023-09-21-gateways-2023-dask-jupyterhub.html",
+    "href": "posts/2023-09-21-gateways-2023-dask-jupyterhub.html",
+    "title": "Gateways 2023 tutorial about Dask and JupyterHub on Kubernetes on Jetstream",
     "section": "",
-    "text": "In this tutorial we will create a Python environment with PyTorch and see how to get Jupyterlab running on a GPU node.\nFirst of all we want to create an isolated Python environment, I generally favor micromamba, see the documentation on how to install it\nOnce installed, create an environment:\nmicromamba create -n pytorch python==3.10 jupyterlab\nDo not install pytorch with Mamba, it won’t recognize the GPU, not sure why.\nInstall pytorch with pip:\nmicromamba activate pytorch\npip install pytorch\nThe tool to launch JupyterLab on Expanse currently doesn’t support mamba, so the easiest way is to activate this environment at login, therefore add:\nmicromamba activate pytorch\nat the end of .bashrc.\nFinally we can launch a job on the GPU-shared partition with Galyleo to get JupyterLab proxied to a public url:\n/cm/shared/apps/sdsc/galyleo/galyleo.sh launch -Q -p gpu-shared -A sds166 -t 120 -c 8 -M 16 -G 1 -j lab\nCheck in a Notebook that pytorch detects the GPU:\nimport torch\ntorch.cuda.is_available()"
+    "text": "Tutorial slides\nJupyter notebooks on Github:zonca/dask-jetstream-tutorial\nTutorial notebooks complete with output cells as executed after the tutorial, in a gist\n\n\n\nVideo on Youtube"
+  },
+  {
+    "objectID": "posts/2023-09-21-gateways-2023-dask-jupyterhub.html#tutorial",
+    "href": "posts/2023-09-21-gateways-2023-dask-jupyterhub.html#tutorial",
+    "title": "Gateways 2023 tutorial about Dask and JupyterHub on Kubernetes on Jetstream",
+    "section": "",
+    "text": "Tutorial slides\nJupyter notebooks on Github:zonca/dask-jetstream-tutorial\nTutorial notebooks complete with output cells as executed after the tutorial, in a gist\n\n\n\nVideo on Youtube"
+  },
+  {
+    "objectID": "posts/2023-09-21-gateways-2023-dask-jupyterhub.html#support",
+    "href": "posts/2023-09-21-gateways-2023-dask-jupyterhub.html#support",
+    "title": "Gateways 2023 tutorial about Dask and JupyterHub on Kubernetes on Jetstream",
+    "section": "Support",
+    "text": "Support\nI have funding from Jetstream to help developers deploy Kubernetes and any related service to Jetstream, please contact me if you need any help or even just to check if any of this could fit your use-case."
+  },
+  {
+    "objectID": "posts/2023-09-21-gateways-2023-dask-jupyterhub.html#deployment-of-the-tutorial-infrastructure",
+    "href": "posts/2023-09-21-gateways-2023-dask-jupyterhub.html#deployment-of-the-tutorial-infrastructure",
+    "title": "Gateways 2023 tutorial about Dask and JupyterHub on Kubernetes on Jetstream",
+    "section": "Deployment of the tutorial infrastructure",
+    "text": "Deployment of the tutorial infrastructure\nHere is the reference to all the step-by-step tutorial on how to deploy the infrastructure used in the tutorial:\n\nDeployment of Kubernetes via Kubespray on Jetstream 2\nDeploy JupyterHub on top of Kubernetes\nInstall cert-manager to provide HTTPS support\nGithub Authentication\nDask Gateway\nConfigure access to object store"
   },
   {
     "objectID": "posts/2023-09-28-dask-gateway-jupyterhub.html",
@@ -4858,200 +4921,137 @@
     "text": "Benchmark noise covariance access\n\n%%time\n\n_ = hp.read_map(f\"test1/{cov}\", (0,1,2,3,4,5))\n\nCPU times: user 1min 13s, sys: 50 s, total: 2min 3s\nWall time: 2min 23s\n\n\n\n%%time\n\n_ = hp.read_map(f\"test1gz/{cov}.gz\", (0,1,2,3,4,5))\n\nCPU times: user 3min 10s, sys: 54.9 s, total: 4min 5s\nWall time: 4min 6s\n\n\n\n%%time\n\n_ = hp.read_map(f\"test2/{cov}\", 0)\n\nCPU times: user 10.9 s, sys: 13.5 s, total: 24.4 s\nWall time: 44.2 s\n\n\n\n%%time\n\n_ = hp.read_map(f\"test2gz/{cov}.gz\", 0)\n\nCPU times: user 2min 7s, sys: 19.5 s, total: 2min 27s\nWall time: 2min 28s"
   },
   {
-    "objectID": "posts/2024-04-25-whatsapp-poll.html",
-    "href": "posts/2024-04-25-whatsapp-poll.html",
-    "title": "Automate sending polls via WhatsApp",
+    "objectID": "posts/2024-04-04-run-pytorch-gpu-expanse.html",
+    "href": "posts/2024-04-04-run-pytorch-gpu-expanse.html",
+    "title": "Run PyTorch with GPU support on Expanse",
     "section": "",
-    "text": "Polls in WhatsApp are so convenient for the users, but so painful for group admins. Cannot modify them, cannot re-use or replicate them.\nBest workaround I found is to use WPPConnect/WA-JS\nThis creates a sort of API in the browser console that can be used to just copy-paste from an editor to create a poll.\n\nInstall Tampermonkey in your browser (I tested with Chrome) https://www.tampermonkey.net/\nSelect “Create new script”\nPaste from https://github.com/wppconnect-team/wa-js?tab=readme-ov-file#tampermonkey-or-greasemonkey, do not need to write anything where it says “Your code here”\n\nNow after we login to https://web.whatsapp.com/ and select the target group chat, we can open the “Developer tools”, paste and execute:\nc = WPP.chat.getActiveChat()\nWPP.chat.sendCreatePollMessage(\nc.id,\n'Title of the poll',\n['9am', '9:30am', '10am', '2pm', '2:30pm', '3pm', 'No', 'Maybe']\n);\nThis is very convenient especially if you send many polls that have mostly the same options."
+    "text": "In this tutorial we will create a Python environment with PyTorch and see how to get Jupyterlab running on a GPU node.\nFirst of all we want to create an isolated Python environment, I generally favor micromamba, see the documentation on how to install it\nOnce installed, create an environment:\nmicromamba create -n pytorch python==3.10 jupyterlab\nDo not install pytorch with Mamba, it won’t recognize the GPU, not sure why.\nInstall pytorch with pip:\nmicromamba activate pytorch\npip install pytorch\nThe tool to launch JupyterLab on Expanse currently doesn’t support mamba, so the easiest way is to activate this environment at login, therefore add:\nmicromamba activate pytorch\nat the end of .bashrc.\nFinally we can launch a job on the GPU-shared partition with Galyleo to get JupyterLab proxied to a public url:\n/cm/shared/apps/sdsc/galyleo/galyleo.sh launch -Q -p gpu-shared -A sds166 -t 120 -c 8 -M 16 -G 1 -j lab\nCheck in a Notebook that pytorch detects the GPU:\nimport torch\ntorch.cuda.is_available()"
   },
   {
-    "objectID": "posts/2023-09-21-gateways-2023-dask-jupyterhub.html",
-    "href": "posts/2023-09-21-gateways-2023-dask-jupyterhub.html",
-    "title": "Gateways 2023 tutorial about Dask and JupyterHub on Kubernetes on Jetstream",
+    "objectID": "posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html",
+    "href": "posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html",
+    "title": "Migrate from fastpages to quarto preserving git history",
     "section": "",
-    "text": "Tutorial slides\nJupyter notebooks on Github:zonca/dask-jetstream-tutorial\nTutorial notebooks complete with output cells as executed after the tutorial, in a gist\n\n\n\nVideo on Youtube"
+    "text": "Most of my blog posts are in Markdown…however, there are cases where plotting and code are very important, and nothing beats a Jupyter Notebook for that.\nThis blog was based on fastpages, a static blog generator by fast.ai. Unfortunately they are discontinuing it and they recommended to migrate to Quarto, so here we are.\nHamel Husain wrote a great tutorial on how to migrate from Fastpages to Quarto (and saved me so much work):\nhttps://nbdev.fast.ai/tutorials/blogging.html#migrating-from-fastpages\nFollowing I describe a couple of tips that were useful for my migration."
   },
   {
-    "objectID": "posts/2023-09-21-gateways-2023-dask-jupyterhub.html#tutorial",
-    "href": "posts/2023-09-21-gateways-2023-dask-jupyterhub.html#tutorial",
-    "title": "Gateways 2023 tutorial about Dask and JupyterHub on Kubernetes on Jetstream",
+    "objectID": "posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html#preserve-git-history",
+    "href": "posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html#preserve-git-history",
+    "title": "Migrate from fastpages to quarto preserving git history",
+    "section": "Preserve git history",
+    "text": "Preserve git history\nI wanted to keep the commit history of my blog, so I replaced this step:\ncp -r ../blog/_notebooks/* posts\ncp -r ../blog/_posts/* posts\nwith a more complicated procedure based on git filter-branch. git expertise recommended, continue at your own risk.\nI was inspired by this tutorial about git, even if I simplified a bit the procedure.\nAfter we initialize the website/blog based on quarto, we commit it to the main branch of the repository (for the new blog).\n\nIn the same repository we create another branch which points to the old fastpages-powered blog:\n\ngit remote add old git@github.com:you/yourfastpagesrepo.git\ngit fetch old\ngit checkout -b oldposts old/master\n\nThen we only keep the history of the _posts folder\ngit filter-branch –subdirectory-filter _posts – –all\nFinally we move it into a folder\nmkdir oldposts mv * oldposts git add . git commit -m “move posts into folder”\nNow we can merge it back into the main branch\n\ngit checkout main\ngit merge oldposts --allow-unrelated-histories\ngit mv oldposts/* posts/\n\nIf necessary, repeat this step with the _notebooks folder"
+  },
+  {
+    "objectID": "posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html#no-categories-in-url",
+    "href": "posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html#no-categories-in-url",
+    "title": "Migrate from fastpages to quarto preserving git history",
+    "section": "No categories in URL",
+    "text": "No categories in URL\nIn my old blog I didn’t have categories in my URL, so the aliases generated by nbdev_migrate were wrong.\nI modified migrate.py in my nbdev install.\nIn _fp_convert, I modified the line about aliases into:\nfm['aliases'] = [f'{fs'}]"
+  },
+  {
+    "objectID": "posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html#screenshots-of-the-old-blog",
+    "href": "posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html#screenshots-of-the-old-blog",
+    "title": "Migrate from fastpages to quarto preserving git history",
+    "section": "Screenshots of the old blog",
+    "text": "Screenshots of the old blog\nSometimes I get nostalgic."
+  },
+  {
+    "objectID": "posts/2024-04-17-overleaf-github-action.html",
+    "href": "posts/2024-04-17-overleaf-github-action.html",
+    "title": "2-way Synchronization of Overleaf and Github via a Github Action",
     "section": "",
-    "text": "Tutorial slides\nJupyter notebooks on Github:zonca/dask-jetstream-tutorial\nTutorial notebooks complete with output cells as executed after the tutorial, in a gist\n\n\n\nVideo on Youtube"
+    "text": "In the past I wrote tutorials on how to handle Github and Overleaf, the latest for example is this. However the Github button in Overleaf is fragile, it often gets disconnected for unknown reasons, and it cannot be reconnected, it forces deletion of the Github repository. Moreover, it seems it is now a Premium feature. Finally, it needs to be triggered manually, and nobody remembers to do that.\nI therefore decided to write a Github Action that can be configured to run automatically every hour to pull changes from Overleaf into Github using the git interface, which instead seems solid.\nThe action also runs on Pull Requests, and in this case runs the rebase operation on Overleaf to check that there are no merge conflicts, but it does not push neither to the local branch nor to Overleaf. Therefore it is useful for contributors to manually rebase on main once in a while to keep the pull request current, it is not strictly necessary, we can wait for the pull request to be merged to handle that.\nWhen the action runs on the Github main branch, if after the rebasing on Overleaf there are any local commits, those commits are also pushed to Overleaf (this is not a force-push, so it will fail is something is not matching, this is intendend behaviour).\nThe Action needs 2 secrets to be configured in the repository, OVERLEAF_PROJECT_ID is in the Overleaf project url https://www.overleaf.com/project/xxxxxxxxxxxxxxxxxxxxxxxx, OVERLEAF_TOKEN can be generated in Account Settings.\nHere is the entire Action:\nname: Overleaf Sync with Git\non:\n  schedule:\n    - cron: \"0 * * * *\"\n  push:\n  workflow_dispatch:\n      \njobs:\n  sync-overleaf:\n    name: Synchronize with Overleaf\n    runs-on: ubuntu-latest\n    steps:\n    - uses: actions/checkout@v4\n      with:\n          fetch-depth: 0 # need to fetch history to rebase\n    - name: Configure Overleaf remote\n      run: git remote add overleaf https://git:${OVERLEAF_TOKEN}@git.overleaf.com/${OVERLEAF_PROJECT_ID}\n      env:\n        OVERLEAF_PROJECT_ID: ${{ secrets.OVERLEAF_PROJECT_ID }}\n        OVERLEAF_TOKEN: ${{ secrets.OVERLEAF_TOKEN }}\n    - name: Pull changes from Overleaf\n      run: git pull --rebase overleaf master \n    - name: Push changes to Github and Overleaf (only from main)\n      run: git push --force origin main && git push overleaf HEAD:master\n      if: ${{ github.ref == 'refs/heads/main' }}"
   },
   {
-    "objectID": "posts/2023-09-21-gateways-2023-dask-jupyterhub.html#support",
-    "href": "posts/2023-09-21-gateways-2023-dask-jupyterhub.html#support",
-    "title": "Gateways 2023 tutorial about Dask and JupyterHub on Kubernetes on Jetstream",
-    "section": "Support",
-    "text": "Support\nI have funding from Jetstream to help developers deploy Kubernetes and any related service to Jetstream, please contact me if you need any help or even just to check if any of this could fit your use-case."
-  },
-  {
-    "objectID": "posts/2023-09-21-gateways-2023-dask-jupyterhub.html#deployment-of-the-tutorial-infrastructure",
-    "href": "posts/2023-09-21-gateways-2023-dask-jupyterhub.html#deployment-of-the-tutorial-infrastructure",
-    "title": "Gateways 2023 tutorial about Dask and JupyterHub on Kubernetes on Jetstream",
-    "section": "Deployment of the tutorial infrastructure",
-    "text": "Deployment of the tutorial infrastructure\nHere is the reference to all the step-by-step tutorial on how to deploy the infrastructure used in the tutorial:\n\nDeployment of Kubernetes via Kubespray on Jetstream 2\nDeploy JupyterHub on top of Kubernetes\nInstall cert-manager to provide HTTPS support\nGithub Authentication\nDask Gateway\nConfigure access to object store"
-  },
-  {
-    "objectID": "posts/2022-10-05-singularity-expanse-tutorial.html",
-    "href": "posts/2022-10-05-singularity-expanse-tutorial.html",
-    "title": "Singularity on Expanse tutorial",
+    "objectID": "posts/2023-02-24-nersc-share-files-html.html",
+    "href": "posts/2023-02-24-nersc-share-files-html.html",
+    "title": "Share data from NERSC publicly via web",
     "section": "",
-    "text": "As one of my last tasks in XSEDE, I updated and improved the tutorial about running Singularity containers in the HPC system Espanse at my institution the San Diego Supercomputer Center.\nThe new version of the tutorial is available on the Github repository zonca/expanse_singularity\nSee the README.md file for the table of contents linking to the subsection.\nThe most important changes were focused on using pre-built containers, either from DockerHub or from the repository maintained by SDSC’s Marty Kandes, and on building custom images either via Sylabs Builder, a cloud-based service that builds containers on demand, or using a Virtual Machine on Jetstream 2, the NSF-funded Openstack cloud deployment."
+    "text": "NERSC allows to make data which is on their Community File System publicly available via a web interface.\nThis is handled via “Project folders”, so the requirement is to be part of a “project”, for example most scientists working on Cosmic Microwave Background are part of the cmb project (and of the cmb Unix group at NERSC):\n&gt; groups\nzonca cmb\n\n&gt; export PRJ=cmb\nSo you should be able to create folders on the Community File System, if not already present, also ma\n&gt; mkdir -p /global/project/projectdirs/$PRJ/www\nAlso make sure it files are world-readable, folders are world-readable and world-executable:\n&gt; chmod 755 !$\n&gt; chmod 644 !$/*\nNow any files and any subfolder of www will be available publicly displaying filenames and file sizes and will allow navigation at the address:\n&gt; echo https://portal.nersc.gov/project/$PRJ\nSee for example:\n* [https://portal.nersc.gov/project/cmb/dirlist/](https://portal.nersc.gov/project/cmb/dirlist/)"
   },
   {
-    "objectID": "posts/2022-12-01-radio-galaxies-websky-planck.html",
-    "href": "posts/2022-12-01-radio-galaxies-websky-planck.html",
-    "title": "Compare WebSky Radio Galaxies maps from PySM to Planck",
+    "objectID": "posts/2023-03-16-latex-github-codespaces.html",
+    "href": "posts/2023-03-16-latex-github-codespaces.html",
+    "title": "Work on a Latex Document in Github Codespaces",
     "section": "",
-    "text": "I need to check that the amplitude of the maps of Radio Galaxies produced by WebSky are reasonable if compared to experimental results. The main worry is that being point sources, when we apply a beam using Spherical Harmonics transform we get spurious results due to the input maps not being band-limited.\npip install pysm3 --pre\n\nRequirement already satisfied: pysm3 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (3.4.0b4.dev138+g864a61e.d20221114)\nRequirement already satisfied: toml in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from pysm3) (0.10.2)\nRequirement already satisfied: astropy in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from pysm3) (5.1.1)\nRequirement already satisfied: numba in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from pysm3) (0.56.3)\nRequirement already satisfied: healpy in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from pysm3) (1.16.1)\nRequirement already satisfied: numpy&gt;=1.18 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from astropy-&gt;pysm3) (1.23.4)\nRequirement already satisfied: packaging&gt;=19.0 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from astropy-&gt;pysm3) (21.3)\nRequirement already satisfied: pyerfa&gt;=2.0 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from astropy-&gt;pysm3) (2.0.0.1)\nRequirement already satisfied: PyYAML&gt;=3.13 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from astropy-&gt;pysm3) (6.0)\nRequirement already satisfied: scipy in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from healpy-&gt;pysm3) (1.9.3)\nRequirement already satisfied: matplotlib in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from healpy-&gt;pysm3) (3.6.2)\nRequirement already satisfied: llvmlite&lt;0.40,&gt;=0.39.0dev0 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from numba-&gt;pysm3) (0.39.1)\nRequirement already satisfied: setuptools in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from numba-&gt;pysm3) (65.5.1)\nRequirement already satisfied: pyparsing!=3.0.5,&gt;=2.0.2 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from packaging&gt;=19.0-&gt;astropy-&gt;pysm3) (3.0.9)\nRequirement already satisfied: contourpy&gt;=1.0.1 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from matplotlib-&gt;healpy-&gt;pysm3) (1.0.6)\nRequirement already satisfied: kiwisolver&gt;=1.0.1 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from matplotlib-&gt;healpy-&gt;pysm3) (1.4.4)\nRequirement already satisfied: python-dateutil&gt;=2.7 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from matplotlib-&gt;healpy-&gt;pysm3) (2.8.2)\nRequirement already satisfied: pillow&gt;=6.2.0 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from matplotlib-&gt;healpy-&gt;pysm3) (9.2.0)\nRequirement already satisfied: cycler&gt;=0.10 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from matplotlib-&gt;healpy-&gt;pysm3) (0.11.0)\nRequirement already satisfied: fonttools&gt;=4.22.0 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from matplotlib-&gt;healpy-&gt;pysm3) (4.38.0)\nRequirement already satisfied: six&gt;=1.5 in /global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages (from python-dateutil&gt;=2.7-&gt;matplotlib-&gt;healpy-&gt;pysm3) (1.16.0)\nNote: you may need to restart the kernel to use updated packages.\nimport healpy as hp\nimport pysm3\nfrom pysm3 import units as u\n%matplotlib inline"
+    "text": "I was exploring using Github Codespaces instead of Overleaf to work on a Latex document.\nThe most important missing component is the Latex editor, and the other downside is that it is free only for 90 hours per month (with a Pro academic account). However, the other useful features of Overleaf are present:\nOn top of that, Codespace is a full machine, so you could run a Python script or a Jupyter Notebook to generate images for example.\nSee a screenshot of the environment"
   },
   {
-    "objectID": "posts/2022-12-01-radio-galaxies-websky-planck.html#get-the-planck-beam-widths",
-    "href": "posts/2022-12-01-radio-galaxies-websky-planck.html#get-the-planck-beam-widths",
-    "title": "Compare WebSky Radio Galaxies maps from PySM to Planck",
-    "section": "Get the Planck beam widths",
-    "text": "Get the Planck beam widths\n\n!wget -nc https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/LFI_RIMO_R3.31.fits\n\nFile ‘LFI_RIMO_R3.31.fits’ already there; not retrieving.\n\n\n\n\n!wget -nc https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/HFI_RIMO_R3.00.fits\n\nFile ‘HFI_RIMO_R3.00.fits’ already there; not retrieving.\n\n\n\n\nfrom astropy.io import fits\n\n\nfwhm = {}\n\nwith fits.open(\"LFI_RIMO_R3.31.fits\") as f:\n  for ch, ch_fwhm in zip(f[2].data[\"FREQUENCY\"], f[2].data[\"FWHM\"]):\n    fwhm[ch[0]] = ch_fwhm * u.arcmin\n\n\nwith fits.open(\"HFI_RIMO_R3.00.fits\") as f:\n  for ch, ch_fwhm in zip(f[1].data[\"FREQUENCY\"], f[1].data[\"FWHM\"]):\n    fwhm[ch[0]] = ch_fwhm * u.arcmin"
+    "objectID": "posts/2023-03-16-latex-github-codespaces.html#how-to-set-github-codespaces-for-latex",
+    "href": "posts/2023-03-16-latex-github-codespaces.html#how-to-set-github-codespaces-for-latex",
+    "title": "Work on a Latex Document in Github Codespaces",
+    "section": "How to set Github Codespaces for Latex",
+    "text": "How to set Github Codespaces for Latex\nOn the repository where you store the Latex project, click on the Code button and open a new Codespace.\nIn the terminal, install the Latex environment:\nsudo apt install texlive texlive-science texlive-latex-extra latexmk\nIn the “Extensions” window, install the extension “Latex Workshop”.\nOpen the “Tex” menu on the left bar to build the project with latexmk and open a tab within VS Code to visualize the PDF."
   },
   {
-    "objectID": "posts/2022-12-01-radio-galaxies-websky-planck.html#select-a-channel",
-    "href": "posts/2022-12-01-radio-galaxies-websky-planck.html#select-a-channel",
-    "title": "Compare WebSky Radio Galaxies maps from PySM to Planck",
-    "section": "Select a channel",
-    "text": "Select a channel\n“030” or “143”\n\nch = \"030\"\nfreq = float(ch) * u.GHz\n\n\ninstrument = \"LFI\" if freq &lt; 100 * u.GHz else \"HFI\"\nnside = 1024 if instrument == \"LFI\" else 2048\nrel = \"R3\" if instrument == \"LFI\" else \"R4\""
-  },
-  {
-    "objectID": "posts/2022-12-01-radio-galaxies-websky-planck.html#load-planck-maps",
-    "href": "posts/2022-12-01-radio-galaxies-websky-planck.html#load-planck-maps",
-    "title": "Compare WebSky Radio Galaxies maps from PySM to Planck",
-    "section": "Load Planck maps",
-    "text": "Load Planck maps\n\n!wget -nc https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/LFI_SkyMap_030_1024_R3.00_full.fits\n\nFile ‘LFI_SkyMap_030_1024_R3.00_full.fits’ already there; not retrieving.\n\n\n\n\n!wget -nc https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/HFI_SkyMap_143_2048_R4.00_full.fits\n\nFile ‘HFI_SkyMap_143_2048_R4.00_full.fits’ already there; not retrieving.\n\n\n\n\nm_planck = hp.read_map(f\"{instrument}_SkyMap_{ch}_{nside}_{rel}.00_full.fits\")\n\n\nm_planck = (m_planck * u.K_CMB).to(u.uK_CMB)\n\n\nhp.mollview(hp.remove_dipole(m_planck), max=1e3)"
-  },
-  {
-    "objectID": "posts/2022-12-01-radio-galaxies-websky-planck.html#create-maps-with-pysm",
-    "href": "posts/2022-12-01-radio-galaxies-websky-planck.html#create-maps-with-pysm",
-    "title": "Compare WebSky Radio Galaxies maps from PySM to Planck",
-    "section": "Create maps with PySM",
-    "text": "Create maps with PySM\n\nsky = pysm3.Sky(nside=nside, preset_strings=[\"rg1\"])\n\n\nm_pysm = sky.get_emission(freq)\n\n\nm_pysm_smoothed = pysm3.apply_smoothing_and_coord_transform(m_pysm, fwhm=fwhm[ch])\n\nhp.map2alm_lsq did not converge in 10 iterations, residual relative error is 0.69\n\n\n\nhp.mollview(m_pysm_smoothed[0], max=1e3)"
-  },
-  {
-    "objectID": "posts/2022-12-01-radio-galaxies-websky-planck.html#visualize-a-point-source",
-    "href": "posts/2022-12-01-radio-galaxies-websky-planck.html#visualize-a-point-source",
-    "title": "Compare WebSky Radio Galaxies maps from PySM to Planck",
-    "section": "Visualize a point source",
-    "text": "Visualize a point source\nCheck for ringing around point sources\n\nmax_pix = m_pysm_smoothed[0].argmax()\n\n\nlon,lat= hp.pix2ang(nside, max_pix, lonlat=True)\n\n\nlon\n\n275.2809917355372\n\n\n\nlat\n\n-62.0850844513906\n\n\n\nhp.gnomview(m_pysm_smoothed[0], rot=(lon,lat))\n\n\n\n\n\nm_pysm_smoothed[0].max()\n\n\\(156551.45 \\; \\mathrm{\\mu K_{{RJ}}}\\)\n\n\n\nm_planck.max()\n\n\\(215075.31 \\; \\mathrm{\\mu K_{{CMB}}}\\)"
-  },
-  {
-    "objectID": "posts/2023-02-02-github-overleaf.html",
-    "href": "posts/2023-02-02-github-overleaf.html",
-    "title": "Work on a Latex Document with Github and Overleaf",
+    "objectID": "posts/2023-04-23-hyper-supreme-cam-cosmology.html",
+    "href": "posts/2023-04-23-hyper-supreme-cam-cosmology.html",
+    "title": "Cosmology webinar Hyper Supreme Cam",
     "section": "",
-    "text": "In the past I have written about coordinating a large document using multiple overleaf documents and Github repositories. In this post I will just layout the simpler case where we have a Latex document on Overleaf and we also want users to be able to work on it from Github and we want Github Actions to automatically build a PDF for every commit."
+    "text": "Webinar about Cosmology results, in particular tension in \\(S_8\\) by the Hyper Supreme Cam collaboration:\nVideo on Youtube"
   },
   {
-    "objectID": "posts/2023-02-02-github-overleaf.html#create-less-privileged-user-on-github",
-    "href": "posts/2023-02-02-github-overleaf.html#create-less-privileged-user-on-github",
-    "title": "Work on a Latex Document with Github and Overleaf",
-    "section": "Create less privileged user on Github",
-    "text": "Create less privileged user on Github\nA concern about using Overleaf is that to have the convenience of pushing and pulling from Github, it asks for write permissions to all repositories.\nSo just to play it safe, it is useful to create a new user on Github, for example mine is called @zoncaoverleafbot, which has write access only to this repository.\nIt is useful to be logged in with your official Github user in your browser and be logged in inside an Incognito window with your “Overleaf bot” user."
-  },
-  {
-    "objectID": "posts/2023-02-02-github-overleaf.html#create-repository-on-github",
-    "href": "posts/2023-02-02-github-overleaf.html#create-repository-on-github",
-    "title": "Work on a Latex Document with Github and Overleaf",
-    "section": "Create repository on Github",
-    "text": "Create repository on Github\nLet’s start with a Latex document for testing purposes, for example I used the “Astronomy & Astrophysics” template.\nStarting with a project on Overleaf is more complicated because of permission issues, so in case you have an Overleaf project, first download it locally.\nCreate a new repository on Github, this should be under your “real” Github account or any organization you have access to, upload the Latex document and all ancillary files.\nSee for example my repository https://github.com/zonca/overleaf_github, you could also fork this repository under your account.\nFinally, give “Write” access to your Overleaf bot user."
-  },
-  {
-    "objectID": "posts/2023-02-02-github-overleaf.html#create-the-linked-project-on-overleaf",
-    "href": "posts/2023-02-02-github-overleaf.html#create-the-linked-project-on-overleaf",
-    "title": "Work on a Latex Document with Github and Overleaf",
-    "section": "Create the linked project on Overleaf",
-    "text": "Create the linked project on Overleaf\nNow login to Github with your “Overleaf bot” account, then login to Overleaf.\nClick on “New project” =&gt; “Import from Github”, select your repository.\nThis will create a project on Overleaf that is automatically linked to the Github repository."
-  },
-  {
-    "objectID": "posts/2023-02-02-github-overleaf.html#how-to-edit-on-overleaf",
-    "href": "posts/2023-02-02-github-overleaf.html#how-to-edit-on-overleaf",
-    "title": "Work on a Latex Document with Github and Overleaf",
-    "section": "How to edit on Overleaf",
-    "text": "How to edit on Overleaf\nNow both you and all your collaborators, can use Overleaf to edit the document and then push to Github using your “Overleaf bot” user, they do not need to link their own Github user.\n\nuse the Overleaf “Write”\nBefore making any edits, click on Menu =&gt; Github =&gt; Pull changes from Github\nMake edits on Overleaf\nOnce you are finished editing, even just for 1 or 2 hours, click on Menu =&gt; Github =&gt; Push changes to Github\nEdits will show up on Github as made by the “Overleaf bot” user , which avoids giving too much permissions to Overleaf\nGithub is supposed to have the latest version of the document always"
-  },
-  {
-    "objectID": "posts/2023-02-02-github-overleaf.html#build-the-pdf-on-github-optional",
-    "href": "posts/2023-02-02-github-overleaf.html#build-the-pdf-on-github-optional",
-    "title": "Work on a Latex Document with Github and Overleaf",
-    "section": "Build the PDF on Github (Optional)",
-    "text": "Build the PDF on Github (Optional)\nThe easiest way to access the PDF is to get it from Overleaf. However, it might be useful to also have it available on Github. We can have Github actions build it and make it available as an artifact.\nCustomize the build_latex.yml file to have Github actions build your PDF.\nThe only downside is that the PDF is hidden inside the Github actions, to simplify access we can get a direct link to the latest PDF using the https://nightly.link service, just paste the URL to the build_latex.yml, for my repository:\n\nhttps://github.com/zonca/overleaf_github/blob/main/.github/workflows/build_latex.yml\n\nThis will provide a link of the form:\nhttps://nightly.link/zonca/overleaf_github/workflows/build_latex/main/PDF.zip\nwhich provides 1-click access to the latest PDF.\n\nCreate releases with attached PDF on Github (Optional)\nThe Github Actions workflow also handles tagging releases, so if you create a tagged version in the repository, like 0,1 in git, for example:\ngit tag -a 0.1 -m \"Tagging version 0.1\"\ngit push --tags\nThis is going to create a Release on Github, which is visible on the homepage and attach the PDF to it, see the example on my repository.\nTo make this work, you need to grant writing permissions Github Action workflows, in the repository “Settings” =&gt; “Actions” =&gt; “General”, select “Read and write permissions” under “Workflow permissions”."
-  },
-  {
-    "objectID": "posts/2023-03-23-update-openstack-credentials-kubernetes.html",
-    "href": "posts/2023-03-23-update-openstack-credentials-kubernetes.html",
-    "title": "Update Openstack credentials in Kubernetes",
+    "objectID": "posts/2024-04-12-pysm-figures.html",
+    "href": "posts/2024-04-12-pysm-figures.html",
+    "title": "Generate figures for PySM emissions",
     "section": "",
-    "text": "If you are deploying Kubernetes on top of Openstack, the Openstack External cloud provider stores the ID and Secret necessary to authenticate with the cloud infrastructure in a Secret.\nLet’s see how to replece those credentials, for example if they expired.\nFirst dump the base64 encoded secret to the terminal:\nkubectl get secret -n kube-system external-openstack-cloud-config -o jsonpath='{.data}'\nThen copy-paste just the encoded part:\necho xxxxxx | base64 –decode &gt; cloud.conf\nNow we can edit it to replace the credentials\nSet the new OS_APPLICATION_CREDENTIAL_ID in application-credential-id and application-credential-name. Set the value of OS_APPLICATION_CREDENTIAL_SECRET in application-credential-secret.\nFinally encode the content of the file again (-w0 gives the output in 1 line without wrapping):\ncat cloud.conf | base64 -w0\nand overwrite the cloud.conf value in the secret:\nkubectl edit secret -n kube-system external-openstack-cloud-config\nNow repeat the process with the cloud-config secret, which is used by Cinder CSI, you can copy the 3 relevant lines from the previous file.\nFinally we need to restart the affected pods, however, to make it easier I just rebooted all the nodes via openstack server reboot."
+    "text": "Generate figures for PySM\nThis notebook generates some figures of Galactic and Extra-Galactic emissions using PySM. Mostly for displaying purposes.\nThis notebook is designed to work on Google Colab, remove the apt lines if executing locally but make sure you have a Latex environment.\n\n# Install Latex to render labels\n!apt install texlive texlive-latex-extra texlive-fonts-recommended cm-super-minimal dvipng\n\n\n%pip install pysm3\n\n\nimport pysm3\nfrom pysm3 import units as u\nimport healpy as hp\n\n\nsky = pysm3.Sky(nside=128, preset_strings=[\"c3\"], output_unit=u.uK_CMB)\n\n\ncmb = sky.get_emission(100 * u.GHz)\n\n\nimport matplotlib.pyplot as plt\nplt.rcParams['text.usetex'] = True\n\n\nfontsize={\"title\":30, \"cbar_label\":20, \"cbar_tick_label\":20}\n\n\nhp.projview(cmb[0].value, min=-250, max=250,\n            fontsize=fontsize,\n            unit=r'$\\mu K_{CMB}$', title=\"Cosmic Microwave Background\");\nplt.savefig(\"1.jpg\", bbox_inches=\"tight\")\n\n\n\n\n\nsky = pysm3.Sky(nside=256, preset_strings=[\"s5\"], output_unit=u.mK_RJ)\nsync = sky.get_emission(23 * u.GHz)[0]\n\n\nhp.projview(sync.value, min=0.02, max=2,\n            fontsize=fontsize, norm=\"symlog2\", cmap=\"planck_log\",\n            unit=r'$mK$', title=r\"Synchrotron at $23 GHz$\");\nplt.savefig(\"2.jpg\", bbox_inches=\"tight\")\n\n\n\n\n\nsky = pysm3.Sky(nside=256, preset_strings=[\"f1\"], output_unit=u.mK_RJ)\nfreefree = sky.get_emission(30 * u.GHz)[0]\n\n\nfreefree.min(), freefree.max()\n\n(&lt;Quantity 1.9947761e-07 mK_RJ&gt;, &lt;Quantity 212.05362 mK_RJ&gt;)\n\n\n\nhp.projview(freefree.value, min=0, max=10,\n            fontsize=fontsize,\n            #norm=\"hist\",\n            cmap = \"plasma\",\n            #norm=\"symlog2\", cmap=\"planck_log\",\n            unit=r'$mK$', title=r\"Free-free emission at $30 GHz$\");\n\n\n\n\n\nsky = pysm3.Sky(nside=256, preset_strings=[\"a1\"], output_unit=u.mK_RJ)\name = sky.get_emission(30 * u.GHz)[0]\n\n\nhp.projview(ame.value, min=0.01, max=10,\n            fontsize=fontsize,\n            norm=\"log\",\n            cmap = \"magma\",\n            #norm=\"symlog2\", cmap=\"planck_log\",\n            unit=r'$mK_{RJ}$', title=r\"Spinning dust at $30 GHz$\");\nplt.savefig(\"3.jpg\", bbox_inches=\"tight\")\n\n\n\n\n\nsky = pysm3.Sky(nside=256, preset_strings=[\"d10\"], output_unit=u.mK_RJ)\ndust = sky.get_emission(545 * u.GHz)[0]\n\n\ndust.value.min()\n\n0.03938505\n\n\n\nhp.projview(dust.value-dust.value.min(), min=0.001, max=10,\n            fontsize=fontsize,\n            norm=\"log\",\n            cmap = \"inferno\",\n            #norm=\"symlog2\", cmap=\"planck_log\",\n            unit=r'$mK_{RJ}$', title=r\"Thermal Dust at $545 GHz$\");\nplt.savefig(\"4.jpg\", bbox_inches=\"tight\")\n\n\n\n\n\nsky = pysm3.Sky(nside=256, preset_strings=[\"co1\"], output_unit=u.mK_RJ)\nco = sky.get_emission(sky.components[0].line_frequency['10'])[0]\n\n\nc=sky.components[0]\n\n\nc.line_frequency\n\n{'10': &lt;Quantity 115.271 GHz&gt;,\n '21': &lt;Quantity 230.538 GHz&gt;,\n '32': &lt;Quantity 345.796 GHz&gt;}\n\n\n\nhp.projview(co.value, min=0.01, max=1,\n            fontsize=fontsize,\n            #norm=\"log\",\n            cmap = \"Greys_r\",\n            #norm=\"symlog2\", cmap=\"planck_log\",\n            unit=r'$mK_{RJ}$', title=r\"Carbon Monoxyde line at $115 GHz$\");\nplt.savefig(\"5.jpg\", bbox_inches=\"tight\")\n\n\n\n\n\nsky = pysm3.Sky(nside=2048, preset_strings=[\"rg1\"], output_unit=u.uK_RJ)\nrg = sky.get_emission(353*u.GHz)[0]\n\n\npysm3.apply_smoothing_and_coord_transform?\n\n\nrg_smoothed = pysm3.apply_smoothing_and_coord_transform(rg, output_nside=256,\n\n                                                        fwhm=3 * u.arcmin)\n\n\nhp.projview(rg_smoothed.value, min=0, max=10,\n            fontsize=fontsize,\n            #norm=\"log\",\n            cmap = \"Oranges_r\",\n            #norm=\"symlog2\", cmap=\"planck_log\",\n            unit=r'$\\mu K_{RJ}$', title=r\"Radio galaxies at $353 GHz$\");\nplt.savefig(\"6.jpg\", bbox_inches=\"tight\")\n\n\n\n\n\n!apt install imagemagick\n\nReading package lists... Done\nBuilding dependency tree... Done\nReading state information... Done\nimagemagick is already the newest version (8:6.9.11.60+dfsg-1.3ubuntu0.22.04.3).\n0 upgraded, 0 newly installed, 0 to remove and 45 not upgraded.\n\n\n\n!rm -f montage.jpg\n!montage -geometry -0+0 -size 2000 *.jpg montage.jpg\n\n\nfrom IPython.display import Image\nImage(filename='montage.jpg')"
   },
   {
-    "objectID": "posts/2023-09-26-https-kubernetes-letsencrypt.html",
-    "href": "posts/2023-09-26-https-kubernetes-letsencrypt.html",
-    "title": "Setup HTTPS on Kubernetes with cert-manager",
+    "objectID": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html",
+    "href": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html",
+    "title": "Deploy Kubernetes on Jetstream 2 with Kubespray 2.21.0",
     "section": "",
-    "text": "Update March 2024: the routing issue that force cert-manager pods to run on the control-plane are back, see this Github issue, so we had to add back the pinning of cert-manager services on one of the nodes in the control plane.\nIn this tutorial we will deploy cert-manager in Kubernetes to automatically provide SSL certificates to JupyterHub (and other services).\nFirst make sure your payload, for example JupyterHub, is working without HTTPS, so that you check that the ports are open, Ingress is working, and JupyterHub itself can accept connections.\nLet’s follow the cert-manager documentation, for convenience I pasted the commands below:\nOnce we have cert-manager setup we can create a Cluster Issuer that works for all namespaces (first edit the yml and add your email address):\nAfter this, we can display all the resources in the cert-manager namespace to check that the services and pods are running:\nThe result should be something like:"
+    "text": "This work has been supported by Indiana University and is cross-posted on the Jetstream 2 official documentation website.\nThis tutorial will explain how to install Kubernetes on Jetstream 2 relying on Kubespray.\nKubespray is a project built on top of Terraform, for creating Openstack resources, and Ansible, for configuring the Virtual Machines for Kubernetes.\nThis work is based on Kubespray v2.21.0 which was published in January 2023, which installs Kubernetes v1.25.6, released in December 2022."
   },
   {
-    "objectID": "posts/2023-09-26-https-kubernetes-letsencrypt.html#bind-the-pods-to-the-master-node",
-    "href": "posts/2023-09-26-https-kubernetes-letsencrypt.html#bind-the-pods-to-the-master-node",
-    "title": "Setup HTTPS on Kubernetes with cert-manager",
-    "section": "Bind the pods to the master node",
-    "text": "Bind the pods to the master node\nIn Jetstream 2 there are routing restrictions which allow Cert Manager to run only from the master node, see the details on Github. At least when the nodes do not have floating IPs, if all your Virtual Machines have a floating IP, you can safely skip this step.\nUnidata has contributed the script they created to patch the 3 Cert Manager pods to have them run on the master node, we can apply it with:\ncd setup_https\nbash deploymentPatch.sh\nThen verify that the pods are redeployed on master:\nkubectl -n cert-manager get pods -o wide"
+    "objectID": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#create-jetstream-virtual-machines-with-terraform",
+    "href": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#create-jetstream-virtual-machines-with-terraform",
+    "title": "Deploy Kubernetes on Jetstream 2 with Kubespray 2.21.0",
+    "section": "Create Jetstream Virtual machines with Terraform",
+    "text": "Create Jetstream Virtual machines with Terraform\nTerraform allows to execute recipes that describe a set of OpenStack resources and their relationship. In the context of this tutorial, we do not need to learn much about Terraform, we will configure and execute the recipe provided by kubespray.\n\nRequirements\nWe have been testing with python-openstackclient version 6.1.0, but any recent openstack client should work. install terraform by copying the correct binary to /usr/local/bin/. The requirement is a terraform version &gt; 0.14, this tutorial has been tested with 0.14.4, which can be dowloaded from the release page. Terraform 1.1.9 and 1.2.9 do not work\n\n\nRequest API access\nFollow the instructions in the Jetstream 2 documentation to create application credentials.\nAlso make sure you are not hitting any of the issues in the Troubleshooting page, in particular, it is a good idea to set your password within single quotes to avoid special characters being interpreted by the shell:\nexport OS_APPLICATION_CREDENTIAL_SECRET='xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'\nTest with:\nopenstack flavor list\nThis should return the list of available “sizes” of the Virtual Machines.\nYou also need to add to the app*openrc.sh also this line:\nexport OS_APPLICATION_CREDENTIAL_NAME=$OS_APPLICATION_CREDENTIAL_ID\notherwise Ansible will fail with you must either set external_openstack_username or external_openstack_application_credential_name.\n\n\nClone kubespray\nWe needed to make a few modifications to kubespray to adapt it to Jetstream:\ngit clone https://github.com/zonca/jetstream_kubespray\ngit checkout -b branch_v2.21.0 origin/branch_v2.21.0\nSee an overview of my changes compared to the standard kubespray release 2.21.0, compared to previous releases of this tutorial, now the changes in the Terraform recipes are extensive, the good news is that the deployment itself is simpler. We are having all networking handled automatically by Jetstream 2, i.e. instances are automatically assigned to the auto_allocated_network, auto_allocated_router and auto_allocated_subnet, instead of creating dedicated resources with Terraform.\nInside jetstream_kubespray, choose a name for the cluster and copy from my template:\nexport CLUSTER=yourclustername\ncp -r inventory/kubejetstream inventory/$CLUSTER\ncd inventory/$CLUSTER\nalso export CLUSTER=yourclustername is useful to add to the app*openrc.sh.\n\n\nUse a projects.jetstream-cloud.org subdomain\nOne option is to use the Designate Openstack service deployed by Jetstream to get an automatically created domain for the instances. In this case the DNS name will be of the form:\nkubejetstream-1.$PROJ.projects.jetstream-cloud.org\nwhere PROJ is the ID of your Jestream 2 allocation:\nexport PROJ=\"xxx000000\"\nThe first part of the URL is the instance name, we shortened it removing k8s-master because domains too long do not work with Letsencrypt.\nAfter having executed Terraform, you can pip install on your local machine the package python-designateclient to check what records were created (mind the final period):\nopenstack recordset list $PROJ.projects.jetstream-cloud.org.\nAs usual with stuff related to DNS, there are delays, so your record could take up to 1 hour to work, or if you delete the instance and create it again with another IP it could take hours to update.\nFor debugging purposes it is useful to use nslookup:\nnslookup ${CLUSTER}-1.$PROJ.projects.jetstream-cloud.org\nalso directly at the source nameservers:\nnslookup ${CLUSTER}-1.$PROJ.projects.jetstream-cloud.org js2.jetstream-cloud.org\nInstead, if you have a way of getting a domain outside of Jetstream, better reserve a floating IP, see below.\n\n\nReserve a floating IP\nWe prefer not to have a floating IP handled by Terraform, otherwise it would be released every time we need to redeploy the cluster, better create it beforehand:\nopenstack floating ip create public\nThis will return a public floating IP address, it can also be accessed with:\nopenstack floating ip list\nIt is useful to save the IP into the app*openrc.sh, so that every time you load the credentials you also get the address of the master node.\nexport IP=149.xxx.xxx.xxx\n\n\nRun Terraform\nOpen and modify cluster.tfvars, choose your image (by default Ubuntu 20, **Update February 2024, currently Ubuntu 22 works on CPU but broken on GPU) and number of nodes and the flavor of the nodes, by default they are medium instances (\"4\"). See the entries marked as REPLACE and replace them according to the instructions provided.\nPaste the floating ip created previously into k8s_master_fips, unless you are using a projects.jetstream-cloud.org subdomain.\nInitialize Terraform:\nbash terraform_init.sh\nCreate the resources:\nbash terraform_apply.sh\nTerraform is very fast in building all the resources, sometimes resources are not ready yet, so the Apply command fails, just run it again, it happens regularly, nothing to worry about.\nYou can SSH into the master node with:\nssh ubuntu@$IP\nInspect with Openstack the resources created:\nopenstack server list\nopenstack network list\nYou can cleanup the virtual machines and all other Openstack resources (all data is lost) with bash terraform_destroy.sh. The floating IP won’t be released so we can create a cluster again from scratch with the same IP address."
   },
   {
-    "objectID": "posts/2023-09-26-https-kubernetes-letsencrypt.html#setup-jupyterhub",
-    "href": "posts/2023-09-26-https-kubernetes-letsencrypt.html#setup-jupyterhub",
-    "title": "Setup HTTPS on Kubernetes with cert-manager",
-    "section": "Setup JupyterHub",
-    "text": "Setup JupyterHub\nThen we modify the JupyterHub ingress configuration to use this Issuer, modify secrets.yaml to:\ningress:\n  enabled: true\n  annotations:\n    kubernetes.io/ingress.class: \"nginx\"\n    cert-manager.io/cluster-issuer: \"letsencrypt\"\n  hosts:\n      - js-XXX-YYY.jetstream-cloud.org\n  tls:\n      - hosts:\n         - js-XXX-YYY.jetstream-cloud.org\n        secretName: certmanager-tls-jupyterhub\nFinally update the JupyterHub deployment rerunning the deployment script (no need to delete it):\nbash install_jhub.sh\nAfter a few minutes we should have a certificate available:\nkubectl get certificaterequest --all-namespaces\nNAMESPACE   NAME                           APPROVED   DENIED   READY   ISSUER        REQUESTOR                                         AGE\njhub        certmanager-tls-jupyterhub-1   True                True    letsencrypt   system:serviceaccount:cert-manager:cert-manager   5d\nYou can also check the state of the certificate with:\nkubectl -n jhub describe certificate certmanager-tls-jupyterhub"
+    "objectID": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#install-and-test-ansible",
+    "href": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#install-and-test-ansible",
+    "title": "Deploy Kubernetes on Jetstream 2 with Kubespray 2.21.0",
+    "section": "Install and test Ansible",
+    "text": "Install and test Ansible\nChange folder back to the root of the jetstream_kubespray repository,\nFirst make sure you have a recent version of ansible installed, tested with 2.10.15, you also need additional modules, so first run:\npip install -r requirements.txt\nThis pip script installs a predefined version of ansible, currently 2.10.15, so it is useful to create a virtualenv or a conda environment and install packages inside that.\nThen following the kubespray documentation, we setup ssh-agent so that ansible can SSH from the machine with public IP to the others:\neval $(ssh-agent -s)\nssh-add ~/.ssh/id_rsa\nTest the connection through ansible:\nansible -i inventory/$CLUSTER/hosts -m ping all"
   },
   {
-    "objectID": "posts/2022-10-24-numba-closures.html",
-    "href": "posts/2022-10-24-numba-closures.html",
-    "title": "Closures in Numba",
+    "objectID": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#install-kubernetes-with-kubespray",
+    "href": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#install-kubernetes-with-kubespray",
+    "title": "Deploy Kubernetes on Jetstream 2 with Kubespray 2.21.0",
+    "section": "Install Kubernetes with kubespray",
+    "text": "Install Kubernetes with kubespray\nIn inventory/$CLUSTER/group_vars/k8s_cluster/k8s-cluster.yml, set the public floating IP of the master instance in supplementary_addresses_in_ssl_keys. Update February 2024: this step is not needed anymore, make sure you have the IP environmental variable set and it will be automatically passed to Ansible by the k8s_install.sh script.\nFinally run the full playbook, it is going to take a good 20 minutes:\nbash k8s_install.sh\nIf the playbook fails with “cannot lock the administrative directory”, it is due to the fact that the Virtual Machine is automatically updating so it has locked the APT directory. Just wait a minute and launch it again. It is always safe to run ansible multiple times.\nIf the playbook gives any error, try to retry the above command, sometimes there are temporary failed tasks, Ansible is designed to be executed multiple times with consistent results.\nYou should have now a Kubernetes cluster running, test it:\n$ ssh ubuntu@$IP\n$ sudo su\n$ kubectl get pods --all-namespaces\nNAMESPACE       NAME                                           READY   STATUS    RESTARTS   AGE\ningress-nginx   ingress-nginx-controller-4xd64                 1/1     Running   0          27m\nkube-system     coredns-8474476ff8-9gd8w                       1/1     Running   0          27m\nkube-system     coredns-8474476ff8-qtshk                       1/1     Running   0          27m\nkube-system     csi-cinder-controllerplugin-9fb5946bf-hwfhp    6/6     Running   0          26m\nkube-system     csi-cinder-nodeplugin-r69nl                    3/3     Running   0          26m\nkube-system     dns-autoscaler-5ffdc7f89d-s4sj4                1/1     Running   0          27m\nkube-system     kube-apiserver-kubejs2-k8s-master-1            1/1     Running   1          66m\nkube-system     kube-controller-manager-kubejs2-k8s-master-1   1/1     Running   1          66m\nkube-system     kube-flannel-2clqv                             1/1     Running   0          29m\nkube-system     kube-flannel-2wbtq                             1/1     Running   0          29m\nkube-system     kube-proxy-hmz6t                               1/1     Running   0          30m\nkube-system     kube-proxy-xkhjx                               1/1     Running   0          30m\nkube-system     kube-scheduler-kubejs2-k8s-master-1            1/1     Running   1          66m\nkube-system     nginx-proxy-kubejs2-k8s-node-1                 1/1     Running   0          64m\nkube-system     nodelocaldns-jwxg8                             1/1     Running   0          27m\nkube-system     nodelocaldns-z4sjl                             1/1     Running   0          27m\nkube-system     openstack-cloud-controller-manager-6q28z       1/1     Running   0          29m\nkube-system     snapshot-controller-786647474f-7x8zx           1/1     Running   0          25m\n\nCompare that you have all those services running also in your cluster. We have also configured NGINX to proxy any service that we will later deploy on Kubernetes, test it with:\n$ wget localhost\n--2022-03-31 06:51:20--  http://localhost/\nResolving localhost (localhost)... 127.0.0.1\nConnecting to localhost (localhost)|127.0.0.1|:80... connected.\nHTTP request sent, awaiting response... 404 Not Found\n2022-03-31 06:51:20 ERROR 404: Not Found.\nError 404 is a good sign, the service is up and serving requests, currently there is nothing to deliver. If you get any other type of error, check that the nginx controller is running:\nkubectl get pods -n ingress-nginx"
+  },
+  {
+    "objectID": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#set-the-default-storage-class",
+    "href": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#set-the-default-storage-class",
+    "title": "Deploy Kubernetes on Jetstream 2 with Kubespray 2.21.0",
+    "section": "Set the default storage class",
+    "text": "Set the default storage class\nThis is not needed anymore, setting Cinder CSI as default storage class is included in the modifications to Kubespray."
+  },
+  {
+    "objectID": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#optional-setup-kubectl-locally",
+    "href": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#optional-setup-kubectl-locally",
+    "title": "Deploy Kubernetes on Jetstream 2 with Kubespray 2.21.0",
+    "section": "(Optional) Setup kubectl locally",
+    "text": "(Optional) Setup kubectl locally\nInstall kubectl locally, the tutorial has been tested with 1.26.\nWe also set kubeconfig_localhost: true, which copies the kubectl configuration admin.conf to:\ninventory/$CLUSTER/artifacts\nWe have a script to replace the IP with the floating IP of the master node, for this script to work make sure you have exported the variable IP:\nbash k8s_configure_kubectl_locally.sh\nFinally edit again the app*openrc.sh and add:\nexport KUBECONFIG=$(pwd -P)/\"jetstream_kubespray/inventory/$CLUSTER/artifacts/admin.conf\""
+  },
+  {
+    "objectID": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#optional-setup-helm-locally",
+    "href": "posts/2023-07-19-jetstream2_kubernetes_kubespray.html#optional-setup-helm-locally",
+    "title": "Deploy Kubernetes on Jetstream 2 with Kubespray 2.21.0",
+    "section": "(Optional) Setup helm locally",
+    "text": "(Optional) Setup helm locally\nInstall helm 3 from the release page on Github\nThe tutorial was tested with v3.8.1."
+  },
+  {
+    "objectID": "posts/2022-10-11-install-jupyroot-jupyterhub.html",
+    "href": "posts/2022-10-11-install-jupyroot-jupyterhub.html",
+    "title": "Install the JupyROOT Python kernel in JupyterHub",
     "section": "",
-    "text": "!pip install numba\n\nLooking in indexes: https://pypi.org/simple, https://us-python.pkg.dev/colab-wheels/public/simple/\nRequirement already satisfied: numba in /usr/local/lib/python3.7/dist-packages (0.56.3)\nRequirement already satisfied: llvmlite&lt;0.40,&gt;=0.39.0dev0 in /usr/local/lib/python3.7/dist-packages (from numba) (0.39.1)\nRequirement already satisfied: setuptools in /usr/local/lib/python3.7/dist-packages (from numba) (57.4.0)\nRequirement already satisfied: importlib-metadata in /usr/local/lib/python3.7/dist-packages (from numba) (4.13.0)\nRequirement already satisfied: numpy&lt;1.24,&gt;=1.18 in /usr/local/lib/python3.7/dist-packages (from numba) (1.21.6)\nRequirement already satisfied: typing-extensions&gt;=3.6.4 in /usr/local/lib/python3.7/dist-packages (from importlib-metadata-&gt;numba) (4.1.1)\nRequirement already satisfied: zipp&gt;=0.5 in /usr/local/lib/python3.7/dist-packages (from importlib-metadata-&gt;numba) (3.9.0)\nfrom numba.core import types\nfrom numba.typed import Dict\nfrom numba import njit"
-  },
-  {
-    "objectID": "posts/2022-10-24-numba-closures.html#parameter-is-a-simple-type",
-    "href": "posts/2022-10-24-numba-closures.html#parameter-is-a-simple-type",
-    "title": "Closures in Numba",
-    "section": "Parameter is a simple type",
-    "text": "Parameter is a simple type\nIn this case numba supports a closure without any issue, in this case have a function which defines a cut on an array, we can create different versions of this function dinamically.\n\ndef MB_cut_factory(limit):\n    def cut(value):\n        return value &lt; limit\n    return cut\n\n\nMB_cut_factory(4)(3)\n\nTrue\n\n\n\nnjit(MB_cut_factory(4))(3)\n\nTrue"
-  },
-  {
-    "objectID": "posts/2022-10-24-numba-closures.html#parameter-is-a-complex-type",
-    "href": "posts/2022-10-24-numba-closures.html#parameter-is-a-complex-type",
-    "title": "Closures in Numba",
-    "section": "Parameter is a complex type",
-    "text": "Parameter is a complex type\nIf the parameter is a complex type, unfortunately numba throws a NotImplementedError:\n\ndict_ranges = Dict.empty(\n    key_type=types.int64,\n    value_type=types.Tuple((types.float64, types.float64))\n    )\n\ndict_ranges[3] = (1, 3)\n\ndef MB_cut_factory(dict_ranges):\n    def cut(series, value):\n        return dict_ranges[series][0] &lt; value &lt; dict_ranges[series][1]\n    return cut\n\nMB_cut_factory(dict_ranges)(3,2)\n\nTrue\n\n\n\nnjit(MB_cut_factory(dict_ranges))(3,2)\n\nNumbaNotImplementedError: ignored"
-  },
-  {
-    "objectID": "posts/2022-10-24-numba-closures.html#the-ugly-workaround",
-    "href": "posts/2022-10-24-numba-closures.html#the-ugly-workaround",
-    "title": "Closures in Numba",
-    "section": "The ugly workaround",
-    "text": "The ugly workaround\nUsing exec we can brutally create the function definition injecting the dictionary as a string into the function definition itself.\nIt is ugly but works and gives back a function that can be tested in pure Python before passing it to numba for optimization.\nNotice we need to use globals() in the call to exec to have the cut function available in the namespace.\n\ndef MB_cut_factory(dict_ranges):\n    exec(\"def cut(series, value):\\n    dict_ranges=\" +\\\n         dict_ranges.__str__() +\\\n        \"\\n    return dict_ranges[series][0] &lt; value &lt; dict_ranges[series][1]\", globals())\n    return cut\n\n\nMB_cut_factory(dict_ranges)(3,2)\n\nTrue\n\n\n\nnjit(MB_cut_factory(dict_ranges))(3,2)\n\nTrue"
-  },
-  {
-    "objectID": "posts/2022-10-24-numba-closures.html#questions-on-stackoverflow",
-    "href": "posts/2022-10-24-numba-closures.html#questions-on-stackoverflow",
-    "title": "Closures in Numba",
-    "section": "Questions on Stackoverflow",
-    "text": "Questions on Stackoverflow\nTrying to find solutions I posted 2 related questions to Stackoverflow, plase contribute there if you have better suggestions:\n\nnumba and variables defined in a closure\nTransform a partial function into a normal function"
-  },
-  {
-    "objectID": "posts/2023-11-02-desouza-award.html",
-    "href": "posts/2023-11-02-desouza-award.html",
-    "title": "Received DeSouza award for work on deploying software infrastructure on Jetstream",
-    "section": "",
-    "text": "I am honored to have received the 2023 DeSouza award from Unidata, a NSF-funded center providing data, software and support for the field of Geoscience. The award celebrates the impact of Jeremy Fischer’s and my work on deploying a software platform based on Kubernetes and JupyterHub (in particular Zero to JupyterHub) on the NSF-funded cloud computing system Jetstream 2.\n\nPage about the award on the Unidata website\nVideo of the seminar on Youtube\nSlides of the seminar"
+    "text": "After installing ROOT’s conda package, for example with micromamba:\nmicromamba create -n root -c conda-forge root python==3.8 matplotlib\nand then installing the kernel for JupyterHub:\nipython kernel install --name root --user\nUnfortunately import ROOT gives the error:\nERROR in cling::CIFactory::createCI(): cannot extract standard library include paths!\nInvoking:\n  LC_ALL=C x86_64-conda-linux-gnu-c++   -DNDEBUG -xc++ -E -v /dev/null 2&gt;&1 | sed -n -e '/^.include/,${' -e '/^ \\/.*++/p' -e '}'\nResults was:\nWith exit code 0\nThe fix, found after more than 1 hour of search, is at https://root-forum.cern.ch/t/jupyroot-in-jupyterhub-cling-init-can-not-extract-standard-include-library-paths/46890:\nEdit the kernel.json file and modify the PATH variable:\n{\n \"argv\": [\n  \"/home/jovyan/micromamba/envs/root/bin/python3.8\",\n  \"-m\",\n  \"ipykernel_launcher\",\n  \"-f\",\n  \"{connection_file}\"\n ],\n \"display_name\": \"root\",\n \"language\": \"python\",\n \"metadata\": {\n  \"debugger\": true\n },\n \"env\": {\n   \"PATH\": \"/home/jovyan/micromamba/envs/root/bin/:${PATH}\"    \n }\n}"
   },
   {
     "objectID": "posts/2022-12-05-jetstream2-kubernetes-manila.html",
