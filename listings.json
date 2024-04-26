@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2024-04-25-whatsapp-poll.html",
       "/posts/2024-04-17-overleaf-github-action.html",
       "/posts/2024-04-12-pysm-figures.html",
       "/posts/2024-04-04-run-pytorch-gpu-expanse.html",
