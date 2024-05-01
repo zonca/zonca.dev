@@ -161,6 +161,9 @@ ul.task-list li input[type="checkbox"] {
 <li>Automatic unsupervised updates</li>
 </ul>
 <p>See <a href="https://www.flatcar.org/docs/latest/installing/cloud/openstack/">their docs about deploying on Openstack</a>, uploading to Jetstream worked out of the box using <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/blob/master/vm_image/upload_image.sh">this script</a>.</p>
+<p>The name of the image is <code>FlatcarContainerLinux-3815-2-2</code>, it is set as a Community image:</p>
+<pre><code>openstack image list --community | grep Flatcar
+| 3c4b5192-3dbc-4478-8340-7409da188669 | FlatcarContainerLinux-3815-2-2                   | active |</code></pre>
 <section id="exosphere" class="level3">
 <h3 class="anchored" data-anchor-id="exosphere">Exosphere</h3>
 <p>The instance boots correctly on Exosphere, I can ssh into the instance as <code>exouser</code>, however, on the Dashboard the image is stuck in the “Building” phase and a passphrase is not assigned to the user. Trying to run Docker commands fails for permission issues and without password cannot <code>sudo</code>.</p>
