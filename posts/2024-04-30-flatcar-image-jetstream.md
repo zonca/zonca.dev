@@ -27,6 +27,13 @@ Best features:
 
 See [their docs about deploying on Openstack](https://www.flatcar.org/docs/latest/installing/cloud/openstack/), uploading to Jetstream worked out of the box using [this script](https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/blob/master/vm_image/upload_image.sh).
 
+The name of the image is `FlatcarContainerLinux-3815-2-2`, it is set as a Community image:
+
+```
+openstack image list --community | grep Flatcar
+| 3c4b5192-3dbc-4478-8340-7409da188669 | FlatcarContainerLinux-3815-2-2                   | active |
+```
+
 ### Exosphere
 
 The instance boots correctly on Exosphere, I can ssh into the instance as `exouser`, however, on the Dashboard the image is stuck in the "Building" phase and a passphrase is not assigned to the user.
