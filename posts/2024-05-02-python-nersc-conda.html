@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2022-11-08">
+<meta name="dcterms.date" content="2024-05-02">
 
 <title>Andrea Zonca - Setup a conda environment at NERSC</title>
 <style>
@@ -131,7 +131,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 8, 2022</p>
+        <p class="date">May 2, 2024</p>
       </div>
     </div>
     
@@ -149,7 +149,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p><strong>Obsolete</strong>: <a href="../posts/2024-05-02-python-nersc-conda.html">see the new version</a></p>
 <p>NERSC recommends to use the <a href="https://docs.nersc.gov/filesystems/global-common/">“Global Common”</a> to store Conda environments, because it is optimized to store lots of small files. Consider that it is mounted read-only on computing nodes. The filesystem is organized by groups, so choose one of your groups:</p>
 <pre><code>groups</code></pre>
 <p>for example for me it is the <code>cmb</code> group.</p>
@@ -160,11 +159,14 @@ ln -s /global/common/software/$GROUP/$USER c</code></pre>
 <p>So we can access it quickly under <code>~/c</code>.</p>
 <p>Then we create a Conda environment with <code>mamba</code>, specifying the version of python and other packages:</p>
 <pre><code>export ENV=pycmb
-module load python3 # it should load the latest Anaconda
+module load conda
 mamba create --prefix /global/common/software/$GROUP/$USER/conda/$ENV python==3.10 numpy astropy matplotlib ipykernel numba  pytest toml cython scipy namaster -c conda-forge</code></pre>
 <p>We can also set that path for <code>conda</code> to automatically search into, this will pickup also future Conda environments on the same path:</p>
 <pre><code>conda config --append envs_dirs /global/common/software/$GROUP/$USER/conda</code></pre>
-<p>We do not want that long path in our prompt, so:</p>
+<p>Moreover, this will be the default location for new environments, so we will be able to create other environments just with:</p>
+<pre><code>mamba create --name onlypython python==3.11</code></pre>
+<p>And they will be automatically created in “Global Common Software”.</p>
+<p>We do not want that long path in our prompt, so (this is necessary if you created the environment with <code>--name</code>):</p>
 <pre><code>conda config --set env_prompt '({name}) '</code></pre>
 <p>So we can activate the environment specifying only the name:</p>
 <pre><code>conda activate $ENV</code></pre>

@@ -2,1022 +2,1030 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.zonca.dev/about.html</loc>
-    <lastmod>2024-05-01T06:08:56.320Z</lastmod>
+    <lastmod>2024-05-02T20:28:48.401Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/consult.html</loc>
-    <lastmod>2024-05-01T06:08:24.447Z</lastmod>
+    <lastmod>2024-05-02T20:28:16.520Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zonca.dev/posts/2024-05-02-python-nersc-conda.html</loc>
+    <lastmod>2024-05-02T20:28:15.540Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2024-02-02-soft-scaling-kubernetes-jetstream.html</loc>
-    <lastmod>2024-05-01T06:08:23.551Z</lastmod>
+    <lastmod>2024-05-02T20:28:14.596Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2023-04-01-dreamhost-letsencrypt.html</loc>
-    <lastmod>2024-05-01T06:08:22.491Z</lastmod>
+    <lastmod>2024-05-02T20:28:13.512Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-09-04-unit-conversion-broadband-foregrounds.html</loc>
-    <lastmod>2024-05-01T06:08:21.583Z</lastmod>
+    <lastmod>2024-05-02T20:28:12.600Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-11-15-binderhub-jetstream2.html</loc>
-    <lastmod>2024-05-01T06:08:20.463Z</lastmod>
+    <lastmod>2024-05-02T20:28:11.472Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-10-26-click-commandline-class-arguments.html</loc>
-    <lastmod>2024-05-01T06:08:19.403Z</lastmod>
+    <lastmod>2024-05-02T20:28:10.420Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2023-04-24-hiring-computational-scientist-ucsd.html</loc>
-    <lastmod>2024-05-01T06:08:18.471Z</lastmod>
+    <lastmod>2024-05-02T20:28:09.463Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2023-02-21-show-your-work.html</loc>
-    <lastmod>2024-05-01T06:08:17.567Z</lastmod>
+    <lastmod>2024-05-02T20:28:08.575Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-12-05-jetstream2-kubernetes-manila.html</loc>
-    <lastmod>2024-05-01T06:08:16.495Z</lastmod>
+    <lastmod>2024-05-02T20:28:07.487Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-10-11-install-jupyroot-jupyterhub.html</loc>
-    <lastmod>2024-05-01T06:08:15.543Z</lastmod>
+    <lastmod>2024-05-02T20:28:06.543Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2023-07-19-jetstream2_kubernetes_kubespray.html</loc>
-    <lastmod>2024-05-01T06:08:14.679Z</lastmod>
+    <lastmod>2024-05-02T20:28:05.695Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2024-04-12-pysm-figures.html</loc>
-    <lastmod>2024-05-01T06:08:13.387Z</lastmod>
+    <lastmod>2024-05-02T20:28:04.435Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2023-04-23-hyper-supreme-cam-cosmology.html</loc>
-    <lastmod>2024-05-01T06:08:12.211Z</lastmod>
+    <lastmod>2024-05-02T20:28:03.247Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2023-03-16-latex-github-codespaces.html</loc>
-    <lastmod>2024-05-01T06:08:11.371Z</lastmod>
+    <lastmod>2024-05-02T20:28:02.411Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2023-02-24-nersc-share-files-html.html</loc>
-    <lastmod>2024-05-01T06:08:10.303Z</lastmod>
+    <lastmod>2024-05-02T20:28:01.347Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2024-04-17-overleaf-github-action.html</loc>
-    <lastmod>2024-05-01T06:08:09.263Z</lastmod>
+    <lastmod>2024-05-02T20:28:00.303Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html</loc>
-    <lastmod>2024-05-01T06:08:08.319Z</lastmod>
+    <lastmod>2024-05-02T20:27:59.363Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2024-04-04-run-pytorch-gpu-expanse.html</loc>
-    <lastmod>2024-05-01T06:08:07.315Z</lastmod>
+    <lastmod>2024-05-02T20:27:58.395Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2023-03-06-gzip-healpix-healpy.html</loc>
-    <lastmod>2024-05-01T06:08:06.347Z</lastmod>
+    <lastmod>2024-05-02T20:27:57.423Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-11-02-healpix-gauss-legendre-pysm.html</loc>
-    <lastmod>2024-05-01T06:08:05.311Z</lastmod>
+    <lastmod>2024-05-02T20:27:56.403Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-04-27-correct-beam-healpy.html</loc>
-    <lastmod>2024-05-01T06:08:04.071Z</lastmod>
+    <lastmod>2024-05-02T20:27:55.167Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-02-28-compute-planck-spectra-healpy-anafast.html</loc>
-    <lastmod>2024-05-01T06:08:02.762Z</lastmod>
+    <lastmod>2024-05-02T20:27:53.855Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-09-30-planck-spectra-healpy.html</loc>
-    <lastmod>2024-05-01T06:08:01.634Z</lastmod>
+    <lastmod>2024-05-02T20:27:52.731Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-09-04-unit-conversion-broadband-cmb.html</loc>
-    <lastmod>2024-05-01T06:08:00.274Z</lastmod>
+    <lastmod>2024-05-02T20:27:51.367Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-08-04-dask-array-rounding.html</loc>
-    <lastmod>2024-05-01T06:07:58.854Z</lastmod>
+    <lastmod>2024-05-02T20:27:49.975Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-06-20-white-noise-hitmap-uniform.html</loc>
-    <lastmod>2024-05-01T06:07:57.462Z</lastmod>
+    <lastmod>2024-05-02T20:27:48.583Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-04-24-white-noise-angular-power-spectrum.html</loc>
-    <lastmod>2024-05-01T06:07:56.322Z</lastmod>
+    <lastmod>2024-05-02T20:27:47.439Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2024-02-09-kubernetes-gpu-jetstream2.html</loc>
-    <lastmod>2024-05-01T06:07:55.142Z</lastmod>
+    <lastmod>2024-05-02T20:27:46.235Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-05-17-remove-cell-id-jupyter-notebook.html</loc>
-    <lastmod>2024-05-01T06:07:54.126Z</lastmod>
+    <lastmod>2024-05-02T20:27:45.203Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-04-27-monitor-restic-backups-kubernetes.html</loc>
-    <lastmod>2024-05-01T06:07:53.262Z</lastmod>
+    <lastmod>2024-05-02T20:27:44.339Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-04-13-jupyterhub-custos-authentication.html</loc>
-    <lastmod>2024-05-01T06:07:52.362Z</lastmod>
+    <lastmod>2024-05-02T20:27:43.431Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-04-04-zarr_jetstream2.html</loc>
-    <lastmod>2024-05-01T06:07:51.222Z</lastmod>
+    <lastmod>2024-05-02T20:27:42.339Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-03-31-jetstream2_jupyterhub.html</loc>
-    <lastmod>2024-05-01T06:07:50.114Z</lastmod>
+    <lastmod>2024-05-02T20:27:41.215Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-03-22-jupyter-notebooks-version-control.html</loc>
-    <lastmod>2024-05-01T06:07:48.818Z</lastmod>
+    <lastmod>2024-05-02T20:27:39.923Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-01-07-make.html</loc>
-    <lastmod>2024-05-01T06:07:47.654Z</lastmod>
+    <lastmod>2024-05-02T20:27:38.795Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-11-04-cka-ckad-kubernetes-certification.html</loc>
-    <lastmod>2024-05-01T06:07:46.666Z</lastmod>
+    <lastmod>2024-05-02T20:27:37.811Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-10-06-healpix-plot-pixel-boundaries.html</loc>
-    <lastmod>2024-05-01T06:07:45.666Z</lastmod>
+    <lastmod>2024-05-02T20:27:36.787Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-09-24-globus-groups-python-sdk.html</loc>
-    <lastmod>2024-05-01T06:07:44.814Z</lastmod>
+    <lastmod>2024-05-02T20:27:35.919Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-08-01-joss-to-arxiv.html</loc>
-    <lastmod>2024-05-01T06:07:43.898Z</lastmod>
+    <lastmod>2024-05-02T20:27:35.015Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-06-22-healpy-1.15.0-release.html</loc>
-    <lastmod>2024-05-01T06:07:43.002Z</lastmod>
+    <lastmod>2024-05-02T20:27:34.123Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-05-20-google-docs-to-overleaf-github.html</loc>
-    <lastmod>2024-05-01T06:07:42.126Z</lastmod>
+    <lastmod>2024-05-02T20:27:33.254Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-03-28-sgci-tech-blog.html</loc>
-    <lastmod>2024-05-01T06:07:40.890Z</lastmod>
+    <lastmod>2024-05-02T20:27:32.022Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-01-28-github-overleaf-large-document.html</loc>
-    <lastmod>2024-05-01T06:07:39.638Z</lastmod>
+    <lastmod>2024-05-02T20:27:30.798Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-01-20-autoscaling_script_kubespray_jupyterhub.html</loc>
-    <lastmod>2024-05-01T06:07:38.246Z</lastmod>
+    <lastmod>2024-05-02T20:27:29.370Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-11-18-paper-review-overleaf-git-googledocs.html</loc>
-    <lastmod>2024-05-01T06:07:37.346Z</lastmod>
+    <lastmod>2024-05-02T20:27:28.466Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-09-25-ffmpeg-edit-recordings.html</loc>
-    <lastmod>2024-05-01T06:07:36.310Z</lastmod>
+    <lastmod>2024-05-02T20:27:27.422Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-09-04-gateways-2020-paper.html</loc>
-    <lastmod>2024-05-01T06:07:35.310Z</lastmod>
+    <lastmod>2024-05-02T20:27:26.430Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-09-01-migrate-travisci-readthedocs-github-actions.html</loc>
-    <lastmod>2024-05-01T06:07:34.354Z</lastmod>
+    <lastmod>2024-05-02T20:27:25.474Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-08-11-dask-gateway-jupyterhub.html</loc>
-    <lastmod>2024-05-01T06:07:33.426Z</lastmod>
+    <lastmod>2024-05-02T20:27:24.562Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-06-15-jetstream_kubernetes_kubespray.html</loc>
-    <lastmod>2024-05-01T06:07:32.206Z</lastmod>
+    <lastmod>2024-05-02T20:27:23.342Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-06-01-git.html</loc>
-    <lastmod>2024-05-01T06:07:31.010Z</lastmod>
+    <lastmod>2024-05-02T20:27:22.170Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-05-21-jetstream_kubernetes_magnum.html</loc>
-    <lastmod>2024-05-01T06:07:30.170Z</lastmod>
+    <lastmod>2024-05-02T20:27:21.326Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-04-01-jetstream-object-store.html</loc>
-    <lastmod>2024-05-01T06:07:29.042Z</lastmod>
+    <lastmod>2024-05-02T20:27:20.182Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-03-12-kill-jupyter-notebook.html</loc>
-    <lastmod>2024-05-01T06:07:28.057Z</lastmod>
+    <lastmod>2024-05-02T20:27:19.198Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-02-26-kubernetes_cvmfs.html</loc>
-    <lastmod>2024-05-01T06:07:27.165Z</lastmod>
+    <lastmod>2024-05-02T20:27:18.270Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2019-10-30-jetstream_kubernetes_loadtest.html</loc>
-    <lastmod>2024-05-01T06:07:26.177Z</lastmod>
+    <lastmod>2024-05-02T20:27:17.266Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2019-08-24-github-for-research-groups.html</loc>
-    <lastmod>2024-05-01T06:07:25.101Z</lastmod>
+    <lastmod>2024-05-02T20:27:16.238Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2019-05-30-webinar_python_hpc.html</loc>
-    <lastmod>2024-05-01T06:07:23.897Z</lastmod>
+    <lastmod>2024-05-02T20:27:15.022Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-09-10-wcs-astropy.html</loc>
-    <lastmod>2024-05-01T06:07:23.021Z</lastmod>
+    <lastmod>2024-05-02T20:27:14.162Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2019-08-21-large_files_python_packages.html</loc>
-    <lastmod>2024-05-01T06:07:21.749Z</lastmod>
+    <lastmod>2024-05-02T20:27:12.882Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2019-02-22-scale-kubernetes-jupyterhub-manually.html</loc>
-    <lastmod>2024-05-01T06:07:20.481Z</lastmod>
+    <lastmod>2024-05-02T20:27:11.594Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2019-02-22-jetstream_kubernetes_kubespray_282.html</loc>
-    <lastmod>2024-05-01T06:07:19.561Z</lastmod>
+    <lastmod>2024-05-02T20:27:10.694Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2018-12-20-jetstream_kubernetes_jupyterhub_pangeo.html</loc>
-    <lastmod>2024-05-01T06:07:18.481Z</lastmod>
+    <lastmod>2024-05-02T20:27:09.614Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html</loc>
-    <lastmod>2024-05-01T06:07:17.345Z</lastmod>
+    <lastmod>2024-05-02T20:27:08.478Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2018-10-24-compute-at-sdsc.html</loc>
-    <lastmod>2024-05-01T06:07:16.317Z</lastmod>
+    <lastmod>2024-05-02T20:27:07.458Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2018-09-23-jetstream_kubernetes_kubespray_explore.html</loc>
-    <lastmod>2024-05-01T06:07:14.933Z</lastmod>
+    <lastmod>2024-05-02T20:27:06.110Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2018-07-23-pearc18_paper_deploy_jupyterhub_xsede.html</loc>
-    <lastmod>2024-05-01T06:07:13.593Z</lastmod>
+    <lastmod>2024-05-02T20:27:04.766Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2018-07-19-docker-auto-build.html</loc>
-    <lastmod>2024-05-01T06:07:12.685Z</lastmod>
+    <lastmod>2024-05-02T20:27:03.826Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2018-06-07-private-dask-kubernetes-jetstream.html</loc>
-    <lastmod>2024-05-01T06:07:11.713Z</lastmod>
+    <lastmod>2024-05-02T20:27:02.862Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2018-05-04-shared-dask-kubernetes-jetstream.html</loc>
-    <lastmod>2024-05-01T06:07:10.409Z</lastmod>
+    <lastmod>2024-05-02T20:27:01.542Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2018-03-03-zarr.html</loc>
-    <lastmod>2024-05-01T06:07:09.201Z</lastmod>
+    <lastmod>2024-05-02T20:27:00.346Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2018-01-01-deploy_jupyterhub_supercomputer_2018.html</loc>
-    <lastmod>2024-05-01T06:07:08.149Z</lastmod>
+    <lastmod>2024-05-02T20:26:59.294Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2017-12-19-ecss-symposium.html</loc>
-    <lastmod>2024-05-01T06:07:07.077Z</lastmod>
+    <lastmod>2024-05-02T20:26:58.218Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2017-12-04-store-conda-environment-inside-notebook.html</loc>
-    <lastmod>2024-05-01T06:07:05.765Z</lastmod>
+    <lastmod>2024-05-02T20:26:56.893Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2017-10-25-cudak8s.html</loc>
-    <lastmod>2024-05-01T06:07:04.317Z</lastmod>
+    <lastmod>2024-05-02T20:26:55.437Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2017-09-06-continous-integration-travis-ci-github.html</loc>
-    <lastmod>2024-05-01T06:07:03.317Z</lastmod>
+    <lastmod>2024-05-02T20:26:54.429Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2017-07-12-xstream-tutorial-notes-pearc17.html</loc>
-    <lastmod>2024-05-01T06:07:02.145Z</lastmod>
+    <lastmod>2024-05-02T20:26:53.249Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2017-05-16-jupyterhub-batchspawner-ssh.html</loc>
-    <lastmod>2024-05-01T06:07:00.685Z</lastmod>
+    <lastmod>2024-05-02T20:26:51.805Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2017-02-26-sample-deployment-jupyterhub-hpc.html</loc>
-    <lastmod>2024-05-01T06:06:59.677Z</lastmod>
+    <lastmod>2024-05-02T20:26:50.797Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2017-02-03-automated-deployment-jupyterhub-ansible.html</loc>
-    <lastmod>2024-05-01T06:06:58.725Z</lastmod>
+    <lastmod>2024-05-02T20:26:49.845Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2017-01-23-singularity-hpc-comet.html</loc>
-    <lastmod>2024-05-01T06:06:57.385Z</lastmod>
+    <lastmod>2024-05-02T20:26:48.513Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2016-05-24-jupyterhub-docker-swarm.html</loc>
-    <lastmod>2024-05-01T06:06:56.297Z</lastmod>
+    <lastmod>2024-05-02T20:26:47.425Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2016-04-16-jupyterhub-sdsc-cloud.html</loc>
-    <lastmod>2024-05-01T06:06:54.973Z</lastmod>
+    <lastmod>2024-05-02T20:26:46.097Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2015-09-24-ipython-jupyter-notebook-nersc-edison.html</loc>
-    <lastmod>2024-05-01T06:06:53.701Z</lastmod>
+    <lastmod>2024-05-02T20:26:44.833Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2015-04-02-jupyterhub-hpc.html</loc>
-    <lastmod>2024-05-01T06:06:52.476Z</lastmod>
+    <lastmod>2024-05-02T20:26:43.605Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2015-02-10-software-carpentry-setup-chromebook.html</loc>
-    <lastmod>2024-05-01T06:06:51.360Z</lastmod>
+    <lastmod>2024-05-02T20:26:42.505Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2014-09-30-unit-tests-ipython-notebook.html</loc>
-    <lastmod>2024-05-01T06:06:50.364Z</lastmod>
+    <lastmod>2024-05-02T20:26:41.489Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2014-08-19-github-for-research-groups.html</loc>
-    <lastmod>2024-05-01T06:06:49.276Z</lastmod>
+    <lastmod>2024-05-02T20:26:40.401Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2014-03-20-python-on-gordon.html</loc>
-    <lastmod>2024-05-01T06:06:47.928Z</lastmod>
+    <lastmod>2024-05-02T20:26:39.081Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2014-02-26-build-software-carpentry-with-pelican.html</loc>
-    <lastmod>2024-05-01T06:06:46.964Z</lastmod>
+    <lastmod>2024-05-02T20:26:38.089Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2014-01-31-wget-file-from-google-drive.html</loc>
-    <lastmod>2024-05-01T06:06:45.956Z</lastmod>
+    <lastmod>2024-05-02T20:26:37.089Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-12-10-joining-sandiego-supercomputer-center.html</loc>
-    <lastmod>2024-05-01T06:06:45.096Z</lastmod>
+    <lastmod>2024-05-02T20:26:36.221Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-10-14-jiffylab-multiuser-ipython-notebooks.html</loc>
-    <lastmod>2024-05-01T06:06:44.140Z</lastmod>
+    <lastmod>2024-05-02T20:26:35.261Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-09-27-google-plus-comments-plugin-for-pelican.html</loc>
-    <lastmod>2024-05-01T06:06:42.796Z</lastmod>
+    <lastmod>2024-05-02T20:26:33.981Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-09-17-clviewer-interactive-plot-of-CMB-spectra.html</loc>
-    <lastmod>2024-05-01T06:06:41.872Z</lastmod>
+    <lastmod>2024-05-02T20:26:33.065Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-09-02-run-hadoop-python-jobs-on-amazon-with-mrjob.html</loc>
-    <lastmod>2024-05-01T06:06:40.944Z</lastmod>
+    <lastmod>2024-05-02T20:26:32.145Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-08-20-planck-ctp-angular-power-spectrum-ell.html</loc>
-    <lastmod>2024-05-01T06:06:39.608Z</lastmod>
+    <lastmod>2024-05-02T20:26:30.817Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-08-04-export-google-analytics-data-via-api.html</loc>
-    <lastmod>2024-05-01T06:06:38.668Z</lastmod>
+    <lastmod>2024-05-02T20:26:29.877Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-06-22-how-to-use-ipython-notebook-on-small.html</loc>
-    <lastmod>2024-05-01T06:06:37.052Z</lastmod>
+    <lastmod>2024-05-02T20:26:28.273Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-04-08-simple-mixin-usage-in-python.html</loc>
-    <lastmod>2024-05-01T06:06:35.972Z</lastmod>
+    <lastmod>2024-05-02T20:26:27.197Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-04-06-basic-forkpull-git-workflow.html</loc>
-    <lastmod>2024-05-01T06:06:34.868Z</lastmod>
+    <lastmod>2024-05-02T20:26:26.133Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-02-27-how-to-cite-hdf5-in-bibtex.html</loc>
-    <lastmod>2024-05-01T06:06:33.800Z</lastmod>
+    <lastmod>2024-05-02T20:26:25.049Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-01-18-elliptic-beams-fwhm-and-ellipticity.html</loc>
-    <lastmod>2024-05-01T06:06:32.972Z</lastmod>
+    <lastmod>2024-05-02T20:26:24.213Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2012-10-06-butterworth-filter-with-python.html</loc>
-    <lastmod>2024-05-01T06:06:31.996Z</lastmod>
+    <lastmod>2024-05-02T20:26:23.289Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2012-09-26-homepage-on-aboutme.html</loc>
-    <lastmod>2024-05-01T06:06:31.092Z</lastmod>
+    <lastmod>2024-05-02T20:26:22.365Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2012-07-06-compile-python-module-with-mpi-support.html</loc>
-    <lastmod>2024-05-01T06:06:30.148Z</lastmod>
+    <lastmod>2024-05-02T20:26:21.412Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2011-06-21-unit-testing-happiness.html</loc>
-    <lastmod>2024-05-01T06:06:29.292Z</lastmod>
+    <lastmod>2024-05-02T20:26:20.560Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2011-05-18-pink-noise-1f-noise-simulations-in-numpy.html</loc>
-    <lastmod>2024-05-01T06:06:28.468Z</lastmod>
+    <lastmod>2024-05-02T20:26:19.692Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2011-04-13-set-python-logging-level.html</loc>
-    <lastmod>2024-05-01T06:06:27.644Z</lastmod>
+    <lastmod>2024-05-02T20:26:18.860Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2011-02-16-ipython-and-pytrilinos.html</loc>
-    <lastmod>2024-05-01T06:06:26.748Z</lastmod>
+    <lastmod>2024-05-02T20:26:18.008Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2011-01-07-memory-map-npy-files.html</loc>
-    <lastmod>2024-05-01T06:06:25.888Z</lastmod>
+    <lastmod>2024-05-02T20:26:17.128Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2010-08-31-gnome-alt-f2-popup-launcher.html</loc>
-    <lastmod>2024-05-01T06:06:25.052Z</lastmod>
+    <lastmod>2024-05-02T20:26:16.292Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2010-08-04-numpy-dtypes-and-fits-keywords.html</loc>
-    <lastmod>2024-05-01T06:06:24.180Z</lastmod>
+    <lastmod>2024-05-02T20:26:15.408Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2010-06-30-change-column-name-in-fits-with-pyfits.html</loc>
-    <lastmod>2024-05-01T06:06:23.292Z</lastmod>
+    <lastmod>2024-05-02T20:26:14.516Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2010-06-21-quaternions-for-python.html</loc>
-    <lastmod>2024-05-01T06:06:22.388Z</lastmod>
+    <lastmod>2024-05-02T20:26:13.640Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2010-03-23-change-permission-recursively-to.html</loc>
-    <lastmod>2024-05-01T06:06:21.536Z</lastmod>
+    <lastmod>2024-05-02T20:26:12.784Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2010-03-03-using-numpy-dtype-with-loadtxt.html</loc>
-    <lastmod>2024-05-01T06:06:20.704Z</lastmod>
+    <lastmod>2024-05-02T20:26:11.916Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2010-01-28-correlation.html</loc>
-    <lastmod>2024-05-01T06:06:19.800Z</lastmod>
+    <lastmod>2024-05-02T20:26:11.036Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2010-01-07-execute-bash-script-remotely-with-ssh.html</loc>
-    <lastmod>2024-05-01T06:06:18.880Z</lastmod>
+    <lastmod>2024-05-02T20:26:10.148Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2009-12-15-latest-maxima-and-wxmaxima-for-ubuntu.html</loc>
-    <lastmod>2024-05-01T06:06:18.024Z</lastmod>
+    <lastmod>2024-05-02T20:26:09.284Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2008-09-17-forcefully-unmount-disk-partition.html</loc>
-    <lastmod>2024-05-01T06:06:17.191Z</lastmod>
+    <lastmod>2024-05-02T20:26:08.448Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2008-03-29-decibels-db-and-dbm-in-terms-of-power.html</loc>
-    <lastmod>2024-05-01T06:06:16.315Z</lastmod>
+    <lastmod>2024-05-02T20:26:07.580Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2008-03-28-producing-pdf-from-xml-files.html</loc>
-    <lastmod>2024-05-01T06:06:15.259Z</lastmod>
+    <lastmod>2024-05-02T20:26:06.524Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2006-10-03-using-gnu-find.html</loc>
-    <lastmod>2024-05-01T06:06:14.359Z</lastmod>
+    <lastmod>2024-05-02T20:26:05.616Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2006-09-25-tar-quickref.html</loc>
-    <lastmod>2024-05-01T06:06:13.527Z</lastmod>
+    <lastmod>2024-05-02T20:26:04.784Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2006-09-22-software-libero-per-il-trattamento-di.html</loc>
-    <lastmod>2024-05-01T06:06:12.695Z</lastmod>
+    <lastmod>2024-05-02T20:26:03.948Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2006-09-22-awk-made-easy.html</loc>
-    <lastmod>2024-05-01T06:06:11.839Z</lastmod>
+    <lastmod>2024-05-02T20:26:03.088Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2006-09-20-pillole-di-astrofisica.html</loc>
-    <lastmod>2024-05-01T06:06:11.335Z</lastmod>
+    <lastmod>2024-05-02T20:26:02.588Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2006-09-22-command-line-processing.html</loc>
-    <lastmod>2024-05-01T06:06:12.267Z</lastmod>
+    <lastmod>2024-05-02T20:26:03.508Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2006-09-25-software-carpentry.html</loc>
-    <lastmod>2024-05-01T06:06:13.107Z</lastmod>
+    <lastmod>2024-05-02T20:26:04.376Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2006-10-03-beginners-bash-guide.html</loc>
-    <lastmod>2024-05-01T06:06:13.931Z</lastmod>
+    <lastmod>2024-05-02T20:26:05.192Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2006-10-17-vim-costumization.html</loc>
-    <lastmod>2024-05-01T06:06:14.811Z</lastmod>
+    <lastmod>2024-05-02T20:26:06.072Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2008-03-28-relation-between-power-density-and.html</loc>
-    <lastmod>2024-05-01T06:06:15.787Z</lastmod>
+    <lastmod>2024-05-02T20:26:07.052Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2008-04-29-netcat-quickly-send-binaries-through.html</loc>
-    <lastmod>2024-05-01T06:06:16.755Z</lastmod>
+    <lastmod>2024-05-02T20:26:08.020Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2009-12-10-number-of-files-in-folder-and-subfolders.html</loc>
-    <lastmod>2024-05-01T06:06:17.607Z</lastmod>
+    <lastmod>2024-05-02T20:26:08.868Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2010-01-05-load-arrays-from-text-file-with-numpy.html</loc>
-    <lastmod>2024-05-01T06:06:18.456Z</lastmod>
+    <lastmod>2024-05-02T20:26:09.704Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2010-01-07-lock-pin-hold-package-using-apt-on.html</loc>
-    <lastmod>2024-05-01T06:06:19.340Z</lastmod>
+    <lastmod>2024-05-02T20:26:10.580Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2010-02-19-stop-ipcluster-from-script.html</loc>
-    <lastmod>2024-05-01T06:06:20.236Z</lastmod>
+    <lastmod>2024-05-02T20:26:11.452Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2010-03-16-aptitude-search.html</loc>
-    <lastmod>2024-05-01T06:06:21.132Z</lastmod>
+    <lastmod>2024-05-02T20:26:12.348Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2010-06-21-parallel-computing-python-way.html</loc>
-    <lastmod>2024-05-01T06:06:21.944Z</lastmod>
+    <lastmod>2024-05-02T20:26:13.196Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2010-06-23-healpix-coordinates.html</loc>
-    <lastmod>2024-05-01T06:06:22.840Z</lastmod>
+    <lastmod>2024-05-02T20:26:14.092Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2010-07-23-count-hits-with-numpy.html</loc>
-    <lastmod>2024-05-01T06:06:23.760Z</lastmod>
+    <lastmod>2024-05-02T20:26:14.988Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2010-08-21-switch-to-interactive-backend-with.html</loc>
-    <lastmod>2024-05-01T06:06:24.648Z</lastmod>
+    <lastmod>2024-05-02T20:26:15.876Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2010-12-03-force-local-install-of-python-module.html</loc>
-    <lastmod>2024-05-01T06:06:25.476Z</lastmod>
+    <lastmod>2024-05-02T20:26:16.708Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2011-02-02-git-make-local-branch-tracking-origin.html</loc>
-    <lastmod>2024-05-01T06:06:26.300Z</lastmod>
+    <lastmod>2024-05-02T20:26:17.560Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2011-03-28-pyfits-memory-leak-in-newtable.html</loc>
-    <lastmod>2024-05-01T06:06:27.200Z</lastmod>
+    <lastmod>2024-05-02T20:26:18.448Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2011-04-29-vim-regular-expressions.html</loc>
-    <lastmod>2024-05-01T06:06:28.052Z</lastmod>
+    <lastmod>2024-05-02T20:26:19.276Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2011-06-21-cfitsio-wrapper-in-python.html</loc>
-    <lastmod>2024-05-01T06:06:28.884Z</lastmod>
+    <lastmod>2024-05-02T20:26:20.132Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2011-11-01-some-python-resources.html</loc>
-    <lastmod>2024-05-01T06:06:29.740Z</lastmod>
+    <lastmod>2024-05-02T20:26:21.004Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2012-08-16-doctests-and-unittests-happiness-2.html</loc>
-    <lastmod>2024-05-01T06:06:30.676Z</lastmod>
+    <lastmod>2024-05-02T20:26:21.941Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2012-09-27-ipythonparallel-for-planck-data.html</loc>
-    <lastmod>2024-05-01T06:06:31.592Z</lastmod>
+    <lastmod>2024-05-02T20:26:22.881Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2012-12-17-ubuntu-ppa-for-healpix-and-healpy.html</loc>
-    <lastmod>2024-05-01T06:06:32.552Z</lastmod>
+    <lastmod>2024-05-02T20:26:23.797Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-01-28-tag-blogger.html</loc>
-    <lastmod>2024-05-01T06:06:33.384Z</lastmod>
+    <lastmod>2024-05-02T20:26:24.625Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-03-12-interactive-3d-plot-of-sky-map.html</loc>
-    <lastmod>2024-05-01T06:06:34.288Z</lastmod>
+    <lastmod>2024-05-02T20:26:25.553Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-04-08-noise-in-spectra-and-map-domain.html</loc>
-    <lastmod>2024-05-01T06:06:35.392Z</lastmod>
+    <lastmod>2024-05-02T20:26:26.625Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-04-11-ipython-parallell-setup-on-carver-at.html</loc>
-    <lastmod>2024-05-01T06:06:36.544Z</lastmod>
+    <lastmod>2024-05-02T20:26:27.753Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-07-15-processing-planck-sources-with-hadoop.html</loc>
-    <lastmod>2024-05-01T06:06:38.016Z</lastmod>
+    <lastmod>2024-05-02T20:26:29.237Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-08-08-healpix-map-of-earth-using-healpy.html</loc>
-    <lastmod>2024-05-01T06:06:39.164Z</lastmod>
+    <lastmod>2024-05-02T20:26:30.373Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-08-30-interactive-figures-planck-power-spectra.html</loc>
-    <lastmod>2024-05-01T06:06:40.140Z</lastmod>
+    <lastmod>2024-05-02T20:26:31.345Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-09-10-Planck-CMB-map-at-high-resolution.html</loc>
-    <lastmod>2024-05-01T06:06:41.424Z</lastmod>
+    <lastmod>2024-05-02T20:26:32.613Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-09-26-automatically-build-pelican-and-publish-to-github-pages.html</loc>
-    <lastmod>2024-05-01T06:06:42.376Z</lastmod>
+    <lastmod>2024-05-02T20:26:33.561Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-10-01-how-to-log-exceptions-in-python.html</loc>
-    <lastmod>2024-05-01T06:06:43.612Z</lastmod>
+    <lastmod>2024-05-02T20:26:34.737Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-11-20-published-paper-destriping-CMB-polarimeter.html</loc>
-    <lastmod>2024-05-01T06:06:44.620Z</lastmod>
+    <lastmod>2024-05-02T20:26:35.741Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2013-12-18-run-ipython-notebook-on-HPC-cluster-via-PBS.html</loc>
-    <lastmod>2024-05-01T06:06:45.536Z</lastmod>
+    <lastmod>2024-05-02T20:26:36.661Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2014-02-13-openproceedings.html</loc>
-    <lastmod>2024-05-01T06:06:46.396Z</lastmod>
+    <lastmod>2024-05-02T20:26:37.525Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2014-03-20-machine-learning-at-scale-with-python.html</loc>
-    <lastmod>2024-05-01T06:06:47.388Z</lastmod>
+    <lastmod>2024-05-02T20:26:38.517Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2014-06-05-career_as_a_computational_scientist.html</loc>
-    <lastmod>2024-05-01T06:06:48.728Z</lastmod>
+    <lastmod>2024-05-02T20:26:39.877Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2014-08-28-code-review-for-scientific-computing.html</loc>
-    <lastmod>2024-05-01T06:06:49.896Z</lastmod>
+    <lastmod>2024-05-02T20:26:41.029Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2014-10-22-zero-based-indexing.html</loc>
-    <lastmod>2024-05-01T06:06:50.788Z</lastmod>
+    <lastmod>2024-05-02T20:26:41.917Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2015-03-24-numba-groupby-pixels.html</loc>
-    <lastmod>2024-05-01T06:06:51.848Z</lastmod>
+    <lastmod>2024-05-02T20:26:42.997Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2015-09-17-ipython-jupyter-notebook-sdsc-comet.html</loc>
-    <lastmod>2024-05-01T06:06:53.056Z</lastmod>
+    <lastmod>2024-05-02T20:26:44.201Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2015-10-05-use-own-python-in-jupyterhub.html</loc>
-    <lastmod>2024-05-01T06:06:54.205Z</lastmod>
+    <lastmod>2024-05-02T20:26:45.297Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2016-04-27-jupyterhub-image-sdsc-cloud.html</loc>
-    <lastmod>2024-05-01T06:06:55.545Z</lastmod>
+    <lastmod>2024-05-02T20:26:46.673Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2016-10-12-dockerspawner-cuda.html</loc>
-    <lastmod>2024-05-01T06:06:56.793Z</lastmod>
+    <lastmod>2024-05-02T20:26:47.921Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2017-02-01-publish-research-software-github.html</loc>
-    <lastmod>2024-05-01T06:06:58.041Z</lastmod>
+    <lastmod>2024-05-02T20:26:49.165Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2017-02-24-customize-your-python-environment-in-jupyterhub.html</loc>
-    <lastmod>2024-05-01T06:06:59.205Z</lastmod>
+    <lastmod>2024-05-02T20:26:50.325Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2017-04-19-globus-ftp-local-machine.html</loc>
-    <lastmod>2024-05-01T06:07:00.169Z</lastmod>
+    <lastmod>2024-05-02T20:26:51.281Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2017-06-30-quick-github-pull-requests.html</loc>
-    <lastmod>2024-05-01T06:07:01.381Z</lastmod>
+    <lastmod>2024-05-02T20:26:52.501Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2017-08-11-jupyterhub-globus-comet-singularity.html</loc>
-    <lastmod>2024-05-01T06:07:02.721Z</lastmod>
+    <lastmod>2024-05-02T20:26:53.817Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2017-10-25-compile-software-singularity.html</loc>
-    <lastmod>2024-05-01T06:07:03.901Z</lastmod>
+    <lastmod>2024-05-02T20:26:55.017Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2017-10-26-scalable-jupyterhub-docker-swarm-mode.html</loc>
-    <lastmod>2024-05-01T06:07:05.341Z</lastmod>
+    <lastmod>2024-05-02T20:26:56.465Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2017-12-05-scalable-jupyterhub-kubernetes-jetstream.html</loc>
-    <lastmod>2024-05-01T06:07:06.625Z</lastmod>
+    <lastmod>2024-05-02T20:26:57.742Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2017-12-21-custom-conda-python-jupyter-nersc.html</loc>
-    <lastmod>2024-05-01T06:07:07.537Z</lastmod>
+    <lastmod>2024-05-02T20:26:58.674Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2018-03-03-zarr-on-jetstream.html</loc>
-    <lastmod>2024-05-01T06:07:08.721Z</lastmod>
+    <lastmod>2024-05-02T20:26:59.866Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2018-03-29-boinc-server-jetstream.html</loc>
-    <lastmod>2024-05-01T06:07:09.833Z</lastmod>
+    <lastmod>2024-05-02T20:27:00.950Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2018-05-12-pearc18-paper-preprint-arxiv.html</loc>
-    <lastmod>2024-05-01T06:07:11.093Z</lastmod>
+    <lastmod>2024-05-02T20:27:02.242Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2018-06-20-organize-code-simulations-nersc.html</loc>
-    <lastmod>2024-05-01T06:07:12.265Z</lastmod>
+    <lastmod>2024-05-02T20:27:03.402Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2018-07-22-updated-singularity-2.5-comet.html</loc>
-    <lastmod>2024-05-01T06:07:13.117Z</lastmod>
+    <lastmod>2024-05-02T20:27:04.262Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2018-09-23-jetstream_kubernetes_kubespray.html</loc>
-    <lastmod>2024-05-01T06:07:14.373Z</lastmod>
+    <lastmod>2024-05-02T20:27:05.530Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2018-09-24-jetstream_kubernetes_kubespray_jupyterhub.html</loc>
-    <lastmod>2024-05-01T06:07:15.593Z</lastmod>
+    <lastmod>2024-05-02T20:27:06.766Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2018-10-26-pandas-astro-example.html</loc>
-    <lastmod>2024-05-01T06:07:16.721Z</lastmod>
+    <lastmod>2024-05-02T20:27:07.858Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2018-12-12-twofactor_ucsd.html</loc>
-    <lastmod>2024-05-01T06:07:17.933Z</lastmod>
+    <lastmod>2024-05-02T20:27:09.066Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2019-01-24-zarr_jetstream_2019.html</loc>
-    <lastmod>2024-05-01T06:07:19.069Z</lastmod>
+    <lastmod>2024-05-02T20:27:10.210Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2019-02-22-kubernetes-monitoring.html</loc>
-    <lastmod>2024-05-01T06:07:19.965Z</lastmod>
+    <lastmod>2024-05-02T20:27:11.098Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2019-04-20-jetstream_kubernetes_monitoring.html</loc>
-    <lastmod>2024-05-01T06:07:21.065Z</lastmod>
+    <lastmod>2024-05-02T20:27:12.202Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2019-09-12-jetstream_kubernetes_magnum_autoscaler.html</loc>
-    <lastmod>2024-05-01T06:07:22.441Z</lastmod>
+    <lastmod>2024-05-02T20:27:13.554Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2019-03-24-folder-inherit-group-permission.html</loc>
-    <lastmod>2024-05-01T06:07:23.473Z</lastmod>
+    <lastmod>2024-05-02T20:27:14.598Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2019-06-14-jetstream_kubernetes_magnum.html</loc>
-    <lastmod>2024-05-01T06:07:24.573Z</lastmod>
+    <lastmod>2024-05-02T20:27:15.686Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2019-09-23-batch_notebook_execution.html</loc>
-    <lastmod>2024-05-01T06:07:25.545Z</lastmod>
+    <lastmod>2024-05-02T20:27:16.670Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2019-12-02-organize_calendars_large_collaboration.html</loc>
-    <lastmod>2024-05-01T06:07:26.637Z</lastmod>
+    <lastmod>2024-05-02T20:27:17.730Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-03-09-pelican-to-fastpages.html</loc>
-    <lastmod>2024-05-01T06:07:27.657Z</lastmod>
+    <lastmod>2024-05-02T20:27:18.790Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-03-13-setup-https-kubernetes-letsencrypt.html</loc>
-    <lastmod>2024-05-01T06:07:28.585Z</lastmod>
+    <lastmod>2024-05-02T20:27:19.698Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-04-20-ecss-symposium-kubernetes-jetstream.html</loc>
-    <lastmod>2024-05-01T06:07:29.466Z</lastmod>
+    <lastmod>2024-05-02T20:27:20.610Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-05-27-readthedocs-conda.html</loc>
-    <lastmod>2024-05-01T06:07:30.582Z</lastmod>
+    <lastmod>2024-05-02T20:27:21.746Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-06-01-twitter-blocklist.html</loc>
-    <lastmod>2024-05-01T06:07:31.442Z</lastmod>
+    <lastmod>2024-05-02T20:27:22.590Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-07-10-nfs-server-kubernetes-jetstream.html</loc>
-    <lastmod>2024-05-01T06:07:32.862Z</lastmod>
+    <lastmod>2024-05-02T20:27:24.006Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-08-24-renew-letsencrypt-nginx.html</loc>
-    <lastmod>2024-05-01T06:07:33.826Z</lastmod>
+    <lastmod>2024-05-02T20:27:24.958Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-09-01-redirect-readthedocs.html</loc>
-    <lastmod>2024-05-01T06:07:34.786Z</lastmod>
+    <lastmod>2024-05-02T20:27:25.902Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-09-15-how-to-share-jupyter-notebooks.html</loc>
-    <lastmod>2024-05-01T06:07:35.866Z</lastmod>
+    <lastmod>2024-05-02T20:27:26.982Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-10-14-install-healpix-polspice-conda-nersc.html</loc>
-    <lastmod>2024-05-01T06:07:36.818Z</lastmod>
+    <lastmod>2024-05-02T20:27:27.938Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-11-30-cfitsio-checkpoint-write.html</loc>
-    <lastmod>2024-05-01T06:07:37.746Z</lastmod>
+    <lastmod>2024-05-02T20:27:28.870Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-01-20-jetstream_kubernetes_kubespray_2.15.0.html</loc>
-    <lastmod>2024-05-01T06:07:39.038Z</lastmod>
+    <lastmod>2024-05-02T20:27:30.202Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-03-25-jetstream-video-stream-object-store.html</loc>
-    <lastmod>2024-05-01T06:07:40.186Z</lastmod>
+    <lastmod>2024-05-02T20:27:31.314Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-04-19-jetstream-backup-kubernetes-volumes-object-store.html</loc>
-    <lastmod>2024-05-01T06:07:41.618Z</lastmod>
+    <lastmod>2024-05-02T20:27:32.754Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-06-17-learn-italian-in-san-diego.html</loc>
-    <lastmod>2024-05-01T06:07:42.546Z</lastmod>
+    <lastmod>2024-05-02T20:27:33.667Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-06-27-dreamhost-email.html</loc>
-    <lastmod>2024-05-01T06:07:43.454Z</lastmod>
+    <lastmod>2024-05-02T20:27:34.543Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-08-04-pysm3-paper.html</loc>
-    <lastmod>2024-05-01T06:07:44.338Z</lastmod>
+    <lastmod>2024-05-02T20:27:35.443Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-10-01-monitor-github-traffic.html</loc>
-    <lastmod>2024-05-01T06:07:45.242Z</lastmod>
+    <lastmod>2024-05-02T20:27:36.359Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-10-12-kubernetes-hadoop.html</loc>
-    <lastmod>2024-05-01T06:07:46.146Z</lastmod>
+    <lastmod>2024-05-02T20:27:37.251Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-11-08-fund-healpy.html</loc>
-    <lastmod>2024-05-01T06:07:47.230Z</lastmod>
+    <lastmod>2024-05-02T20:27:38.371Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-01-27-dask-gateway-jupyterhub.html</loc>
-    <lastmod>2024-05-01T06:07:48.246Z</lastmod>
+    <lastmod>2024-05-02T20:27:39.351Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-03-30-jetstream2_kubernetes_kubespray.html</loc>
-    <lastmod>2024-05-01T06:07:49.606Z</lastmod>
+    <lastmod>2024-05-02T20:27:40.699Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-04-04-dask-gateway-jupyterhub.html</loc>
-    <lastmod>2024-05-01T06:07:50.686Z</lastmod>
+    <lastmod>2024-05-02T20:27:41.799Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-04-05-science-gateway-dask-zarr.html</loc>
-    <lastmod>2024-05-01T06:07:51.782Z</lastmod>
+    <lastmod>2024-05-02T20:27:42.895Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-04-15-jetstream2-su-calculator.html</loc>
-    <lastmod>2024-05-01T06:07:52.766Z</lastmod>
+    <lastmod>2024-05-02T20:27:43.835Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-05-02-ssh-github-action.html</loc>
-    <lastmod>2024-05-01T06:07:53.714Z</lastmod>
+    <lastmod>2024-05-02T20:27:44.783Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-06-06-mariadb.html</loc>
-    <lastmod>2024-05-01T06:07:54.590Z</lastmod>
+    <lastmod>2024-05-02T20:27:45.667Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-03-16-raise-check-flag-numpy.html</loc>
-    <lastmod>2024-05-01T06:07:55.690Z</lastmod>
+    <lastmod>2024-05-02T20:27:46.795Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-06-19-white-noise-hitmap-fullsky.html</loc>
-    <lastmod>2024-05-01T06:07:56.878Z</lastmod>
+    <lastmod>2024-05-02T20:27:47.999Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-06-21-white-noise-hitmap-not-uniform.html</loc>
-    <lastmod>2024-05-01T06:07:58.150Z</lastmod>
+    <lastmod>2024-05-02T20:27:49.263Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-08-24-debug-bandpass-unit-conversion-pysm3.html</loc>
-    <lastmod>2024-05-01T06:07:59.574Z</lastmod>
+    <lastmod>2024-05-02T20:27:50.707Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2023-10-27-jupyterhub-github-authentication.html</loc>
-    <lastmod>2024-05-01T06:08:00.706Z</lastmod>
+    <lastmod>2024-05-02T20:27:51.791Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2020-10-02-example-healpy-query_disc.html</loc>
-    <lastmod>2024-05-01T06:08:02.086Z</lastmod>
+    <lastmod>2024-05-02T20:27:53.183Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-03-11-rotate-maps-healpy.html</loc>
-    <lastmod>2024-05-01T06:08:03.526Z</lastmod>
+    <lastmod>2024-05-02T20:27:54.635Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2021-06-18-healpy-rotate-mask.html</loc>
-    <lastmod>2024-05-01T06:08:04.587Z</lastmod>
+    <lastmod>2024-05-02T20:27:55.671Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2023-09-28-dask-gateway-jupyterhub.html</loc>
-    <lastmod>2024-05-01T06:08:06.867Z</lastmod>
+    <lastmod>2024-05-02T20:27:57.955Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2023-09-21-gateways-2023-dask-jupyterhub.html</loc>
-    <lastmod>2024-05-01T06:08:07.811Z</lastmod>
+    <lastmod>2024-05-02T20:27:58.879Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-10-05-singularity-expanse-tutorial.html</loc>
-    <lastmod>2024-05-01T06:08:08.739Z</lastmod>
+    <lastmod>2024-05-02T20:27:59.783Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-12-01-radio-galaxies-websky-planck.html</loc>
-    <lastmod>2024-05-01T06:08:09.867Z</lastmod>
+    <lastmod>2024-05-02T20:28:00.895Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2023-02-02-github-overleaf.html</loc>
-    <lastmod>2024-05-01T06:08:10.879Z</lastmod>
+    <lastmod>2024-05-02T20:28:01.931Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2023-03-23-update-openstack-credentials-kubernetes.html</loc>
-    <lastmod>2024-05-01T06:08:11.811Z</lastmod>
+    <lastmod>2024-05-02T20:28:02.847Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2023-09-26-https-kubernetes-letsencrypt.html</loc>
-    <lastmod>2024-05-01T06:08:12.671Z</lastmod>
+    <lastmod>2024-05-02T20:28:03.707Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-10-24-numba-closures.html</loc>
-    <lastmod>2024-05-01T06:08:13.911Z</lastmod>
+    <lastmod>2024-05-02T20:28:04.967Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2023-11-02-desouza-award.html</loc>
-    <lastmod>2024-05-01T06:08:15.127Z</lastmod>
+    <lastmod>2024-05-02T20:28:06.127Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2024-04-25-whatsapp-poll.html</loc>
-    <lastmod>2024-05-01T06:08:15.999Z</lastmod>
+    <lastmod>2024-05-02T20:28:06.987Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2023-02-06-nfs-server-kubernetes-jetstream.html</loc>
-    <lastmod>2024-05-01T06:08:17.167Z</lastmod>
+    <lastmod>2024-05-02T20:28:08.171Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2024-01-12-pdf-from-screenshots.html</loc>
-    <lastmod>2024-05-01T06:08:18.015Z</lastmod>
+    <lastmod>2024-05-02T20:28:09.015Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2023-10-27-buy-us-reasury-bonds-fidelity.html</loc>
-    <lastmod>2024-05-01T06:08:18.935Z</lastmod>
+    <lastmod>2024-05-02T20:28:09.932Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-11-03-singularity-github-actions.html</loc>
-    <lastmod>2024-05-01T06:08:19.823Z</lastmod>
+    <lastmod>2024-05-02T20:28:10.848Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2022-11-08-python-nersc-conda.html</loc>
-    <lastmod>2024-05-01T06:08:20.907Z</lastmod>
+    <lastmod>2024-05-02T20:28:11.924Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2023-01-23-kubernetes-gpu-jetstream2.html</loc>
-    <lastmod>2024-05-01T06:08:22.063Z</lastmod>
+    <lastmod>2024-05-02T20:28:13.084Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2023-08-16-python-for-hpc-tutorial.html</loc>
-    <lastmod>2024-05-01T06:08:22.943Z</lastmod>
+    <lastmod>2024-05-02T20:28:13.984Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2024-04-30-flatcar-image-jetstream.html</loc>
-    <lastmod>2024-05-01T06:08:24.047Z</lastmod>
+    <lastmod>2024-05-02T20:28:15.096Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zonca.dev/posts/pysm_point_source_pixell.html</loc>
+    <lastmod>2024-05-02T20:28:16.120Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/index.html</loc>
-    <lastmod>2024-05-01T06:08:55.880Z</lastmod>
+    <lastmod>2024-05-02T20:28:47.957Z</lastmod>
   </url>
 </urlset>
