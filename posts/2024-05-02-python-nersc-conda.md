@@ -39,7 +39,7 @@ Moreover, this will be the default location for new environments, so we will be 
 
 And they will be automatically created in "Global Common Software".
 
-We do not want that long path in our prompt, so (this is necessary if you created the environment with `--name`):
+We do not want that long path in our prompt, so (this is not necessary if you created the environment with `--name`):
 
     conda config --set env_prompt '({name}) '
 
