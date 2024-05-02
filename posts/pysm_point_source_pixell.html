@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2024-05-02">
 
 <title>Andrea Zonca - Generate point source maps with pixell</title>
 <style>
@@ -150,13 +151,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Generate point source maps with pixell</h1>
-                      </div>
+                                <div class="quarto-categories">
+                <div class="quarto-category">cosmology</div>
+                <div class="quarto-category">pysm</div>
+              </div>
+                  </div>
   </div>
     
   
   <div class="quarto-title-meta">
 
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 2, 2024</p>
+      </div>
+    </div>
     
       
     </div>
@@ -172,7 +183,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>title: Generate point source maps with pixell date: 2024-05-02 categories: - cosmology - pysm</p>
 <p>Testing the pixell <code>sim_objects</code> functionality to create maps of point sources pre-smoothed with a gaussian beam. The purpose is to include this functionality in PySM to be able to generate on the fly maps of source starting from a catalog.</p>
 <div class="cell" data-tags="[]" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pixell <span class="im">import</span> enmap, utils, resample, curvedsky <span class="im">as</span> cs, reproject, pointsrcs</span>
