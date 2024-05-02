@@ -166,7 +166,7 @@ mamba create --prefix /global/common/software/$GROUP/$USER/conda/$ENV python==3.
 <p>Moreover, this will be the default location for new environments, so we will be able to create other environments just with:</p>
 <pre><code>mamba create --name onlypython python==3.11</code></pre>
 <p>And they will be automatically created in “Global Common Software”.</p>
-<p>We do not want that long path in our prompt, so (this is necessary if you created the environment with <code>--name</code>):</p>
+<p>We do not want that long path in our prompt, so (this is not necessary if you created the environment with <code>--name</code>):</p>
 <pre><code>conda config --set env_prompt '({name}) '</code></pre>
 <p>So we can activate the environment specifying only the name:</p>
 <pre><code>conda activate $ENV</code></pre>
