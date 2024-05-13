@@ -1,6 +1,7 @@
 ---
 categories:
 - python
+- pysm
 - cosmology
 date: '2024-05-12'
 layout: post
