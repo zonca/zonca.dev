@@ -112,3 +112,80 @@ kubejetstream-k8s-node-nf-gpu-1   NotReady   <none>          18m   v1.25.6   10.
 ```
 
 Did not feel it was necessary to test JupyterHub, I'm confident it will work.
+
+Let's review the disk space occupied on a `m3.medium` worker with Ubuntu Minimal before running Ansible:
+
+```
+ubuntu@kubejetstream-k8s-node-1:~$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        58G  831M   58G   2% /
+tmpfs            15G     0   15G   0% /dev/shm
+tmpfs           5.9G  484K  5.9G   1% /run
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda15      105M  6.1M   99M   6% /boot/efi
+tmpfs           3.0G  4.0K  3.0G   1% /run/user/1000
+```
+
+and after Kubernetes has being installed (from 800 MB to 6.8 GB):
+
+```
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        58G  6.8G   52G  12% /
+tmpfs            15G     0   15G   0% /dev/shm
+tmpfs           5.9G  2.1M  5.9G   1% /run
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda15      105M  6.1M   99M   6% /boot/efi
+shm              64M     0   64M   0% /run/containerd/io.containerd.grpc.v1.cri/sandboxes/1a777fcf86f2e982969b83f78302bb19427470995262032dabe0384af26d202b/shm
+shm              64M     0   64M   0% /run/containerd/io.containerd.grpc.v1.cri/sandboxes/1331d819ef46d1d4ee94cd1faa58c0965e6c63b25d5fd69bb86e5b1769c9041e/shm
+shm              64M     0   64M   0% /run/containerd/io.containerd.grpc.v1.cri/sandboxes/6c6a245269c66d8a7ba69d31e590e9e807d17d19acfe9d2a251daa6b73127b78/shm
+shm              64M     0   64M   0% /run/containerd/io.containerd.grpc.v1.cri/sandboxes/2ed3c7de52d4c63e3a4df8e00486f4fcde91634891708e88aaf506256c2637c7/shm
+shm              64M     0   64M   0% /run/containerd/io.containerd.grpc.v1.cri/sandboxes/03b1e64d75fd951f7aefa050746717baa3811636636254132d4d11758c1a239c/shm
+shm              64M     0   64M   0% /run/containerd/io.containerd.grpc.v1.cri/sandboxes/bda38bc2b547cd4bdeca1aa7653fdf6483da2fbb8b69abbda2a35a3d93b982a8/shm
+shm              64M     0   64M   0% /run/containerd/io.containerd.grpc.v1.cri/sandboxes/3288593c52f5a21fec4be1222326d22f65612c61135e289addab1fe11b423334/shm
+shm              64M     0   64M   0% /run/containerd/io.containerd.grpc.v1.cri/sandboxes/e9fd081509ca17913118ae4c69a80dc7cd50ea3a14469a90bc7e63ff5ff36c6f/shm
+tmpfs           3.0G  4.0K  3.0G   1% /run/user/1000
+```
+
+Here is instead the comparison with the default Jetstream Ubuntu 22 image:
+
+```
+Filesystem                                                                                                                                                                                       Size  Used Avail Use% Mounted on
+udev                                                                                                                                                                                              15G     0   15G   0% /dev
+tmpfs                                                                                                                                                                                            3.0G  1.2M  3.0G   1% /run
+/dev/sda1                                                                                                                                                                                         58G  8.8G   50G  16% /
+tmpfs                                                                                                                                                                                             15G     0   15G   0% /dev/shm
+tmpfs                                                                                                                                                                                            5.0M     0  5.0M   0% /run/lock
+tmpfs                                                                                                                                                                                             15G     0   15G   0% /sys/fs/cgroup
+/dev/loop0                                                                                                                                                                                        64M   64M     0 100% /snap/core20/2264
+/dev/loop1                                                                                                                                                                                        92M   92M     0 100% /snap/lxd/24061
+/dev/sda15                                                                                                                                                                                       105M  6.1M   99M   6% /boot/efi
+/dev/loop2                                                                                                                                                                                        39M   39M     0 100% /snap/snapd/21465
+tmpfs                                                                                                                                                                                            3.0G  4.0K  3.0G   1% /run/user/1000
+149.165.158.38:6789,149.165.158.22:6789,149.165.158.54:6789,149.165.158.70:6789,149.165.158.86:6789:/volumes/\_nogroup/b7112570-f7cb-4bd2-8c0e-39b08609b9fd/01aa9d72-69bf-4250-9245-2eaddcdb251d  9.8T  493G  9.3T   5% /software
+```
+
+After having installed Kubernetes (from 8.8 GB to 13):
+
+```
+                      Size  Used Avail Use% Mounted on
+udev                                                                                                                                                                                              15G     0   15G   0% /dev
+tmpfs                                                                                                                                                                                            3.0G  3.0M  3.0G   1% /run
+/dev/sda1                                                                                                                                                                                         58G   13G   46G  23% /
+tmpfs                                                                                                                                                                                             15G     0   15G   0% /dev/shm
+tmpfs                                                                                                                                                                                            5.0M     0  5.0M   0% /run/lock
+tmpfs                                                                                                                                                                                             15G     0   15G   0% /sys/fs/cgroup
+/dev/loop0                                                                                                                                                                                        64M   64M     0 100% /snap/core20/2264
+/dev/loop1                                                                                                                                                                                        92M   92M     0 100% /snap/lxd/24061
+/dev/sda15                                                                                                                                                                                       105M  6.1M   99M   6% /boot/efi
+/dev/loop2                                                                                                                                                                                        39M   39M     0 100% /snap/snapd/21465
+shm                                                                                                                                                                                               64M     0   64M   0% /run/containerd/io.containerd.grpc.v1.cri/sandboxes/c0fc748f6469ded859983f821e8f167691b52a529bdc5e9a1269646ab1d1466f/shm
+shm                                                                                                                                                                                               64M     0   64M   0% /run/containerd/io.containerd.grpc.v1.cri/sandboxes/5c853382c912e5cddd3dc6c726bce09fdbec753a89b60b6cf334214c34216cbc/shm
+shm                                                                                                                                                                                               64M     0   64M   0% /run/containerd/io.containerd.grpc.v1.cri/sandboxes/1d5f384f212ecf62aafa44e8cd1dbabf5bc0fa28aeb10759da9e372494d82661/shm
+shm                                                                                                                                                                                               64M     0   64M   0% /run/containerd/io.containerd.grpc.v1.cri/sandboxes/7d8ab2baa7b00523538b0921b0fc6c9d6aee1d121db8752fdb38bdce877784b7/shm
+shm                                                                                                                                                                                               64M     0   64M   0% /run/containerd/io.containerd.grpc.v1.cri/sandboxes/1669d88641a2eafd7dc3c841e9f71ef6014d61bd986bc527e899b2b972837279/shm
+shm                                                                                                                                                                                               64M     0   64M   0% /run/containerd/io.containerd.grpc.v1.cri/sandboxes/7d0ded66f7e811fdb0fee58dba737494aca1e36510f8291d7ebca5f5a3ad9824/shm
+shm                                                                                                                                                                                               64M     0   64M   0% /run/containerd/io.containerd.grpc.v1.cri/sandboxes/4ec65ad53b8ab3391a04cc2442fa3278b114fbe4791ca1b24cc7db213be8f896/shm
+shm                                                                                                                                                                                               64M     0   64M   0% /run/containerd/io.containerd.grpc.v1.cri/sandboxes/2bb33f80ec8afc1639dd57094dbbd9c59e97640cb10df557f68d3bd8582a10f1/shm
+tmpfs                                                                                                                                                                                            3.0G  4.0K  3.0G   1% /run/user/1000
+149.165.158.38:6789,149.165.158.22:6789,149.165.158.54:6789,149.165.158.70:6789,149.165.158.86:6789:/volumes/\_nogroup/b7112570-f7cb-4bd2-8c0e-39b08609b9fd/01aa9d72-69bf-4250-9245-2eaddcdb251d  9.8T  493G  9.3T   5% /software
+```
