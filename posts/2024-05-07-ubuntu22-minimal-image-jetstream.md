@@ -161,7 +161,7 @@ tmpfs                                                                           
 /dev/sda15                                                                                                                                                                                       105M  6.1M   99M   6% /boot/efi
 /dev/loop2                                                                                                                                                                                        39M   39M     0 100% /snap/snapd/21465
 tmpfs                                                                                                                                                                                            3.0G  4.0K  3.0G   1% /run/user/1000
-149.165.158.38:6789,149.165.158.22:6789,149.165.158.54:6789,149.165.158.70:6789,149.165.158.86:6789:/volumes/\_nogroup/b7112570-f7cb-4bd2-8c0e-39b08609b9fd/01aa9d72-69bf-4250-9245-2eaddcdb251d  9.8T  493G  9.3T   5% /software
+xxxxxxxxxxxx          9.8T  493G  9.3T   5% /software
 ```
 
 After having installed Kubernetes (from 8.8 GB to 13):
@@ -187,5 +187,5 @@ shm                                                                             
 shm                                                                                                                                                                                               64M     0   64M   0% /run/containerd/io.containerd.grpc.v1.cri/sandboxes/4ec65ad53b8ab3391a04cc2442fa3278b114fbe4791ca1b24cc7db213be8f896/shm
 shm                                                                                                                                                                                               64M     0   64M   0% /run/containerd/io.containerd.grpc.v1.cri/sandboxes/2bb33f80ec8afc1639dd57094dbbd9c59e97640cb10df557f68d3bd8582a10f1/shm
 tmpfs                                                                                                                                                                                            3.0G  4.0K  3.0G   1% /run/user/1000
-149.165.158.38:6789,149.165.158.22:6789,149.165.158.54:6789,149.165.158.70:6789,149.165.158.86:6789:/volumes/\_nogroup/b7112570-f7cb-4bd2-8c0e-39b08609b9fd/01aa9d72-69bf-4250-9245-2eaddcdb251d  9.8T  493G  9.3T   5% /software
+xxxxxxxxxxxx          9.8T  493G  9.3T   5% /software
 ```
