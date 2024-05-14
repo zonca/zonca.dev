@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html",
       "/posts/2024-05-12-pysm-aso-sdsc.html",
       "/posts/2024-05-07-ubuntu22-minimal-image-jetstream.html",
       "/posts/2024-05-02-python-nersc-conda.html",
