@@ -149,6 +149,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>Globus supports a <a href="https://github.com/globus/globus-sdk-javascript">Javascript SDK</a> which allows to authenticate against Globus Auth and then access all the Globus services, for example accessing protected data or setting up transfers between endpoints.</p>
+<p>I think the project is really powerful because brings Globus to the browser, however it is sparsely documented, so it is really difficult to leverage its potential.</p>
 <p>This is somehow related to my work on the <a href="https://data.cmb-s4.org/about.html">CMB-S4 data portal</a>, the idea is that on top of the static Catalog inside a Data Portal we could also provide additional services via Javascript, without the need of a backend server.</p>
 <p>For example plotting a dataset which requires authentication.</p>
 <p>Rick Wagner created an example that uses the Globus Javascript SDK to authenticate and retrieve a protected JSON dataset and plot it with <code>Chart.js</code>, see <a href="https://rpwagner.github.io/globus-sdk-javascript-ex-01/" class="uri">https://rpwagner.github.io/globus-sdk-javascript-ex-01/</a>.</p>
@@ -157,6 +158,14 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="https://zonca.github.io/globus-sdk-javascript-ex-01/">Webpage with Globus and PyScript</a></li>
 <li><a href="https://github.com/zonca/globus-sdk-javascript-ex-01">Github repository</a></li>
 <li>If you would like to reproduce this, follow the instructions <a href="https://github.com/globus/globus-sdk-javascript/tree/main/examples/basic">on the Globus Javascript SDK Basic example to create a Globus app</a></li>
+</ul>
+<p>A few notes on the implementation:</p>
+<ul>
+<li>I was not able to use <code>pydom</code> in PyScript to make visible the iframe with the code, so I used Javascript for that</li>
+<li>The HTTP request to load the data is automatically launched just after signing in, when completed, the “Plot data” button is activated</li>
+<li>I didn’t find a way to call the Python function <code>pandas_plot</code> from Javascript, that is why I added the “Plot data” button</li>
+<li>I directly pass the JSON string to Python, then use <code>pandas.read_json</code> to parse it</li>
+<li>Impressive how you can quickly load a huge package like <code>pandas</code> inside the browser, it is overkill for this example, but could be handy</li>
 </ul>
 
 
