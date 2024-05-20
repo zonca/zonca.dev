@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2013-03-12">
+<meta name="dcterms.date" content="2024-05-20">
 
-<title>Andrea Zonca - Interactive 3D plot of a sky map</title>
+<title>Andrea Zonca - Interactive 3D plot of a Planck map with Matplotlib</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,7 +116,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Interactive 3D plot of a sky map</h1>
+      <h1 class="title">Interactive 3D plot of a Planck map with Matplotlib</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">python</div>
                 <div class="quarto-category">astrophysics</div>
@@ -131,7 +131,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 12, 2013</p>
+        <p class="date">May 20, 2024</p>
       </div>
     </div>
     
@@ -149,26 +149,15 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p><strong>update May 2024</strong>: See the <a href="../posts/2024-05-20-interactive-3d-plot-planck-map.html">new version of this tutorial</a></p>
-<a href="http://code.enthought.com/projects/mayavi/"> Mayavi </a> is a Python package from Enthought for 3D visualization, here a simple example of creating a 3D interactive map starting from a HEALPix pixelization sky map: <br>
-<div>
-<br>
-<div>
-<div class="separator" style="clear: both; text-align: center;">
-<a href="interactive-3d-plot-of-sky-map_s1600_snapshot.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"> <img border="0" height="271" src="interactive-3d-plot-of-sky-map_s400_snapshot.png" width="400"> </a>
-</div>
-<div class="separator" style="clear: both; text-align: center;">
-<br>
-</div>
-<br> <a name="more"> </a> <br> Here the code: <br>
-<script src="https://gist.github.com/zonca/5146356.js">
-  </script>
-<br> <br> The output is a beautiful 3D interactive map, Mayavi allows to pan, zoom and rotate. <br> UPDATE 13 Mar: actually there was a bug (found by Marius Millea) in the script, there is no problem in the projection! <br>
-<div class="separator" style="clear: both; text-align: center;">
-<br>
-</div>
-Mayavi can be installed in Ubuntu installing <span style="font-family: Courier New, Courier, monospace;"> python-vtk </span> and then <span style="font-family: Courier New, Courier, monospace;"> sudo pip install mayavi. </span>
-</div>
+<p>This is an update of my <a href="../posts/2013-03-12-interactive-3d-plot-of-sky-map.html">older tutorial</a></p>
+<p>Unfortunately I was not able to make Mayavi properly plot the data, rerunning the same code would give a map that looked like uniform noise.</p>
+<p>This test instead uses matplotlib, unfortunately this is extremely slow, and the output map is really slow to rotate or interact at all. Anyway it is possible to tweak <code>xsize</code>,<code>ysize</code> to change the resolution as a trade-off between resolution and interactivity.</p>
+<script src="https://gist.github.com/zonca/c7be9a6883e5702bdf8d74a5984a3ec9.js"></script>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="3d_plot_planck.jpg" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Screenshot of the 3D plot with matplotlib</figcaption>
+</figure>
 </div>
 
 
