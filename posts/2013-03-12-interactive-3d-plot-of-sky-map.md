@@ -11,6 +11,8 @@ title: Interactive 3D plot of a sky map
 
 ---
 
+**update May 2024**: See the [new version of this tutorial](./2024-05-20-interactive-3d-plot-planck-map.md)
+
 <a href="http://code.enthought.com/projects/mayavi/">
  Mayavi
 </a>
