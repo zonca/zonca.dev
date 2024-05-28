@@ -2,6 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2024-05-28-ai-code-assistant-jupyter-nersc.html",
+      "/posts/2024-05-28-quarto-notebook-frontmatter.html",
       "/posts/2024-05-20-interactive-3d-plot-planck-map.html",
       "/posts/2024-05-20-HEALPix-in-Megapixels.html",
       "/posts/2024-05-16-globus-javascript-sdk-pyscript.html",

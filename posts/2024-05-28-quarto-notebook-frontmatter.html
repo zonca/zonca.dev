@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-05-20">
+<meta name="dcterms.date" content="2024-05-28">
 
-<title>Andrea Zonca - HEALPix in Megapixels</title>
+<title>Andrea Zonca - Jupyter Notebook frontmatter for Quarto to download source notebook</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -99,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -150,10 +116,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">HEALPix in Megapixels</h1>
+      <h1 class="title">Jupyter Notebook frontmatter for Quarto to download source notebook</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">cosmology</div>
-                <div class="quarto-category">healpy</div>
+                <div class="quarto-category">python</div>
+                <div class="quarto-category">jupyter</div>
               </div>
                   </div>
   </div>
@@ -165,7 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">May 20, 2024</p>
+        <p class="date">May 28, 2024</p>
       </div>
     </div>
     
@@ -176,62 +142,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="2024-05-20-HEALPix-in-Megapixels.out.ipynb" download="2024-05-20-HEALPix-in-Megapixels.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></div>
+    
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
-<p>How many megapixels is a HEALPix map?</p>
-<div class="cell" data-outputid="3c7f621d-dd7f-41b2-c1a9-f83f6ddffdc2" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install healpy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Collecting healpy
-  Downloading healpy-1.16.6-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (24.5 MB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 24.5/24.5 MB 16.1 MB/s eta 0:00:00
-Requirement already satisfied: matplotlib in /usr/local/lib/python3.10/dist-packages (from healpy) (3.7.1)
-Requirement already satisfied: numpy&gt;=1.19 in /usr/local/lib/python3.10/dist-packages (from healpy) (1.25.2)
-Requirement already satisfied: astropy in /usr/local/lib/python3.10/dist-packages (from healpy) (5.3.4)
-Requirement already satisfied: scipy in /usr/local/lib/python3.10/dist-packages (from healpy) (1.11.4)
-Requirement already satisfied: pyerfa&gt;=2.0 in /usr/local/lib/python3.10/dist-packages (from astropy-&gt;healpy) (2.0.1.4)
-Requirement already satisfied: PyYAML&gt;=3.13 in /usr/local/lib/python3.10/dist-packages (from astropy-&gt;healpy) (6.0.1)
-Requirement already satisfied: packaging&gt;=19.0 in /usr/local/lib/python3.10/dist-packages (from astropy-&gt;healpy) (24.0)
-Requirement already satisfied: contourpy&gt;=1.0.1 in /usr/local/lib/python3.10/dist-packages (from matplotlib-&gt;healpy) (1.2.1)
-Requirement already satisfied: cycler&gt;=0.10 in /usr/local/lib/python3.10/dist-packages (from matplotlib-&gt;healpy) (0.12.1)
-Requirement already satisfied: fonttools&gt;=4.22.0 in /usr/local/lib/python3.10/dist-packages (from matplotlib-&gt;healpy) (4.51.0)
-Requirement already satisfied: kiwisolver&gt;=1.0.1 in /usr/local/lib/python3.10/dist-packages (from matplotlib-&gt;healpy) (1.4.5)
-Requirement already satisfied: pillow&gt;=6.2.0 in /usr/local/lib/python3.10/dist-packages (from matplotlib-&gt;healpy) (9.4.0)
-Requirement already satisfied: pyparsing&gt;=2.3.1 in /usr/local/lib/python3.10/dist-packages (from matplotlib-&gt;healpy) (3.1.2)
-Requirement already satisfied: python-dateutil&gt;=2.7 in /usr/local/lib/python3.10/dist-packages (from matplotlib-&gt;healpy) (2.8.2)
-Requirement already satisfied: six&gt;=1.5 in /usr/local/lib/python3.10/dist-packages (from python-dateutil&gt;=2.7-&gt;matplotlib-&gt;healpy) (1.16.0)
-Installing collected packages: healpy
-Successfully installed healpy-1.16.6</code></pre>
-</div>
-</div>
-<div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> healpy <span class="im">as</span> hp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>megapixels <span class="op">=</span> []</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nside_power <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">8</span>, <span class="dv">15</span>):</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  nside <span class="op">=</span> <span class="dv">2</span><span class="op">**</span>nside_power</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  megapixels.append((nside, hp.nside2npix(nside)<span class="op">/</span><span class="fl">1e6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-outputid="8b97dac5-fd44-48da-8956-3d6c4f479c10" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>megapixels</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
-<pre><code>[(256, 0.786432),
- (512, 3.145728),
- (1024, 12.582912),
- (2048, 50.331648),
- (4096, 201.326592),
- (8192, 805.306368),
- (16384, 3221.225472)]</code></pre>
-</div>
-</div>
+<p><a href="https://quarto.org/">Quarto</a> is one of the best platforms to create statically generated blogs with Markdown and Jupyter Notebooks.</p>
+<p>I switched <code>zonca.dev</code> to Quarto <a href="../posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html">back in 2022</a>.</p>
+<p>It is convenient to give the possibility to users to download the <code>.ipynb</code> source of a page when that page is generated from a Jupyter Notebook, so that they can execute it themselves.</p>
+<p>Quarto supports this out of the box using this frontmatter as the first cell of a Notebook (in Raw format):</p>
+<pre><code>---
+layout: post
+toc: true
+format:
+  html: default
+  ipynb: default
+date: '2024-05-28'
+categories:
+- category1
+- category2
+---</code></pre>
 
 
 
