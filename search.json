@@ -14,32 +14,11 @@
     "text": "I have a large expertise ranging from scientific computing to web development and devops.\nI am available to be hired as a consultant in:\n\nScientific computing: development of high performance and parallel Python software for data analysis, code-review, software design\nWeb: hosting of websites, development of custom Python web apps using Flask and Django\nKubernetes: deployment of Kubernetes to Openstack, deployment on top of Kubernetes of JupyterHub, Dask or custom microservices.\n\nContact me via email (consult on the domain zonca.dev) or via Twitter."
   },
   {
-    "objectID": "posts/2024-05-28-ai-code-assistant-jupyter-nersc.html",
-    "href": "posts/2024-05-28-ai-code-assistant-jupyter-nersc.html",
-    "title": "AI Code Assistant at NERSC",
+    "objectID": "posts/2024-06-03-web-server-https-django-jetstream2.html",
+    "href": "posts/2024-06-03-web-server-https-django-jetstream2.html",
+    "title": "Deploy a web server with automatic HTTPS for static website and Django app on Jestream 2",
     "section": "",
-    "text": "If you are used to Github Copilot on VS Code or on Google Colaboratory as I am, coding without an AI assistant is so slow!\nIn this tutorial we will see how to activate Google AI Gemini on Jupyter@NERSC, this will work as well in any other Jupyter environment. I choose Google Gemini because it has a generous free tier allowance, ChatGPT instead requires to buy credits for using it through the API.\nThe good news is that we do not need to be in control of the environment running JupyterHub, we can successfully install what is necessary in a Jupyter kernel we control.\nFor example we could use our own conda environment at NERSC.\nThis web page was generated from a Notebook, from the sidebar you can directly download the source Notebook, upload it to Jupyter@NERSC and directly execute it there, no need to copy-paste."
-  },
-  {
-    "objectID": "posts/2024-05-28-ai-code-assistant-jupyter-nersc.html#install-packages",
-    "href": "posts/2024-05-28-ai-code-assistant-jupyter-nersc.html#install-packages",
-    "title": "AI Code Assistant at NERSC",
-    "section": "Install packages",
-    "text": "Install packages\nFirst make sure you are running the right Jupyter Kernel. Jupyter AI supports many model providers, each with different required packages:\n\n%pip install jupyter-ai langchain-google-genai"
-  },
-  {
-    "objectID": "posts/2024-05-28-ai-code-assistant-jupyter-nersc.html#configure-google-api-key",
-    "href": "posts/2024-05-28-ai-code-assistant-jupyter-nersc.html#configure-google-api-key",
-    "title": "AI Code Assistant at NERSC",
-    "section": "Configure Google API key",
-    "text": "Configure Google API key\nNext we need a Google API key to authenticate, go to:\nhttps://aistudio.google.com/app/apikey\ncreate a new secret key, and paste it below:\n\n%env GOOGLE_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n\nenv: GOOGLE_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-  },
-  {
-    "objectID": "posts/2024-05-28-ai-code-assistant-jupyter-nersc.html#load-and-test-jupyter-ai",
-    "href": "posts/2024-05-28-ai-code-assistant-jupyter-nersc.html#load-and-test-jupyter-ai",
-    "title": "AI Code Assistant at NERSC",
-    "section": "Load and test Jupyter AI",
-    "text": "Load and test Jupyter AI\nFinally we can test it\n\n%load_ext jupyter_ai\n\n/global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages/tqdm/auto.py:22: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html\n  from .autonotebook import tqdm as notebook_tqdm\n\n\n\n%ai list gemini\n\n\n\n\n\n\n\n\n\n\nProvider\nEnvironment variable\nSet?\nModels\n\n\n\n\ngemini\nGOOGLE_API_KEY\n✅\n\n\n\n\n\n\n\n%%ai gemini:gemini-pro -f code\n\nfind indices of the largest 10 values in a numpy array\n\nAI generated code inserted below ⬇️\n\n\n\nimport numpy as np\n\ndef find_indices_of_largest_10_values(array):\n  \"\"\"Finds the indices of the largest 10 values in a numpy array.\n\n  Args:\n    array: A numpy array.\n\n  Returns:\n    A list of the indices of the largest 10 values in the array.\n  \"\"\"\n\n  # Find the indices of the largest 10 values in the array.\n  indices = np.argsort(array)[-10:]\n\n  # Return the list of indices.\n  return indices"
+    "text": "As part of my work to support the Jetstream 2 Openstack deployment at Indiana University, I have developed a tutorial that explains how to create a Virtual Machine that deploys the Caddy web server.\nCaddy is extremely easy to use compared to Apache or NGINX.\nIn the tutorial I show both how to deploy some static pages and to deploy a toy application in Python Django.\nSee the tutorial in the official Jetstream 2 documentation website."
   },
   {
     "objectID": "posts/2024-05-20-HEALPix-in-Megapixels.html",
@@ -5376,11 +5355,32 @@
     "text": "FastAPI is a framework that simplifies building APIs in Python. Authentication via Google, Github and many more is provided by FastAPI-SSO.\nWe can also combine this with PyGithub to check if the user is a member of a specific organization and handle permissions on specific objects provided by an endpoint.\nSee the implementation in this Gist\nNotice that on from your Developer Settings on Github you both need to create an OAuth app (with http://localhost:5000/auth/callback callback) and a Personal Access Token (classic) with read:orgs scope to query group membership and store all their credentials in github_env.sh.\nOnce the app is running, try accessing http://127.0.0.1:5000/protected, you should first get “Not authenticated”, now login at http://localhost:5000/auth/login, you should be redirected to Github for authentication, then you should see if you are or not a member of the ORG organization as defined in the source file."
   },
   {
-    "objectID": "posts/2024-06-03-web-server-https-django-jetstream2.html",
-    "href": "posts/2024-06-03-web-server-https-django-jetstream2.html",
-    "title": "Deploy a web server with automatic HTTPS for static website and Django app on Jestream 2",
+    "objectID": "posts/2024-05-28-ai-code-assistant-jupyter-nersc.html",
+    "href": "posts/2024-05-28-ai-code-assistant-jupyter-nersc.html",
+    "title": "AI Code Assistant at NERSC",
     "section": "",
-    "text": "As part of my work to support the Jetstream 2 Openstack deployment at Indiana University, I have developed a tutorial that explains how to create a Virtual Machine that deploys the Caddy web server.\nCaddy is extremely easy to use compared to Apache or NGINX.\nIn the tutorial I show both how to deploy some static pages and to deploy a toy application in Python Django.\nSee the tutorial in the official Jetstream 2 documentation website."
+    "text": "If you are used to Github Copilot on VS Code or on Google Colaboratory as I am, coding without an AI assistant is so slow!\nIn this tutorial we will see how to activate Google AI Gemini on Jupyter@NERSC, this will work as well in any other Jupyter environment. I choose Google Gemini because it has a generous free tier allowance, ChatGPT instead requires to buy credits for using it through the API.\nNotice that using the Gemini API you are sending your interactions with AI to Google, see the Gemini API privacy policy for more details.\nThe good news is that we do not need to be in control of the environment running JupyterHub, we can successfully install what is necessary in a Jupyter kernel we control.\nFor example we could use our own conda environment at NERSC.\nThis web page was generated from a Notebook, from the sidebar you can directly download the source Notebook, upload it to Jupyter@NERSC and directly execute it there, no need to copy-paste."
+  },
+  {
+    "objectID": "posts/2024-05-28-ai-code-assistant-jupyter-nersc.html#install-packages",
+    "href": "posts/2024-05-28-ai-code-assistant-jupyter-nersc.html#install-packages",
+    "title": "AI Code Assistant at NERSC",
+    "section": "Install packages",
+    "text": "Install packages\nFirst make sure you are running the right Jupyter Kernel, which should be running in your own conda environment, see above on instructions on how to create it. You need to install the packages just once, either from this notebook or from the command line after having activated the environment. Once the packages are installed, no need to run this cell anymore.\nJupyter AI supports many model providers, each with different required packages:\n\n%pip install jupyter-ai langchain-google-genai"
+  },
+  {
+    "objectID": "posts/2024-05-28-ai-code-assistant-jupyter-nersc.html#configure-google-api-key",
+    "href": "posts/2024-05-28-ai-code-assistant-jupyter-nersc.html#configure-google-api-key",
+    "title": "AI Code Assistant at NERSC",
+    "section": "Configure Google API key",
+    "text": "Configure Google API key\nNext we need a Google API key to authenticate, go to:\nhttps://aistudio.google.com/app/apikey\ncreate a new secret key, and paste it below:\n\n%env GOOGLE_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n\nenv: GOOGLE_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  },
+  {
+    "objectID": "posts/2024-05-28-ai-code-assistant-jupyter-nersc.html#load-and-test-jupyter-ai",
+    "href": "posts/2024-05-28-ai-code-assistant-jupyter-nersc.html#load-and-test-jupyter-ai",
+    "title": "AI Code Assistant at NERSC",
+    "section": "Load and test Jupyter AI",
+    "text": "Load and test Jupyter AI\nFinally we can test it\n\n%load_ext jupyter_ai\n\n/global/common/software/cmb/zonca/conda/pycmb/lib/python3.10/site-packages/tqdm/auto.py:22: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html\n  from .autonotebook import tqdm as notebook_tqdm\n\n\n\n%ai list gemini\n\n\n\n\n\n\n\n\n\n\nProvider\nEnvironment variable\nSet?\nModels\n\n\n\n\ngemini\nGOOGLE_API_KEY\n✅\n\n\n\n\n\n\n\n%%ai gemini:gemini-pro -f code\n\nfind indices of the largest 10 values in a numpy array\n\nAI generated code inserted below ⬇️\n\n\n\nimport numpy as np\n\ndef find_indices_of_largest_10_values(array):\n  \"\"\"Finds the indices of the largest 10 values in a numpy array.\n\n  Args:\n    array: A numpy array.\n\n  Returns:\n    A list of the indices of the largest 10 values in the array.\n  \"\"\"\n\n  # Find the indices of the largest 10 values in the array.\n  indices = np.argsort(array)[-10:]\n\n  # Return the list of indices.\n  return indices"
   },
   {
     "objectID": "index.html",
