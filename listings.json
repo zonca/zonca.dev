@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2024-06-27-fastapi-conditional-auth.html",
       "/posts/2024-06-03-web-server-https-django-jetstream2.html",
       "/posts/2024-05-29-fastapi-sso-github-organization.html",
       "/posts/2024-05-28-quarto-notebook-frontmatter.html",
@@ -11,6 +12,7 @@
       "/posts/2024-05-16-globus-javascript-sdk-pyscript.html",
       "/posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html",
       "/posts/2024-05-12-pysm-aso-sdsc.html",
+      "/posts/italian-classes-san-diego.html",
       "/posts/2024-05-07-ubuntu22-minimal-image-jetstream.html",
       "/posts/2024-05-02-pysm-point-source-pixell.html",
       "/posts/2024-05-02-python-nersc-conda.html",
