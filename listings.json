@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2024-07-17-run-healpy-browser-pyodide.html",
       "/posts/2024-06-27-fastapi-conditional-auth.html",
       "/posts/2024-06-03-web-server-https-django-jetstream2.html",
       "/posts/2024-05-29-fastapi-sso-github-organization.html",
