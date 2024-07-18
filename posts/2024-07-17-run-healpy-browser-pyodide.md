@@ -23,3 +23,5 @@ see the page source at:
 See the [generated website](https://healpy.github.io/pyhealpy/), open the Developer console to see the logs.
 
 Details on [how to use Github Actions to build and deploy](https://github.com/healpy/pyhealpy/blob/pyhealpy/.github/workflows/pyodide.yml).
+
+![Screenshot](healpy_pyodide_screenshot.png)
