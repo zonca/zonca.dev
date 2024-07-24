@@ -25,3 +25,16 @@ See the [generated website](https://healpy.github.io/pyhealpy/), open the Develo
 Details on [how to use Github Actions to build and deploy](https://github.com/healpy/pyhealpy/blob/pyhealpy/.github/workflows/pyodide.yml).
 
 ![Screenshot](healpy_pyodide_screenshot.png)
+
+## JupyterLite
+
+We can also run JupyterLite in the browser and import this package, see a preliminary test at:
+
+<https://github.com/healpy/pyhealpy/tree/pyhealpy/jupyterlite>
+
+it is deployed at <https://healpy.github.io/pyhealpy/jup/lab/index.html>
+
+This allows to run JupyterLite, load healpy, read maps loaded into JupyterLite with `healpy`, it is also possible to use [`jupyterlab-open-url-parameter`](https://jupyterlab-contrib.github.io/jupyterlab-open-url-parameter.html) to retrieve a map at runtime. However there are several limitations:
+
+* loading maps via fromUrl is very slow and works only for tiny maps, even a 30 MB map is too large and makes JupyterLite hang for minutes
+* `pyhealpy` only supports maps in `ring` ordering, maps in `nest` ordering require `ring2nest` functionality which is not imported from the C++ package.
