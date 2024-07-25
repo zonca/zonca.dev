@@ -162,8 +162,19 @@ ul.task-list li input[type="checkbox"] {
 <figcaption class="figure-caption">Screenshot</figcaption>
 </figure>
 </div>
+<section id="jupyterlite" class="level2">
+<h2 class="anchored" data-anchor-id="jupyterlite">JupyterLite</h2>
+<p>We can also run JupyterLite in the browser and import this package, see a preliminary test at:</p>
+<p><a href="https://github.com/healpy/pyhealpy/tree/pyhealpy/jupyterlite" class="uri">https://github.com/healpy/pyhealpy/tree/pyhealpy/jupyterlite</a></p>
+<p>it is deployed at <a href="https://healpy.github.io/pyhealpy/jup/lab/index.html" class="uri">https://healpy.github.io/pyhealpy/jup/lab/index.html</a></p>
+<p>This allows to run JupyterLite, load healpy, read maps loaded into JupyterLite with <code>healpy</code>, it is also possible to use <a href="https://jupyterlab-contrib.github.io/jupyterlab-open-url-parameter.html"><code>jupyterlab-open-url-parameter</code></a> to retrieve a map at runtime. However there are several limitations:</p>
+<ul>
+<li>loading maps via fromUrl is very slow and works only for tiny maps, even a 30 MB map is too large and makes JupyterLite hang for minutes</li>
+<li><code>pyhealpy</code> only supports maps in <code>ring</code> ordering, maps in <code>nest</code> ordering require <code>ring2nest</code> functionality which is not imported from the C++ package.</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <div>

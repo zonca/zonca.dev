@@ -5401,7 +5401,14 @@
     "href": "posts/2024-07-17-run-healpy-browser-pyodide.html",
     "title": "Run (part of) healpy in the browser with pyodide",
     "section": "",
-    "text": "Thanks to the help of @VeerioSDSC and Rick Wagner, I have been able to run part of healpy in the browser. For now only tested reading FITS maps and plotting with projview.\nCompiling the C++ and Cython extensions was difficult so for experimental purposes we opted for stripping healpy of all extensions making it a pure Python package, see https://github.com/healpy/pyhealpy\nThen it is possible to build a wheel of healpy compiled to Javascript with pyodide and emscripten, see: https://github.com/healpy/pyhealpy/blob/pyhealpy/README.md\nOnce the wheel is available it is possible to load it in a web page and use it, see the page source at:\nindex.html for plotting a fits map in the browser\nSee the generated website, open the Developer console to see the logs.\nDetails on how to use Github Actions to build and deploy.\n\n\n\nScreenshot"
+    "text": "Thanks to the help of @VeerioSDSC and Rick Wagner, I have been able to run part of healpy in the browser. For now only tested reading FITS maps and plotting with projview.\nCompiling the C++ and Cython extensions was difficult so for experimental purposes we opted for stripping healpy of all extensions making it a pure Python package, see https://github.com/healpy/pyhealpy\nThen it is possible to build a wheel of healpy compiled to Javascript with pyodide and emscripten, see: https://github.com/healpy/pyhealpy/blob/pyhealpy/README.md\nOnce the wheel is available it is possible to load it in a web page and use it, see the page source at:\nindex.html for plotting a fits map in the browser\nSee the generated website, open the Developer console to see the logs.\nDetails on how to use Github Actions to build and deploy."
+  },
+  {
+    "objectID": "posts/2024-07-17-run-healpy-browser-pyodide.html#jupyterlite",
+    "href": "posts/2024-07-17-run-healpy-browser-pyodide.html#jupyterlite",
+    "title": "Run (part of) healpy in the browser with pyodide",
+    "section": "JupyterLite",
+    "text": "JupyterLite\nWe can also run JupyterLite in the browser and import this package, see a preliminary test at:\nhttps://github.com/healpy/pyhealpy/tree/pyhealpy/jupyterlite\nit is deployed at https://healpy.github.io/pyhealpy/jup/lab/index.html\nThis allows to run JupyterLite, load healpy, read maps loaded into JupyterLite with healpy, it is also possible to use jupyterlab-open-url-parameter to retrieve a map at runtime. However there are several limitations:\n\nloading maps via fromUrl is very slow and works only for tiny maps, even a 30 MB map is too large and makes JupyterLite hang for minutes\npyhealpy only supports maps in ring ordering, maps in nest ordering require ring2nest functionality which is not imported from the C++ package."
   },
   {
     "objectID": "index.html",
