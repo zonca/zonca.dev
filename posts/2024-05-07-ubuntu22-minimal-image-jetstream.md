@@ -49,6 +49,17 @@ The name of the image is `Ubuntu2204MinimalGenKernel`, ID `671f03f1-4d86-4363-b0
 
 See <https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/issues/80>
 
+This image a bit larger image:
+
+```
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           297M  664K  297M   1% /run
+/dev/sda1        20G  2.7G   17G  14% /
+tmpfs           1.5G     0  1.5G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda15      105M  6.1M   99M   6% /boot/efi
+tmpfs           297M  4.0K  297M   1% /run/user/1000
+```
 
 ### GPU support
 
