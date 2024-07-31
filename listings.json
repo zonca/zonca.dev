@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2024-05-07-ubuntu22-minimal-image-jetstream.html",
       "/posts/2024-07-29-pysm-point-source-pixell-healpix.html",
       "/posts/2024-07-17-run-healpy-browser-pyodide.html",
       "/posts/2024-06-27-fastapi-conditional-auth.html",
@@ -15,7 +16,6 @@
       "/posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html",
       "/posts/2024-05-12-pysm-aso-sdsc.html",
       "/posts/italian-classes-san-diego.html",
-      "/posts/2024-05-07-ubuntu22-minimal-image-jetstream.html",
       "/posts/2024-05-02-pysm-point-source-pixell.html",
       "/posts/2024-05-02-python-nersc-conda.html",
       "/posts/2024-04-30-flatcar-image-jetstream.html",

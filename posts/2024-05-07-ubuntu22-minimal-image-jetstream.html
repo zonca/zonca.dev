@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-05-07">
+<meta name="dcterms.date" content="2024-07-31">
 
 <title>Andrea Zonca - Ubuntu 22.04 Minimal on Jetstream</title>
 <style>
@@ -131,7 +131,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">May 7, 2024</p>
+        <p class="date">July 31, 2024</p>
       </div>
     </div>
     
@@ -149,6 +149,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<p><strong>Update July 2024</strong>: Ubuntu 22.04 Minimal image with Generic Kernel</p>
 <p>Virtual Machine images provided by the Jetstream team are fully fledged and therefore quite large.</p>
 <p>Julien Chastang proposed the shift to a minimalist distribution to save disk space, resources and shorten deployment time, see <a href="https://gitlab.com/jetstream-cloud/image-build-pipeline/-/issues/33">the relevant issue discussion on the Jetstream Gitlab organization</a>.</p>
 <p>We are mostly interested in replacing Ubuntu as the default image for our Kubespray developments, so we are <a href="https://github.com/kubernetes-sigs/kubespray?tab=readme-ov-file#supported-linux-distributions">looking only at OS supported by Kubespray</a></p>
@@ -166,10 +167,26 @@ ul.task-list li input[type="checkbox"] {
 <p>The name of the image is <code>Ubuntu2204Minimal</code>, it is set as a Community image (<a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/blob/master/vm_image/upload_image_ubuntu.sh">script to load image to Openstack</a>:</p>
 <pre><code>openstack image list --community | grep Minimal
 | 0fa9f3b4-d29f-4f68-a8a7-16bf44ffae69 | Ubuntu2204Minimal                                   | active      |</code></pre>
+</section>
+<section id="ubuntu-minimal-version-with-generic-kernel" class="level2">
+<h2 class="anchored" data-anchor-id="ubuntu-minimal-version-with-generic-kernel">Ubuntu minimal version with Generic kernel</h2>
+<p>By default Ubuntu Minimal ships with the <code>kvm</code> kernel which is a smaller kernel, it does not offer some modules, for example <code>nfsd</code> is not available, this prevents running NFS servers on the node or even in containers inside the node.</p>
+<p>To circumvent this issue, I created a new version of the Minimal image with the only modification being the <code>generic</code> kernel instead of the <code>kvm</code> one.</p>
+<p>The name of the image is <code>Ubuntu2204MinimalGenKernel</code>, ID <code>671f03f1-4d86-4363-b03c-f5d54818693a</code></p>
+<p>See <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/issues/80" class="uri">https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/issues/80</a></p>
+<p>This image a bit larger image:</p>
+<pre><code>Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           297M  664K  297M   1% /run
+/dev/sda1        20G  2.7G   17G  14% /
+tmpfs           1.5G     0  1.5G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda15      105M  6.1M   99M   6% /boot/efi
+tmpfs           297M  4.0K  297M   1% /run/user/1000</code></pre>
 <section id="gpu-support" class="level3">
 <h3 class="anchored" data-anchor-id="gpu-support">GPU support</h3>
 <p>While Ubuntu potentially supports GPUs, the default image from Ubuntu does not. We need <a href="https://gitlab.com/jetstream-cloud/image-build-pipeline/-/blob/main/ansible/roles/js2-specific/tasks/Ubuntu-22.yml?ref_type=heads#L120-167">some specific customization</a> on the image.</p>
 <p>Therefore we would need to create a GPU-specific minimal version that also includes the GPU drivers.</p>
+<p>See <a href="../posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html">the dedicated tutorial about GPU support</a>.</p>
 </section>
 <section id="exosphere" class="level3">
 <h3 class="anchored" data-anchor-id="exosphere">Exosphere</h3>
