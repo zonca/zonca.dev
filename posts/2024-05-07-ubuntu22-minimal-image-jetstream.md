@@ -2,12 +2,16 @@
 categories:
 - kubernetes
 - jetstream2
-date: '2024-05-07'
+date: '2024-07-31'
+aliases:
+- 2024-05-07-ubuntu22-minimal-image-jetstream
 layout: post
 slug: ubuntu22-minimal-image-jetstream
 title: Ubuntu 22.04 Minimal on Jetstream
 
 ---
+
+**Update July 2024**: Ubuntu 22.04 Minimal image with Generic Kernel
 
 Virtual Machine images provided by the Jetstream team are fully fledged and therefore quite large.
 
@@ -35,12 +39,25 @@ openstack image list --community | grep Minimal
 | 0fa9f3b4-d29f-4f68-a8a7-16bf44ffae69 | Ubuntu2204Minimal                                   | active      |
 ```
 
+## Ubuntu minimal version with Generic kernel
+
+By default Ubuntu Minimal ships with the `kvm` kernel which is a smaller kernel, it does not offer some modules, for example `nfsd` is not available, this prevents running NFS servers on the node or even in containers inside the node.
+
+To circumvent this issue, I created a new version of the Minimal image with the only modification being the `generic` kernel instead of the `kvm` one.
+
+The name of the image is `Ubuntu2204MinimalGenKernel`, ID `671f03f1-4d86-4363-b03c-f5d54818693a`
+
+See <https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/issues/80>
+
+
 ### GPU support
 
 While Ubuntu potentially supports GPUs, the default image from Ubuntu does not.
 We need [some specific customization](https://gitlab.com/jetstream-cloud/image-build-pipeline/-/blob/main/ansible/roles/js2-specific/tasks/Ubuntu-22.yml?ref_type=heads#L120-167) on the image.
 
 Therefore we would need to create a GPU-specific minimal version that also includes the GPU drivers.
+
+See [the dedicated tutorial about GPU support](./2024-05-13-ubuntu22-minimal-gpu-image-jetstream.md).
 
 ### Exosphere
 
