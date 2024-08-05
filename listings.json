@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2024-08-04-export-confluence-markdown.html",
       "/posts/2024-05-07-ubuntu22-minimal-image-jetstream.html",
       "/posts/2024-07-29-pysm-point-source-pixell-healpix.html",
       "/posts/2024-07-17-run-healpy-browser-pyodide.html",
