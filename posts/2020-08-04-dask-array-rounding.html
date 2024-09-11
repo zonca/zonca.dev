@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2020-08-04">
 <meta name="description" content="Dask array rounding float32">
 
-<title>Andrea Zonca - Dask array rounding</title>
+<title>Dask array rounding – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -59,7 +59,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -81,7 +81,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -90,13 +96,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
@@ -106,47 +113,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Andrea Zonca</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../consult.html" rel="" target="">
- <span class="menu-text">Consulting</span></a>
+    <a class="nav-link" href="../consult.html"> 
+<span class="menu-text">Consulting</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/zonca" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/zonca"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/andreazonca" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/andreazonca"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://mastodon.online/@zonca" rel="" target=""><i class="bi bi-mastodon" role="img">
+    <a class="nav-link" href="https://mastodon.online/@zonca"> <i class="bi bi-mastodon" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
+          </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -192,17 +199,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+
 <p>This notebook is an extract from the <a href="https://github.com/dask/dask-tutorial/blob/master/03_array.ipynb">Dask array Tutorial notebook</a>, see also the Youtube SciPy 2020 class at <a href="https://www.youtube.com/watch?v=mqdglv9GnM8" class="uri">https://www.youtube.com/watch?v=mqdglv9GnM8</a>.</p>
 <p>We notice that <code>dask</code> is automatically rounding <code>float32</code> numbers to machine precision, which I think is the most sensible choice, but surprising difference compared to <code>numpy</code>.</p>
 <section id="create-the-input-data" class="level2">
 <h2 class="anchored" data-anchor-id="create-the-input-data">Create the input data</h2>
 <p>Needs only to be done once, defaults to ~4GB of data, you can reduce it by setting <code>blocksize</code> to a smaller number, e.g.&nbsp;1000</p>
-<div class="cell" data-execution_count="6">
+<div id="cell-3" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> h5py</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div id="cell-4" class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>blocksize <span class="op">=</span> <span class="dv">1000000</span></span>
@@ -219,12 +227,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="setup" class="level2">
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
-<div class="cell" data-execution_count="1">
+<div id="cell-6" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dask.distributed <span class="im">import</span> Client</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> Client(n_workers<span class="op">=</span><span class="dv">24</span>, processes<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="12">
+<div id="cell-7" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data with h5py</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># this creates a pointer to the data, but does not actually load</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> h5py</span>
@@ -232,13 +240,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> h5py.File(<span class="st">'random.hdf5'</span>, mode<span class="op">=</span><span class="st">'r'</span>)</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>dset <span class="op">=</span> f[<span class="st">'/x'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="13">
+<div id="cell-8" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dset.dtype</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>dtype('&lt;f4')</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="16">
+<div id="cell-9" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>ls <span class="op">-</span>lah data<span class="op">/</span>random.hdf5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>-rw-r--r-- 1 zonca csb148 3.8G Jul 24 22:51 data/random.hdf5</code></pre>
@@ -252,13 +260,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Computing the sum of the 1,000 intermediate sums</li>
 </ol>
 <p>Note that this is a sequential process in the notebook kernel, both the loading and summing.</p>
-<div class="cell" data-execution_count="5">
+<div id="cell-12" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(dset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>1000000000</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="6">
+<div id="cell-13" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute sum of large array, one million numbers at a time</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sums <span class="op">=</span> []</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">1000000000</span>, <span class="dv">1000000</span>):</span>
@@ -277,20 +285,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>data</code>: Any object that supports NumPy slicing, like <code>dset</code></li>
 <li><code>chunks</code>: A chunk size to tell us how to block up our array, like <code>(1000000,)</code></li>
 </ol>
-<div class="cell" data-execution_count="4">
+<div id="cell-16" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dask.array <span class="im">as</span> da</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> da.from_array(dset, chunks<span class="op">=</span>(<span class="dv">10000000</span>,))</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <colgroup>
 <col style="width: 50%">
 <col style="width: 50%">
 </colgroup>
 <tbody>
 <tr class="odd">
-<td><table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<td><table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th></th>
@@ -321,16 +329,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table></td>
-<td><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTcwIiBoZWlnaHQ9Ijc1IiBzdHlsZT0ic3Ryb2tlOnJnYigwLDAsMCk7c3Ryb2tlLXdpZHRoOjEiPgoKICA8IS0tIEhvcml6b250YWwgbGluZXMgLS0+CiAgPGxpbmUgeDE9IjAiIHkxPSIwIiB4Mj0iMTIwIiB5Mj0iMCIgc3R5bGU9InN0cm9rZS13aWR0aDoyIj48L2xpbmU+CiAgPGxpbmUgeDE9IjAiIHkxPSIyNSIgeDI9IjEyMCIgeTI9IjI1IiBzdHlsZT0ic3Ryb2tlLXdpZHRoOjIiPjwvbGluZT4KCiAgPCEtLSBWZXJ0aWNhbCBsaW5lcyAtLT4KICA8bGluZSB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMjUiIHN0eWxlPSJzdHJva2Utd2lkdGg6MiI+PC9saW5lPgogIDxsaW5lIHgxPSIxIiB5MT0iMCIgeDI9IjEiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIyIiB5MT0iMCIgeDI9IjIiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIzIiB5MT0iMCIgeDI9IjMiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI0IiB5MT0iMCIgeDI9IjQiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI2IiB5MT0iMCIgeDI9IjYiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI3IiB5MT0iMCIgeDI9IjciIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI4IiB5MT0iMCIgeDI9IjgiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI5IiB5MT0iMCIgeDI9IjkiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIxMCIgeTE9IjAiIHgyPSIxMCIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjEyIiB5MT0iMCIgeDI9IjEyIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMTMiIHkxPSIwIiB4Mj0iMTMiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIxNCIgeTE9IjAiIHgyPSIxNCIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjE1IiB5MT0iMCIgeDI9IjE1IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMTYiIHkxPSIwIiB4Mj0iMTYiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIxOCIgeTE9IjAiIHgyPSIxOCIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjE5IiB5MT0iMCIgeDI9IjE5IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMjAiIHkxPSIwIiB4Mj0iMjAiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIyMSIgeTE9IjAiIHgyPSIyMSIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjIyIiB5MT0iMCIgeDI9IjIyIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMjQiIHkxPSIwIiB4Mj0iMjQiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIyNSIgeTE9IjAiIHgyPSIyNSIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjI2IiB5MT0iMCIgeDI9IjI2IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMjciIHkxPSIwIiB4Mj0iMjciIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIyOCIgeTE9IjAiIHgyPSIyOCIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjMwIiB5MT0iMCIgeDI9IjMwIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMzEiIHkxPSIwIiB4Mj0iMzEiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIzMiIgeTE9IjAiIHgyPSIzMiIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjMzIiB5MT0iMCIgeDI9IjMzIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMzQiIHkxPSIwIiB4Mj0iMzQiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIzNiIgeTE9IjAiIHgyPSIzNiIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjM3IiB5MT0iMCIgeDI9IjM3IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMzgiIHkxPSIwIiB4Mj0iMzgiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIzOSIgeTE9IjAiIHgyPSIzOSIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjQwIiB5MT0iMCIgeDI9IjQwIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iNDIiIHkxPSIwIiB4Mj0iNDIiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI0MyIgeTE9IjAiIHgyPSI0MyIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjQ0IiB5MT0iMCIgeDI9IjQ0IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iNDUiIHkxPSIwIiB4Mj0iNDUiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI0NiIgeTE9IjAiIHgyPSI0NiIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjQ4IiB5MT0iMCIgeDI9IjQ4IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iNDkiIHkxPSIwIiB4Mj0iNDkiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI1MCIgeTE9IjAiIHgyPSI1MCIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjUxIiB5MT0iMCIgeDI9IjUxIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iNTIiIHkxPSIwIiB4Mj0iNTIiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI1NCIgeTE9IjAiIHgyPSI1NCIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjU1IiB5MT0iMCIgeDI9IjU1IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iNTYiIHkxPSIwIiB4Mj0iNTYiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI1NyIgeTE9IjAiIHgyPSI1NyIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjU4IiB5MT0iMCIgeDI9IjU4IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iNjAiIHkxPSIwIiB4Mj0iNjAiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI2MSIgeTE9IjAiIHgyPSI2MSIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjYyIiB5MT0iMCIgeDI9IjYyIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iNjMiIHkxPSIwIiB4Mj0iNjMiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI2NCIgeTE9IjAiIHgyPSI2NCIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjY2IiB5MT0iMCIgeDI9IjY2IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iNjciIHkxPSIwIiB4Mj0iNjciIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI2OCIgeTE9IjAiIHgyPSI2OCIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjY5IiB5MT0iMCIgeDI9IjY5IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iNzAiIHkxPSIwIiB4Mj0iNzAiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI3MiIgeTE9IjAiIHgyPSI3MiIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjczIiB5MT0iMCIgeDI9IjczIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iNzQiIHkxPSIwIiB4Mj0iNzQiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI3NSIgeTE9IjAiIHgyPSI3NSIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9Ijc2IiB5MT0iMCIgeDI9Ijc2IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iNzgiIHkxPSIwIiB4Mj0iNzgiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI3OSIgeTE9IjAiIHgyPSI3OSIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjgwIiB5MT0iMCIgeDI9IjgwIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iODEiIHkxPSIwIiB4Mj0iODEiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI4MiIgeTE9IjAiIHgyPSI4MiIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9Ijg0IiB5MT0iMCIgeDI9Ijg0IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iODUiIHkxPSIwIiB4Mj0iODUiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI4NiIgeTE9IjAiIHgyPSI4NiIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9Ijg3IiB5MT0iMCIgeDI9Ijg3IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iODgiIHkxPSIwIiB4Mj0iODgiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI5MCIgeTE9IjAiIHgyPSI5MCIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjkxIiB5MT0iMCIgeDI9IjkxIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iOTIiIHkxPSIwIiB4Mj0iOTIiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI5MyIgeTE9IjAiIHgyPSI5MyIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9Ijk0IiB5MT0iMCIgeDI9Ijk0IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iOTYiIHkxPSIwIiB4Mj0iOTYiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSI5NyIgeTE9IjAiIHgyPSI5NyIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9Ijk4IiB5MT0iMCIgeDI9Ijk4IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iOTkiIHkxPSIwIiB4Mj0iOTkiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIxMDAiIHkxPSIwIiB4Mj0iMTAwIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMTAyIiB5MT0iMCIgeDI9IjEwMiIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjEwMyIgeTE9IjAiIHgyPSIxMDMiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIxMDQiIHkxPSIwIiB4Mj0iMTA0IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMTA1IiB5MT0iMCIgeDI9IjEwNSIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjEwNiIgeTE9IjAiIHgyPSIxMDYiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIxMDgiIHkxPSIwIiB4Mj0iMTA4IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMTA5IiB5MT0iMCIgeDI9IjEwOSIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjExMCIgeTE9IjAiIHgyPSIxMTAiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIxMTEiIHkxPSIwIiB4Mj0iMTExIiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMTEyIiB5MT0iMCIgeDI9IjExMiIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjExNCIgeTE9IjAiIHgyPSIxMTQiIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIxMTUiIHkxPSIwIiB4Mj0iMTE1IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMTE2IiB5MT0iMCIgeDI9IjExNiIgeTI9IjI1Ij48L2xpbmU+CiAgPGxpbmUgeDE9IjExNyIgeTE9IjAiIHgyPSIxMTciIHkyPSIyNSI+PC9saW5lPgogIDxsaW5lIHgxPSIxMTgiIHkxPSIwIiB4Mj0iMTE4IiB5Mj0iMjUiPjwvbGluZT4KICA8bGluZSB4MT0iMTIwIiB5MT0iMCIgeDI9IjEyMCIgeTI9IjI1IiBzdHlsZT0ic3Ryb2tlLXdpZHRoOjIiPjwvbGluZT4KCiAgPCEtLSBDb2xvcmVkIFJlY3RhbmdsZSAtLT4KICA8cG9seWdvbiBwb2ludHM9IjAuMDAwMDAwLDAuMDAwMDAwIDEyMC4wMDAwMDAsMC4wMDAwMDAgMTIwLjAwMDAwMCwyNS40MTI2MTcgMC4wMDAwMDAsMjUuNDEyNjE3IiBzdHlsZT0iZmlsbDojRUNCMTcyQTA7c3Ryb2tlLXdpZHRoOjAiPjwvcG9seWdvbj4KCiAgPCEtLSBUZXh0IC0tPgogIDx0ZXh0IHg9IjYwLjAwMDAwMCIgeT0iNDUuNDEyNjE3IiBmb250LXNpemU9IjEuMHJlbSIgZm9udC13ZWlnaHQ9IjEwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+MTAwMDAwMDAwMDwvdGV4dD4KICA8dGV4dCB4PSIxNDAuMDAwMDAwIiB5PSIxMi43MDYzMDgiIGZvbnQtc2l6ZT0iMS4wcmVtIiBmb250LXdlaWdodD0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiB0cmFuc2Zvcm09InJvdGF0ZSgwLDE0MC4wMDAwMDAsMTIuNzA2MzA4KSI+MTwvdGV4dD4KPC9zdmc+" class="img-fluid"></td>
+<td><svg width="170" height="75" style="stroke:rgb(0,0,0);stroke-width:1">
+<!-- Horizontal lines --> <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2"></line> <line x1="0" y1="25" x2="120" y2="25" style="stroke-width:2"></line> <!-- Vertical lines --> <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2"></line> <line x1="1" y1="0" x2="1" y2="25"></line> <line x1="2" y1="0" x2="2" y2="25"></line> <line x1="3" y1="0" x2="3" y2="25"></line> <line x1="4" y1="0" x2="4" y2="25"></line> <line x1="6" y1="0" x2="6" y2="25"></line> <line x1="7" y1="0" x2="7" y2="25"></line> <line x1="8" y1="0" x2="8" y2="25"></line> <line x1="9" y1="0" x2="9" y2="25"></line> <line x1="10" y1="0" x2="10" y2="25"></line> <line x1="12" y1="0" x2="12" y2="25"></line> <line x1="13" y1="0" x2="13" y2="25"></line> <line x1="14" y1="0" x2="14" y2="25"></line> <line x1="15" y1="0" x2="15" y2="25"></line> <line x1="16" y1="0" x2="16" y2="25"></line> <line x1="18" y1="0" x2="18" y2="25"></line> <line x1="19" y1="0" x2="19" y2="25"></line> <line x1="20" y1="0" x2="20" y2="25"></line> <line x1="21" y1="0" x2="21" y2="25"></line> <line x1="22" y1="0" x2="22" y2="25"></line> <line x1="24" y1="0" x2="24" y2="25"></line> <line x1="25" y1="0" x2="25" y2="25"></line> <line x1="26" y1="0" x2="26" y2="25"></line> <line x1="27" y1="0" x2="27" y2="25"></line> <line x1="28" y1="0" x2="28" y2="25"></line> <line x1="30" y1="0" x2="30" y2="25"></line> <line x1="31" y1="0" x2="31" y2="25"></line> <line x1="32" y1="0" x2="32" y2="25"></line> <line x1="33" y1="0" x2="33" y2="25"></line> <line x1="34" y1="0" x2="34" y2="25"></line> <line x1="36" y1="0" x2="36" y2="25"></line> <line x1="37" y1="0" x2="37" y2="25"></line> <line x1="38" y1="0" x2="38" y2="25"></line> <line x1="39" y1="0" x2="39" y2="25"></line> <line x1="40" y1="0" x2="40" y2="25"></line> <line x1="42" y1="0" x2="42" y2="25"></line> <line x1="43" y1="0" x2="43" y2="25"></line> <line x1="44" y1="0" x2="44" y2="25"></line> <line x1="45" y1="0" x2="45" y2="25"></line> <line x1="46" y1="0" x2="46" y2="25"></line> <line x1="48" y1="0" x2="48" y2="25"></line> <line x1="49" y1="0" x2="49" y2="25"></line> <line x1="50" y1="0" x2="50" y2="25"></line> <line x1="51" y1="0" x2="51" y2="25"></line> <line x1="52" y1="0" x2="52" y2="25"></line> <line x1="54" y1="0" x2="54" y2="25"></line> <line x1="55" y1="0" x2="55" y2="25"></line> <line x1="56" y1="0" x2="56" y2="25"></line> <line x1="57" y1="0" x2="57" y2="25"></line> <line x1="58" y1="0" x2="58" y2="25"></line> <line x1="60" y1="0" x2="60" y2="25"></line> <line x1="61" y1="0" x2="61" y2="25"></line> <line x1="62" y1="0" x2="62" y2="25"></line> <line x1="63" y1="0" x2="63" y2="25"></line> <line x1="64" y1="0" x2="64" y2="25"></line> <line x1="66" y1="0" x2="66" y2="25"></line> <line x1="67" y1="0" x2="67" y2="25"></line> <line x1="68" y1="0" x2="68" y2="25"></line> <line x1="69" y1="0" x2="69" y2="25"></line> <line x1="70" y1="0" x2="70" y2="25"></line> <line x1="72" y1="0" x2="72" y2="25"></line> <line x1="73" y1="0" x2="73" y2="25"></line> <line x1="74" y1="0" x2="74" y2="25"></line> <line x1="75" y1="0" x2="75" y2="25"></line> <line x1="76" y1="0" x2="76" y2="25"></line> <line x1="78" y1="0" x2="78" y2="25"></line> <line x1="79" y1="0" x2="79" y2="25"></line> <line x1="80" y1="0" x2="80" y2="25"></line> <line x1="81" y1="0" x2="81" y2="25"></line> <line x1="82" y1="0" x2="82" y2="25"></line> <line x1="84" y1="0" x2="84" y2="25"></line> <line x1="85" y1="0" x2="85" y2="25"></line> <line x1="86" y1="0" x2="86" y2="25"></line> <line x1="87" y1="0" x2="87" y2="25"></line> <line x1="88" y1="0" x2="88" y2="25"></line> <line x1="90" y1="0" x2="90" y2="25"></line> <line x1="91" y1="0" x2="91" y2="25"></line> <line x1="92" y1="0" x2="92" y2="25"></line> <line x1="93" y1="0" x2="93" y2="25"></line> <line x1="94" y1="0" x2="94" y2="25"></line> <line x1="96" y1="0" x2="96" y2="25"></line> <line x1="97" y1="0" x2="97" y2="25"></line> <line x1="98" y1="0" x2="98" y2="25"></line> <line x1="99" y1="0" x2="99" y2="25"></line> <line x1="100" y1="0" x2="100" y2="25"></line> <line x1="102" y1="0" x2="102" y2="25"></line> <line x1="103" y1="0" x2="103" y2="25"></line> <line x1="104" y1="0" x2="104" y2="25"></line> <line x1="105" y1="0" x2="105" y2="25"></line> <line x1="106" y1="0" x2="106" y2="25"></line> <line x1="108" y1="0" x2="108" y2="25"></line> <line x1="109" y1="0" x2="109" y2="25"></line> <line x1="110" y1="0" x2="110" y2="25"></line> <line x1="111" y1="0" x2="111" y2="25"></line> <line x1="112" y1="0" x2="112" y2="25"></line> <line x1="114" y1="0" x2="114" y2="25"></line> <line x1="115" y1="0" x2="115" y2="25"></line> <line x1="116" y1="0" x2="116" y2="25"></line> <line x1="117" y1="0" x2="117" y2="25"></line> <line x1="118" y1="0" x2="118" y2="25"></line> <line x1="120" y1="0" x2="120" y2="25" style="stroke-width:2"></line> <!-- Colored Rectangle --> <polygon points="0.000000,0.000000 120.000000,0.000000 120.000000,25.412617 0.000000,25.412617" style="fill:#ECB172A0;stroke-width:0"></polygon> <!-- Text --> <text x="60.000000" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle">1000000000</text> <text x="140.000000" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,12.706308)">1</text>
+</svg></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div class="cell" data-execution_count="17">
+<div id="cell-17" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>x_float64 <span class="op">=</span> x.astype(np.float64)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="18">
+<div id="cell-18" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>x.<span class="bu">sum</span>().compute()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <pre><code>999976700.0</code></pre>
@@ -338,23 +348,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>The machine resolution of <code>float32</code> is <code>1e-6</code>, therefore everything after the 7th digit is garbage, so it is reasonable to remove it, otherwise it gives you the impression that the computation is more precise than it actually it. Still I am surprised <code>dask</code> does it, <code>numpy</code> above instead doesn’t care about that and prints all the digits.</p>
 <p>If we need more precision, we need to increase the precision of the calculation, see below, but we are going to use a lot more memory, also, the input data were <code>float32</code>, so it is not very useful anyway, we should generate again the input with higher precision.</p>
-<div class="cell" data-execution_count="19">
+<div id="cell-20" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>np.finfo(np.float32)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>finfo(resolution=1e-06, min=-3.4028235e+38, max=3.4028235e+38, dtype=float32)</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="20">
+<div id="cell-21" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>x_float64.<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="20">
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <colgroup>
 <col style="width: 50%">
 <col style="width: 50%">
 </colgroup>
 <tbody>
 <tr class="odd">
-<td><table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<td><table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th></th>
@@ -391,13 +401,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
-<div class="cell" data-execution_count="21">
+<div id="cell-22" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>x_float64.<span class="bu">sum</span>().compute()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="21">
 <pre><code>999976584.1788422</code></pre>
 </div>
 </div>
-<div class="cell">
+<div id="cell-23" class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>client.shutdown()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
@@ -443,18 +453,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -486,11 +485,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.zonca\.dev");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -500,8 +538,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -513,7 +560,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -557,6 +727,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -582,6 +753,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -642,6 +839,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 
