@@ -46,6 +46,8 @@ We would like people that use a public dataset to be able to properly attribute 
 
 Traditionally attribution is achieved by asking people to cite a specific paper, while this works well with Academia rewarding paper citations, if anyone joins the collaboration after publication of the referenced paper, they would not receive proper recognition. Moreover, some data products do not have a specific paper to refer to. Finally, given the large quantity of data that (A)SO plans to release on short timescales, there may not be a specific paper that is relevant for a particular data product.
 
+Publishing a paper takes a lot of time, especially in a large collaboration which does a first round of internal review, therefore an author list is often obsolete by the time the paper is out. Moreover, papers on a specific topic might be spaced by 1 or 2 years and all data products published between those releases would reference an obsolete author list.
+
 ### DOI for each dataset
 
 This is how Zenodo or Figshare work, each dataset (not necessarily each data product, but each data release) is assigned a DOI. This works well for identifying the data source but (possibly) dilutes citations. It depends a lot on the data release cycle, if data releases are rare, then this could work, each dataset has as authors the people contributing to that release. Finally, assigning each data product a DOI may be expensive and wasteful ('properly' tracked DOIs are \~$1 to mint).
