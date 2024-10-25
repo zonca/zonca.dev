@@ -10,17 +10,19 @@ title: Generate script to mount a Manila share
 ---
 
 Jetstream 2 makes creating volumes that are shared across instances as easy as creating standard volumes.
-This is provided by the Manila service, which creates volumes based on the Ceph file system that can be mounted simultaneously on multiple Jetstream 2 Virtual Machines.
+This is provided by the [Manila service](https://docs.jetstream-cloud.org/general/manila/), which creates volumes based on the Ceph file system that can be mounted simultaneously on multiple Jetstream 2 Virtual Machines.
 
-Exosphere, the Jetstream 2 user friendly UI, is able to create and manage shares, and has the convenient feature that it prints out a command that can be executed in a Jetstream virtual machines to mount a Manila share.
+[Exosphere](https://jetstream2.exosphere.app/), the Jetstream 2 user friendly UI, is able to create and manage shares, and has the convenient feature that it prints out a command that can be executed in a Jetstream virtual machines to mount a Manila share.
 
-This functionality could be useful also outside of Exosphere, for example if we are creating Manila shares programmatically via the Jetstream API.
+This functionality could be useful also outside of Exosphere, for example if we are [creating Manila shares programmatically via the Jetstream API](https://docs.jetstream-cloud.org/ui/cli/manila/).
 
 Therefore I have created a script that generates the same command.
 
 The only requirement is the Openstack Manila client:
 
+```bash
     pip install python-manilaclient
+```
 
 I tested with `python-manilaclient-5.0.0`
 
@@ -30,8 +32,10 @@ The script [`generate_mount_command.sh`](https://github.com/zonca/jupyterhub-dep
 
 It is executed from a client with Openstack-CLI installed with:
 
-    SHARENAME="test_share"
-    bash generate_mount_command.sh $SHARENAME
+```bash
+SHARENAME="test_share"
+bash generate_mount_command.sh $SHARENAME
+```
 
 This will generate a command of the form:
 
