@@ -191,18 +191,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>Jetstream 2 makes creating volumes that are shared across instances as easy as creating standard volumes. This is provided by the Manila service, which creates volumes based on the Ceph file system that can be mounted simultaneously on multiple Jetstream 2 Virtual Machines.</p>
-<p>Exosphere, the Jetstream 2 user friendly UI, is able to create and manage shares, and has the convenient feature that it prints out a command that can be executed in a Jetstream virtual machines to mount a Manila share.</p>
-<p>This functionality could be useful also outside of Exosphere, for example if we are creating Manila shares programmatically via the Jetstream API.</p>
+<p>Jetstream 2 makes creating volumes that are shared across instances as easy as creating standard volumes. This is provided by the <a href="https://docs.jetstream-cloud.org/general/manila/">Manila service</a>, which creates volumes based on the Ceph file system that can be mounted simultaneously on multiple Jetstream 2 Virtual Machines.</p>
+<p><a href="https://jetstream2.exosphere.app/">Exosphere</a>, the Jetstream 2 user friendly UI, is able to create and manage shares, and has the convenient feature that it prints out a command that can be executed in a Jetstream virtual machines to mount a Manila share.</p>
+<p>This functionality could be useful also outside of Exosphere, for example if we are <a href="https://docs.jetstream-cloud.org/ui/cli/manila/">creating Manila shares programmatically via the Jetstream API</a>.</p>
 <p>Therefore I have created a script that generates the same command.</p>
 <p>The only requirement is the Openstack Manila client:</p>
-<pre><code>pip install python-manilaclient</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>    <span class="ex">pip</span> install python-manilaclient</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>I tested with <code>python-manilaclient-5.0.0</code></p>
 <p>We assume we have already created both the Manila share and an access rule (the access rule is created automatically by Exosphere, it needs to be explicitely created if using the CLI).</p>
 <p>The script <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/blob/master/manila/generate_mount_command.sh"><code>generate_mount_command.sh</code></a> is available in the usual <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream">Github repository</a> under <code>manila/</code>.</p>
 <p>It is executed from a client with Openstack-CLI installed with:</p>
-<pre><code>SHARENAME="test_share"
-bash generate_mount_command.sh $SHARENAME</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="va">SHARENAME</span><span class="op">=</span><span class="st">"test_share"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> generate_mount_command.sh <span class="va">$SHARENAME</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This will generate a command of the form:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> https://jetstream2.exosphere.app/exosphere/assets/scripts/mount_ceph.py <span class="kw">|</span> <span class="fu">sudo</span> python3 <span class="at">-</span> mount <span class="dt">\</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>--access-rule-name=<span class="st">'test_share-rw'</span> <span class="dt">\</span></span>
