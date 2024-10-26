@@ -13,6 +13,8 @@ title: Kubernetes monitoring with Prometheus and Grafana
 
 ---
 
+**See the [updated version of this tutorial](./2024-10-25-jetstream_kubernetes_grafana.md)**
+
 **Updated September 2020**
 
 In a production Kubernetes deployment it is necessary to make it easier to monitor the status of the cluster effectively.
