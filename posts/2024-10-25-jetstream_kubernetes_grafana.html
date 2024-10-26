@@ -6,7 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2019-04-20">
 
 <title>Kubernetes monitoring with Prometheus and Grafana – Andrea Zonca</title>
 <style>
@@ -20,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -136,12 +169,6 @@ ul.task-list li input[type="checkbox"] {
   <div class="quarto-title-meta">
 
       
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">April 20, 2019</p>
-      </div>
-    </div>
     
       
     </div>
@@ -158,34 +185,38 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p><strong>See the <a href="../posts/2024-10-25-jetstream_kubernetes_grafana.html">updated version of this tutorial</a></strong></p>
-<p><strong>Updated September 2020</strong></p>
 <p>In a production Kubernetes deployment it is necessary to make it easier to monitor the status of the cluster effectively. Kubernetes provides Prometheus to gather data from the different components of Kubernetes and Grafana to access those data and provide real-time plotting and inspection capability. Moreover, they both provide systems to send alerts in case some conditions on the state of the cluster are met, i.e.&nbsp;using more than 90% of RAM or CPU.</p>
 <p>The only downside is that the pods that handle monitoring consume some resource themselves, so this could be significant for small clusters below 5 nodes or so, but shouldn’t be a problem for typical larger production deployments.</p>
 <p>Both Prometheus and Grafana can be installed separately with Helm recipes or using the Prometheus operator Helm recipe, however those deployments do not have any preconfigured dashboards, it is easier to get started thanks to the <code>kube-prometheus</code> project, which not only installs Prometheus and Grafana, but also preconfigures about 10 different Grafana dashboards to explore in depth the status of a Kubernetes cluster.</p>
 <p>The main issue is that customizing it is really complicated, it requires modifying <code>jsonnet</code> templates and recompiling them with a <code>jsonnet</code> builder which requires <code>go</code>, however I don’t foresee the need to do that for most users.</p>
+<p>First check the <a href="https://github.com/prometheus-operator/kube-prometheus?tab=readme-ov-file#compatibility">Kubernetes compatibility matrix</a> to check what version of Kube-Prometheus we should use, for the Jetstream 2 deployment via Kubespray as of October 2024 we deploy Kubernetes 1.25, therefore we need <code>0.12</code>.</p>
 <p>Unfortunately it is not based on Helm, so you need to first checkout the repository:</p>
-<pre><code>git clone https://github.com/coreos/kube-prometheus</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">--single-branch</span> <span class="at">--branch</span> release-0.12 https://github.com/prometheus-operator/kube-prometheus</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>and then follow the instructions <a href="https://github.com/coreos/kube-prometheus#quickstart">in the documentation</a>, copied here for convenience:</p>
-<pre><code>kubectl create -f manifests/setup</code></pre>
-<p>Wait a few minutes, then:</p>
-<pre><code>kubectl create -f manifests/</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> apply <span class="at">--server-side</span> <span class="at">-f</span> manifests/setup</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> wait <span class="dt">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--for</span> condition=Established <span class="dt">\</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--all</span> CustomResourceDefinition <span class="dt">\</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--namespace</span><span class="op">=</span>monitoring</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> apply <span class="at">-f</span> manifests/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This creates several pods in the <code>monitoring</code> namespace:</p>
 <pre><code>kubectl get pods -n monitoring
-NAME                                   READY   STATUS    RESTARTS   AGE
-alertmanager-main-0                    2/2     Running   0          13m
-alertmanager-main-1                    2/2     Running   0          13m
-alertmanager-main-2                    2/2     Running   0          13m
-grafana-9d97dfdc7-zkfft                1/1     Running   0          14m
-kube-state-metrics-7c7979b6bc-srcvk    4/4     Running   0          12m
-node-exporter-b6n2w                    2/2     Running   0          14m
-node-exporter-cgp46                    2/2     Running   0          14m
-prometheus-adapter-b7d894c9c-z2ph7     1/1     Running   0          14m
-prometheus-k8s-0                       3/3     Running   1          13m
-prometheus-k8s-1                       3/3     Running   1          13m
-prometheus-operator-65c44fb7b7-8ltzs   1/1     Running   0          14m</code></pre>
+NAME                                   READY   STATUS    RESTARTS      AGE
+alertmanager-main-0                    2/2     Running   1 (20h ago)   20h
+alertmanager-main-1                    2/2     Running   1 (20h ago)   20h
+alertmanager-main-2                    2/2     Running   1 (20h ago)   20h
+blackbox-exporter-6fd586b445-ptmgk     3/3     Running   0             20h
+grafana-6849bbf859-c85s7               1/1     Running   0             20h
+kube-state-metrics-66659c89c-zfwg2     3/3     Running   0             20h
+node-exporter-28gfj                    2/2     Running   0             20h
+node-exporter-kh4gf                    2/2     Running   0             20h
+prometheus-adapter-757f9b4cf9-vpq24    1/1     Running   0             20h
+prometheus-adapter-757f9b4cf9-ww9sd    1/1     Running   0             20h
+prometheus-k8s-0                       2/2     Running   0             20h
+prometheus-k8s-1                       2/2     Running   0             20h
+prometheus-operator-776c6c6b87-dnlcx   2/2     Running   0             20h</code></pre>
 <p>Then you can setup forwarding on your laptop to export grafana locally:</p>
-<pre><code>kubectl --namespace monitoring port-forward svc/grafana 3000</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">--namespace</span> monitoring port-forward svc/grafana 3000</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Access <code>localhost:3000</code> with your browser and you should be able to navigate through all the statistics of your cluster, see for example this screenshot. The credentials are user <code>admin</code> and password <code>admin</code>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -196,7 +227,7 @@ prometheus-operator-65c44fb7b7-8ltzs   1/1     Running   0          14m</code></
 <p>From the “Home” page, you can access all the preconfigured dashboards by clicking on the top “Home” button, it will show a searchable list of all available dashboards.</p>
 <section id="access-the-ui-from-a-different-machine" class="level2">
 <h2 class="anchored" data-anchor-id="access-the-ui-from-a-different-machine">Access the UI from a different machine</h2>
-<p>In case you are running the configuration on a remote server and you would like to access the Grafana UI (or any other service) from your laptop, you can install <code>kubectl</code> also your my laptop, then copy the <code>.kube/config</code> to the laptop with:</p>
+<p>In case you are running the configuration on a remote server and you would like to access the Grafana UI (or any other service) from your laptop, you can install <code>kubectl</code> also on your laptop, then copy the <code>.kube/config</code> to the laptop with:</p>
 <pre><code> scp -r KUBECTLMACHINE:~/.kube/config ~/.kube</code></pre>
 <p>and run:</p>
 <pre><code> ssh ubuntu@$IP -f -L 6443:localhost:6443 sleep 3h &amp;</code></pre>
@@ -204,7 +235,7 @@ prometheus-operator-65c44fb7b7-8ltzs   1/1     Running   0          14m</code></
 </section>
 <section id="monitor-jupyterhub" class="level2">
 <h2 class="anchored" data-anchor-id="monitor-jupyterhub">Monitor JupyterHub</h2>
-<p>Once we have <a href="https://zonca.github.io/2019/02/kubernetes-jupyterhub-jetstream-kubespray.html">deployed JupyterHub with Helm</a>, we can pull up the “namespace” monitor and select the <code>jhub</code> namespace to visualize resource usage but also usage requests and limits of all pods created by JupyterHub and its users. See a screenshot below.</p>
+<p>Once we have <a href="https://www.zonca.dev/posts/2022-03-31-jetstream2_jupyterhub">deployed JupyterHub with Helm</a>, we can pull up the “namespace” monitor and select the <code>jhub</code> namespace to visualize resource usage but also usage requests and limits of all pods created by JupyterHub and its users. See a screenshot below.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="grafana_jhub.png" class="img-fluid figure-img"></p>
@@ -214,6 +245,7 @@ prometheus-operator-65c44fb7b7-8ltzs   1/1     Running   0          14m</code></
 </section>
 <section id="setup-alerts" class="level2">
 <h2 class="anchored" data-anchor-id="setup-alerts">Setup alerts</h2>
+<p><strong>Warning</strong>: the “Setup alerts” section needs to be updated</p>
 <p>Grafana supports email alerts, but it needs a SMTP server, and it is not easy to setup and to avoid being filtered as spam. The easiest way is to setup an alert to Slack, and optionally be notified via email of Slack messages.</p>
 <p>Follow the <a href="https://grafana.com/docs/alerting/notifications/#slack">instructions for slack on the Grafana documentation</a></p>
 <ul>
@@ -229,10 +261,20 @@ prometheus-operator-65c44fb7b7-8ltzs   1/1     Running   0          14m</code></
 </figure>
 </div>
 </section>
+<section id="configure-a-domain" class="level2">
+<h2 class="anchored" data-anchor-id="configure-a-domain">Configure a domain</h2>
+<p>We need to serve both JupyterHub and Grafana from the same Jetstream instance, so we need 2 domains, Jetstream automatically creates a domain based on the name of the instance and the allocation, typically:</p>
+<pre><code>kubejetstream-1.xxx000000.projects.jetstream-cloud.org</code></pre>
+<p>where xxx000000 is the allocation code.</p>
+<p>We can create a new DNS record with the Openstack-cli, the best is to use a CNAME, so that if we redeploy and the VM changes address, the record would still be valid, the command is (the <code>.</code> at the end of the records is intentional):</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> recordset create xxx000000.projects.jetstream-cloud.org. grafana <span class="at">--type</span> CNAME <span class="at">--record</span> <span class="st">'kubejetstream-1.xxx000000.projects.jetstream-cloud.org.'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now we should be able to access <a href="https://grafana.xxx000000.projects.jetstream-cloud.org" class="uri">https://grafana.xxx000000.projects.jetstream-cloud.org</a> and get a nice 404 error from our ingress.</p>
+<p>Any other domain would work, as long as it points to the IP of the master node of Kubernetes. The proper way of deploying this would be through a Load Balancer, but I haven’t had much success in making that work on Jetstream 2 in the past.</p>
+</section>
 <section id="configure-ingress" class="level2">
 <h2 class="anchored" data-anchor-id="configure-ingress">Configure ingress</h2>
-<p>It is also possible to expose Grafana to the web via an Ingress, the easiest is to have a dedicated URL just for grafana (different from the URL of JupyterHub), in this case, see an <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/blob/master/monitoring/grafana-ingress.yaml">example ingress</a>. It is important that it is in the <code>monitoring</code> namespace.</p>
-<p>The configuration also supports HTTPS, for that to work you also need to create an Issuer in the namespace <code>monitoring</code> (also rename the secret key), for more details see the <a href="https://zonca.dev/2020/03/setup-https-kubernetes-letsencrypt.html">tutorial on deploying letsencrypt</a>.</p>
+<p>It is also possible to expose Grafana to the web via an Ingress, see an <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/blob/master/monitoring/grafana-ingress.yaml">example ingress</a>. It is important that it is in the <code>monitoring</code> namespace.</p>
+<p>The configuration also supports HTTPS, for that to work you also need to create an Issuer in the namespace <code>monitoring</code> (also rename the secret key), for more details see the <a href="https://www.zonca.dev/posts/2023-09-26-https-kubernetes-letsencrypt">tutorial on deploying letsencrypt</a></p>
 
 
 </section>

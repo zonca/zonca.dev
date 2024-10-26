@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2024-10-25-jetstream_kubernetes_grafana.html",
       "/posts/2024-10-09-jetstream-manila-mount.html",
       "/posts/2024-10-02-ssh-agent.html",
       "/posts/2024-09-11-python-for-hpc-tutorial.html",
