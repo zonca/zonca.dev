@@ -28,8 +28,10 @@ First check the [Kubernetes compatibility matrix](https://github.com/prometheus-
 Unfortunately it is not based on Helm, so you need to first checkout the repository:
 
 ```bash
-git clone --single-branch --branch release-0.12 https://github.com/prometheus-operator/kube-prometheus
+git clone --single-branch --branch release-0.12-jupyterhub-labels https://github.com/zonca/kube-prometheus
 ```
+
+This is `release-0.12` branch with [minor modifications focused on exporting the JupyterHub-related pod labels](https://github.com/zonca/kube-prometheus/pull/1)
 
 and then follow the instructions [in the documentation](https://github.com/coreos/kube-prometheus#quickstart),
 copied here for convenience:
@@ -138,3 +140,20 @@ see an [example ingress](https://github.com/zonca/jupyterhub-deploy-kubernetes-j
 The configuration also supports HTTPS, for that to work you also need to create
 an Issuer in the namespace `monitoring` (also rename the secret key), for more details
 see the [tutorial on deploying letsencrypt](https://www.zonca.dev/posts/2023-09-26-https-kubernetes-letsencrypt)
+
+## Install JupyterHub dashboard
+
+Install `go-jsonnet` by going to [their Release page](https://github.com/google/go-jsonnet/releases), downloading the executable for your architecture and moving it to `~/bin` or `/usr/local/bin`
+
+Next
+
+```bash
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+```
+
+can create and save dashboards
+
+created a dashboard with 
+
+
+    sum(kube_pod_labels{namespace="jhub"})
