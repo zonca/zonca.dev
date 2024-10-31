@@ -67,7 +67,7 @@ Next we can serve the model:
 
 ```bash
 huggingface-cli login
-vllm serve "meta-llama/Llama-3.2-1B-Instruct" --max-model-len=8192 --enforce-eager
+vllm serve "meta-llama/Llama-3.2-1B-Instruct" --max-model-len=8192
 ```
 
 If this starts with no error, we can kill it with `Ctrl-C` and create a service for it.
