@@ -13,6 +13,8 @@ For experimentation purposes we are using the smaller and cheapest GPU node avai
 
 However the same instructions can be used to deploy any other model available on the Hugging Face model hub.
 
+This tutorial is based on work by [Tijmen de Haan](https://www2.kek.jp/qup/en/member/dehaan.html), the author of [Cosmosage](https://cosmosage.online/).
+
 ## Choose a model
 
 Jetstream has GPU nodes with 4 NVIDIA A100 GPUs, a user can create a Virtual Machine with 1 entire GPU or a fraction of it.
