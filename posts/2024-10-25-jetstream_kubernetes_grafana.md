@@ -25,7 +25,7 @@ The main issue is that customizing it is really complicated, it requires modifyi
 
 First check the [Kubernetes compatibility matrix](https://github.com/prometheus-operator/kube-prometheus?tab=readme-ov-file#compatibility) to check what version of Kube-Prometheus we should use, for the Jetstream 2 deployment via Kubespray as of October 2024 we deploy Kubernetes 1.25, therefore we need `0.12`.
 
-Unfortunately it is not based on Helm, so you need to first checkout the repository:
+Unfortunately it is not based on Helm, so you need to first checkout the repository, I have a fork with a minor modification to export the JupyterHub-related pod labels:
 
 ```bash
 git clone --single-branch --branch release-0.12-jupyterhub-labels https://github.com/zonca/kube-prometheus
@@ -91,12 +91,32 @@ and run:
 
 from the laptop and then run the `port-forward` command locally on the laptop.
 
-## Monitor JupyterHub
+## Monitor JupyterHub with the default dashboards
 
 Once we have [deployed JupyterHub with Helm](https://www.zonca.dev/posts/2022-03-31-jetstream2_jupyterhub), we can pull up the
 "namespace" monitor and select the `jhub` namespace to visualize resource usage but also usage requests and limits of all pods created by JupyterHub and its users. See a screenshot below.
 
 ![Screenshot of the Grafana namespace UI](grafana_jhub.png)
+
+## Monitor JupyterHub with custom dashboards
+
+The fork of Kube-Prometheus exports JupyterHub-related labels, so we can create custom dashboards to monitor JupyterHub more in depth.
+
+For example we can track how many Notebook sessions are used in JupyterHub.
+
+It is best to create a new dashboard, becase we cannot mix panels generated programmatically by Kube-Prometheus with Panels created by the Grafana UI itself.
+
+We can create a new dashboard and add a new Timeseries panel with the following query:
+
+    sum(kube_pod_labels{label_component="singleuser-server"}) 
+
+This will show the number of singleuser servers running in the `jhub` namespace.
+
+The problem is that by default Prometheus retains metrics only for 10 days by default, we can modify this in `manifests/prometheus-prometheus.yaml`.
+
+In the branch `release-0.12-jupyterhub-labels` I have already modified the `Prometheus` resource to retain metrics for 365 days, you can modify the `retention` field to change this.
+Moreover, the same manifest also creates a 50 GB Persistent Volume Claim for each of the Prometheus pods, you can modify the `storage` field to change this.
+
 
 ## Setup alerts
 
@@ -140,20 +160,3 @@ see an [example ingress](https://github.com/zonca/jupyterhub-deploy-kubernetes-j
 The configuration also supports HTTPS, for that to work you also need to create
 an Issuer in the namespace `monitoring` (also rename the secret key), for more details
 see the [tutorial on deploying letsencrypt](https://www.zonca.dev/posts/2023-09-26-https-kubernetes-letsencrypt)
-
-## Install JupyterHub dashboard
-
-Install `go-jsonnet` by going to [their Release page](https://github.com/google/go-jsonnet/releases), downloading the executable for your architecture and moving it to `~/bin` or `/usr/local/bin`
-
-Next
-
-```bash
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-```
-
-can create and save dashboards
-
-created a dashboard with 
-
-
-    sum(kube_pod_labels{namespace="jhub"})
