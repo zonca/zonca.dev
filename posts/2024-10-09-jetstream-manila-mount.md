@@ -48,3 +48,18 @@ curl https://jetstream2.exosphere.app/exosphere/assets/scripts/mount_ceph.py | s
 ```
 
 This can be executed at the command line in a Jetstream 2 VM, which does not require any access to the Openstack API.
+
+## How to mount on an external machine
+
+**FIXME**: this is not supported, Manila shares can only be mounted on Jetstream 2 instances.
+
+All Jetstream images have the `ceph-common` package installed, for other machines, follow [the instructions on the Quincy release](https://docs.ceph.com/en/quincy/install/get-packages/).
+
+For Ubuntu 22:
+
+```bash
+wget -q -O- 'https://download.ceph.com/keys/release.asc' | sudo apt-key add -
+codename=jammy
+sudo apt-add-repository "deb https://download.ceph.com/debian-quincy/ ${codename} main"
+sudo apt install ceph-common
+```
