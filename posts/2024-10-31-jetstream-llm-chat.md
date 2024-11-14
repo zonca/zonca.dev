@@ -3,6 +3,7 @@ categories:
 - jetstream
 - llm
 layout: post
+date: 2024-10-31
 slug: jetstream-llm-chat
 title: Deploy a LLM Chat-GPT like service on Jetstream
 

@@ -4,6 +4,7 @@ categories:
 - jetstream
 - jupyterhub
 layout: post
+date: 2024-10-25
 slug: kubernetes-prometheus-grafana
 title: Kubernetes monitoring with Prometheus and Grafana
 

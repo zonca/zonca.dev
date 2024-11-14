@@ -1,7 +1,7 @@
 ---
 categories:
 - openscience
-date: 2024-11-13
+date: 2024-11-13 00:00
 layout: post
 slug: self-invite-calendar-event
 title: Allow users to self-invite to a Google Calendar event
