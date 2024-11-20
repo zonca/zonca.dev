@@ -138,7 +138,7 @@ The chat interface is provided by [Open Web UI](https://openwebui.com/).
 Create the environment:
 
 ```bash
-conda create -y -n vllm python=3.11
+conda create -y -n open-webui python=3.11
 conda activate open-webui
 pip install open-webui
 open-webui serve
@@ -214,3 +214,23 @@ Under "OpenAI API" enter the URL `http://localhost:8000/v1` and leave the API ke
 Click on the "Verify connection" button, then to "Save" on the bottom.
 
 Finally you can start chatting with the model!
+
+## Use a larger model using quantization
+
+The weights of LLMs can be quantized to a lower precision to reduce the GPU memory required to run them, often larger models with quantization outperform smaller models with no quantization. Hugging Face has several quantized models, the most popular are GGUF models, but `vllm` has just experimental support for that format, so better search explicitely for a model "quantized for vllm", for example [`hugging-quants/Meta-Llama-3.1-8B-Instruct-AWQ-INT4`](https://huggingface.co/hugging-quants/Meta-Llama-3.1-8B-Instruct-AWQ-INT4).
+
+    sudo systemctl stop vllm
+    vllm serve "hugging-quants/Meta-Llama-3.1-8B-Instruct-AWQ-INT4" --max_model_len 4096 --gpu_memory_utilization 1 --enforce-eager
+
+Modify the systemd service replacing the relevant line with:
+
+    ExecStart=/bin/bash -c "source /home/exouser/miniforge3/etc/profile.d/conda.sh && conda activate vllm && vllm serve 'hugging-quants/Meta-Llama-3.1-8B-Instruct-AWQ-INT4' --max-model-len=4096 --gpu_memory_utilization 1 --enforce-eager"
+
+Then restart the service:
+
+    sudo systemctl daemon-reload
+    sudo systemctl start vllm
+
+Check `nvidia-smi`, memory consumption should be about 7.5 GB.
+
+Unfortunately we needed to also decrease `max-model-len` to fit in such a small GPU, so the model will only support 4096 tokens, so it would be best to deploy this model on a slightly larger Virtual Machine and increase the number of tokens.
