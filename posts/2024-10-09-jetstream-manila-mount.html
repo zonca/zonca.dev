@@ -210,8 +210,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>--share-path=<span class="st">'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'</span> <span class="dt">\</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>--share-name=<span class="st">'test_share'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This can be executed at the command line in a Jetstream 2 VM, which does not require any access to the Openstack API.</p>
+<section id="how-to-mount-on-an-external-machine" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-mount-on-an-external-machine">How to mount on an external machine</h2>
+<p><strong>FIXME</strong>: this is not supported, Manila shares can only be mounted on Jetstream 2 instances.</p>
+<p>All Jetstream images have the <code>ceph-common</code> package installed, for other machines, follow <a href="https://docs.ceph.com/en/quincy/install/get-packages/">the instructions on the Quincy release</a>.</p>
+<p>For Ubuntu 22:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">-q</span> <span class="at">-O-</span> <span class="st">'https://download.ceph.com/keys/release.asc'</span> <span class="kw">|</span> <span class="fu">sudo</span> apt-key add <span class="at">-</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="va">codename</span><span class="op">=</span>jammy</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-add-repository <span class="st">"deb https://download.ceph.com/debian-quincy/ </span><span class="va">${codename}</span><span class="st"> main"</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install ceph-common</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
+</section>
 
 </main> <!-- /main -->
 <div>

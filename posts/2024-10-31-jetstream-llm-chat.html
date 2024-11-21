@@ -301,7 +301,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="configure-the-chat-interface">Configure the chat interface</h2>
 <p>The chat interface is provided by <a href="https://openwebui.com/">Open Web UI</a>.</p>
 <p>Create the environment:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-y</span> <span class="at">-n</span> vllm python=3.11</span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-y</span> <span class="at">-n</span> open-webui python=3.11</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate open-webui</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install open-webui</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">open-webui</span> serve</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -349,6 +349,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Under “OpenAI API” enter the URL <code>http://localhost:8000/v1</code> and leave the API key empty.</p>
 <p>Click on the “Verify connection” button, then to “Save” on the bottom.</p>
 <p>Finally you can start chatting with the model!</p>
+</section>
+<section id="use-a-larger-model-using-quantization" class="level2">
+<h2 class="anchored" data-anchor-id="use-a-larger-model-using-quantization">Use a larger model using quantization</h2>
+<p>The weights of LLMs can be quantized to a lower precision to reduce the GPU memory required to run them, often larger models with quantization outperform smaller models with no quantization. Hugging Face has several quantized models, the most popular are GGUF models, but <code>vllm</code> has just experimental support for that format, so better search explicitely for a model “quantized for vllm”, for example <a href="https://huggingface.co/hugging-quants/Meta-Llama-3.1-8B-Instruct-AWQ-INT4"><code>hugging-quants/Meta-Llama-3.1-8B-Instruct-AWQ-INT4</code></a>.</p>
+<pre><code>sudo systemctl stop vllm
+vllm serve "hugging-quants/Meta-Llama-3.1-8B-Instruct-AWQ-INT4" --max_model_len 4096 --gpu_memory_utilization 1 --enforce-eager</code></pre>
+<p>Modify the systemd service replacing the relevant line with:</p>
+<pre><code>ExecStart=/bin/bash -c "source /home/exouser/miniforge3/etc/profile.d/conda.sh &amp;&amp; conda activate vllm &amp;&amp; vllm serve 'hugging-quants/Meta-Llama-3.1-8B-Instruct-AWQ-INT4' --max-model-len=4096 --gpu_memory_utilization 1 --enforce-eager"</code></pre>
+<p>Then restart the service:</p>
+<pre><code>sudo systemctl daemon-reload
+sudo systemctl start vllm</code></pre>
+<p>Check <code>nvidia-smi</code>, memory consumption should be about 7.5 GB.</p>
+<p>Unfortunately we needed to also decrease <code>max-model-len</code> to fit in such a small GPU, so the model will only support 4096 tokens, so it would be best to deploy this model on a slightly larger Virtual Machine and increase the number of tokens.</p>
 
 
 </section>
