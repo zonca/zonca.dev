@@ -241,3 +241,11 @@ Finally edit again the `app*openrc.sh` and add:
 Install helm 3 from [the release page on Github](https://github.com/helm/helm/releases)
 
 The tutorial was tested with `v3.8.1`.
+
+## Troubleshooting
+
+### Looking at container logs
+
+* `kubectl logs`
+* `kubectl logs --previous` for terminated or restarted containers
+* If this doesn't work, ssh into the worker node, `crictl ps -a` then `crictl inspect $ID`
