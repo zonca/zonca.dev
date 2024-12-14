@@ -137,20 +137,29 @@ Magnum comes with a default storage class for persistent volumes which relies on
     kubectl create -f ../alpine-persistent-volume.yaml
     kubectl describe pod alpine
 
+## Install NGINX controller
+
+In principle we do not need an Ingress because the Openstack Load Balancer can directly route traffic to JupyterHub. However, there is no way of getting a HTTPS certificate without an Ingress.
+
+Install the NGINX Ingress controller with:
+
+```bash
+helm upgrade --install ingress-nginx ingress-nginx \
+             --repo https://kubernetes.github.io/ingress-nginx \
+             --namespace ingress-nginx --create-namespace
+```
+
 ## Install JupyterHub
 
 Finally, we can go back to the root of the repository and install JupyterHub, first create the secrets file:
 
     bash create_secrets.sh
 
+The default `secrets.yaml` file assumes you are deploying on a `projects.jetstream-cloud.org` subdomain, if that is not the case, edit the file with your own domain.
+
     bash configure_helm_jupyterhub.sh
     bash install_jhub.sh
 
-After a few minutes, you can find out what is the public IP created by the Openstack Load Balancer service for JupyterHub:
-
-    kubectl -n jhub get service proxy-public
-
-We can connect with our browser to that IP and verify if JupyterHub is working, however we cannot login given we do not have a domain setup.
 
 ## Configure a subdomain
 
@@ -162,15 +171,27 @@ where `PROJ` is the ID of your Jestream 2 allocation:
 
     export PROJ="xxx000000" 
 
-Given the public IP of the JupyterHub service we tested before:
+Given the public IP of the NGINX ingress controller:
+
+    kubectl get svc -n ingress-nginx ingress-nginx-controller
+
+If you have a custom subdomain, you can configure an A record that points to the `EXTERNAL-IP` of the service, otherwise use Openstack to create a record:
 
     openstack recordset create  $PROJ.projects.jetstream-cloud.org. k8s --type A --record $IP --ttl 3600
 
+Access JupyterHub at <https://k8s.$PROJ.projects.jetstream-cloud.org>.
+
 ## Setup HTTPS
+
+Finally, to get a valid certificate, deploy `cert-manager` with:
 
     kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.16.2/cert-manager.yaml
 
-Still working on getting Cert-Manager working with Load Balancer instead of Ingress
+and a Cluster Issuer:
+
+    kubectl create -f ../setup_https/https_cluster_issuer.yml
+
+Now your deployment should have a valid HTTPS certificate.
 
 ## Issues and feedback
 
