@@ -21,14 +21,21 @@ The Jetstream team recently enabled the Cluster API on the Openstack deployment 
 * **Integrates with load balancer**: it relies on the Openstack load balancer service, so we can easily support multiple master nodes and if one of them fails, other nodes can handle incoming requests.
 * **Autoscaling**: it natively supports Cluster Autoscaling, so that worker nodes are created and destroyed based on load.
 
-## Setup access to the Jetstream API
+## Prerequisites
 
 First install the OpenStack and Magnum client:
 
     pip install python-openstackclient python-magnumclient
 
+This tutorial used openstack 6.1.0 and python-magnumclient 4.7.0.
+
+And create an updated app credential for the client to access the API.
 Jetstream recently updated permissions, so even if you have an already working app credential, create another one 'Unrestricted (dangerous)' application credential with all permissions, including the "loadbalancer" permission, in the project where you will be creating the cluster, and source it to expose the environment variables in your local environment where you'll be running the openstack commands.
 
+Once we have launched a cluster, we will want to manage it using standard Kubernetes tooling, any recent version should work:
+
+* `kubectl`: see <https://kubernetes.io/docs/tasks/tools/>, this tutorial used 1.26
+* `helm`: see <https://helm.sh/docs/intro/install/>, this tutorial used 3.8.1
 
 ## Create the cluster with Magnum
 
@@ -88,7 +95,9 @@ Increase number of worker nodes:
 
     openstack coe cluster resize --nodegroup default-worker $K8S_CLUSTER_NAME 3
 
-Confirm that there are 3 worker nodes: kubectl get nodes
+Confirm that there are 3 worker nodes:
+
+    kubectl get nodes
 
 ## Enable the autoscaler
 
