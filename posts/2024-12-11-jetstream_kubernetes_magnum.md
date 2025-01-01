@@ -17,7 +17,7 @@ JupyterHub on top of that using [zero-to-jupyterhub](https://zero-to-jupyterhub.
 
 The Jetstream team recently enabled the Cluster API on the Openstack deployment as the backend for Openstack Magnum to launch Kubernetes clusters. Clusters created via Magnum have several advantages compared to our [previous deployment via Kubespray](https://www.zonca.dev/posts/2023-07-19-jetstream2_kubernetes_kubespray):
 
-* **Quicker**: instead of configuring each VM with Ansible, VMs are launched with pre-prepared images, so spin up within minutes
+* **Quicker**: instead of configuring each VM with Ansible, VMs are launched with pre-prepared images, so deploys in about 10 minutes and scales in about 5 minutes.
 * **Integrates with load balancer**: it relies on the Openstack load balancer service, so we can easily support multiple master nodes and if one of them fails, other nodes can handle incoming requests.
 * **Autoscaling**: it natively supports Cluster Autoscaling, so that worker nodes are created and destroyed based on load.
 
@@ -51,7 +51,7 @@ A cluster can be created with:
     export K8S_CLUSTER_NAME=k8s
     bash create_cluster.sh
 
-See inside the file for the most commonly used parameters.
+See inside the file for the most commonly used parameters, the script awaits for the cluster to complete deployment successfully, it should take about 10 minutes.
 
 The cluster consumes resources when active, it can be switched off with:
 
