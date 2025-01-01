@@ -68,7 +68,7 @@ Consider this is deleting all Jetstream virtual machines and data that could be 
 
 Once status is `CREATE_COMPLETE`, get the Kubernetes config file in the current folder:
 
-    openstack coe cluster config $K8S_CLUSTER_NAME
+    openstack coe cluster config $K8S_CLUSTER_NAME --force
     export KUBECONFIG=$(pwd)/config
     chmod 600 config
 
