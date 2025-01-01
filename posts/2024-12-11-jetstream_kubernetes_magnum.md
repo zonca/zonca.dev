@@ -59,9 +59,10 @@ The cluster consumes resources when active, it can be switched off with:
 
 Consider this is deleting all Jetstream virtual machines and data that could be stored in JupyterHub.
 
-List clusters again. You should see your cluster now. Once status is `CREATE_COMPLETE`, get the Kubernetes config file:
+Once status is `CREATE_COMPLETE`, get the Kubernetes config file in the current folder:
 
-    eval $(openstack coe cluster config $K8S_CLUSTER_NAME)
+    openstack coe cluster config $K8S_CLUSTER_NAME
+    export KUBECONFIG=$(pwd)/config
     chmod 600 config
 
 `eval` is used because the command returns the correct `export KUBECONFIG` statement.
