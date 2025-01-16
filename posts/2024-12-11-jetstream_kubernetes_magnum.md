@@ -1,14 +1,12 @@
 ---
-aliases:
-- /2020/05/jetstream_kubernetes_magnum
 categories:
 - kubernetes
 - jetstream
 - jupyterhub
-date: '2020-05-21'
+date: '2024-12-11'
 layout: post
-slug: kubernetes-jupyterhub-jetstream-magnum
-title: Deploy Kubernetes and JupyterHub on Jetstream with Magnum
+slug: kubernetes-jupyterhub-jetstream-magnum-2024
+title: Deploy Kubernetes and JupyterHub on Jetstream with Magnum and Cluster API
 
 ---
 
