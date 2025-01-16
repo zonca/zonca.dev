@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2020-05-21">
+
+<title>Deploy Kubernetes and JupyterHub on Jetstream with Magnum – Andrea Zonca</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Andrea Zonca</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../consult.html"> 
+<span class="menu-text">Consulting</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://mastodon.online/@zonca"> <i class="bi bi-mastodon" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Deploy Kubernetes and JupyterHub on Jetstream with Magnum</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">kubernetes</div>
+                <div class="quarto-category">jetstream</div>
+                <div class="quarto-category">jupyterhub</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 21, 2020</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>This tutorial deploys Kubernetes on Jetstream with Magnum and then JupyterHub on top of that using <a href="https://zero-to-jupyterhub.readthedocs.io/">zero-to-jupyterhub</a>.</p>
+<p>The Jetstream team recently enabled the Cluster API on the Openstack deployment as the backend for Openstack Magnum to launch Kubernetes clusters. Clusters created via Magnum have several advantages compared to our <a href="https://www.zonca.dev/posts/2023-07-19-jetstream2_kubernetes_kubespray">previous deployment via Kubespray</a>:</p>
+<ul>
+<li><strong>Quicker</strong>: instead of configuring each VM with Ansible, VMs are launched with pre-prepared images, so deploys in about 10 minutes and scales in about 5 minutes.</li>
+<li><strong>Integrates with load balancer</strong>: it relies on the Openstack load balancer service, so we can easily support multiple master nodes and if one of them fails, other nodes can handle incoming requests.</li>
+<li><strong>Autoscaling</strong>: it natively supports Cluster Autoscaling, so that worker nodes are created and destroyed based on load.</li>
+</ul>
+<section id="prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
+<p>First install the OpenStack and Magnum client:</p>
+<pre><code>pip install python-openstackclient python-magnumclient</code></pre>
+<p>This tutorial used openstack 6.1.0 and python-magnumclient 4.7.0.</p>
+<p>And create an updated app credential for the client to access the API. Jetstream recently updated permissions, so even if you have an already working app credential, create another one ‘Unrestricted (dangerous)’ application credential with all permissions, including the “loadbalancer” permission, in the project where you will be creating the cluster, and source it to expose the environment variables in your local environment where you’ll be running the openstack commands.</p>
+<p>Once we have launched a cluster, we will want to manage it using standard Kubernetes tooling, any recent version should work:</p>
+<ul>
+<li><code>kubectl</code>: see <a href="https://kubernetes.io/docs/tasks/tools/" class="uri">https://kubernetes.io/docs/tasks/tools/</a>, this tutorial used 1.26</li>
+<li><code>helm</code>: see <a href="https://helm.sh/docs/intro/install/" class="uri">https://helm.sh/docs/intro/install/</a>, this tutorial used 3.8.1</li>
+</ul>
+</section>
+<section id="create-the-cluster-with-magnum" class="level2">
+<h2 class="anchored" data-anchor-id="create-the-cluster-with-magnum">Create the cluster with Magnum</h2>
+<p>Check out the cluster templates available:</p>
+<pre><code>openstack coe cluster template list</code></pre>
+<p>List clusters (initially empty):</p>
+<pre><code>openstack coe cluster list</code></pre>
+<p>As usual, checkout the repository with all the configuration files on the machine you will use the Jetstream API from, typically your laptop.</p>
+<pre><code>git clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream
+cd jupyterhub-deploy-kubernetes-jetstream
+cd kubernetes_magnum</code></pre>
+<p>A cluster can be created with:</p>
+<pre><code>export K8S_CLUSTER_NAME=k8s
+bash create_cluster.sh</code></pre>
+<p>See inside the file for the most commonly used parameters, the script awaits for the cluster to complete deployment successfully, it should take about 10 minutes.</p>
+<p>The cluster consumes resources when active, it can be switched off with:</p>
+<pre><code>bash delete_cluster.sh</code></pre>
+<p>Consider this is deleting all Jetstream virtual machines and data that could be stored in JupyterHub.</p>
+<p>Once status is <code>CREATE_COMPLETE</code>, get the Kubernetes config file in the current folder:</p>
+<pre><code>openstack coe cluster config $K8S_CLUSTER_NAME --force
+export KUBECONFIG=$(pwd)/config
+chmod 600 config</code></pre>
+<p><code>eval</code> is used because the command returns the correct <code>export KUBECONFIG</code> statement.</p>
+<p>Now the usual <code>kubectl</code> commands should work:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> kubectl <span class="ex">get</span> nodes</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">NAME</span>                                          STATUS   ROLES           AGE     VERSION</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">k8s-mbbffjfee7zs-control-plane-6rn2z</span>          Ready    control-plane   2m22s   v1.30.4</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">k8s-mbbffjfee7zs-control-plane-nw4cc</span>          Ready    control-plane   41s     v1.30.4</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">k8s-mbbffjfee7zs-control-plane-w9jln</span>          Ready    control-plane   5m8s    v1.30.4</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="ex">k8s-mbbffjfee7zs-default-worker-jb5lm-gvvjm</span>   Ready    <span class="op">&lt;</span>none<span class="op">&gt;</span>          2m21s   v1.30.4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="scale-manually" class="level2">
+<h2 class="anchored" data-anchor-id="scale-manually">Scale manually</h2>
+<p>List the node groups:</p>
+<pre><code>openstack coe nodegroup list $K8S_CLUSTER_NAME</code></pre>
+<p>Increase number of worker nodes:</p>
+<pre><code>openstack coe cluster resize --nodegroup default-worker $K8S_CLUSTER_NAME 3</code></pre>
+<p>Confirm that there are 3 worker nodes:</p>
+<pre><code>kubectl get nodes</code></pre>
+</section>
+<section id="enable-the-autoscaler" class="level2">
+<h2 class="anchored" data-anchor-id="enable-the-autoscaler">Enable the autoscaler</h2>
+<p>We can enable the autocaler setting the <code>max_node_count</code> property on the <code>default-worker</code> nodegroup:</p>
+<pre><code>openstack coe nodegroup update $K8S_CLUSTER_NAME default-worker replace /max_node_count=5</code></pre>
+<p>Now we can test the autoscaler,</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> high_mem_dep.yaml</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> scale deployment high-memory-deployment <span class="at">--replicas</span> 6</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the log of the pods we can notice that this triggered creation of more nodes:</p>
+<pre><code>  Normal   TriggeredScaleUp        113s  cluster-autoscaler  pod triggered scale-up: [{MachineDeployment/magnum-83bd0e70b4ba4cd092c2fb82b1ce06fb/k8s-mbbffjfee7zs-default-worker 2-&gt;5 (max: 5)}]</code></pre>
+<p>And in fact, within a couple of minutes:</p>
+<pre><code>&gt; kubectl get nodes
+NAME                                          STATUS   ROLES           AGE    VERSION
+k8s-mbbffjfee7zs-control-plane-6rn2z          Ready    control-plane   26m    v1.30.4
+k8s-mbbffjfee7zs-control-plane-nw4cc          Ready    control-plane   25m    v1.30.4
+k8s-mbbffjfee7zs-control-plane-w9jln          Ready    control-plane   29m    v1.30.4
+k8s-mbbffjfee7zs-default-worker-jb5lm-cpsqx   Ready    &lt;none&gt;          94s    v1.30.4
+k8s-mbbffjfee7zs-default-worker-jb5lm-dqww9   Ready    &lt;none&gt;          91s    v1.30.4
+k8s-mbbffjfee7zs-default-worker-jb5lm-gvvjm   Ready    &lt;none&gt;          26m    v1.30.4
+k8s-mbbffjfee7zs-default-worker-jb5lm-pmptm   Ready    &lt;none&gt;          5m4s   v1.30.4
+k8s-mbbffjfee7zs-default-worker-jb5lm-sss6b   Ready    &lt;none&gt;          97s    v1.30.4</code></pre>
+<p>We still have 1 pending pod but the autoscaler has a limit of 5 workers, so it won’t launch other nodes:</p>
+<pre><code>&gt; kubectl get pods
+NAME                                     READY   STATUS    RESTARTS   AGE
+high-memory-deployment-85785c87d-4zbrv   1/1     Running   0          4m5s
+high-memory-deployment-85785c87d-5xtvq   0/1     Pending   0          4m5s
+high-memory-deployment-85785c87d-6ds4c   1/1     Running   0          4m5s
+high-memory-deployment-85785c87d-qhclc   1/1     Running   0          4m5s
+high-memory-deployment-85785c87d-qxlf2   1/1     Running   0          4m5s
+high-memory-deployment-85785c87d-rk8sb   1/1     Running   0          5m8s</code></pre>
+</section>
+<section id="test-persistent-volumes" class="level2">
+<h2 class="anchored" data-anchor-id="test-persistent-volumes">Test Persistent Volumes</h2>
+<p>Magnum comes with a default storage class for persistent volumes which relies on Openstack Cinder, we can test with a simple pod:</p>
+<pre><code>kubectl create -f ../alpine-persistent-volume.yaml
+kubectl describe pod alpine</code></pre>
+</section>
+<section id="install-nginx-controller" class="level2">
+<h2 class="anchored" data-anchor-id="install-nginx-controller">Install NGINX controller</h2>
+<p>In principle we do not need an Ingress because the Openstack Load Balancer can directly route traffic to JupyterHub. However, there is no way of getting a HTTPS certificate without an Ingress.</p>
+<p>Install the NGINX Ingress controller with:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> upgrade <span class="at">--install</span> ingress-nginx ingress-nginx <span class="dt">\</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">--repo</span> https://kubernetes.github.io/ingress-nginx <span class="dt">\</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">--namespace</span> ingress-nginx <span class="at">--create-namespace</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="install-jupyterhub" class="level2">
+<h2 class="anchored" data-anchor-id="install-jupyterhub">Install JupyterHub</h2>
+<p>Finally, we can go back to the root of the repository and install JupyterHub, first create the secrets file:</p>
+<pre><code>bash create_secrets.sh</code></pre>
+<p>The default <code>secrets.yaml</code> file assumes you are deploying on a <code>projects.jetstream-cloud.org</code> subdomain, if that is not the case, edit the file with your own domain.</p>
+<pre><code>bash configure_helm_jupyterhub.sh
+bash install_jhub.sh</code></pre>
+</section>
+<section id="configure-a-subdomain" class="level2">
+<h2 class="anchored" data-anchor-id="configure-a-subdomain">Configure a subdomain</h2>
+<p>Jetstream also provides subdomains to each project as:</p>
+<pre><code>xxxxxx.$PROJ.projects.jetstream-cloud.org</code></pre>
+<p>where <code>PROJ</code> is the ID of your Jestream 2 allocation:</p>
+<pre><code>export PROJ="xxx000000" </code></pre>
+<p>Given the public IP of the NGINX ingress controller:</p>
+<pre><code>kubectl get svc -n ingress-nginx ingress-nginx-controller</code></pre>
+<p>If you have a custom subdomain, you can configure an A record that points to the <code>EXTERNAL-IP</code> of the service, otherwise use Openstack to create a record:</p>
+<pre><code>openstack recordset create  $PROJ.projects.jetstream-cloud.org. k8s --type A --record $IP --ttl 3600</code></pre>
+<p>Access JupyterHub at <a href="https://k8s.$PROJ.projects.jetstream-cloud.org" class="uri">https://k8s.$PROJ.projects.jetstream-cloud.org</a>.</p>
+</section>
+<section id="setup-https" class="level2">
+<h2 class="anchored" data-anchor-id="setup-https">Setup HTTPS</h2>
+<p>Finally, to get a valid certificate, deploy <code>cert-manager</code> with:</p>
+<pre><code>kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.16.2/cert-manager.yaml</code></pre>
+<p>and a Cluster Issuer:</p>
+<pre><code>kubectl create -f ../setup_https/https_cluster_issuer.yml</code></pre>
+<p>Now your deployment should have a valid HTTPS certificate.</p>
+</section>
+<section id="issues-and-feedback" class="level2">
+<h2 class="anchored" data-anchor-id="issues-and-feedback">Issues and feedback</h2>
+<p>Please <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/">open an issue on the repository</a> to report any issue or give feedback.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<div>
+    <hr>
+</div>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.zonca\.dev");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
