@@ -3,7 +3,7 @@ categories:
 - data
 date: '2024-12-05'
 layout: post
-title: Proposal for of Simons Observatory Data Products
+title: Proposal for of Simons Observatory Data Products Attribution
 ---
 
 ## License
