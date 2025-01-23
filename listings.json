@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2025-01-22-github-release-artifacts.html",
       "/posts/2024-12-11-jetstream_kubernetes_magnum.html",
       "/posts/2024-12-06-simons-observatory-doi.html",
       "/posts/2024-12-04-jetstream-windows.html",
