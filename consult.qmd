@@ -6,8 +6,9 @@ I have a large expertise ranging from scientific computing to web development an
 
 I am available to be hired as a consultant in:
 
+* **AI**: Custom development of AI workflows based on Convolutional Neural Networks, Large Language Models and more
 * **Scientific computing**: development of high performance and parallel Python software for data analysis, code-review, software design
 * **Web**: hosting of websites, development of custom Python web apps using Flask and Django
 * **Kubernetes**: deployment of Kubernetes to Openstack, deployment on top of Kubernetes of JupyterHub, Dask or custom microservices.
 
-Contact me via email (`consult` on the domain zonca.dev) or via [Twitter](https://twitter.com/andreazonca).
+See my [AI consulting services locally in San Diego through `San Diego Data Science LLC`](https://sandiegodata.science)
