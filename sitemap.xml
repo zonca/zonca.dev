@@ -41,6 +41,10 @@
     <lastmod>2024-05-17T02:56:32.587Z</lastmod>
   </url>
   <url>
+    <loc>https://www.zonca.dev/posts/2024-05-02-python-nersc-conda.html</loc>
+    <lastmod>2024-05-17T02:31:44.159Z</lastmod>
+  </url>
+  <url>
     <loc>https://www.zonca.dev/posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html</loc>
     <lastmod>2024-05-14T01:25:04.876Z</lastmod>
   </url>
@@ -1101,8 +1105,12 @@
     <lastmod>2025-01-23T03:55:29.033Z</lastmod>
   </url>
   <url>
-    <loc>https://www.zonca.dev/posts/2024-05-02-python-nersc-conda.html</loc>
-    <lastmod>2024-05-17T02:31:44.159Z</lastmod>
+    <loc>https://www.zonca.dev/posts/2025-01-29-github-auth-browser-device-flow.html</loc>
+    <lastmod>2025-01-30T06:08:07.108Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zonca.dev/posts/2025-01-29-jupyterlite-save-github.html</loc>
+    <lastmod>2025-01-30T06:08:07.108Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2024-05-20-interactive-3d-plot-planck-map.html</loc>
