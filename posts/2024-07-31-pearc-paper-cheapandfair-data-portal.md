@@ -4,7 +4,7 @@ categories:
 layout: post
 date: 2024-07-31
 slug: pearc-paper-cheapandfair-data-portal
-title: PEARC Paper: Cheap and FAIR Data Portal
+title: PEARC24 Paper Cheap and FAIR Data Portal
 ---
 
 In this blog post, we summarize the key points from our recent paper presented at PEARC 2024, titled "Cheap and FAIR: A Serverless Research Data Repository for the Next Generation Cosmic Microwave Background Experiment."
