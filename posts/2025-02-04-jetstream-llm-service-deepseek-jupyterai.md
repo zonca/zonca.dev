@@ -8,6 +8,8 @@ slug: jetstream-llm-service-deepseek-jupyterai
 title: Use Jetstream's DeepSeek R1 as a code assistant on JupyterAI
 ---
 
+Thanks to Openrouter, there is now a way of using the [Jetstream LLM inference system](https://docs.jetstream-cloud.org/general/inference-service/), in particular the powerful Deepseek R1 model, as a code and documentation assistant in JupyterLab via JupyterAI.
+
 ## Access the Jetstream LLM service from your machine
 
 Follow the [Jetstream docs](https://docs.jetstream-cloud.org/general/inference-service/?h=#accessing-from-your-own-computer)
