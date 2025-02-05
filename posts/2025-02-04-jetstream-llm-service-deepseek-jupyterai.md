@@ -12,7 +12,7 @@ Thanks to Openrouter, there is now a way of using the [Jetstream LLM inference s
 
 ## Access the Jetstream LLM service from your machine
 
-Follow the [Jetstream docs](https://docs.jetstream-cloud.org/general/inference-service/?h=#accessing-from-your-own-computer)
+Follow the [Jetstream docs](https://docs.jetstream-cloud.org/general/inference-service/?h=#accessing-from-your-own-computer) to configure local access to the service, below I copied the instrutions for a Linux (Ubuntu) machine:
 
     sudo apt install sshuttle
 
