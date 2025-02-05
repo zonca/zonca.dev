@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2025-02-04-jetstream-llm-service-deepseek-jupyterai.html",
       "/posts/2025-01-29-github-auth-browser-device-flow.html",
       "/posts/2025-01-29-jupyterlite-save-github.html",
       "/posts/2025-01-22-github-release-artifacts.html",
