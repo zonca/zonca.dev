@@ -35,6 +35,17 @@ Examples of data products:
 * Occasional data release, e.g. once every few months, this could be either simulations or real data or results of some analysis. This is straightforward, we mint a single DOI for the release with the full member list at the time of the release. This doesn't need to be completely automated, there could be a manual step where the membership list got from the automated service is merged with external collaborators and then the DOI is minted.
 * Daily products, for example maps, in this case a single DOI per day would make it difficult to aggregate citations, it would be best to create a hierarchical DOI, with a canonical DOI "Simons Observatory Daily Maps" and a DOI for each month which is minted at the beginning of the month, and then data added to it. In this way we could coalesce citations for all the maps under the single canonical DOI.
 
+An interesting usage of the hierarchical DOIs is Matplotlib releases:
+
+<https://matplotlib.org/stable/project/citing.html#dois>
+
+they also have different authors for each version:
+
+* <https://zenodo.org/records/1343133>
+* <https://zenodo.org/records/3633844>
+
+the "generic" DOI resolves to the last version, which is the standard behaviour in Zenodo.
+
 See for example LIGO, for a data release they both have a page on their website with a DOI <https://gwosc.org/eventapi/html/O4_Discovery_Papers/GW230529_181500/v1/> and then they have [additional (smaller I guess) data products on Zenodo](https://zenodo.org/records/10845779) with another DOI.
 
 ### Timed DOI for the SO collaboration
