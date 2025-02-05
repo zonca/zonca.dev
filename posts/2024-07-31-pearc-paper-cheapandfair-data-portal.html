@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-02-04">
+<meta name="dcterms.date" content="2024-07-31">
 
-<title>Use Jetstream’s DeepSeek R1 as a code assistant on JupyterAI – Andrea Zonca</title>
+<title>PEARC24 Paper Cheap and FAIR Data Portal – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -157,10 +123,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Use Jetstream’s DeepSeek R1 as a code assistant on JupyterAI</h1>
+      <h1 class="title">PEARC24 Paper Cheap and FAIR Data Portal</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">jetstream</div>
-                <div class="quarto-category">llm</div>
+                <div class="quarto-category">data</div>
               </div>
                   </div>
   </div>
@@ -172,7 +137,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">February 4, 2025</p>
+        <p class="date">July 31, 2024</p>
       </div>
     </div>
     
@@ -191,68 +156,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>Thanks to Openrouter, there is now a way of using the <a href="https://docs.jetstream-cloud.org/general/inference-service/">Jetstream LLM inference system</a>, in particular the powerful Deepseek R1 model, as a code and documentation assistant in JupyterLab via JupyterAI.</p>
-<section id="access-the-jetstream-llm-service-from-your-machine" class="level2">
-<h2 class="anchored" data-anchor-id="access-the-jetstream-llm-service-from-your-machine">Access the Jetstream LLM service from your machine</h2>
-<p>Follow the <a href="https://docs.jetstream-cloud.org/general/inference-service/?h=#accessing-from-your-own-computer">Jetstream docs</a> to configure local access to the service, below I copied the instrutions for a Linux (Ubuntu) machine:</p>
-<pre><code>sudo apt install sshuttle</code></pre>
-<p>I assume below you have <code>.ssh/config</code> already setup for passwordless login to a Jetstream VM:</p>
-<pre><code>sshuttle -r jsvm 149.165.157.253/32</code></pre>
-<p>Now you can open your browser and check you can access the chat web UI at:</p>
-<pre><code>&lt;https://llm.jetstream-cloud.org/&gt;</code></pre>
-<p>Notice that if you are using a Chromebook with the Linux environment, this only works from a browser installed within the Ubuntu environment (e.g.&nbsp;<code>firefox</code>), not with Chrome.</p>
+<p>In this blog post, we summarize the key points from our recent paper presented at PEARC 2024, titled “Cheap and FAIR: A Serverless Research Data Repository for the Next Generation Cosmic Microwave Background Experiment.”</p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>The paper discusses the development and implementation of a cost-effective and equitable data portal designed to facilitate data sharing and collaboration among researchers involved in the CMB-S4 experiment. CMB-S4 is a large-scale scientific experiment jointly funded by NSF and DOE to measure radiation emitted just after the Big Bang.</p>
 </section>
-<section id="test-access-from-langchain" class="level2">
-<h2 class="anchored" data-anchor-id="test-access-from-langchain">Test access from LangChain</h2>
-<p>Create env for JupyterAI and <code>langchain-openai</code> (needed to support <a href="https://jupyter-ai.readthedocs.io/en/latest/users/openrouter.html">OpenRouter</a>):</p>
-<pre><code>pip install jupyter-ai langchain-openai</code></pre>
-<p>Find the model id pointing the browser to (<code>sshuttle</code> needs to be running for this to work):</p>
-<pre><code>https://llm.jetstream-cloud.org/sglang/v1/models</code></pre>
-<p>Currently it is <code>DeepSeek-R1</code>.</p>
-<p>Or, for the <code>vLLM</code> based models:</p>
-<pre><code>https://llm.jetstream-cloud.org/vllm/v1/models</code></pre>
-<p>Now you can test this is working first inside a Notebook:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>openai_api_key<span class="op">=</span><span class="st">"EMPTY"</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>openai_api_base<span class="op">=</span><span class="st">"https://llm.jetstream-cloud.org/sglang/v1/"</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI(</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    api_key<span class="op">=</span>openai_api_key, base_url<span class="op">=</span>openai_api_base)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>completion<span class="op">=</span>client.completions.create(model<span class="op">=</span><span class="st">"Deepseek-R1"</span>, prompt<span class="op">=</span><span class="st">"Jetstream at Indiana University is a"</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>completion</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="configure-jupyter-ai-to-use-deepseek" class="level2">
-<h2 class="anchored" data-anchor-id="configure-jupyter-ai-to-use-deepseek">Configure Jupyter AI to use Deepseek</h2>
-<section id="patch-for-openrouter_api_key-keyword-not-accepted-error" class="level3">
-<h3 class="anchored" data-anchor-id="patch-for-openrouter_api_key-keyword-not-accepted-error">Patch for <code>openrouter_api_key</code> keyword not accepted error</h3>
-<p>At the moment, with <code>jupyter_ai==2.29.0</code> and <code>langchain-openai==0.3.3</code>, it seems like Lanchain does not accept the API key passed by JupyterAI, so we need to remove it. Hopefully this won’t be necessary in the future.</p>
-<p>Unfortunately at the moment this requires a really harmless tiny “patch” (ok, it’s more of a hack than a patch), in the file (adapt for your system):</p>
-<pre><code>~.virtualenvs/jupyterai/lib/python3.11/site-packages/langchain_openai/chat_models/base.py</code></pre>
-<p>Add the <code>pop</code> line just before the <code>create</code> line which should be around line <code>890</code> in the file:</p>
-<pre><code>payload.pop("openrouter_api_key")
-response = await self.async_client.create(**payload)</code></pre>
-</section>
-<section id="jupyterai-settings" class="level3">
-<h3 class="anchored" data-anchor-id="jupyterai-settings">JupyterAI settings</h3>
-<p>Open the JupyterAI settings, and configure:</p>
+<section id="key-features" class="level2">
+<h2 class="anchored" data-anchor-id="key-features">Key Features</h2>
 <ul>
-<li>Completion model = <code>OpenRouter :: *</code></li>
-<li>Local model ID = <code>Deepseek R1</code> or whatever model id you get in the previous step</li>
-<li>API Base url = <code>https://llm.jetstream-cloud.org/sglang/v1/</code> for Deepseek or <code>https://llm.jetstream-cloud.org/vllm/v1/</code> for Llama.</li>
-<li><code>OPENROUTER_API_KEY</code> = “EMPTY”</li>
+<li><strong>Cost-Effective</strong>: The portal leverages open-source technologies to minimize costs.</li>
+<li><strong>Equitable Access</strong>: Ensures fair access to data for all researchers, regardless of their institutional affiliation or funding status.</li>
+<li><strong>User-Friendly Interface</strong>: Designed with a focus on ease of use to encourage widespread adoption.</li>
 </ul>
-<p>Next we can test in the chat box (oh how Deepseek loves to talk!):</p>
+</section>
+<section id="implementation" class="level2">
+<h2 class="anchored" data-anchor-id="implementation">Implementation</h2>
+<p>The portal is built using a combination of modern web technologies and cloud infrastructure, ensuring scalability and reliability. Key components include:</p>
+<ul>
+<li><strong>Backend</strong>: Powered by Globus for authentication, authorization, and data access.</li>
+<li><strong>Frontend</strong>: A static web interface for browsing available datasets and their metadata.</li>
+<li><strong>Security</strong>: Implements stringent security measures to protect sensitive data using Globus groups.</li>
+</ul>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>The Cheap and FAIR Data Portal represents a significant step forward in democratizing access to research data. By reducing costs and ensuring equitable access, it aims to foster greater collaboration and innovation in the research community.</p>
+<p>For more details, you can read the full paper <a href="https://dl.acm.org/doi/10.1145/3626203.3670558">here</a>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="./deepseek_jupyterai.png" class="img-fluid figure-img"></p>
-<figcaption>Deepseek JupyterAI</figcaption>
+<p><img src="./pearc_paper_architecture.png" class="img-fluid figure-img"></p>
+<figcaption>Cheap and FAIR Data Portal</figcaption>
 </figure>
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
