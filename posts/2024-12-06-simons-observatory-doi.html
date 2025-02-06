@@ -179,6 +179,14 @@ ul.task-list li input[type="checkbox"] {
 <li>Occasional data release, e.g.&nbsp;once every few months, this could be either simulations or real data or results of some analysis. This is straightforward, we mint a single DOI for the release with the full member list at the time of the release. This doesn’t need to be completely automated, there could be a manual step where the membership list got from the automated service is merged with external collaborators and then the DOI is minted.</li>
 <li>Daily products, for example maps, in this case a single DOI per day would make it difficult to aggregate citations, it would be best to create a hierarchical DOI, with a canonical DOI “Simons Observatory Daily Maps” and a DOI for each month which is minted at the beginning of the month, and then data added to it. In this way we could coalesce citations for all the maps under the single canonical DOI.</li>
 </ul>
+<p>An interesting usage of the hierarchical DOIs is Matplotlib releases:</p>
+<p><a href="https://matplotlib.org/stable/project/citing.html#dois" class="uri">https://matplotlib.org/stable/project/citing.html#dois</a></p>
+<p>they also have different authors for each version:</p>
+<ul>
+<li><a href="https://zenodo.org/records/1343133" class="uri">https://zenodo.org/records/1343133</a></li>
+<li><a href="https://zenodo.org/records/3633844" class="uri">https://zenodo.org/records/3633844</a></li>
+</ul>
+<p>the “generic” DOI resolves to the last version, which is the standard behaviour in Zenodo.</p>
 <p>See for example LIGO, for a data release they both have a page on their website with a DOI <a href="https://gwosc.org/eventapi/html/O4_Discovery_Papers/GW230529_181500/v1/" class="uri">https://gwosc.org/eventapi/html/O4_Discovery_Papers/GW230529_181500/v1/</a> and then they have <a href="https://zenodo.org/records/10845779">additional (smaller I guess) data products on Zenodo</a> with another DOI.</p>
 </section>
 <section id="timed-doi-for-the-so-collaboration" class="level3">

@@ -227,6 +227,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="configure-jupyter-ai-to-use-deepseek">Configure Jupyter AI to use Deepseek</h2>
 <section id="patch-for-openrouter_api_key-keyword-not-accepted-error" class="level3">
 <h3 class="anchored" data-anchor-id="patch-for-openrouter_api_key-keyword-not-accepted-error">Patch for <code>openrouter_api_key</code> keyword not accepted error</h3>
+<p><strong>This is <a href="https://github.com/jupyterlab/jupyter-ai/issues/1010#issuecomment-2640702262">now fixed in <code>jupyter_ai</code> <code>2.29.1</code></a>, skip this step</strong></p>
+<p>If you still find this error, make sure you update <code>jupyter_ai</code> to <code>2.29.1</code> or newer version.</p>
 <p>At the moment, with <code>jupyter_ai==2.29.0</code> and <code>langchain-openai==0.3.3</code>, it seems like Lanchain does not accept the API key passed by JupyterAI, so we need to remove it. Hopefully this won’t be necessary in the future.</p>
 <p>Unfortunately at the moment this requires a really harmless tiny “patch” (ok, it’s more of a hack than a patch), in the file (adapt for your system):</p>
 <pre><code>~.virtualenvs/jupyterai/lib/python3.11/site-packages/langchain_openai/chat_models/base.py</code></pre>
