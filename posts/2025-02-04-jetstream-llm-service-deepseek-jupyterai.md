@@ -61,6 +61,10 @@ completion
 
 ### Patch for `openrouter_api_key` keyword not accepted error
 
+**This is [now fixed in `jupyter_ai` `2.29.1`](https://github.com/jupyterlab/jupyter-ai/issues/1010#issuecomment-2640702262), skip this step**
+
+If you still find this error, make sure you update `jupyter_ai` to `2.29.1` or newer version.
+
 At the moment, with `jupyter_ai==2.29.0` and `langchain-openai==0.3.3`, it seems like Lanchain does not accept the API key passed by JupyterAI, so we need to remove it. Hopefully this won't be necessary in the future.
 
 Unfortunately at the moment this requires a really harmless tiny "patch" (ok, it's more of a hack than a patch), in the file (adapt for your system):
