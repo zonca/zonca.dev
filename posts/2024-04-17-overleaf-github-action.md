@@ -8,12 +8,15 @@ title: 2-way Synchronization of Overleaf and Github via a Github Action
 
 ---
 
+**Updated: 2025-02-20**
+
 In the past I wrote tutorials on how to handle Github and Overleaf, the latest for example is [this](./2023-02-02-github-overleaf.md).
 However the Github button in Overleaf is fragile, it often gets disconnected for unknown reasons, and it cannot be reconnected, it forces deletion of the Github repository. Moreover, it seems it is now a Premium feature. Finally, it needs to be triggered manually, and nobody remembers to do that.
 
 I therefore decided to write a Github Action that can be configured to run automatically every hour to pull changes from Overleaf into Github using the `git` interface, which instead seems solid.
 
 The action also runs on Pull Requests, and in this case runs the rebase operation on Overleaf to check that there are no merge conflicts, but it does not push neither to the local branch nor to Overleaf. Therefore it is useful for contributors to manually rebase on `main` once in a while to keep the pull request current, it is not strictly necessary, we can wait for the pull request to be merged to handle that.
+Also notice that the synchronization action can be triggered manually in the "Github Actions" section of the repository.
 
 When the action runs on the Github `main` branch, if after the rebasing on Overleaf there are any local commits, those commits are also pushed to Overleaf (this is not a force-push, so it will fail is something is not matching, this is intendend behaviour).
 
@@ -25,8 +28,10 @@ Here is the entire Action:
 name: Overleaf Sync with Git
 on:
   schedule:
-    - cron: "0 * * * *"
+    - cron: "24 * * * *"
   push:
+    branches:
+      - master
   workflow_dispatch:
       
 jobs:
@@ -42,9 +47,11 @@ jobs:
       env:
         OVERLEAF_PROJECT_ID: ${{ secrets.OVERLEAF_PROJECT_ID }}
         OVERLEAF_TOKEN: ${{ secrets.OVERLEAF_TOKEN }}
+    - name: Configure git user
+      run: git config user.email "github-action-overleaf@example.com" && git config user.name "Github Actions"
     - name: Pull changes from Overleaf
       run: git pull --rebase overleaf master 
-    - name: Push changes to Github and Overleaf (only from main)
-      run: git push --force origin main && git push overleaf HEAD:master
-      if: ${{ github.ref == 'refs/heads/main' }}
+    - name: Push changes to Github and Overleaf (only from master)
+      run: git push --force origin master && git push overleaf HEAD:master
+      if: ${{ github.ref == 'refs/heads/master' }}
 ```
