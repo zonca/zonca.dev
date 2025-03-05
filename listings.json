@@ -2,10 +2,12 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2025-03-03-paper-pysm-models.html",
       "/posts/2025-02-04-jetstream-llm-service-deepseek-jupyterai.html",
       "/posts/2025-01-29-github-auth-browser-device-flow.html",
       "/posts/2025-01-29-jupyterlite-save-github.html",
       "/posts/2025-01-22-github-release-artifacts.html",
+      "/posts/italian-classes-chess-san-diego-2025.html",
       "/posts/2024-12-11-jetstream_kubernetes_magnum.html",
       "/posts/2024-12-06-simons-observatory-doi.html",
       "/posts/2024-12-04-jetstream-windows.html",
