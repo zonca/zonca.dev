@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2025-03-26-jetstream-usage-monitoring.html",
       "/posts/2025-03-26-binderhub-pythia.html",
       "/posts/2025-03-26-tutorial-globus-serverless-research-data-repository.html",
       "/posts/2025-03-03-paper-pysm-models.html",
