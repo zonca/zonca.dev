@@ -10,6 +10,8 @@ title: Deploy Kubernetes and JupyterHub on Jetstream with Magnum and Cluster API
 
 ---
 
+**UPDATED 2025-04-12**: Set a fixed IP address for the NGINX ingress controller.
+
 This tutorial deploys Kubernetes on Jetstream with Magnum and then
 JupyterHub on top of that using [zero-to-jupyterhub](https://zero-to-jupyterhub.readthedocs.io/).
 
@@ -155,7 +157,36 @@ helm upgrade --install ingress-nginx ingress-nginx \
              --namespace ingress-nginx --create-namespace
 ```
 
+### Use a fixed IP address
 
+Notice that deploying the NGINX ingress controller will create a new Openstack Load Balancer, which will be assigned a random IP address, and this address will be lost when the NGINX ingress controller is deleted or the cluster is deleted.
+
+
+To use a fixed IP address, first create a floating IP in Openstack:
+
+    openstack floating ip create public
+    export IP=<FLOATING_IP>
+
+Find the ID of the NGINX Load Balancer:
+
+    openstack loadbalancer list
+    export LB=<LOAD_BALANCER_ID>
+
+Find the ID of the VIP port:
+
+    LB_VIP_PORT_ID=$(openstack loadbalancer show $LB -c vip_port_id -f value)
+
+Find the existing IP:
+
+    EXISTING_FIP=$(openstack floating ip list --port $LB_VIP_PORT_ID -c ID -f value)
+
+Remove it:
+
+    openstack floating ip unset --port $EXISTING_FIP
+
+And associate the new floating IP:
+
+    openstack floating ip set --port $LB_VIP_PORT_ID $IP
 
 ## Install JupyterHub
 
