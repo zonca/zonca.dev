@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-12-11">
+<meta name="dcterms.date" content="2025-03-30">
 
-<title>Deploy Kubernetes and JupyterHub on Jetstream with Magnum and Cluster API – Andrea Zonca</title>
+<title>New Simulations of the Panexp Model Suite for Planck and WMAP – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -157,11 +123,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Deploy Kubernetes and JupyterHub on Jetstream with Magnum and Cluster API</h1>
+      <h1 class="title">New Simulations of the Panexp Model Suite for Planck and WMAP</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">kubernetes</div>
-                <div class="quarto-category">jetstream</div>
-                <div class="quarto-category">jupyterhub</div>
+                <div class="quarto-category">pysm</div>
+                <div class="quarto-category">cmb</div>
               </div>
                   </div>
   </div>
@@ -173,7 +138,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">December 11, 2024</p>
+        <p class="date">March 30, 2025</p>
       </div>
     </div>
     
@@ -192,157 +157,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p><strong>UPDATED 2025-04-12</strong>: Set a fixed IP address for the NGINX ingress controller.</p>
-<p>This tutorial deploys Kubernetes on Jetstream with Magnum and then JupyterHub on top of that using <a href="https://zero-to-jupyterhub.readthedocs.io/">zero-to-jupyterhub</a>.</p>
-<p>The Jetstream team recently enabled the Cluster API on the Openstack deployment as the backend for Openstack Magnum to launch Kubernetes clusters. Clusters created via Magnum have several advantages compared to our <a href="https://www.zonca.dev/posts/2023-07-19-jetstream2_kubernetes_kubespray">previous deployment via Kubespray</a>:</p>
+<p>Following up on my <a href="../posts/2025-03-03-paper-pysm-models.html">recent post about PySM models for Galactic emission</a>, I have recently executed three new simulations of the Panexp model suite:</p>
+<section id="new-simulations" class="level2">
+<h2 class="anchored" data-anchor-id="new-simulations">New Simulations</h2>
 <ul>
-<li><strong>Quicker</strong>: instead of configuring each VM with Ansible, VMs are launched with pre-prepared images, so deploys in about 10 minutes and scales in about 5 minutes.</li>
-<li><strong>Integrates with load balancer</strong>: it relies on the Openstack load balancer service, so we can easily support multiple master nodes and if one of them fails, other nodes can handle incoming requests.</li>
-<li><strong>Autoscaling</strong>: it natively supports Cluster Autoscaling, so that worker nodes are created and destroyed based on load.</li>
-</ul>
-<section id="prerequisites" class="level2">
-<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
-<p>First install the OpenStack and Magnum client:</p>
-<pre><code>pip install python-openstackclient python-magnumclient</code></pre>
-<p>This tutorial used openstack 6.1.0 and python-magnumclient 4.7.0.</p>
-<p>And create an updated app credential for the client to access the API. Jetstream recently updated permissions, so even if you have an already working app credential, create another one ‘Unrestricted (dangerous)’ application credential with all permissions, including the “loadbalancer” permission, in the project where you will be creating the cluster, and source it to expose the environment variables in your local environment where you’ll be running the openstack commands.</p>
-<p>Once we have launched a cluster, we will want to manage it using standard Kubernetes tooling, any recent version should work:</p>
-<ul>
-<li><code>kubectl</code>: see <a href="https://kubernetes.io/docs/tasks/tools/" class="uri">https://kubernetes.io/docs/tasks/tools/</a>, this tutorial used 1.26</li>
-<li><code>helm</code>: see <a href="https://helm.sh/docs/intro/install/" class="uri">https://helm.sh/docs/intro/install/</a>, this tutorial used 3.8.1</li>
+<li><strong>Planck</strong>: Using NPIPE beam window functions and PR3 bandpasses for HFI, Beyond Planck for LFI</li>
+<li><strong>WMAP</strong>: Including bandpasses and beam window functions</li>
+<li><strong>Idealized delta-frequency instrument</strong>: Features a 5 arcmin beam at all frequencies to be used for component separation studies (50 frequency channels spanning 20-800 GHz)</li>
 </ul>
 </section>
-<section id="create-the-cluster-with-magnum" class="level2">
-<h2 class="anchored" data-anchor-id="create-the-cluster-with-magnum">Create the cluster with Magnum</h2>
-<p>Check out the cluster templates available:</p>
-<pre><code>openstack coe cluster template list</code></pre>
-<p>List clusters (initially empty):</p>
-<pre><code>openstack coe cluster list</code></pre>
-<p>As usual, checkout the repository with all the configuration files on the machine you will use the Jetstream API from, typically your laptop.</p>
-<pre><code>git clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream
-cd jupyterhub-deploy-kubernetes-jetstream
-cd kubernetes_magnum</code></pre>
-<p>A cluster can be created with:</p>
-<pre><code>export K8S_CLUSTER_NAME=k8s
-bash create_cluster.sh</code></pre>
-<p>See inside the file for the most commonly used parameters, the script awaits for the cluster to complete deployment successfully, it should take about 10 minutes.</p>
-<p>The cluster consumes resources when active, it can be switched off with:</p>
-<pre><code>bash delete_cluster.sh</code></pre>
-<p>Consider this is deleting all Jetstream virtual machines and data that could be stored in JupyterHub.</p>
-<p>Once status is <code>CREATE_COMPLETE</code>, get the Kubernetes config file in the current folder:</p>
-<pre><code>openstack coe cluster config $K8S_CLUSTER_NAME --force
-export KUBECONFIG=$(pwd)/config
-chmod 600 config</code></pre>
-<p>Now the usual <code>kubectl</code> commands should work:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> kubectl <span class="ex">get</span> nodes</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">NAME</span>                                          STATUS   ROLES           AGE     VERSION</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">k8s-mbbffjfee7zs-control-plane-6rn2z</span>          Ready    control-plane   2m22s   v1.30.4</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">k8s-mbbffjfee7zs-control-plane-nw4cc</span>          Ready    control-plane   41s     v1.30.4</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">k8s-mbbffjfee7zs-control-plane-w9jln</span>          Ready    control-plane   5m8s    v1.30.4</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="ex">k8s-mbbffjfee7zs-default-worker-jb5lm-gvvjm</span>   Ready    <span class="op">&lt;</span>none<span class="op">&gt;</span>          2m21s   v1.30.4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="scale-manually" class="level2">
-<h2 class="anchored" data-anchor-id="scale-manually">Scale manually</h2>
-<p>List the node groups:</p>
-<pre><code>openstack coe nodegroup list $K8S_CLUSTER_NAME</code></pre>
-<p>Increase number of worker nodes:</p>
-<pre><code>openstack coe cluster resize --nodegroup default-worker $K8S_CLUSTER_NAME 3</code></pre>
-<p>Confirm that there are 3 worker nodes:</p>
-<pre><code>kubectl get nodes</code></pre>
-</section>
-<section id="enable-the-autoscaler" class="level2">
-<h2 class="anchored" data-anchor-id="enable-the-autoscaler">Enable the autoscaler</h2>
-<p>We can enable the autocaler setting the <code>max_node_count</code> property on the <code>default-worker</code> nodegroup:</p>
-<pre><code>openstack coe nodegroup update $K8S_CLUSTER_NAME default-worker replace /max_node_count=5</code></pre>
-<p>Now we can test the autoscaler,</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> high_mem_dep.yaml</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> scale deployment high-memory-deployment <span class="at">--replicas</span> 6</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>In the log of the pods we can notice that this triggered creation of more nodes:</p>
-<pre><code>  Normal   TriggeredScaleUp        113s  cluster-autoscaler  pod triggered scale-up: [{MachineDeployment/magnum-83bd0e70b4ba4cd092c2fb82b1ce06fb/k8s-mbbffjfee7zs-default-worker 2-&gt;5 (max: 5)}]</code></pre>
-<p>And in fact, within a couple of minutes:</p>
-<pre><code>&gt; kubectl get nodes
-NAME                                          STATUS   ROLES           AGE    VERSION
-k8s-mbbffjfee7zs-control-plane-6rn2z          Ready    control-plane   26m    v1.30.4
-k8s-mbbffjfee7zs-control-plane-nw4cc          Ready    control-plane   25m    v1.30.4
-k8s-mbbffjfee7zs-control-plane-w9jln          Ready    control-plane   29m    v1.30.4
-k8s-mbbffjfee7zs-default-worker-jb5lm-cpsqx   Ready    &lt;none&gt;          94s    v1.30.4
-k8s-mbbffjfee7zs-default-worker-jb5lm-dqww9   Ready    &lt;none&gt;          91s    v1.30.4
-k8s-mbbffjfee7zs-default-worker-jb5lm-gvvjm   Ready    &lt;none&gt;          26m    v1.30.4
-k8s-mbbffjfee7zs-default-worker-jb5lm-pmptm   Ready    &lt;none&gt;          5m4s   v1.30.4
-k8s-mbbffjfee7zs-default-worker-jb5lm-sss6b   Ready    &lt;none&gt;          97s    v1.30.4</code></pre>
-<p>We still have 1 pending pod but the autoscaler has a limit of 5 workers, so it won’t launch other nodes:</p>
-<pre><code>&gt; kubectl get pods
-NAME                                     READY   STATUS    RESTARTS   AGE
-high-memory-deployment-85785c87d-4zbrv   1/1     Running   0          4m5s
-high-memory-deployment-85785c87d-5xtvq   0/1     Pending   0          4m5s
-high-memory-deployment-85785c87d-6ds4c   1/1     Running   0          4m5s
-high-memory-deployment-85785c87d-qhclc   1/1     Running   0          4m5s
-high-memory-deployment-85785c87d-qxlf2   1/1     Running   0          4m5s
-high-memory-deployment-85785c87d-rk8sb   1/1     Running   0          5m8s</code></pre>
-</section>
-<section id="test-persistent-volumes" class="level2">
-<h2 class="anchored" data-anchor-id="test-persistent-volumes">Test Persistent Volumes</h2>
-<p>Magnum comes with a default storage class for persistent volumes which relies on Openstack Cinder, we can test with a simple pod:</p>
-<pre><code>kubectl create -f ../alpine-persistent-volume.yaml
-kubectl describe pod alpine</code></pre>
-</section>
-<section id="install-nginx-controller" class="level2">
-<h2 class="anchored" data-anchor-id="install-nginx-controller">Install NGINX controller</h2>
-<p>In principle we do not need an Ingress because the Openstack Load Balancer can directly route traffic to JupyterHub. However, there is no way of getting a HTTPS certificate without an Ingress.</p>
-<p>Install the NGINX Ingress controller with:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> upgrade <span class="at">--install</span> ingress-nginx ingress-nginx <span class="dt">\</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">--repo</span> https://kubernetes.github.io/ingress-nginx <span class="dt">\</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">--namespace</span> ingress-nginx <span class="at">--create-namespace</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="use-a-fixed-ip-address" class="level3">
-<h3 class="anchored" data-anchor-id="use-a-fixed-ip-address">Use a fixed IP address</h3>
-<p>Notice that deploying the NGINX ingress controller will create a new Openstack Load Balancer, which will be assigned a random IP address, and this address will be lost when the NGINX ingress controller is deleted or the cluster is deleted.</p>
-<p>To use a fixed IP address, first create a floating IP in Openstack:</p>
-<pre><code>openstack floating ip create public
-export IP=&lt;FLOATING_IP&gt;</code></pre>
-<p>Find the ID of the NGINX Load Balancer:</p>
-<pre><code>openstack loadbalancer list
-export LB=&lt;LOAD_BALANCER_ID&gt;</code></pre>
-<p>Find the ID of the VIP port:</p>
-<pre><code>LB_VIP_PORT_ID=$(openstack loadbalancer show $LB -c vip_port_id -f value)</code></pre>
-<p>Find the existing IP:</p>
-<pre><code>EXISTING_FIP=$(openstack floating ip list --port $LB_VIP_PORT_ID -c ID -f value)</code></pre>
-<p>Remove it:</p>
-<pre><code>openstack floating ip unset --port $EXISTING_FIP</code></pre>
-<p>And associate the new floating IP:</p>
-<pre><code>openstack floating ip set --port $LB_VIP_PORT_ID $IP</code></pre>
-</section>
-</section>
-<section id="install-jupyterhub" class="level2">
-<h2 class="anchored" data-anchor-id="install-jupyterhub">Install JupyterHub</h2>
-<p>Finally, we can go back to the root of the repository and install JupyterHub, first create the secrets file:</p>
-<pre><code>bash create_secrets.sh</code></pre>
-<p>The default <code>secrets.yaml</code> file assumes you are deploying on a <code>projects.jetstream-cloud.org</code> subdomain, if that is not the case, edit the file with your own domain.</p>
-<pre><code>bash configure_helm_jupyterhub.sh
-bash install_jhub.sh</code></pre>
-</section>
-<section id="configure-a-subdomain" class="level2">
-<h2 class="anchored" data-anchor-id="configure-a-subdomain">Configure a subdomain</h2>
-<p>Jetstream also provides subdomains to each project as:</p>
-<pre><code>xxxxxx.$PROJ.projects.jetstream-cloud.org</code></pre>
-<p>where <code>PROJ</code> is the ID of your Jestream 2 allocation:</p>
-<pre><code>export PROJ="xxx000000" </code></pre>
-<p>Given the public IP of the NGINX ingress controller:</p>
-<pre><code>kubectl get svc -n ingress-nginx ingress-nginx-controller</code></pre>
-<p>If you have a custom subdomain, you can configure an A record that points to the <code>EXTERNAL-IP</code> of the service, otherwise use Openstack to create a record:</p>
-<pre><code>openstack recordset create  $PROJ.projects.jetstream-cloud.org. k8s --type A --record $IP --ttl 3600</code></pre>
-<p>Access JupyterHub at <a href="https://k8s.$PROJ.projects.jetstream-cloud.org" class="uri">https://k8s.$PROJ.projects.jetstream-cloud.org</a>.</p>
-</section>
-<section id="setup-https" class="level2">
-<h2 class="anchored" data-anchor-id="setup-https">Setup HTTPS</h2>
-<p>Finally, to get a valid certificate, deploy <code>cert-manager</code> with:</p>
-<pre><code>kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.16.2/cert-manager.yaml</code></pre>
-<p>and a Cluster Issuer:</p>
-<pre><code>kubectl create -f ../setup_https/https_cluster_issuer.yml</code></pre>
-<p>Now your deployment should have a valid HTTPS certificate.</p>
-</section>
-<section id="issues-and-feedback" class="level2">
-<h2 class="anchored" data-anchor-id="issues-and-feedback">Issues and feedback</h2>
-<p>Please <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/">open an issue on the repository</a> to report any issue or give feedback.</p>
+<section id="documentation-and-access" class="level2">
+<h2 class="anchored" data-anchor-id="documentation-and-access">Documentation and Access</h2>
+<p>Detailed documentation about these simulations can be found in the Simon Observatory’s map-based simulations repository: <a href="https://github.com/simonsobs/map_based_simulations/tree/main?tab=readme-ov-file#available-simulations">Available Simulations Documentation</a></p>
+<p>As these are public datasets, they have also been published on the CMB-S4 data portal: <a href="https://data.cmb-s4.org/">CMB-S4 Data Portal</a></p>
+<p>These simulations provide valuable resources for researchers working on component separation and other CMB-related studies.</p>
 
 
 </section>
