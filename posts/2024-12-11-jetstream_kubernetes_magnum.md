@@ -70,8 +70,6 @@ Once status is `CREATE_COMPLETE`, get the Kubernetes config file in the current 
     export KUBECONFIG=$(pwd)/config
     chmod 600 config
 
-`eval` is used because the command returns the correct `export KUBECONFIG` statement.
-
 Now the usual `kubectl` commands should work:
 
 ```bash
@@ -156,6 +154,8 @@ helm upgrade --install ingress-nginx ingress-nginx \
              --repo https://kubernetes.github.io/ingress-nginx \
              --namespace ingress-nginx --create-namespace
 ```
+
+
 
 ## Install JupyterHub
 
