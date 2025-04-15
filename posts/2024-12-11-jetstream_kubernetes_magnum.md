@@ -10,6 +10,7 @@ title: Deploy Kubernetes and JupyterHub on Jetstream with Magnum and Cluster API
 
 ---
 
+**UPDATED 2025-04-14**: Added echo test
 **UPDATED 2025-04-12**: Set a fixed IP address for the NGINX ingress controller.
 
 This tutorial deploys Kubernetes on Jetstream with Magnum and then
@@ -25,9 +26,11 @@ The Jetstream team recently enabled the Cluster API on the Openstack deployment 
 
 First install the OpenStack and Magnum client:
 
-    pip install python-openstackclient python-magnumclient
+    pip install python-openstackclient python-magnumclient python-octaviaclient
 
-This tutorial used openstack 6.1.0 and python-magnumclient 4.7.0.
+The Openstack client is used to create the cluster and manage it, the Magnum client is used to create the cluster template and the Octavia client is used to manage the load balancer.
+
+This tutorial used openstack 6.1.0, python-magnumclient 4.7.0 and python-octaviaclient `3.3.0`.
 
 And create an updated app credential for the client to access the API.
 Jetstream recently updated permissions, so even if you have an already working app credential, create another one 'Unrestricted (dangerous)' application credential with all permissions, including the "loadbalancer" permission, in the project where you will be creating the cluster, and source it to expose the environment variables in your local environment where you'll be running the openstack commands.
@@ -60,6 +63,12 @@ A cluster can be created with:
 
 See inside the file for the most commonly used parameters, the script awaits for the cluster to complete deployment successfully, it should take about 10 minutes.
 
+At this point you should also decide if you prefer to use autoscaling or not, see the flag available in the script. Autoscaling means that the cluster will automatically add (up to a predefined maximum) or remove worker nodes based on the load on Kubernetes, up to a maximum number of nodes. This is the recommended way to run JupyterHub, as it will automatically scale up and down based on the number of users and their activity.
+With manual scaling instead you run a command to add or remove nodes.
+In any case, scaling always refers to the worker nodes, the control plane cannot be scaled, so we recommend to use 3 control plane nodes for redundancy.
+
+The first time this is executed, and then again if not executed for a while, it will take a lot more time to deploy, between 2 and 2.5 hours, probably because the images are not cached in the Openstack cloud. After that first execution, it should regularly deploy in 10 minutes.
+
 The cluster consumes resources when active, it can be switched off with:
 
     bash delete_cluster.sh
@@ -85,6 +94,8 @@ k8s-mbbffjfee7zs-default-worker-jb5lm-gvvjm   Ready    <none>          2m21s   v
 
 ## Scale manually
 
+Scaling manually only works if autoscaling is disabled.
+
 List the node groups:
 
     openstack coe nodegroup list $K8S_CLUSTER_NAME
@@ -99,11 +110,17 @@ Confirm that there are 3 worker nodes:
 
 ## Enable the autoscaler
 
-We can enable the autocaler setting the `max_node_count` property on the `default-worker` nodegroup:
+Even if we specify a max node count of 5 in the `create_cluster.sh` script, this is not propagated to the nodegroup, see:
+
+    openstack coe nodegroup show $K8S_CLUSTER_NAME default-worker
+
+While `min_node_count` is set to 1, `max_node_count` is set to None, which means that the autoscaler is still disabled.
+
+We can enable it by setting the `max_node_count` property on the `default-worker` nodegroup manually:
 
     openstack coe nodegroup update $K8S_CLUSTER_NAME default-worker replace /max_node_count=5
 
-Now we can test the autoscaler,
+Now we can test the autoscaler with a simple deployment that uses 4 GB of memory for each replica:
 
 ```bash
 kubectl create -f high_mem_dep.yaml
@@ -112,7 +129,7 @@ kubectl scale deployment high-memory-deployment --replicas 6
 
 In the log of the pods we can notice that this triggered creation of more nodes:
 
-      Normal   TriggeredScaleUp        113s  cluster-autoscaler  pod triggered scale-up: [{MachineDeployment/magnum-83bd0e70b4ba4cd092c2fb82b1ce06fb/k8s-mbbffjfee7zs-default-worker 2->5 (max: 5)}]
+    Normal   TriggeredScaleUp        113s  cluster-autoscaler  pod triggered scale-up: [{MachineDeployment/magnum-83bd0e70b4ba4cd092c2fb82b1ce06fb/k8s-mbbffjfee7zs-default-worker 2->5 (max: 5)}]
 
 And in fact, within a couple of minutes:
 
@@ -188,6 +205,45 @@ And associate the new floating IP:
 
     openstack floating ip set --port $LB_VIP_PORT_ID $IP
 
+## Configure a subdomain
+
+In case you do not have access to a custom domain, you can use the Jetstream subdomain for your project. The subdomain is available to all projects on Jetstream, and it is a good way to test your deployment without having to configure a custom domain.
+
+Jetstream provides subdomains to each project as:
+
+    xxxxxx.$PROJ.projects.jetstream-cloud.org
+    
+where `PROJ` is the ID of your Jestream 2 allocation (all lowercase):
+
+    export PROJ="xxx000000" 
+
+First get the public IP of the NGINX ingress controller:
+
+    export IP=$(kubectl get svc -n ingress-nginx ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+
+If you have a custom subdomain, you can configure an A record that points to the `EXTERNAL-IP` of the service, otherwise use Openstack to create a record:
+
+    export SUBDOMAIN="k8s"
+    openstack recordset create  $PROJ.projects.jetstream-cloud.org. $SUBDOMAIN --type A --record $IP --ttl 3600
+
+Access JupyterHub at <https://k8s.$PROJ.projects.jetstream-cloud.org>.
+
+## Test the NGINX ingress controller
+
+We have a deployment of a simple toy application to test that Kubernetes, the NGINX ingress and the domain are working correctly.
+
+First we associate a subdomain to the IP address of the NGINX ingress controller:
+
+    export SUBDOMAIN="testpage"
+    openstack recordset create $PROJ.projects.jetstream-cloud.org. $SUBDOMAIN --type A --record $IP --ttl 3600
+    kubectl create -f echo-test.yaml
+
+Now you should be able to connect to:
+
+    <http://testpage.$PROJ.projects.jetstream-cloud.org>
+
+If everything is working properly you should see "Testing NGINX Ingress on Jetstream!" in the browser.
+
 ## Install JupyterHub
 
 Finally, we can go back to the root of the repository and install JupyterHub, first create the secrets file:
@@ -198,27 +254,6 @@ The default `secrets.yaml` file assumes you are deploying on a `projects.jetstre
 
     bash configure_helm_jupyterhub.sh
     bash install_jhub.sh
-
-
-## Configure a subdomain
-
-Jetstream also provides subdomains to each project as:
-
-    xxxxxx.$PROJ.projects.jetstream-cloud.org
-    
-where `PROJ` is the ID of your Jestream 2 allocation:
-
-    export PROJ="xxx000000" 
-
-Given the public IP of the NGINX ingress controller:
-
-    kubectl get svc -n ingress-nginx ingress-nginx-controller
-
-If you have a custom subdomain, you can configure an A record that points to the `EXTERNAL-IP` of the service, otherwise use Openstack to create a record:
-
-    openstack recordset create  $PROJ.projects.jetstream-cloud.org. k8s --type A --record $IP --ttl 3600
-
-Access JupyterHub at <https://k8s.$PROJ.projects.jetstream-cloud.org>.
 
 ## Setup HTTPS
 
