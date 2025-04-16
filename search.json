@@ -5884,7 +5884,7 @@
     "href": "posts/2025-04-15-release-of-pysm-3.4.1.html",
     "title": "PySM 3.4.1 Released",
     "section": "",
-    "text": "PySM version 3.4.1 is now available. It can be downloaded from PyPI. The release notes detail new features and improvements.\nTwo new models, rg2 and rg3, have been added: - rg2: Websky radio galaxy model applying a beam on the fly to brightest sources. - rg3: Pre-computed background sources for radio galaxies using catalog data.\nAdditionally, see these docs for a comparison of the old rg1 model with these new models, including plots."
+    "text": "PySM version 3.4.1 is now available. It can be downloaded from PyPI. The release notes detail new features and improvements.\nTwo new models, rg2 and rg3, have been added:\n\nrg2: Websky radio galaxy model applying a beam on the fly to brightest sources.\nrg3: Pre-computed background sources for radio galaxies using catalog data.\n\nAdditionally, see these docs for a comparison of the old rg1 model with these new models, including plots."
   },
   {
     "objectID": "posts/2024-05-20-interactive-3d-plot-planck-map.html",
