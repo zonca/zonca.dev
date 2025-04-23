@@ -45,44 +45,44 @@
     <lastmod>2024-05-28T22:42:03.467Z</lastmod>
   </url>
   <url>
-    <loc>https://www.zonca.dev/posts/2024-05-28-quarto-notebook-frontmatter.html</loc>
-    <lastmod>2024-05-28T22:05:40.647Z</lastmod>
+    <loc>https://www.zonca.dev/posts/2024-05-20-interactive-3d-plot-planck-map.html</loc>
+    <lastmod>2024-05-20T19:03:31.421Z</lastmod>
   </url>
   <url>
-    <loc>https://www.zonca.dev/posts/2024-05-16-globus-javascript-sdk-pyscript.html</loc>
-    <lastmod>2024-05-17T02:56:32.587Z</lastmod>
+    <loc>https://www.zonca.dev/posts/2025-04-15-release-of-pysm-3.4.1.html</loc>
+    <lastmod>2025-04-20T01:59:23.699Z</lastmod>
   </url>
   <url>
-    <loc>https://www.zonca.dev/posts/italian-classes-chess-san-diego-2025.html</loc>
-    <lastmod>2025-03-05T17:00:49.259Z</lastmod>
+    <loc>https://www.zonca.dev/posts/2025-01-29-jupyterlite-save-github.html</loc>
+    <lastmod>2025-01-30T06:08:07.108Z</lastmod>
   </url>
   <url>
-    <loc>https://www.zonca.dev/posts/2024-05-02-python-nersc-conda.html</loc>
-    <lastmod>2024-05-17T02:31:44.159Z</lastmod>
+    <loc>https://www.zonca.dev/posts/2025-03-30-healpy-1.18.1.html</loc>
+    <lastmod>2025-04-12T22:57:24.638Z</lastmod>
   </url>
   <url>
-    <loc>https://www.zonca.dev/posts/2025-03-03-paper-pysm-models.html</loc>
-    <lastmod>2025-03-26T22:25:27.861Z</lastmod>
+    <loc>https://www.zonca.dev/posts/2025-01-29-github-auth-browser-device-flow.html</loc>
+    <lastmod>2025-01-30T06:08:07.108Z</lastmod>
   </url>
   <url>
-    <loc>https://www.zonca.dev/posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html</loc>
-    <lastmod>2024-05-14T01:25:04.876Z</lastmod>
+    <loc>https://www.zonca.dev/posts/2025-03-26-jetstream-usage-monitoring.html</loc>
+    <lastmod>2025-03-26T23:55:13.219Z</lastmod>
   </url>
   <url>
-    <loc>https://www.zonca.dev/posts/2024-07-31-pearc-paper-cheapandfair-data-portal.html</loc>
-    <lastmod>2025-02-06T18:47:17.099Z</lastmod>
+    <loc>https://www.zonca.dev/posts/2025-01-22-github-release-artifacts.html</loc>
+    <lastmod>2025-01-23T03:55:29.033Z</lastmod>
   </url>
   <url>
-    <loc>https://www.zonca.dev/posts/2024-10-09-jetstream-manila-mount.html</loc>
-    <lastmod>2024-11-20T06:41:18.802Z</lastmod>
+    <loc>https://www.zonca.dev/posts/2024-09-11-python-for-hpc-tutorial.html</loc>
+    <lastmod>2024-09-11T18:43:21.558Z</lastmod>
   </url>
   <url>
-    <loc>https://www.zonca.dev/posts/2024-08-04-cmb-data-licensing.html</loc>
-    <lastmod>2024-09-11T02:21:49.183Z</lastmod>
+    <loc>https://www.zonca.dev/posts/2024-09-03-anki-flashcards-learn-spelling-kids.html</loc>
+    <lastmod>2024-09-07T00:51:51.761Z</lastmod>
   </url>
   <url>
-    <loc>https://www.zonca.dev/posts/2024-05-07-ubuntu22-minimal-image-jetstream.html</loc>
-    <lastmod>2024-07-31T21:59:05.285Z</lastmod>
+    <loc>https://www.zonca.dev/posts/2024-05-02-pysm-point-source-pixell.html</loc>
+    <lastmod>2024-05-02T20:35:54.728Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2025-02-04-jetstream-llm-service-deepseek-jupyterai.html</loc>
@@ -1113,48 +1113,48 @@
     <lastmod>2024-11-20T06:41:18.814Z</lastmod>
   </url>
   <url>
-    <loc>https://www.zonca.dev/posts/2024-05-02-pysm-point-source-pixell.html</loc>
-    <lastmod>2024-05-02T20:35:54.728Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.zonca.dev/posts/2024-09-03-anki-flashcards-learn-spelling-kids.html</loc>
-    <lastmod>2024-09-07T00:51:51.761Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.zonca.dev/posts/2024-09-11-python-for-hpc-tutorial.html</loc>
-    <lastmod>2024-09-11T18:43:21.558Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.zonca.dev/posts/2025-01-22-github-release-artifacts.html</loc>
-    <lastmod>2025-01-23T03:55:29.033Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.zonca.dev/posts/2025-03-26-jetstream-usage-monitoring.html</loc>
-    <lastmod>2025-03-26T23:55:13.219Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.zonca.dev/posts/2025-01-29-github-auth-browser-device-flow.html</loc>
-    <lastmod>2025-01-30T06:08:07.108Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.zonca.dev/posts/2025-03-30-healpy-1.18.1.html</loc>
-    <lastmod>2025-04-12T22:57:24.638Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.zonca.dev/posts/2025-01-29-jupyterlite-save-github.html</loc>
-    <lastmod>2025-01-30T06:08:07.108Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.zonca.dev/posts/2025-04-15-release-of-pysm-3.4.1.html</loc>
-    <lastmod>2025-04-20T01:59:23.699Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.zonca.dev/posts/2024-05-20-interactive-3d-plot-planck-map.html</loc>
-    <lastmod>2024-05-20T19:03:31.421Z</lastmod>
-  </url>
-  <url>
     <loc>https://www.zonca.dev/posts/2025-04-22-nfs-server-jetstream2.html</loc>
-    <lastmod>2025-04-23T05:44:30.631Z</lastmod>
+    <lastmod>2025-04-23T05:50:02.521Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zonca.dev/posts/2024-05-07-ubuntu22-minimal-image-jetstream.html</loc>
+    <lastmod>2024-07-31T21:59:05.285Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zonca.dev/posts/2024-08-04-cmb-data-licensing.html</loc>
+    <lastmod>2024-09-11T02:21:49.183Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zonca.dev/posts/2024-10-09-jetstream-manila-mount.html</loc>
+    <lastmod>2024-11-20T06:41:18.802Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zonca.dev/posts/2024-07-31-pearc-paper-cheapandfair-data-portal.html</loc>
+    <lastmod>2025-02-06T18:47:17.099Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zonca.dev/posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html</loc>
+    <lastmod>2024-05-14T01:25:04.876Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zonca.dev/posts/2025-03-03-paper-pysm-models.html</loc>
+    <lastmod>2025-03-26T22:25:27.861Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zonca.dev/posts/2024-05-02-python-nersc-conda.html</loc>
+    <lastmod>2024-05-17T02:31:44.159Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zonca.dev/posts/italian-classes-chess-san-diego-2025.html</loc>
+    <lastmod>2025-03-05T17:00:49.259Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zonca.dev/posts/2024-05-16-globus-javascript-sdk-pyscript.html</loc>
+    <lastmod>2024-05-17T02:56:32.587Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zonca.dev/posts/2024-05-28-quarto-notebook-frontmatter.html</loc>
+    <lastmod>2024-05-28T22:05:40.647Z</lastmod>
   </url>
   <url>
     <loc>https://www.zonca.dev/posts/2024-05-29-fastapi-sso-github-organization.html</loc>

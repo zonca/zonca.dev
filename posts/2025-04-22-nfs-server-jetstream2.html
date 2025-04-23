@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2025-04-22">
 
-<title>Deploy a NFS server to share data between JupyterHub users on Jetstream (2025 Update) – Andrea Zonca</title>
+<title>Deploy a NFS server to share data between JupyterHub users on Jetstream – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -157,7 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Deploy a NFS server to share data between JupyterHub users on Jetstream (2025 Update)</h1>
+      <h1 class="title">Deploy a NFS server to share data between JupyterHub users on Jetstream</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">kubernetes</div>
                 <div class="quarto-category">jetstream</div>
@@ -213,33 +213,35 @@ If you are still using Kubespray, see the <a href="https://www.zonca.dev/posts/2
 <p>We create a deployment with a replica number of 1 instead of creating directly a pod, so that in case servers are rebooted or a node dies, Kubernetes will take care of spawning another pod.</p>
 <p>Some configuration options you might want to edit:</p>
 <ul>
-<li>I named the shared folder <code>/share</code></li>
-<li>In case you are interested in sharing read-only, uncomment the <code>READ_ONLY</code> flag.</li>
-<li>In the persistent volume claim definition <code>create_nfs_volume.yaml</code>, modify the volume size (default is 10 GB)</li>
-<li>Select the right IP in <code>service_nfs.yaml</code> for either Magnum or Kubespray (or you can delete the line to be assigned an IP by Kubernetes), this is an arbitrary IP, it just needs to be in the same subnet of other Kubernetes services. You can find it looking at the output of <code>kubectl get services</code>. So you could have 2 NFS servers in the same cluster with 2 different IPs.</li>
+<li><p>I named the shared folder <code>/share</code></p></li>
+<li><p>In case you are interested in sharing read-only, uncomment the <code>READ_ONLY</code> flag.</p></li>
+<li><p>In the persistent volume claim definition <code>create_nfs_volume.yaml</code>, modify the volume size (default is 10 GB)</p></li>
+<li><p>Select the right IP in <code>service_nfs.yaml</code> for either Magnum or Kubespray (or you can delete the line to be assigned an IP by Kubernetes), this is an arbitrary IP, it just needs to be in the same subnet of other Kubernetes services. You can find it looking at the output of <code>kubectl get services</code>. So you could have 2 NFS servers in the same cluster with 2 different IPs.</p></li>
+<li><p>You can check the IP range for a cluster using:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> cluster-info dump <span class="kw">|</span> <span class="fu">grep</span> service-cluster-ip-range</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul>
 <p>First we create the PersistentVolumeClaim:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> create_nfs_volume.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> create_nfs_volume.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>then the service and the pod:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> service_nfs.yaml</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> nfs_server.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> service_nfs.yaml</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> nfs_server.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>I separated them so that later on we more easily delete the NFS server, but keep all the data on the (potentially large) NFS volume:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> delete <span class="at">-f</span> nfs_server.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> delete <span class="at">-f</span> nfs_server.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="test-the-nfs-server" class="level2">
 <h2 class="anchored" data-anchor-id="test-the-nfs-server">Test the NFS server</h2>
 <p>Edit <code>test_nfs_mount.yaml</code> to set the right IP for the NFS server, then:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> test_nfs_mount.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> test_nfs_mount.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>and access the terminal to test:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">N</span><span class="op">=</span>default <span class="co">#set namespace</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> ../terminal_pod.sh test-nfs-mount</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">N</span><span class="op">=</span>default <span class="co">#set namespace</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> ../terminal_pod.sh test-nfs-mount</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>172.24.46.63:/  9.8G     0  9.8G   0% /share</code></pre>
 <p>We have the root user, we can use the terminal to copy or rsync data into the shared volume. We can also create writable folders owned by the user <code>1000</code> which maps to <code>jovyan</code> in JupyterHub:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sh-4.2#</span> mkdir readonly_folder</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sh-4.2#</span> touch readonly_folder/aaa</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">sh-4.2#</span> mkdir writable_folder</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">sh-4.2#</span> chown 1000:100 writable_folder</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">sh-4.2#</span> ls <span class="at">-l</span> /share</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sh-4.2#</span> mkdir readonly_folder</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sh-4.2#</span> touch readonly_folder/aaa</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">sh-4.2#</span> mkdir writable_folder</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">sh-4.2#</span> chown 1000:100 writable_folder</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ex">sh-4.2#</span> ls <span class="at">-l</span> /share</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>total 24
 drwx------. 2 root root  16384 Jul 10 06:32 lost+found
 drwxr-xr-x. 2 root root   4096 Jul 10 06:43 readonly_folder
@@ -249,38 +251,38 @@ drwxr-xr-x. 2 1000 users  4096 Jul 10 06:43 writable_folder</code></pre>
 <h2 class="anchored" data-anchor-id="preserve-the-data-volume-across-redeployments">Preserve the data volume across redeployments</h2>
 <p>The NFS data volume could contain a lot of data that you would want to preserve in case you need to completely tear down the Kubernetes cluster.</p>
 <p>First we find out what is the ID of the <code>PersistentVolume</code> associated with the NFS volume:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pv <span class="kw">|</span> <span class="fu">grep</span> nfs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pv <span class="kw">|</span> <span class="fu">grep</span> nfs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>pvc-ee1f02aa-11f8-433f-806f-186f6d622a30   10Gi       RWO            Delete           Bound    default/nfs-share-folder-claim   standard                5m55s</code></pre>
 <p>Then you can save the <code>PersistentVolume</code> and the <code>PersistentVolumeClaim</code> to YAML:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pvc nfs-share-folder-claim <span class="at">-o</span> yaml <span class="op">&gt;</span> existing_nfs_volume_claim.yaml</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pv pvc-ee1f02aa-11f8-433f-806f-186f6d622a30 <span class="at">-o</span> yaml <span class="op">&gt;</span> existing_nfs_volume.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pvc nfs-share-folder-claim <span class="at">-o</span> yaml <span class="op">&gt;</span> existing_nfs_volume_claim.yaml</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pv pvc-ee1f02aa-11f8-433f-806f-186f6d622a30 <span class="at">-o</span> yaml <span class="op">&gt;</span> existing_nfs_volume.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Next we can delete the servers directly from Openstack, be careful not to delete the <code>PersistentVolume</code> or the <code>PersistentVolumeClaim</code> in Kubernetes or the underlying volume in Openstack will be deleted, also do not delete the namespace associated with those resources.</p>
 <p>Finally redeploy everything, and instead of launching <code>create_nfs_volume.yaml</code>, we create first the <code>PersistentVolume</code> then the <code>PersistentVolumeClaim</code>:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> existing_nfs_volume.yaml</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> existing_nfs_volume_claim.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> existing_nfs_volume.yaml</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> existing_nfs_volume_claim.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="mount-the-shared-filesystem-on-jupyterhub" class="level1">
 <h1>Mount the shared filesystem on JupyterHub</h1>
 <p>Set the NFS server IP in <code>jupyterhub_nfs.yaml</code>, then add this line to <code>install_jhub.sh</code> (just before the last line, the file is located in the parent folder):</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">--values</span> nfs/jupyterhub_nfs.yaml <span class="dt">\</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">--values</span> nfs/jupyterhub_nfs.yaml <span class="dt">\</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then run <code>install_jhub.sh</code> to have the NFS filesystem mounted on all JupyterHub single user containers:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> install_jhub.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> install_jhub.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="test-in-jupyter" class="level2">
 <h2 class="anchored" data-anchor-id="test-in-jupyter">Test in Jupyter</h2>
 <p>Now connect to JupyterHub and check in a terminal:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jovyan@jupyter-zonca2:/share$</span> pwd</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/share</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="ex">jovyan@jupyter-zonca2:/share$</span> whoami</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="ex">jovyan</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="ex">jovyan@jupyter-zonca2:/share$</span> touch readonly_folder/ccc</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="ex">touch:</span> cannot touch <span class="st">'readonly_folder/ccc'</span>: Permission denied</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="ex">jovyan@jupyter-zonca2:/share$</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="ex">jovyan@jupyter-zonca2:/share$</span> touch writable_folder/ccc</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="ex">jovyan@jupyter-zonca2:/share$</span> ls <span class="at">-l</span> writable_folder/</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 0</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--.</span> 1 jovyan root 0 Jul 10 06:50 ccc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jovyan@jupyter-zonca2:/share$</span> pwd</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/share</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="ex">jovyan@jupyter-zonca2:/share$</span> whoami</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="ex">jovyan</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="ex">jovyan@jupyter-zonca2:/share$</span> touch readonly_folder/ccc</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="ex">touch:</span> cannot touch <span class="st">'readonly_folder/ccc'</span>: Permission denied</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="ex">jovyan@jupyter-zonca2:/share$</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="ex">jovyan@jupyter-zonca2:/share$</span> touch writable_folder/ccc</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="ex">jovyan@jupyter-zonca2:/share$</span> ls <span class="at">-l</span> writable_folder/</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 0</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--.</span> 1 jovyan root 0 Jul 10 06:50 ccc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="expose-a-ssh-server-to-copy-data-to-the-shared-volume" class="level1">
