@@ -6,7 +6,7 @@ categories:
 - linux
 date: '2025-04-22'
 layout: post
-title: Deploy a NFS server to share data between JupyterHub users on Jetstream (2025 Update)
+title: Deploy a NFS server to share data between JupyterHub users on Jetstream
 ---
 
 This is an updated version of my [2023 tutorial](https://www.zonca.dev/posts/2023-02-06-nfs-server-kubernetes-jetstream) on deploying a NFS server to share data between JupyterHub users on Jetstream.
@@ -44,6 +44,11 @@ Some configuration options you might want to edit:
 * In case you are interested in sharing read-only, uncomment the `READ_ONLY` flag.
 * In the persistent volume claim definition `create_nfs_volume.yaml`, modify the volume size (default is 10 GB)
 * Select the right IP in `service_nfs.yaml` for either Magnum or Kubespray (or you can delete the line to be assigned an IP by Kubernetes), this is an arbitrary IP, it just needs to be in the same subnet of other Kubernetes services. You can find it looking at the output of `kubectl get services`. So you could have 2 NFS servers in the same cluster with 2 different IPs.
+* You can check the IP range for a cluster using:
+  
+  ```bash
+  kubectl cluster-info dump | grep service-cluster-ip-range
+  ```
 
 First we create the PersistentVolumeClaim:
 
