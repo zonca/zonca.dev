@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2025-04-22-nfs-server-jetstream2.html",
       "/posts/2025-04-19-access-hpc.html",
       "/posts/2025-04-15-release-of-pysm-3.4.1.html",
       "/posts/2025-03-30-healpy-1.18.1.html",

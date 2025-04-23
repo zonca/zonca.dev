@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2023-02-06">
+<meta name="dcterms.date" content="2025-04-22">
 
-<title>Deploy a NFS server to share data between JupyterHub users on Jetstream – Andrea Zonca</title>
+<title>Deploy a NFS server to share data between JupyterHub users on Jetstream (2025 Update) – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -123,7 +157,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Deploy a NFS server to share data between JupyterHub users on Jetstream</h1>
+      <h1 class="title">Deploy a NFS server to share data between JupyterHub users on Jetstream (2025 Update)</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">kubernetes</div>
                 <div class="quarto-category">jetstream</div>
@@ -140,7 +174,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">February 6, 2023</p>
+        <p class="date">April 22, 2025</p>
       </div>
     </div>
     
@@ -159,21 +193,21 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<blockquote class="blockquote">
-<p><strong>Update:</strong> See the <a href="https://www.zonca.dev/posts/2025-02-01-nfs-server-kubernetes-jetstream">2025 updated tutorial for deploying NFS on Jetstream with Kubernetes</a> for the latest instructions.</p>
-</blockquote>
-<p>This tutorial is a minor update of <a href="https://www.zonca.dev/posts/2020-07-10-nfs-server-kubernetes-jetstream" class="uri">https://www.zonca.dev/posts/2020-07-10-nfs-server-kubernetes-jetstream</a>.</p>
-<p>Also consider that a more robust and low-maintenance way of providing shared data volumes is <a href="https://www.zonca.dev/posts/2022-12-05-jetstream2-kubernetes-manila">to rely on Manila shares provided by Jetstream 2, see the tutorial</a></p>
-<p>In this tutorial I’ll show how to create a data volume on Jetstream and share it using a NFS server to all JupyterHub users. All JupyterHub users run as the <code>jovyan</code> user, therefore each folder in the shared filesystem can be either read-only, or writable by every user. The main concern is that a user could delete by mistake data of another user, however the users still have access to their own home folder.</p>
+<p>This is an updated version of my <a href="https://www.zonca.dev/posts/2023-02-06-nfs-server-kubernetes-jetstream">2023 tutorial</a> on deploying a NFS server to share data between JupyterHub users on Jetstream.</p>
+<p>The recommended way to deploy Kubernetes on Jetstream is now using <a href="https://www.zonca.dev/posts/2024-12-11-jetstream_kubernetes_magnum.html">Magnum and Cluster API</a>. Please refer to that guide for the latest instructions on launching and managing Kubernetes clusters on Jetstream. This tutorial has been updated to reflect this change, but the NFS server deployment steps remain the same.</p>
+<hr>
+<p>This tutorial shows how to create a data volume on Jetstream and share it using a NFS server to all JupyterHub users.<br>
+All JupyterHub users run as the <code>jovyan</code> user, so each folder in the shared filesystem can be either read-only or writable by every user. The main concern is that a user could delete by mistake data of another user, however the users still have access to their own home folder.</p>
 <section id="deploy-kubernetes-and-jupyterhub" class="level1">
 <h1>Deploy Kubernetes and JupyterHub</h1>
-<p>I assume here you already have a deployment of JupyterHub on top of Kubernetes on Jetstream, currently, the recommended method <a href="https://www.zonca.dev/posts/2022-03-30-jetstream2_kubernetes_kubespray">is via Kubespray 2.18</a>.</p>
+<p>The recommended method is now <a href="https://www.zonca.dev/posts/2024-12-11-jetstream_kubernetes_magnum.html">via Magnum and Cluster API</a>.<br>
+If you are still using Kubespray, see the <a href="https://www.zonca.dev/posts/2023-02-06-nfs-server-kubernetes-jetstream">older tutorial</a>.</p>
 </section>
 <section id="deploy-the-nfs-server" class="level1">
 <h1>Deploy the NFS server</h1>
 <p>Clone as usual the repository with all the configuration files:</p>
-<pre><code>git clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream
-cd nfs</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> nfs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>By default the NFS server is configured both for reading and writing, and then using the filesystem permissions we can make some or all folders writable.</p>
 <p>In <code>nfs_server.yaml</code> we use the image <a href="https://hub.docker.com/r/itsthenetwork/nfs-server-alpine/">itsthenetwork/nfs-server-alpine</a>, check their documentation for more configuration options.</p>
 <p>We create a deployment with a replica number of 1 instead of creating directly a pod, so that in case servers are rebooted or a node dies, Kubernetes will take care of spawning another pod.</p>
@@ -185,31 +219,28 @@ cd nfs</code></pre>
 <li>Select the right IP in <code>service_nfs.yaml</code> for either Magnum or Kubespray (or you can delete the line to be assigned an IP by Kubernetes), this is an arbitrary IP, it just needs to be in the same subnet of other Kubernetes services. You can find it looking at the output of <code>kubectl get services</code>. So you could have 2 NFS servers in the same cluster with 2 different IPs.</li>
 </ul>
 <p>First we create the PersistentVolumeClaim:</p>
-<pre><code>kubectl create -f create_nfs_volume.yaml</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> create_nfs_volume.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>then the service and the pod:</p>
-<pre><code>kubectl create -f service_nfs.yaml
-kubectl create -f nfs_server.yaml</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> service_nfs.yaml</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> nfs_server.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>I separated them so that later on we more easily delete the NFS server, but keep all the data on the (potentially large) NFS volume:</p>
-<pre><code>kubectl delete -f nfs_server.yaml</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> delete <span class="at">-f</span> nfs_server.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="test-the-nfs-server" class="level2">
 <h2 class="anchored" data-anchor-id="test-the-nfs-server">Test the NFS server</h2>
 <p>Edit <code>test_nfs_mount.yaml</code> to set the right IP for the NFS server, then:</p>
-<pre><code>kubectl create -f test_nfs_mount.yaml</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> test_nfs_mount.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>and access the terminal to test:</p>
-<pre><code>export N=default #set namespace
-bash ../terminal_pod.sh test-nfs-mount
-df -h
-
-...
-10.254.204.67:/       9.8G   36M  9.8G   1% /share
-...</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">N</span><span class="op">=</span>default <span class="co">#set namespace</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> ../terminal_pod.sh test-nfs-mount</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>172.24.46.63:/  9.8G     0  9.8G   0% /share</code></pre>
 <p>We have the root user, we can use the terminal to copy or rsync data into the shared volume. We can also create writable folders owned by the user <code>1000</code> which maps to <code>jovyan</code> in JupyterHub:</p>
-<pre><code>sh-4.2# mkdir readonly_folder
-sh-4.2# touch readonly_folder/aaa
-sh-4.2# mkdir writable_folder
-sh-4.2# chown 1000:100 writable_folder
-sh-4.2# ls -l /share
-total 24
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sh-4.2#</span> mkdir readonly_folder</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sh-4.2#</span> touch readonly_folder/aaa</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">sh-4.2#</span> mkdir writable_folder</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">sh-4.2#</span> chown 1000:100 writable_folder</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">sh-4.2#</span> ls <span class="at">-l</span> /share</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>total 24
 drwx------. 2 root root  16384 Jul 10 06:32 lost+found
 drwxr-xr-x. 2 root root   4096 Jul 10 06:43 readonly_folder
 drwxr-xr-x. 2 1000 users  4096 Jul 10 06:43 writable_folder</code></pre>
@@ -218,77 +249,43 @@ drwxr-xr-x. 2 1000 users  4096 Jul 10 06:43 writable_folder</code></pre>
 <h2 class="anchored" data-anchor-id="preserve-the-data-volume-across-redeployments">Preserve the data volume across redeployments</h2>
 <p>The NFS data volume could contain a lot of data that you would want to preserve in case you need to completely tear down the Kubernetes cluster.</p>
 <p>First we find out what is the ID of the <code>PersistentVolume</code> associated with the NFS volume:</p>
-<pre><code>kubectl get pv | grep nfs
-pvc-ee1f02aa-11f8-433f-806f-186f6d622a30   10Gi       RWO            Delete           Bound    default/nfs-share-folder-claim   standard                5m55s</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pv <span class="kw">|</span> <span class="fu">grep</span> nfs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>pvc-ee1f02aa-11f8-433f-806f-186f6d622a30   10Gi       RWO            Delete           Bound    default/nfs-share-folder-claim   standard                5m55s</code></pre>
 <p>Then you can save the <code>PersistentVolume</code> and the <code>PersistentVolumeClaim</code> to YAML:</p>
-<pre><code>kubectl get pvc nfs-share-folder-claim -o yaml &gt; existing_nfs_volume_claim.yaml
-kubectl get pv pvc-ee1f02aa-11f8-433f-806f-186f6d622a30 -o yaml &gt; existing_nfs_volume.yaml</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pvc nfs-share-folder-claim <span class="at">-o</span> yaml <span class="op">&gt;</span> existing_nfs_volume_claim.yaml</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pv pvc-ee1f02aa-11f8-433f-806f-186f6d622a30 <span class="at">-o</span> yaml <span class="op">&gt;</span> existing_nfs_volume.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Next we can delete the servers directly from Openstack, be careful not to delete the <code>PersistentVolume</code> or the <code>PersistentVolumeClaim</code> in Kubernetes or the underlying volume in Openstack will be deleted, also do not delete the namespace associated with those resources.</p>
 <p>Finally redeploy everything, and instead of launching <code>create_nfs_volume.yaml</code>, we create first the <code>PersistentVolume</code> then the <code>PersistentVolumeClaim</code>:</p>
-<pre><code>kubectl create -f existing_nfs_volume.yaml
-kubectl create -f existing_nfs_volume_claim.yaml</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> existing_nfs_volume.yaml</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> existing_nfs_volume_claim.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="mount-the-shared-filesystem-on-jupyterhub" class="level1">
 <h1>Mount the shared filesystem on JupyterHub</h1>
 <p>Set the NFS server IP in <code>jupyterhub_nfs.yaml</code>, then add this line to <code>install_jhub.sh</code> (just before the last line, the file is located in the parent folder):</p>
-<pre><code>--values nfs/jupyterhub_nfs.yaml \</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">--values</span> nfs/jupyterhub_nfs.yaml <span class="dt">\</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then run <code>install_jhub.sh</code> to have the NFS filesystem mounted on all JupyterHub single user containers:</p>
-<pre><code>cd ..
-bash install_jhub.sh</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> install_jhub.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="test-in-jupyter" class="level2">
 <h2 class="anchored" data-anchor-id="test-in-jupyter">Test in Jupyter</h2>
 <p>Now connect to JupyterHub and check in a terminal:</p>
-<pre><code>jovyan@jupyter-zonca2:/share$ pwd
-/share
-jovyan@jupyter-zonca2:/share$ whoami
-jovyan
-jovyan@jupyter-zonca2:/share$ touch readonly_folder/ccc
-touch: cannot touch 'readonly_folder/ccc': Permission denied
-jovyan@jupyter-zonca2:/share$
-jovyan@jupyter-zonca2:/share$ touch writable_folder/ccc
-jovyan@jupyter-zonca2:/share$ ls -l writable_folder/
-total 0
--rw-r--r--. 1 jovyan root 0 Jul 10 06:50 ccc</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jovyan@jupyter-zonca2:/share$</span> pwd</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/share</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="ex">jovyan@jupyter-zonca2:/share$</span> whoami</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="ex">jovyan</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="ex">jovyan@jupyter-zonca2:/share$</span> touch readonly_folder/ccc</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="ex">touch:</span> cannot touch <span class="st">'readonly_folder/ccc'</span>: Permission denied</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="ex">jovyan@jupyter-zonca2:/share$</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="ex">jovyan@jupyter-zonca2:/share$</span> touch writable_folder/ccc</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="ex">jovyan@jupyter-zonca2:/share$</span> ls <span class="at">-l</span> writable_folder/</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 0</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--.</span> 1 jovyan root 0 Jul 10 06:50 ccc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="expose-a-ssh-server-to-copy-data-to-the-shared-volume" class="level1">
 <h1>Expose a SSH server to copy data to the shared volume</h1>
-<p>The main restriction is that the only way to copy data to the read-only folders is through Kubernetes. Next we will deploy a SSH server which mounts the container and whose user can become root to manage permissions and copy data. We will also expose this service externally so that people with the right SSH certificate can login.</p>
-<p>First edit <code>ssh_server.yaml</code>:</p>
-<ul>
-<li>Set the NFS server IP</li>
-<li>Set the string of the <code>PUBLIC_KEY</code> to the SSH key which will be able to access</li>
-<li>Optionally, you can modify username and ports</li>
-<li>See the <a href="https://hub.docker.com/r/linuxserver/openssh-server"><code>linuxserver/openssh-server</code> documentation for other options</a></li>
-</ul>
-<p>Deploy the pod (also here we create a Deployment with a replica number of 1):</p>
-<pre><code>kubectl create -f ssh_server.yaml</code></pre>
-<p>Open the Horizon interface, go to “Security groups”, open the <code>$CLUSTER-k8s-master</code> group, which we use to open ports on the master instance, and add a new rule to open port <code>30022</code> for Ingress TCP traffic.</p>
-<section id="test-the-ssh-server" class="level2">
-<h2 class="anchored" data-anchor-id="test-the-ssh-server">Test the SSH server</h2>
-<p>From a machine external to Jetstream:</p>
-<pre><code>ssh -i path/to/private/key -p 30022 datacopier@js-xxx-xxx.jetstream-cloud.org</code></pre>
-<pre><code>Welcome to OpenSSH Server
-
-ssh-server:~$ whoami
-datacopier
-ssh-server:~$ sudo su
-ssh-server:/config# whoami
-root
-ssh-server:/config# cd /share
-ssh-server:/share# ls
-lost+found  readonly_folder  writable_folder
-ssh-server:/share# touch readonly_folder/moredata
-ssh-server:/share#</code></pre>
-</section>
-</section>
-<section id="troubleshooting" class="level1">
-<h1>Troubleshooting</h1>
-<ul>
-<li>Consider that if you reboot or re-create the NFS server, the user pods need to be restarted, otherwise the NFS volume hangs.</li>
-<li>If you get the error <code>bad option; for several filesystems (e.g. nfs, cifs) you might need a /sbin/mount.&lt;type&gt; helper program.</code>, it means you do not have a NFS client on the host. Make sure you install the right package, for Ubuntu/Debian it is <code>nfs-common</code>. This should be taken care of by Kubespray if using my deployment tutorial.</li>
-</ul>
+<p>See also the <a href="https://www.zonca.dev/posts/2023-02-06-nfs-server-kubernetes-jetstream#expose-a-ssh-server-to-copy-data-to-the-shared-volume">2023 version of this tutorial for more details on the SSH server setup</a>.</p>
 
 
 </section>
