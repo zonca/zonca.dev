@@ -27,8 +27,10 @@ If you are still using Kubespray, see the [older tutorial](https://www.zonca.dev
 
 Clone as usual the repository with all the configuration files:
 
-    git clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream
-    cd nfs
+```bash
+git clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream
+cd nfs
+```
 
 By default the NFS server is configured both for reading and writing, and then using the filesystem permissions we can make some or all folders writable.
 
@@ -45,42 +47,55 @@ Some configuration options you might want to edit:
 
 First we create the PersistentVolumeClaim:
 
-    kubectl create -f create_nfs_volume.yaml
+```bash
+kubectl create -f create_nfs_volume.yaml
+```
 
 then the service and the pod:
 
-    kubectl create -f service_nfs.yaml
-    kubectl create -f nfs_server.yaml
+```bash
+kubectl create -f service_nfs.yaml
+kubectl create -f nfs_server.yaml
+```
 
 I separated them so that later on we more easily delete the NFS server, but keep all the data on the (potentially large) NFS volume:
 
-    kubectl delete -f nfs_server.yaml
+```bash
+kubectl delete -f nfs_server.yaml
+```
 
 ## Test the NFS server
 
 Edit `test_nfs_mount.yaml` to set the right IP for the NFS server, then:
 
-    kubectl create -f test_nfs_mount.yaml
+```bash
+kubectl create -f test_nfs_mount.yaml
+```
 
 and access the terminal to test:
 
-    export N=default #set namespace
-    bash ../terminal_pod.sh test-nfs-mount
-    df -h
+```bash
+export N=default #set namespace
+bash ../terminal_pod.sh test-nfs-mount
+df -h
+```
 
-    ...
-    172.24.46.63:/  9.8G     0  9.8G   0% /share
-    ...
+```
+172.24.46.63:/  9.8G     0  9.8G   0% /share
+```
 
 We have the root user, we can use the terminal to copy or rsync data into the shared volume.
 We can also create writable folders owned by the user `1000` which maps to `jovyan` in JupyterHub:
 
-```
+```bash
 sh-4.2# mkdir readonly_folder
 sh-4.2# touch readonly_folder/aaa
 sh-4.2# mkdir writable_folder
 sh-4.2# chown 1000:100 writable_folder
 sh-4.2# ls -l /share
+```
+
+```
 total 24
 drwx------. 2 root root  16384 Jul 10 06:32 lost+found
 drwxr-xr-x. 2 root root   4096 Jul 10 06:43 readonly_folder
@@ -93,14 +108,17 @@ The NFS data volume could contain a lot of data that you would want to preserve 
 
 First we find out what is the ID of the `PersistentVolume` associated with the NFS volume:
 
-```
+```bash
 kubectl get pv | grep nfs
+```
+
+```
 pvc-ee1f02aa-11f8-433f-806f-186f6d622a30   10Gi       RWO            Delete           Bound    default/nfs-share-folder-claim   standard                5m55s
 ```
 
 Then you can save the `PersistentVolume` and the `PersistentVolumeClaim` to YAML:
 
-```
+```bash
 kubectl get pvc nfs-share-folder-claim -o yaml > existing_nfs_volume_claim.yaml
 kubectl get pv pvc-ee1f02aa-11f8-433f-806f-186f6d622a30 -o yaml > existing_nfs_volume.yaml
 ```
@@ -109,7 +127,7 @@ Next we can delete the servers directly from Openstack, be careful not to delete
 
 Finally redeploy everything, and instead of launching `create_nfs_volume.yaml`, we create first the `PersistentVolume` then the `PersistentVolumeClaim`:
 
-```
+```bash
 kubectl create -f existing_nfs_volume.yaml
 kubectl create -f existing_nfs_volume_claim.yaml
 ```
@@ -118,18 +136,22 @@ kubectl create -f existing_nfs_volume_claim.yaml
 
 Set the NFS server IP in `jupyterhub_nfs.yaml`, then add this line to `install_jhub.sh` (just before the last line, the file is located in the parent folder):
 
-    --values nfs/jupyterhub_nfs.yaml \
+```bash
+--values nfs/jupyterhub_nfs.yaml \
+```
 
 Then run `install_jhub.sh` to have the NFS filesystem mounted on all JupyterHub single user containers:
 
-    cd ..
-    bash install_jhub.sh
+```bash
+cd ..
+bash install_jhub.sh
+```
 
 ## Test in Jupyter
 
 Now connect to JupyterHub and check in a terminal:
 
-```
+```bash
 jovyan@jupyter-zonca2:/share$ pwd
 /share
 jovyan@jupyter-zonca2:/share$ whoami
