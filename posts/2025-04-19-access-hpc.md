@@ -14,6 +14,7 @@ I decided to write a blog post with an overview of the options, consider that I'
 At the San Diego Supercomputer Center, our national scale resource is the [Expanse Supercomputer](https://www.sdsc.edu/systems/expanse/index.html), a powerful system designed for diverse scientific workloads.
 
 **Expanse Specifications:**
+
 *   **Peak Performance:** 5 Pflop/s
 *   **CPU Cores:** 93,184
 *   **GPUs:** 208 NVIDIA V100s
