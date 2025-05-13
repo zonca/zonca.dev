@@ -1,7 +1,7 @@
 ---
 title: "VS Code Copilot Agent Mode: A Productivity Showcase"
 date: 2025-05-13
-categories: [productivity, vscode, copilot, ai]
+categories: [llm, ai]
 ---
 
 Visual Studio Code, together with GitHub Copilot in agent mode, enables a more focused and efficient development workflow. Below are three practical examples of how this integration can help streamline your daily work, each illustrated with real screenshots:
