@@ -34,7 +34,8 @@ The OpenStack client is used to create and manage the cluster, the Magnum client
 This tutorial used OpenStack 6.1.0, python-magnumclient 4.7.0, and python-octaviaclient 3.3.0.
 
 2. **Create an Updated App Credential**:
-   Jetstream recently updated permissions, so even if you have an already working app credential, create another one 'Unrestricted (dangerous)' application credential with all permissions, including the "loadbalancer" permission, in the project where you will be creating the cluster, and source it to expose the environment variables in your local environment where you'll be running the OpenStack commands.
+    Create an updated app credential for the client to access the API through [Horizon](https://js2.jetstream-cloud.org/) under [Identity - Application credentials](https://js2.jetstream-cloud.org/identity/application_credentials/).
+    Jetstream recently updated permissions, so even if you have an already working app credential, create another one 'Unrestricted (dangerous)' application credential with all permissions, including the "loadbalancer" permission, in the project where you will be creating the cluster, download the `openrc` file and source it to expose the environment variables in your local environment where you'll be running the openstack commands.
 
 3. **Install Kubernetes Tooling**:
    Once the cluster is launched, manage it using standard Kubernetes tools. Any recent version should work:
@@ -72,7 +73,15 @@ bash create_cluster.sh
 
 See inside the file for the most commonly used parameters. The script awaits for the cluster to complete deployment successfully, which should take about 10 minutes.
 
+<<<<<<< HEAD
 At this point, decide if you prefer to use autoscaling or not. Autoscaling means that the cluster will automatically add (up to a predefined maximum) or remove worker nodes based on the load on Kubernetes. This is the recommended way to run JupyterHub, as it will automatically scale up and down based on the number of users and their activity. With manual scaling, you run a command to add or remove nodes. Scaling always refers to the worker nodes; the control plane cannot be scaled, so we recommend using 3 control plane nodes for redundancy.
+=======
+In case of errors, you can check the error message with:
+
+    openstack coe cluster show k8s -f json | jq '.status_reason'
+
+The cluster consumes resources when active, it can be switched off with:
+>>>>>>> e93c7bd5 (minor clarification)
 
 The first time this is executed, and then again if not executed for a while, it will take a lot more time to deploy, between 2 and 2.5 hours, probably because the images are not cached in the OpenStack cloud. After that first execution, it should regularly deploy in 10 minutes.
 
