@@ -168,53 +168,46 @@
     "text": "Conclusion\nThis is just a prototype to explore the capabilities and a starting point for thinking about strategies to deal with the ephemeral storage provided by JupyterLite."
   },
   {
-    "objectID": "posts/2025-03-30-healpy-1.18.1.html",
-    "href": "posts/2025-03-30-healpy-1.18.1.html",
-    "title": "healpy 1.18.1 released",
-    "section": "",
-    "text": "Just released healpy 1.18.1, this version includes important bug fixes, please test and open issues at https://github.com/healpy/healpy/issues\nMajor improvements in this release:\n\nFixed overflow error in map2alm_lsq when working with nside 8192 maps\nFixed incompatibility of map2alm_lsq with scipy 1.15\nAll other changes at https://github.com/healpy/healpy/blob/main/CHANGELOG.rst\n\nBinary packages are available on PyPI and conda-forge for Linux and MacOS.\nAs usual, remember to cite our JOSS paper https://joss.theoj.org/papers/10.21105/joss.01298"
-  },
-  {
-    "objectID": "posts/2025-01-29-github-auth-browser-device-flow.html",
-    "href": "posts/2025-01-29-github-auth-browser-device-flow.html",
-    "title": "Authenticate to GitHub in the Browser with the Device Flow",
-    "section": "",
-    "text": "Authenticating to GitHub in the browser using the device flow is essential for applications that cannot directly handle OAuth redirects. This method allows users to authenticate by entering a code on GitHub’s website, making it ideal for devices with limited input capabilities or for applications running in environments where traditional OAuth flows are not feasible.\nGitHub does not allow direct calls to the device flow from the browser for security reasons. The device flow requires a server process to handle the communication with GitHub’s API securely. This server process acts as an intermediary, managing the device code generation, polling for user authentication, and securely storing the access token. By deploying a server process, we ensure that sensitive information is not exposed to the client-side, maintaining the integrity and security of the authentication flow."
-  },
-  {
-    "objectID": "posts/2025-01-29-github-auth-browser-device-flow.html#introduction",
-    "href": "posts/2025-01-29-github-auth-browser-device-flow.html#introduction",
-    "title": "Authenticate to GitHub in the Browser with the Device Flow",
-    "section": "",
-    "text": "Authenticating to GitHub in the browser using the device flow is essential for applications that cannot directly handle OAuth redirects. This method allows users to authenticate by entering a code on GitHub’s website, making it ideal for devices with limited input capabilities or for applications running in environments where traditional OAuth flows are not feasible.\nGitHub does not allow direct calls to the device flow from the browser for security reasons. The device flow requires a server process to handle the communication with GitHub’s API securely. This server process acts as an intermediary, managing the device code generation, polling for user authentication, and securely storing the access token. By deploying a server process, we ensure that sensitive information is not exposed to the client-side, maintaining the integrity and security of the authentication flow."
-  },
-  {
-    "objectID": "posts/2025-01-29-github-auth-browser-device-flow.html#how-it-works",
-    "href": "posts/2025-01-29-github-auth-browser-device-flow.html#how-it-works",
-    "title": "Authenticate to GitHub in the Browser with the Device Flow",
-    "section": "How It Works",
-    "text": "How It Works\nThe device flow works by generating a device code that the user enters on GitHub’s website. The steps are as follows:\n\nThe client requests a device code from GitHub.\nGitHub responds with a device code and a user code.\nThe user navigates to GitHub’s device activation page and enters the user code.\nThe client polls GitHub to check if the user has completed the authentication.\nOnce authenticated, GitHub provides an access token."
-  },
-  {
-    "objectID": "posts/2025-01-29-github-auth-browser-device-flow.html#deploying-on-render.com",
-    "href": "posts/2025-01-29-github-auth-browser-device-flow.html#deploying-on-render.com",
-    "title": "Authenticate to GitHub in the Browser with the Device Flow",
-    "section": "Deploying on Render.com",
-    "text": "Deploying on Render.com\nTo deploy the server code on Render.com, follow these steps:\n\nCreate a Github OAuth App\n\nGo to GitHub Developer Settings\nClick on New OAuth App\nFill in the details:\n\nApplication name: github-auth-proxy-render\nHomepage URL: https://github.com\nAuthorization callback URL: https://localhost\n\nMake sure you enable the Device flow in the OAuth Apps settings.\nGet the Client ID, we do not need a secret for the device flow.\n\n\n\nServer Deployment\n\nFork the repository github_auth_proxy_render.\nEdit the file server.js and replace the CLIENT_ID with the one you got from the GitHub OAuth App.\nCreate a new web service on Render.com.\nConnect your forked repository to the new web service.\nDeploy the service.\nKeep the server logs open for debugging purposes"
-  },
-  {
-    "objectID": "posts/2025-01-29-github-auth-browser-device-flow.html#test-with-the-client",
-    "href": "posts/2025-01-29-github-auth-browser-device-flow.html#test-with-the-client",
-    "title": "Authenticate to GitHub in the Browser with the Device Flow",
-    "section": "Test with the Client",
-    "text": "Test with the Client\n\nEdit the file github_device_flow_auth.html and replace the urls with the ones from your own Render.com service.\nOpen the file with your browser\nClick on the button to start the device flow.\nFollow the instructions on the page.\nIf everything works as expected, you should see all of your used data dumped to the page\n\n\n\n\nGitHub Device Flow Screenshot"
-  },
-  {
     "objectID": "posts/python-ai-camp-san-diego-2025.html",
     "href": "posts/python-ai-camp-san-diego-2025.html",
     "title": "Python and AI Coding Summer Camp in person in San Diego",
     "section": "",
-    "text": "I’m excited to announce that I’ll be teaching a brand new Python and AI Coding Summer Camp in person in San Diego, hosted at the Italian School of San Diego (Kearny Mesa)!\nAs someone deeply inspired by the rapid advances in AI, I want to be part of this exciting shift by teaching the next generation of coders and innovators.\nFor more information and to enroll, visit the Python & AI Camp Enrollment Page.\nAbout the Program: - Designed for Middle and High School students, with no prior programming experience required - Dates: Monday, July 28 to Friday, August 1, 2025. - Flexible schedule: Morning (9am–12pm, Mon/Wed/Thu/Fri) or Afternoon (3pm–6pm, Mon/Tue/Wed/Thu) options. - Hands-on, project-based learning: students will build a text-based game in Python, then enhance it with AI-powered features. - Direct interaction with cutting-edge Large Language Models (LLMs) integrated into the curriculum. - All activities are browser-based—just bring a laptop, no installation needed. - We actively encourage students from underrepresented genders and communities in tech to join us. Our camp is designed to be supportive and inclusive for all.\n\n\n\nPython and AI Coding Summer Camp Flyer"
+    "text": "I’m excited to announce that I’ll be teaching a brand new Python and AI Coding Summer Camp in person in San Diego, hosted at the Italian School of San Diego (Kearny Mesa)!\nAs someone deeply inspired by the rapid advances in AI, I want to be part of this exciting shift by teaching the next generation of coders and innovators.\nFor more information and to enroll, visit the Python & AI Camp Enrollment Page.\nAbout the Program:\n\nDesigned for Middle and High School students, with no prior programming experience required\nDates: Monday, July 28 to Friday, August 1, 2025.\nFlexible schedule: Morning (9am–12pm, Mon/Wed/Thu/Fri) or Afternoon (3pm–6pm, Mon/Tue/Wed/Thu) options.\nHands-on, project-based learning: students will build a text-based game in Python, then enhance it with AI-powered features.\nDirect interaction with cutting-edge Large Language Models (LLMs) integrated into the curriculum.\nAll activities are browser-based—just bring a laptop, no installation needed.\nWe actively encourage students from underrepresented genders and communities in tech to join us. Our camp is designed to be supportive and inclusive for all.\n\n\n\n\nPython and AI Coding Summer Camp Flyer"
+  },
+  {
+    "objectID": "posts/2025-03-03-paper-pysm-models.html",
+    "href": "posts/2025-03-03-paper-pysm-models.html",
+    "title": "New Paper on Arxiv about Models of Galactic Emission in the Microwaves for CMB Experiments",
+    "section": "",
+    "text": "A new paper has been published on Arxiv discussing models of Galactic emission in the microwaves for Cosmic Microwave Background (CMB) experiments:\nNew Paper on Arxiv\nThe models are available publicly through the PySM3 (Python Sky Model) software package:\nPySM3 Documentation\nMoreover, the CMB-S4 data portal has simulations of the Galactic emission using PySM3 for several past, current and future CMB experiments, see:\nCMB-S4 Data Portal\nFor more information, you can also check out my older post about the PEARC paper:\nPEARC Paper Post"
+  },
+  {
+    "objectID": "posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html",
+    "href": "posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html",
+    "title": "Ubuntu 22.04 Minimal on Jetstream with GPU Support",
+    "section": "",
+    "text": "Just notes on how to create a Ubuntu 22.04 image with GPU support\nFirst create an image with Ubuntu Minimal from Horizon\nAssociate a floating IP and save it in an environment variable we will use later:\nThe default kernel of Ubuntu minimal does not work with the Nvidia GPU proprietary driver, it gives the same error detailed in this issue\nTherefore we need to install another kernel with the headers, this occupies more than 2 GB because it grabs many other libraries:"
+  },
+  {
+    "objectID": "posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html#install-the-gpu-driver",
+    "href": "posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html#install-the-gpu-driver",
+    "title": "Ubuntu 22.04 Minimal on Jetstream with GPU Support",
+    "section": "Install the GPU driver",
+    "text": "Install the GPU driver\nWe can use the Ansible recipe created by the Jetstream team. I created a branch which only installs the GPU driver.\ngit clone --single-branch --branch ubuntu_minimal_gpu https://gitlab.com/zonca/jetstream-image-build-pipeline.git\nDue to licensing issues, the NVIDIA GPU driver for Jetstream can only be accessed by members of the Jetstream team. The files need to be copied to the nvidia_driver subfolder\nExecute run.sh"
+  },
+  {
+    "objectID": "posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html#check",
+    "href": "posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html#check",
+    "title": "Ubuntu 22.04 Minimal on Jetstream with GPU Support",
+    "section": "Check",
+    "text": "Check\nNo need to reboot again, SSH into the instance, check:\nnvidia-smi\nTue May 14 01:15:22 2024       \n+---------------------------------------------------------------------------------------+\n| NVIDIA-SMI 535.129.03             Driver Version: 535.129.03   CUDA Version: 12.2     |\n|-----------------------------------------+----------------------+----------------------+\n| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |\n|                                         |                      |               MIG M. |\n|=========================================+======================+======================|\n|   0  GRID A100X-8C                  On  | 00000000:00:06.0 Off |                    0 |\n| N/A   N/A    P0              N/A /  N/A |      1MiB /  8192MiB |      0%      Default |\n|                                         |                      |             Disabled |\n+-----------------------------------------+----------------------+----------------------+\n                                                                                         \n+---------------------------------------------------------------------------------------+\n| Processes:                                                                            |\n|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |\n|        ID   ID                                                             Usage      |\n|=======================================================================================|\n|  No running processes found                                                           |\n+---------------------------------------------------------------------------------------+"
+  },
+  {
+    "objectID": "posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html#disk-usage",
+    "href": "posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html#disk-usage",
+    "title": "Ubuntu 22.04 Minimal on Jetstream with GPU Support",
+    "section": "Disk usage",
+    "text": "Disk usage\nJust installing the kernel brings more than 2 GB of packages\ndf -h\nFilesystem      Size  Used Avail Use% Mounted on\n/dev/root        58G  4.7G   54G   9% /\ntmpfs           7.4G     0  7.4G   0% /dev/shm\ntmpfs           3.0G  704K  3.0G   1% /run\ntmpfs           5.0M     0  5.0M   0% /run/lock\n/dev/sda15      105M  6.1M   99M   6% /boot/efi\ntmpfs           1.5G  4.0K  1.5G   1% /run/user/1000"
   },
   {
     "objectID": "posts/2024-07-31-pearc-paper-cheapandfair-data-portal.html",
@@ -5873,39 +5866,46 @@
     "text": "Conclusion\nFor researchers and developers using Jetstream2, this monitoring tool provides a simple yet effective way to keep track of SU usage, helping to avoid unexpected allocation exhaustion and enabling better resource planning."
   },
   {
-    "objectID": "posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html",
-    "href": "posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html",
-    "title": "Ubuntu 22.04 Minimal on Jetstream with GPU Support",
+    "objectID": "posts/2025-01-29-github-auth-browser-device-flow.html",
+    "href": "posts/2025-01-29-github-auth-browser-device-flow.html",
+    "title": "Authenticate to GitHub in the Browser with the Device Flow",
     "section": "",
-    "text": "Just notes on how to create a Ubuntu 22.04 image with GPU support\nFirst create an image with Ubuntu Minimal from Horizon\nAssociate a floating IP and save it in an environment variable we will use later:\nThe default kernel of Ubuntu minimal does not work with the Nvidia GPU proprietary driver, it gives the same error detailed in this issue\nTherefore we need to install another kernel with the headers, this occupies more than 2 GB because it grabs many other libraries:"
+    "text": "Authenticating to GitHub in the browser using the device flow is essential for applications that cannot directly handle OAuth redirects. This method allows users to authenticate by entering a code on GitHub’s website, making it ideal for devices with limited input capabilities or for applications running in environments where traditional OAuth flows are not feasible.\nGitHub does not allow direct calls to the device flow from the browser for security reasons. The device flow requires a server process to handle the communication with GitHub’s API securely. This server process acts as an intermediary, managing the device code generation, polling for user authentication, and securely storing the access token. By deploying a server process, we ensure that sensitive information is not exposed to the client-side, maintaining the integrity and security of the authentication flow."
   },
   {
-    "objectID": "posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html#install-the-gpu-driver",
-    "href": "posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html#install-the-gpu-driver",
-    "title": "Ubuntu 22.04 Minimal on Jetstream with GPU Support",
-    "section": "Install the GPU driver",
-    "text": "Install the GPU driver\nWe can use the Ansible recipe created by the Jetstream team. I created a branch which only installs the GPU driver.\ngit clone --single-branch --branch ubuntu_minimal_gpu https://gitlab.com/zonca/jetstream-image-build-pipeline.git\nDue to licensing issues, the NVIDIA GPU driver for Jetstream can only be accessed by members of the Jetstream team. The files need to be copied to the nvidia_driver subfolder\nExecute run.sh"
-  },
-  {
-    "objectID": "posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html#check",
-    "href": "posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html#check",
-    "title": "Ubuntu 22.04 Minimal on Jetstream with GPU Support",
-    "section": "Check",
-    "text": "Check\nNo need to reboot again, SSH into the instance, check:\nnvidia-smi\nTue May 14 01:15:22 2024       \n+---------------------------------------------------------------------------------------+\n| NVIDIA-SMI 535.129.03             Driver Version: 535.129.03   CUDA Version: 12.2     |\n|-----------------------------------------+----------------------+----------------------+\n| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |\n|                                         |                      |               MIG M. |\n|=========================================+======================+======================|\n|   0  GRID A100X-8C                  On  | 00000000:00:06.0 Off |                    0 |\n| N/A   N/A    P0              N/A /  N/A |      1MiB /  8192MiB |      0%      Default |\n|                                         |                      |             Disabled |\n+-----------------------------------------+----------------------+----------------------+\n                                                                                         \n+---------------------------------------------------------------------------------------+\n| Processes:                                                                            |\n|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |\n|        ID   ID                                                             Usage      |\n|=======================================================================================|\n|  No running processes found                                                           |\n+---------------------------------------------------------------------------------------+"
-  },
-  {
-    "objectID": "posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html#disk-usage",
-    "href": "posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html#disk-usage",
-    "title": "Ubuntu 22.04 Minimal on Jetstream with GPU Support",
-    "section": "Disk usage",
-    "text": "Disk usage\nJust installing the kernel brings more than 2 GB of packages\ndf -h\nFilesystem      Size  Used Avail Use% Mounted on\n/dev/root        58G  4.7G   54G   9% /\ntmpfs           7.4G     0  7.4G   0% /dev/shm\ntmpfs           3.0G  704K  3.0G   1% /run\ntmpfs           5.0M     0  5.0M   0% /run/lock\n/dev/sda15      105M  6.1M   99M   6% /boot/efi\ntmpfs           1.5G  4.0K  1.5G   1% /run/user/1000"
-  },
-  {
-    "objectID": "posts/2025-03-03-paper-pysm-models.html",
-    "href": "posts/2025-03-03-paper-pysm-models.html",
-    "title": "New Paper on Arxiv about Models of Galactic Emission in the Microwaves for CMB Experiments",
+    "objectID": "posts/2025-01-29-github-auth-browser-device-flow.html#introduction",
+    "href": "posts/2025-01-29-github-auth-browser-device-flow.html#introduction",
+    "title": "Authenticate to GitHub in the Browser with the Device Flow",
     "section": "",
-    "text": "A new paper has been published on Arxiv discussing models of Galactic emission in the microwaves for Cosmic Microwave Background (CMB) experiments:\nNew Paper on Arxiv\nThe models are available publicly through the PySM3 (Python Sky Model) software package:\nPySM3 Documentation\nMoreover, the CMB-S4 data portal has simulations of the Galactic emission using PySM3 for several past, current and future CMB experiments, see:\nCMB-S4 Data Portal\nFor more information, you can also check out my older post about the PEARC paper:\nPEARC Paper Post"
+    "text": "Authenticating to GitHub in the browser using the device flow is essential for applications that cannot directly handle OAuth redirects. This method allows users to authenticate by entering a code on GitHub’s website, making it ideal for devices with limited input capabilities or for applications running in environments where traditional OAuth flows are not feasible.\nGitHub does not allow direct calls to the device flow from the browser for security reasons. The device flow requires a server process to handle the communication with GitHub’s API securely. This server process acts as an intermediary, managing the device code generation, polling for user authentication, and securely storing the access token. By deploying a server process, we ensure that sensitive information is not exposed to the client-side, maintaining the integrity and security of the authentication flow."
+  },
+  {
+    "objectID": "posts/2025-01-29-github-auth-browser-device-flow.html#how-it-works",
+    "href": "posts/2025-01-29-github-auth-browser-device-flow.html#how-it-works",
+    "title": "Authenticate to GitHub in the Browser with the Device Flow",
+    "section": "How It Works",
+    "text": "How It Works\nThe device flow works by generating a device code that the user enters on GitHub’s website. The steps are as follows:\n\nThe client requests a device code from GitHub.\nGitHub responds with a device code and a user code.\nThe user navigates to GitHub’s device activation page and enters the user code.\nThe client polls GitHub to check if the user has completed the authentication.\nOnce authenticated, GitHub provides an access token."
+  },
+  {
+    "objectID": "posts/2025-01-29-github-auth-browser-device-flow.html#deploying-on-render.com",
+    "href": "posts/2025-01-29-github-auth-browser-device-flow.html#deploying-on-render.com",
+    "title": "Authenticate to GitHub in the Browser with the Device Flow",
+    "section": "Deploying on Render.com",
+    "text": "Deploying on Render.com\nTo deploy the server code on Render.com, follow these steps:\n\nCreate a Github OAuth App\n\nGo to GitHub Developer Settings\nClick on New OAuth App\nFill in the details:\n\nApplication name: github-auth-proxy-render\nHomepage URL: https://github.com\nAuthorization callback URL: https://localhost\n\nMake sure you enable the Device flow in the OAuth Apps settings.\nGet the Client ID, we do not need a secret for the device flow.\n\n\n\nServer Deployment\n\nFork the repository github_auth_proxy_render.\nEdit the file server.js and replace the CLIENT_ID with the one you got from the GitHub OAuth App.\nCreate a new web service on Render.com.\nConnect your forked repository to the new web service.\nDeploy the service.\nKeep the server logs open for debugging purposes"
+  },
+  {
+    "objectID": "posts/2025-01-29-github-auth-browser-device-flow.html#test-with-the-client",
+    "href": "posts/2025-01-29-github-auth-browser-device-flow.html#test-with-the-client",
+    "title": "Authenticate to GitHub in the Browser with the Device Flow",
+    "section": "Test with the Client",
+    "text": "Test with the Client\n\nEdit the file github_device_flow_auth.html and replace the urls with the ones from your own Render.com service.\nOpen the file with your browser\nClick on the button to start the device flow.\nFollow the instructions on the page.\nIf everything works as expected, you should see all of your used data dumped to the page\n\n\n\n\nGitHub Device Flow Screenshot"
+  },
+  {
+    "objectID": "posts/2025-03-30-healpy-1.18.1.html",
+    "href": "posts/2025-03-30-healpy-1.18.1.html",
+    "title": "healpy 1.18.1 released",
+    "section": "",
+    "text": "Just released healpy 1.18.1, this version includes important bug fixes, please test and open issues at https://github.com/healpy/healpy/issues\nMajor improvements in this release:\n\nFixed overflow error in map2alm_lsq when working with nside 8192 maps\nFixed incompatibility of map2alm_lsq with scipy 1.15\nAll other changes at https://github.com/healpy/healpy/blob/main/CHANGELOG.rst\n\nBinary packages are available on PyPI and conda-forge for Linux and MacOS.\nAs usual, remember to cite our JOSS paper https://joss.theoj.org/papers/10.21105/joss.01298"
   },
   {
     "objectID": "posts/2024-05-02-python-nersc-conda.html",
