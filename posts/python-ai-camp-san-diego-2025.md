@@ -13,6 +13,7 @@ As someone deeply inspired by the rapid advances in AI, I want to be part of thi
 For more information and to enroll, visit the [Python & AI Camp Enrollment Page](https://pythonai2.sandiegodata.science/).
 
 **About the Program:**
+
 - Designed for Middle and High School students, with no prior programming experience required
 - Dates: Monday, July 28 to Friday, August 1, 2025.
 - Flexible schedule: Morning (9am–12pm, Mon/Wed/Thu/Fri) or Afternoon (3pm–6pm, Mon/Tue/Wed/Thu) options.
