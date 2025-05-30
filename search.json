@@ -5877,7 +5877,7 @@
     "href": "posts/2025-05-23-github-copilot-scientific-computing.html#accessing-github-copilot-with-an-academic-discount",
     "title": "How to use GitHub Copilot for Scientific Computing",
     "section": "1. Accessing GitHub Copilot with an Academic Discount",
-    "text": "1. Accessing GitHub Copilot with an Academic Discount\nResearchers and educators at accredited institutions can obtain free access to GitHub Copilot by verifying their academic status:\n\nVisit the GitHub Education Benefits page.\nSign in with your GitHub account.\nApply using your institutional email address (e.g., .edu).\nUpon approval, Copilot and other academic resources will be available at no cost."
+    "text": "1. Accessing GitHub Copilot with an Academic Discount\nResearchers and educators at accredited institutions can obtain free access to GitHub Copilot by verifying their academic status:\n\nVisit the GitHub Education Benefits page.\nSign in with your GitHub account.\nApply using your institutional email address (e.g., .edu).\nUpon approval, Copilot and other academic resources will be available at no cost.\n\nFor anyone struggling to activate Copilot Pro: You have to activate it through the Education tab. If you go to Settings &gt; Billing and licensing &gt; Education benefits (this is also where you submit your application), you will notice that once your application is approved, there is a drop-down menu under “Coupon applied”. Once you open this drop-down menu, there is a link to redeem your Copilot Pro Coupon. This takes you to a configuration page, where you give Copilot certain permissions, after which it should be free to use."
   },
   {
     "objectID": "posts/2025-05-23-github-copilot-scientific-computing.html#installing-visual-studio-code-vs-code",
