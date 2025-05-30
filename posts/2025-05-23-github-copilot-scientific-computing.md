@@ -19,6 +19,9 @@ Researchers and educators at accredited institutions can obtain free access to G
 - Apply using your institutional email address (e.g., `.edu`).
 - Upon approval, Copilot and other academic resources will be available at no cost.
 
+**For anyone struggling to activate Copilot Pro:**
+You have to activate it through the Education tab. If you go to **Settings > Billing and licensing > Education benefits** (this is also where you submit your application), you will notice that once your application is approved, there is a drop-down menu under "Coupon applied". Once you open this drop-down menu, there is a link to redeem your Copilot Pro Coupon. This takes you to a configuration page, where you give Copilot certain permissions, after which it should be free to use.
+
 ## 2. Installing Visual Studio Code (VS Code)
 
 VS Code is the recommended environment for integrating GitHub Copilot into scientific workflows:
