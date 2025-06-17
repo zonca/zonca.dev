@@ -4,7 +4,7 @@ categories:
 - sdsc
 date: '2025-06-04'
 layout: post
-title: Voyager enters ACCESS allocations Phase: What Researchers Need to Know
+title: Voyager enters ACCESS allocations Phase
 ---
 
 # Voyager Supercomputer Enters ACCESS Allocations Phase
