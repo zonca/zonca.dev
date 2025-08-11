@@ -193,7 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p><strong>UPDATED 2025-08-11</strong>: Recommended package versions updated.</p>
-<p><strong>UPDATED 2025-04-14</strong>: Added echo test<br>
+<p><strong>UPDATED 2025-08-11</strong>: Added note about overriding DNS recordset IP. <strong>UPDATED 2025-04-14</strong>: Added echo test<br>
 <strong>UPDATED 2025-04-12</strong>: Set a fixed IP address for the NGINX Ingress controller.</p>
 <p>This guide demonstrates how to deploy Kubernetes on Jetstream with Magnum and then install JupyterHub on top using <a href="https://zero-to-jupyterhub.readthedocs.io/">zero-to-jupyterhub</a>. Jetstream recently enabled the Cluster API on its OpenStack deployment as the backend for Magnum, making it faster and more straightforward to launch Kubernetes clusters.</p>
 <section id="advantages-of-magnum-based-deployments" class="level2">
@@ -343,17 +343,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>First, get the public IP of the NGINX ingress controller:</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">IP</span><span class="op">=</span><span class="va">$(</span><span class="ex">kubectl</span> get svc <span class="at">-n</span> ingress-nginx ingress-nginx-controller <span class="at">-o</span> jsonpath=<span class="st">'{.status.loadBalancer.ingress[0].ip}'</span><span class="va">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If you have a custom subdomain, you can configure an A record that points to the <code>EXTERNAL-IP</code> of the service. Otherwise, use OpenStack to create a record:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SUBDOMAIN</span><span class="op">=</span><span class="st">"k8s"</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> recordset create  <span class="va">$PROJ</span>.projects.jetstream-cloud.org. <span class="va">$SUBDOMAIN</span> <span class="at">--type</span> A <span class="at">--record</span> <span class="va">$IP</span> <span class="at">--ttl</span> 3600</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you get an error “Duplicate recordset”, you can override the IP with:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> recordset set <span class="va">$PROJ</span>.projects.jetstream-cloud.org. <span class="va">$SUBDOMAIN</span>.<span class="va">$PROJ</span>.projects.jetstream-cloud.org. <span class="at">--record</span> <span class="va">$IP</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SUBDOMAIN</span><span class="op">=</span><span class="st">"k8s"</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> recordset create  <span class="va">$PROJ</span>.projects.jetstream-cloud.org. <span class="va">$SUBDOMAIN</span> <span class="at">--type</span> A <span class="at">--record</span> <span class="va">$IP</span> <span class="at">--ttl</span> 3600</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Access JupyterHub at <a href="https://k8s.$PROJ.projects.jetstream-cloud.org" class="uri">https://k8s.$PROJ.projects.jetstream-cloud.org</a>.</p>
 </section>
 <section id="test-the-nginx-ingress-controller" class="level2">
 <h2 class="anchored" data-anchor-id="test-the-nginx-ingress-controller">Test the NGINX Ingress Controller</h2>
 <p>We have a deployment of a simple toy application to test that Kubernetes, the NGINX ingress, and the domain are working correctly.</p>
 <p>First, associate a subdomain to the IP address of the NGINX ingress controller:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SUBDOMAIN</span><span class="op">=</span><span class="st">"testpage"</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> recordset create <span class="va">$PROJ</span>.projects.jetstream-cloud.org. <span class="va">$SUBDOMAIN</span> <span class="at">--type</span> A <span class="at">--record</span> <span class="va">$IP</span> <span class="at">--ttl</span> 3600</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> echo-test.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SUBDOMAIN</span><span class="op">=</span><span class="st">"testpage"</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> recordset create <span class="va">$PROJ</span>.projects.jetstream-cloud.org. <span class="va">$SUBDOMAIN</span> <span class="at">--type</span> A <span class="at">--record</span> <span class="va">$IP</span> <span class="at">--ttl</span> 3600</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> echo-test.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now you should be able to connect to:</p>
 <p><a href="http://testpage.$PROJ.projects.jetstream-cloud.org" class="uri">http://testpage.$PROJ.projects.jetstream-cloud.org</a></p>
 <p>If everything is working properly, you should see “Testing NGINX Ingress on Jetstream!” in the browser.</p>
@@ -361,17 +363,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="install-jupyterhub" class="level2">
 <h2 class="anchored" data-anchor-id="install-jupyterhub">Install JupyterHub</h2>
 <p>Finally, we can go back to the root of the repository and install JupyterHub. First, create the secrets file:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> create_secrets.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> create_secrets.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The default <code>secrets.yaml</code> file assumes you are deploying on a <code>projects.jetstream-cloud.org</code> subdomain. If that is not the case, edit the file with your own domain.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> configure_helm_jupyterhub.sh</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> install_jhub.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> configure_helm_jupyterhub.sh</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> install_jhub.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="setup-https" class="level2">
 <h2 class="anchored" data-anchor-id="setup-https">Setup HTTPS</h2>
 <p>Finally, to get a valid certificate, deploy <code>cert-manager</code> with:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> apply <span class="at">-f</span> https://github.com/cert-manager/cert-manager/releases/download/v1.16.2/cert-manager.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> apply <span class="at">-f</span> https://github.com/cert-manager/cert-manager/releases/download/v1.16.2/cert-manager.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>and a Cluster Issuer:</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> ../setup_https/https_cluster_issuer.yml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create <span class="at">-f</span> ../setup_https/https_cluster_issuer.yml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now your deployment should have a valid HTTPS certificate.</p>
 </section>
 <section id="issues-and-feedback" class="level2">
