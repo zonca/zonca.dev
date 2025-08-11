@@ -9,6 +9,8 @@ slug: kubernetes-jupyterhub-jetstream-magnum-2024
 title: Deploy Kubernetes and JupyterHub on Jetstream with Magnum and Cluster API
 ---
 
+**UPDATED 2025-08-11**: Recommended package versions updated.
+
 **UPDATED 2025-04-14**: Added echo test  
 **UPDATED 2025-04-12**: Set a fixed IP address for the NGINX Ingress controller.
 
@@ -24,20 +26,20 @@ Magnum-based clusters offer several benefits over [Kubespray](https://www.zonca.
 
 ## Prerequisites
 
-1. **Install OpenStack and Magnum Clients**:
+1. **Install OpenStack and Magnum Clients**: 
    ```bash
    pip install python-openstackclient python-magnumclient python-octaviaclient
    ```
 
 The OpenStack client is used to create and manage the cluster, the Magnum client is used to create the cluster template, and the Octavia client is used to manage the load balancer.
 
-This tutorial used OpenStack 6.1.0, python-magnumclient 4.7.0, and python-octaviaclient 3.3.0.
+This tutorial used python-openstackclient 8.1.0, python-magnumclient 4.8.1, python-octaviaclient 3.11.1, and python-designateclient 6.3.0.
 
-2. **Create an Updated App Credential**:
+2. **Create an Updated App Credential**: 
     Create an updated app credential for the client to access the API through [Horizon](https://js2.jetstream-cloud.org/) under [Identity - Application credentials](https://js2.jetstream-cloud.org/identity/application_credentials/).
     Jetstream recently updated permissions, so even if you have an already working app credential, create another one 'Unrestricted (dangerous)' application credential with all permissions, including the "loadbalancer" permission, in the project where you will be creating the cluster, download the `openrc` file and source it to expose the environment variables in your local environment where you'll be running the openstack commands.
 
-3. **Install Kubernetes Tooling**:
+3. **Install Kubernetes Tooling**: 
    Once the cluster is launched, manage it using standard Kubernetes tools. Any recent version should work:
    - `kubectl`: see <https://kubernetes.io/docs/tasks/tools/>, this tutorial used 1.26.
    - `helm`: see <https://helm.sh/docs/intro/install/>, this tutorial used 3.8.1.
