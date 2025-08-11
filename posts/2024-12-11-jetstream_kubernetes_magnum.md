@@ -11,6 +11,7 @@ title: Deploy Kubernetes and JupyterHub on Jetstream with Magnum and Cluster API
 
 **UPDATED 2025-08-11**: Recommended package versions updated.
 
+**UPDATED 2025-08-11**: Added note about overriding DNS recordset IP.
 **UPDATED 2025-04-14**: Added echo test  
 **UPDATED 2025-04-12**: Set a fixed IP address for the NGINX Ingress controller.
 
@@ -277,6 +278,12 @@ export IP=$(kubectl get svc -n ingress-nginx ingress-nginx-controller -o jsonpat
 ```
 
 If you have a custom subdomain, you can configure an A record that points to the `EXTERNAL-IP` of the service. Otherwise, use OpenStack to create a record:
+
+If you get an error "Duplicate recordset", you can override the IP with:
+
+```bash
+openstack recordset set $PROJ.projects.jetstream-cloud.org. $SUBDOMAIN.$PROJ.projects.jetstream-cloud.org. --record $IP
+```
 
 ```bash
 export SUBDOMAIN="k8s"
