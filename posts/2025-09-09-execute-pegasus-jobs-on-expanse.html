@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2023-02-21">
+<meta name="dcterms.date" content="2025-09-09">
 
-<title>Showyourwork! Globus demo – Andrea Zonca</title>
+<title>Execute Pegasus Jobs on Expanse – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -123,9 +157,11 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Showyourwork! Globus demo</h1>
+      <h1 class="title">Execute Pegasus Jobs on Expanse</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">python</div>
+                <div class="quarto-category">Expanse</div>
+                <div class="quarto-category">HPC</div>
+                <div class="quarto-category">ACCESS</div>
               </div>
                   </div>
   </div>
@@ -137,7 +173,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">February 21, 2023</p>
+        <p class="date">September 9, 2025</p>
       </div>
     </div>
     
@@ -156,11 +192,91 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p><a href="https://github.com/showyourwork/showyourwork">Showyourwork!</a> is a great project to make scientific articles reproducible.</p>
-<p>I participated to its first Hack Day, I focused on building a simple recipe in SnakeMake (the workflow engine behind Showyourwork!) to interface with data stored on Globus.</p>
-<p><a href="https://github.com/zonca/showyourwork_globus_demo/tree/main/snakemake_globus_demo">See the repository on Github</a></p>
+<section id="what-is-pegasus" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-pegasus">What is Pegasus?</h2>
+<p><a href="https://pegasus.isi.edu/">Pegasus</a> is a workflow management system that helps scientists and engineers execute complex computational workflows. It maps a user’s abstract workflow onto available distributed resources, manages data, and handles execution failures, making it easier to run scientific applications on high-throughput computing (HTC) systems like HTCondor.</p>
+</section>
+<section id="accessing-pegasus-on-access" class="level2">
+<h2 class="anchored" data-anchor-id="accessing-pegasus-on-access">Accessing Pegasus on ACCESS</h2>
+<p>You can access a hosted version of Pegasus through ACCESS. You will need an existing ACCESS account.</p>
+<ol type="1">
+<li>Go to <a href="https://support.access-ci.org/tools/pegasus">https://support.access-ci.org/tools/pegasus</a>.</li>
+<li>Click on “Local shell access” to get a terminal.</li>
+</ol>
+</section>
+<section id="setting-up-htcondor-annex-on-expanse" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up-htcondor-annex-on-expanse">Setting up HTCondor Annex on Expanse</h2>
+<p>We will follow the documentation for HTCondor Annex, specifically the steps outlined in <a href="https://access-ci.atlassian.net/wiki/spaces/ACCESSdocumentation/pages/564887666/HTCondor+Annex">https://access-ci.atlassian.net/wiki/spaces/ACCESSdocumentation/pages/564887666/HTCondor+Annex</a>.</p>
+<section id="generate-ssh-key" class="level3">
+<h3 class="anchored" data-anchor-id="generate-ssh-key">1. Generate SSH Key</h3>
+<p>First, generate an SSH key specifically for the annex:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-f</span> ~/.ssh/annex</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="configure-ssh" class="level3">
+<h3 class="anchored" data-anchor-id="configure-ssh">2. Configure SSH</h3>
+<p>Add the following configuration to your <code>~/.ssh/config</code> file. This tells SSH to use the newly generated key for Expanse.</p>
+<pre><code>Host expanse.sdsc.edu *.expanse.sdsc.edu
+   User MYUSERNAME # Replace MYUSERNAME with your Expanse username
+   IdentityFile ~/.ssh/annex</code></pre>
+<p><strong>Permissions:</strong> Ensure your <code>~/.ssh/config</code> file has the correct permissions (read-only for your user) to prevent errors:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 600 ~/.ssh/config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="copy-ssh-key-to-expanse" class="level3">
+<h3 class="anchored" data-anchor-id="copy-ssh-key-to-expanse">3. Copy SSH Key to Expanse</h3>
+<p>Copy your public SSH key to Expanse. You will be prompted for your password and MFA code.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ssh-copy-id</span> <span class="at">-i</span> ~/.ssh/annex.pub MYUSERNAME@expanse.sdsc.edu</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="create-a-sample-htcondor-job" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-sample-htcondor-job">4. Create a Sample HTCondor Job</h3>
+<p>Before creating an annex, HTCondor requires a job to execute. Create a file named <code>many_hostname.sub</code> with the following content:</p>
+<pre class="condor"><code>executable      = /bin/hostname
+output          = out.$(Cluster).$(Process)
+error           = err.$(Cluster).$(Process)
+log             = log.$(Cluster)
+
+# 1 core per task so the partitionable slot can split into many tasks
+request_cpus    = 1
+request_memory  = 512MB
+request_disk    = 100MB
+
+# Keep these jobs on the annex
++MayUseAWS      = False
+requirements    = (AnnexName == "zonca") # You can change "zonca" to your desired annex name
+
+queue 128</code></pre>
+</section>
+<section id="submit-the-sample-job" class="level3">
+<h3 class="anchored" data-anchor-id="submit-the-sample-job">5. Submit the Sample Job</h3>
+<p>Submit the job using <code>condor_submit</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">condor_submit</span> many_hostname.sub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="create-the-htcondor-annex" class="level3">
+<h3 class="anchored" data-anchor-id="create-the-htcondor-annex">6. Create the HTCondor Annex</h3>
+<p>Now you can create the HTCondor annex. Remember to replace <code>MYUSERNAME</code> with your Expanse username and set your <code>PROJECT_ID</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PROJECT_ID</span><span class="op">=</span>YOUR_ALLOCATION_ID <span class="co"># Set the ID of your allocation on Expanse</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">htcondor</span> annex create <span class="at">--nodes</span> 1 <span class="at">--lifetime</span> 3600 <span class="at">--project</span> <span class="va">$PROJECT_ID</span> <span class="va">$USER</span> compute@expanse</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="extending-or-adding-resources-to-the-htcondor-annex" class="level3">
+<h3 class="anchored" data-anchor-id="extending-or-adding-resources-to-the-htcondor-annex">Extending or Adding Resources to the HTCondor Annex</h3>
+<p>To extend the lifetime or add more nodes to an existing HTCondor annex, use the <code>htcondor annex add</code> command:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">htcondor</span> annex add <span class="at">--project</span> <span class="va">$PROJECT_ID</span> <span class="at">--nodes</span> 1 <span class="at">--lifetime</span> 3600 <span class="va">$USER</span> compute@expanse</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="monitoring-and-output" class="level3">
+<h3 class="anchored" data-anchor-id="monitoring-and-output">Monitoring and Output</h3>
+<p>To check the status of your HTCondor annex, use:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">htcondor</span> annex status <span class="va">$USER</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>During execution, you can also log in to Expanse and monitor the job using <code>squeue</code>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">-u</span> <span class="va">$USER</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once the job is completed, it will create many <code>out.*</code> files in your submission directory. Each of these files will contain the hostname of the machine where that specific job ran. Since we requested only 1 node for the annex in this example, all <code>out.*</code> files will likely contain the same hostname.</p>
+</section>
+</section>
+<section id="running-jobs-with-pegasus-unsuccessful-attempt" class="level2">
+<h2 class="anchored" data-anchor-id="running-jobs-with-pegasus-unsuccessful-attempt">Running Jobs with Pegasus (Unsuccessful Attempt)</h2>
+<p>I attempted to configure Pegasus to run jobs through the HTCondor annex, but I was unable to get it to work properly. I found the process of configuring Pegasus surprisingly difficult. Here’s a gist of what I managed to achieve, though it did not result in a successful Pegasus workflow execution through the annex:</p>
+<p><a href="https://gist.github.com/zonca/94b99a5590c43eba2f47d3514b166c88">https://gist.github.com/zonca/94b99a5590c43eba2f47d3514b166c88</a></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <div>
