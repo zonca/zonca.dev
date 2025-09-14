@@ -119,6 +119,7 @@ Once the job is completed, it will create many `out.*` files in your submission 
 ## Running Jobs with Pegasus
 
 Once the HTCondor Annex is running, you can launch Pegasus workflows.
+Special thanks to Karan Vahi for creating the example Expanse workflow.
 
 1.  **Clone the Pegasus example repository:**
     In the Pegasus access machine terminal, clone the example workflow repository:
