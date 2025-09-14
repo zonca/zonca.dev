@@ -194,6 +194,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="what-is-pegasus" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-pegasus">What is Pegasus?</h2>
 <p><a href="https://pegasus.isi.edu/">Pegasus</a> is a workflow management system that helps scientists and engineers execute complex computational workflows. It maps a user’s abstract workflow onto available distributed resources, manages data, and handles execution failures, making it easier to run scientific applications on high-throughput computing (HTC) systems like HTCondor.</p>
+<p>Pegasus supports different data staging mechanisms, primarily <code>sharedfs</code> and <code>condorio</code>. The <code>sharedfs</code> mode is used when the head node and all worker nodes share a common file system, allowing jobs to directly access data. However, there is currently a bug that prevents <code>sharedfs</code> from working as expected. In contrast, the <code>condorio</code> mode is designed for environments where worker nodes do not share a file system, relying on HTCondor’s built-in file transfer capabilities for all data I/O. Since Pegasus 5.0, <code>condorio</code> is the default. Our current setup on Expanse, utilizing HTCondor Annex, operates in <code>condorio</code> mode, leveraging Condor’s efficient data transfer for distributed execution.</p>
 </section>
 <section id="accessing-pegasus-on-access" class="level2">
 <h2 class="anchored" data-anchor-id="accessing-pegasus-on-access">Accessing Pegasus on ACCESS</h2>
