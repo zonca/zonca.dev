@@ -2,9 +2,8 @@
 title: "Execute Pegasus Jobs on Expanse"
 date: 2025-09-09
 categories:
-  - Expanse
+  - SDSC
   - HPC
-  - ACCESS
 ---
 
 ## What is Pegasus?
@@ -117,8 +116,20 @@ squeue -u $USER
 
 Once the job is completed, it will create many `out.*` files in your submission directory. Each of these files will contain the hostname of the machine where that specific job ran. Since we requested only 1 node for the annex in this example, all `out.*` files will likely contain the same hostname.
 
-## Running Jobs with Pegasus (Unsuccessful Attempt)
+## Running Jobs with Pegasus
 
-I attempted to configure Pegasus to run jobs through the HTCondor annex, but I was unable to get it to work properly. I found the process of configuring Pegasus surprisingly difficult. Here's a gist of what I managed to achieve, though it did not result in a successful Pegasus workflow execution through the annex:
+Once the HTCondor Annex is running, you can launch Pegasus workflows.
 
-[https://gist.github.com/zonca/94b99a5590c43eba2f47d3514b166c88](https://gist.github.com/zonca/94b99a5590c43eba2f47d3514b166c88)
+1.  **Clone the Pegasus example repository:**
+    In the Pegasus access machine terminal, clone the example workflow repository:
+    ```bash
+    git clone https://github.com/pegasus-isi/expanse-single-job-wf
+    cd expanse-single-job-wf
+    ```
+
+2.  **Launch the workflow:**
+    After making sure that the annex is running, launch the workflow with:
+    ```bash
+    python expanse_hostname.py
+    ```
+    This command will create all the necessary workflow configuration YAML files in the current folder and submit the job to be executed on Expanse. The workflow consists of a single job running `hostname`. The output of this job will be transferred back and can be accessed in `output/hostname.out`.
