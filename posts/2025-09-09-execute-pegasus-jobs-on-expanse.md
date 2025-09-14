@@ -10,6 +10,8 @@ categories:
 
 [Pegasus](https://pegasus.isi.edu/) is a workflow management system that helps scientists and engineers execute complex computational workflows. It maps a user's abstract workflow onto available distributed resources, manages data, and handles execution failures, making it easier to run scientific applications on high-throughput computing (HTC) systems like HTCondor.
 
+Pegasus supports different data staging mechanisms, primarily `sharedfs` and `condorio`. The `sharedfs` mode is used when the head node and all worker nodes share a common file system, allowing jobs to directly access data. However, there is currently a bug that prevents `sharedfs` from working as expected. In contrast, the `condorio` mode is designed for environments where worker nodes do not share a file system, relying on HTCondor's built-in file transfer capabilities for all data I/O. Since Pegasus 5.0, `condorio` is the default. Our current setup on Expanse, utilizing HTCondor Annex, operates in `condorio` mode, leveraging Condor's efficient data transfer for distributed execution.
+
 ## Accessing Pegasus on ACCESS
 
 You can access a hosted version of Pegasus through ACCESS. You will need an existing ACCESS account.
