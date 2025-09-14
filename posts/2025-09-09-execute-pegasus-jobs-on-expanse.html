@@ -271,7 +271,7 @@ queue 128</code></pre>
 </section>
 <section id="running-jobs-with-pegasus" class="level2">
 <h2 class="anchored" data-anchor-id="running-jobs-with-pegasus">Running Jobs with Pegasus</h2>
-<p>Once the HTCondor Annex is running, you can launch Pegasus workflows.</p>
+<p>Once the HTCondor Annex is running, you can launch Pegasus workflows. Special thanks to Karan Vahi for creating the example Expanse workflow.</p>
 <ol type="1">
 <li><p><strong>Clone the Pegasus example repository:</strong> In the Pegasus access machine terminal, clone the example workflow repository: <code>bash     git clone https://github.com/pegasus-isi/expanse-single-job-wf     cd expanse-single-job-wf</code></p></li>
 <li><p><strong>Launch the workflow:</strong> After making sure that the annex is running, launch the workflow with: <code>bash     python expanse_hostname.py</code> This command will create all the necessary workflow configuration YAML files in the current folder and submit the job to be executed on Expanse. The workflow consists of a single job running <code>hostname</code>. The output of this job will be transferred back and can be accessed in <code>output/hostname.out</code>.</p></li>
