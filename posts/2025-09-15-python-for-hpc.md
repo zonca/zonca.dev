@@ -1,6 +1,6 @@
 ---
 title: "Python for HPC"
-author: "P. Zonca"
+
 date: "2025-09-15"
 categories: [Python, HPC, Numba, Dask]
 ---
