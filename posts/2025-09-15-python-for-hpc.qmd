@@ -5,9 +5,9 @@ date: "2025-09-15"
 categories: [Python, HPC, Numba, Dask]
 ---
 
-This is part of the [Advanced HPC-CI Webinar series](https://www.sdsc.edu/education/training-programs/Advanced-HPC-CI-Webinars.html). This webinar was authored by P. Zonca, Lead of Scientific Computing Applications Group at the San Diego Supercomputer Center. You can find more about P. Zonca here: [https://www.sdsc.edu/research/researcher_spotlight/zonca_andrea.html](https://www.sdsc.edu/research/researcher_spotlight/zonca_andrea.html).
+Python has long been the language researchers reach for when prototyping ideas, but getting that same code ready for thousands of cores and petabytes of data takes a different playbook. On my blog I'm sharing the webinar I authored for the [Advanced HPC-CI Webinar series](https://www.sdsc.edu/education/training-programs/Advanced-HPC-CI-Webinars.html), which walks through that transition step by step and shows how to keep Python flexible while making it perform like a native HPC tool.
 
-This video provides a detailed guide on using Python for High-Performance Computing (HPC). It covers essential techniques for optimizing Python code and leveraging supercomputing resources.
+I'm Andrea Zonca, Lead of the Scientific Computing Applications Group at the San Diego Supercomputer Center, and in this session I guide you through the practices I rely on when bringing Python onto supercomputers. Learn more about my work here: [https://www.sdsc.edu/research/researcher_spotlight/zonca_andrea.html](https://www.sdsc.edu/research/researcher_spotlight/zonca_andrea.html).
 
 Key topics include:
 
