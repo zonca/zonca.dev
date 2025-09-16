@@ -21,6 +21,6 @@ Key chapters:
 * [Numba optimization](https://www.youtube.com/watch?v=Zv4DcRy1yeg&t=1974s) (32:54) – JIT hotspots, type specialization, parallel=True, cache usage, and when to stop micro‑optimizing.
 * [Dask for scaling out](https://www.youtube.com/watch?v=Zv4DcRy1yeg&t=3324s) (55:24) – Task graphs, scheduler behavior, choosing between Array / Delayed / DataFrame, minimizing data movement, dashboard-driven tuning.
 
-Slides, notebooks, and examples: [github.com/zonca/python_hpc_2025](https://github.com/zonca/python_hpc_2025)
+My group, the Scientific Computing Applications Group, helps scientists in the US optimize their code on supercomputers. Feel free to contact me via my [contact info](https://www.sdsc.edu/cgi-bin/staff_dir.cgi?query_type=s&name=Andrea+Zonca).
 
-If you have suggestions or want a deeper dive on a specific section (e.g. packaging strategies, performance profiling, GPU offload), feel free to reach out.
+If you have any problems or feedback, please open an issue in the [repository](https://github.com/zonca/python_hpc_2025/issues/new).
