@@ -4,6 +4,7 @@ project:
     - "*.jpg"
     - "*.png"
     - "docs"
+    - "posts/img"
 
 website:
   title: "Andrea Zonca"
