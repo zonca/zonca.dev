@@ -22,4 +22,4 @@ Copilot agent mode can access test failures and error messages directly from you
 
 Routine git operations—such as staging files, running tests, and confirming fixes—are handled smoothly by Copilot agent mode. The agent provides context-aware suggestions and explanations, helping you maintain a clean and reliable version history with minimal manual intervention.
 
-![Git Workflow Automation](/posts/img/vscode-copilot-agent-git.png)
+![Git Workflow Automation](img/vscode-copilot-agent-git.png)
