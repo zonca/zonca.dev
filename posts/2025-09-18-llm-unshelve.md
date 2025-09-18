@@ -5,7 +5,7 @@ categories:
 layout: post
 date: 2025-09-18
 slug: llm-unshelve
-title: Unshelving a Jetstream 70B LLM Instance
+title: Timing the Unshelving of a Jetstream 70B LLM Instance
 
 ---
 
