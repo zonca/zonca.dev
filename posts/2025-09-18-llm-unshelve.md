@@ -9,7 +9,7 @@ title: Unshelving a Jetstream 70B LLM Instance
 
 ---
 
-Following the work documented in [PR #13](https://github.com/zonca/zonca.dev/pull/13), the `Meta-Llama-3.1-70B-Instruct-GGUF` deployment is now running on a `g3.xl` instance. The goal of this follow-up is to measure how long it takes to unshelve that virtual machine and bring the chat interface back online.
+Following the work documented in [Deploy a 70B LLM to Jetstream](2025-09-18-deploy-70b-llm-jetstream.md), the `Meta-Llama-3.1-70B-Instruct-GGUF` deployment is now running on a `g3.xl` instance. The goal of this follow-up is to measure how long it takes to unshelve that virtual machine and bring the chat interface back online.
 
 Each unshelve cycle includes attaching the `llmstorage` volume, waiting for the model weights to be available under `~/models`, and watching for the Open WebUI front end to load. I am timing the interval from issuing the unshelve command in Exosphere until the chat interface is ready to accept prompts.
 
