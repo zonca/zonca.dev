@@ -11,7 +11,7 @@ title: Timing the Unshelving of a Jetstream 70B LLM Instance
 
 Following the work documented in [Deploy a 70B LLM to Jetstream](2025-09-18-deploy-70b-llm-jetstream.md), the `Meta-Llama-3.1-70B-Instruct-GGUF` deployment is now running on a `g3.xl` instance. The goal of this follow-up is to measure how long it takes to unshelve that virtual machine and bring the chat interface back online.
 
-Each unshelve cycle includes waiting for the model weights to be available under `~/models` and letting `llama.cpp` stream the 37 GB checkpoint from disk into GPU memory before Open WebUI comes up. I am timing the interval from issuing the unshelve command in Exosphere until the chat interface is ready to accept prompts.
+Each unshelve cycle includes letting `llama.cpp` stream the 37 GB checkpoint from disk into GPU memory before Open WebUI comes up. I am timing the interval from issuing the unshelve command in Exosphere until the chat interface is ready to accept prompts.
 
 When shelving the instance in Exosphere, make sure to clear the "Release IP when shelving" checkbox. Keeping the floating IP attached ensures the service comes back with the same address, which avoids reconfiguring client applications or DNS.
 
