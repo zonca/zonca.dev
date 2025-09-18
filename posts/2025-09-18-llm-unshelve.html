@@ -172,7 +172,8 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="timing">Timing</h2>
 <p>First attempt: the instance shows as ready in Exosphere after about <strong>2 minutes</strong>, and the Open WebUI chat interface becomes responsive roughly <strong>1 minute</strong> later. In total it takes just <strong>3 minutes</strong> from unshelving to having the assistant ready for prompts.</p>
 <p>Second attempt: Exosphere reports the VM ready in <strong>1 minute 40 seconds</strong>, and the chat UI finishes loading at <strong>2 minutes 55 seconds</strong> overall.</p>
-<p>Third attempt: after updating the systemd units so Open WebUI waits for the <code>llama</code> service before starting—no more manual reconnection—the VM appears ready at <strong>1 minute 30 seconds</strong>, and the chat interface (with the model responding) is back <strong>4 minutes 30 seconds</strong> after clicking Unshelve.</p>
+<p>Third attempt: after updating the systemd units so Open WebUI waits for the <code>llama</code> service before starting—no more manual reconnection—the VM appears ready at <strong>1 minute 30 seconds</strong>, and the chat interface (with the model responding) is back <strong>5 minutes</strong> after clicking Unshelve.</p>
+<p>Fourth attempt: same systemd configuration, Exosphere shows the instance ready in <strong>1 minute 30 seconds</strong>, and the model-backed chat becomes responsive <strong>5 minutes 30 seconds</strong> after unshelving.</p>
 
 
 </section>
