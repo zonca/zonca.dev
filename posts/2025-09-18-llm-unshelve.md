@@ -23,4 +23,6 @@ First attempt: the instance shows as ready in Exosphere after about **2 minutes*
 
 Second attempt: Exosphere reports the VM ready in **1 minute 40 seconds**, and the chat UI finishes loading at **2 minutes 55 seconds** overall.
 
-Third attempt: after updating the systemd units so Open WebUI waits for the `llama` service before starting—no more manual reconnection—the VM appears ready at **1 minute 30 seconds**, and the chat interface (with the model responding) is back **4 minutes 30 seconds** after clicking Unshelve.
+Third attempt: after updating the systemd units so Open WebUI waits for the `llama` service before starting—no more manual reconnection—the VM appears ready at **1 minute 30 seconds**, and the chat interface (with the model responding) is back **5 minutes** after clicking Unshelve.
+
+Fourth attempt: same systemd configuration, Exosphere shows the instance ready in **1 minute 30 seconds**, and the model-backed chat becomes responsive **5 minutes 30 seconds** after unshelving.
