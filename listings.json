@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2025-09-18-llm-unshelve.html",
       "/posts/2025-09-15-python-for-hpc.html",
       "/posts/2025-09-09-execute-pegasus-jobs-on-expanse.html",
       "/posts/2025-08-08-use-vs-code-on-expanse.html",
