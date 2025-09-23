@@ -2,7 +2,7 @@
 title: "Inspect SMTP sending through UCSD"
 author: "Andrea Zonca"
 date: "2025-09-23"
-categories: [UCSD, SMTP, Python]
+categories: [Python]
 ---
 
 When configuring email sending through UCSD, it can be surprisingly unclear which SMTP server to use. The official documentation mentions three options: `smtp.ucsd.edu`, `smtp.gmail.com`, and `smtp.office365.com`. This ambiguity often leads to trial-and-error, making it difficult to set up applications or scripts that reliably send emails. To cut through the confusion, I developed a simple script to systematically test connectivity and sending capabilities for all three servers.
