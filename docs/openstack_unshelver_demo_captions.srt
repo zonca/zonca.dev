@@ -1,0 +1,220 @@
+1
+00:00:01,199 --> 00:00:06,240
+Let's do a quick demo of OpenStack
+
+2
+00:00:04,000 --> 00:00:09,760
+and Unshelver.
+
+3
+00:00:06,240 --> 00:00:12,880
+So, this is a web app based on FastHTML
+
+4
+00:00:09,760 --> 00:00:16,720
+that uses GitHub for authentication and
+
+5
+00:00:12,880 --> 00:00:19,199
+then uses the OpenStack SDK to
+
+6
+00:00:16,720 --> 00:00:23,279
+communicate with the OpenStack API and
+
+7
+00:00:19,199 --> 00:00:24,960
+manage pre-existing instances. So
+
+8
+00:00:23,279 --> 00:00:28,000
+this is meant to be of course deployed
+
+9
+00:00:24,960 --> 00:00:32,800
+on a server but for testing purposes
+
+10
+00:00:28,000 --> 00:00:36,880
+I'm just running it locally. So
+
+11
+00:00:32,800 --> 00:00:39,920
+Once the app is running
+
+12
+00:00:36,880 --> 00:00:42,960
+we can connect to it on localhost and
+
+13
+00:00:39,920 --> 00:00:46,079
+then we get redirected to GitHub for
+
+14
+00:00:42,960 --> 00:00:47,360
+login and after login I'm also
+
+15
+00:00:46,079 --> 00:00:50,160
+checking for membership to an
+
+16
+00:00:47,360 --> 00:00:54,239
+organization, which can be configured
+
+17
+00:00:50,160 --> 00:00:57,760
+in a YAML file.
+
+18
+00:00:54,239 --> 00:01:02,160
+That YAML file also lists all
+
+19
+00:00:57,760 --> 00:01:05,360
+different virtual machines that we
+
+20
+00:01:02,160 --> 00:01:10,159
+can monitor. So I haven't implemented
+
+21
+00:01:05,360 --> 00:01:12,799
+the shelving feature yet. For now it
+
+22
+00:01:10,159 --> 00:01:14,960
+only handles the unshelving step.
+
+23
+00:01:12,799 --> 00:01:17,360
+So we have this instance which is just a
+
+24
+00:01:14,960 --> 00:01:20,799
+simple web server. It's a Caddy default
+
+25
+00:01:17,360 --> 00:01:25,520
+deployment. And on top of that I
+
+26
+00:01:20,799 --> 00:01:29,119
+also implemented the /health endpoint
+
+27
+00:01:25,520 --> 00:01:33,119
+which returns the JSON { "status": "healthy" }.
+
+28
+00:01:29,119 --> 00:01:36,640
+And so what we can do is
+
+29
+00:01:33,119 --> 00:01:39,840
+click on Unshelve Start.
+
+30
+00:01:36,640 --> 00:01:43,119
+So this is useful if you have a service
+
+31
+00:01:39,840 --> 00:01:45,439
+that you don't need all the time and
+
+32
+00:01:43,119 --> 00:01:48,320
+so you have a simple interface that you
+
+33
+00:01:45,439 --> 00:01:49,920
+can spawn that service really quickly
+
+34
+00:01:48,320 --> 00:01:52,479
+because
+
+35
+00:01:49,920 --> 00:01:55,680
+an OpenStack instance takes just one
+
+36
+00:01:52,479 --> 00:01:57,360
+minute or two to unshelve and so after
+
+37
+00:01:55,680 --> 00:01:59,920
+that it's just time for your
+
+38
+00:01:57,360 --> 00:02:02,799
+application to start. So it's pretty
+
+39
+00:01:59,920 --> 00:02:07,280
+efficient. And under the hood,
+
+40
+00:02:02,799 --> 00:02:10,080
+this uses the OpenStack SDK to
+
+41
+00:02:07,280 --> 00:02:12,959
+unshelve the instance and then it
+
+42
+00:02:10,080 --> 00:02:15,200
+checks the health endpoint every 10
+
+43
+00:02:12,959 --> 00:02:20,160
+seconds to wait for the service to
+
+44
+00:02:15,200 --> 00:02:24,720
+become available. So you see now the
+
+45
+00:02:20,160 --> 00:02:27,440
+instance is probably ready. Here it
+
+46
+00:02:24,720 --> 00:02:31,120
+is. It's ready but the service is not
+
+47
+00:02:27,440 --> 00:02:34,959
+available yet and we're going to
+
+48
+00:02:31,120 --> 00:02:38,000
+wait another few seconds
+
+49
+00:02:34,959 --> 00:02:41,120
+and then here we go. Now the instance
+
+50
+00:02:38,000 --> 00:02:45,840
+status is active and we can click on
+
+51
+00:02:41,120 --> 00:02:49,680
+Open Web App to access the service which
+
+52
+00:02:45,840 --> 00:02:53,680
+in this case is just the Caddy
+
+53
+00:02:49,680 --> 00:02:57,840
+simple status page but it can be an
+
+54
+00:02:53,680 --> 00:03:02,239
+LLM deployed with a web UI or some other
+
+55
+00:02:57,840 --> 00:03:02,239
+useful web services.
+
