@@ -4,7 +4,7 @@ Let's do a quick demo of OpenStack
 
 2
 00:00:04,000 --> 00:00:09,760
-and Unshelver.
+Unshelver.
 
 3
 00:00:06,240 --> 00:00:12,880
