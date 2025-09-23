@@ -1,15 +1,16 @@
 ---
 categories:
 - openstack
-- webapp
+- jetstream
 layout: post
 date: 2025-09-22
 slug: openstack-unshelver-demo
 title: OpenStack Unshelver Demo
+image: posts/img/openstack-unshelver-demo-thumbnail.jpg
 
 ---
 
-I recently vibe-coded a lightweight web application that revives shelved OpenStack instances on demand. The stack is intentionally minimal: a FastHTML frontend, GitHub for authentication, and the OpenStack SDK orchestrated through a YAML configuration that lists the instances the team cares about. The video below captures the current experience end to end.
+I recently vibe-coded a lightweight web application that revives shelved OpenStack instances on demand. The stack is intentionally minimal: a FastHTML frontend, GitHub for authentication, and the OpenStack SDK orchestrated through a YAML configuration that lists the instances the team cares about. I exercised the workflow against my Jetstream 2 project, and the video below captures the current experience end to end.
 
 ![OpenStack Unshelver demo thumbnail](https://img.youtube.com/vi/xdVKyStD55M/hqdefault.jpg)
 
@@ -27,4 +28,4 @@ Once OpenStack confirms the instance is running, the interface offers a one-clic
 
 ## Build notes
 
-This iteration was intentionally fast to validate the interaction model. From here I plan to round out the shelving workflow, improve the status panel so it surfaces more context while `/health` is polled, and package the FastHTML app for straightforward deployment on a shared server.
+This iteration was intentionally fast to validate the interaction model while running against Jetstream 2. From here I plan to round out the shelving workflow, improve the status panel so it surfaces more context while `/health` is polled, and package the FastHTML app for straightforward deployment on a shared server.
