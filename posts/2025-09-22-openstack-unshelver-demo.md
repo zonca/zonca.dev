@@ -10,9 +10,11 @@ image: posts/img/openstack-unshelver-demo-thumbnail.jpg
 
 ---
 
+![OpenStack Unshelver demo thumbnail](posts/img/openstack-unshelver-demo-thumbnail.jpg)
+
 I recently vibe-coded a lightweight web application that revives shelved OpenStack instances on demand. The stack is intentionally minimal: a FastHTML frontend, GitHub for authentication, and the OpenStack SDK orchestrated through a YAML configuration that lists the instances the team cares about. I exercised the workflow against my Jetstream 2 project, and the video below captures the current experience end to end.
 
-![OpenStack Unshelver demo thumbnail](https://img.youtube.com/vi/xdVKyStD55M/hqdefault.jpg)
+Source code lives at [github.com/zonca/openstack_unshelver_webapp](https://github.com/zonca/openstack_unshelver_webapp).
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/xdVKyStD55M" title="OpenStack Unshelver demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
