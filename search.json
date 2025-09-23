@@ -2748,7 +2748,7 @@
     "href": "posts/2025-09-22-openstack-unshelver-demo.html",
     "title": "OpenStack Unshelver Demo",
     "section": "",
-    "text": "I recently vibe-coded a lightweight web application that revives shelved OpenStack instances on demand. The stack is intentionally minimal: a FastHTML frontend, GitHub for authentication, and the OpenStack SDK orchestrated through a YAML configuration that lists the instances the team cares about. I exercised the workflow against my Jetstream 2 project, and the video below captures the current experience end to end."
+    "text": "OpenStack Unshelver demo thumbnail\nI recently vibe-coded a lightweight web application that revives shelved OpenStack instances on demand. The stack is intentionally minimal: a FastHTML frontend, GitHub for authentication, and the OpenStack SDK orchestrated through a YAML configuration that lists the instances the team cares about. I exercised the workflow against my Jetstream 2 project, and the video below captures the current experience end to end.\nSource code lives at github.com/zonca/openstack_unshelver_webapp."
   },
   {
     "objectID": "posts/2025-09-22-openstack-unshelver-demo.html#demo-breakdown",
