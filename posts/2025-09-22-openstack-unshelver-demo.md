@@ -25,3 +25,9 @@ The walkthrough starts with a quick tour of the interface: after the app boots l
 For the moment the application focuses solely on unshelving. The featured instance is a vanilla Caddy web server that exposes a `/health` endpoint returning `{ "status": "healthy" }`. That heartbeat gives the app a predictable signal to poll while the VM transitions from shelved to active. Triggering “Unshelve Start” launches the workflow: the backend calls the OpenStack SDK, tracks the instance status, and rechecks `/health` at a steady cadence until the service responds.
 
 Once OpenStack confirms the instance is running, the interface offers a one-click path into the workload. In the demo that simply reveals Caddy’s default status page, but the same flow can wake up something more substantial—for example, the large language model documented in [Timing the Unshelving of a Jetstream 70B LLM Instance](2025-09-18-llm-unshelve.md).
+
+Questions, feature ideas, or deployment help? Open an issue on the repo: [github.com/zonca/openstack_unshelver_webapp/issues](https://github.com/zonca/openstack_unshelver_webapp/issues).
+
+### Security notice
+
+Running this tool in production means trusting it with OpenStack credentials. Treat that risk seriously: create a dedicated OpenStack application credential scoped to the narrowest role that still lets you check instance state and perform shelve/unshelve operations—nothing more. Avoid reusing full-admin credentials on a web server.
