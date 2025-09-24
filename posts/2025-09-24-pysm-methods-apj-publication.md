@@ -34,3 +34,6 @@ Beyond the bundle definitions, the publication provides validation and performan
 - **CO lines**: new `co1`, `co2`, and `co3` scenarios spanning unpolarized to polarized implementations.
 
 All of these models—and experiment-specific sky realizations derived from them—are available for download through the [CMB-S4 Data Portal](https://data.cmb-s4.org).
+
+In addition, the paper’s LaTeX sources and the notebooks used for figures live in the [galsci/pysm_methods_paper](https://github.com/galsci/pysm_methods_paper) repository.
+
