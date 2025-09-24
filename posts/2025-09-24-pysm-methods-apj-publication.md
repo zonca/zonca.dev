@@ -4,7 +4,7 @@ categories:
 - pysm
 - python
 layout: post
-date: 2025-09-12
+date: 2025-09-24
 slug: pysm-methods-apj-publication
 title: PySM Methods Paper Published in ApJ
 image: img/pysm-methods-figure.jpg
