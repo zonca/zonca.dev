@@ -2916,7 +2916,7 @@
     "href": "posts/2025-09-24-pysm-methods-apj-publication.html#models-characterized-in-the-paper",
     "title": "PySM Methods Paper Published in ApJ",
     "section": "Models characterized in the paper",
-    "text": "Models characterized in the paper\nBeyond the bundle definitions, the publication provides validation and performance metrics for the new component models now available in PySM 3:\n\nDust: d9, d10, d11, and the layer-based d12 implementation.\nSynchrotron: s5, s6, and s7, contrasted with the legacy templates.\nFree-free and AME: continued reliance on f1 plus both a1 (unpolarized) and a2 (2% polarized) AME options.\nCO lines: new co1, co2, and co3 scenarios spanning unpolarized to polarized implementations.\n\nAll of these models—and experiment-specific sky realizations derived from them—are available for download through the CMB-S4 Data Portal."
+    "text": "Models characterized in the paper\nBeyond the bundle definitions, the publication provides validation and performance metrics for the new component models now available in PySM 3:\n\nDust: d9, d10, d11, and the layer-based d12 implementation.\nSynchrotron: s5, s6, and s7, contrasted with the legacy templates.\nFree-free and AME: continued reliance on f1 plus both a1 (unpolarized) and a2 (2% polarized) AME options.\nCO lines: new co1, co2, and co3 scenarios spanning unpolarized to polarized implementations.\n\nAll of these models—and experiment-specific sky realizations derived from them—are available for download through the CMB-S4 Data Portal.\nIn addition, the paper’s LaTeX sources and the notebooks used for figures live in the galsci/pysm_methods_paper repository."
   },
   {
     "objectID": "posts/2021-06-17-learn-italian-in-san-diego.html",
