@@ -12,7 +12,7 @@ image: img/pysm-methods-figure.jpg
 
 ![Small-scale Galactic emission realizations from the PySM methods paper](img/pysm-methods-figure.jpg)
 
-The *Astrophysical Journal* has now formally published our paper, [*Full-sky Models of Galactic Microwave Emission and Polarization at Sub-arcminute Scales for the Python Sky Model*](https://iopscience.iop.org/article/10.3847/1538-4357/adf212), on **September 12, 2025**. This follows up on [my March note about the ArXiv submission](./2025-03-03-paper-pysm-models.md).
+The *Astrophysical Journal* formally published our paper, [*Full-sky Models of Galactic Microwave Emission and Polarization at Sub-arcminute Scales for the Python Sky Model*](https://iopscience.iop.org/article/10.3847/1538-4357/adf212), on **September 12, 2025**. I wanted to capture the news here now that the issue is out, following up on [my March note about the ArXiv submission](./2025-03-03-paper-pysm-models.md).
 
 You can still read the open-access version on [arXiv:2502.20452](https://arxiv.org/abs/2502.20452), and the latest software documentation lives at the [PySM3 docs](https://pysm3.readthedocs.io/).
 
