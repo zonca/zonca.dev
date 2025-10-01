@@ -17,7 +17,7 @@ In this tutorial we deploy a Large Language Model (LLM) on Jetstream, run infere
 
 Before spinning up your own GPU, consider the managed [Jetstream LLM inference service](https://docs.jetstream-cloud.org/inference-service/overview/). It may be more cost‑ and time‑effective if you just need API access to standard models.
 
-We will deploy a single (quantized) model: **Meta Llama 3.1 8B Instruct Q3_K_M (GGUF)**. This quantized 8B model fits comfortably in ~8 GB of GPU memory, so it runs on a `g3.medium` (10 GB) with a little headroom. (The older `g3.small` flavor has been retired.)
+We will deploy a single (quantized) model: **`Meta Llama 3.1 8B Instruct Q3_K_M` (GGUF)**. This quantized 8B model fits comfortably in ~8 GB of GPU memory, so it runs on a `g3.medium` (10 GB) with a little headroom. (The older `g3.small` flavor has been retired.)
 
 If you later choose a different quantization or a larger context length, or move to an unquantized 8B / 70B model, you'll need a larger flavor—adjust accordingly.
 
@@ -33,7 +33,7 @@ Jetstream GPU flavors (current key options):
 | g3.large      | 20                      |
 | g3.xl         | 40 (full A100)          |
 
-We pick the quantized **Llama 3.1 8B Instruct Q3_K_M** variant (GGUF format). Its VRAM residency during inference is about ~8 GB with default context settings, leaving some margin on `g3.medium`. Always keep a couple of GB free to avoid OOM errors when increasing context length or concurrency.
+We pick the quantized `Llama 3.1 8B Instruct Q3_K_M` variant (GGUF format). Its VRAM residency during inference is about ~8 GB with default context settings, leaving some margin on `g3.medium`. Always keep a couple of GB free to avoid OOM errors when increasing context length or concurrency.
 
 Ensure the model is an Instruct fine‑tuned variant (it is) so it responds well to chat prompts.
 
@@ -71,7 +71,7 @@ CMAKE_ARGS="-DGGML_CUDA=on -DCMAKE_CUDA_COMPILER=$(which nvcc) -DCMAKE_C_COMPILE
 ```
 
 
-Download the quantized GGUF file (Q3_K_M variant) from the QuantFactory model page: https://huggingface.co/QuantFactory/Meta-Llama-3.1-8B-Instruct-GGUF
+Download the quantized GGUF file (`Q3_K_M` variant) from the QuantFactory model page: https://huggingface.co/QuantFactory/Meta-Llama-3.1-8B-Instruct-GGUF
 
 ```bash
 mkdir -p ~/models
@@ -91,11 +91,11 @@ python -m llama_cpp.server \
     --port 8000
 ```
 
-`--n_gpu_layers -1` tells `llama.cpp` to offload **all model layers** to the GPU (full GPU inference). Without this flag the default is CPU layers (`n_gpu_layers=0`), which results in only ~1 GB of VRAM being used and much slower generation. Full offload of this 8B Q3_K_M model plus context buffers should occupy roughly 8–9 GB VRAM at `--n_ctx 8192` on first real requests. If it fails to start with an out‑of‑memory (OOM) error you have a few mitigation options (apply one, then retry):
+`--n_gpu_layers -1` tells `llama.cpp` to offload **all model layers** to the GPU (full GPU inference). Without this flag the default is CPU layers (`n_gpu_layers=0`), which results in only ~1 GB of VRAM being used and much slower generation. Full offload of this 8B `Q3_K_M` model plus context buffers should occupy roughly 8–9 GB VRAM at `--n_ctx 8192` on first real requests. If it fails to start with an out‑of‑memory (OOM) error you have a few mitigation options (apply one, then retry):
 
 * Lower context length: e.g. `--n_ctx 4096` (largest single lever; roughly linear VRAM impact for KV cache).
 * Partially offload: replace `--n_gpu_layers -1` with a number (e.g. `--n_gpu_layers 20`). Remaining layers will run on CPU (slower, but reduces VRAM need).
-* Use a lower‑bit quantization (e.g. Q2_K) or a smaller model.
+* Use a lower‑bit quantization (e.g. `Q2_K`) or a smaller model.
 
 You can inspect VRAM usage with `watch -n 2 nvidia-smi` after starting the server.
 
@@ -272,7 +272,7 @@ If you change context length (`--n_ctx`) or increase concurrent users you may ap
 
 Want a larger model or higher quality? Options:
 
-* Use a higher‑bit quantization (Q4_K_M / Q5_K_M) for better quality (needs more VRAM).
+* Use a higher‑bit quantization (`Q4_K_M` / `Q5_K_M`) for better quality (needs more VRAM).
 * Move to unquantized FP16 8B (≈16 GB VRAM) on `g3.large` or bigger.
 * Increase context length (each 1k tokens adds memory usage). If you see OOM, lower `--n_ctx`.
 
