@@ -207,7 +207,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="install-nextflow" class="level3">
 <h3 class="anchored" data-anchor-id="install-nextflow">2. Install Nextflow</h3>
-<p>Once Micromamba is set up, you can install Nextflow in a new environment called <code>nf-env</code>. Follow the instructions on the official Nextflow installation page: <a href="https://www.nextflow.io/docs/latest/install.html">https://www.nextflow.io/docs/latest/install.html</a></p>
+<p>Once Micromamba is set up, you can install Nextflow in a new environment called <code>nf-env</code>. This approach is particularly beneficial on Expanse because the system’s default Java version might be too old for Nextflow. Micromamba will install a recent Java version isolated within your <code>nf-env</code> environment, ensuring compatibility.</p>
+<p>Follow the instructions on the official Nextflow installation page: <a href="https://www.nextflow.io/docs/latest/install.html">https://www.nextflow.io/docs/latest/install.html</a></p>
 <p>Here’s how you can do it using Micromamba:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">micromamba</span> create <span class="at">-n</span> nf-env nextflow</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">micromamba</span> activate nf-env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
