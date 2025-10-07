@@ -86,11 +86,11 @@ This will show your available allocations, for example:
 ╭───┬───────┬───────┬─────────┬──────────────┬──────┬───────────┬─────────────────╮
 │   │ NAME  │ STATE │ PROJECT │ TG PROJECT   │ USED │ AVAILABLE │ USED BY PROJECT │
 ├───┼───────┼───────┼─────────┼──────────────┼──────┼───────────┼─────────────────┤
-│ 1 │ zonca │ allow │ sds166  │ TG-STA160003 │  706 │     25000 │             761 │
+│ 1 │ zonca │ allow │ sdsxxx  │ TG-XXXX │  706 │     25000 │             761 │
 ╰───┴───────┴───────┴─────────┴──────────────┴──────┴───────────┴─────────────────╯
 ```
 
-From this output, you can see that `sds166` is the project and `TG-STA160003` is the TG project. You will use these in your Slurm script.
+From this output, you can see that `sdsxxx` is the project and `TG-XXXX` is the TG project. You will use these in your Slurm script.
 
 Create a file named `nextflow_job.sh` with the following content:
 
@@ -103,7 +103,7 @@ Create a file named `nextflow_job.sh` with the following content:
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=4GB
 #SBATCH --time=00:10:00
-#SBATCH --account=sds166
+#SBATCH --account=sdsxxx
 #SBATCH --export=ALL
 #SBATCH --output=nextflow_job.out
 #SBATCH --error=nextflow_job.err
