@@ -14,3 +14,14 @@ This tutorial will guide you through setting up Nextflow on Expanse.
 Expanse uses an older version of Anaconda, so we'll install Micromamba for a more up-to-date and isolated environment. Follow the official Micromamba installation guide: [https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html](https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html)
 
 After installation, make sure to configure your `bash` shell. You will need to log out and log back in, or source your `~/.bashrc` file for the changes to take effect.
+
+### 2. Install Nextflow
+
+Once Micromamba is set up, you can install Nextflow in a new environment called `nf-env`. Follow the instructions on the official Nextflow installation page: [https://www.nextflow.io/docs/latest/install.html](https://www.nextflow.io/docs/latest/install.html)
+
+Here's how you can do it using Micromamba:
+
+```bash
+micromamba create -n nf-env nextflow
+micromamba activate nf-env
+```
