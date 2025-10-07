@@ -3,3 +3,6 @@
 _site
 
 **/*.quarto_ipynb
+expanse_nextflow/
+posts/*.html
+site_libs/

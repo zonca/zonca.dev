@@ -4,8 +4,9 @@ date: 2025-08-08
 tags:
 - VS Code
 - Expanse
-- HPC
+- hpc
 - SSH
+- sdsc
 ---
 
 Using VS Code directly on Expanse, or other HPC systems, is generally not recommended due to the high resource usage of the IDE itself. These systems are optimized for computational tasks, not for running graphical applications on login nodes.
