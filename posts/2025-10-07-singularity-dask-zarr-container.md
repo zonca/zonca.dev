@@ -22,6 +22,11 @@ This post introduces a Singularity container designed for scientific computing, 
 
 ## Getting Started:
 
-The container can be built and tested using a simple `Makefile`. The `Singularity.def` defines the container image, including the base OS and Python dependencies (`requirements.txt`).
+This container is built using Apptainer (formerly Singularity) via GitHub Actions, ensuring a streamlined and automated process. Python dependencies are managed through `requirements.txt`. The resulting container image is hosted on the GitHub Container Registry, allowing for easy pulling and deployment.
+
+You can pull the container using:
+```bash
+singularity pull oras://ghcr.io/zonca/singularity_dask_zarr:latest
+```
 
 For more details, including building and testing instructions, please refer to the GitHub repository: [https://github.com/zonca/singularity_dask_zarr](https://github.com/zonca/singularity_dask_zarr)
