@@ -3,26 +3,24 @@ aliases:
 - /2025/10/singularity-dask-zarr-container
 categories:
 - singularity
-- dask
-- zarr
 - python
 date: '2025-10-07'
 layout: post
-title: Singularity Dask Zarr Container for Scientific Computing
+title: Building Singularity Containers with Conda Environments from requirements.txt
 
 ---
 
-This post introduces a Singularity container designed for scientific computing, leveraging Dask and Zarr for efficient data processing and storage. The container provides a reproducible environment for data-intensive tasks.
+This post introduces a method for building Singularity containers that include a Conda environment based on a `requirements.txt` file. This approach provides a reproducible and portable environment for any Python project.
 
-## Key Features:
+## Key Capabilities:
 
-*   **Efficient Data Processing:** Utilizes Dask for parallel and out-of-core computations.
-*   **Scalable Data Storage:** Employs Zarr for chunked, compressed N-dimensional array storage.
-*   **Reproducible Environments:** Singularity ensures consistent execution across different systems.
+*   **Automated Environment Setup:** Easily create a Conda environment within a Singularity container using a `requirements.txt` file.
+*   **Reproducible Environments:** Ensure consistent execution of your Python projects across different systems.
+*   **Streamlined Workflow:** Leverage GitHub Actions for automated container builds and hosting on GitHub Container Registry.
 
 ## Getting Started:
 
-This container is built using Apptainer (formerly Singularity) via GitHub Actions, ensuring a streamlined and automated process. Python dependencies are managed through `requirements.txt`. The resulting container image is hosted on the GitHub Container Registry, allowing for easy pulling and deployment.
+This container is built using Apptainer (formerly Singularity) via GitHub Actions, ensuring a streamlined and automated process. Python dependencies are managed through `requirements.txt`, which is used to create a Conda environment inside the container. The resulting container image is hosted on the GitHub Container Registry, allowing for easy pulling and deployment.
 
 You can pull the container using:
 ```bash
