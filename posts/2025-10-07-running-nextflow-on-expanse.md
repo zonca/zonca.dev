@@ -98,15 +98,15 @@ This will show your available allocations, for example:
 ╰───┴───────┴───────┴─────────┴──────────────┴──────┴───────────┴─────────────────╯
 ```
 
-From this output, you can see that `sdsxxx` is the SLURM `account`. You will use these in your Slurm script.
+From this output, you can see that `sdsxxx` is the SLURM `account`. You will use this to customize the `single_nextflow_job_expanse.slurm` file, located in the `expanse_nextflow` repository you cloned. Open this file and replace `sdsxxx` with your actual project account.
 
-Submit the job using `sbatch`:
+Once customized, submit the job to the Slurm scheduler:
 
 ```bash
-sbatch nextflow_job.sh
+sbatch single_nextflow_job_expanse.slurm
 ```
 
-You can monitor the job status with `squeue -u $USER` and check the output in `nextflow_job.out` and `nextflow_job.err` once the job completes.
+You can monitor the job status with `squeue -u $USER`. Once the job completes, you can check the output and error logs in the `logs/` folder within your `expanse_nextflow` directory. You should see an output very similar to when you ran the workflow on the login node.
 
 ### 6. Run with Slurm Executor
 
