@@ -6220,7 +6220,7 @@
     "href": "posts/2025-10-07-singularity-dask-zarr-container.html#getting-started",
     "title": "Singularity Dask Zarr Container for Scientific Computing",
     "section": "Getting Started:",
-    "text": "Getting Started:\nThe container can be built and tested using a simple Makefile. The Singularity.def defines the container image, including the base OS and Python dependencies (requirements.txt).\nFor more details, including building and testing instructions, please refer to the GitHub repository: https://github.com/zonca/singularity_dask_zarr"
+    "text": "Getting Started:\nThis container is built using Apptainer (formerly Singularity) via GitHub Actions, ensuring a streamlined and automated process. Python dependencies are managed through requirements.txt. The resulting container image is hosted on the GitHub Container Registry, allowing for easy pulling and deployment.\nYou can pull the container using:\nsingularity pull oras://ghcr.io/zonca/singularity_dask_zarr:latest\nFor more details, including building and testing instructions, please refer to the GitHub repository: https://github.com/zonca/singularity_dask_zarr"
   },
   {
     "objectID": "posts/2019-01-24-zarr_jetstream_2019.html",
