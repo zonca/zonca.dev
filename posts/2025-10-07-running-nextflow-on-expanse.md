@@ -24,3 +24,17 @@ Once Micromamba is set up, you can install Nextflow in a new environment called 
 Follow the instructions on the official Nextflow installation page: [https://www.nextflow.io/docs/latest/install.html](https://www.nextflow.io/docs/latest/install.html)
 
 When following the instructions, replace any `conda` commands with `micromamba` to use your newly installed Micromamba environment.
+
+### 3. Verify Nextflow Installation
+
+After installation, you can verify that Nextflow is correctly installed and using the Micromamba-provided Java by running `nextflow info`. You should see something like this:
+
+```
+Version: 25.04.8 build 5956
+Created: 06-10-2025 21:19 UTC (14:19 PDT)
+System: Linux 4.18.0-513.24.1.el8_9.x86_64
+Runtime: Groovy 4.0.26 on OpenJDK 64-Bit Server VM 23.0.2-internal-adhoc.conda.src
+Encoding: UTF-8 (UTF-8)
+```
+
+Notice the `Runtime` line, which indicates that Nextflow is using an OpenJDK version provided by Conda, ensuring compatibility and optimal performance on Expanse.
