@@ -43,17 +43,16 @@ Notice the `Runtime` line, which indicates that Nextflow is using an OpenJDK ver
 
 To test your Nextflow installation, let's run a simple workflow from the Nextflow training materials. The training videos are an excellent resource for understanding Nextflow concepts: [https://training.nextflow.io/latest/hello_nextflow/01_hello_world/](https://training.nextflow.io/latest/hello_nextflow/01_hello_world/)
 
-First, download the workflow script and input data:
+First, clone the example repository:
 
 ```bash
-wget https://github.com/nextflow-io/training/raw/refs/heads/master/hello-nextflow/solutions/3-hello-workflow/hello-workflow-4.nf
-wget https://github.com/nextflow-io/training/raw/refs/heads/master/hello-nextflow/greetings.csv
+git clone https://github.com/zonca/expanse_nextflow
 ```
 
 Then, run the workflow locally on the login node (for testing purposes):
 
 ```bash
-nextflow hello-workflow-4.nf
+nextflow expanse_nextflow/hello-workflow-4.nf
 ```
 
 You should see output similar to this:
@@ -113,7 +112,7 @@ source ~/.bashrc
 micromamba activate nf-env
 
 # Run Nextflow
-nextflow hello-workflow-4.nf
+nextflow expanse_nextflow/hello-workflow-4.nf
 ```
 
 Submit the job using `sbatch`:
