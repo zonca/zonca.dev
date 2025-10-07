@@ -23,9 +23,4 @@ Once Micromamba is set up, you can install Nextflow in a new environment called 
 
 Follow the instructions on the official Nextflow installation page: [https://www.nextflow.io/docs/latest/install.html](https://www.nextflow.io/docs/latest/install.html)
 
-Here's how you can do it using Micromamba:
-
-```bash
-micromamba create -n nf-env nextflow
-micromamba activate nf-env
-```
+When following the instructions, replace any `conda` commands with `micromamba` to use your newly installed Micromamba environment.
