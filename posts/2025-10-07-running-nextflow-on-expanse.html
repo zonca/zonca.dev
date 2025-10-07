@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Andrea Zonca">
-<meta name="dcterms.date" content="2025-09-09">
+<meta name="dcterms.date" content="2025-10-07">
 
-<title>Execute Pegasus Jobs on Expanse – Andrea Zonca</title>
+<title>Running Nextflow on Expanse – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -158,10 +158,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Execute Pegasus Jobs on Expanse</h1>
+      <h1 class="title">Running Nextflow on Expanse</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">sdsc</div>
                 <div class="quarto-category">hpc</div>
+                <div class="quarto-category">sdsc</div>
               </div>
                   </div>
   </div>
@@ -179,7 +179,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 9, 2025</p>
+        <p class="date">October 7, 2025</p>
       </div>
     </div>
     
@@ -198,92 +198,102 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="what-is-pegasus" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-pegasus">What is Pegasus?</h2>
-<p><a href="https://pegasus.isi.edu/">Pegasus</a> is a workflow management system that helps scientists and engineers execute complex computational workflows. It maps a user’s abstract workflow onto available distributed resources, manages data, and handles execution failures, making it easier to run scientific applications on high-throughput computing (HTC) systems like HTCondor.</p>
-<p>Pegasus supports different data staging mechanisms, primarily <code>sharedfs</code> and <code>condorio</code>. The <code>sharedfs</code> mode is used when the head node and all worker nodes share a common file system, allowing jobs to directly access data. However, there is currently a bug that prevents <code>sharedfs</code> from working as expected. In contrast, the <code>condorio</code> mode is designed for environments where worker nodes do not share a file system, relying on HTCondor’s built-in file transfer capabilities for all data I/O. Since Pegasus 5.0, <code>condorio</code> is the default. Our current setup on Expanse, utilizing HTCondor Annex, operates in <code>condorio</code> mode, leveraging Condor’s efficient data transfer for distributed execution.</p>
+<p>This tutorial will guide you through setting up Nextflow on Expanse. <a href="https://www.nextflow.io/">Nextflow</a> is a powerful and flexible workflow management system that enables scalable and reproducible scientific workflows. It allows researchers to define complex computational pipelines using a simple language, making it easy to manage data dependencies, parallelize tasks, and adapt workflows to different computing environments, from local machines to cloud platforms and HPC clusters like Expanse. Workflow systems like Nextflow are incredibly useful for ensuring reproducibility, simplifying complex analyses, and efficiently utilizing computational resources by automating the execution of multi-step processes.</p>
+<section id="install-micromamba" class="level3">
+<h3 class="anchored" data-anchor-id="install-micromamba">1. Install Micromamba</h3>
+<p>Expanse uses an older version of Anaconda, so we’ll install Micromamba for managing Conda environments. Follow the official Micromamba installation guide: <a href="https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html">https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html</a></p>
+<p><strong>Important:</strong> When prompted for the <code>Prefix location?</code>, use a path in your scratch space. You can get the correct path by running: <code>echo /expanse/lustre/scratch/$USER/temp_project/micromamba</code>. Note that you cannot use <code>$USER</code> directly in the prompt; you must replace it with the actual path obtained from the <code>echo</code> command.</p>
+<p>After installation, you will need to log out and log back in, or source your <code>~/.bashrc</code> file for the changes to take effect.</p>
 </section>
-<section id="accessing-pegasus-on-access" class="level2">
-<h2 class="anchored" data-anchor-id="accessing-pegasus-on-access">Accessing Pegasus on ACCESS</h2>
-<p>You can access a hosted version of Pegasus through ACCESS. You will need an existing ACCESS account.</p>
+<section id="install-nextflow" class="level3">
+<h3 class="anchored" data-anchor-id="install-nextflow">2. Install Nextflow</h3>
+<p>Once Micromamba is set up, you can install Nextflow in a new environment called <code>nf-env</code>. This approach is particularly beneficial on Expanse because the system’s default Java version is too old for Nextflow. Micromamba will install a recent Java version isolated within your <code>nf-env</code> environment, ensuring compatibility.</p>
+<p>Follow the instructions on the official Nextflow installation page: <a href="https://www.nextflow.io/docs/latest/install.html">https://www.nextflow.io/docs/latest/install.html</a></p>
+<p>When following the instructions, replace any <code>conda</code> commands with <code>micromamba</code> to use your newly installed Micromamba environment.</p>
+</section>
+<section id="verify-nextflow-installation" class="level3">
+<h3 class="anchored" data-anchor-id="verify-nextflow-installation">3. Verify Nextflow Installation</h3>
+<p>After installation, you can verify that Nextflow is correctly installed by running <code>nextflow info</code>:</p>
+<pre><code>Version: 25.04.8 build 5956
+Created: 06-10-2025 21:19 UTC (14:19 PDT)
+System: Linux 4.18.0-513.24.1.el8_9.x86_64
+Runtime: Groovy 4.0.26 on OpenJDK 64-Bit Server VM 23.0.2-internal-adhoc.conda.src
+Encoding: UTF-8 (UTF-8)</code></pre>
+<p>Notice the <code>Runtime</code> line, which indicates that Nextflow is using an OpenJDK version provided by Conda, ensuring compatibility and optimal performance on Expanse.</p>
+</section>
+<section id="run-a-toy-example" class="level3">
+<h3 class="anchored" data-anchor-id="run-a-toy-example">4. Run a Toy Example</h3>
+<p>To test your Nextflow installation, let’s run a simple workflow from the Nextflow training materials. The training videos are an excellent resource for understanding Nextflow concepts, see <a href="https://training.nextflow.io">https://training.nextflow.io</a></p>
+<p>First, clone the example repository:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/zonca/expanse_nextflow</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> expanse_nextflow</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>hello-workflow-4.nf</code> workflow processes a CSV file containing greetings, converts them to uppercase, and then collects them. For more details, refer to the <a href="https://training.nextflow.io/2.4.0/hello_nextflow/03_hello_workflow/">3rd tutorial in the Nextflow training materials</a>.</p>
+<p>The workflow consists of the following steps:</p>
 <ol type="1">
-<li>Go to <a href="https://support.access-ci.org/tools/pegasus">https://support.access-ci.org/tools/pegasus</a>.</li>
-<li>Click on “Local shell access” to get a terminal.</li>
+<li><strong><code>sayHello</code> process</strong>: Takes individual greetings (e.g., from a CSV file) and creates a separate output file for each greeting, containing the greeting text.</li>
+<li><strong><code>convertToUpper</code> process</strong>: Takes the output files from <code>sayHello</code>, reads their content, converts the text to uppercase, and writes the uppercase text to new files.</li>
+<li><strong><code>collectGreetings</code> process</strong>: Gathers all the uppercase files produced by <code>convertToUpper</code>, concatenates their content into a single output file, and also counts how many greetings were processed in total.</li>
 </ol>
-</section>
-<section id="setting-up-htcondor-annex-on-expanse" class="level2">
-<h2 class="anchored" data-anchor-id="setting-up-htcondor-annex-on-expanse">Setting up HTCondor Annex on Expanse</h2>
-<p>We will follow the documentation for HTCondor Annex, specifically the steps outlined in <a href="https://access-ci.atlassian.net/wiki/spaces/ACCESSdocumentation/pages/564887666/HTCondor+Annex">https://access-ci.atlassian.net/wiki/spaces/ACCESSdocumentation/pages/564887666/HTCondor+Annex</a>.</p>
-<section id="generate-ssh-key" class="level3">
-<h3 class="anchored" data-anchor-id="generate-ssh-key">1. Generate SSH Key</h3>
-<p>First, generate an SSH key specifically for the annex:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-f</span> ~/.ssh/annex</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="configure-ssh" class="level3">
-<h3 class="anchored" data-anchor-id="configure-ssh">2. Configure SSH</h3>
-<p>Add the following configuration to your <code>~/.ssh/config</code> file. This tells SSH to use the newly generated key for Expanse.</p>
-<pre><code>Host expanse.sdsc.edu *.expanse.sdsc.edu
-   User MYUSERNAME # Replace MYUSERNAME with your Expanse username
-   IdentityFile ~/.ssh/annex</code></pre>
-<p><strong>Permissions:</strong> Ensure your <code>~/.ssh/config</code> file has the correct permissions (read-only for your user) to prevent errors:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 600 ~/.ssh/config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="copy-ssh-key-to-expanse" class="level3">
-<h3 class="anchored" data-anchor-id="copy-ssh-key-to-expanse">3. Copy SSH Key to Expanse</h3>
-<p>Copy your public SSH key to Expanse. You will be prompted for your password and MFA code.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ssh-copy-id</span> <span class="at">-i</span> ~/.ssh/annex.pub MYUSERNAME@expanse.sdsc.edu</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="create-a-sample-htcondor-job" class="level3">
-<h3 class="anchored" data-anchor-id="create-a-sample-htcondor-job">4. Create a Sample HTCondor Job</h3>
-<p>Before creating an annex, HTCondor requires a job to execute. Create a file named <code>many_hostname.sub</code> with the following content:</p>
-<pre class="condor"><code>executable      = /bin/hostname
-output          = out.$(Cluster).$(Process)
-error           = err.$(Cluster).$(Process)
-log             = log.$(Cluster)
+<p>In summary, the workflow reads a list of greetings, processes each one by converting it to uppercase, and then combines all the uppercase greetings into a single result file, finally reporting the total count.</p>
+<p>Then, run the workflow locally on the login node (for testing purposes):</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> hello-workflow-4.nf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You should see output similar to this:</p>
+<pre><code>N E X T F L O W   ~  version 25.04.8
 
-# 1 core per task so the partitionable slot can split into many tasks
-request_cpus    = 1
-request_memory  = 512MB
-request_disk    = 100MB
+Launching `hello-workflow-4.nf` [soggy_monod] DSL2 - revision: 7924362939
 
-# Keep these jobs on the annex
-+MayUseAWS      = False
-requirements    = (AnnexName == "zonca") # You can change "zonca" to your desired annex name
+executor &gt;  local (7)
+[ee/22f232] sayHello (3)       [100%] 3 of 3 ✔
+[77/32c0db] convertToUpper (3) [100%] 3 of 3 ✔
+[09/3fd893] collectGreetings   [100%] 1 of 1 ✔
+There were 3 greetings in this batch</code></pre>
+</section>
+<section id="run-in-a-single-slurm-job" class="level3">
+<h3 class="anchored" data-anchor-id="run-in-a-single-slurm-job">5. Run in a single Slurm job</h3>
+<p>To run Nextflow on the compute nodes, you need to submit a Slurm job. This approach is useful if you have many tiny jobs that can all run within the resources of a single node. However, the true power of Nextflow lies in its ability to coordinate multiple Slurm jobs, which can execute on different queues or even require specialized resources like GPUs or multiple nodes for different stages of a workflow. First, identify your available allocation using <code>expanse-client user</code>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">expanse-client</span> user</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will show your available allocations, for example:</p>
+<pre><code> Resource  expanse 
 
-queue 128</code></pre>
+╭───┬───────┬───────┬─────────┬──────────────┬──────┬───────────┬─────────────────╮
+│   │ NAME  │ STATE │ PROJECT │ TG PROJECT   │ USED │ AVAILABLE │ USED BY PROJECT │
+├───┼───────┼───────┼─────────┼──────────────┼──────┼───────────┼─────────────────┤
+│ 1 │ zonca │ allow │ sdsxxx  │ TG-XXXX      │  706 │     25000 │             761 │
+╰───┴───────┴───────┴─────────┴──────────────┴──────┴───────────┴─────────────────╯</code></pre>
+<p>From this output, you can see that <code>sdsxxx</code> is the SLURM <code>account</code>. You will use this to customize the <code>single_nextflow_job_expanse.slurm</code> file, located in the <code>expanse_nextflow</code> repository you cloned. Open this file and replace <code>sdsxxx</code> with your actual project account.</p>
+<p>Once customized, submit the job to the Slurm scheduler:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> single_nextflow_job_expanse.slurm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can monitor the job status with <code>squeue -u $USER</code>. Once the job completes, you can check the output and error logs in the <code>logs/</code> folder within your <code>expanse_nextflow</code> directory. You should see an output very similar to when you ran the workflow on the login node.</p>
 </section>
-<section id="submit-the-sample-job" class="level3">
-<h3 class="anchored" data-anchor-id="submit-the-sample-job">5. Submit the Sample Job</h3>
-<p>Submit the job using <code>condor_submit</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">condor_submit</span> many_hostname.sub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="run-with-slurm-executor" class="level3">
+<h3 class="anchored" data-anchor-id="run-with-slurm-executor">6. Run with Slurm Executor</h3>
+<p>Nextflow can also manage the submission of individual tasks as separate Slurm jobs, allowing you to leverage the cluster’s resources more effectively. In this mode, Nextflow runs on the login node, but each process within the workflow is submitted as an independent Slurm job. This setup often utilizes node-local scratch (fast SSD) for temporary files, with results passed between tasks.</p>
+<p>Nextflow uses configuration profiles to define different execution environments. The <code>expanse_nextflow</code> repository includes a <code>nextflow.config</code> file with a <code>slurm_debug</code> profile tailored for this purpose. This profile limits parallelism to 1 job at a time due to debug queue limits, but this restriction can be removed when using the shared or compute queues. You can inspect the <code>nextflow.config</code> file to see the specific configurations.</p>
+<p>To run the workflow using the Slurm executor with the <code>slurm_debug</code> profile, execute the following command on the login node:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run hello-workflow-4.nf <span class="at">-profile</span> slurm_debug</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You should see output similar to this, indicating that the executor is <code>slurm</code>:</p>
+<pre><code>N E X T F L O W   ~  version 25.04.8
+
+Launching `hello-workflow-4.nf` [tender_fermi] DSL2 - revision: 7924362939
+
+executor &gt;  slurm (7)
+[bb/5d01f1] sayHello (1)       [100%] 3 of 3 ✔
+[a1/f76925] convertToUpper (3) [100%] 3 of 3 ✔
+[d0/a2e7e6] collectGreetings   [100%] 1 of 1 ✔
+There were 3 greetings in this batch
+Completed at: 07-Oct-2025 11:02:52
+Duration    : 1m 22s
+CPU hours   : (a few seconds)
+Succeeded   : 7</code></pre>
 </section>
-<section id="create-the-htcondor-annex" class="level3">
-<h3 class="anchored" data-anchor-id="create-the-htcondor-annex">6. Create the HTCondor Annex</h3>
-<p>Now you can create the HTCondor annex. Remember to replace <code>MYUSERNAME</code> with your Expanse username and set your <code>PROJECT_ID</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PROJECT_ID</span><span class="op">=</span>YOUR_ALLOCATION_ID <span class="co"># Set the ID of your allocation on Expanse</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">htcondor</span> annex create <span class="at">--nodes</span> 1 <span class="at">--lifetime</span> 3600 <span class="at">--project</span> <span class="va">$PROJECT_ID</span> <span class="va">$USER</span> compute@expanse</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="extending-or-adding-resources-to-the-htcondor-annex" class="level3">
-<h3 class="anchored" data-anchor-id="extending-or-adding-resources-to-the-htcondor-annex">Extending or Adding Resources to the HTCondor Annex</h3>
-<p>To extend the lifetime or add more nodes to an existing HTCondor annex, use the <code>htcondor annex add</code> command:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">htcondor</span> annex add <span class="at">--project</span> <span class="va">$PROJECT_ID</span> <span class="at">--nodes</span> 1 <span class="at">--lifetime</span> 3600 <span class="va">$USER</span> compute@expanse</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="monitoring-and-output" class="level3">
-<h3 class="anchored" data-anchor-id="monitoring-and-output">Monitoring and Output</h3>
-<p>To check the status of your HTCondor annex, use:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">htcondor</span> annex status <span class="va">$USER</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>During execution, you can also log in to Expanse and monitor the job using <code>squeue</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">-u</span> <span class="va">$USER</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Once the job is completed, it will create many <code>out.*</code> files in your submission directory. Each of these files will contain the hostname of the machine where that specific job ran. Since we requested only 1 node for the annex in this example, all <code>out.*</code> files will likely contain the same hostname.</p>
-</section>
-</section>
-<section id="running-jobs-with-pegasus" class="level2">
-<h2 class="anchored" data-anchor-id="running-jobs-with-pegasus">Running Jobs with Pegasus</h2>
-<p>Once the HTCondor Annex is running, you can launch Pegasus workflows. Special thanks to Karan Vahi for creating the example Expanse workflow.</p>
-<ol type="1">
-<li><p><strong>Clone the Pegasus example repository:</strong> In the Pegasus access machine terminal, clone the example workflow repository: <code>bash     git clone https://github.com/pegasus-isi/expanse-single-job-wf     cd expanse-single-job-wf</code></p></li>
-<li><p><strong>Launch the workflow:</strong> After making sure that the annex is running, launch the workflow with: <code>bash     python expanse_hostname.py</code> This command will create all the necessary workflow configuration YAML files in the current folder and submit the job to be executed on Expanse. The workflow consists of a single job running <code>hostname</code>. The output of this job will be transferred back and can be accessed in <code>output/hostname.out</code>.</p></li>
-</ol>
+<section id="run-with-singularity" class="level3">
+<h3 class="anchored" data-anchor-id="run-with-singularity">7. Run with Singularity</h3>
+<p>Nextflow seamlessly integrates with container technologies like Singularity, allowing you to define your workflow’s execution environment in a portable and reproducible way. On Expanse, this is particularly useful for managing dependencies and ensuring consistent results across different computing environments.</p>
+<p>The <code>expanse_nextflow</code> repository’s <code>nextflow.config</code> file already includes a profile that enables Singularity. To leverage this, you simply need to uncomment the <code>containers</code> line within your Nextflow workflow file (e.g., <code>hello-workflow-4.nf</code>). Before executing the workflow, ensure you load the Singularity module by running <code>module load singularitypro</code>. The environment will be automatically propagated to the Slurm job.</p>
+<p>Once enabled, processes like <code>convertToUpper</code> will no longer run natively on the host system but will instead execute inside a specified Singularity container. The Singularity image is cached on the first run and then reused for subsequent executions, saving time and resources. For this tutorial, we are using a standard Ubuntu container maintained by SDSC’s Marty Kandes, available through his <a href="https://github.com/mkandes/naked-singularity">naked-singularity</a> project. This ensures that the <code>convertToUpper</code> process runs in a consistent and isolated environment.</p>
+<p>To run the workflow with Singularity, first uncomment the <code>containers</code> line in <code>hello-workflow-4.nf</code> (if it’s commented out). Then, execute Nextflow with the appropriate profile (e.g., <code>slurm_debug</code> if you’re still testing on the debug queue):</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run hello-workflow-4.nf <span class="at">-profile</span> slurm_debug</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You should observe that the <code>convertToUpper</code> process now executes within the Singularity container, providing a robust and reproducible execution environment.</p>
 
 
 </section>
