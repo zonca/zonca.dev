@@ -52,6 +52,14 @@ cd expanse_nextflow
 
 This workflow processes a CSV file containing greetings, converts them to uppercase, and then collects them. For more details, refer to the [Nextflow training materials](https://training.nextflow.io/2.4.0/hello_nextflow/03_hello_workflow/).
 
+The workflow consists of the following steps:
+
+1.  **`sayHello` process**: Takes individual greetings (e.g., from a CSV file) and creates a separate output file for each greeting, containing the greeting text.
+2.  **`convertToUpper` process**: Takes the output files from `sayHello`, reads their content, converts the text to uppercase, and writes the uppercase text to new files.
+3.  **`collectGreetings` process**: Gathers all the uppercase files produced by `convertToUpper`, concatenates their content into a single output file, and also counts how many greetings were processed in total.
+
+In summary, the workflow reads a list of greetings, processes each one by converting it to uppercase, and then combines all the uppercase greetings into a single result file, finally reporting the total count.
+
 Then, run the workflow locally on the login node (for testing purposes):
 
 ```bash
