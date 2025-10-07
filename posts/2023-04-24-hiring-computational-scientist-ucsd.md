@@ -2,7 +2,6 @@
 categories:
 - hpc
 - sdsc
-- sdsc
 date: '2023-04-24'
 layout: post
 title: Hiring a Computational Scientist at the San Diego Supercomputer Center
