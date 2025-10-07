@@ -1,6 +1,4 @@
 ---
-categories:
-- bash
 date: '2024-01-12'
 layout: post
 title: Make a PDF from a series of screenshots
