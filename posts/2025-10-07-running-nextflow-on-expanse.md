@@ -168,7 +168,7 @@ Nextflow seamlessly integrates with container technologies like Singularity, all
 
 The `expanse_nextflow` repository's `nextflow.config` file already includes a profile that enables Singularity. To leverage this, you simply need to uncomment the `containers` line within your Nextflow workflow file (e.g., `hello-workflow-4.nf`).
 
-Once enabled, processes like `convertToUpper` will no longer run natively on the host system but will instead execute inside a specified Singularity container. For this tutorial, we are using a standard Ubuntu container maintained by SDSC's Marty Kandes, available through his [naked-singularity](https://github.com/mkandes/naked-singularity) project. This ensures that the `convertToUpper` process runs in a consistent and isolated environment.
+Once enabled, processes like `convertToUpper` will no longer run natively on the host system but will instead execute inside a specified Singularity container. The Singularity image is cached on the first run and then reused for subsequent executions, saving time and resources. For this tutorial, we are using a standard Ubuntu container maintained by SDSC's Marty Kandes, available through his [naked-singularity](https://github.com/mkandes/naked-singularity) project. This ensures that the `convertToUpper` process runs in a consistent and isolated environment.
 
 To run the workflow with Singularity, first uncomment the `containers` line in `hello-workflow-4.nf` (if it's commented out). Then, execute Nextflow with the appropriate profile (e.g., `slurm_debug` if you're still testing on the debug queue):
 
