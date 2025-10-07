@@ -2,8 +2,10 @@
 title: "Python for HPC"
 
 date: "2025-09-15"
-<<<<<<< HEAD
-categories: [Python, hpc, sdsc]
+categories:
+  - Python
+  - hpc
+  - sdsc
 ---
 
 Python is often the first choice for prototyping research ideas, but scaling that prototype to thousands of cores and multi‑node workflows needs a different toolkit. This post shares a webinar I authored for the [Advanced HPC-CI Webinar series](https://www.sdsc.edu/education/training-programs/Advanced-HPC-CI-Webinars.html) that walks through a practical path: start with idiomatic Python, isolate hotspots, accelerate them, then scale out while keeping the development loop fast.
