@@ -1,7 +1,7 @@
 ---
 categories:
-  - hpc
-  - nextflow
+  - HPC
+  - sdsc
 date: '2025-10-07'
 layout: post
 title: Running Nextflow on Expanse
