@@ -47,12 +47,13 @@ First, clone the example repository:
 
 ```bash
 git clone https://github.com/zonca/expanse_nextflow
+cd expanse_nextflow
 ```
 
 Then, run the workflow locally on the login node (for testing purposes):
 
 ```bash
-nextflow expanse_nextflow/hello-workflow-4.nf
+nextflow hello-workflow-4.nf
 ```
 
 You should see output similar to this:
