@@ -3,3 +3,4 @@
 _site
 
 **/*.quarto_ipynb
+expanse_nextflow/
