@@ -1,6 +1,7 @@
 ---
 categories:
-- HPC
+- hpc
+- sdsc
 - sdsc
 date: '2023-04-24'
 layout: post

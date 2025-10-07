@@ -1,6 +1,6 @@
 ---
 categories:
-- HPC
+- hpc
 - sdsc
 date: 2025-04-19
 layout: post

@@ -1,7 +1,7 @@
 ---
 categories:
 - python
-- HPC
+- hpc
 - sdsc
 date: 2023-08-16 15:00
 layout: post
