@@ -133,3 +133,33 @@ sbatch nextflow_job.sh
 ```
 
 You can monitor the job status with `squeue -u $USER` and check the output in `nextflow_job.out` and `nextflow_job.err` once the job completes.
+
+### 6. Run with Slurm Executor
+
+Nextflow can also manage the submission of individual tasks as separate Slurm jobs, allowing you to leverage the cluster's resources more effectively. In this mode, Nextflow runs on the login node, but each process within the workflow is submitted as an independent Slurm job. This setup often utilizes node-local scratch (fast SSD) for temporary files, with results passed between tasks.
+
+Nextflow uses configuration profiles to define different execution environments. The `expanse_nextflow` repository includes a `nextflow.config` file with a `slurm_debug` profile tailored for this purpose. You can inspect the `nextflow.config` file to see the specific configurations.
+
+To run the workflow using the Slurm executor with the `slurm_debug` profile, execute the following command on the login node:
+
+```bash
+nextflow run hello-workflow-4.nf -profile slurm_debug
+```
+
+You should see output similar to this, indicating that the executor is `slurm`:
+
+```
+N E X T F L O W   ~  version 25.04.8
+
+Launching `hello-workflow-4.nf` [tender_fermi] DSL2 - revision: 7924362939
+
+executor >  slurm (7)
+[bb/5d01f1] sayHello (1)       [100%] 3 of 3 ✔
+[a1/f76925] convertToUpper (3) [100%] 3 of 3 ✔
+[d0/a2e7e6] collectGreetings   [100%] 1 of 1 ✔
+There were 3 greetings in this batch
+Completed at: 07-Oct-2025 11:02:52
+Duration    : 1m 22s
+CPU hours   : (a few seconds)
+Succeeded   : 7
+```
