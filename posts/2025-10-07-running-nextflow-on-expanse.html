@@ -202,7 +202,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="install-micromamba" class="level3">
 <h3 class="anchored" data-anchor-id="install-micromamba">1. Install Micromamba</h3>
 <p>Expanse uses an older version of Anaconda, so we’ll install Micromamba for a more up-to-date and isolated environment. Follow the official Micromamba installation guide: <a href="https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html">https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html</a></p>
-<p><strong>Important:</strong> When prompted for the <code>Prefix location?</code>, use a path in your scratch space. You can get the correct path by running: <code>echo /expanse/lustre/scratch/$USER/temp_project/micromamba</code>.</p>
+<p><strong>Important:</strong> When prompted for the <code>Prefix location?</code>, use a path in your scratch space. You can get the correct path by running: <code>echo /expanse/lustre/scratch/$USER/temp_project/micromamba</code>. Note that you cannot use <code>$USER</code> directly in the prompt; you must replace it with the actual path obtained from the <code>echo</code> command.</p>
 <p>After installation, make sure to configure your <code>bash</code> shell. You will need to log out and log back in, or source your <code>~/.bashrc</code> file for the changes to take effect.</p>
 </section>
 <section id="install-nextflow" class="level3">
