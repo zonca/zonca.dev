@@ -1,6 +1,7 @@
 ---
 categories:
-- hpc
+- HPC
+- sdsc
 date: 2025-04-19
 layout: post
 title: How to request High Performance Computing (HPC) resources
