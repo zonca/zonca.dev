@@ -69,3 +69,57 @@ executor >  local (7)
 [09/3fd893] collectGreetings   [100%] 1 of 1 ✔
 There were 3 greetings in this batch
 ```
+
+### 5. Run in a single Slurm job
+
+To run Nextflow on the compute nodes, you need to submit a Slurm job. First, identify your available allocation using `expanse-client user`:
+
+```bash
+expanse-client user
+```
+
+This will show your available allocations, for example:
+
+```
+ Resource  expanse 
+
+╭───┬───────┬───────┬─────────┬──────────────┬──────┬───────────┬─────────────────╮
+│   │ NAME  │ STATE │ PROJECT │ TG PROJECT   │ USED │ AVAILABLE │ USED BY PROJECT │
+├───┼───────┼───────┼─────────┼──────────────┼──────┼───────────┼─────────────────┤
+│ 1 │ zonca │ allow │ sds166  │ TG-STA160003 │  706 │     25000 │             761 │
+╰───┴───────┴───────┴─────────┴──────────────┴──────┴───────────┴─────────────────╯
+```
+
+From this output, you can see that `sds166` is the project and `TG-STA160003` is the TG project. You will use these in your Slurm script.
+
+Create a file named `nextflow_job.sh` with the following content:
+
+```bash
+#!/bin/bash
+#SBATCH --job-name=nextflow_test
+#SBATCH --partition=shared
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=4GB
+#SBATCH --time=00:10:00
+#SBATCH --account=sds166
+#SBATCH --export=ALL
+#SBATCH --output=nextflow_job.out
+#SBATCH --error=nextflow_job.err
+
+# Load micromamba and activate nextflow environment
+source ~/.bashrc
+micromamba activate nf-env
+
+# Run Nextflow
+nextflow hello-workflow-4.nf
+```
+
+Submit the job using `sbatch`:
+
+```bash
+sbatch nextflow_job.sh
+```
+
+You can monitor the job status with `squeue -u $USER` and check the output in `nextflow_job.out` and `nextflow_job.err` once the job completes.
