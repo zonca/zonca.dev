@@ -138,7 +138,7 @@ You can monitor the job status with `squeue -u $USER` and check the output in `n
 
 Nextflow can also manage the submission of individual tasks as separate Slurm jobs, allowing you to leverage the cluster's resources more effectively. In this mode, Nextflow runs on the login node, but each process within the workflow is submitted as an independent Slurm job. This setup often utilizes node-local scratch (fast SSD) for temporary files, with results passed between tasks.
 
-Nextflow uses configuration profiles to define different execution environments. The `expanse_nextflow` repository includes a `nextflow.config` file with a `slurm_debug` profile tailored for this purpose. You can inspect the `nextflow.config` file to see the specific configurations.
+Nextflow uses configuration profiles to define different execution environments. The `expanse_nextflow` repository includes a `nextflow.config` file with a `slurm_debug` profile tailored for this purpose. This profile limits parallelism to 1 job at a time due to debug queue limits, but this restriction can be removed when using the shared or compute queues. You can inspect the `nextflow.config` file to see the specific configurations.
 
 To run the workflow using the Slurm executor with the `slurm_debug` profile, execute the following command on the login node:
 
