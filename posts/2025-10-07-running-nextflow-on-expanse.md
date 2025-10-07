@@ -38,3 +38,34 @@ Encoding: UTF-8 (UTF-8)
 ```
 
 Notice the `Runtime` line, which indicates that Nextflow is using an OpenJDK version provided by Conda, ensuring compatibility and optimal performance on Expanse.
+
+### 4. Run a Toy Example
+
+To test your Nextflow installation, let's run a simple workflow from the Nextflow training materials. The training videos are an excellent resource for understanding Nextflow concepts: [https://training.nextflow.io/latest/hello_nextflow/01_hello_world/](https://training.nextflow.io/latest/hello_nextflow/01_hello_world/)
+
+First, download the workflow script and input data:
+
+```bash
+wget https://github.com/nextflow-io/training/raw/refs/heads/master/hello-nextflow/solutions/3-hello-workflow/hello-workflow-4.nf
+wget https://github.com/nextflow-io/training/raw/refs/heads/master/hello-nextflow/greetings.csv
+```
+
+Then, run the workflow locally on the login node (for testing purposes):
+
+```bash
+nextflow hello-workflow-4.nf
+```
+
+You should see output similar to this:
+
+```
+N E X T F L O W   ~  version 25.04.8
+
+Launching `hello-workflow-4.nf` [soggy_monod] DSL2 - revision: 7924362939
+
+executor >  local (7)
+[ee/22f232] sayHello (3)       [100%] 3 of 3 ✔
+[77/32c0db] convertToUpper (3) [100%] 3 of 3 ✔
+[09/3fd893] collectGreetings   [100%] 1 of 1 ✔
+There were 3 greetings in this batch
+```
