@@ -1,7 +1,8 @@
 ---
 categories:
 - python
-- hpc
+- HPC
+- sdsc
 date: 2023-08-16 15:00
 layout: post
 slug: python-for-hpc-tutorial
