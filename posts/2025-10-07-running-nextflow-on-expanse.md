@@ -80,7 +80,7 @@ There were 3 greetings in this batch
 
 ### 5. Run in a single Slurm job
 
-To run Nextflow on the compute nodes, you need to submit a Slurm job. First, identify your available allocation using `expanse-client user`:
+To run Nextflow on the compute nodes, you need to submit a Slurm job. This approach is useful if you have many tiny jobs that can all run within the resources of a single node. However, the true power of Nextflow lies in its ability to coordinate multiple Slurm jobs, which can execute on different queues or even require specialized resources like GPUs or multiple nodes for different stages of a workflow. First, identify your available allocation using `expanse-client user`:
 
 ```bash
 expanse-client user
