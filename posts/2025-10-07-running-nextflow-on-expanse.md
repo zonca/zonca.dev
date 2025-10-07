@@ -19,7 +19,9 @@ After installation, make sure to configure your `bash` shell. You will need to l
 
 ### 2. Install Nextflow
 
-Once Micromamba is set up, you can install Nextflow in a new environment called `nf-env`. Follow the instructions on the official Nextflow installation page: [https://www.nextflow.io/docs/latest/install.html](https://www.nextflow.io/docs/latest/install.html)
+Once Micromamba is set up, you can install Nextflow in a new environment called `nf-env`. This approach is particularly beneficial on Expanse because the system's default Java version might be too old for Nextflow. Micromamba will install a recent Java version isolated within your `nf-env` environment, ensuring compatibility.
+
+Follow the instructions on the official Nextflow installation page: [https://www.nextflow.io/docs/latest/install.html](https://www.nextflow.io/docs/latest/install.html)
 
 Here's how you can do it using Micromamba:
 
