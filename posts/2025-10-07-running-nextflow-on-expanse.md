@@ -50,6 +50,8 @@ git clone https://github.com/zonca/expanse_nextflow
 cd expanse_nextflow
 ```
 
+This workflow processes a CSV file containing greetings, converts them to uppercase, and then collects them. For more details, refer to the [Nextflow training materials](https://training.nextflow.io/2.4.0/hello_nextflow/03_hello_workflow/).
+
 Then, run the workflow locally on the login node (for testing purposes):
 
 ```bash
