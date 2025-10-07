@@ -9,7 +9,7 @@
 <meta name="author" content="Andrea Zonca">
 <meta name="dcterms.date" content="2025-10-07">
 
-<title>Singularity Dask Zarr Container for Scientific Computing – Andrea Zonca</title>
+<title>Building Singularity Containers with Conda Environments from requirements.txt – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -158,11 +158,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Singularity Dask Zarr Container for Scientific Computing</h1>
+      <h1 class="title">Building Singularity Containers with Conda Environments from requirements.txt</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">singularity</div>
-                <div class="quarto-category">dask</div>
-                <div class="quarto-category">zarr</div>
                 <div class="quarto-category">python</div>
               </div>
                   </div>
@@ -200,18 +198,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>This post introduces a Singularity container designed for scientific computing, leveraging Dask and Zarr for efficient data processing and storage. The container provides a reproducible environment for data-intensive tasks.</p>
-<section id="key-features" class="level2">
-<h2 class="anchored" data-anchor-id="key-features">Key Features:</h2>
+<p>This post introduces a method for building Singularity containers that include a Conda environment based on a <code>requirements.txt</code> file. This approach provides a reproducible and portable environment for any Python project.</p>
+<section id="key-capabilities" class="level2">
+<h2 class="anchored" data-anchor-id="key-capabilities">Key Capabilities:</h2>
 <ul>
-<li><strong>Efficient Data Processing:</strong> Utilizes Dask for parallel and out-of-core computations.</li>
-<li><strong>Scalable Data Storage:</strong> Employs Zarr for chunked, compressed N-dimensional array storage.</li>
-<li><strong>Reproducible Environments:</strong> Singularity ensures consistent execution across different systems.</li>
+<li><strong>Automated Environment Setup:</strong> Easily create a Conda environment within a Singularity container using a <code>requirements.txt</code> file.</li>
+<li><strong>Reproducible Environments:</strong> Ensure consistent execution of your Python projects across different systems.</li>
+<li><strong>Streamlined Workflow:</strong> Leverage GitHub Actions for automated container builds and hosting on GitHub Container Registry.</li>
 </ul>
 </section>
 <section id="getting-started" class="level2">
 <h2 class="anchored" data-anchor-id="getting-started">Getting Started:</h2>
-<p>This container is built using Apptainer (formerly Singularity) via GitHub Actions, ensuring a streamlined and automated process. Python dependencies are managed through <code>requirements.txt</code>. The resulting container image is hosted on the GitHub Container Registry, allowing for easy pulling and deployment.</p>
+<p>This container is built using Apptainer (formerly Singularity) via GitHub Actions, ensuring a streamlined and automated process. Python dependencies are managed through <code>requirements.txt</code>, which is used to create a Conda environment inside the container. The resulting container image is hosted on the GitHub Container Registry, allowing for easy pulling and deployment.</p>
 <p>You can pull the container using:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">singularity</span> pull oras://ghcr.io/zonca/singularity_dask_zarr:latest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>For more details, including building and testing instructions, please refer to the GitHub repository: <a href="https://github.com/zonca/singularity_dask_zarr">https://github.com/zonca/singularity_dask_zarr</a></p>
