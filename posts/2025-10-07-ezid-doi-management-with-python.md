@@ -9,7 +9,7 @@ This project offers Python scripts for interacting with the EZID API to create a
 
 ## Setup
 
-1.  **Clone the Repository**: If you haven't already, clone the repository.
+1.  **Clone the Repository**: If you haven't already, clone the [EZID API repository](https://github.com/zonca/ezid_api).
 2.  **Configure Credentials**: Create a `.env` file in the project root with your `EZID_USERNAME` and `EZID_PASSWORD`. This file is Git-ignored for security.
 3.  **Install Dependencies**: Use `uv` to set up a virtual environment and install dependencies from `requirements.txt` (`uv venv` then `uv pip install -r requirements.txt`).
 
