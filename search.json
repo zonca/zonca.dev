@@ -3238,7 +3238,7 @@
     "href": "GEMINI.html",
     "title": "Gemini CLI Guidelines for zonca.dev",
     "section": "",
-    "text": "This document outlines specific guidelines for interacting with the zonca.dev website project using the Gemini CLI.\n\n\n\nCommit and Push: After making any changes, always commit your changes and push them to the remote repository. This ensures that your work is saved and synchronized.\nAutonomous Commits: You do not need to ask for permission before committing or double-check commit messages. Proceed with committing and pushing once changes are complete.\n\n\n\n\n\nExisting Categories Only: When creating or modifying blog posts, do not invent new categories. Only use categories that have been previously used in other posts. To find existing categories, you can inspect the _metadata.yml file in the posts/ directory or check individual post files."
+    "text": "This document outlines specific guidelines for interacting with the zonca.dev website project using the Gemini CLI.\n\n\n\nCommit and Push: After making any changes, always commit your changes and push them to the remote repository. This ensures that your work is saved and synchronized.\nAutonomous Commits: You do not need to ask for permission before committing or double-check commit messages. Proceed with committing and pushing once changes are complete.\n\n\n\n\n\nExisting Categories Only: When creating or modifying blog posts, do not invent new categories. Only use categories that have been previously used in other posts. To find existing categories, you can inspect the _metadata.yml file in the posts/ directory or check individual post files.\n\n\n\n\nWhen referencing images in blog posts, always use paths relative to the post’s directory. If the image is in a subdirectory named img within the post’s directory, the path should be img/your_image.png. Avoid using absolute paths like /img/your_image.png."
   },
   {
     "objectID": "GEMINI.html#general-workflow",
@@ -3253,6 +3253,13 @@
     "title": "Gemini CLI Guidelines for zonca.dev",
     "section": "",
     "text": "Existing Categories Only: When creating or modifying blog posts, do not invent new categories. Only use categories that have been previously used in other posts. To find existing categories, you can inspect the _metadata.yml file in the posts/ directory or check individual post files."
+  },
+  {
+    "objectID": "GEMINI.html#image-referencing-in-blog-posts",
+    "href": "GEMINI.html#image-referencing-in-blog-posts",
+    "title": "Gemini CLI Guidelines for zonca.dev",
+    "section": "",
+    "text": "When referencing images in blog posts, always use paths relative to the post’s directory. If the image is in a subdirectory named img within the post’s directory, the path should be img/your_image.png. Avoid using absolute paths like /img/your_image.png."
   },
   {
     "objectID": "posts/2024-07-17-run-healpy-browser-pyodide.html",
