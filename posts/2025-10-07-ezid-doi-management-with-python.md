@@ -20,7 +20,7 @@ This project offers Python scripts for interacting with the EZID API to create a
 
 ## Verification
 
-![Screenshot of EZID Identifier Details page](/img/ezid_screenshot.png)
+![Screenshot of EZID Identifier Details page](img/ezid_screenshot.png)
 
 You can verify the DOI in a web browser:
 

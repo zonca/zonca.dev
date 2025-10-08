@@ -10,3 +10,7 @@ This document outlines specific guidelines for interacting with the `zonca.dev` 
 ## Blog Post Categories
 
 - **Existing Categories Only:** When creating or modifying blog posts, **do not invent new categories**. Only use categories that have been previously used in other posts. To find existing categories, you can inspect the `_metadata.yml` file in the `posts/` directory or check individual post files.
+
+## Image Referencing in Blog Posts
+
+When referencing images in blog posts, always use paths relative to the post's directory. If the image is in a subdirectory named `img` within the post's directory, the path should be `img/your_image.png`. Avoid using absolute paths like `/img/your_image.png`.
