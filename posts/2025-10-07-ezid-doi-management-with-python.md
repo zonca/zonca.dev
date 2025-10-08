@@ -20,6 +20,8 @@ This project offers Python scripts for interacting with the EZID API to create a
 
 ## Verification
 
+![Screenshot of EZID Identifier Details page](../img/ezid_screenshot.png)
+
 You can verify the DOI in a web browser:
 
 *   **View Metadata**: Access `https://ezid.cdlib.org/id/doi:10.5072/FK2/TESTDOI123` to see the raw metadata.
