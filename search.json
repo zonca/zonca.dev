@@ -4729,7 +4729,7 @@
     "href": "posts/2025-10-07-ezid-doi-management-with-python.html#verification",
     "title": "EZID DOI Management with Python",
     "section": "Verification",
-    "text": "Verification\nYou can verify the DOI in a web browser:\n\nView Metadata: Access https://ezid.cdlib.org/id/doi:10.5072/FK2/TESTDOI123 to see the raw metadata.\nResolve DOI: The DOI https://doi.org/10.5072/FK2/TESTDOI123 will redirect to https://www.google.com as configured."
+    "text": "Verification\n\n\n\nScreenshot of EZID Identifier Details page\n\n\nYou can verify the DOI in a web browser:\n\nView Metadata: Access https://ezid.cdlib.org/id/doi:10.5072/FK2/TESTDOI123 to see the raw metadata.\nResolve DOI: The DOI https://doi.org/10.5072/FK2/TESTDOI123 will redirect to https://www.google.com as configured."
   },
   {
     "objectID": "posts/2012-12-17-ubuntu-ppa-for-healpix-and-healpy.html",
