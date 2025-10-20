@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Andrea Zonca">
-<meta name="dcterms.date" content="2022-03-22">
+<meta name="dcterms.date" content="2025-10-20">
 
-<title>Workflow for Jupyter Notebooks under version control – Andrea Zonca</title>
+<title>Auto-merge GitHub Pull Requests After GitHub Actions Pass – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -124,10 +158,11 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Workflow for Jupyter Notebooks under version control</h1>
+      <h1 class="title">Auto-merge GitHub Pull Requests After GitHub Actions Pass</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">jupyter</div>
-                <div class="quarto-category">git</div>
+                <div class="quarto-category">github</div>
+                <div class="quarto-category">automation</div>
+                <div class="quarto-category">ci</div>
               </div>
                   </div>
   </div>
@@ -145,7 +180,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 22, 2022</p>
+        <p class="date">October 20, 2025</p>
       </div>
     </div>
     
@@ -164,64 +199,57 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>I’ll present here my strategy for keeping Jupyter Notebooks under version control.</p>
-<p>TLDR:</p>
+<p>Pull request auto-merge is a small feature that keeps teams from babysitting green builds. Once every required check is green, GitHub merges the PR for you—no extra clicks, no late-night merges. Here is how to get it running safely with GitHub Actions.</p>
+<section id="prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
+<p>You need <strong>maintainer access</strong> (admin or repository maintainer) to change repository settings. Auto-merge depends on branch protection rules, so make sure you already have a default branch (for example, <code>main</code>) and that your GitHub Actions workflows have run at least once so their check names appear in the UI.</p>
+</section>
+<section id="allow-auto-merge-on-the-repository" class="level2">
+<h2 class="anchored" data-anchor-id="allow-auto-merge-on-the-repository">1. Allow auto-merge on the repository</h2>
+<ol type="1">
+<li>Open <code>Settings → General</code>.</li>
+<li>Scroll to <strong>Pull Requests</strong> and enable <strong>Allow auto-merge</strong>.</li>
+</ol>
+<p>This only needs to be done once per repository. Without it the <strong>Auto-merge</strong> button will never appear on PRs.</p>
+</section>
+<section id="require-the-github-actions-checks-in-a-branch-protection-rule" class="level2">
+<h2 class="anchored" data-anchor-id="require-the-github-actions-checks-in-a-branch-protection-rule">2. Require the GitHub Actions checks in a branch protection rule</h2>
+<ol type="1">
+<li>Go to <code>Settings → Branches</code>.</li>
+<li>Add or edit the branch protection rule for your main integration branch (for example, <code>main</code>).</li>
+<li>(Optional) Turn on <strong>Require a pull request before merging</strong> and set <strong>Require approvals</strong> to <code>1</code> if you want at least one review before auto-merge.</li>
+<li>Check <strong>Require status checks to pass before merging</strong>.</li>
+<li>In the status check picker, select every GitHub Actions workflow that must be green.</li>
+<li>(Recommended) Enable <strong>Require branches to be up to date before merging</strong> so the PR is rebased/merged only when it matches the latest base branch.</li>
+<li>Save the rule.</li>
+</ol>
+<p>Once this rule is in place, GitHub knows exactly which GitHub Actions jobs must succeed before it is allowed to merge automatically.</p>
+</section>
+<section id="turn-on-auto-merge-from-a-pull-request" class="level2">
+<h2 class="anchored" data-anchor-id="turn-on-auto-merge-from-a-pull-request">3. Turn on auto-merge from a pull request</h2>
+<p>When a contributor opens a PR against the protected branch:</p>
+<ol type="1">
+<li>Scroll to the merge box and click <strong>Enable auto-merge</strong>.</li>
+<li>Choose the merge strategy you want GitHub to apply (merge commit, squash, or rebase). The available options depend on the repository’s merge policy.</li>
+<li>Confirm.</li>
+</ol>
+<p>GitHub now keeps the PR queued. When the branch has the required approvals (if any) and every required GitHub Actions check is green, the merge happens automatically. If <strong>Require branches to be up to date</strong> is active, GitHub may ask the author to <code>Update branch</code> before it flips the merge switch.</p>
+<section id="cli-shortcut" class="level3">
+<h3 class="anchored" data-anchor-id="cli-shortcut">CLI shortcut</h3>
+<p>You can enable the same behavior from the terminal:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gh</span> pr merge <span class="op">&lt;</span>pr-number<span class="op">&gt;</span> --auto <span class="at">--squash</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Adjust the merge strategy flag (<code>--squash</code>, <code>--merge</code>, <code>--rebase</code>) to match your repository defaults.</p>
+</section>
+</section>
+<section id="troubleshooting-checklist" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting-checklist">Troubleshooting checklist</h2>
 <ul>
-<li>Use <code>nbstripout</code> to only commit input cells</li>
-<li>Snapshot executed Notebooks to a Gist with <code>gh gist create</code></li>
-<li>Save link to Gist in commit message and in Notebook cell</li>
-<li>see below for script to automate</li>
+<li><strong>Auto-merge button missing</strong>: confirm the repository-level <strong>Allow auto-merge</strong> toggle is on and that you have permission to merge.</li>
+<li><strong>Specific workflow missing from the status check list</strong>: trigger the GitHub Actions workflow at least once; only executed jobs appear as selectable checks.</li>
+<li><strong>Auto-merge stuck on “Waiting for status to be reported”</strong>: the branch protection rule references a stale check name. Update the rule to match the new workflow or job name.</li>
+<li><strong>Dependabot PRs</strong>: enable <strong>Allow auto-merge</strong> in the repository settings and grant Dependabot permission to auto-merge, or add <code>github.actor == "dependabot[bot]"</code> to your policies if you are using GitHub’s CodeQL or security features.</li>
 </ul>
-<section id="requirements" class="level2">
-<h2 class="anchored" data-anchor-id="requirements">Requirements</h2>
-<ul>
-<li>Github handles ipynb pretty well, so I prefer not to use <a href="https://github.com/mwouts/jupytext"><code>jupytext</code></a></li>
-<li>I want small repositories, so only commit the input cells</li>
-<li>I want to save the executed notebooks, not in the repo, but where I can easily reference them if needed</li>
-</ul>
-</section>
-<section id="workflow" class="level2">
-<h2 class="anchored" data-anchor-id="workflow">Workflow</h2>
-<section id="notebooks-and-git" class="level3">
-<h3 class="anchored" data-anchor-id="notebooks-and-git">Notebooks and git</h3>
-<p>I work on Notebooks as I work with normal Python files, so I always run <code>black</code> on them to fix formatting, use <code>git add -p</code> to add snippet by snippet. I don’t mind the little extra escaping the Notebook introduces.</p>
-<p>I have the <code>nbstripout</code> filters activated (<code>nbstripout --install</code>) so that even if the notebook is partially executed, when I run <code>git add -p</code> I only get the patches on the input cells.</p>
-<p>Moreover, I configure <code>nbstripout</code> <a href="https://github.com/kynan/nbstripout#stripping-metadata">to remove metadata</a> like the kernelspec or the Python version, which doesn’t do by default</p>
-</section>
-<section id="snapshot-executed-notebooks" class="level3">
-<h3 class="anchored" data-anchor-id="snapshot-executed-notebooks">Snapshot executed Notebooks</h3>
-<p>The Jupyter Notebook inside the repository has only the inputs, but I would like to save executed Notebooks for tracking purposes without increasing the size of the repository.</p>
-<p>First I do a clean execution of the Notebook (with Restart &amp; Run All), then I save the changes to the input cells to the repository. I don’t need to clear the outputs from the Notebook, <code>nbstripout</code> does it on th e fly before submitting changes to git.</p>
-<p>Then I post the executed Notebook with all outputs to a Gist from the command line with the Github CLI:</p>
-<pre><code>gh gist create my_notebook.ipynb</code></pre>
-<p>Optionally with <code>--public</code> to make it show on my Gist profile.</p>
-<p>The <code>gh</code> tool returns the link to the Gist, that I can add to the commit message or post in a Pull Request or an Issue.</p>
-</section>
-<section id="add-executed-notebooks-to-the-documentation" class="level3">
-<h3 class="anchored" data-anchor-id="add-executed-notebooks-to-the-documentation">Add executed Notebooks to the documentation</h3>
-<p>Once I have the final version of a Notebook, I often use <code>nbsphinx</code> to add it to the documentation.</p>
-<p>So I disable <code>nbstripout</code> with:</p>
-<pre><code>nbstripout --uninstall</code></pre>
-<p>Then I add just the last executed state of the Notebook to the repository, so that Sphinx/Readthedocs can compile it into the documentation, including all plots.</p>
-<p>See <a href="https://pysm3.readthedocs.io/en/latest/preprocess-templates/gnilc_dust_logpoltens_templates.html">an example of a Notebook compiled into HTML by Sphinx</a></p>
-</section>
-</section>
-<section id="automation-script" class="level2">
-<h2 class="anchored" data-anchor-id="automation-script">Automation script</h2>
-<p>I have created a bash script that automates the process:</p>
-<ul>
-<li>call with <code>snapshot_nb your_notebook.ipynb</code></li>
-<li>creates a Gist with the Notebook</li>
-<li>amends the last commit to add a link to it</li>
-<li>it also creates a new Markdown cell with the tag <code>snapshotlog</code> and the title “Execution log” and appends a link to the gist with date and time of execution (Thanks <a href="https://twitter.com/cosmic_mar"><code>@cosmic_mar</code></a> for the suggestion), see <a href="https://gist.github.com/zonca/0fd8770877a1c90c5a7f22d4a391471d">how the Execution log looks like</a></li>
-<li>it actually works with any text file, even multiple files, so it could be used for log outputs for example</li>
-</ul>
-<p>See <a href="https://gist.github.com/2f2eba4f0288ca4079f7f83efa6b9048" class="uri">https://gist.github.com/2f2eba4f0288ca4079f7f83efa6b9048</a></p>
-<p>Install it by symlinking the 2 scripts to an executable folder, for example <code>~/bin</code>, also useful if you fork my Gist.</p>
-</section>
-<section id="feedback" class="level2">
-<h2 class="anchored" data-anchor-id="feedback">Feedback</h2>
-<p>See <a href="https://twitter.com/andreazonca/status/1506458567456411649">this thread on Twitter</a></p>
+<p>Once everything is wired up, teams can queue PRs as soon as reviews are done. GitHub takes care of merging the moment your Actions pipeline says the coast is clear.</p>
 
 
 </section>
