@@ -1,8 +1,6 @@
 ---
 categories:
 - github
-- automation
-- ci
 date: '2025-10-20'
 layout: post
 title: Auto-merge GitHub Pull Requests After GitHub Actions Pass
