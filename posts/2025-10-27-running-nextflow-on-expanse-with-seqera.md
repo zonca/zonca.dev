@@ -68,9 +68,9 @@ Within your Seqera workspace, navigate to the "Compute Environments" section and
 
 Refer to the [Seqera documentation for HPC setup](https://docs.seqera.io/platform/compute-environments/hpc/) for more detailed instructions on each of these steps.
 
-#### 3.2. Launch Pipeline from Seqera Launchpad
+#### 3.2. Configure Pipeline in Seqera Launchpad
 
-Once your compute environment is configured, you can launch a pipeline directly from the Seqera Launchpad:
+Once your compute environment is configured, you can configure a pipeline in the Seqera Launchpad:
 
 1.  Navigate to the "Launchpad" section in your Seqera workspace.
 2.  Click "Add pipeline".
@@ -79,5 +79,9 @@ Once your compute environment is configured, you can launch a pipeline directly 
 5.  Enable the "Pull latest" button.
 6.  Set "Work directory" to `/expanse/lustre/scratch/zonca/temp_project/nextflow`.
 7.  In "Config profiles", select `slurm debug`. This profile is automatically pulled from the `nextflow.config` file in the repository.
+
+#### 3.3. Launch Pipeline
+
+After configuring the pipeline in the Launchpad, go to your Seqera dashboard. Find the `expanse_nextflow` pipeline and click "Launch". This action will submit a single job to the `debug` queue on Expanse to execute Nextflow. This Nextflow process will then submit the actual workflow jobs to the appropriate queues as defined in your pipeline. Real-time updates and logs for all jobs will flow directly into the Seqera.io UI, allowing you to monitor the entire workflow execution.
 
 
