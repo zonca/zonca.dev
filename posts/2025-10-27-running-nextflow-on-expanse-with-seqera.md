@@ -37,19 +37,7 @@ export TOWER_ACCESS_TOKEN="YOUR_SEQERA_API_TOKEN"
 
 Add this line to your `~/.bashrc` or `~/.profile` file on Expanse to persist the token across sessions.
 
-#### 1.3. Run a Workflow via Seqera
-
-Now, you can run your Nextflow workflow and have Seqera manage its execution on Expanse. The `-w` flag specifies the Seqera workspace, and the `-profile` flag can still be used for local Nextflow configurations.
-
-```bash
-nextflow run hello-workflow-4.nf -w YOUR_SEQERA_WORKSPACE_ID -profile slurm_debug
-```
-
-Replace `YOUR_SEQERA_WORKSPACE_ID` with the actual ID of your workspace in Seqera. You can find this in the URL when you are in your workspace (e.g., `https://platform.seqera.io/your_username/YOUR_SEQERA_WORKSPACE_ID`).
-
-Seqera will now orchestrate the submission of your Nextflow workflow to Expanse, and you can monitor its progress, view logs, and manage resources directly from the Seqera Platform web interface.
-
-#### 1.4. Launching Workflows from the Nextflow CLI with `-with-tower`
+#### 1.3. Launching Workflows from the Nextflow CLI with `-with-tower`
 
 Once your Seqera compute environment is configured and your `TOWER_ACCESS_TOKEN` is set, you can also launch Nextflow workflows directly from the command line using the `-with-tower` flag. This allows you to leverage Seqera's monitoring and management capabilities without explicitly specifying the workspace ID in the run command, as long as your local Nextflow configuration is linked to your Seqera account.
 
@@ -59,7 +47,7 @@ nextflow run hello-workflow-4.nf -with-tower -profile slurm_debug
 
 This command will execute the workflow, and its progress will be visible in your Seqera Platform dashboard. For more details, refer to the [Nextflow training materials on using Seqera Platform to capture and monitor Nextflow jobs launched from the CLI](https://training.nextflow.io/2.0/hello_nextflow/10_hello_seqera/#1-use-seqera-platform-to-capture-and-monitor-nextflow-jobs-launched-from-the-cli).
 
-#### 1.5. Configure a Compute Environment for Expanse
+#### 1.4. Configure a Compute Environment for Expanse
 
 Within your Seqera workspace, you need to configure a compute environment that connects to Expanse. Follow these steps:
 
