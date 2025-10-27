@@ -17,78 +17,76 @@ Seqera Labs is a bioinformatics company that provides a platform for collaborati
 
 Seqera offers an Academic Program that provides free Pro-level access to the Seqera Cloud Platform for researchers, educators, and students at qualifying institutions. To be eligible, the applicant's organization must be a degree-granting educational institution, and the use of the Seqera Platform must be solely for academic research and/or teaching purposes, not for commercial use. Applicants need a user account on seqera.io using their institutional email address and an organization created within seqera.io. More details and an application form are available on the Seqera website.
 
-### 1. Install Micromamba
+Before proceeding with Seqera-specific configurations, please follow the initial setup steps outlined in our previous tutorial: [Running Nextflow on Expanse](/posts/2025-10-07-running-nextflow-on-expanse.html). This includes installing Micromamba, Nextflow, verifying the installation, and running a toy example locally. Once you have completed these foundational steps, return to this tutorial to integrate Nextflow with the Seqera Platform.
 
-Expanse uses an older version of Anaconda, so we'll install Micromamba for managing Conda environments. Follow the official Micromamba installation guide: [https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html](https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html)
+### 1. Running Workflows with Seqera Platform
 
-**Important:** When prompted for the `Prefix location?`, use a path in your scratch space. You can get the correct path by running: `echo /expanse/lustre/scratch/$USER/temp_project/micromamba`. Note that you cannot use `$USER` directly in the prompt; you must replace it with the actual path obtained from the `echo` command.
+Instead of manually submitting Slurm jobs, we will now leverage the Seqera Platform to manage and execute our Nextflow workflows on Expanse. This provides a centralized interface for monitoring, collaboration, and advanced resource management.
 
-After installation, you will need to log out and log back in, or source your `~/.bashrc` file for the changes to take effect.
+#### 1.1. Create a Seqera Account and Workspace
 
-### 2. Install Nextflow
+If you don't already have one, create an account on [Seqera Platform](https://seqera.io/). Once logged in, create a new workspace for your projects.
 
-Once Micromamba is set up, you can install Nextflow in a new environment called `nf-env`. This approach is particularly beneficial on Expanse because the system's default Java version is too old for Nextflow. Micromamba will install a recent Java version isolated within your `nf-env` environment, ensuring compatibility.
+#### 1.2. Configure a Compute Environment for Expanse
 
-Follow the instructions on the official Nextflow installation page: [https://www.nextflow.io/docs/latest/install.html](https://www.nextflow.io/docs/latest/install.html)
+Within your Seqera workspace, you need to configure a compute environment that connects to Expanse. Follow these steps:
 
-When following the instructions, replace any `conda` commands with `micromamba` to use your newly installed Micromamba environment.
+1.  **Name:** `expanse-compute`
+2.  **Credentials:** Select `Managed identity cluster`. You will need to provide `login.expanse.sdsc.edu` as the host and configure an SSH key for authentication. This usually involves generating an SSH key pair and adding the public key to your `~/.ssh/authorized_keys` file on Expanse.
+3.  **Work directory:** First, create a directory on Expanse: `mkdir /expanse/lustre/scratch/$USER/temp_project/nextflow`. Then, in Seqera, specify the absolute path to this directory (e.g., `/expanse/lustre/scratch/your_username/temp_project/nextflow`), replacing `your_username` with your actual username.
+4.  **Launch directory:** Leave this field empty.
+5.  **Queue names:** Use `compute` for both the default queue and any other relevant queue settings.
 
-### 3. Verify Nextflow Installation
+Refer to the [Seqera documentation for HPC setup](https://docs.seqera.io/platform/compute-environments/hpc/) for more detailed instructions on each of these steps.
 
-After installation, you can verify that Nextflow is correctly installed by running `nextflow info`:
+#### 1.3. Link Nextflow to Seqera
 
-```
-Version: 25.04.8 build 5956
-Created: 06-10-2025 21:19 UTC (14:19 PDT)
-System: Linux 4.18.0-513.24.1.el8_9.x86_64
-Runtime: Groovy 4.0.26 on OpenJDK 64-Bit Server VM 23.0.2-internal-adhoc.conda.src
-Encoding: UTF-8 (UTF-8)
-```
-
-Notice the `Runtime` line, which indicates that Nextflow is using an OpenJDK version provided by Conda, ensuring compatibility and optimal performance on Expanse.
-
-### 4. Run a Toy Example
-
-To test your Nextflow installation, let's run a simple workflow from the Nextflow training materials. The training videos are an excellent resource for understanding Nextflow concepts, see [https://training.nextflow.io](https://training.nextflow.io)
-
-First, clone the example repository:
+To allow your local Nextflow installation to communicate with the Seqera Platform, you need to set the `NXF_API_TOKEN` environment variable. You can generate an API token from your Seqera account settings.
 
 ```bash
-git clone https://github.com/zonca/expanse_nextflow
-cd expanse_nextflow
+export NXF_API_TOKEN="YOUR_SEQERA_API_TOKEN"
 ```
 
-The `hello-workflow-4.nf` workflow processes a CSV file containing greetings, converts them to uppercase, and then collects them. For more details, refer to the [3rd tutorial in the Nextflow training materials](https://training.nextflow.io/2.4.0/hello_nextflow/03_hello_workflow/).
+Add this line to your `~/.bashrc` or `~/.profile` file on Expanse to persist the token across sessions.
 
-The workflow consists of the following steps:
+#### 1.4. Run a Workflow via Seqera
 
-1.  **`sayHello` process**: Takes individual greetings (e.g., from a CSV file) and creates a separate output file for each greeting, containing the greeting text.
-2.  **`convertToUpper` process**: Takes the output files from `sayHello`, reads their content, converts the text to uppercase, and writes the uppercase text to new files.
-3.  **`collectGreetings` process**: Gathers all the uppercase files produced by `convertToUpper`, concatenates their content into a single output file, and also counts how many greetings were processed in total.
-
-In summary, the workflow reads a list of greetings, processes each one by converting it to uppercase, and then combines all the uppercase greetings into a single result file, finally reporting the total count.
-
-Then, run the workflow locally on the login node (for testing purposes):
+Now, you can run your Nextflow workflow and have Seqera manage its execution on Expanse. The `-w` flag specifies the Seqera workspace, and the `-profile` flag can still be used for local Nextflow configurations.
 
 ```bash
-nextflow hello-workflow-4.nf
+nextflow run hello-workflow-4.nf -w YOUR_SEQERA_WORKSPACE_ID -profile slurm_debug
 ```
 
-You should see output similar to this:
+Replace `YOUR_SEQERA_WORKSPACE_ID` with the actual ID of your workspace in Seqera. You can find this in the URL when you are in your workspace (e.g., `https://platform.seqera.io/your_username/YOUR_SEQERA_WORKSPACE_ID`).
 
+Seqera will now orchestrate the submission of your Nextflow workflow to Expanse, and you can monitor its progress, view logs, and manage resources directly from the Seqera Platform web interface.
+
+### 2. Advanced Seqera Features: Slurm Executor and Singularity Integration
+
+Seqera Platform seamlessly integrates with Nextflow's executors and container technologies, simplifying the management of complex workflows on HPC systems like Expanse.
+
+#### 2.1. Slurm Executor Management
+
+When you run a Nextflow workflow through Seqera, and your compute environment is configured for Slurm, Seqera automatically handles the submission of individual Nextflow tasks as separate Slurm jobs. This means you don't need to manually configure `nextflow.config` profiles for Slurm execution on the login node. Seqera's compute environment configuration takes care of mapping Nextflow processes to appropriate Slurm resources, queues, and accounts.
+
+Seqera provides a rich interface to monitor these individual Slurm jobs, view their logs, and track resource consumption, offering a significant advantage over managing raw Slurm output files.
+
+#### 2.2. Singularity Container Integration
+
+Seqera also streamlines the use of container technologies like Singularity. If your Nextflow workflow specifies a container image (e.g., `container 'ubuntu:latest'`), Seqera will ensure that the specified Singularity image is pulled and used for the relevant processes on Expanse. You typically configure the container registry and any necessary authentication within your Seqera compute environment settings.
+
+This eliminates the need for manual `module load singularitypro` commands or complex `nextflow.config` adjustments for container runtime. Seqera ensures that the correct container environment is set up for each task, promoting reproducibility and portability of your workflows.
+
+For example, if your `nextflow.config` or workflow file includes:
+
+```groovy
+process convertToUpper {
+    container 'docker.io/ubuntu:latest'
+    // ... other process definitions
+}
 ```
-N E X T F L O W   ~  version 25.04.8
 
-Launching `hello-workflow-4.nf` [soggy_monod] DSL2 - revision: 7924362939
-
-executor >  local (7)
-[ee/22f232] sayHello (3)       [100%] 3 of 3 ✔
-[77/32c0db] convertToUpper (3) [100%] 3 of 3 ✔
-[09/3fd893] collectGreetings   [100%] 1 of 1 ✔
-There were 3 greetings in this batch
-```
-
-### 5. Running Workflows with Seqera Platform
+Seqera will handle the pulling and execution of the `ubuntu:latest` Singularity image on Expanse for the `convertToUpper` process, provided your compute environment is correctly configured to access Docker Hub or a mirrored registry.
 
 Instead of manually submitting Slurm jobs, we will now leverage the Seqera Platform to manage and execute our Nextflow workflows on Expanse. This provides a centralized interface for monitoring, collaboration, and advanced resource management.
 
