@@ -80,29 +80,4 @@ Once your compute environment is configured, you can launch a pipeline directly 
 6.  Set "Work directory" to `/expanse/lustre/scratch/zonca/temp_project/nextflow`.
 7.  In "Config profiles", select `slurm debug`. This profile is automatically pulled from the `nextflow.config` file in the repository.
 
-#### 3.3. Advanced Seqera Features: Slurm Executor and Singularity Integration
 
-Seqera Platform seamlessly integrates with Nextflow's executors and container technologies, simplifying the management of complex workflows on HPC systems like Expanse.
-
-##### 3.3.1. Slurm Executor Management
-
-When you run a Nextflow workflow through Seqera, and your compute environment is configured for Slurm, Seqera automatically handles the submission of individual Nextflow tasks as separate Slurm jobs. This means you don't need to manually configure `nextflow.config` profiles for Slurm execution on the login node. Seqera's compute environment configuration takes care of mapping Nextflow processes to appropriate Slurm resources, queues, and accounts.
-
-Seqera provides a rich interface to monitor these individual Slurm jobs, view their logs, and track resource consumption, offering a significant advantage over managing raw Slurm output files.
-
-##### 3.3.2. Singularity Container Integration
-
-Seqera also streamlines the use of container technologies like Singularity. If your Nextflow workflow specifies a container image (e.g., `container 'ubuntu:latest'`), Seqera will ensure that the specified Singularity image is pulled and used for the relevant processes on Expanse. You typically configure the container registry and any necessary authentication within your Seqera compute environment settings.
-
-This eliminates the need for manual `module load singularitypro` commands or complex `nextflow.config` adjustments for container runtime. Seqera ensures that the correct container environment is set up for each task, promoting reproducibility and portability of your workflows.
-
-For example, if your `nextflow.config` or workflow file includes:
-
-```groovy
-process convertToUpper {
-    container 'docker.io/ubuntu:latest'
-    // ... other process definitions
-}
-```
-
-Seqera will handle the pulling and execution of the `ubuntu:latest` Singularity image on Expanse for the `convertToUpper` process, provided your compute environment is correctly configured to access Docker Hub or a mirrored registry.
