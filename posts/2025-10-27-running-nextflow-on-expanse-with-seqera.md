@@ -49,15 +49,7 @@ This command will execute the workflow, and its progress will be visible in your
 
 #### 1.4. Configure a Compute Environment for Expanse
 
-Within your Seqera workspace, you need to configure a compute environment that connects to Expanse. Follow these steps:
-
-1.  **Name:** `expanse-compute`
-2.  **Credentials:** Select `Managed identity cluster`. You will need to provide `login.expanse.sdsc.edu` as the host and configure an SSH key for authentication. This usually involves generating an SSH key pair and adding the public key to your `~/.ssh/authorized_keys` file on Expanse.
-3.  **Work directory:** First, create a directory on Expanse: `mkdir /expanse/lustre/scratch/$USER/temp_project/nextflow`. Then, in Seqera, specify the absolute path to this directory (e.g., `/expanse/lustre/scratch/your_username/temp_project/nextflow`), replacing `your_username` with your actual username.
-4.  **Launch directory:** Leave this field empty.
-5.  **Queue names:** Use `compute` for both the default queue and any other relevant queue settings.
-
-Refer to the [Seqera documentation for HPC setup](https://docs.seqera.io/platform/compute-environments/hpc/) for more detailed instructions on each of these steps.
+To execute workflows on Expanse, you need to configure a compute environment within the Seqera Platform UI. This involves specifying connection details, work directories, and queue settings. For detailed instructions on setting up your compute environment, please refer to the [Seqera documentation for HPC setup](https://docs.seqera.io/platform/compute-environments/hpc/).
 
 ### 2. Advanced Seqera Features: Slurm Executor and Singularity Integration
 
