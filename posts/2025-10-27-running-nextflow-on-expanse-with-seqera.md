@@ -27,19 +27,7 @@ Instead of manually submitting Slurm jobs, we will now leverage the Seqera Platf
 
 If you don't already have one, create an account on [Seqera Platform](https://seqera.io/). Once logged in, create a new workspace for your projects.
 
-#### 1.2. Configure a Compute Environment for Expanse
-
-Within your Seqera workspace, you need to configure a compute environment that connects to Expanse. Follow these steps:
-
-1.  **Name:** `expanse-compute`
-2.  **Credentials:** Select `Managed identity cluster`. You will need to provide `login.expanse.sdsc.edu` as the host and configure an SSH key for authentication. This usually involves generating an SSH key pair and adding the public key to your `~/.ssh/authorized_keys` file on Expanse.
-3.  **Work directory:** First, create a directory on Expanse: `mkdir /expanse/lustre/scratch/$USER/temp_project/nextflow`. Then, in Seqera, specify the absolute path to this directory (e.g., `/expanse/lustre/scratch/your_username/temp_project/nextflow`), replacing `your_username` with your actual username.
-4.  **Launch directory:** Leave this field empty.
-5.  **Queue names:** Use `compute` for both the default queue and any other relevant queue settings.
-
-Refer to the [Seqera documentation for HPC setup](https://docs.seqera.io/platform/compute-environments/hpc/) for more detailed instructions on each of these steps.
-
-#### 1.3. Link Nextflow to Seqera
+#### 1.2. Link Nextflow to Seqera
 
 To allow your local Nextflow installation to communicate with the Seqera Platform, you need to set the `TOWER_ACCESS_TOKEN` environment variable. You can generate an API token from your Seqera account settings.
 
@@ -49,7 +37,7 @@ export TOWER_ACCESS_TOKEN="YOUR_SEQERA_API_TOKEN"
 
 Add this line to your `~/.bashrc` or `~/.profile` file on Expanse to persist the token across sessions.
 
-#### 1.4. Run a Workflow via Seqera
+#### 1.3. Run a Workflow via Seqera
 
 Now, you can run your Nextflow workflow and have Seqera manage its execution on Expanse. The `-w` flag specifies the Seqera workspace, and the `-profile` flag can still be used for local Nextflow configurations.
 
@@ -61,7 +49,7 @@ Replace `YOUR_SEQERA_WORKSPACE_ID` with the actual ID of your workspace in Seqer
 
 Seqera will now orchestrate the submission of your Nextflow workflow to Expanse, and you can monitor its progress, view logs, and manage resources directly from the Seqera Platform web interface.
 
-#### 1.5. Launching Workflows from the Nextflow CLI with `-with-tower`
+#### 1.4. Launching Workflows from the Nextflow CLI with `-with-tower`
 
 Once your Seqera compute environment is configured and your `TOWER_ACCESS_TOKEN` is set, you can also launch Nextflow workflows directly from the command line using the `-with-tower` flag. This allows you to leverage Seqera's monitoring and management capabilities without explicitly specifying the workspace ID in the run command, as long as your local Nextflow configuration is linked to your Seqera account.
 
@@ -70,6 +58,18 @@ nextflow run hello-workflow-4.nf -with-tower -profile slurm_debug
 ```
 
 This command will execute the workflow, and its progress will be visible in your Seqera Platform dashboard. For more details, refer to the [Nextflow training materials on using Seqera Platform to capture and monitor Nextflow jobs launched from the CLI](https://training.nextflow.io/2.0/hello_nextflow/10_hello_seqera/#1-use-seqera-platform-to-capture-and-monitor-nextflow-jobs-launched-from-the-cli).
+
+#### 1.5. Configure a Compute Environment for Expanse
+
+Within your Seqera workspace, you need to configure a compute environment that connects to Expanse. Follow these steps:
+
+1.  **Name:** `expanse-compute`
+2.  **Credentials:** Select `Managed identity cluster`. You will need to provide `login.expanse.sdsc.edu` as the host and configure an SSH key for authentication. This usually involves generating an SSH key pair and adding the public key to your `~/.ssh/authorized_keys` file on Expanse.
+3.  **Work directory:** First, create a directory on Expanse: `mkdir /expanse/lustre/scratch/$USER/temp_project/nextflow`. Then, in Seqera, specify the absolute path to this directory (e.g., `/expanse/lustre/scratch/your_username/temp_project/nextflow`), replacing `your_username` with your actual username.
+4.  **Launch directory:** Leave this field empty.
+5.  **Queue names:** Use `compute` for both the default queue and any other relevant queue settings.
+
+Refer to the [Seqera documentation for HPC setup](https://docs.seqera.io/platform/compute-environments/hpc/) for more detailed instructions on each of these steps.
 
 ### 2. Advanced Seqera Features: Slurm Executor and Singularity Integration
 
