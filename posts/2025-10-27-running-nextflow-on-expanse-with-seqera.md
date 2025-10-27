@@ -39,7 +39,7 @@ Add this line to your `~/.bashrc` or `~/.profile` file on Expanse to persist the
 
 #### 2.1. Launching Workflows from the Nextflow CLI with `-with-tower`
 
-Once your `TOWER_ACCESS_TOKEN` is set, you can also launch Nextflow workflows directly from the command line using the `-with-tower` flag. This allows you to leverage Seqera's monitoring and management capabilities without explicitly specifying the workspace ID in the run command, as long as your local Nextflow configuration is linked to your Seqera account.
+Once your `TOWER_ACCESS_TOKEN` is set, you can launch Nextflow workflows directly from the command line using the `-with-tower` flag. This allows you to leverage Seqera's monitoring and management capabilities, as long as your local Nextflow configuration is linked to your Seqera account.
 
 ```bash
 nextflow run hello-workflow-4.nf -with-tower -profile slurm_debug
@@ -64,7 +64,7 @@ Within your Seqera workspace, navigate to the "Compute Environments" section and
 3.  **Work directory:** First, create a directory on Expanse: `mkdir /expanse/lustre/scratch/$USER/temp_project/nextflow`. Then, in Seqera, specify the absolute path to this directory (e.g., `/expanse/lustre/scratch/your_username/temp_project/nextflow`), replacing `your_username` with your actual username.
 4.  **Launch directory:** Leave this field empty.
 5.  **Queue names:** Use `debug` for the head queue and `compute` for the compute queue.
-6.  **Head job submit options:** In the advanced options, add: `--account=sds166 --time=00:30:00 --nodes=1 --ntasks=1`. Remember to replace `sds166` with your actual project account.
+6.  **Head job submit options:** In the advanced options, add: `--account=YOUR_PROJECT_ACCOUNT --time=00:30:00 --nodes=1 --ntasks=1`. Remember to replace `YOUR_PROJECT_ACCOUNT` with your actual project account.
 
 Refer to the [Seqera documentation for HPC setup](https://docs.seqera.io/platform/compute-environments/hpc/) for more detailed instructions on each of these steps.
 
