@@ -98,13 +98,15 @@ If you don't already have one, create an account on [Seqera Platform](https://se
 
 #### 5.2. Configure a Compute Environment for Expanse
 
-Within your Seqera workspace, you need to configure a compute environment that connects to Expanse. This typically involves:
+Within your Seqera workspace, you need to configure a compute environment that connects to Expanse. Follow these steps:
 
-1.  **Selecting the HPC (Slurm) template:** Seqera provides templates for various HPC systems.
-2.  **Providing SSH credentials:** You will need to configure SSH access from Seqera to Expanse. This usually involves generating an SSH key pair and adding the public key to your `~/.ssh/authorized_keys` file on Expanse.
-3.  **Specifying Slurm settings:** Configure the appropriate Slurm partitions, accounts, and other resource parameters for Expanse.
+1.  **Name:** `expanse-compute`
+2.  **Credentials:** Select `Managed identity cluster`. You will need to provide `login.expanse.sdsc.edu` as the host and configure an SSH key for authentication. This usually involves generating an SSH key pair and adding the public key to your `~/.ssh/authorized_keys` file on Expanse.
+3.  **Work directory:** First, create a directory on Expanse: `mkdir /expanse/lustre/scratch/$USER/temp_project/nextflow`. Then, in Seqera, specify the absolute path to this directory (e.g., `/expanse/lustre/scratch/your_username/temp_project/nextflow`), replacing `your_username` with your actual username.
+4.  **Launch directory:** Leave this field empty.
+5.  **Queue names:** Use `compute` for both the default queue and any other relevant queue settings.
 
-Refer to the [Seqera documentation for HPC setup](https://docs.seqera.io/platform/compute-environments/hpc/) for detailed instructions.
+Refer to the [Seqera documentation for HPC setup](https://docs.seqera.io/platform/compute-environments/hpc/) for more detailed instructions on each of these steps.
 
 #### 5.3. Link Nextflow to Seqera
 
