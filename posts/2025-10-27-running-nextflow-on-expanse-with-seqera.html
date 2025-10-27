@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Andrea Zonca">
-<meta name="dcterms.date" content="2011-06-21">
+<meta name="dcterms.date" content="2025-10-27">
 
-<title>unit testing happiness – Andrea Zonca</title>
+<title>Running Nextflow on Expanse with Seqera – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -124,9 +158,10 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">unit testing happiness</h1>
+      <h1 class="title">Running Nextflow on Expanse with Seqera</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">python</div>
+                <div class="quarto-category">hpc</div>
+                <div class="quarto-category">sdsc</div>
               </div>
                   </div>
   </div>
@@ -144,7 +179,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 21, 2011</p>
+        <p class="date">October 27, 2025</p>
       </div>
     </div>
     
@@ -163,9 +198,118 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<pre>nosetests -v<br>test_all_cols (pycfitsio.test.TestPyCfitsIoRead) ... ok<br>test_colnames (pycfitsio.test.TestPyCfitsIoRead) ... ok<br>test_move (pycfitsio.test.TestPyCfitsIoRead) ... ok<br>test_open_file (pycfitsio.test.TestPyCfitsIoRead) ... ok<br>test_read_col (pycfitsio.test.TestPyCfitsIoRead) ... ok<br>test_read_hdus (pycfitsio.test.TestPyCfitsIoRead) ... ok<br>test_create (pycfitsio.test.TestPyCfitsIoWrite) ... ok<br>test_write (pycfitsio.test.TestPyCfitsIoWrite) ... ok<br><br>----------------------------------------------------------------------<br>Ran 8 tests in 0.016s<br><br>OK</pre>
+<p>This tutorial will guide you through setting up Nextflow on Expanse using the Seqera platform. <a href="https://www.nextflow.io/">Nextflow</a> is a powerful and flexible workflow management system that enables scalable and reproducible scientific workflows. It allows researchers to define complex computational pipelines using a simple language, making it easy to manage data dependencies, parallelize tasks, and adapt workflows to different computing environments, from local machines to cloud platforms and HPC clusters like Expanse. Workflow systems like Nextflow are incredibly useful for ensuring reproducibility, simplifying complex analyses, and efficiently utilizing computational resources by automating the execution of multi-step processes.</p>
+<p>Seqera Platform enhances Nextflow by providing a centralized control plane for managing and monitoring Nextflow pipelines across diverse execution environments, including HPC clusters like Expanse. It offers features such as advanced logging, resource optimization, and collaborative tools, making it easier to deploy, track, and scale complex scientific workflows.</p>
+<section id="what-is-seqera" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-seqera">What is Seqera?</h3>
+<p>Seqera Labs is a bioinformatics company that provides a platform for collaborative and scalable scientific data analysis, closely associated with the Nextflow workflow management system. It helps scientists develop, debug, and execute bioinformatics pipelines, manage data, and supervise workflows, particularly in cloud environments. Key offerings include Seqera AI for pipeline code generation and analysis, and Seqera Containers for streamlining Docker and Singularity container building and access. Seqera’s technologies are used across various scientific disciplines to scale analytical work.</p>
+</section>
+<section id="seqera-academic-program" class="level3">
+<h3 class="anchored" data-anchor-id="seqera-academic-program">Seqera Academic Program</h3>
+<p>Seqera offers an Academic Program that provides free Pro-level access to the Seqera Cloud Platform for researchers, educators, and students at qualifying institutions. To be eligible, the applicant’s organization must be a degree-granting educational institution, and the use of the Seqera Platform must be solely for academic research and/or teaching purposes, not for commercial use. Applicants need a user account on seqera.io using their institutional email address and an organization created within seqera.io. More details and an application form are available on the Seqera website.</p>
+</section>
+<section id="install-micromamba" class="level3">
+<h3 class="anchored" data-anchor-id="install-micromamba">1. Install Micromamba</h3>
+<p>Expanse uses an older version of Anaconda, so we’ll install Micromamba for managing Conda environments. Follow the official Micromamba installation guide: <a href="https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html">https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html</a></p>
+<p><strong>Important:</strong> When prompted for the <code>Prefix location?</code>, use a path in your scratch space. You can get the correct path by running: <code>echo /expanse/lustre/scratch/$USER/temp_project/micromamba</code>. Note that you cannot use <code>$USER</code> directly in the prompt; you must replace it with the actual path obtained from the <code>echo</code> command.</p>
+<p>After installation, you will need to log out and log back in, or source your <code>~/.bashrc</code> file for the changes to take effect.</p>
+</section>
+<section id="install-nextflow" class="level3">
+<h3 class="anchored" data-anchor-id="install-nextflow">2. Install Nextflow</h3>
+<p>Once Micromamba is set up, you can install Nextflow in a new environment called <code>nf-env</code>. This approach is particularly beneficial on Expanse because the system’s default Java version is too old for Nextflow. Micromamba will install a recent Java version isolated within your <code>nf-env</code> environment, ensuring compatibility.</p>
+<p>Follow the instructions on the official Nextflow installation page: <a href="https://www.nextflow.io/docs/latest/install.html">https://www.nextflow.io/docs/latest/install.html</a></p>
+<p>When following the instructions, replace any <code>conda</code> commands with <code>micromamba</code> to use your newly installed Micromamba environment.</p>
+</section>
+<section id="verify-nextflow-installation" class="level3">
+<h3 class="anchored" data-anchor-id="verify-nextflow-installation">3. Verify Nextflow Installation</h3>
+<p>After installation, you can verify that Nextflow is correctly installed by running <code>nextflow info</code>:</p>
+<pre><code>Version: 25.04.8 build 5956
+Created: 06-10-2025 21:19 UTC (14:19 PDT)
+System: Linux 4.18.0-513.24.1.el8_9.x86_64
+Runtime: Groovy 4.0.26 on OpenJDK 64-Bit Server VM 23.0.2-internal-adhoc.conda.src
+Encoding: UTF-8 (UTF-8)</code></pre>
+<p>Notice the <code>Runtime</code> line, which indicates that Nextflow is using an OpenJDK version provided by Conda, ensuring compatibility and optimal performance on Expanse.</p>
+</section>
+<section id="run-a-toy-example" class="level3">
+<h3 class="anchored" data-anchor-id="run-a-toy-example">4. Run a Toy Example</h3>
+<p>To test your Nextflow installation, let’s run a simple workflow from the Nextflow training materials. The training videos are an excellent resource for understanding Nextflow concepts, see <a href="https://training.nextflow.io">https://training.nextflow.io</a></p>
+<p>First, clone the example repository:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/zonca/expanse_nextflow</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> expanse_nextflow</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>hello-workflow-4.nf</code> workflow processes a CSV file containing greetings, converts them to uppercase, and then collects them. For more details, refer to the <a href="https://training.nextflow.io/2.4.0/hello_nextflow/03_hello_workflow/">3rd tutorial in the Nextflow training materials</a>.</p>
+<p>The workflow consists of the following steps:</p>
+<ol type="1">
+<li><strong><code>sayHello</code> process</strong>: Takes individual greetings (e.g., from a CSV file) and creates a separate output file for each greeting, containing the greeting text.</li>
+<li><strong><code>convertToUpper</code> process</strong>: Takes the output files from <code>sayHello</code>, reads their content, converts the text to uppercase, and writes the uppercase text to new files.</li>
+<li><strong><code>collectGreetings</code> process</strong>: Gathers all the uppercase files produced by <code>convertToUpper</code>, concatenates their content into a single output file, and also counts how many greetings were processed in total.</li>
+</ol>
+<p>In summary, the workflow reads a list of greetings, processes each one by converting it to uppercase, and then combines all the uppercase greetings into a single result file, finally reporting the total count.</p>
+<p>Then, run the workflow locally on the login node (for testing purposes):</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> hello-workflow-4.nf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You should see output similar to this:</p>
+<pre><code>N E X T F L O W   ~  version 25.04.8
+
+Launching `hello-workflow-4.nf` [soggy_monod] DSL2 - revision: 7924362939
+
+executor &gt;  local (7)
+[ee/22f232] sayHello (3)       [100%] 3 of 3 ✔
+[77/32c0db] convertToUpper (3) [100%] 3 of 3 ✔
+[09/3fd893] collectGreetings   [100%] 1 of 1 ✔
+There were 3 greetings in this batch</code></pre>
+</section>
+<section id="running-workflows-with-seqera-platform" class="level3">
+<h3 class="anchored" data-anchor-id="running-workflows-with-seqera-platform">5. Running Workflows with Seqera Platform</h3>
+<p>Instead of manually submitting Slurm jobs, we will now leverage the Seqera Platform to manage and execute our Nextflow workflows on Expanse. This provides a centralized interface for monitoring, collaboration, and advanced resource management.</p>
+<section id="create-a-seqera-account-and-workspace" class="level4">
+<h4 class="anchored" data-anchor-id="create-a-seqera-account-and-workspace">5.1. Create a Seqera Account and Workspace</h4>
+<p>If you don’t already have one, create an account on <a href="https://seqera.io/">Seqera Platform</a>. Once logged in, create a new workspace for your projects.</p>
+</section>
+<section id="configure-a-compute-environment-for-expanse" class="level4">
+<h4 class="anchored" data-anchor-id="configure-a-compute-environment-for-expanse">5.2. Configure a Compute Environment for Expanse</h4>
+<p>Within your Seqera workspace, you need to configure a compute environment that connects to Expanse. This typically involves:</p>
+<ol type="1">
+<li><strong>Selecting the HPC (Slurm) template:</strong> Seqera provides templates for various HPC systems.</li>
+<li><strong>Providing SSH credentials:</strong> You will need to configure SSH access from Seqera to Expanse. This usually involves generating an SSH key pair and adding the public key to your <code>~/.ssh/authorized_keys</code> file on Expanse.</li>
+<li><strong>Specifying Slurm settings:</strong> Configure the appropriate Slurm partitions, accounts, and other resource parameters for Expanse.</li>
+</ol>
+<p>Refer to the <a href="https://docs.seqera.io/platform/compute-environments/hpc/">Seqera documentation for HPC setup</a> for detailed instructions.</p>
+</section>
+<section id="link-nextflow-to-seqera" class="level4">
+<h4 class="anchored" data-anchor-id="link-nextflow-to-seqera">5.3. Link Nextflow to Seqera</h4>
+<p>To allow your local Nextflow installation to communicate with the Seqera Platform, you need to set the <code>NXF_API_TOKEN</code> environment variable. You can generate an API token from your Seqera account settings.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">NXF_API_TOKEN</span><span class="op">=</span><span class="st">"YOUR_SEQERA_API_TOKEN"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Add this line to your <code>~/.bashrc</code> or <code>~/.profile</code> file on Expanse to persist the token across sessions.</p>
+</section>
+<section id="run-a-workflow-via-seqera" class="level4">
+<h4 class="anchored" data-anchor-id="run-a-workflow-via-seqera">5.4. Run a Workflow via Seqera</h4>
+<p>Now, you can run your Nextflow workflow and have Seqera manage its execution on Expanse. The <code>-w</code> flag specifies the Seqera workspace, and the <code>-profile</code> flag can still be used for local Nextflow configurations.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run hello-workflow-4.nf <span class="at">-w</span> YOUR_SEQERA_WORKSPACE_ID <span class="at">-profile</span> slurm_debug</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Replace <code>YOUR_SEQERA_WORKSPACE_ID</code> with the actual ID of your workspace in Seqera. You can find this in the URL when you are in your workspace (e.g., <code>https://platform.seqera.io/your_username/YOUR_SEQERA_WORKSPACE_ID</code>).</p>
+<p>Seqera will now orchestrate the submission of your Nextflow workflow to Expanse, and you can monitor its progress, view logs, and manage resources directly from the Seqera Platform web interface.</p>
+</section>
+</section>
+<section id="advanced-seqera-features-slurm-executor-and-singularity-integration" class="level3">
+<h3 class="anchored" data-anchor-id="advanced-seqera-features-slurm-executor-and-singularity-integration">6. Advanced Seqera Features: Slurm Executor and Singularity Integration</h3>
+<p>Seqera Platform seamlessly integrates with Nextflow’s executors and container technologies, simplifying the management of complex workflows on HPC systems like Expanse.</p>
+<section id="slurm-executor-management" class="level4">
+<h4 class="anchored" data-anchor-id="slurm-executor-management">6.1. Slurm Executor Management</h4>
+<p>When you run a Nextflow workflow through Seqera, and your compute environment is configured for Slurm, Seqera automatically handles the submission of individual Nextflow tasks as separate Slurm jobs. This means you don’t need to manually configure <code>nextflow.config</code> profiles for Slurm execution on the login node. Seqera’s compute environment configuration takes care of mapping Nextflow processes to appropriate Slurm resources, queues, and accounts.</p>
+<p>Seqera provides a rich interface to monitor these individual Slurm jobs, view their logs, and track resource consumption, offering a significant advantage over managing raw Slurm output files.</p>
+</section>
+<section id="singularity-container-integration" class="level4">
+<h4 class="anchored" data-anchor-id="singularity-container-integration">6.2. Singularity Container Integration</h4>
+<p>Seqera also streamlines the use of container technologies like Singularity. If your Nextflow workflow specifies a container image (e.g., <code>container 'ubuntu:latest'</code>), Seqera will ensure that the specified Singularity image is pulled and used for the relevant processes on Expanse. You typically configure the container registry and any necessary authentication within your Seqera compute environment settings.</p>
+<p>This eliminates the need for manual <code>module load singularitypro</code> commands or complex <code>nextflow.config</code> adjustments for container runtime. Seqera ensures that the correct container environment is set up for each task, promoting reproducibility and portability of your workflows.</p>
+<p>For example, if your <code>nextflow.config</code> or workflow file includes:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode groovy code-with-copy"><code class="sourceCode groovy"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>process convertToUpper <span class="op">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    container <span class="st">'docker.io/ubuntu:latest'</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ... other process definitions</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Seqera will handle the pulling and execution of the <code>ubuntu:latest</code> Singularity image on Expanse for the <code>convertToUpper</code> process, provided your compute environment is correctly configured to access Docker Hub or a mirrored registry.</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <div>
