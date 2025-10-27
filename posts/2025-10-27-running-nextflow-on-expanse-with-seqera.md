@@ -61,6 +61,16 @@ Replace `YOUR_SEQERA_WORKSPACE_ID` with the actual ID of your workspace in Seqer
 
 Seqera will now orchestrate the submission of your Nextflow workflow to Expanse, and you can monitor its progress, view logs, and manage resources directly from the Seqera Platform web interface.
 
+#### 1.5. Launching Workflows from the Nextflow CLI with `-with-tower`
+
+Once your Seqera compute environment is configured and your `TOWER_ACCESS_TOKEN` is set, you can also launch Nextflow workflows directly from the command line using the `-with-tower` flag. This allows you to leverage Seqera's monitoring and management capabilities without explicitly specifying the workspace ID in the run command, as long as your local Nextflow configuration is linked to your Seqera account.
+
+```bash
+nextflow run hello-workflow-4.nf -with-tower -profile slurm_debug
+```
+
+This command will execute the workflow, and its progress will be visible in your Seqera Platform dashboard. For more details, refer to the [Nextflow training materials on using Seqera Platform to capture and monitor Nextflow jobs launched from the CLI](https://training.nextflow.io/2.0/hello_nextflow/10_hello_seqera/#1-use-seqera-platform-to-capture-and-monitor-nextflow-jobs-launched-from-the-cli).
+
 ### 2. Advanced Seqera Features: Slurm Executor and Singularity Integration
 
 Seqera Platform seamlessly integrates with Nextflow's executors and container technologies, simplifying the management of complex workflows on HPC systems like Expanse.
