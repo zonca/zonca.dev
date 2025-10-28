@@ -85,3 +85,6 @@ Once your compute environment is configured, you can configure a pipeline in the
 After configuring the pipeline in the Launchpad, go to your Seqera dashboard. Find the `expanse_nextflow` pipeline and click "Launch". This action will submit a single job to the `debug` queue on Expanse to execute Nextflow. This Nextflow process will then submit the actual workflow jobs to the appropriate queues as defined in your pipeline. Real-time updates and logs for all jobs will flow directly into the Seqera.io UI, allowing you to monitor the entire workflow execution.
 
 
+### Conclusion: Impressed by Seqera
+
+I must say I am impressed by Seqera; it is so well-built and polished. You can configure and launch pipelines, view all tasks executing in real-time in a fancy web dashboard, then dig into the logs, check resource utilization for each stage of the pipeline, check execution time task by task, and much more. It truly streamlines the management and monitoring of complex Nextflow workflows on HPC systems like Expanse.
