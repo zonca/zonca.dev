@@ -7,7 +7,6 @@ categories:
 - jupyterhub
 - dask
 - python
-- jetstream
 date: '2022-04-05'
 layout: post
 title: Science Gateway with Dask and Zarr

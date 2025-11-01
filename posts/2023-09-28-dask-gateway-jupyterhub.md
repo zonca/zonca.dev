@@ -5,7 +5,6 @@ categories:
 - jupyterhub
 - dask
 - python
-- jetstream
 date: '2023-09-28'
 layout: post
 title: Deploy Dask Gateway with JupyterHub on Kubernetes

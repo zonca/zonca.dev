@@ -6,7 +6,6 @@ categories:
 - dask
 - jetstream2
 - python
-- jetstream
 date: 2022-04-04 18:00
 layout: post
 slug: zarr-jetstream2

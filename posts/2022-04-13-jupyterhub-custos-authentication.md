@@ -5,7 +5,6 @@ categories:
 - kubernetes
 - jetstream2
 - jupyterhub
-- jetstream
 date: '2022-04-13'
 layout: post
 title: Custos authentication for JupyterHub

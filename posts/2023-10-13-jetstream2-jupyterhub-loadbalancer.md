@@ -2,7 +2,6 @@
 categories:
 - kubernetes
 - jetstream2
-- jetstream
 date: '2023-11-06'
 draft: true
 layout: post
