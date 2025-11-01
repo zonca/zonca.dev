@@ -2,7 +2,6 @@
 title: "Tampermonkey Script for Audible Filtering"
 author: "Zonca"
 date: "2025-11-01"
-categories: [javascript, web, automation]
 ---
 
 This Tampermonkey script helps filter Audible search results by hiding items that do not meet certain criteria. Specifically, it hides audiobooks with a rating less than 4.0 stars or with fewer than 500 reviews.

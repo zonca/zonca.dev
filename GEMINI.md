@@ -10,6 +10,7 @@ This document outlines specific guidelines for interacting with the `zonca.dev` 
 ## Blog Post Categories
 
 - **Existing Categories Only:** When creating or modifying blog posts, **do not invent new categories**. Only use categories that have been previously used in other posts. To find existing categories, you can inspect the `_metadata.yml` file in the `posts/` directory or check individual post files.
+- **Do Not Create New Categories:** Never create new categories unless specifically instructed to do so.
 
 ## Image Referencing in Blog Posts
 
