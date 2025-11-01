@@ -1,6 +1,8 @@
 ---
 categories:
 - jetstream2
+- python
+- jetstream
 date: '2024-06-13'
 layout: post
 slug: web-server-https-django-jetstream2

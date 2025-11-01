@@ -4,6 +4,7 @@ aliases:
 categories:
 - jetstream2
 - kubernetes
+- jetstream
 date: '2022-04-27'
 layout: post
 title: Monitor Restic backups on Kubernetes

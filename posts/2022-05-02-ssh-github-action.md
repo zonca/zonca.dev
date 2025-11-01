@@ -3,6 +3,7 @@ aliases:
 - /2022/05/ssh-github-action
 categories:
 - github
+- git
 date: '2022-05-02'
 layout: post
 title: Access running Github action with SSH

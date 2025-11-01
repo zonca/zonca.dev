@@ -3,6 +3,7 @@ categories:
 - jupyterhub
 - jetstream
 - kubernetes
+- python
 aliases:
 - /gw23
 - gw23

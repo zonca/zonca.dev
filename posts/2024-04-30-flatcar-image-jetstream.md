@@ -2,6 +2,7 @@
 categories:
 - kubernetes
 - jetstream2
+- jetstream
 aliases:
 - 2024-04-20-flatcar-image-jetstream
 date: '2024-04-30'

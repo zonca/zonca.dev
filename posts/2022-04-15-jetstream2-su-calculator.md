@@ -3,6 +3,7 @@ aliases:
 - /2022/04/jetstream2-su-calculator
 categories:
 - jetstream2
+- jetstream
 date: '2022-04-15'
 layout: post
 title: Jetstream2 SU calculator

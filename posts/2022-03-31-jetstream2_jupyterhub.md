@@ -5,6 +5,7 @@ categories:
 - kubernetes
 - jupyterhub
 - jetstream2
+- jetstream
 date: '2022-03-31'
 layout: post
 slug: jetstream2-jupyterhub

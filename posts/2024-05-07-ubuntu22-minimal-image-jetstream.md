@@ -2,6 +2,7 @@
 categories:
 - kubernetes
 - jetstream2
+- jetstream
 date: '2024-07-31'
 aliases:
 - 2024-05-07-ubuntu22-minimal-image-jetstream

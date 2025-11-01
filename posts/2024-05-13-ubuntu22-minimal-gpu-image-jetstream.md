@@ -2,6 +2,7 @@
 categories:
 - kubernetes
 - jetstream2
+- jetstream
 date: '2024-05-13'
 layout: post
 slug: ubuntu22-minimal-image-gpu-jetstream

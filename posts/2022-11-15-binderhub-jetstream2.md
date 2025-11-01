@@ -1,6 +1,7 @@
 ---
 categories:
 - jetstream2
+- kubernetes
 layout: post
 date: '2022-11-15'
 title: Deploy BinderHub on top of Kubernetes on Jetstream 2

@@ -2,6 +2,8 @@
 categories:
 - jetstream2
 - jupyterhub
+- kubernetes
+- jetstream
 layout: post
 date: '2024-02-08'
 title: Deploy Kubernetes on Jetstream 2 with GPU support

@@ -5,6 +5,7 @@ title: Run PyTorch with GPU support on Expanse
 categories:
 - hpc
 - jupyter
+- python
 
 ---
 

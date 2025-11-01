@@ -5,6 +5,7 @@ aliases:
 categories:
 - kubernetes
 - jetstream2
+- jetstream
 date: '2022-03-30'
 layout: post
 slug: kubernetes-jetstream2-kubespray

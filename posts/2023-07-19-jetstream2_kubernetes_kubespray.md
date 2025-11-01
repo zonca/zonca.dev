@@ -2,6 +2,7 @@
 categories:
 - kubernetes
 - jetstream2
+- jetstream
 date: '2023-06-19'
 layout: post
 slug: kubernetes-jetstream2-kubespray

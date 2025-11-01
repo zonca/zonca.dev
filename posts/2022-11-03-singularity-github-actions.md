@@ -1,6 +1,8 @@
 ---
 categories:
 - singularity
+- git
+- github
 date: '2022-11-03'
 layout: post
 title: Build and host Singularity containers on Github

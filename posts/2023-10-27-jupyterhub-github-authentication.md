@@ -3,6 +3,8 @@ categories:
 - jupyterhub
 - jetstream
 - kubernetes
+- git
+- github
 date: '2023-09-27'
 layout: post
 title: Deploy Github Authenticator in JupyterHub

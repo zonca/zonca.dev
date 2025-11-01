@@ -1,6 +1,8 @@
 ---
 categories:
 - python
+- git
+- github
 date: '2024-05-29'
 layout: post
 title: Authenticate FastAPI endpoints with a Github organization

@@ -2,6 +2,8 @@
 categories:
 - jetstream
 - llm
+- kubernetes
+- python
 layout: post
 date: 2024-10-31
 slug: jetstream-llm-chat
