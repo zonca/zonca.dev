@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2025-11-01-tampermonkey-audible-filter.html",
       "/posts/2025-10-27-running-nextflow-on-expanse-with-seqera.html",
       "/posts/2025-10-20-github-actions-auto-merge.html",
       "/posts/2025-10-10-manage-calendar-of-a-scientific-collaboration-using-google-groups.html",
