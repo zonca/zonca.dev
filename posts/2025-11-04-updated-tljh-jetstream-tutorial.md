@@ -1,5 +1,5 @@
 ---
-categories: [hpc, sdsc]
+categories: [hpc, sdsc, jupyterhub]
 date: '2025-11-04'
 layout: post
 title: Updated Tutorial on The Littlest JupyterHub on Jetstream
@@ -7,7 +7,9 @@ title: Updated Tutorial on The Littlest JupyterHub on Jetstream
 
 I'm excited to share that I've contributed an updated tutorial on how to deploy "The Littlest JupyterHub" (TLJH) on a Jetstream instance!
 
-TLJH is a simple way to set up a JupyterHub for a small group of users. It's designed to be easy to install and maintain, making it perfect for classrooms, workshops, or small research teams. Jetstream is a national science and engineering cloud environment that provides on-demand computing and data analysis resources.
+TLJH is a simple way to set up a JupyterHub for a small group of users. It's designed to be easy to install and maintain, making it perfect for classrooms, workshops, or small research teams.
+
+Jetstream is a national science and engineering cloud environment that provides on-demand computing and data analysis resources to the research community. It enables researchers to access and use high-performance computing and data resources through a user-friendly cloud interface. You can learn more about Jetstream at its official website: [https://jetstream-cloud.org/](https://jetstream-cloud.org/)
 
 This updated tutorial provides step-by-step instructions to get your own TLJH instance running on Jetstream, leveraging the power of cloud computing for interactive data science and research.
 
