@@ -1,5 +1,5 @@
 ---
-categories: [hpc, sdsc, jupyterhub]
+categories: [jupyterhub, jetstream2]
 date: '2025-11-04'
 layout: post
 title: Updated Tutorial on The Littlest JupyterHub on Jetstream
