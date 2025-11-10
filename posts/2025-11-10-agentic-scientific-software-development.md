@@ -32,15 +32,15 @@ One of the most impressive aspects of this workflow is the ability to work on mu
 
 This parallel approach fundamentally changed my role. Instead of being the sole developer writing every line of code, I became a technical reviewer and project manager, guiding multiple AI agents toward the right solutions. It genuinely felt like having a team of five experienced developers working for me—each one capable, but needing direction and review to ensure quality meets project standards.
 
-## Adding Another Layer: Automated Code Review with CodeQL
+## Adding Another Layer: Automated Code Review with Codex
 
-To enhance this workflow further, I enabled CodeQL, the AI-powered code review agent developed by OpenAI. This adds another dimension to the process:
+To enhance this workflow further, I enabled Codex, the AI-powered code review agent developed by OpenAI. This adds another dimension to the process:
 
 1. Copilot creates and updates pull requests
-2. CodeQL automatically reviews the changes and provides feedback
-3. I can then ask Copilot to address CodeQL's feedback
+2. Codex automatically reviews the changes and provides feedback
+3. I can then ask Copilot to address Codex's feedback
 
-This creates a fascinating dynamic where AI agents are reviewing each other's work. It's like having five developers and an additional maintainer on the team. CodeQL often catches issues I might miss in my initial review, such as potential security vulnerabilities, performance concerns, or edge cases that need better handling.
+This creates a fascinating dynamic where AI agents are reviewing each other's work. It's like having five developers and an additional maintainer on the team. Codex often catches issues I might miss in my initial review, such as potential security vulnerabilities, performance concerns, or edge cases that need better handling.
 
 The immediate feedback loop is invaluable. Instead of waiting for human reviewers, the code gets an initial review instantly, allowing me to iterate faster and catch issues earlier in the development process.
 
@@ -54,7 +54,7 @@ The final piece of this agentic workflow is enabling GitHub's auto-merge feature
 
 This eliminates the need to babysit pull requests waiting for final test runs. I can approve a PR, enable auto-merge, and move on to reviewing the next one, confident that it will merge once everything is green.
 
-For more details on setting up and using auto-merge effectively, see my [previous post on auto-merging GitHub pull requests](/posts/2025-10-20-github-actions-auto-merge.html).
+For more details on setting up and using auto-merge effectively, see my [previous post on auto-merging GitHub pull requests](2025-10-20-github-actions-auto-merge.md).
 
 ## The Mobile Advantage: Reviewing On the Go
 
@@ -65,7 +65,7 @@ I no longer need to be in front of my laptop to keep development moving forward.
 - Review pull requests during coffee breaks
 - Provide quick feedback to AI agents while commuting
 - Approve changes and enable auto-merge from anywhere
-- Check test results and CodeQL reports on the go
+- Check test results and Codex reports on the go
 
 This flexibility means the AI agents can continue working even when I'm away from my desk. I give feedback, they iterate on the solution, and the development process continues smoothly. It's a remarkably efficient use of time that wouldn't be possible with traditional development workflows.
 
@@ -84,9 +84,13 @@ If you maintain scientific software, I highly recommend exploring this workflow.
 If you're interested in trying this workflow yourself:
 
 1. Explore [GitHub Copilot](https://github.com/features/copilot) and sign up for access (academic institutions often have free access)
-2. Review my guide on [using GitHub Copilot for scientific computing](/posts/2025-05-23-github-copilot-scientific-computing.html)
-3. Enable CodeQL on your repository for automated security scanning
-4. Set up [auto-merge](/posts/2025-10-20-github-actions-auto-merge.html) to streamline your workflow
+2. Review my guide on [using GitHub Copilot for scientific computing](2025-05-23-github-copilot-scientific-computing.md)
+3. Enable Codex on your repository for automated code review
+4. Set up [auto-merge](2025-10-20-github-actions-auto-merge.md) to streamline your workflow
 5. Start with simple issues to build confidence with the process
 
 The future of scientific software development is looking increasingly collaborative—with AI agents as valuable team members working alongside human expertise.
+
+---
+
+*Yes, of course, this post was also created by Copilot from my speech-to-text raw inputs.*
