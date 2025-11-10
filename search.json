@@ -2118,7 +2118,7 @@
     "href": "posts/2025-11-10-agentic-scientific-software-development.html",
     "title": "Going Full Agentic for Scientific Software Development",
     "section": "",
-    "text": "The landscape of scientific software development is being transformed by AI coding agents. Over the past few weeks, I’ve been exploring GitHub Copilot’s AI coding agent capabilities for maintaining healpy, and the experience has been remarkable. What started as an experiment has evolved into a workflow that feels like managing a team of experienced developers rather than coding alone."
+    "text": "The landscape of scientific software development is being transformed by AI coding agents. Over the past few weeks, I’ve been exploring GitHub Copilot’s AI coding agent capabilities for maintaining healpy, and the experience has been remarkable. What started as an experiment has evolved into a workflow that feels like managing a team of experienced developers rather than coding alone.\nIn the last two weeks alone, this workflow helped me close 12 healpy issues (per gh api 'search/issues?q=repo:healpy/healpy+is:issue+involves:zonca+closed:%3E=2025-10-27' --jq '.total_count'), providing a concrete sense of momentum."
   },
   {
     "objectID": "posts/2025-11-10-agentic-scientific-software-development.html#the-workflow-assigning-issues-to-ai-agents",

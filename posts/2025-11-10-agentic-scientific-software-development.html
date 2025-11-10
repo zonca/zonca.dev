@@ -166,6 +166,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>The landscape of scientific software development is being transformed by AI coding agents. Over the past few weeks, I’ve been exploring GitHub Copilot’s AI coding agent capabilities for maintaining <a href="https://github.com/healpy/healpy">healpy</a>, and the experience has been remarkable. What started as an experiment has evolved into a workflow that feels like managing a team of experienced developers rather than coding alone.</p>
+<p>In the last two weeks alone, this workflow helped me close 12 healpy issues (per <code>gh api 'search/issues?q=repo:healpy/healpy+is:issue+involves:zonca+closed:%3E=2025-10-27' --jq '.total_count'</code>), providing a concrete sense of momentum.</p>
 <section id="the-workflow-assigning-issues-to-ai-agents" class="level2">
 <h2 class="anchored" data-anchor-id="the-workflow-assigning-issues-to-ai-agents">The Workflow: Assigning Issues to AI Agents</h2>
 <p>My approach has been straightforward: I take existing issues from the healpy repository—some of which have been open for 5 years or more—and assign them to GitHub Copilot. The AI agent then automatically analyzes the issue, explores the codebase, and opens a pull request with a proposed fix.</p>
