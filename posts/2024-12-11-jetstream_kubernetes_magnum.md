@@ -9,6 +9,7 @@ slug: kubernetes-jupyterhub-jetstream-magnum-2024
 title: Deploy Kubernetes and JupyterHub on Jetstream with Magnum and Cluster API
 ---
 
+**UPDATED 2025-11-10**: Documented how to inspect autoscaler status and scale-down activity.
 **UPDATED 2025-08-11**: Recommended package versions updated.
 
 **UPDATED 2025-08-11**: Added note about overriding DNS recordset IP.
@@ -191,6 +192,52 @@ high-memory-deployment-85785c87d-qhclc   1/1     Running   0          4m5s
 high-memory-deployment-85785c87d-qxlf2   1/1     Running   0          4m5s
 high-memory-deployment-85785c87d-rk8sb   1/1     Running   0          5m8s
 ```
+
+### Clean Up and Observe Scale Down
+
+When you are done stressing the cluster, delete the test deployment so the autoscaler can return the worker pool to its minimum size:
+
+```bash
+kubectl delete deployment high-memory-deployment
+```
+
+It can take a few minutes before the autoscaler drains and terminates surplus nodes. Watch the node list to confirm the downsizing:
+
+```bash
+kubectl get nodes -w
+```
+
+#### Inspect Autoscaler Activity
+
+Magnum’s managed autoscaler runs outside the cluster, but it still publishes status back into Kubernetes. Inspect it any time to confirm whether a scale-down is in progress or why a node is being retained:
+
+```bash
+kubectl -n kube-system get configmap cluster-autoscaler-status -o jsonpath='{.data.status}'
+```
+
+Sample output (captured 2025-11-10):
+
+```text
+time: 2025-11-10 21:44:21.81052768 +0000 UTC
+autoscalerStatus: Running
+clusterWide:
+  scaleDown:
+    status: CandidatesPresent
+    candidates: 4
+nodeGroups:
+- name: MachineDeployment/.../k8s-3isal4t6kuan-default-worker
+  health:
+    nodeCounts:
+      registered:
+        total: 5
+    minSize: 1
+    maxSize: 5
+  scaleDown:
+    status: CandidatesPresent
+    candidates: 4
+```
+
+When `scaleDown.status` shows `CandidatesPresent`, the autoscaler has picked idle nodes and is draining them; it flips to `InProgress` or `Done` once the node is actually removed. Pair this check with `kubectl get nodes -w` to watch the worker count drop in real time.
 
 ## Test Persistent Volumes
 
