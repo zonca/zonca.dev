@@ -10,6 +10,8 @@ title: Going Full Agentic for Scientific Software Development
 
 The landscape of scientific software development is being transformed by AI coding agents. Over the past few weeks, I've been exploring GitHub Copilot's AI coding agent capabilities for maintaining [healpy](https://github.com/healpy/healpy), and the experience has been remarkable. What started as an experiment has evolved into a workflow that feels like managing a team of experienced developers rather than coding alone.
 
+In the last two weeks alone, this workflow helped me close 12 healpy issues (per `gh api 'search/issues?q=repo:healpy/healpy+is:issue+involves:zonca+closed:%3E=2025-10-27' --jq '.total_count'`), providing a concrete sense of momentum.
+
 ## The Workflow: Assigning Issues to AI Agents
 
 My approach has been straightforward: I take existing issues from the healpy repository—some of which have been open for 5 years or more—and assign them to GitHub Copilot. The AI agent then automatically analyzes the issue, explores the codebase, and opens a pull request with a proposed fix.
