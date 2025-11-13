@@ -3,7 +3,7 @@ title: "How to Use AI Chat Assistants While Traveling"
 date: 2025-06-17
 categories:
   - ai
-  - LLM
+  - llm
 ---
 
 Traveling often means unreliable or expensive internet access, especially on airplanes or in remote areas. Here are two practical ways to keep using AI chat assistants even when your connectivity is limited:
