@@ -1,6 +1,6 @@
 ---
 title: Hierarchical EZID DOIs with Python
-date: '2025-10-10'
+date: '2025-11-13'
 categories:
   - python
   - data-management
