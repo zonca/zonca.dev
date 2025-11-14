@@ -51,6 +51,20 @@ This command will execute the workflow, and its progress will be visible in your
 
 After launching the workflow with `-with-tower`, navigate to your Seqera Platform dashboard in your web browser. You should see your workflow listed with its real-time status, logs, and resource utilization.
 
+#### 2.3. Launching Workflows with the `tw` Command-Line Tool
+
+The `tw` command-line tool is a powerful utility that allows you to interact with the Seqera Platform directly from your terminal. It provides a convenient way to launch, manage, and monitor your Nextflow workflows without needing to access the web UI.
+
+You can install the `tw` CLI by following the instructions on the [Seqera documentation](https://docs.seqera.io/platform/getting-started/install-cli/).
+
+Once installed and configured with your `TOWER_ACCESS_TOKEN`, you can trigger workflows using a command like this:
+
+```bash
+tw launch -w org/workspace expanse_nextflow
+```
+
+Replace `org/workspace` with your actual Seqera organization and workspace name. This command will launch the `expanse_nextflow` pipeline configured in your Seqera workspace, and you can monitor its progress directly from the Seqera UI or using other `tw` commands.
+
 ### 3. Create Compute Environment and Launch from Seqera UI
 
 To fully leverage Seqera's capabilities for managing and executing workflows on Expanse, you need to configure a compute environment and launch pipelines directly from the Seqera UI.
