@@ -234,6 +234,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h4 class="anchored" data-anchor-id="monitor-progress-in-seqera-ui">2.2. Monitor Progress in Seqera UI</h4>
 <p>After launching the workflow with <code>-with-tower</code>, navigate to your Seqera Platform dashboard in your web browser. You should see your workflow listed with its real-time status, logs, and resource utilization.</p>
 </section>
+<section id="launching-workflows-with-the-tw-command-line-tool" class="level4">
+<h4 class="anchored" data-anchor-id="launching-workflows-with-the-tw-command-line-tool">2.3. Launching Workflows with the <code>tw</code> Command-Line Tool</h4>
+<p>The <code>tw</code> command-line tool is a powerful utility that allows you to interact with the Seqera Platform directly from your terminal. It provides a convenient way to launch, manage, and monitor your Nextflow workflows without needing to access the web UI.</p>
+<p>You can install the <code>tw</code> CLI by following the instructions on the <a href="https://docs.seqera.io/platform/getting-started/install-cli/">Seqera documentation</a>.</p>
+<p>Once installed and configured with your <code>TOWER_ACCESS_TOKEN</code>, you can trigger workflows using a command like this:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tw</span> launch <span class="at">-w</span> org/workspace expanse_nextflow</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Replace <code>org/workspace</code> with your actual Seqera organization and workspace name. This command will launch the <code>expanse_nextflow</code> pipeline configured in your Seqera workspace, and you can monitor its progress directly from the Seqera UI or using other <code>tw</code> commands.</p>
+</section>
 </section>
 <section id="create-compute-environment-and-launch-from-seqera-ui" class="level3">
 <h3 class="anchored" data-anchor-id="create-compute-environment-and-launch-from-seqera-ui">3. Create Compute Environment and Launch from Seqera UI</h3>
