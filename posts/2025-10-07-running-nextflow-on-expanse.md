@@ -153,3 +153,8 @@ nextflow run hello-workflow-4.nf -profile slurm_debug
 ```
 
 You should observe that the `convertToUpper` process now executes within the Singularity container, providing a robust and reproducible execution environment.
+
+### Next Steps
+
+For a more advanced setup that integrates Nextflow with the Seqera Platform for enhanced monitoring and management, refer to our next tutorial: [Running Nextflow on Expanse with Seqera](2025-10-27-running-nextflow-on-expanse-with-seqera.html).
+
