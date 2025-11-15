@@ -35,13 +35,14 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Render project
-        run: make render
+      - name: Render Quarto Project (PRs)
+        if: github.event_name == 'pull_request'
+        run: make all
 
-      # - name: Publish project
-      #   if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
-      #   run: make publish
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Render and Publish Quarto Project (Main Branch)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: make all
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       
