@@ -27,3 +27,7 @@ format:
 
 execute:
   freeze: auto  # re-render only when source changes
+
+contributes:
+  shortcodes:
+    - custom_links.lua
