@@ -123,7 +123,29 @@ process collectGreetings {
     There were 3 greetings in this batch
     ```
 
-4.  Observe the behavior:
+4.  To specifically observe which processes are submitted to Slurm and which run locally, you can inspect the `.nextflow.log` file. For instance, using `grep -i submitted .nextflow.log` will show:
+
+    ```bash
+    grep -i submitted .nextflow.log
+    ```
+
+    ```
+    Nov-15 10:09:05.950 [Task submitter] INFO  nextflow.Session - [81/795962] Submitted process > sayHello (2)
+    Nov-15 10:09:05.993 [Task submitter] INFO  nextflow.Session - [1a/95d170] Submitted process > sayHello (1)
+    Nov-15 10:09:06.133 [Task submitter] INFO  nextflow.Session - [82/03b4e9] Submitted process > sayHello (3)
+    Nov-15 10:09:06.393 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process convertToUpper (1) > jobId: 44200682; workDir: /home/zonca/p/software/expanse_nextflow/work/b2/9ef9d9a6d062048fd8915225ca2609
+    Nov-15 10:09:06.393 [Task submitter] INFO  nextflow.Session - [b2/9ef9d9] Submitted process > convertToUpper (1)
+    Nov-15 10:09:06.660 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process convertToUpper (2) > jobId: 44200683; workDir: /home/zonca/p/software/expanse_nextflow/work/be/37f3e78a4e3c27f4f63b71da31aa2f
+    Nov-15 10:09:06.660 [Task submitter] INFO  nextflow.Session - [be/37f3e7] Submitted process > convertToUpper (2)
+    Nov-15 10:09:06.759 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process convertToUpper (3) > jobId: 44200684; workDir: /home/zonca/p/software/expanse_nextflow/work/58/871526bef14c129bae9f85c07edd15
+    Nov-15 10:09:06.759 [Task submitter] INFO  nextflow.Session - [58/871526] Submitted process > convertToUpper (3)
+    Nov-15 10:11:20.782 [Task submitter] INFO  nextflow.Session - [56/d2737f] Submitted process > collectGreetings
+    Nov-15 10:11:25.676 [main] DEBUG n.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=7; failedCount=0; ignoredCount=0; cachedCount=0; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=0; succeedDuration=1m 10s; failedDuration=0ms; cachedDuration=0ms;loadCpus=0; loadMemory=0; peakRunning=2; peakCpus=4; peakMemory=8 GB; ]
+    ```
+
+    This log clearly shows that `sayHello` processes are submitted without a specific executor (implying local execution), while `convertToUpper` processes explicitly indicate `[SLURM] submitted process`.
+
+5.  Finally, observe the behavior:
     *   `sayHello` and `collectGreetings` execute on the local executor (e.g., login node).
     *   `convertToUpper` submits to Slurm (`executor > slurm`) with the queue, resources, and `clusterOptions` defined directly in its process block. You can check `logs/<process>-<jobid>.{out,err}` for scheduler output.
 
