@@ -1,5 +1,5 @@
 ---
-categories: [hpc, sdsc]
+categories: [hpc, sdsc, nextflow]
 date: '2025-10-27'
 layout: post
 title: Running Nextflow on Expanse with Seqera

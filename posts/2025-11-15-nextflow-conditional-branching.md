@@ -1,5 +1,5 @@
 ---
-categories: [hpc, sdsc]
+categories: [hpc, sdsc, nextflow]
 date: '2025-11-15'
 layout: post
 title: Implementing Conditional Logic in Nextflow Workflows
