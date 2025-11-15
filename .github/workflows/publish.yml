@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -32,8 +35,12 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Render and Publish Quarto Project
-        run: make all
+      - name: Render project
+        run: make render
+
+      - name: Publish project
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        run: make publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
