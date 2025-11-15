@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Andrea Zonca">
-<meta name="dcterms.date" content="2025-10-07">
+<meta name="dcterms.date" content="2025-11-15">
 
-<title>Running Nextflow on Expanse – Andrea Zonca</title>
+<title>Implementing Conditional Logic in Nextflow Workflows – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -158,7 +158,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Running Nextflow on Expanse</h1>
+      <h1 class="title">Implementing Conditional Logic in Nextflow Workflows</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">hpc</div>
                 <div class="quarto-category">sdsc</div>
@@ -179,7 +179,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 7, 2025</p>
+        <p class="date">November 15, 2025</p>
       </div>
     </div>
     
@@ -198,109 +198,126 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>This tutorial will guide you through setting up Nextflow on Expanse. <a href="https://www.nextflow.io/">Nextflow</a> is a powerful and flexible workflow management system that enables scalable and reproducible scientific workflows. It allows researchers to define complex computational pipelines using a simple language, making it easy to manage data dependencies, parallelize tasks, and adapt workflows to different computing environments, from local machines to cloud platforms and HPC clusters like Expanse. Workflow systems like Nextflow are incredibly useful for ensuring reproducibility, simplifying complex analyses, and efficiently utilizing computational resources by automating the execution of multi-step processes.</p>
-<section id="install-micromamba" class="level3">
-<h3 class="anchored" data-anchor-id="install-micromamba">1. Install Micromamba</h3>
-<p>Expanse uses an older version of Anaconda, so we’ll install Micromamba for managing Conda environments. Follow the official Micromamba installation guide: <a href="https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html">https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html</a></p>
-<p><strong>Important:</strong> When prompted for the <code>Prefix location?</code>, use a path in your scratch space. You can get the correct path by running: <code>echo /expanse/lustre/scratch/$USER/temp_project/micromamba</code>. Note that you cannot use <code>$USER</code> directly in the prompt; you must replace it with the actual path obtained from the <code>echo</code> command.</p>
-<p>After installation, you will need to log out and log back in, or source your <code>~/.bashrc</code> file for the changes to take effect.</p>
-</section>
-<section id="install-nextflow" class="level3">
-<h3 class="anchored" data-anchor-id="install-nextflow">2. Install Nextflow</h3>
-<p>Once Micromamba is set up, you can install Nextflow in a new environment called <code>nf-env</code>. This approach is particularly beneficial on Expanse because the system’s default Java version is too old for Nextflow. Micromamba will install a recent Java version isolated within your <code>nf-env</code> environment, ensuring compatibility.</p>
-<p>Follow the instructions on the official Nextflow installation page: <a href="https://www.nextflow.io/docs/latest/install.html">https://www.nextflow.io/docs/latest/install.html</a></p>
-<p>When following the instructions, replace any <code>conda</code> commands with <code>micromamba</code> to use your newly installed Micromamba environment.</p>
-</section>
-<section id="verify-nextflow-installation" class="level3">
-<h3 class="anchored" data-anchor-id="verify-nextflow-installation">3. Verify Nextflow Installation</h3>
-<p>After installation, you can verify that Nextflow is correctly installed by running <code>nextflow info</code>:</p>
-<pre><code>Version: 25.04.8 build 5956
-Created: 06-10-2025 21:19 UTC (14:19 PDT)
-System: Linux 4.18.0-513.24.1.el8_9.x86_64
-Runtime: Groovy 4.0.26 on OpenJDK 64-Bit Server VM 23.0.2-internal-adhoc.conda.src
-Encoding: UTF-8 (UTF-8)</code></pre>
-<p>Notice the <code>Runtime</code> line, which indicates that Nextflow is using an OpenJDK version provided by Conda, ensuring compatibility and optimal performance on Expanse.</p>
-</section>
-<section id="run-a-toy-example" class="level3">
-<h3 class="anchored" data-anchor-id="run-a-toy-example">4. Run a Toy Example</h3>
-<p>To test your Nextflow installation, let’s run a simple workflow from the Nextflow training materials. The training videos are an excellent resource for understanding Nextflow concepts, see <a href="https://training.nextflow.io">https://training.nextflow.io</a></p>
-<p>First, clone the example repository:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/zonca/expanse_nextflow</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> expanse_nextflow</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The <code>hello-workflow-4.nf</code> workflow processes a CSV file containing greetings, converts them to uppercase, and then collects them. For more details, refer to the <a href="https://training.nextflow.io/2.4.0/hello_nextflow/03_hello_workflow/">3rd tutorial in the Nextflow training materials</a>.</p>
-<p>The workflow consists of the following steps:</p>
+<p>This post serves as a follow-up to our previous tutorial, “<a href="2025-10-07-running-nextflow-on-expanse.html">Running Nextflow on Expanse</a>”, where we covered the foundational aspects of deploying Nextflow workflows on an HPC environment. While the previous discussion focused on execution environments, this tutorial delves into a crucial aspect of building sophisticated and adaptive bioinformatics workflows: conditional logic.</p>
+<p>Conditional execution is a powerful feature in workflow management systems, enabling pipelines to dynamically adjust their behavior based on runtime conditions. Nextflow provides robust mechanisms for implementing conditional branching, leveraging its dataflow paradigm to ensure reproducibility and efficient parallel execution. This tutorial will explore how to implement such logic using channels and operators, drawing examples from the <code>main_conditional.nf</code> pipeline available in the <a href="https://github.com/zonca/expanse_nextflow">expanse_nextflow repository</a>. The principles discussed here are universally applicable to Nextflow workflows, extending beyond the Expanse HPC environment.</p>
+<section id="problem-statement" class="level2">
+<h2 class="anchored" data-anchor-id="problem-statement">Problem Statement</h2>
+<p>Consider a scenario requiring the following workflow steps:</p>
 <ol type="1">
-<li><strong><code>sayHello</code> process</strong>: Takes individual greetings (e.g., from a CSV file) and creates a separate output file for each greeting, containing the greeting text.</li>
-<li><strong><code>convertToUpper</code> process</strong>: Takes the output files from <code>sayHello</code>, reads their content, converts the text to uppercase, and writes the uppercase text to new files.</li>
-<li><strong><code>collectGreetings</code> process</strong>: Gathers all the uppercase files produced by <code>convertToUpper</code>, concatenates their content into a single output file, and also counts how many greetings were processed in total.</li>
+<li><strong>Parse Input:</strong> Process a CSV file containing a list of greetings.</li>
+<li><strong>Generate Files:</strong> Create a distinct file for each parsed greeting.</li>
+<li><strong>Global Conditional Decision:</strong> Introduce a single, random decision that applies uniformly to the entire batch of greetings.</li>
+<li><strong>Conditional Transformation:</strong> Apply an uppercase transformation exclusively to the files selected by the global decision.</li>
+<li><strong>Consolidate Output:</strong> Merge all processed files into a single output.</li>
 </ol>
-<p>In summary, the workflow reads a list of greetings, processes each one by converting it to uppercase, and then combines all the uppercase greetings into a single result file, finally reporting the total count.</p>
-<p>Then, run the workflow locally on the login node (for testing purposes):</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> hello-workflow-4.nf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>You should see output similar to this:</p>
-<pre><code>N E X T F L O W   ~  version 25.04.8
-
-Launching `hello-workflow-4.nf` [soggy_monod] DSL2 - revision: 7924362939
-
-executor &gt;  local (7)
-[ee/22f232] sayHello (3)       [100%] 3 of 3 ✔
-[77/32c0db] convertToUpper (3) [100%] 3 of 3 ✔
-[09/3fd893] collectGreetings   [100%] 1 of 1 ✔
-There were 3 greetings in this batch</code></pre>
+<p>The key challenge lies in the dynamic nature of the conditional decision, which necessitates dynamic channel operations within Nextflow.</p>
 </section>
-<section id="run-in-a-single-slurm-job" class="level3">
-<h3 class="anchored" data-anchor-id="run-in-a-single-slurm-job">5. Run in a single Slurm job</h3>
-<p>To run Nextflow on the compute nodes, you need to submit a Slurm job. This approach is useful if you have many tiny jobs that can all run within the resources of a single node. However, the true power of Nextflow lies in its ability to coordinate multiple Slurm jobs, which can execute on different queues or even require specialized resources like GPUs or multiple nodes for different stages of a workflow. First, identify your available allocation using <code>expanse-client user</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">expanse-client</span> user</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This will show your available allocations, for example:</p>
-<pre><code> Resource  expanse 
-
-╭───┬───────┬───────┬─────────┬──────────────┬──────┬───────────┬─────────────────╮
-│   │ NAME  │ STATE │ PROJECT │ TG PROJECT   │ USED │ AVAILABLE │ USED BY PROJECT │
-├───┼───────┼───────┼─────────┼──────────────┼──────┼───────────┼─────────────────┤
-│ 1 │ zonca │ allow │ sdsxxx  │ TG-XXXX      │  706 │     25000 │             761 │
-╰───┴───────┴───────┴─────────┴──────────────┴──────┴───────────┴─────────────────╯</code></pre>
-<p>From this output, you can see that <code>sdsxxx</code> is the SLURM <code>account</code>. You will use this to customize the <code>single_nextflow_job_expanse.slurm</code> file, located in the <code>expanse_nextflow</code> repository you cloned. Open this file and replace <code>sdsxxx</code> with your actual project account.</p>
-<p>Once customized, submit the job to the Slurm scheduler:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> single_nextflow_job_expanse.slurm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>You can monitor the job status with <code>squeue -u $USER</code>. Once the job completes, you can check the output and error logs in the <code>logs/</code> folder within your <code>expanse_nextflow</code> directory. You should see an output very similar to when you ran the workflow on the login node.</p>
+<section id="core-processes" class="level2">
+<h2 class="anchored" data-anchor-id="core-processes">Core Processes</h2>
+<p>The <code>main_conditional.nf</code> pipeline utilizes several processes to achieve the described functionality:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 47%">
+<col style="width: 14%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Process</th>
+<th style="text-align: left;">Responsibility</th>
+<th style="text-align: left;">Inputs</th>
+<th style="text-align: left;">Outputs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>sayHello</code></td>
+<td style="text-align: left;">Generates an output file (<code>&lt;greeting&gt;-output.txt</code>) containing the greeting.</td>
+<td style="text-align: left;"><code>val greeting</code></td>
+<td style="text-align: left;"><code>path "${greeting}-output.txt"</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>convertToUpper</code></td>
+<td style="text-align: left;">Transforms the content of an input file to uppercase, creating <code>UPPER-&lt;file&gt;</code>.</td>
+<td style="text-align: left;"><code>path input_file</code></td>
+<td style="text-align: left;"><code>path "UPPER-${input_file}"</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>collectGreetings</code></td>
+<td style="text-align: left;">Concatenates a collection of files and reports the total count of greetings.</td>
+<td style="text-align: left;"><code>path input_files</code>, <code>val batch_name</code></td>
+<td style="text-align: left;"><code>path "COLLECTED-${batch}-output.txt"</code>, <code>val count_greetings"</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>random_decision</code></td>
+<td style="text-align: left;">Executes <code>scripts/random_decision.sh</code> to produce either <code>0</code> or <code>1</code> as a standard output.</td>
+<td style="text-align: left;">(None)</td>
+<td style="text-align: left;"><code>stdout decision</code></td>
+</tr>
+</tbody>
+</table>
+<p>The <code>random_decision</code> process is particularly noteworthy as it emits an integer directly onto a channel, rather than a file path, which is then used to drive the conditional logic.</p>
 </section>
-<section id="run-with-slurm-executor" class="level3">
-<h3 class="anchored" data-anchor-id="run-with-slurm-executor">6. Run with Slurm Executor</h3>
-<p>Nextflow can also manage the submission of individual tasks as separate Slurm jobs, allowing you to leverage the cluster’s resources more effectively. In this mode, Nextflow runs on the login node, but each process within the workflow is submitted as an independent Slurm job. This setup often utilizes node-local scratch (fast SSD) for temporary files, with results passed between tasks.</p>
-<p>Nextflow uses configuration profiles to define different execution environments. The <code>expanse_nextflow</code> repository includes a <code>nextflow.config</code> file with a <code>slurm_debug</code> profile tailored for this purpose. This profile limits parallelism to 1 job at a time due to debug queue limits, but this restriction can be removed when using the shared or compute queues. You can inspect the <code>nextflow.config</code> file to see the specific configurations.</p>
-<p>To run the workflow using the Slurm executor with the <code>slurm_debug</code> profile, execute the following command on the login node:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run hello-workflow-4.nf <span class="at">-profile</span> slurm_debug</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>You should see output similar to this, indicating that the executor is <code>slurm</code>:</p>
-<pre><code>N E X T F L O W   ~  version 25.04.8
-
-Launching `hello-workflow-4.nf` [tender_fermi] DSL2 - revision: 7924362939
-
-executor &gt;  slurm (7)
-[bb/5d01f1] sayHello (1)       [100%] 3 of 3 ✔
-[a1/f76925] convertToUpper (3) [100%] 3 of 3 ✔
-[d0/a2e7e6] collectGreetings   [100%] 1 of 1 ✔
-There were 3 greetings in this batch
-Completed at: 07-Oct-2025 11:02:52
-Duration    : 1m 22s
-CPU hours   : (a few seconds)
-Succeeded   : 7</code></pre>
+<section id="workflow-orchestration" class="level2">
+<h2 class="anchored" data-anchor-id="workflow-orchestration">Workflow Orchestration</h2>
+<p>The DSL2 <code>workflow { main: ... }</code> block in <code>main_conditional.nf</code> orchestrates the dataflow as follows:</p>
+<ol type="1">
+<li><p><strong>Initialize Greeting Channel:</strong> <code>groovy     greeting_ch = Channel.fromPath(params.greeting)                         .splitCsv()                         .map { line -&gt; line[0] }</code> This sequence reads the CSV file, splits it into rows, and extracts the first column, resulting in a channel emitting individual greeting strings.</p></li>
+<li><p><strong>Execute <code>sayHello</code> Process:</strong> <code>groovy     sayHello(greeting_ch)</code> Invoking <code>sayHello</code> instantiates the process, making its output available via <code>sayHello.out</code>.</p></li>
+<li><p><strong>Determine Conditional Branch:</strong> <code>groovy     random_decision()     def decision_ch = random_decision.out                             .map { it.trim() }                             .view { "Random branch decision: $it" }</code> The <code>random_decision</code> process is executed once. Its output, a single integer, is then trimmed and broadcast to <code>decision_ch</code>. Due to the broadcast nature of channels, all downstream consumers receive the same decision, ensuring a consistent conditional path for the entire batch.</p></li>
+<li><p><strong>Combine Greetings with Decision:</strong> <code>groovy     sayHello.out         .combine(decision_ch)         .view { "Greeting + decision pair: $it" }         .set { decorated_ch }</code> The <code>combine</code> operator pairs each greeting file path from <code>sayHello.out</code> with the single decision value from <code>decision_ch</code>. The <code>.set { decorated_ch }</code> construct is crucial here, allowing this combined channel to be reused for subsequent branching operations without being consumed.</p></li>
+<li><p><strong>Implement Conditional Branching:</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode groovy code-with-copy"><code class="sourceCode groovy"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>decorated_ch</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">filter</span> <span class="op">{</span> tuple <span class="op">-&gt;</span> tuple<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">==</span> <span class="st">"0"</span> <span class="op">}</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">map</span> <span class="op">{</span> tuple <span class="op">-&gt;</span> tuple<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">}</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">view</span> <span class="op">{</span> <span class="st">"Skipping uppercase for: </span><span class="ss">$it</span><span class="st">"</span> <span class="op">}</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">set</span> <span class="op">{</span> skip_uppercase_ch <span class="op">}</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>decorated_ch</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">filter</span> <span class="op">{</span> tuple <span class="op">-&gt;</span> tuple<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">==</span> <span class="st">"1"</span> <span class="op">}</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">map</span> <span class="op">{</span> tuple <span class="op">-&gt;</span> tuple<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">}</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">view</span> <span class="op">{</span> <span class="st">"Running uppercase on: </span><span class="ss">$it</span><span class="st">"</span> <span class="op">}</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">set</span> <span class="op">{</span> convert_input_ch <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here, <code>decorated_ch</code> is filtered into two distinct channels based on the decision value (<code>tuple[1]</code>). The <code>map</code> operator then extracts only the file path (<code>tuple[0]</code>), preparing the data for the next stage. The use of <code>.set</code> on both <code>skip_uppercase_ch</code> and <code>convert_input_ch</code> ensures these channels can be independently consumed.</p></li>
+<li><p><strong>Execute Conditional Transformation:</strong> <code>groovy     def converted_ch = convertToUpper(convert_input_ch)         .view { "Converted file produced: $it" }</code> The <code>convertToUpper</code> process is only triggered for files that pass through the <code>convert_input_ch</code> (i.e., where the decision was <code>1</code>). Files in <code>skip_uppercase_ch</code> bypass this process entirely.</p></li>
+<li><p><strong>Merge Branches:</strong> <code>groovy     def uppercase_ch = skip_uppercase_ch.mix(converted_ch)</code> The <code>mix</code> operator interleaves elements from <code>skip_uppercase_ch</code> and <code>converted_ch</code>, emitting them as they become available. This effectively merges the two conditional branches back into a single stream for subsequent processing.</p></li>
+<li><p><strong>Final Collection and Reporting:</strong> <code>groovy     collectGreetings(uppercase_ch.collect(), params.batch)     collectGreetings.out.count.view { "There were $it greetings in this batch" }</code> The <code>collect()</code> operator gathers all files from <code>uppercase_ch</code> before passing them to <code>collectGreetings</code>. This process then emits both the concatenated output file and a count of the processed greetings.</p></li>
+</ol>
 </section>
-<section id="run-with-singularity" class="level3">
-<h3 class="anchored" data-anchor-id="run-with-singularity">7. Run with Singularity</h3>
-<p>Nextflow integrates seamlessly with container technologies like Singularity, enabling you to define your workflow’s execution environment in a portable and reproducible manner. On Expanse, this is particularly useful for managing dependencies and ensuring consistent results across diverse computing environments.</p>
-<p>The <code>expanse_nextflow</code> repository’s <code>nextflow.config</code> file already includes a profile that enables Singularity. To activate it, uncomment the <code>containers</code> line in your Nextflow workflow file (e.g., <code>hello-workflow-4.nf</code>). Before running the workflow, load the Singularity module using <code>module load singularitypro</code>. The Singularity environment will then be automatically propagated to the Slurm job.</p>
-<p>Once enabled, processes like <code>convertToUpper</code> will execute inside a specified Singularity container instead of natively on the host system. The Singularity image is cached on the first run and reused for subsequent executions, saving time and resources. For this tutorial, we use a standard Ubuntu container from SDSC’s Marty Kandes’s <a href="https://github.com/mkandes/naked-singularity">naked-singularity</a> project, ensuring a consistent and isolated execution for the <code>convertToUpper</code> process.</p>
-<p>To run the workflow with Singularity, execute Nextflow with the appropriate profile (e.g., <code>slurm_debug</code> for testing on the debug queue):</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run hello-workflow-4.nf <span class="at">-profile</span> slurm_debug</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>You should observe that the <code>convertToUpper</code> process now executes within the Singularity container, providing a robust and reproducible execution environment.</p>
+<section id="executing-the-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="executing-the-workflow">Executing the Workflow</h2>
+<p>To execute this conditional workflow, navigate to the <code>expanse_nextflow</code> repository and run:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run main_conditional.nf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Observe the Nextflow logs for messages indicating the random decision and the subsequent branching behavior. For instance, you might see:</p>
+<ul>
+<li><code>Random branch decision: 1</code> (or <code>0</code>)</li>
+<li><code>Greeting + decision pair: [/path/to/Alice-output.txt, 1]</code></li>
+<li><code>Skipping uppercase for: /path/to/Bob-output.txt</code> (if decision was <code>0</code> for Bob)</li>
+<li><code>Running uppercase on: /path/to/Alice-output.txt</code> (if decision was <code>1</code> for Alice)</li>
+<li><code>Converted file produced: UPPER-/path/to/Alice-output.txt</code></li>
+<li><code>There were X greetings in this batch</code></li>
+</ul>
+<p>These log entries confirm the dynamic execution of the conditional branches.</p>
 </section>
+<section id="extending-the-pattern" class="level2">
+<h2 class="anchored" data-anchor-id="extending-the-pattern">Extending the Pattern</h2>
+<p>The conditional branching pattern demonstrated here can be extended in various ways:</p>
+<ul>
+<li>Replace the <code>random_decision</code> process with one that queries external metadata, checks resource availability, or integrates with an API to inform branching logic.</li>
+<li>Introduce additional <code>filter</code> operations to refine input streams based on specific criteria before transformations.</li>
+<li>Utilize <code>view</code> blocks strategically during development for debugging complex dataflow paths.</li>
+</ul>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Implementing conditional logic in Nextflow workflows is fundamental for creating adaptable and efficient pipelines. By understanding how to manipulate channels with operators like <code>combine</code>, <code>filter</code>, <code>map</code>, <code>mix</code>, and <code>set</code>, developers can design workflows that respond dynamically to runtime conditions while maintaining Nextflow’s benefits of reproducibility and parallel execution. This approach ensures that complex scientific workflows can be both robust and flexible, regardless of the underlying computing environment.</p>
 <section id="next-steps" class="level3">
 <h3 class="anchored" data-anchor-id="next-steps">Next Steps</h3>
-<p>For an in-depth exploration of conditional logic within Nextflow workflows, see: <a href="2025-11-15-nextflow-conditional-branching.html">Implementing Conditional Logic in Nextflow Workflows</a>.</p>
-<p>For a more advanced setup that integrates Nextflow with the Seqera Platform for enhanced monitoring and management, refer to our next tutorial: <a href="2025-10-27-running-nextflow-on-expanse-with-seqera.html">Running Nextflow on Expanse with Seqera</a>.</p>
+<p>Explore other advanced Nextflow features, such as subworkflows, modules, and advanced error handling, to further enhance the sophistication and resilience of your computational pipelines.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

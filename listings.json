@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2025-11-15-nextflow-conditional-branching.html",
       "/posts/2025-11-13-ezid-hierarchical-doi-management.html",
       "/posts/2025-11-10-agentic-scientific-software-development.html",
       "/posts/2025-11-06-software-citation-station-helper.html",
