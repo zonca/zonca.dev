@@ -156,5 +156,7 @@ You should observe that the `convertToUpper` process now executes within the Sin
 
 ### Next Steps
 
+For an in-depth exploration of conditional logic within Nextflow workflows, see: [Implementing Conditional Logic in Nextflow Workflows](2025-11-15-nextflow-conditional-branching.html).
+
 For a more advanced setup that integrates Nextflow with the Seqera Platform for enhanced monitoring and management, refer to our next tutorial: [Running Nextflow on Expanse with Seqera](2025-10-27-running-nextflow-on-expanse-with-seqera.html).
 
