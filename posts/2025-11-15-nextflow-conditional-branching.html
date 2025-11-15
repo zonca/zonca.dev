@@ -198,8 +198,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>This post serves as a follow-up to our previous tutorial, “<a href="2025-10-07-running-nextflow-on-expanse.html">Running Nextflow on Expanse</a>”, where we covered the foundational aspects of deploying Nextflow workflows on an HPC environment. While the previous discussion focused on execution environments, this tutorial delves into a crucial aspect of building sophisticated and adaptive bioinformatics workflows: conditional logic.</p>
-<p>Conditional execution is a powerful feature in workflow management systems, enabling pipelines to dynamically adjust their behavior based on runtime conditions. Nextflow provides robust mechanisms for implementing conditional branching, leveraging its dataflow paradigm to ensure reproducibility and efficient parallel execution. This tutorial will explore how to implement such logic using channels and operators, drawing examples from the <code>main_conditional.nf</code> pipeline available in the <a href="https://github.com/zonca/expanse_nextflow">expanse_nextflow repository</a>. The principles discussed here are universally applicable to Nextflow workflows, extending beyond the Expanse HPC environment.</p>
+<p>This post serves as a follow-up to my previous tutorial, “<a href="2025-10-07-running-nextflow-on-expanse.html">Running Nextflow on Expanse</a>”, where I covered the foundational aspects of deploying Nextflow workflows on an HPC environment. While the previous discussion focused on execution environments, this tutorial delves into a crucial aspect of building sophisticated and adaptive computational workflows: conditional logic.</p>
+<p>Conditional execution is a powerful feature in workflow management systems, enabling pipelines to dynamically adjust their behavior based on runtime conditions. Nextflow provides robust mechanisms for implementing conditional branching, leveraging its dataflow paradigm to ensure reproducibility and efficient parallel execution. This tutorial will explore how to implement such logic using channels and operators, drawing examples from the <a href="https://github.com/zonca/expanse_nextflow/blob/main/main_conditional.nf"><code>main_conditional.nf</code> pipeline</a> available in the expanse_nextflow repository. The principles discussed here are universally applicable to Nextflow workflows, extending beyond the Expanse HPC environment.</p>
 <section id="problem-statement" class="level2">
 <h2 class="anchored" data-anchor-id="problem-statement">Problem Statement</h2>
 <p>Consider a scenario requiring the following workflow steps:</p>
@@ -312,12 +312,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>Implementing conditional logic in Nextflow workflows is fundamental for creating adaptable and efficient pipelines. By understanding how to manipulate channels with operators like <code>combine</code>, <code>filter</code>, <code>map</code>, <code>mix</code>, and <code>set</code>, developers can design workflows that respond dynamically to runtime conditions while maintaining Nextflow’s benefits of reproducibility and parallel execution. This approach ensures that complex scientific workflows can be both robust and flexible, regardless of the underlying computing environment.</p>
-<section id="next-steps" class="level3">
-<h3 class="anchored" data-anchor-id="next-steps">Next Steps</h3>
-<p>Explore other advanced Nextflow features, such as subworkflows, modules, and advanced error handling, to further enhance the sophistication and resilience of your computational pipelines.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
