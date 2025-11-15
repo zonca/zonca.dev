@@ -299,7 +299,21 @@ Launching `main_local_slurm.nf` [disturbed_babbage] DSL2 - revision: 719cae3431
 [58/871526] Submitted process &gt; convertToUpper (3)
 [56/d2737f] Submitted process &gt; collectGreetings
 There were 3 greetings in this batch</code></pre></li>
-<li><p>Observe the behavior:</p>
+<li><p>To specifically observe which processes are submitted to Slurm and which run locally, you can inspect the <code>.nextflow.log</code> file. For instance, using <code>grep -i submitted .nextflow.log</code> will show:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-i</span> submitted .nextflow.log</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>Nov-15 10:09:05.950 [Task submitter] INFO  nextflow.Session - [81/795962] Submitted process &gt; sayHello (2)
+Nov-15 10:09:05.993 [Task submitter] INFO  nextflow.Session - [1a/95d170] Submitted process &gt; sayHello (1)
+Nov-15 10:09:06.133 [Task submitter] INFO  nextflow.Session - [82/03b4e9] Submitted process &gt; sayHello (3)
+Nov-15 10:09:06.393 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process convertToUpper (1) &gt; jobId: 44200682; workDir: /home/zonca/p/software/expanse_nextflow/work/b2/9ef9d9a6d062048fd8915225ca2609
+Nov-15 10:09:06.393 [Task submitter] INFO  nextflow.Session - [b2/9ef9d9] Submitted process &gt; convertToUpper (1)
+Nov-15 10:09:06.660 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process convertToUpper (2) &gt; jobId: 44200683; workDir: /home/zonca/p/software/expanse_nextflow/work/be/37f3e78a4e3c27f4f63b71da31aa2f
+Nov-15 10:09:06.660 [Task submitter] INFO  nextflow.Session - [be/37f3e7] Submitted process &gt; convertToUpper (2)
+Nov-15 10:09:06.759 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process convertToUpper (3) &gt; jobId: 44200684; workDir: /home/zonca/p/software/expanse_nextflow/work/58/871526bef14c129bae9f85c07edd15
+Nov-15 10:09:06.759 [Task submitter] INFO  nextflow.Session - [58/871526] Submitted process &gt; convertToUpper (3)
+Nov-15 10:11:20.782 [Task submitter] INFO  nextflow.Session - [56/d2737f] Submitted process &gt; collectGreetings
+Nov-15 10:11:25.676 [main] DEBUG n.trace.WorkflowStatsObserver - Workflow completed &gt; WorkflowStats[succeededCount=7; failedCount=0; ignoredCount=0; cachedCount=0; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=0; succeedDuration=1m 10s; failedDuration=0ms; cachedDuration=0ms;loadCpus=0; loadMemory=0; peakRunning=2; peakCpus=4; peakMemory=8 GB; ]</code></pre>
+<p>This log clearly shows that <code>sayHello</code> processes are submitted without a specific executor (implying local execution), while <code>convertToUpper</code> processes explicitly indicate <code>[SLURM] submitted process</code>.</p></li>
+<li><p>Finally, observe the behavior:</p>
 <ul>
 <li><code>sayHello</code> and <code>collectGreetings</code> execute on the local executor (e.g., login node).</li>
 <li><code>convertToUpper</code> submits to Slurm (<code>executor &gt; slurm</code>) with the queue, resources, and <code>clusterOptions</code> defined directly in its process block. You can check <code>logs/&lt;process&gt;-&lt;jobid&gt;.{out,err}</code> for scheduler output.</li>
