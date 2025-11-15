@@ -108,20 +108,37 @@ The DSL2 `workflow { main: ... }` block in `main_conditional.nf` orchestrates th
 
 ## Executing the Workflow
 
-To execute this conditional workflow, navigate to the `expanse_nextflow` repository and run:
+To execute this conditional workflow on Expanse, navigate to the `expanse_nextflow` repository and run:
 
 ```bash
-nextflow run main_conditional.nf
+nextflow run main_conditional.nf -profile slurm_debug -ansi-log false
 ```
 
-Observe the Nextflow logs for messages indicating the random decision and the subsequent branching behavior. For instance, you might see:
+You should observe output similar to this:
 
-*   `Random branch decision: 1` (or `0`)
-*   `Greeting + decision pair: [/path/to/Alice-output.txt, 1]`
-*   `Skipping uppercase for: /path/to/Bob-output.txt` (if decision was `0` for Bob)
-*   `Running uppercase on: /path/to/Alice-output.txt` (if decision was `1` for Alice)
-*   `Converted file produced: UPPER-/path/to/Alice-output.txt`
-*   `There were X greetings in this batch`
+```
+N E X T F L O W  ~  version 25.10.0
+Launching `main_conditional.nf` [determined_kowalevski] DSL2 - revision: 9384b7fc20
+[05/0ee611] Submitted process > sayHello (2)
+[8c/80b9f0] Submitted process > sayHello (1)
+[42/5b9235] Submitted process > random_decision
+Random branch decision: 1
+Greeting + decision pair: [/expanse/lustre/scratch/zonca/temp_project/nxf_work/05/0ee6113628b8c84ab1056f79fa5310/Bonjour-output.txt, 1]
+Greeting + decision pair: [/expanse/lustre/scratch/zonca/temp_project/nxf_work/8c/80b9f0ef609a10ed6d25d115a2d73c/Hello-output.txt, 1]
+Running uppercase on: /expanse/lustre/scratch/zonca/temp_project/nxf_work/05/0ee6113628b8c84ab1056f79fa5310/Bonjour-output.txt
+Running uppercase on: /expanse/lustre/scratch/zonca/temp_project/nxf_work/8c/80b9f0ef609a10ed6d25d115a2d73c/Hello-output.txt
+[40/30a93c] Submitted process > sayHello (3)
+Greeting + decision pair: [/expanse/lustre/scratch/zonca/temp_project/nxf_work/40/30a93c83ed1f8c3d51791c8133f5c9/Holà-output.txt, 1]
+Running uppercase on: /expanse/lustre/scratch/zonca/temp_project/nxf_work/40/30a93c83ed1f8c3d51791c8133f5c9/Holà-output.txt
+[74/75e5ac] Submitted process > convertToUpper (2)
+Converted file produced: /expanse/lustre/scratch/zonca/temp_project/nxf_work/74/75e5ac7244efcb02bb2973cbfffa2e/UPPER-Hello-output.txt
+[dd/56e8de] Submitted process > convertToUpper (3)
+Converted file produced: /expanse/lustre/scratch/zonca/temp_project/nxf_work/dd/56e8def9f6b74b805ceb2a5cc579d4/UPPER-Holà-output.txt
+[23/32811d] Submitted process > convertToUpper (1)
+Converted file produced: /expanse/lustre/scratch/zonca/temp_project/nxf_work/23/32811db56641dc0c36aa0e4cd66253/UPPER-Bonjour-output.txt
+[f4/2c6a9d] Submitted process > collectGreetings
+There were 3 greetings in this batch
+```
 
 These log entries confirm the dynamic execution of the conditional branches.
 
