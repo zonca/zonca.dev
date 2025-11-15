@@ -102,13 +102,30 @@ process collectGreetings {
 ## 4. Running the Workflow
 
 1.  Place `greetings.csv` in the project root (first column only is fine).
-2.  Launch the workflow without any profile overrides:
+2.  Launch the workflow. Note that there is no need to use a profile (e.g., `-profile slurm_debug`) because the executor for each process is configured separately within the workflow itself. This approach is particularly useful for orchestrating jobs across different execution environments, such as mixing AWS cloud resources with an HPC cluster.
+
     ```bash
-    nextflow run main_local_slurm.nf
+    nextflow run main_local_slurm.nf -ansi-log false
     ```
-3.  Observe the behavior:
-    *   `sayHello` and `collectGreetings` appear in `.nextflow.log` as `executor > local` and execute immediately.
-    *   `convertToUpper` submits to Slurm (`executor > slurm`) with the queue, resources, and `clusterOptions` defined in the process. You can check `logs/<process>-<jobid>.{out,err}` for scheduler output.
+
+3.  You should observe output similar to this:
+
+    ```
+    N E X T F L O W  ~  version 25.10.0
+    Launching `main_local_slurm.nf` [disturbed_babbage] DSL2 - revision: 719cae3431
+    [81/795962] Submitted process > sayHello (2)
+    [1a/95d170] Submitted process > sayHello (1)
+    [82/03b4e9] Submitted process > sayHello (3)
+    [b2/9ef9d9] Submitted process > convertToUpper (1)
+    [be/37f3e7] Submitted process > convertToUpper (2)
+    [58/871526] Submitted process > convertToUpper (3)
+    [56/d2737f] Submitted process > collectGreetings
+    There were 3 greetings in this batch
+    ```
+
+4.  Observe the behavior:
+    *   `sayHello` and `collectGreetings` execute on the local executor (e.g., login node).
+    *   `convertToUpper` submits to Slurm (`executor > slurm`) with the queue, resources, and `clusterOptions` defined directly in its process block. You can check `logs/<process>-<jobid>.{out,err}` for scheduler output.
 
 ## 5. Tips for More Complex Pipelines
 
