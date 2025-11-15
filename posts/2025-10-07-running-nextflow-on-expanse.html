@@ -294,6 +294,10 @@ Succeeded   : 7</code></pre>
 <p>To run the workflow with Singularity, execute Nextflow with the appropriate profile (e.g., <code>slurm_debug</code> for testing on the debug queue):</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run hello-workflow-4.nf <span class="at">-profile</span> slurm_debug</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You should observe that the <code>convertToUpper</code> process now executes within the Singularity container, providing a robust and reproducible execution environment.</p>
+</section>
+<section id="next-steps" class="level3">
+<h3 class="anchored" data-anchor-id="next-steps">Next Steps</h3>
+<p>For a more advanced setup that integrates Nextflow with the Seqera Platform for enhanced monitoring and management, refer to our next tutorial: <a href="2025-10-27-running-nextflow-on-expanse-with-seqera.html">Running Nextflow on Expanse with Seqera</a>.</p>
 
 
 </section>
