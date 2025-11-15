@@ -3182,7 +3182,7 @@
     "href": "posts/2025-11-15-nextflow-multiple-executors.html",
     "title": "Mixing Nextflow Executors for Hybrid Workflows",
     "section": "",
-    "text": "This post explores an advanced Nextflow pattern: the strategic combination of different execution environments within a single workflow. In complex scientific computing, it is often beneficial to perform lightweight, interactive tasks on a local machine or login node, while offloading computationally intensive processes to high-performance computing (HPC) clusters. Nextflow’s flexible executor model facilitates this hybrid approach, allowing seamless integration of local and remote execution.\nBy mixing executors, users can optimize resource utilization, accelerate development cycles by quickly testing initial steps locally, and ensure scalability for demanding computational stages. This tutorial will demonstrate a minimal example of a Nextflow pipeline that leverages both local and Slurm executors, illustrating how to effectively manage diverse computational requirements within a unified workflow."
+    "text": "This post demonstrates how to combine different Nextflow executors within a single workflow, a powerful pattern for optimizing resource usage in scientific computing. By running lightweight tasks locally and offloading computationally intensive processes to HPC clusters like Expanse (as discussed in my previous tutorial on Nextflow on Expanse), users can accelerate development and ensure scalability. This tutorial provides a minimal example of a Nextflow pipeline leveraging both local and Slurm executors."
   },
   {
     "objectID": "posts/2025-11-15-nextflow-multiple-executors.html#project-layout",
