@@ -287,17 +287,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="executing-the-workflow" class="level2">
 <h2 class="anchored" data-anchor-id="executing-the-workflow">Executing the Workflow</h2>
-<p>To execute this conditional workflow, navigate to the <code>expanse_nextflow</code> repository and run:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run main_conditional.nf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Observe the Nextflow logs for messages indicating the random decision and the subsequent branching behavior. For instance, you might see:</p>
-<ul>
-<li><code>Random branch decision: 1</code> (or <code>0</code>)</li>
-<li><code>Greeting + decision pair: [/path/to/Alice-output.txt, 1]</code></li>
-<li><code>Skipping uppercase for: /path/to/Bob-output.txt</code> (if decision was <code>0</code> for Bob)</li>
-<li><code>Running uppercase on: /path/to/Alice-output.txt</code> (if decision was <code>1</code> for Alice)</li>
-<li><code>Converted file produced: UPPER-/path/to/Alice-output.txt</code></li>
-<li><code>There were X greetings in this batch</code></li>
-</ul>
+<p>To execute this conditional workflow on Expanse, navigate to the <code>expanse_nextflow</code> repository and run:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run main_conditional.nf <span class="at">-profile</span> slurm_debug <span class="at">-ansi-log</span> false</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You should observe output similar to this:</p>
+<pre><code>N E X T F L O W  ~  version 25.10.0
+Launching `main_conditional.nf` [determined_kowalevski] DSL2 - revision: 9384b7fc20
+[05/0ee611] Submitted process &gt; sayHello (2)
+[8c/80b9f0] Submitted process &gt; sayHello (1)
+[42/5b9235] Submitted process &gt; random_decision
+Random branch decision: 1
+Greeting + decision pair: [/expanse/lustre/scratch/zonca/temp_project/nxf_work/05/0ee6113628b8c84ab1056f79fa5310/Bonjour-output.txt, 1]
+Greeting + decision pair: [/expanse/lustre/scratch/zonca/temp_project/nxf_work/8c/80b9f0ef609a10ed6d25d115a2d73c/Hello-output.txt, 1]
+Running uppercase on: /expanse/lustre/scratch/zonca/temp_project/nxf_work/05/0ee6113628b8c84ab1056f79fa5310/Bonjour-output.txt
+Running uppercase on: /expanse/lustre/scratch/zonca/temp_project/nxf_work/8c/80b9f0ef609a10ed6d25d115a2d73c/Hello-output.txt
+[40/30a93c] Submitted process &gt; sayHello (3)
+Greeting + decision pair: [/expanse/lustre/scratch/zonca/temp_project/nxf_work/40/30a93c83ed1f8c3d51791c8133f5c9/Holà-output.txt, 1]
+Running uppercase on: /expanse/lustre/scratch/zonca/temp_project/nxf_work/40/30a93c83ed1f8c3d51791c8133f5c9/Holà-output.txt
+[74/75e5ac] Submitted process &gt; convertToUpper (2)
+Converted file produced: /expanse/lustre/scratch/zonca/temp_project/nxf_work/74/75e5ac7244efcb02bb2973cbfffa2e/UPPER-Hello-output.txt
+[dd/56e8de] Submitted process &gt; convertToUpper (3)
+Converted file produced: /expanse/lustre/scratch/zonca/temp_project/nxf_work/dd/56e8def9f6b74b805ceb2a5cc579d4/UPPER-Holà-output.txt
+[23/32811d] Submitted process &gt; convertToUpper (1)
+Converted file produced: /expanse/lustre/scratch/zonca/temp_project/nxf_work/23/32811db56641dc0c36aa0e4cd66253/UPPER-Bonjour-output.txt
+[f4/2c6a9d] Submitted process &gt; collectGreetings
+There were 3 greetings in this batch</code></pre>
 <p>These log entries confirm the dynamic execution of the conditional branches.</p>
 </section>
 <section id="extending-the-pattern" class="level2">
