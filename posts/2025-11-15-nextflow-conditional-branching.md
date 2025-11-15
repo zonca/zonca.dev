@@ -5,9 +5,9 @@ layout: post
 title: Implementing Conditional Logic in Nextflow Workflows
 ---
 
-This post serves as a follow-up to our previous tutorial, "[Running Nextflow on Expanse](2025-10-07-running-nextflow-on-expanse.html)", where we covered the foundational aspects of deploying Nextflow workflows on an HPC environment. While the previous discussion focused on execution environments, this tutorial delves into a crucial aspect of building sophisticated and adaptive bioinformatics workflows: conditional logic.
+This post serves as a follow-up to my previous tutorial, "[Running Nextflow on Expanse](2025-10-07-running-nextflow-on-expanse.html)", where I covered the foundational aspects of deploying Nextflow workflows on an HPC environment. While the previous discussion focused on execution environments, this tutorial delves into a crucial aspect of building sophisticated and adaptive computational workflows: conditional logic.
 
-Conditional execution is a powerful feature in workflow management systems, enabling pipelines to dynamically adjust their behavior based on runtime conditions. Nextflow provides robust mechanisms for implementing conditional branching, leveraging its dataflow paradigm to ensure reproducibility and efficient parallel execution. This tutorial will explore how to implement such logic using channels and operators, drawing examples from the `main_conditional.nf` pipeline available in the [expanse_nextflow repository](https://github.com/zonca/expanse_nextflow). The principles discussed here are universally applicable to Nextflow workflows, extending beyond the Expanse HPC environment.
+Conditional execution is a powerful feature in workflow management systems, enabling pipelines to dynamically adjust their behavior based on runtime conditions. Nextflow provides robust mechanisms for implementing conditional branching, leveraging its dataflow paradigm to ensure reproducibility and efficient parallel execution. This tutorial will explore how to implement such logic using channels and operators, drawing examples from the [`main_conditional.nf` pipeline](https://github.com/zonca/expanse_nextflow/blob/main/main_conditional.nf) available in the expanse_nextflow repository. The principles discussed here are universally applicable to Nextflow workflows, extending beyond the Expanse HPC environment.
 
 ## Problem Statement
 
@@ -137,6 +137,3 @@ The conditional branching pattern demonstrated here can be extended in various w
 
 Implementing conditional logic in Nextflow workflows is fundamental for creating adaptable and efficient pipelines. By understanding how to manipulate channels with operators like `combine`, `filter`, `map`, `mix`, and `set`, developers can design workflows that respond dynamically to runtime conditions while maintaining Nextflow's benefits of reproducibility and parallel execution. This approach ensures that complex scientific workflows can be both robust and flexible, regardless of the underlying computing environment.
 
-### Next Steps
-
-Explore other advanced Nextflow features, such as subworkflows, modules, and advanced error handling, to further enhance the sophistication and resilience of your computational pipelines.
