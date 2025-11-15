@@ -1,5 +1,5 @@
 ---
-categories: [hpc, sdsc]
+categories: [hpc, sdsc, nextflow]
 date: '2025-10-07'
 layout: post
 title: Running Nextflow on Expanse
