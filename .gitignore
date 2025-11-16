@@ -6,3 +6,6 @@ _site
 expanse_nextflow/
 posts/*.html
 site_libs/
+
+# Local Netlify folder
+.netlify
