@@ -1,18 +1,80 @@
-return {
-  ['custom_links'] = function(args, kwargs, meta)
-    -- Get the input file path
-    local input_file = quarto.doc.input_file
+local path = require("pandoc.path")
 
-    -- Construct the GitHub URLs
-    local github_repo = "https://github.com/zonca/zonca.dev"
-    local edit_url = github_repo .. "/edit/main/" .. input_file
-    local download_url = "https://raw.githubusercontent.com/zonca/zonca.dev/main/" .. input_file
+local github_repo = "https://github.com/zonca/zonca.dev"
+local raw_repo = "https://raw.githubusercontent.com/zonca/zonca.dev/main/"
 
-    -- Create the HTML for the links
-    local contribute_button = '<a href="' .. edit_url .. '" class="btn btn-light" role="button" target="_blank">Contribute</a>'
-    local download_link = '<a href="' .. download_url .. '" download style="display: none;">Download</a>'
-
-    -- Return the HTML as a raw block
-    return pandoc.RawBlock('html', download_link .. '\n' .. contribute_button)
+local function current_input_path()
+  local input_file = quarto.doc and quarto.doc.input_file or nil
+  if not input_file or input_file == "" then
+    return nil
   end
-}
+
+  local normalized = path.normalize(input_file)
+  local cwd = pandoc.system.get_working_directory()
+  local project_dir = (quarto.project and quarto.project.directory) or cwd
+  local relative = path.make_relative(normalized, project_dir)
+
+  if not relative or relative == "" then
+    return nil
+  end
+
+  return relative
+end
+
+local function build_buttons_html()
+  local relative_path = current_input_path()
+  if not relative_path then
+    return nil
+  end
+
+  local edit_url = github_repo .. "/edit/main/" .. relative_path
+  local download_url = raw_repo .. relative_path
+
+  local download_button = string.format(
+    '<a href="%s" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a>',
+    download_url
+  )
+  local contribute_button = string.format(
+    '<a href="%s" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a>',
+    edit_url
+  )
+
+  return string.format(
+    '<div class="page-action-buttons d-flex flex-wrap gap-2">%s%s</div>',
+    download_button,
+    contribute_button
+  )
+end
+
+local function build_footer_html()
+  local buttons = build_buttons_html()
+  if not buttons then
+    return nil
+  end
+
+  return '<div class="page-action-footer mt-4"><hr>' .. buttons .. '</div>'
+end
+
+local M = {}
+
+M['custom_links'] = function(args, kwargs, meta)
+  local buttons = build_buttons_html()
+  if not buttons then
+    return pandoc.Null()
+  end
+
+  return pandoc.RawBlock('html', buttons)
+end
+
+M['Pandoc'] = function(doc)
+  if quarto.doc.is_format("html") then
+    local footer = build_footer_html()
+    if footer then
+      quarto.doc.include_text("after-body", footer)
+    end
+  end
+
+  return doc
+end
+
+return M
