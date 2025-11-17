@@ -5,6 +5,8 @@ categories:
   - python
 ---
 
+This post refers to the [ezid_api repository](https://github.com/zonca/ezid_api).
+
 In the [previous tutorial](/posts/2025-10-07-ezid-doi-management-with-python.html) we focused on minting a single test DOI with the EZID API. This follow-up shows how to extend the same repository to support a canonical DOI plus two version-specific DOIs that point to one another so DataCite-powered portals can navigate the release history.
 
 ## What “hierarchical” means here
