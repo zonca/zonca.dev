@@ -46,13 +46,14 @@ local function build_buttons_html()
   )
 end
 
-local function build_footer_html()
+local function build_buttons_block()
   local buttons = build_buttons_html()
   if not buttons then
     return nil
   end
 
-  return '<div class="page-action-footer mt-4"><hr>' .. buttons .. '</div>'
+  return pandoc.RawBlock('html',
+    '<div class="page-action-container mb-4">' .. buttons .. '</div>')
 end
 
 local M = {}
@@ -68,9 +69,9 @@ end
 
 M['Pandoc'] = function(doc)
   if quarto.doc.is_format("html") then
-    local footer = build_footer_html()
-    if footer then
-      quarto.doc.include_text("after-body", footer)
+    local block = build_buttons_block()
+    if block then
+      table.insert(doc.blocks, 1, block)
     end
   end
 
