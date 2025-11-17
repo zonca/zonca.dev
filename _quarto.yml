@@ -21,8 +21,9 @@ website:
         href: https://mastodon.online/@zonca
 format:
   html:
-    theme: litera
+    theme: cosmo
     css: styles.css
+    mainfont: Lato
     code-block-bg: E9ECEF
 
 execute:

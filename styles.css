@@ -1,20 +1,41 @@
 /* css styles */
 
-.navbar-dark {
-    background-color: white;
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
 }
 
 .quarto-title-banner {
     margin-bottom: 1em;
-    color: #605e5e;
-    background: rgba(233,236,239,.65);
+    color: #495057;
+    background: #f8f9fa;
 }
 
 .page-item.active .page-link {
-    background-color: #605e5e;
-    border-color: #605e5e;
+    background-color: #495057;
+    border-color: #495057;
 }
 
 .page-link {
-    color: #605e5e;
+    color: #495057;
+}
+
+.quarto-grid-item {
+    border: 1px solid #dee2e6;
+    border-radius: .25rem;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,.05);
+}
+
+.quarto-grid-item .card-title a {
+    color: #212529;
+    text-decoration: none;
+}
+
+.quarto-grid-item .card-text {
+    color: #6c757d;
 }
