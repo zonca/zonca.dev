@@ -5485,7 +5485,7 @@
     "href": "posts/2024-12-11-jetstream_kubernetes_magnum.html",
     "title": "Deploy Kubernetes and JupyterHub on Jetstream with Magnum and Cluster API",
     "section": "",
-    "text": "UPDATED 2025-11-10: Documented how to inspect autoscaler status and scale-down activity. UPDATED 2025-08-11: Recommended package versions updated.\nUPDATED 2025-08-11: Added note about overriding DNS recordset IP. UPDATED 2025-04-14: Added echo test\nUPDATED 2025-04-12: Set a fixed IP address for the NGINX Ingress controller.\nThis guide demonstrates how to deploy Kubernetes on Jetstream with Magnum and then install JupyterHub on top using zero-to-jupyterhub. Jetstream recently enabled the Cluster API on its OpenStack deployment as the backend for Magnum, making it faster and more straightforward to launch Kubernetes clusters."
+    "text": "UPDATED 2025-11-10: Documented how to inspect autoscaler status and scale-down activity.\nUPDATED 2025-08-11: Recommended package versions updated.\nUPDATED 2025-08-11: Added note about overriding DNS recordset IP.\nUPDATED 2025-04-14: Added echo test\n\nUPDATED 2025-04-12: Set a fixed IP address for the NGINX Ingress controller.\nThis guide demonstrates how to deploy Kubernetes on Jetstream with Magnum and then install JupyterHub on top using zero-to-jupyterhub. Jetstream recently enabled the Cluster API on its OpenStack deployment as the backend for Magnum, making it faster and more straightforward to launch Kubernetes clusters."
   },
   {
     "objectID": "posts/2024-12-11-jetstream_kubernetes_magnum.html#advantages-of-magnum-based-deployments",
@@ -6486,7 +6486,7 @@
     "href": "posts/2025-11-13-ezid-hierarchical-doi-management.html",
     "title": "Hierarchical EZID DOIs with Python",
     "section": "",
-    "text": "In the previous tutorial we focused on minting a single test DOI with the EZID API. This follow-up shows how to extend the same repository to support a canonical DOI plus two version-specific DOIs that point to one another so DataCite-powered portals can navigate the release history."
+    "text": "This post refers to the ezid_api repository.\nIn the previous tutorial we focused on minting a single test DOI with the EZID API. This follow-up shows how to extend the same repository to support a canonical DOI plus two version-specific DOIs that point to one another so DataCite-powered portals can navigate the release history."
   },
   {
     "objectID": "posts/2025-11-13-ezid-hierarchical-doi-management.html#what-hierarchical-means-here",
