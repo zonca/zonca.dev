@@ -247,6 +247,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>From JupyterHub, start a new notebook server and open a Python notebook.</p>
 <p>In the first cell, install <code>dask-kubernetes</code> (this ensures the Operator Python client is available inside the user environment):</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install dask<span class="op">-</span>kubernetes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you want to avoid running <code>%pip install dask-kubernetes</code> every time a pod restarts, build your JupyterHub spawn image with <code>dask-kubernetes</code> already included so the dependency is available as soon as the notebook starts.</p>
 <p>In the next cell, create a Dask cluster using the Operator. The <code>namespace</code> must match the JupyterHub namespace so the spawned pods are visible and accessible to the user environment:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dask_kubernetes.operator <span class="im">import</span> KubeCluster</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
