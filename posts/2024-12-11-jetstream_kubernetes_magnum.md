@@ -9,12 +9,11 @@ slug: kubernetes-jupyterhub-jetstream-magnum-2024
 title: Deploy Kubernetes and JupyterHub on Jetstream with Magnum and Cluster API
 ---
 
-**UPDATED 2025-11-10**: Documented how to inspect autoscaler status and scale-down activity.
-**UPDATED 2025-08-11**: Recommended package versions updated.
-
-**UPDATED 2025-08-11**: Added note about overriding DNS recordset IP.
-**UPDATED 2025-04-14**: Added echo test  
-**UPDATED 2025-04-12**: Set a fixed IP address for the NGINX Ingress controller.
+* **UPDATED 2025-11-10**: Documented how to inspect autoscaler status and scale-down activity.
+* **UPDATED 2025-08-11**: Recommended package versions updated.
+* **UPDATED 2025-08-11**: Added note about overriding DNS recordset IP.
+* **UPDATED 2025-04-14**: Added echo test  
+* **UPDATED 2025-04-12**: Set a fixed IP address for the NGINX Ingress controller.
 
 This guide demonstrates how to deploy Kubernetes on Jetstream with Magnum and then install JupyterHub on top using [zero-to-jupyterhub](https://zero-to-jupyterhub.readthedocs.io/). Jetstream recently enabled the Cluster API on its OpenStack deployment as the backend for Magnum, making it faster and more straightforward to launch Kubernetes clusters.
 
