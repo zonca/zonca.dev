@@ -145,7 +145,7 @@ I have created an example single-user image derived from `scipy-notebook` that i
 
 The list of available image tags is at [github.com/zonca/jupyterhub-dask-docker-image/pkgs/container/jupyterhub-dask-docker-image](https://github.com/zonca/jupyterhub-dask-docker-image/pkgs/container/jupyterhub-dask-docker-image).
 
-To use one of these images in your JupyterHub deployment, you need to update your `values.yaml` file for the JupyterHub Helm chart. For example, to use a specific image tag, you would add:
+To use one of these images in your JupyterHub deployment, you need to update your `config_standard_storage.yaml` file for the JupyterHub Helm chart. For example, to use a specific image tag, you would add:
 
 ```yaml
 singleuser:
