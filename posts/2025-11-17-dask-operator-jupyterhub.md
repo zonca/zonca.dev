@@ -5,7 +5,7 @@ categories:
 - jupyterhub
 - dask
 - python
-date: '2025-06-25'
+date: '2025-11-17'
 layout: post
 title: Deploy the Dask Operator Alongside JupyterHub on Kubernetes
 
