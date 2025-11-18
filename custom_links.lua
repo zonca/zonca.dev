@@ -21,9 +21,17 @@ local function current_input_path()
   return relative
 end
 
+local function is_post(relative_path)
+  if not relative_path then
+    return false
+  end
+  -- Check if the file is in the posts/ directory
+  return string.match(relative_path, "^posts/") ~= nil
+end
+
 local function build_buttons_html()
   local relative_path = current_input_path()
-  if not relative_path then
+  if not relative_path or not is_post(relative_path) then
     return nil
   end
 
