@@ -9,7 +9,11 @@ publish:
 	quarto publish gh-pages --no-prompt --no-render --no-browser
 
 pull:
-	git pull --rebase
+	@if [ -n "$$GITHUB_ACTIONS" ]; then \
+		echo "Skipping git pull --rebase on CI (detached HEAD)"; \
+	else \
+		git pull --rebase; \
+	fi
 
 render:
 	quarto render
