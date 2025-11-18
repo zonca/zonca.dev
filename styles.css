@@ -18,12 +18,12 @@
 }
 
 .page-item.active .page-link {
-    background-color: #605e5e;
-    border-color: #605e5e;
+    background-color: #000000;
+    border-color: #000000;
 }
 
 .page-link {
-    color: #605e5e;
+    color: #000000;
 }
 
 .page-action-container {
