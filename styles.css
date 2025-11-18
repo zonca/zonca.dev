@@ -6,8 +6,8 @@
 
 .quarto-title-banner {
     margin-bottom: 1em;
-    color: #605e5e;
-    background: rgba(233,236,239,.65);
+    color: #000000;
+    background: transparent;
 }
 
 .page-item.active .page-link {
