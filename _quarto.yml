@@ -25,5 +25,8 @@ format:
     css: styles.css
     code-block-bg: E9ECEF
 
+filters:
+  - custom_links.lua
+
 execute:
   freeze: auto  # re-render only when source changes
