@@ -97,3 +97,38 @@ Finally, display the cluster object to get a realtime view on the number of work
 ```python
 cluster
 ```
+
+## Specify worker CPU and memory
+
+Simpler: pass a `resources` dict directly to `KubeCluster`. This sets requests/limits for both scheduler and the default worker group. Then scale.
+
+```python
+from dask_kubernetes.operator import KubeCluster
+
+cluster = KubeCluster(
+  name="my-dask-cluster-resources",
+  namespace="jhub",
+  resources={
+    "requests": {"cpu": "2", "memory": "2Gi"},
+    "limits": {"cpu": "2", "memory": "2Gi"},
+  },
+  n_workers=0,  # start with zero, then scale explicitly
+)
+cluster.scale(5)  # create 5 workers with 2 CPU / 2Gi each
+cluster
+```
+
+Different sizes? Add another worker group with its own resources:
+
+```python
+cluster.add_worker_group(
+  name="highmem",
+  n_workers=2,
+  resources={"requests": {"memory": "8Gi"}, "limits": {"memory": "8Gi"}},
+)
+cluster.scale(4, worker_group="highmem")  # scale that group
+```
+
+Use `cluster.scale(N, worker_group="groupname")` to change replicas for a specific group later.
+
+Notice that if you have the the Kubernetes Autocaler enabled in your cluster, it will automatically scale the number of nodes to accommodate the requested resources.
