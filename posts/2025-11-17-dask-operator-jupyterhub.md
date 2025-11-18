@@ -134,3 +134,28 @@ cluster.scale(4, worker_group="highmem")  # scale that group
 Use `cluster.scale(N, worker_group="groupname")` to change replicas for a specific group later.
 
 Notice that if you have the the Kubernetes Autocaler enabled in your cluster, it will automatically scale the number of nodes to accommodate the requested resources.
+
+## Access the dask dashboard
+
+One of the most important features of Dask is its dashboard, which provides real-time insight into distributed calculations. To visualize the Dask dashboard from within JupyterHub, we need to use `jupyter-server-proxy`.
+
+A critical point is that `jupyter-server-proxy` must be baked into the single-user Docker image that JupyterHub spawns. This is because the proxy needs to be available when the user's pod starts. Installing it with `%pip install` inside a running notebook will not work, as the server proxy components are not loaded dynamically.
+
+I have created an example single-user image derived from `scipy-notebook` that includes `jupyter-server-proxy` and other useful packages for scientific computing. The repository is available at [github.com/zonca/jupyterhub-dask-docker-image](https://github.com/zonca/jupyterhub-dask-docker-image). The image is automatically built using GitHub Actions and hosted on the GitHub Container Registry (which is a container registry similar to Docker Hub or Quay.io).
+
+The list of available image tags is at [github.com/zonca/jupyterhub-dask-docker-image/pkgs/container/jupyterhub-dask-docker-image](https://github.com/zonca/jupyterhub-dask-docker-image/pkgs/container/jupyterhub-dask-docker-image).
+
+To use one of these images in your JupyterHub deployment, you need to update your `values.yaml` file for the JupyterHub Helm chart. For example, to use a specific image tag, you would add:
+
+```yaml
+singleuser:
+  image:
+    name: ghcr.io/zonca/jupyterhub-dask-docker-image
+    tag: "2025-11-18-018e8a6"
+```
+
+After updating your JupyterHub configuration to use a compatible image, when you create a `KubeCluster` and print the `cluster` object in your notebook, it will now include a clickable link to the Dask dashboard. The link will have a format similar to this:
+
+`/user/YOURUSER/proxy/my-dask-cluster-scheduler.jhub:8787/status`
+
+This allows you to directly access the dashboard and monitor your Dask cluster's activity.
