@@ -29,3 +29,7 @@
 .page-action-buttons .btn {
     min-width: 170px;
 }
+
+.home #title-block-header {
+    display: none;
+}
