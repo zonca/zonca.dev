@@ -79,6 +79,8 @@ In the first cell, install `dask-kubernetes` (this ensures the Operator Python c
 %pip install dask-kubernetes
 ```
 
+If you want to avoid running `%pip install dask-kubernetes` every time a pod restarts, build your JupyterHub spawn image with `dask-kubernetes` already included so the dependency is available as soon as the notebook starts.
+
 In the next cell, create a Dask cluster using the Operator. The `namespace` must match the JupyterHub namespace so the spawned pods are visible and accessible to the user environment:
 
 ```python
