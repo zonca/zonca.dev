@@ -1,5 +1,14 @@
 /* css styles */
 
+/* Override Bootstrap and Quarto CSS variables to use black instead of grey */
+:root {
+    --bs-navbar-brand-color: #000000;
+    --bs-navbar-brand-hover-color: #000000;
+    --bs-body-color: #000000;
+    --bs-link-color: #000000;
+    --bs-link-hover-color: #000000;
+}
+
 .navbar-dark {
     background-color: white;
 }
@@ -35,4 +44,24 @@
 
 .page-action-buttons .btn {
     min-width: 170px;
+}
+
+/* Override grey text colors in posts and other elements */
+div.quarto-post a,
+div.quarto-post .metadata,
+.quarto-categories,
+.quarto-category,
+a.quarto-category,
+.navbar-brand,
+.nav-link,
+.listing-title a,
+.listing-description,
+.listing-author,
+.listing-date,
+body,
+p,
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+a {
+    color: #000000 !important;
 }
