@@ -10,6 +10,13 @@
     background: transparent;
 }
 
+.quarto-title-banner h1,
+.quarto-title-banner .h1,
+.quarto-title-banner h2,
+.quarto-title-banner .h2 {
+    color: #000000;
+}
+
 .page-item.active .page-link {
     background-color: #605e5e;
     border-color: #605e5e;
