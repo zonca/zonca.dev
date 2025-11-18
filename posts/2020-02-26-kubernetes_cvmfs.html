@@ -165,6 +165,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2020-02-26-kubernetes_cvmfs.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2020-02-26-kubernetes_cvmfs.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p><a href="https://cvmfs.readthedocs.io/">CVMFS</a> is a software distribution service, it is used by High Energy Physics experiments at CERN to synchronize software environments across the whole collaborations.</p>
 <p>In the context of a Kubernetes + JupyterHub deployment on Jetstream, for example <a href="http://zonca.github.io/2019/06/kubernetes-jupyterhub-jetstream-magnum.html">deployed using Magnum following my tutorial</a>, it is useful to use CVMFS to make the software tools of a collaboration to all the users connected to JupyterHub, so that we can keep the base Docker image simpler and smaller.</p>
 <section id="alternatives" class="level2">
@@ -203,9 +204,6 @@ cd jupyterhub-deploy-kubernetes-jetstream/cvmfs</code></pre>
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

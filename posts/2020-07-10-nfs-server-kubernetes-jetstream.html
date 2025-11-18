@@ -166,6 +166,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2020-07-10-nfs-server-kubernetes-jetstream.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2020-07-10-nfs-server-kubernetes-jetstream.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p><strong>Important</strong>: This tutorial is obsolete, please refer to <a href="../posts/2023-02-06-nfs-server-kubernetes-jetstream.html">the new version from February 2023</a></p>
 <p>In this tutorial I’ll show how to create a data volume on Jetstream and share it using a NFS server to all JupyterHub users. All JupyterHub users run as the <code>jovyan</code> user, therefore each folder in the shared filesystem can be either read-only, or writable by every user. The main concern is that a user could delete by mistake data of another user, however the users still have access to their own home folder.</p>
 <section id="deploy-kubernetes-and-jupyterhub" class="level1">
@@ -295,9 +296,6 @@ ssh-server:/share#</code></pre>
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

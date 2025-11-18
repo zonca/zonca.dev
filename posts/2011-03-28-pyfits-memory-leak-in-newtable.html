@@ -164,6 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2011-03-28-pyfits-memory-leak-in-newtable.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2011-03-28-pyfits-memory-leak-in-newtable.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>
 I found a memory leakage issue in pyfits.new_table, data were NOT deleted when the table was deleted, I prepared a test on github, using <a href="http://mg.pov.lt/objgraph/" title="objgraph"> objgraph </a> , which shows that data are still in memory: <br> <a name="more"> </a> <a href="https://gist.github.com/884298"> https://gist.github.com/884298 </a> <br> <br> the issue was solved by Erik Bray of STSCI on March 28th, 2011 , see bug report: <br> <a href="http://trac6.assembla.com/pyfits/ticket/49"> http://trac6.assembla.com/pyfits/ticket/49 <br> </a> and changeset: <br> <a href="http://trac6.assembla.com/pyfits/changeset/844"> http://trac6.assembla.com/pyfits/changeset/844 </a>
 </p>
@@ -171,9 +172,6 @@ I found a memory leakage issue in pyfits.new_table, data were NOT deleted when t
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

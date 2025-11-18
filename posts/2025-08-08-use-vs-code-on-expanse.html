@@ -194,6 +194,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2025-08-08-use-vs-code-on-expanse.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2025-08-08-use-vs-code-on-expanse.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>Using VS Code directly on Expanse, or other HPC systems, is generally not recommended due to the high resource usage of the IDE itself. These systems are optimized for computational tasks, not for running graphical applications on login nodes.</p>
 <p>The popular “Remote - SSH” extension for VS Code, which allows you to connect to a remote server and develop as if your code was local, also faces challenges. This extension attempts to install a VS Code server on the remote machine. On Expanse’s login nodes, this server often consumes too much memory, leading to connection issues or system instability.</p>
 <p>However, there is a viable workaround using the “SSH FS” extension. This extension allows you to mount a remote filesystem over SSH, making it appear as a local folder in VS Code. You can then edit files directly, and VS Code will handle the file transfers in the background. This approach avoids running a full VS Code server on the remote machine, making it much more lightweight and suitable for HPC environments. You are only getting the files from Expanse, but if you run any code, you are running locally, not using the Expanse resources.</p>
@@ -213,9 +214,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

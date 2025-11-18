@@ -163,6 +163,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2008-04-29-netcat-quickly-send-binaries-through.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2008-04-29-netcat-quickly-send-binaries-through.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>
 just start nc in server mode on localhost: <br> <br> [sourcecode language=‘python’] nc -l -p 3333 [/sourcecode] <br> <br> send a string to localhost on port 3333: <br> <br> [sourcecode language=‘python’] echo “hello world” | nc localhost 3333 [/sourcecode] <br> <br> you’ll see on server side appearing the string you sent. <br> <br> very useful for sending binaries, see <a href="http://www.g-loaded.eu/2006/11/06/netcat-a-couple-of-useful-examples/"> examples </a> .
 </p>
@@ -170,9 +171,6 @@ just start nc in server mode on localhost: <br> <br> [sourcecode language=‘pyt
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

@@ -163,6 +163,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2020-09-01-redirect-readthedocs.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2020-09-01-redirect-readthedocs.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>This is useful if you switch to hosting your own documentation, for example using <a href="https://pypi.org/project/sphinx-multiversion/">Sphinx Multiversion</a> on Github pages, tutorial coming soon.</p>
 <p>We want to be able to redirect from <code>readthedocs</code> keeping the relative url.</p>
 <p>First we can setup user-defined redirects from the admin page on <code>readthedocs</code>, see the <a href="https://docs.readthedocs.io/en/stable/user-defined-redirects.html#exact-redirects">full documentation</a>, you can choose “Exact redirect”, I only care about redirecting the <code>latest</code> version, so:</p>
@@ -180,9 +181,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

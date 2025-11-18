@@ -164,6 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2016-10-12-dockerspawner-cuda.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2016-10-12-dockerspawner-cuda.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p><a href="https://github.com/jupyterhub/dockerspawner">Docker Spawner</a> allows users of Jupyterhub to run Jupyter Notebook inside isolated Docker Containers. Access to the host NVIDIA GPU was not allowed until NVIDIA release the <a href="https://github.com/NVIDIA/nvidia-docker">NVIDIA-docker</a> plugin.</p>
 <section id="build-the-docker-image" class="level2">
 <h2 class="anchored" data-anchor-id="build-the-docker-image">Build the Docker image</h2>
@@ -209,9 +210,6 @@ c.DockerSpawner.extra_host_config = { "devices":["/dev/nvidiactl","/dev/nvidia-u
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

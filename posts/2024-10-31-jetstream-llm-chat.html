@@ -200,6 +200,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2024-10-31-jetstream-llm-chat.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2024-10-31-jetstream-llm-chat.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>In this tutorial we will deploy a LLM Chat-GPT like service on a GPU node on Jetstream. For experimentation purposes we are using the smaller and cheapest GPU node available on Jetstream, the <code>g3.small</code> which has a virtual GPU with 8GB of memory, and deploy the <code>meta-llama/Llama-3.2-1B-Instruct</code> model which is a 1.3B parameter model.</p>
 <p>However the same instructions can be used to deploy any other model available on the Hugging Face model hub.</p>
 <p>This tutorial is based on work by <a href="https://www2.kek.jp/qup/en/member/dehaan.html">Tijmen de Haan</a>, the author of <a href="https://cosmosage.online/">Cosmosage</a>.</p>
@@ -376,9 +377,6 @@ sudo systemctl start vllm</code></pre>
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

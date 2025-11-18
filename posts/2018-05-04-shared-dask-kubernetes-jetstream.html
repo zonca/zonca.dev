@@ -165,6 +165,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2018-05-04-shared-dask-kubernetes-jetstream.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2018-05-04-shared-dask-kubernetes-jetstream.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>Let’s assume we have already a Kubernetes deployment and have installed JupyterHub, see for example my <a href="https://zonca.github.io/2017/12/scalable-jupyterhub-kubernetes-jetstream.html">previous tutorial on Jetstream</a>. Now that users can login and access a Jupyter Notebook, we would also like to provide them more computing power for their interactive data exploration. The easiest way is through <a href="https://dask.pydata.org"><code>dask</code></a>, we can launch a scheduler and any number of workers as containers inside Kubernetes so that users can leverage the computing power of many Jetstream instances at once.</p>
 <p>There are 2 main strategies, we can give each user their own dask cluster with exclusive access and this would be more performant but cause quick spike of usage of the Kubernetes cluster, or just launch a shared cluster and give all users access to that.</p>
 <p>In this tutorial we cover the second scenario, we’ll cover the first scenario in a following tutorial.</p>
@@ -266,9 +267,6 @@ x.sum().compute()</code></pre>
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

@@ -165,6 +165,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2017-05-16-jupyterhub-batchspawner-ssh.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2017-05-16-jupyterhub-batchspawner-ssh.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>The best way to deploy Jupyterhub with an interface to a Supercomputer is through the use of <code>batchspawner</code>. I have a sample deployment explained in an older blog post: <a href="https://zonca.github.io/2017/02/sample-deployment-jupyterhub-hpc.html" class="uri">https://zonca.github.io/2017/02/sample-deployment-jupyterhub-hpc.html</a></p>
 <p>This setup however requires a OAUTH service, in this case provided by XSEDE, to authenticate the users via web and then provide a X509 certificate that is then used by <code>batchspawner</code> to connect to the Supercomputer on behalf of the user and submit the job to spawn a notebook.</p>
 <p>In case an authentication service of this type is not available, another option is to use SSH authentication.</p>
@@ -179,9 +180,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

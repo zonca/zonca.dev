@@ -201,6 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2023-09-28-dask-gateway-jupyterhub.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2023-09-28-dask-gateway-jupyterhub.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>In this tutorial we will install <a href="https://gateway.dask.org/index.html">Dask Gateway</a>, currently version <code>2023.9.0</code>, on Kubernetes and configure JupyterHub so Jupyter Notebook users can launch private Dask cluster and connect to them.</p>
 <p>I assume to start from a Kubernetes cluster already running and JupyterHub deployed on top of it via Helm. And SSL encryption also activated (it isn’t probably necessary, but I haven’t tested that). I tested on Jetstream 2, but the recipe should be agnostic of that.</p>
 <section id="preparation" class="level2">
@@ -269,9 +270,6 @@ traefik-dask-gateway   LoadBalancer   10.233.43.51   149.165.xxx.xxx   80:32752/
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

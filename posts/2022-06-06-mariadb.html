@@ -164,6 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2022-06-06-mariadb.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2022-06-06-mariadb.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>In this tutorial we will install a MariaDB instance backed by a persistent volume on Jetstream 2. It will be in the <code>jhub</code> namespace, so that it can be accessed by the JupyterHub users and from no other namespace.</p>
 <p>As usual all configuration files and scripts are in my reference repository:</p>
 <pre><code>gh repo clone zonca/jupyterhub-deploy-kubernetes-jetstream
@@ -202,9 +203,6 @@ engine = sqlalchemy.create_engine(f"mariadb+mariadbconnector://mariadbuser:{pw}@
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

@@ -164,6 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2021-01-28-github-overleaf-large-document.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2021-01-28-github-overleaf-large-document.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>In case we need to build a large document (~hundreds of pages) and we have a large number of collaborators (more than 50), it is convenient to have each section of the document be a different Overleaf project. Also, we don’t want to rely on Overleaf only, we prefer backup of everything to Github.</p>
 <p>Then have a Github repository that includes all of those as <code>git submodules</code> and can build the whole document together automatically using Github Actions and provides the PDF. We cannot use Overleaf here because it doesn’t support <code>submodules</code>.</p>
 <p>The setup is based on the <a href="https://www.overleaf.com/learn/latex/Multi-file_LaTeX_projects#The_standalone_package">Overleaf tutorial on multi-page Latex</a> using the “Standalone package” setup, and then splitting it into separate repositories.</p>
@@ -210,9 +211,6 @@ ul.task-list li input[type="checkbox"] {
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

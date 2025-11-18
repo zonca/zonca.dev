@@ -164,6 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2024-05-02-python-nersc-conda.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2024-05-02-python-nersc-conda.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>NERSC recommends to use the <a href="https://docs.nersc.gov/filesystems/global-common/">“Global Common”</a> to store Conda environments, because it is optimized to store lots of small files. Consider that it is mounted read-only on computing nodes. The filesystem is organized by groups, so choose one of your groups:</p>
 <pre><code>groups</code></pre>
 <p>for example for me it is the <code>cmb</code> group.</p>
@@ -193,9 +194,6 @@ mamba create --prefix /global/common/software/$GROUP/$USER/conda/$ENV python==3.
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

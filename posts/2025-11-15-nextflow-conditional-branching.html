@@ -199,6 +199,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2025-11-15-nextflow-conditional-branching.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2025-11-15-nextflow-conditional-branching.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>This post serves as a follow-up to my previous tutorial, “<a href="2025-10-07-running-nextflow-on-expanse.html">Running Nextflow on Expanse</a>”, where I covered the foundational aspects of deploying Nextflow workflows on an HPC environment. While the previous discussion focused on execution environments, this tutorial delves into a crucial aspect of building sophisticated and adaptive computational workflows: conditional logic.</p>
 <p>Conditional execution is a powerful feature in workflow management systems, enabling pipelines to dynamically adjust their behavior based on runtime conditions. Nextflow provides robust mechanisms for implementing conditional branching, leveraging its dataflow paradigm to ensure reproducibility and efficient parallel execution. This tutorial will explore how to implement such logic using channels and operators, drawing examples from the <a href="https://github.com/zonca/expanse_nextflow/blob/main/main_conditional.nf"><code>main_conditional.nf</code> pipeline</a> available in the expanse_nextflow repository. The principles discussed here are universally applicable to Nextflow workflows, extending beyond the Expanse HPC environment.</p>
 <section id="problem-statement" class="level2">
@@ -331,9 +332,6 @@ There were 3 greetings in this batch</code></pre>
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

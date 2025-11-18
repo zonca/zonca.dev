@@ -163,6 +163,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2008-09-17-forcefully-unmount-disk-partition.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2008-09-17-forcefully-unmount-disk-partition.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>
 check which processes are accessing a partition: <br> <br> [sourcecode language=“python”]lsof | grep ‘/opt’[/sourcecode] <br> <br> kill all the processes accessing the partition (check what you’re killing, you could loose data): <br> <br> [sourcecode language=“python”]fuser -km /mnt[/sourcecode] <br> <br> try to unmount now: <br> [sourcecode language=“python”]umount /opt[/sourcecode]
 </p>
@@ -170,9 +171,6 @@ check which processes are accessing a partition: <br> <br> [sourcecode language=
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

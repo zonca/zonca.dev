@@ -164,6 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2013-09-26-automatically-build-pelican-and-publish-to-github-pages.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2013-09-26-automatically-build-pelican-and-publish-to-github-pages.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>Something I like a lot about Jekyll, the Github static blog generator, is that you just push commits to your repository and Github takes care of re-building and publishing your website. Thanks to this, it is possible to create a quick blog post from the Github web interface, without the need to use a machine with Python environment.</p>
 <p>The Pelican developers have a <a href="http://blog.getpelican.com/using-pelican-with-heroku.html">method for building and deploying Pelican on Heroku</a>, which is really useful, but I would like instead to use Github Pages.</p>
 <p>I realized that the best way to do this is to rely on <a href="https://travis-ci.org/">Travis-CI</a>, as the build/deploy workflow is pretty similar to install/unit-testing Travis is designed for.</p>
@@ -196,9 +197,6 @@ sudo gem install travis</code></pre>
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

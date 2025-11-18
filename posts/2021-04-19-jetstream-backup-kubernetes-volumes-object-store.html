@@ -164,6 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2021-04-19-jetstream-backup-kubernetes-volumes-object-store.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2021-04-19-jetstream-backup-kubernetes-volumes-object-store.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>In my specific scenario, I have users running JupyterHub on top of Kubernetes on the Jetstream XSEDE Cloud resouce. Each user has a persistent volume as their home folder of a few GB. Instead of snapshotting the entire volume, I would like to only backup the data offsite to OpenStorageNetwork and being able to restore them.</p>
 <p>In this tutorial I’ll show how to configure <a href="https://stash.run">Stash</a> for this task. Stash is has a lot of other functionality, so it is really easy to get lost in their documentation. This tutorial is for an advanced topic, it assumes good knowledge of Kubernetes.</p>
 <p>Stash under the hood uses <a href="https://restic.net/"><code>restic</code></a> to backup the data, so that we can also manage the backups outside of Kubernetes, see further down the tutorial. It also automatically decuplicates the data, so if the same file is unchanged in multiple backups, as it is often the case, it is just stored once and referenced by multiple backups.</p>
@@ -342,9 +343,6 @@ a  b  Healpix_3.70_2020Jul23.tar.gz  MosfireDRP-2018release.zip  plot_cl_TT.ipyn
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

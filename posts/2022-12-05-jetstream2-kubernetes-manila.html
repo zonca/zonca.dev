@@ -164,6 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2022-12-05-jetstream2-kubernetes-manila.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2022-12-05-jetstream2-kubernetes-manila.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>This work has been supported by Indiana University and is cross-posted on the <a href="https://docs.jetstream-cloud.org/general/k8smanila" rel="canonical">Jetstream 2 official documentation website</a>.</p>
 <p>In the <a href="https://www.zonca.dev/posts/2022-03-31-jetstream2_jupyterhub">standard deployment of JupyterHub on top of Kubernetes on Jetstream 2</a>, each user has access to their own home folder, but there is no built-in way to share data between users.</p>
 <p>One option is to <a href="https://www.zonca.dev/posts/2020-07-10-nfs-server-kubernetes-jetstream">install a NFS server as a service in Kubernetes</a>. However, Jetstream offers a managed service, named Manila, that offers the sharing capability out-of-the-box.</p>
@@ -229,9 +230,6 @@ touch: cannot touch 'readonly/myfile': Permission denied</code></pre>
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

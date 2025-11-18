@@ -227,6 +227,7 @@ window.Quarto = {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2022-12-01-radio-galaxies-websky-planck.ipynb" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2022-12-01-radio-galaxies-websky-planck.ipynb" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>I need to check that the amplitude of the maps of Radio Galaxies produced by WebSky are reasonable if compared to experimental results. The main worry is that being point sources, when we apply a beam using Spherical Harmonics transform we get spurious results due to the input maps not being band-limited.</p>
 <div id="cell-2" class="cell" data-outputid="c9187ddf-aa1a-4395-bc3a-a336f4688664" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pip install pysm3 <span class="op">--</span>pre</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -412,9 +413,6 @@ Note: you may need to restart the kernel to use updated packages.</code></pre>
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

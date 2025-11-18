@@ -163,6 +163,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2013-08-08-healpix-map-of-earth-using-healpy.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2013-08-08-healpix-map-of-earth-using-healpy.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>
 HEALPix maps can also be used to create equal-area pixelized maps of the Earth, RGB colors are not supported in healpy, so we need to convert the image to colorscale. <br> The best user case is for using spherical harmonic transforms, e.g.&nbsp;apply a smoothing filter, in this case HEALPix/healpy tools are really efficient. <br> However, other tools for transforming between angles (coordinates), 3d vectors and pixels might be useful. <br> <br> <a name="more"> </a> <br> I’ve created an IPython notebook that provides a simple example: <br> <br> <a href="http://nbviewer.ipython.org/6187504"> http://nbviewer.ipython.org/6187504 </a> <br> <br> Here is the output Mollweide projection provided by healpy: <br> <br>
 </p>
@@ -186,9 +187,6 @@ increase the resolution of the plots (which is different from the resolution of 
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

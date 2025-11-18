@@ -197,6 +197,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2025-11-13-ezid-hierarchical-doi-management.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2025-11-13-ezid-hierarchical-doi-management.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>This post refers to the <a href="https://github.com/zonca/ezid_api">ezid_api repository</a>.</p>
 <p>In the <a href="../posts/2025-10-07-ezid-doi-management-with-python.html">previous tutorial</a> we focused on minting a single test DOI with the EZID API. This follow-up shows how to extend the same repository to support a canonical DOI plus two version-specific DOIs that point to one another so DataCite-powered portals can navigate the release history.</p>
 <section id="what-hierarchical-means-here" class="level2">
@@ -249,9 +250,6 @@ datacite.relationtype.2: IsNewVersionOf</code></pre>
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

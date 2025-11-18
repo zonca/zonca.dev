@@ -165,6 +165,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2019-04-20-jetstream_kubernetes_monitoring.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2019-04-20-jetstream_kubernetes_monitoring.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p><strong>See the <a href="../posts/2024-10-25-jetstream_kubernetes_grafana.html">updated version of this tutorial</a></strong></p>
 <p><strong>Updated September 2020</strong></p>
 <p>In a production Kubernetes deployment it is necessary to make it easier to monitor the status of the cluster effectively. Kubernetes provides Prometheus to gather data from the different components of Kubernetes and Grafana to access those data and provide real-time plotting and inspection capability. Moreover, they both provide systems to send alerts in case some conditions on the state of the cluster are met, i.e.&nbsp;using more than 90% of RAM or CPU.</p>
@@ -245,9 +246,6 @@ prometheus-operator-65c44fb7b7-8ltzs   1/1     Running   0          14m</code></
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

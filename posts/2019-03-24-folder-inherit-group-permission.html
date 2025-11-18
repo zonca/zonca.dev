@@ -164,6 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2019-03-24-folder-inherit-group-permission.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2019-03-24-folder-inherit-group-permission.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>I have googled this so many times…</p>
 <p>On shared systems, like Supercomputers, you often belong to many different Unix groups, and that membership allows you to access data from specific projects you are working on and you can share data with your collaborators.</p>
 <p>If you set SGID on a folder, any folder of file created in that folder will automatically belong to the Unix group of that folder, and not your default group. You first set the right group on the folder, recursively so that older files will get the right permissions:</p>
@@ -176,9 +177,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

@@ -163,6 +163,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2014-01-31-wget-file-from-google-drive.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2014-01-31-wget-file-from-google-drive.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>Sometimes it is useful, even more if you have a chromebook, to upload a file to Google Drive and then use <code>wget</code> to retrieve it from a server remotely.</p>
 <p>In order to do this you need to make the file available to “Anyone with the link”, then click on that link from your local machine and get to the download page that displays a Download button. Now right-click and select “Show page source” (in Chrome), and search for “downloadUrl”, copy the url that starts with <code>https://docs.google.com</code>, for example:</p>
 <pre><code>https://docs.google.com/uc?id\u003d0ByPZe438mUkZVkNfTHZLejFLcnc\u0026export\u003ddownload\u0026revid\u003d0ByPZe438mUkZbUIxRkYvM2dwbVduRUxSVXNERm0zZFFiU2c0PQ</code></pre>
@@ -175,9 +176,6 @@ u'https://docs.google.com/uc?id=0ByPZe438mUkZVkNfTHZLejFLcnc&amp;export=download
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

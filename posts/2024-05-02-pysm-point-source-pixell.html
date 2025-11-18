@@ -198,6 +198,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2024-05-02-pysm-point-source-pixell.ipynb" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2024-05-02-pysm-point-source-pixell.ipynb" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>Testing the pixell <code>sim_objects</code> functionality to create maps of point sources pre-smoothed with a gaussian beam. The purpose is to include this functionality in PySM to be able to generate on the fly maps of source starting from a catalog.</p>
 <div id="6bc32901-4ebd-49d0-9b3d-788648643510" class="cell" data-tags="[]" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pixell <span class="im">import</span> enmap, utils, resample, curvedsky <span class="im">as</span> cs, reproject, pointsrcs</span>
@@ -401,9 +402,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

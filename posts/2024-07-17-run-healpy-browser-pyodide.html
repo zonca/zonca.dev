@@ -164,6 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2024-07-17-run-healpy-browser-pyodide.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2024-07-17-run-healpy-browser-pyodide.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>Thanks to the help of <a href="https://github.com/VeerioSDSC"><code>@VeerioSDSC</code></a> and <a href="https://github.com/rpwagner">Rick Wagner</a>, I have been able to run part of <code>healpy</code> in the browser. For now only tested reading FITS maps and plotting with <code>projview</code>.</p>
 <p>Compiling the C++ and Cython extensions was difficult so for experimental purposes we opted for stripping <code>healpy</code> of all extensions making it a pure Python package, see <a href="https://github.com/healpy/pyhealpy" class="uri">https://github.com/healpy/pyhealpy</a></p>
 <p>Then it is possible to build a wheel of <code>healpy</code> compiled to Javascript with <code>pyodide</code> and <code>emscripten</code>, see: <a href="https://github.com/healpy/pyhealpy/blob/pyhealpy/README.md" class="uri">https://github.com/healpy/pyhealpy/blob/pyhealpy/README.md</a></p>
@@ -192,9 +193,6 @@ ul.task-list li input[type="checkbox"] {
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

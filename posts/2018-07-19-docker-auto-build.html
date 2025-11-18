@@ -163,6 +163,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2018-07-19-docker-auto-build.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2018-07-19-docker-auto-build.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>It is very convenient to create Autobuild repositories on DockerHub linked to a Github repository with a <code>Dockerfile</code>. Then every time you commit to Github, Dockerhub is going to build the image on their service and make it available on <a href="https://hub.docker.com" class="uri">https://hub.docker.com</a> and can quickly be pulled to any other system that supports Docker or Singularity.</p>
 <p>Unfortunately if you have many Github organizations and repositories, the process to set a new repository up gets stuck.</p>
 <p>Fortunately we can bypass the issue by directly accessing the right URL, as suggested <a href="https://stackoverflow.com/questions/42792240/dockerhub-create-automated-build-step-stuck-at-creating">on StackOverflow</a>.</p>
@@ -172,9 +173,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

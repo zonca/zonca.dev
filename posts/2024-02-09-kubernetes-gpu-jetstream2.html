@@ -165,6 +165,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2024-02-09-kubernetes-gpu-jetstream2.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2024-02-09-kubernetes-gpu-jetstream2.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>This work has been supported by Indiana University and is cross-posted on the <a href="https://docs.jetstream-cloud.org/general/k8sgpu" rel="canonical">Jetstream 2 official documentation website</a>.</p>
 <p>Thanks to work by <a href="https://github.com/ana-v-espinoza">Ana Espinoza</a>, the standard recipe now supports GPUs out of the box and also supports hybrid clusters where some nodes are standard CPU nodes and some nodes have GPU.</p>
 <p>The Jetstream 2 cloud includes <a href="https://docs.jetstream-cloud.org/overview/config/" target="_blank">90 GPU nodes with 4 NVIDIA A100 each</a>. If we want to leverage the GPUs inside Kubernetes pods, for example JupyterHub users, we both need to have a GPU-enabled ContainerD runtime and a compatible Docker image based off NVIDIA images.</p>
@@ -240,9 +241,6 @@ Done</code></pre>
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

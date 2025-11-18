@@ -164,6 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2018-09-23-jetstream_kubernetes_kubespray.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2018-09-23-jetstream_kubernetes_kubespray.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p><strong>This tutorial is obsolete, check the <a href="https://zonca.dev/2020/06/kubernetes-jetstream-kubespray.html">updated version of the tutorial</a></strong></p>
 <p>The purpose of this tutorial series is to deploy Jupyterhub on top of Kubernetes on Jetstream. This material was presented as a tutorial at the Gateways 2018 conference, see also <a href="https://figshare.com/articles/Hands-on_Tutorial_Deploying_Kubernetes_and_JupyterHub_on_Jetstream/7137884">the slides on Figshare</a>.</p>
 <p>Compared to my <a href="https://zonca.github.io/2017/12/scalable-jupyterhub-kubernetes-jetstream.html">initial tutorial</a>, I focused on improving automation. Instead of creating Jetstream instances via the Atmosphere web interface and then SSHing into the instances and run <code>kubeadm</code> based commands to setup Docker and Kubernetes we will:</p>
@@ -308,9 +309,6 @@ HTTP request sent, awaiting response... 404 Not Found
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

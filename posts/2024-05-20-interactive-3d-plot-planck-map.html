@@ -164,6 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2024-05-20-interactive-3d-plot-planck-map.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2024-05-20-interactive-3d-plot-planck-map.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>This is an update of my <a href="../posts/2013-03-12-interactive-3d-plot-of-sky-map.html">older tutorial</a></p>
 <p>Unfortunately I was not able to make Mayavi properly plot the data, rerunning the same code would give a map that looked like uniform noise.</p>
 <p>This test instead uses matplotlib, unfortunately this is extremely slow, and the output map is really slow to rotate or interact at all. Anyway it is possible to tweak <code>xsize</code>,<code>ysize</code> to change the resolution as a trade-off between resolution and interactivity.</p>
@@ -178,9 +179,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

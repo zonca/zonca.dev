@@ -164,6 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2025-09-18-llm-unshelve.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2025-09-18-llm-unshelve.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>Following the work documented in <a href="../posts/2025-09-18-deploy-70b-llm-jetstream.html">Deploy a 70B LLM to Jetstream</a>, the <code>Meta-Llama-3.1-70B-Instruct-GGUF</code> deployment is now running on a <code>g3.xl</code> instance. The goal of this follow-up is to measure how long it takes to unshelve that virtual machine and bring the chat interface back online.</p>
 <p>Each unshelve cycle includes letting <code>llama.cpp</code> stream the 37 GB checkpoint from disk into GPU memory before Open WebUI comes up. I am timing the interval from issuing the unshelve command in Exosphere until the chat interface is ready to accept prompts.</p>
 <p>When shelving the instance in Exosphere, make sure to clear the “Release IP when shelving” checkbox. Keeping the floating IP attached ensures the service comes back with the same address, which avoids reconfiguring client applications or DNS.</p>
@@ -179,9 +180,6 @@ ul.task-list li input[type="checkbox"] {
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

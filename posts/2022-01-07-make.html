@@ -163,6 +163,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2022-01-07-make.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2022-01-07-make.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>I often find myself repeat the same commands in a project, for example in Openstack/Kubernetes, but also when I need to interface with Docker (build/push image).</p>
 <p>Instead of relying on bash history or writing a few bash scripts, it is just easier to write a <code>Makefile</code>, even if you do not use the Make dependencies and you just use it as a collection of useful commands.</p>
 <p>Here is a template to start from, which supports <code>make list</code> to show available targets and shows how to pass arguments to a command:</p>
@@ -173,9 +174,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

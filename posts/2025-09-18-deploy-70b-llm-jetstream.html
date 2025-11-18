@@ -198,6 +198,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2025-09-18-deploy-70b-llm-jetstream.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2025-09-18-deploy-70b-llm-jetstream.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>Deploying large language models on Jetstream is getting easier thanks to the official <a href="https://docs.jetstream-cloud.org/general/llm/">Jetstream LLM guide</a>. Here I follow that walkthrough but scale the hardware and model so we can run something far more capable than the defaults.</p>
 <p>Instead of the suggested <code>g3.medium</code> instance, spin up a <code>g3.xl</code> virtual machine. This flavor maps to an entire NVIDIA A100 with 40 GB of GPU memory, which comfortably fits the <code>Meta-Llama-3.1-70B-Instruct-GGUF</code> checkpoint. The steps below highlight the few adjustments needed to provision the larger VM and load the bigger model; everything else matches the upstream documentation.</p>
 <p>The quantized 70B weights weigh in at about 37 GB, so reserve enough storage. From Exosphere create a 100 GB volume named <code>llmstorage</code>, attach it to the instance, and confirm it shows up under <code>/media/volume/llmstorage/</code>. Keeping the model files on that volume makes it easy to swap or resize later. From your home directory point <code>~/models</code> at the mounted volume so every tool reads and writes there:</p>
@@ -267,9 +268,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

@@ -18,3 +18,14 @@
 .page-link {
     color: #605e5e;
 }
+
+.page-action-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.page-action-buttons .btn {
+    min-width: 170px;
+}

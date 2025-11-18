@@ -164,6 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2023-02-02-github-overleaf.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2023-02-02-github-overleaf.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>In the past I have written about <a href="https://www.zonca.dev/posts/2021-01-28-github-overleaf-large-document">coordinating a large document using multiple overleaf documents and Github repositories</a>. In this post I will just layout the simpler case where we have a Latex document on Overleaf and we also want users to be able to work on it from Github and we want Github Actions to automatically build a PDF for every commit.</p>
 <section id="create-less-privileged-user-on-github" class="level2">
 <h2 class="anchored" data-anchor-id="create-less-privileged-user-on-github">Create less privileged user on Github</h2>
@@ -221,9 +222,6 @@ git push --tags</code></pre>
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

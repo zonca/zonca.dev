@@ -163,6 +163,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2010-02-19-stop-ipcluster-from-script.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2010-02-19-stop-ipcluster-from-script.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>
 Ipcluster is easy to start but not trivial to stop from a script, after having finished the processing, here’s the solution: <br> <code> from IPython.kernel import client <br> mec = client.MultiEngineClient() <br> mec.kill(controller=True) </code>
 </p>
@@ -170,9 +171,6 @@ Ipcluster is easy to start but not trivial to stop from a script, after having f
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

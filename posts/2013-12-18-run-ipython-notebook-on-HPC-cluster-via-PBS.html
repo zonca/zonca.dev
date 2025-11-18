@@ -164,6 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2013-12-18-run-ipython-notebook-on-HPC-cluster-via-PBS.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2013-12-18-run-ipython-notebook-on-HPC-cluster-via-PBS.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>The <a href="http://ipython.org/notebook.html">IPython notebook</a> is a great tool for data exploration and visualization. It is suitable in particular for analyzing a large amount of data remotely on a computing node of a HPC cluster and visualize it in a browser that runs on a local machine. In this configuration, the interface is local, it is very responsive, but the amount of memory and CPU horsepower is provided by a HPC computing node.</p>
 <p>Also, it is possible to keep the notebook server running, disconnect and reconnect later from another machine to the same session.</p>
 <p>I created a script which is very general and can be used on most HPC cluster and published it on Github:</p>
@@ -174,9 +175,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

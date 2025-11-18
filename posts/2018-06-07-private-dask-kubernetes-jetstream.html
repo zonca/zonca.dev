@@ -166,6 +166,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2018-06-07-private-dask-kubernetes-jetstream.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2018-06-07-private-dask-kubernetes-jetstream.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>In this post we will leverage software made available by the <a href="https://pangeo-data.github.io">Pangeo community</a> to allow each user of a <a href="https://zonca.github.io/2017/12/scalable-jupyterhub-kubernetes-jetstream.html">Jupyterhub instance deployed on Jetstream on top of Kubernetes</a> to launch a set of <a href="https://dask.pydata.org"><code>dask</code></a> workers as containers running inside Kubernetes itself and use them for distributed computing.</p>
 <p>Pangeo also maintains a deployment of this environment on Google Cloud freely accessible at <a href="https://pangeo.pydata.org">pangeo.pydata.org</a>.</p>
 <p><strong>Security considerations</strong>: This deployment grants each user administrative access to the Kubernetes API, so each user could use this privilege to terminate other users’ pods or dask workers. Therefore it is suitable only for a community of trusted users. There is <a href="https://github.com/pangeo-data/pangeo/issues/135#issuecomment-384320753">discussion about leveraging namespaces to limit this</a> but it hasn’t been implemented yet.</p>
@@ -224,9 +225,6 @@ client</code></pre>
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

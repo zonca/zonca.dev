@@ -203,6 +203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2020-03-16-raise-check-flag-numpy.ipynb" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2020-03-16-raise-check-flag-numpy.ipynb" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>Often to describe data quality of timelines or images, we use array of integers where each of its bit has a specific meaning, so that we can identify what issues affect each data point.</p>
 <p>For example we have 10 data points, and we assign an array of 8 bits for data quality. Generally <code>0</code> means a good data point, any bit raised is sign of some problem in the data, this is more compressed then using different boolean arrays, and allows to make batch <code>np.bitwise_and</code> and <code>np.bitwise_or</code> operations.</p>
 <div id="cell-2" class="cell" data-execution_count="1">
@@ -345,9 +346,6 @@ np         module     &lt;module 'numpy' from '/ho&lt;...&gt;kages/numpy/__init_
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

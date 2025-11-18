@@ -164,6 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2013-04-11-ipython-parallell-setup-on-carver-at.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2013-04-11-ipython-parallell-setup-on-carver-at.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>
 IPython parallel is one of the easiest ways to spawn several Python sessions on a Supercomputing cluster and process jobs in parallel. <br> <br> On Carver, the basic setup is running a controller on the login node, and submit engines to the computing nodes via PBS. <br> <br> <a name="more"> </a> <br> First create your configuration files running: <br> <br> <span style="font-family: Courier New, Courier, monospace;"> ipython profile create –parallel </span> <br> <br> Therefore in the ~/.config/ipython/profile_default/ipcluster_config.py, just need to set: <br> <br> <span style="font-family: Courier New, Courier, monospace;"> c.IPClusterStart.controller_launcher_class = ‘LocalControllerLauncher’ </span> <br> <span style="font-family: Courier New, Courier, monospace;"> c.IPClusterStart.engine_launcher_class = ‘PBS’ </span> <br> <span style="font-family: Courier New, Courier, monospace;"> c.PBSLauncher.batch_template_file = u’~/.config/ipython/profile_default/pbs.engine.template’ </span> <br> <br> You also need to allow connections to the controller from other hosts, setting &nbsp;in ~/.config/ipython/profile_default/ipcontroller_config.py: <br> <br> <span style="font-family: Courier New, Courier, monospace;"> c.HubFactory.ip = ’*’ </span> <br>
 </p>
@@ -206,9 +207,6 @@ With the path to the pbs engine template. <br> <br> Next a couple of examples of
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

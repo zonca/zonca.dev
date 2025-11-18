@@ -163,6 +163,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2010-01-07-execute-bash-script-remotely-with-ssh.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2010-01-07-execute-bash-script-remotely-with-ssh.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>
 a bash script launched remotely via ssh does not load the environment, if this is an issue it is necessary to specify –login when calling bash: <br> <br> <code> ssh user@remoteserver.com ‘bash –login life_om/cronodproc’ | mail your@email.com -s cronodproc </code>
 </p>
@@ -170,9 +171,6 @@ a bash script launched remotely via ssh does not load the environment, if this i
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

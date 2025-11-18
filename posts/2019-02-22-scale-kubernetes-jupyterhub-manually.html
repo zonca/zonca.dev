@@ -165,6 +165,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2019-02-22-scale-kubernetes-jupyterhub-manually.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2019-02-22-scale-kubernetes-jupyterhub-manually.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>We would like to modify the number of Openstack virtual machines available to Kubernetes. Ideally we would like to do this automatically based on the load on JupyterHub, that is the target. For now we will increase and decrease the size manually. This can be useful for example if you make a test deployment with only 1 worker node a week before a workshop and then scale it up to 10 or more instances the day before the workshop begins.</p>
 <p>This assumes you have <a href="http://zonca.github.io/2019/02/kubernetes-jupyterhub-jetstream-kubespray.html">deployed Kubernetes and JupyterHub already</a></p>
 <section id="create-a-new-openstack-virtual-machine-with-terraform" class="level2">
@@ -209,9 +210,6 @@ zonca-k8s-node-nf-2        : ok=257  changed=77   unreachable=0    failed=0     
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

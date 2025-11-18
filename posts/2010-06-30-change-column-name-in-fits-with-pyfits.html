@@ -163,6 +163,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2010-06-30-change-column-name-in-fits-with-pyfits.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2010-06-30-change-column-name-in-fits-with-pyfits.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>
 no way to change it manipulating the dtype of the data array. <br> <code> a=pyfits.open(‘filename.fits’) <br> a[1].header.update(‘TTYPE1’,‘newname’) </code> <br> you need to change the header, using the update method of the right TTYPE and then write again the fits file using a.writeto.
 </p>
@@ -170,9 +171,6 @@ no way to change it manipulating the dtype of the data array. <br> <code> a=pyfi
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

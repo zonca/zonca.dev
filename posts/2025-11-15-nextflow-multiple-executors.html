@@ -199,6 +199,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2025-11-15-nextflow-multiple-executors.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2025-11-15-nextflow-multiple-executors.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>This post demonstrates how to combine different Nextflow executors within a single workflow, a powerful pattern for optimizing resource usage in scientific computing. By running lightweight tasks locally and offloading computationally intensive processes to HPC clusters like Expanse (as discussed in my <a href="2025-10-07-running-nextflow-on-expanse.html">previous tutorial on Nextflow on Expanse</a>), users can accelerate development and ensure scalability. This tutorial provides a minimal example of a Nextflow pipeline leveraging both local and Slurm executors.</p>
 <section id="project-layout" class="level2">
 <h2 class="anchored" data-anchor-id="project-layout">1. Project Layout</h2>
@@ -344,9 +345,6 @@ Nov-15 10:11:25.676 [main] DEBUG n.trace.WorkflowStatsObserver - Workflow comple
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

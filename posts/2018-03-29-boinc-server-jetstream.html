@@ -164,6 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2018-03-29-boinc-server-jetstream.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2018-03-29-boinc-server-jetstream.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p><a href="https://boinc.berkeley.edu/">BOINC</a> is the leading platform for volunteer computing.</p>
 <p>Scientists can create a project on the platform and submit computational jobs that will be executed on computers of volunteers all over the world.</p>
 <p>In this post we’ll deploy a BOINC server on Jetstream. All US scientists can get a free <a href="https://jetstream-cloud.org/allocations.php">allocation on Jetstream via XSEDE</a>.</p>
@@ -294,9 +295,6 @@ docker exec boinc boinccmd --project_attach $URL $account_key</code></pre>
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

@@ -164,6 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2022-04-27-monitor-restic-backups-kubernetes.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2022-04-27-monitor-restic-backups-kubernetes.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>For one of my production JupyterHub deployments on Kubernetes, I have setup an automated system to perform nightly backup of the user data, see <a href="https://zonca.dev/2021/04/jetstream-backup-kubernetes-volumes-object-store.html">the full tutorial on how to set it up</a>.</p>
 <p>The system writes the backups to Object store using <a href="https://restic.net/">Restic</a>.</p>
 <p>In this tutorial I’ll provide the configuration to have a CronJob on Kubernetes checking how old are the backups and be alerted if anything is not working using Healthchecks.io.</p>
@@ -190,9 +191,6 @@ ul.task-list li input[type="checkbox"] {
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

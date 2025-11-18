@@ -198,6 +198,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2024-07-29-pysm-point-source-pixell-healpix.ipynb" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2024-07-29-pysm-point-source-pixell-healpix.ipynb" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>Testing the pixell <code>sim_objects</code> functionality to create maps of point sources pre-smoothed with a gaussian beam. The purpose is to include this functionality in PySM to be able to generate on the fly maps of source starting from a catalog.</p>
 <p>Compared to the <a href="../posts/2024-05-02-pysm-point-source-pixell.html">previous notebook</a>, here I also use <code>reproject</code> to convert the map to HEALPix, plot the result and check the flux in HEALPix also agrees with the input.</p>
 <div id="6bc32901-4ebd-49d0-9b3d-788648643510" class="cell" data-tags="[]" data-execution_count="1">
@@ -406,9 +407,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

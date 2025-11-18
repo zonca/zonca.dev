@@ -198,6 +198,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2024-10-09-jetstream-manila-mount.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2024-10-09-jetstream-manila-mount.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>Jetstream 2 makes creating volumes that are shared across instances as easy as creating standard volumes. This is provided by the <a href="https://docs.jetstream-cloud.org/general/manila/">Manila service</a>, which creates volumes based on the Ceph file system that can be mounted simultaneously on multiple Jetstream 2 Virtual Machines.</p>
 <p><a href="https://jetstream2.exosphere.app/">Exosphere</a>, the Jetstream 2 user friendly UI, is able to create and manage shares, and has the convenient feature that it prints out a command that can be executed in a Jetstream virtual machines to mount a Manila share.</p>
 <p>This functionality could be useful also outside of Exosphere, for example if we are <a href="https://docs.jetstream-cloud.org/ui/cli/manila/">creating Manila shares programmatically via the Jetstream API</a>.</p>
@@ -231,9 +232,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

@@ -207,6 +207,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2020-08-04-dask-array-rounding.ipynb" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2020-08-04-dask-array-rounding.ipynb" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>This notebook is an extract from the <a href="https://github.com/dask/dask-tutorial/blob/master/03_array.ipynb">Dask array Tutorial notebook</a>, see also the Youtube SciPy 2020 class at <a href="https://www.youtube.com/watch?v=mqdglv9GnM8" class="uri">https://www.youtube.com/watch?v=mqdglv9GnM8</a>.</p>
 <p>We notice that <code>dask</code> is automatically rounding <code>float32</code> numbers to machine precision, which I think is the most sensible choice, but surprising difference compared to <code>numpy</code>.</p>
 <section id="create-the-input-data" class="level2">
@@ -422,9 +423,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

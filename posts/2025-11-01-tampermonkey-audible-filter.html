@@ -160,6 +160,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2025-11-01-tampermonkey-audible-filter.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2025-11-01-tampermonkey-audible-filter.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>This Tampermonkey script helps filter Audible search results by hiding items that do not meet certain criteria. Specifically, it hides audiobooks with a rating less than 4.0 stars or with fewer than 500 reviews.</p>
 <p>The script injects JavaScript into the Audible.com website to dynamically modify the displayed content. It identifies book items on the page, parses their ratings and review counts, and then hides those that fall below the defined thresholds (<code>MIN_RATING = 4.0</code> and <code>MIN_REVIEWS = 500</code>).</p>
 <p>Additionally, the script adds a small badge to the top right corner of the Audible page, indicating that the filter is active and showing the filtering criteria (“Audible filter: ≥4.0 &amp; ≥500”).</p>
@@ -168,9 +169,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

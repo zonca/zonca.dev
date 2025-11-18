@@ -160,6 +160,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2022-09-27-migrate-fastpages-quarto-preserve-history.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2022-09-27-migrate-fastpages-quarto-preserve-history.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>Most of my blog posts are in Markdown…however, there are cases where plotting and code are very important, and nothing beats a Jupyter Notebook for that.</p>
 <p>This blog was based on <code>fastpages</code>, a static blog generator by <code>fast.ai</code>. Unfortunately they are discontinuing it and they recommended to migrate to <a href="https://quarto.org">Quarto</a>, so here we are.</p>
 <p><a href="https://twitter.com/HamelHusain">Hamel Husain</a> wrote a great tutorial on how to migrate from Fastpages to Quarto (and saved me so much work):</p>
@@ -209,9 +210,6 @@ git mv oldposts/* posts/</code></pre>
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

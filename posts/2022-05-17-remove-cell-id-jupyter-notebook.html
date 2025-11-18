@@ -164,6 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2022-05-17-remove-cell-id-jupyter-notebook.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2022-05-17-remove-cell-id-jupyter-notebook.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>I know! Jupyter is littering your <code>git diff</code> with randomly generated cell ids and <code>nbstripout</code> doesn’t remove them, (I’m sure they are useful for some reason).</p>
 <p>Open the Notebook with your editor of choice, <code>vim</code>, then look for <code>minor</code> and set <code>nbformat_minor</code> to 4:</p>
 <pre><code>"nbformat_minor": 4</code></pre>
@@ -172,9 +173,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

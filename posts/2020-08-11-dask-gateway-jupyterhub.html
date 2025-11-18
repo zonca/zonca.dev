@@ -201,6 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2020-08-11-dask-gateway-jupyterhub.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2020-08-11-dask-gateway-jupyterhub.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p><strong>This tutorial is obsolete, please follow <a href="https://zonca.dev/2022/01/dask-gateway-jupyterhub.html" class="uri">https://zonca.dev/2022/01/dask-gateway-jupyterhub.html</a></strong></p>
 <p>This tutorial follows the work by the Pangeo collaboration, the main difference is that I prefer to keep JupyterHub and the Dask infrastructure in 2 separate <code>Helm</code> recipes.</p>
 <p>I assume to start from a Kubernetes cluster already running and JupyterHub deployed on top of it via Helm. And SSL encryption also activated (it isn’t probably necessary, but I haven’t tested that). I tested on Jetstream, but this is agnostic of that.</p>
@@ -268,9 +269,6 @@ traefik-dask-gateway-5bbd68c5fd-5drm8      1/1     Running   0          23m</cod
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

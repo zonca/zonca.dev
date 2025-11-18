@@ -163,6 +163,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2024-06-27-fastapi-conditional-auth.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2024-06-27-fastapi-conditional-auth.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>Building <a href="../posts/2024-05-29-fastapi-sso-github-organization.html">on my previous tutorial</a>, I have now implemented a toy FastAPI application which requires authentication based on query parameters.</p>
 <p>In this simple example <code>/protected/0</code> does not require authentication, while <code>/protected/1</code> gives permissions denied.</p>
 <p>Once the users logs in successfully via Github using <code>/auth/login</code> and is member of the right Github organization, they can now access also the <code>/protected/1</code> endpoint.</p>
@@ -171,9 +172,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

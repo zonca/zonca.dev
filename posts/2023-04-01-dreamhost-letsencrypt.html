@@ -160,6 +160,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2023-04-01-dreamhost-letsencrypt.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2023-04-01-dreamhost-letsencrypt.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>Dreamhost has discontinued offering free Letsecrypt certificated in their shared hosting.</p>
 <p>However, they support pasting a manually created certificate, so we can generate one on a different machine with the manual mode of <code>certbot</code> and then deploy it.</p>
 <p>The issue that costed me 1 hour today is that <code>certbot</code> generated a ECDSA key by default instead of RSA, so here the script to generate the right key, just run:</p>
@@ -176,9 +177,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

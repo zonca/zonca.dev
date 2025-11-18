@@ -164,6 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2021-01-20-autoscaling_script_kubespray_jupyterhub.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2021-01-20-autoscaling_script_kubespray_jupyterhub.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>I think the most reliable way of deploying Kubernetes on Openstack is Kubespray, see <a href="https://zonca.dev/2021/01/kubernetes-jetstream-kubespray.html">my latest tutorial about it focused on Jetstream</a>.</p>
 <p>The main issue with this strategy, compared to using Magnum, is that it is not supported by the Cluster Autoscaler, so we don’t have an automatic way of scaling up and down the deployment based on load.</p>
 <p>For testing purposes I developed a small script that implements this, just to set the expectations, I called it <code>hacktoscaler</code>.</p>
@@ -194,9 +195,6 @@ ul.task-list li input[type="checkbox"] {
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

@@ -163,6 +163,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2010-01-07-lock-pin-hold-package-using-apt-on.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2010-01-07-lock-pin-hold-package-using-apt-on.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>
 set hold: <br> <code> echo packagename hold | dpkg –set-selections </code> <br> <br> check, should be <strong> hi </strong> : <br> <code> dpkg -l packagename </code> <br> <br> unset hold: <br> <code> echo packagename install | dpkg –set-selections </code>
 </p>
@@ -170,9 +171,6 @@ set hold: <br> <code> echo packagename hold | dpkg –set-selections </code> <br
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

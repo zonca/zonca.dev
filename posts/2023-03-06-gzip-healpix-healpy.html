@@ -198,6 +198,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2023-03-06-gzip-healpix-healpy.ipynb" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2023-03-06-gzip-healpix-healpy.ipynb" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>HEALPix maps are generally stored in FITS format, they can be Gzipped to save disk space. Reading gzipped maps is natively supported in <code>healpy</code>, however, it takes longer because maps are uncompressed on the fly.</p>
 <p>As usual, the best way to assess this is to test. In this case, I am testing using the JupyterHub@NERSC running on a Cori shared CPU server, the maps have about 30% of unobserved pixels and are stored in double precision.</p>
 <p>For this case, the performance loss due to compression is significant, in particular if accessing just a subset of the maps. Therefore it is hard to justify compression, unless storage is really a limiting factor.</p>
@@ -382,9 +383,6 @@ Wall time: 2min 28s</code></pre>
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

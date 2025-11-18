@@ -164,6 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2020-09-01-migrate-travisci-readthedocs-github-actions.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2020-09-01-migrate-travisci-readthedocs-github-actions.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>For a number of years I have been concerned about the duplication of work having to maintain continuous integration environments both on Travis-CI to run the unit tests and on Readthedocs to build and host the documentation.</p>
 <p>The solution I am proposing is to use Github actions to replace both systems. I chose Github actions instead of Travis-CI because they are easier to configure, have better log-viewing interface and surprisingly enough they are better integrated with Github!</p>
 <p>The biggest hurdle was to find a way to reproduce the capability of <code>readthedocs</code> to host multiple versions of the documentation together, fortunately the <a href="https://holzhaus.github.io/sphinx-multiversion/master/index.html"><code>sphinx-multiversion</code></a> gives a very similar functionality.</p>
@@ -212,9 +213,6 @@ ul.task-list li input[type="checkbox"] {
 </section>
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

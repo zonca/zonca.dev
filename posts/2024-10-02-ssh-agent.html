@@ -197,6 +197,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2024-10-02-ssh-agent.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2024-10-02-ssh-agent.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>I keep Googling this again and again.</p>
 <p>First, <code>ssh-agent</code> <strong>does not</strong> need to run on the remote server, it is the local agent which is forwarded over ssh to the remote server.</p>
 <p>On the local machine, configure <code>ssh-agent</code> so that it starts only once, credit to <a href="https://gist.github.com/darrenpmeyer/e7ad217d929f87a7b7052b3282d1b24c">this gist</a>, add this to <code>.bashrc</code>:</p>
@@ -242,9 +243,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 </main> <!-- /main -->
-<div>
-    <hr>
-</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
