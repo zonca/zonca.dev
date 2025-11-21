@@ -141,6 +141,8 @@ One of the most important features of Dask is its dashboard, which provides real
 
 A critical point is that `jupyter-server-proxy` must be baked into the single-user Docker image that JupyterHub spawns. This is because the proxy needs to be available when the user's pod starts. Installing it with `%pip install` inside a running notebook will not work, as the server proxy components are not loaded dynamically.
 
+Ensure `install_jhub.sh` also passes `--values dask_operator/jupyterhub_dask_dashboard_config.yaml` to the `helm upgrade --install` command so JupyterHub is configured to expose the Dask dashboard through the proxy.
+
 I have created an example single-user image derived from `scipy-notebook` that includes `jupyter-server-proxy` and other useful packages for scientific computing. The repository is available at [github.com/zonca/jupyterhub-dask-docker-image](https://github.com/zonca/jupyterhub-dask-docker-image). The image is automatically built using GitHub Actions and hosted on the GitHub Container Registry (which is a container registry similar to Docker Hub or Quay.io).
 
 The list of available image tags is at [github.com/zonca/jupyterhub-dask-docker-image/pkgs/container/jupyterhub-dask-docker-image](https://github.com/zonca/jupyterhub-dask-docker-image/pkgs/container/jupyterhub-dask-docker-image).
