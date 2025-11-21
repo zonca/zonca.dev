@@ -9,3 +9,4 @@ site_libs/
 
 # Local Netlify folder
 .netlify
+.gemini/
