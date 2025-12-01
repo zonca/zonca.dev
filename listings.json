@@ -2,7 +2,6 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/2025-12-01-commit-and-push.html",
       "/posts/2025-11-17-dask-operator-jupyterhub.html",
       "/posts/2025-11-15-nextflow-multiple-executors.html",
       "/posts/2025-11-15-nextflow-conditional-branching.html",
