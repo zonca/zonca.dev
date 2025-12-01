@@ -89,10 +89,12 @@ from dask_kubernetes.operator import KubeCluster
 cluster = KubeCluster(
   name="my-dask-cluster",
   namespace="jhub",            # important: JupyterHub namespace
-  image="ghcr.io/dask/dask:latest",
+  image="ghcr.io/dask/dask:latest",  # use the same image set in config_standard_storage.yaml
 )
 cluster.scale(10)
 ```
+
+The image must match the one specified for the JupyterHub single-user pods (for example in `config_standard_storage.yaml`). Mixing images leads to client/scheduler/worker incompatibilities that are hard to debug.
 
 Finally, display the cluster object to get a realtime view on the number of workers:
 
@@ -134,6 +136,12 @@ cluster.scale(4, worker_group="highmem")  # scale that group
 Use `cluster.scale(N, worker_group="groupname")` to change replicas for a specific group later.
 
 Notice that if you have the the Kubernetes Autocaler enabled in your cluster, it will automatically scale the number of nodes to accommodate the requested resources.
+
+When you are done with the cluster, shut it down cleanly:
+
+```python
+cluster.close()
+```
 
 ## Access the dask dashboard
 
