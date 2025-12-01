@@ -4,7 +4,7 @@ categories:
 - python
 date: '2025-12-01'
 layout: post
-title: Custom JupyterHub Docker image template
+title: Auto-build JupyterHub images with GitHub Actions
 ---
 
 Overview: <https://github.com/zonca/custom-jupyterhub-docker-image> is a template that ships a JupyterHub-ready single-user image with common scientific Python tooling and sensible defaults. Just edit `requirements.txt` in GitHub and the built-in GitHub Actions workflow auto-builds and publishes a new image—no local Docker required. See the README for the detailed package list and CI steps.
