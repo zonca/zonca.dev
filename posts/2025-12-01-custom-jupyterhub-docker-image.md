@@ -1,7 +1,7 @@
 ---
 categories:
 - jupyterhub
-- docker
+- python
 date: '2025-12-01'
 layout: post
 title: Custom JupyterHub Docker image template
