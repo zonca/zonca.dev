@@ -254,9 +254,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>cluster <span class="op">=</span> KubeCluster(</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  name<span class="op">=</span><span class="st">"my-dask-cluster"</span>,</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  namespace<span class="op">=</span><span class="st">"jhub"</span>,            <span class="co"># important: JupyterHub namespace</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  image<span class="op">=</span><span class="st">"ghcr.io/dask/dask:latest"</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  image<span class="op">=</span><span class="st">"ghcr.io/dask/dask:latest"</span>,  <span class="co"># use the same image set in config_standard_storage.yaml</span></span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>cluster.scale(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The image must match the one specified for the JupyterHub single-user pods (for example in <code>config_standard_storage.yaml</code>). Mixing images leads to client/scheduler/worker incompatibilities that are hard to debug.</p>
 <p>Finally, display the cluster object to get a realtime view on the number of workers:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cluster</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
@@ -285,6 +286,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>cluster.scale(<span class="dv">4</span>, worker_group<span class="op">=</span><span class="st">"highmem"</span>)  <span class="co"># scale that group</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Use <code>cluster.scale(N, worker_group="groupname")</code> to change replicas for a specific group later.</p>
 <p>Notice that if you have the the Kubernetes Autocaler enabled in your cluster, it will automatically scale the number of nodes to accommodate the requested resources.</p>
+<p>When you are done with the cluster, shut it down cleanly:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cluster.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="access-the-dask-dashboard" class="level2">
 <h2 class="anchored" data-anchor-id="access-the-dask-dashboard">Access the dask dashboard</h2>
@@ -294,10 +297,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>I have created an example single-user image derived from <code>scipy-notebook</code> that includes <code>jupyter-server-proxy</code> and other useful packages for scientific computing. The repository is available at <a href="https://github.com/zonca/jupyterhub-dask-docker-image">github.com/zonca/jupyterhub-dask-docker-image</a>. The image is automatically built using GitHub Actions and hosted on the GitHub Container Registry (which is a container registry similar to Docker Hub or Quay.io).</p>
 <p>The list of available image tags is at <a href="https://github.com/zonca/jupyterhub-dask-docker-image/pkgs/container/jupyterhub-dask-docker-image">github.com/zonca/jupyterhub-dask-docker-image/pkgs/container/jupyterhub-dask-docker-image</a>.</p>
 <p>To use one of these images in your JupyterHub deployment, you need to update your <code>config_standard_storage.yaml</code> file for the JupyterHub Helm chart. For example, to use a specific image tag, you would add:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">singleuser</span><span class="kw">:</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">image</span><span class="kw">:</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> ghcr.io/zonca/jupyterhub-dask-docker-image</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">tag</span><span class="kw">:</span><span class="at"> </span><span class="st">"2025-11-18-018e8a6"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">singleuser</span><span class="kw">:</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">image</span><span class="kw">:</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> ghcr.io/zonca/jupyterhub-dask-docker-image</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">tag</span><span class="kw">:</span><span class="at"> </span><span class="st">"2025-11-18-018e8a6"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>After updating your JupyterHub configuration to use a compatible image, when you create a <code>KubeCluster</code> and print the <code>cluster</code> object in your notebook, it will now include a clickable link to the Dask dashboard. The link will have a format similar to this:</p>
 <p><code>/user/YOURUSER/proxy/my-dask-cluster-scheduler.jhub:8787/status</code></p>
 <p>This allows you to directly access the dashboard and monitor your Dask cluster’s activity.</p>
