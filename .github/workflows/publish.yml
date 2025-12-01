@@ -35,12 +35,17 @@ jobs:
 
       - name: Render Quarto Project (PRs)
         if: github.event_name == 'pull_request'
-        run: make all
+        run: make render
 
       - name: Render and Publish Quarto Project (Main Branch)
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name != 'pull_request'
         run: make all
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      
+      - name: Check for broken links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --base '_site' --no-progress '_site/**/*.html'
+          fail: true
+
