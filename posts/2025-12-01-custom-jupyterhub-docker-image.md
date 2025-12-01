@@ -7,7 +7,7 @@ layout: post
 title: Custom JupyterHub Docker image template
 ---
 
-I published a template that builds a ready-to-use JupyterHub single-user image with common scientific Python tooling and JupyterHub-friendly defaults: <https://github.com/zonca/custom-jupyterhub-docker-image>. See the README in that repo for the full list of packages, build steps, and CI workflow details.
+I published a template that builds a ready-to-use JupyterHub single-user image with common scientific Python tooling and JupyterHub-friendly defaults: <https://github.com/zonca/custom-jupyterhub-docker-image>. Clone it, adjust `requirements.txt` (or the Dockerfile/env files) in GitHub, and a GitHub Actions workflow automatically builds and publishes a new image for you—no local Docker needed. See the README in that repo for the full list of packages, build steps, and CI workflow details.
 
 How to use it in JupyterHub:
 
