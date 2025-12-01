@@ -1,5 +1,5 @@
 ---
-categories: [software, citation]
+categories: [citation]
 date: '2025-11-06'
 layout: post
 title: Software Citation Station helper script
