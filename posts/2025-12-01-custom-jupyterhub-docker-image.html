@@ -165,13 +165,13 @@ ul.task-list li input[type="checkbox"] {
 
 
 <div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2025-12-01-custom-jupyterhub-docker-image.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2025-12-01-custom-jupyterhub-docker-image.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
-<p>Overview: <a href="https://github.com/zonca/custom-jupyterhub-docker-image" class="uri">https://github.com/zonca/custom-jupyterhub-docker-image</a> is a template that ships a JupyterHub-ready single-user image with common scientific Python tooling and sensible defaults. You edit <code>requirements.txt</code> (or Dockerfile/env files) directly in GitHub, and the built-in GitHub Actions workflow auto-builds and publishes a new image—no local Docker required. See the README for the detailed package list and CI steps.</p>
+<p>Overview: <a href="https://github.com/zonca/custom-jupyterhub-docker-image" class="uri">https://github.com/zonca/custom-jupyterhub-docker-image</a> is a template that ships a JupyterHub-ready single-user image with common scientific Python tooling and sensible defaults. Just edit <code>requirements.txt</code> in GitHub and the built-in GitHub Actions workflow auto-builds and publishes a new image—no local Docker required. See the README for the detailed package list and CI steps.</p>
 <p>How to use it in JupyterHub:</p>
 <ul>
 <li>Build or pull the image, then point your spawner at it, e.g.&nbsp;<code>c.DockerSpawner.image = "ghcr.io/your-org/custom-jupyterhub-docker-image:TAG"</code> (or the equivalent field for your spawner/Helm chart).</li>
 <li>Restart JupyterHub so new servers launch with the custom image.</li>
 </ul>
-<p>Adopt it via GitHub templates: click “Use this template” to create your own copy (no fork history), tweak the Dockerfile or environment files, and push to your namespace to trigger the build.</p>
+<p>Adopt it via GitHub templates: click “Use this template” to create your own copy (no fork history), tweak <code>requirements.txt</code>, and push to your namespace to trigger the build.</p>
 <p>Where the image lives: the workflow can publish to GitHub Container Registry. Publish/pull docs: <a href="https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry" class="uri">https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry</a>.</p>
 
 
