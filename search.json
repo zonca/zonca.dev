@@ -1,17 +1,17 @@
 [
   {
-    "objectID": "agents.html",
-    "href": "agents.html",
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "I am a computational scientist the San Diego Supercomputer Center, California, USA.\nI mostly work on distributed data processing in Python of Astrophysics/Cosmology datasets. I simulate and analyze data from Cosmic Microwave Background experiments, I got my Ph.D. at the University of Milano, Italy, working on the Planck satellite (European Space Agency). See my publications on Google Scholar or Arxiv.\nCurrently I also work on cloud deployments of interactive computing platforms based on JupyterHub on top of Kubernetes.\nI am available for consulting, code-review, software infrastructure design.\nContact me via Twitter or email (andrea on the domain andreazonca.com).\n\nThis website is powered by quarto."
+  },
+  {
+    "objectID": "AGENTS.html",
+    "href": "AGENTS.html",
     "title": "Agent notes",
     "section": "",
     "text": "Agent notes\n\nWhen adding links between posts in posts/, use Hugo/Quarto relref with just the filename because all posts live in the same folder: {{&lt; relref \"2025-12-01-custom-jupyterhub-docker-image.md\" &gt;}}. Do not prefix with posts/, or the link will break."
-  },
-  {
-    "objectID": "consult.html",
-    "href": "consult.html",
-    "title": "Consulting",
-    "section": "",
-    "text": "I have a large expertise ranging from scientific computing to web development and devops.\nI am available to be hired as a consultant in:\n\nAI: Custom development of AI workflows based on Convolutional Neural Networks, Large Language Models and more\nScientific computing: development of high performance and parallel Python software for data analysis, code-review, software design\nWeb: hosting of websites, development of custom Python web apps using Flask and Django\nKubernetes: deployment of Kubernetes to Openstack, deployment on top of Kubernetes of JupyterHub, Dask or custom microservices.\n\nSee my AI consulting services locally in San Diego through San Diego Data Science LLC"
   },
   {
     "objectID": "posts/2021-04-19-jetstream-backup-kubernetes-volumes-object-store.html",
@@ -6902,10 +6902,10 @@
     "text": "Unit conversion error for CMB-S4 channels\n\nS4_chs = h5py.File(\"../s4mapbasedsims/202006_foregrounds_extragalactic_cmb_tophat/cmbs4_tophat.h5\", mode='r')\n\n\nperc_error = {}\nfor ch in S4_chs.values():\n    freqs = ch[\"bandpass_frequency_GHz\"] * u.GHz\n    weights = ch[\"bandpass_weight\"]\n    rj_to_cmb = broken_bandpass_unit_conversion(\n        freqs, weights, u.uK_CMB\n    )\n    fixed_rj_to_cmb = fixed_bandpass_unit_conversion(\n        freqs, weights, u.uK_CMB\n    )\n    perc_error[center_freq] = (rj_to_cmb - fixed_rj_to_cmb) / fixed_rj_to_cmb * 100\n    print(\"{} {:5s}, {:6.2f} GHz, broken: {:.3f}, fixed: {:.3f}, error {:.2f}%\".format(\n        ch.attrs[\"telescope\"], ch.attrs[\"band\"], ch.attrs[\"center_frequency_GHz\"], rj_to_cmb, fixed_rj_to_cmb, perc_error[center_freq]))\n\nLAT HFL1 , 225.00 GHz, broken: 3.364 uK_CMB / uK_RJ, fixed: 3.275 uK_CMB / uK_RJ, error 2.71%\nLAT HFL2 , 278.00 GHz, broken: 5.632 uK_CMB / uK_RJ, fixed: 5.523 uK_CMB / uK_RJ, error 1.98%\nSAT HFS1 , 220.00 GHz, broken: 3.163 uK_CMB / uK_RJ, fixed: 3.109 uK_CMB / uK_RJ, error 1.71%\nSAT HFS2 , 270.00 GHz, broken: 5.269 uK_CMB / uK_RJ, fixed: 5.099 uK_CMB / uK_RJ, error 3.34%\nLAT LFL1 ,  27.00 GHz, broken: 1.019 uK_CMB / uK_RJ, fixed: 1.019 uK_CMB / uK_RJ, error 0.00%\nLAT LFL2 ,  39.00 GHz, broken: 1.044 uK_CMB / uK_RJ, fixed: 1.044 uK_CMB / uK_RJ, error 0.01%\nSAT LFS1 ,  30.00 GHz, broken: 1.024 uK_CMB / uK_RJ, fixed: 1.024 uK_CMB / uK_RJ, error 0.00%\nSAT LFS2 ,  40.00 GHz, broken: 1.044 uK_CMB / uK_RJ, fixed: 1.044 uK_CMB / uK_RJ, error 0.01%\nSAT MFHS1,  95.00 GHz, broken: 1.263 uK_CMB / uK_RJ, fixed: 1.262 uK_CMB / uK_RJ, error 0.10%\nSAT MFHS2, 155.10 GHz, broken: 1.822 uK_CMB / uK_RJ, fixed: 1.813 uK_CMB / uK_RJ, error 0.51%\nLAT MFL1 ,  93.00 GHz, broken: 1.262 uK_CMB / uK_RJ, fixed: 1.259 uK_CMB / uK_RJ, error 0.22%\nLAT MFL2 , 145.00 GHz, broken: 1.707 uK_CMB / uK_RJ, fixed: 1.697 uK_CMB / uK_RJ, error 0.62%\nSAT MFLS1,  85.00 GHz, broken: 1.207 uK_CMB / uK_RJ, fixed: 1.206 uK_CMB / uK_RJ, error 0.06%\nSAT MFLS2, 145.10 GHz, broken: 1.696 uK_CMB / uK_RJ, fixed: 1.690 uK_CMB / uK_RJ, error 0.40%\nLAT ULFL1,  20.00 GHz, broken: 1.011 uK_CMB / uK_RJ, fixed: 1.011 uK_CMB / uK_RJ, error 0.00%"
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "consult.html",
+    "href": "consult.html",
+    "title": "Consulting",
     "section": "",
-    "text": "I am a computational scientist the San Diego Supercomputer Center, California, USA.\nI mostly work on distributed data processing in Python of Astrophysics/Cosmology datasets. I simulate and analyze data from Cosmic Microwave Background experiments, I got my Ph.D. at the University of Milano, Italy, working on the Planck satellite (European Space Agency). See my publications on Google Scholar or Arxiv.\nCurrently I also work on cloud deployments of interactive computing platforms based on JupyterHub on top of Kubernetes.\nI am available for consulting, code-review, software infrastructure design.\nContact me via Twitter or email (andrea on the domain andreazonca.com).\n\nThis website is powered by quarto."
+    "text": "I have a large expertise ranging from scientific computing to web development and devops.\nI am available to be hired as a consultant in:\n\nAI: Custom development of AI workflows based on Convolutional Neural Networks, Large Language Models and more\nScientific computing: development of high performance and parallel Python software for data analysis, code-review, software design\nWeb: hosting of websites, development of custom Python web apps using Flask and Django\nKubernetes: deployment of Kubernetes to Openstack, deployment on top of Kubernetes of JupyterHub, Dask or custom microservices.\n\nSee my AI consulting services locally in San Diego through San Diego Data Science LLC"
   }
 ]
