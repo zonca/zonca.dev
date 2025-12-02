@@ -3,6 +3,7 @@ title: Hierarchical EZID DOIs with Python
 date: '2025-11-13'
 categories:
   - python
+  - doi
 ---
 
 This post refers to the [ezid_api repository](https://github.com/zonca/ezid_api).

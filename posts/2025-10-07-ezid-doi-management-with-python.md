@@ -3,6 +3,7 @@ title: EZID DOI Management with Python
 date: '2025-10-07'
 categories:
   - python
+  - doi
 ---
 
 This project offers Python scripts for interacting with the EZID API to create and verify Digital Object Identifiers (DOIs).
