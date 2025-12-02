@@ -221,7 +221,7 @@
     "href": "posts/2025-12-02-take-control-of-your-kaiser-permanente-blood-test-results-no-coding-knowledge-required.html",
     "title": "Take control of your Kaiser Permanente blood test results (no coding knowledge required)",
     "section": "",
-    "text": "Download sourceContribute\nAre you tired of deciphering your Kaiser Permanente blood test results, wishing there was an easier way to track your health data over time without needing to be a coding expert? This guide will show you how to leverage readily available tools to analyze your health summary, specifically focusing on lipid panels, using a step-by-step approach."
+    "text": "Download sourceContribute\nWant to make sense of your Kaiser Permanente blood test results without needing to be a coding expert? This guide will walk you through using readily available tools to analyze your health summary, specifically focusing on lipid panels, with a step-by-step approach."
   },
   {
     "objectID": "posts/2025-12-02-take-control-of-your-kaiser-permanente-blood-test-results-no-coding-knowledge-required.html#step-1-download-your-health-summary-from-kp.org",
@@ -249,7 +249,7 @@
     "href": "posts/2025-12-02-take-control-of-your-kaiser-permanente-blood-test-results-no-coding-knowledge-required.html#step-4-visualize-your-results",
     "title": "Take control of your Kaiser Permanente blood test results (no coding knowledge required)",
     "section": "Step 4: Visualize Your Results",
-    "text": "Step 4: Visualize Your Results\nAfter Codex finishes, it will generate a lipid_panel.csv file within your GitHub repository. You can now use this CSV data for visualization:\n\nOpen the lipid_panel.csv file in your GitHub repository and copy its entire content.\nPaste the content into the regular ChatGPT interface (not Codex).\nAsk ChatGPT to create a plot. For example: &gt; “I’ll paste a CSV. Create a 4-panel plot with lipid values (Total Cholesterol, LDL, HDL, Triglycerides). Also add typical healthy limits for each, and shade the ‘bad’ areas (e.g., too high LDL, too low HDL) in red.”\n\nThis process empowers you to gain meaningful insights from your health data without writing a single line of code, transforming raw XML into understandable visualizations."
+    "text": "Step 4: Visualize Your Results\nAfter Codex finishes, it will generate a lipid_panel.csv file. This file will appear as a preview directly within the Codex interface, and you can copy its content from there. You can now use this CSV data for visualization:\n\nCopy the entire content of the lipid_panel.csv preview from the Codex interface.\nPaste the content into the regular ChatGPT interface (not Codex).\nAsk ChatGPT to create a plot. For example: &gt; “I’ll paste a CSV. Create a 4-panel plot with lipid values (Total Cholesterol, LDL, HDL, Triglycerides). Also add typical healthy limits for each, and shade the ‘bad’ areas (e.g., too high LDL, too low HDL) in red.”\n\nThis process empowers you to gain meaningful insights from your health data without writing a single line of code, transforming raw XML into understandable visualizations."
   },
   {
     "objectID": "posts/2019-01-24-zarr_jetstream_2019.html",
