@@ -1,7 +1,7 @@
 ---
 title: "Take control of your Kaiser Permanente blood test results (no coding knowledge required)"
 author: "Andrea Zonca"
-categories: [tutorial, health]
+categories: [ai, github]
 date: 2025-12-02
 ---
 
