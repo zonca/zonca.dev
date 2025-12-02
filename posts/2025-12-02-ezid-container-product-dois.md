@@ -14,9 +14,9 @@ The previous tutorial showed how to wire a canonical DOI to multiple versions; s
 
 The new `create_container_doi.py` script mints three identifiers under the EZID test shoulder `doi:10.5072/FK2`:
 
-1.  **Release container (`OCEAN-RELEASE-2025`)** – represents the full 2025 coastal observing system release and lists each product DOI with `HasPart`.
-2.  **Product 1 (`OCEAN-RELEASE-2025-P1`)** – a gridded sea surface temperature dataset that points back to the container DOI with `IsPartOf`.
-3.  **Product 2 (`OCEAN-RELEASE-2025-P2`)** – a chlorophyll-a mosaic dataset that also uses `IsPartOf` to reference the same container DOI.
+1.  **Release container (`SIMONSOBS-RELEASE-2025`)** – represents the 2025 Simons Observatory release and lists each product DOI with `HasPart`.
+2.  **Product 1 (`SIMONSOBS-RELEASE-2025-P1`)** – a sample data product that points back to the container DOI with `IsPartOf`.
+3.  **Product 2 (`SIMONSOBS-RELEASE-2025-P2`)** – another product that also uses `IsPartOf` to reference the same container DOI.
 
 Because we stay on the EZID test shoulder, you can try the flow without touching production identifiers.
 
@@ -39,16 +39,16 @@ Both scripts reuse the `.env` credentials described in the earlier posts (`EZID_
 `check_container_doi.py` prints the ANVL metadata returned by EZID and highlights the relationship fields. A shortened sample looks like:
 
 ```text
-_target: https://example.org/data-releases/ocean-2025
-datacite.relatedidentifier.1: 10.5072/FK2/OCEAN-RELEASE-2025-P1
+_target: https://example.org/data-releases/simonsobs-2025
+datacite.relatedidentifier.1: 10.5072/FK2/SIMONSOBS-RELEASE-2025-P1
 datacite.relatedidentifiertype.1: DOI
 datacite.relationtype.1: HasPart
-datacite.relatedidentifier.2: 10.5072/FK2/OCEAN-RELEASE-2025-P2
+datacite.relatedidentifier.2: 10.5072/FK2/SIMONSOBS-RELEASE-2025-P2
 datacite.relatedidentifiertype.2: DOI
 datacite.relationtype.2: HasPart
 
-_target: https://example.org/data-releases/ocean-2025/sea-surface-temp
-datacite.relatedidentifier.1: 10.5072/FK2/OCEAN-RELEASE-2025
+_target: https://example.org/data-releases/simonsobs-2025/product-1
+datacite.relatedidentifier.1: 10.5072/FK2/SIMONSOBS-RELEASE-2025
 datacite.relatedidentifiertype.1: DOI
 datacite.relationtype.1: IsPartOf
 ```
