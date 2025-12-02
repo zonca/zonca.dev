@@ -8,7 +8,7 @@ categories:
 
 This post refers to the [ezid_api repository](https://github.com/zonca/ezid_api).
 
-The previous tutorial showed how to wire a canonical DOI to multiple versions. This follow-up creates a **container DOI** for a data release and two **product DOIs** that declare they belong to that release. The pattern mirrors a collection landing page (container) that links to specific datasets (products) using DataCite's `HasPart` and `IsPartOf` relations.
+The previous tutorial showed how to wire a canonical DOI to multiple versions; start there if you need versioning rather than parts: [single DOI basics](/posts/2025-10-07-ezid-doi-management-with-python.html) and [hierarchical versioned DOIs](/posts/2025-11-13-ezid-hierarchical-doi-management.html). This follow-up creates a **container DOI** for a data release and two **product DOIs** that declare they belong to that release. The pattern mirrors a collection landing page (container) that links to specific datasets (products) using DataCite's `HasPart` and `IsPartOf` relations.
 
 ## What the container/product pattern does
 
