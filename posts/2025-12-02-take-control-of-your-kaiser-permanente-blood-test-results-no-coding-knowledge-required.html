@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Andrea Zonca">
-<meta name="dcterms.date" content="2023-09-27">
+<meta name="dcterms.date" content="2025-12-02">
 
-<title>Deploy Github Authenticator in JupyterHub – Andrea Zonca</title>
+<title>Take control of your Kaiser Permanente blood test results (no coding knowledge required) – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -124,13 +124,10 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Deploy Github Authenticator in JupyterHub</h1>
+      <h1 class="title">Take control of your Kaiser Permanente blood test results (no coding knowledge required)</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">jupyterhub</div>
-                <div class="quarto-category">jetstream</div>
-                <div class="quarto-category">kubernetes</div>
-                <div class="quarto-category">git</div>
-                <div class="quarto-category">github</div>
+                <div class="quarto-category">tutorial</div>
+                <div class="quarto-category">health</div>
               </div>
                   </div>
   </div>
@@ -148,7 +145,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 27, 2023</p>
+        <p class="date">December 2, 2025</p>
       </div>
     </div>
     
@@ -167,16 +164,78 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2023-10-27-jupyterhub-github-authentication.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2023-10-27-jupyterhub-github-authentication.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
-<p><strong>Updated June 2024</strong>: added more options to config file</p>
-<p>Quick reference on how to deploy the Github Authenticator in JupyterHub, the main reference is <a href="https://z2jh.jupyter.org/en/latest/administrator/authentication.html#github">the Zero to JupyterHub docs</a>.</p>
-<p>For maintaining the single-user image used by this setup, the easiest path is the custom template where you only update <code>requirements.txt</code> and let GitHub Actions rebuild and publish: {{&lt; relref "2025-12-01-custom-jupyterhub-docker-image.md" &gt;}}.</p>
-<p>First create a Oauth app on Github, see under “Settings” and “Developer options”, set your Hub Callback url, see for example the configuration file below.</p>
-<p>Save this configuration file as <code>config_github_auth.yaml</code> following <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/blob/master/github/config_github.yaml">the template available on Github</a></p>
-<p>See the comments in the file for other interesting configuration options, and check <a href="https://oauthenticator.readthedocs.io/en/latest/reference/api/gen/oauthenticator.github.html#module-oauthenticator.github">the OAuthenticator documentation for more</a>.</p>
-<p>Add the configuration file to the <code>helm upgrade --install</code> call as <code>--values config_github_auth.yaml</code>, you can have multiple <code>--values</code> arguments.</p>
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2025-12-02-take-control-of-your-kaiser-permanente-blood-test-results-no-coding-knowledge-required.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2025-12-02-take-control-of-your-kaiser-permanente-blood-test-results-no-coding-knowledge-required.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
+<p>Are you tired of deciphering your Kaiser Permanente blood test results, wishing there was an easier way to track your health data over time without needing to be a coding expert? This guide will show you how to leverage readily available tools to analyze your health summary, specifically focusing on lipid panels, using a step-by-step approach.</p>
+<section id="step-1-download-your-health-summary-from-kp.org" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-download-your-health-summary-from-kp.org">Step 1: Download your Health Summary from kp.org</h2>
+<ol type="1">
+<li><strong>Log in</strong> to your kp.org account.</li>
+<li>Navigate to <strong>“Health Summary”</strong>.</li>
+<li>Click on <strong>“Download Health Summary”</strong>.</li>
+</ol>
+<p>This action will download a <code>.zip</code> file to your computer.</p>
+</section>
+<section id="step-2-extract-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-extract-the-data">Step 2: Extract the Data</h2>
+<p>Locate the downloaded <code>.zip</code> file (usually in your <code>Downloads</code> folder) and <strong>double-click it</strong> to extract its contents. Inside, you’ll find a folder structure. The actual data you need is typically located within the <code>IHE_XDM/Firstname1/</code> folder. This folder contains numerous <code>.xml</code> files, each representing different aspects of your health record.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>At this point, you might have many <code>.xml</code> files (e.g., 77 in one instance). Directly feeding all of these into most AI chat interfaces like ChatGPT or Gemini is not feasible, as they often have limitations on the number of files or the total content size they can process simultaneously.</p>
+</div>
+</div>
+</section>
+<section id="step-3-use-github-and-codex-chatgpt-plus-for-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-use-github-and-codex-chatgpt-plus-for-analysis">Step 3: Use GitHub and Codex (ChatGPT Plus) for Analysis</h2>
+<p>While coding experience would allow you to process these files with tools like <code>codex cli</code> or Gemini in the terminal, the easiest non-coding solution is to use <strong>Codex</strong>, a feature available with <strong>ChatGPT Plus</strong> (a paid subscription, approximately $20/month).</p>
+<p>Here’s how to do it:</p>
+<ol type="1">
+<li><strong>Create a free account on <a href="https://github.com/">Github.com</a></strong>.</li>
+<li><strong>Create a New Repository</strong>:
+<ul>
+<li>Click the <strong>“+”</strong> sign in the top right corner and select “New repository”.</li>
+<li><strong>IMPORTANT</strong>: Make sure to select <strong>“Private”</strong> for your repository. This ensures your personal health data remains secure and confidential.</li>
+<li>Check <strong>“Add a README file”</strong> so your repository isn’t empty.</li>
+<li>Click “Create repository”.</li>
+</ul></li>
+<li><strong>Upload Your XML Files</strong>:
+<ul>
+<li>Once your repository is created, click the <strong>“Add file”</strong> button, then select <strong>“Upload files”</strong>.</li>
+<li>Drag and drop all the <code>.xml</code> files from your <code>IHE_XDM/Firstname1/</code> folder into the upload area.</li>
+<li>Commit the changes.</li>
+</ul></li>
+<li><strong>Connect to Codex on ChatGPT</strong>:
+<ul>
+<li>Go to <a href="https://chatgpt.com/">chatgpt.com</a>.</li>
+<li>Select <strong>Codex</strong> (available if you have ChatGPT Plus).</li>
+<li>Follow the prompts to <strong>link your GitHub account</strong> and choose the private repository where you uploaded your <code>.xml</code> files.</li>
+</ul></li>
+<li><strong>Analyze Your Data</strong>:
+<ul>
+<li>In the Codex chat interface, provide a clear instruction, such as: &gt; “Analyze the XML files and extract all values from the lipid panel of my blood tests to a a csv file named <code>lipid_panel.csv</code>.”</li>
+<li>Let Codex work. This process might take up to 10 minutes, depending on the number and size of your files.</li>
+</ul></li>
+</ol>
+</section>
+<section id="step-4-visualize-your-results" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-visualize-your-results">Step 4: Visualize Your Results</h2>
+<p>After Codex finishes, it will generate a <code>lipid_panel.csv</code> file within your GitHub repository. You can now use this CSV data for visualization:</p>
+<ol type="1">
+<li><strong>Open the <code>lipid_panel.csv</code> file</strong> in your GitHub repository and <strong>copy its entire content</strong>.</li>
+<li><strong>Paste the content into the regular ChatGPT interface</strong> (not Codex).</li>
+<li>Ask ChatGPT to create a plot. For example: &gt; “I’ll paste a CSV. Create a 4-panel plot with lipid values (Total Cholesterol, LDL, HDL, Triglycerides). Also add typical healthy limits for each, and shade the ‘bad’ areas (e.g., too high LDL, too low HDL) in red.”</li>
+</ol>
+<p>This process empowers you to gain meaningful insights from your health data without writing a single line of code, transforming raw XML into understandable visualizations.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
