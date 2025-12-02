@@ -205,9 +205,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="what-the-containerproduct-pattern-does">What the container/product pattern does</h2>
 <p>The new <code>create_container_doi.py</code> script mints three identifiers under the EZID test shoulder <code>doi:10.5072/FK2</code>:</p>
 <ol type="1">
-<li><strong>Release container (<code>OCEAN-RELEASE-2025</code>)</strong> – represents the full 2025 coastal observing system release and lists each product DOI with <code>HasPart</code>.</li>
-<li><strong>Product 1 (<code>OCEAN-RELEASE-2025-P1</code>)</strong> – a gridded sea surface temperature dataset that points back to the container DOI with <code>IsPartOf</code>.</li>
-<li><strong>Product 2 (<code>OCEAN-RELEASE-2025-P2</code>)</strong> – a chlorophyll-a mosaic dataset that also uses <code>IsPartOf</code> to reference the same container DOI.</li>
+<li><strong>Release container (<code>SIMONSOBS-RELEASE-2025</code>)</strong> – represents the 2025 Simons Observatory release and lists each product DOI with <code>HasPart</code>.</li>
+<li><strong>Product 1 (<code>SIMONSOBS-RELEASE-2025-P1</code>)</strong> – a sample data product that points back to the container DOI with <code>IsPartOf</code>.</li>
+<li><strong>Product 2 (<code>SIMONSOBS-RELEASE-2025-P2</code>)</strong> – another product that also uses <code>IsPartOf</code> to reference the same container DOI.</li>
 </ol>
 <p>Because we stay on the EZID test shoulder, you can try the flow without touching production identifiers.</p>
 </section>
@@ -224,16 +224,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="relationship-fields-you-should-see" class="level2">
 <h2 class="anchored" data-anchor-id="relationship-fields-you-should-see">Relationship fields you should see</h2>
 <p><code>check_container_doi.py</code> prints the ANVL metadata returned by EZID and highlights the relationship fields. A shortened sample looks like:</p>
-<pre class="text"><code>_target: https://example.org/data-releases/ocean-2025
-datacite.relatedidentifier.1: 10.5072/FK2/OCEAN-RELEASE-2025-P1
+<pre class="text"><code>_target: https://example.org/data-releases/simonsobs-2025
+datacite.relatedidentifier.1: 10.5072/FK2/SIMONSOBS-RELEASE-2025-P1
 datacite.relatedidentifiertype.1: DOI
 datacite.relationtype.1: HasPart
-datacite.relatedidentifier.2: 10.5072/FK2/OCEAN-RELEASE-2025-P2
+datacite.relatedidentifier.2: 10.5072/FK2/SIMONSOBS-RELEASE-2025-P2
 datacite.relatedidentifiertype.2: DOI
 datacite.relationtype.2: HasPart
 
-_target: https://example.org/data-releases/ocean-2025/sea-surface-temp
-datacite.relatedidentifier.1: 10.5072/FK2/OCEAN-RELEASE-2025
+_target: https://example.org/data-releases/simonsobs-2025/product-1
+datacite.relatedidentifier.1: 10.5072/FK2/SIMONSOBS-RELEASE-2025
 datacite.relatedidentifiertype.1: DOI
 datacite.relationtype.1: IsPartOf</code></pre>
 <p>The container DOI lists both products with <code>HasPart</code>, while each product DOI declares <code>IsPartOf</code> to connect back to the release landing page. Swap in your own URLs, creators, and titles before running against a production shoulder.</p>
