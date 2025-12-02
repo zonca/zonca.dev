@@ -1481,7 +1481,7 @@
     "href": "posts/2025-12-02-ezid-container-product-dois.html",
     "title": "Container and Product EZID DOIs with Python",
     "section": "",
-    "text": "Download sourceContribute\nThis post refers to the ezid_api repository.\nThe previous tutorial showed how to wire a canonical DOI to multiple versions. This follow-up creates a container DOI for a data release and two product DOIs that declare they belong to that release. The pattern mirrors a collection landing page (container) that links to specific datasets (products) using DataCite’s HasPart and IsPartOf relations."
+    "text": "Download sourceContribute\nThis post refers to the ezid_api repository.\nThe previous tutorial showed how to wire a canonical DOI to multiple versions; start there if you need versioning rather than parts: single DOI basics and hierarchical versioned DOIs. This follow-up creates a container DOI for a data release and two product DOIs that declare they belong to that release. The pattern mirrors a collection landing page (container) that links to specific datasets (products) using DataCite’s HasPart and IsPartOf relations."
   },
   {
     "objectID": "posts/2025-12-02-ezid-container-product-dois.html#what-the-containerproduct-pattern-does",
