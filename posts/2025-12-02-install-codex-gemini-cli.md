@@ -2,7 +2,7 @@
 title: "How to install codex and gemini cli"
 author: "Andrea Zonca"
 date: "2025-12-02"
-categories: [cli, npm, gemini, codex, install]
+categories: [ai]
 ---
 
 When installing `@google/gemini-cli` or `@openai/codex` using `npm`, you might encounter permission errors with the default global installation command.
