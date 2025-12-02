@@ -32,7 +32,9 @@ Here's how to do it:
 1.  **Create a free account on [Github.com](https://github.com/)**.
 2.  **Create a New Repository**:
     *   Click the **"+"** sign in the top right corner and select "New repository".
-    *   **IMPORTANT**: Make sure to select **"Private"** for your repository. This ensures your personal health data remains secure and confidential.
+    :::callout-warning
+    *   **CRITICAL**: Make sure to select **"Private"** for your repository. This step is paramount to ensure your personal health data remains secure and confidential and is not exposed publicly.
+    :::
     *   Check **"Add a README file"** so your repository isn't empty.
     *   Click "Create repository".
 3.  **Upload Your XML Files**:
