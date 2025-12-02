@@ -5,7 +5,7 @@ categories: [tutorial, health]
 date: 2025-12-02
 ---
 
-Are you tired of deciphering your Kaiser Permanente blood test results, wishing there was an easier way to track your health data over time without needing to be a coding expert? This guide will show you how to leverage readily available tools to analyze your health summary, specifically focusing on lipid panels, using a step-by-step approach.
+Want to make sense of your Kaiser Permanente blood test results without needing to be a coding expert? This guide will walk you through using readily available tools to analyze your health summary, specifically focusing on lipid panels, with a step-by-step approach.
 
 ## Step 1: Download your Health Summary from kp.org
 
@@ -50,9 +50,9 @@ Here's how to do it:
 
 ## Step 4: Visualize Your Results
 
-After Codex finishes, it will generate a `lipid_panel.csv` file within your GitHub repository. You can now use this CSV data for visualization:
+After Codex finishes, it will generate a `lipid_panel.csv` file. This file will appear as a preview directly within the Codex interface, and you can copy its content from there. You can now use this CSV data for visualization:
 
-1.  **Open the `lipid_panel.csv` file** in your GitHub repository and **copy its entire content**.
+1.  **Copy the entire content of the `lipid_panel.csv` preview** from the Codex interface.
 2.  **Paste the content into the regular ChatGPT interface** (not Codex).
 3.  Ask ChatGPT to create a plot. For example:
     > "I'll paste a CSV. Create a 4-panel plot with lipid values (Total Cholesterol, LDL, HDL, Triglycerides). Also add typical healthy limits for each, and shade the 'bad' areas (e.g., too high LDL, too low HDL) in red."
