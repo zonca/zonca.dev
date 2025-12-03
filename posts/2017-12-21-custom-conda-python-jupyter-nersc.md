@@ -17,7 +17,7 @@ title: Install custom Python environment on Jupyter Notebooks at NERSC
 
 NERSC has provided a JupyterHub instance for quite some time to all NERSC users.
 It is currently running on a dedicated large-memory node on Cori, so now it can access also data on
-Cori `$SCRATCH`, not only `/project` and `$HOME`. See [their documentation](http://www.nersc.gov/users/data-analytics/data-analytics-2/jupyter-and-rstudio/)
+Cori `$SCRATCH`, not only `/project` and `$HOME`. See [their documentation](https://docs.nersc.gov/services/jupyter/)
 
 ## Customize your Python environment
 

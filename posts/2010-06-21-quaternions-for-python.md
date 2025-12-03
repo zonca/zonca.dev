@@ -10,6 +10,8 @@ title: quaternions for python
 
 ---
 
+**Update**: SciPy now includes `scipy.spatial.transform.Rotation` which provides excellent quaternion support. See the [SciPy documentation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.transform.Rotation.html).
+
 <p>
  the situation is pretty problematic, I hope someday
  <strong>
@@ -28,9 +30,7 @@ title: quaternions for python
  </li>
  <br/>
  <li>
-  <a href="http://cxc.harvard.edu/mta/ASPECT/tool_doc/pydocs/Quaternion.html">
-   http://cxc.harvard.edu/mta/ASPECT/tool_doc/pydocs/Quaternion.html
-  </a>
+  Quaternion package from CXC Harvard (link no longer available)
   : more lightweight, does not implement quaternion interpolation
  </li>
  <br/>

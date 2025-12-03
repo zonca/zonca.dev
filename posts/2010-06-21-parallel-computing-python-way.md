@@ -10,10 +10,6 @@ title: parallel computing the python way
 
 ---
 
-<p>
- forget MPI:
- <br/>
- <a href="http://showmedo.com/videotutorials/series?name=N49qyIFOh">
-  http://showmedo.com/videotutorials/series?name=N49qyIFOh
- </a>
-</p>
+**Note**: The original showmedo.com video tutorial site is no longer available.
+
+For parallel computing in Python, consider using [multiprocessing](https://docs.python.org/3/library/multiprocessing.html), [dask](https://dask.org/), or [mpi4py](https://mpi4py.readthedocs.io/) as modern alternatives to MPI.

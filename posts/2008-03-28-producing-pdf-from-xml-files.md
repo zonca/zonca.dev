@@ -14,7 +14,7 @@ title: Producing PDF from XML files
  I need to produce formatted pdf from XML data input file.
  <br/>
  The more standard way looks like to use
- <a href="http://www.w3schools.com/xsl" title="w3schools tutorial">
+ <a href="https://www.w3schools.com/xml/xsl_intro.asp" title="w3schools tutorial">
   XSL stylesheets.
  </a>
  <br/>

@@ -12,7 +12,9 @@ title: ECSS Symposium introduction to cloud computing with Jetstream and deploym
 
 ---
 
-ECSS Symposium, April 2020, Web presentation to the XSEDE [Extended Collaborative Support Services](https://www.xsede.org/for-users/ecss).
+**Note**: XSEDE has been replaced by [ACCESS](https://access-ci.org/).
+
+ECSS Symposium, April 2020, Web presentation to the XSEDE Extended Collaborative Support Services.
 
 It is a 1-hour session introducing cloud computing on Jetstream and then explaining how to deploy Kubernetes
 and JupyterHub on Jetstream.

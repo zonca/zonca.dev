@@ -14,7 +14,9 @@ title: ECSS Symposium about Jupyterhub deployments on XSEDE
 
 ## Jupyter Notebooks at scale for Gateways and Workshops
 
-ECSS Symposium, 19 December 2017, Web presentation to the XSEDE [Extended Collaborative Support Services](https://www.xsede.org/for-users/ecss).
+**Note**: XSEDE has been replaced by [ACCESS](https://access-ci.org/).
+
+ECSS Symposium, 19 December 2017, Web presentation to the XSEDE Extended Collaborative Support Services.
 
 Overview on deployment options for Jupyter Notebooks at scale on XSEDE resources.
 

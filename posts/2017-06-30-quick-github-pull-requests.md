@@ -27,7 +27,7 @@ For small changes, like create a folder and upload a few files, or a quick fix o
 * If you need to **create a folder**
     * click on "Create new file"
     * in the "Name your file..." box, insert: "yourfolder/README.md"
-    * in the README.md write a description of the content of the folder, you can use markdown syntax, (see [the Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) )
+    * in the README.md write a description of the content of the folder, you can use markdown syntax, (see [the Markdown Cheatsheet](https://www.markdownguide.org/cheat-sheet/) )
     * create a bullet list with description of the files you will be uploading next
     * Click on "Propose new file"
     * this will ask you to create a Pull Request, follow the prompts and make sure to confirm at the end that you want to create a Pull Request, you have to click twice on "Create Pull Request" buttons

@@ -12,6 +12,8 @@ title: Deploy Kubernetes on Jetstream with Kubespray 1/3
 
 ---
 
+**Note**: Jetstream 1 has been retired. For current Kubernetes deployments, see [Jetstream 2 documentation](https://docs.jetstream-cloud.org/).
+
 **This tutorial is obsolete, check the [updated version of the tutorial](https://zonca.dev/2020/06/kubernetes-jetstream-kubespray.html)**
 
 The purpose of this tutorial series is to deploy Jupyterhub on top of

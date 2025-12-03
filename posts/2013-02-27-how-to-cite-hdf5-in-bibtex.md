@@ -17,7 +17,7 @@ title: How to cite HDF5 in bibtex
  <br/>
  reference:
  <br/>
- <a href="http://www.hdfgroup.org/HDF5-FAQ.html#gcite">
-  http://www.hdfgroup.org/HDF5-FAQ.html#gcite
+ <a href="https://www.hdfgroup.org/solutions/hdf5/">
+  https://www.hdfgroup.org/solutions/hdf5/
  </a>
 </p>

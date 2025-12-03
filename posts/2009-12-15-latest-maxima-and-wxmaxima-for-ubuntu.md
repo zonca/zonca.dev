@@ -10,11 +10,6 @@ title: Latest Maxima and WxMaxima for Ubuntu Karmic
 
 ---
 
-<a href="http://zeus.nyf.hu/~blahota/maxima/karmic/" title="maxima for ubuntu">
- http://zeus.nyf.hu/~blahota/maxima/karmic/
-</a>
-<br/>
-<br/>
-on maxima mailing lists they suggested to install the sbcl built, so I first installed sbcl from the Ubuntu repositories and then maxima and wxmaxima f
-<br/>
-rom this url.
+**Note**: The original third-party repository for Maxima packages is no longer available.
+
+On the maxima mailing lists they suggested to install the sbcl built, so I first installed sbcl from the Ubuntu repositories and then maxima and wxmaxima from the third-party repository.

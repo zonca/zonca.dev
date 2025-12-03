@@ -269,4 +269,4 @@ Now you should be able to connect to your server over HTTPS and access Jupyterhu
 
 Feedback appreciated, [@andreazonca](https://twitter.com/andreazonca)
 
-I am also available to support US scientists to deploy scientific gateways through the [XSEDE ECSS consultation program](https://www.xsede.org/for-users/ecss).
+**Note**: XSEDE has been replaced by [ACCESS](https://access-ci.org/). Contact ACCESS for current support options.
