@@ -66,32 +66,6 @@ end
 
 local M = {}
 
--- relref shortcode: converts a filename to a relative URL
--- Usage: {{< relref "filename.md" >}} or {{< relref "posts/filename.md" >}}
-M['relref'] = function(args, kwargs, meta)
-  if #args < 1 then
-    return pandoc.Null()
-  end
-  
-  local target = pandoc.utils.stringify(args[1])
-  -- Remove any leading/trailing quotes
-  target = target:gsub('^"', ''):gsub('"$', '')
-  
-  -- Remove .md extension and replace with .html for the URL
-  local url_path = target:gsub("%.md$", ".html"):gsub("%.qmd$", ".html")
-  
-  -- Handle both "filename.md" and "posts/filename.md" formats
-  if not url_path:match("^posts/") then
-    -- If it doesn't start with posts/, add it
-    url_path = "posts/" .. url_path
-  end
-  
-  -- Build absolute URL for the site
-  local url = "/" .. url_path
-  
-  return pandoc.Str(url)
-end
-
 M['custom_links'] = function(args, kwargs, meta)
   local buttons = build_buttons_html()
   if not buttons then
