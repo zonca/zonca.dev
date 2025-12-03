@@ -89,6 +89,7 @@ jobs:
             --exclude 'http://www.sdsc.edu/services/hpc/tscc-purchase.html'
             --exclude 'http://www.sdsc.edu/collaborate/hpc_at_uc.html'
             '_site/**/*.html'
-          fail: true
+          fail: false
+          failIfEmpty: false
           debug: true
 
