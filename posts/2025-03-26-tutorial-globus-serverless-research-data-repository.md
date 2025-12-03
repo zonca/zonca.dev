@@ -23,4 +23,4 @@ You can find the tutorial material on GitHub:
 
 Below is the recording of the tutorial:
 
-[Youtube video](https://www.youtube.com/embed/EYrGxGtmUH0>)
+[Youtube video](https://www.youtube.com/embed/EYrGxGtmUH0)
