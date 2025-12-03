@@ -90,4 +90,5 @@ jobs:
             --exclude 'http://www.sdsc.edu/collaborate/hpc_at_uc.html'
             '_site/**/*.html'
           fail: true
+          debug: true
 
