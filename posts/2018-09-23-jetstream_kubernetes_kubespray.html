@@ -165,6 +165,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 <div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2018-09-23-jetstream_kubernetes_kubespray.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2018-09-23-jetstream_kubernetes_kubespray.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
+<p><strong>Note</strong>: Jetstream 1 has been retired. For current Kubernetes deployments, see <a href="https://docs.jetstream-cloud.org/">Jetstream 2 documentation</a>.</p>
 <p><strong>This tutorial is obsolete, check the <a href="https://zonca.dev/2020/06/kubernetes-jetstream-kubespray.html">updated version of the tutorial</a></strong></p>
 <p>The purpose of this tutorial series is to deploy Jupyterhub on top of Kubernetes on Jetstream. This material was presented as a tutorial at the Gateways 2018 conference, see also <a href="https://figshare.com/articles/Hands-on_Tutorial_Deploying_Kubernetes_and_JupyterHub_on_Jetstream/7137884">the slides on Figshare</a>.</p>
 <p>Compared to my <a href="https://zonca.github.io/2017/12/scalable-jupyterhub-kubernetes-jetstream.html">initial tutorial</a>, I focused on improving automation. Instead of creating Jetstream instances via the Atmosphere web interface and then SSHing into the instances and run <code>kubeadm</code> based commands to setup Docker and Kubernetes we will:</p>
@@ -183,8 +184,9 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="request-api-access" class="level3">
 <h3 class="anchored" data-anchor-id="request-api-access">Request API access</h3>
-<p>In order to make sure your XSEDE account can access the Jetstream API, you need to contact the Helpdesk, see the <a href="https://iujetstream.atlassian.net/wiki/spaces/JWT/pages/39682057/Using+the+Jetstream+API">instructions on the Jetstream Wiki</a>. You will also receive your <strong>TACC</strong> password, which could be different than your XSEDE one (username is generally the same).</p>
-<p>Login to the TACC Horizon panel at <a href="https://tacc.jetstream-cloud.org/dashboard" class="uri">https://tacc.jetstream-cloud.org/dashboard</a>, this is basically the low level web interface to OpenStack, a lot more complex and powerful than Atmosphere available at <a href="https://use.jetstream-cloud.org/application" class="uri">https://use.jetstream-cloud.org/application</a>. Use <code>tacc</code> as domain, your TACC username (generally the same as your XSEDE username) and your TACC password.</p>
+<p><strong>Note</strong>: Jetstream 1 documentation and services are no longer available.</p>
+<p>In order to make sure your XSEDE account can access the Jetstream API, you need to contact the Helpdesk (Jetstream 1 wiki is no longer available).</p>
+<p>Login to the TACC Horizon panel (Jetstream 1 dashboard is no longer available), this is basically the low level web interface to OpenStack, a lot more complex and powerful than Atmosphere.</p>
 <p>First choose the right project you would like to charge to in the top dropdown menu (see the XSEDE website if you don’t recognize the grant code).</p>
 <p>Click on Compute / API Access and download the OpenRC V3 authentication file to your machine. Source it typing:</p>
 <pre><code>source XX-XXXXXXXX-openrc.sh</code></pre>

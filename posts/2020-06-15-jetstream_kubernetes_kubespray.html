@@ -165,6 +165,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 <div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2020-06-15-jetstream_kubernetes_kubespray.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2020-06-15-jetstream_kubernetes_kubespray.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
+<p><strong>Note</strong>: Jetstream 1 has been retired. For current Kubernetes deployments, see <a href="https://docs.jetstream-cloud.org/">Jetstream 2 documentation</a>.</p>
 <p><strong>This tutorial is obsolete, check the <a href="https://zonca.dev/2021/01/kubernetes-jetstream-kubespray.html">updated version of the tutorial</a></strong></p>
 <p>This is an update to previous tutorials, focused on deploying Kubernetes 1.17.6 (released in May 2020, based on 1.17.0 released in December 2019).</p>
 <p>We will use Kubespray 2.13.1, which first runs <code>terraform</code> to create the Openstack resources, then <code>ansible</code> to configure the servers to run all the Kubernetes services.</p>
@@ -177,8 +178,9 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="request-api-access" class="level3">
 <h3 class="anchored" data-anchor-id="request-api-access">Request API access</h3>
-<p>In order to make sure your XSEDE account can access the Jetstream API, you need to contact the Helpdesk, see the <a href="https://iujetstream.atlassian.net/wiki/spaces/JWT/pages/39682057/Using+the+Jetstream+API">instructions on the Jetstream Wiki</a>. You will also receive your <strong>TACC</strong> password, which could be different than your XSEDE one (username is generally the same).</p>
-<p>Login to the TACC Horizon panel at <a href="https://tacc.jetstream-cloud.org/dashboard" class="uri">https://tacc.jetstream-cloud.org/dashboard</a>, this is basically the low level web interface to OpenStack, a lot more complex and powerful than Atmosphere available at <a href="https://use.jetstream-cloud.org/application" class="uri">https://use.jetstream-cloud.org/application</a>. Use <code>tacc</code> as domain, your TACC username (generally the same as your XSEDE username) and your TACC password.</p>
+<p><strong>Note</strong>: Jetstream 1 documentation and services are no longer available.</p>
+<p>In order to make sure your XSEDE account can access the Jetstream API, you need to contact the Helpdesk (Jetstream 1 wiki is no longer available).</p>
+<p>Login to the TACC Horizon panel (Jetstream 1 dashboard is no longer available), this is basically the low level web interface to OpenStack, a lot more complex and powerful than Atmosphere.</p>
 <p>First choose the right project you would like to charge to in the top dropdown menu (see the XSEDE website if you don’t recognize the grant code).</p>
 <p>Click on Compute / API Access and download the OpenRC V3 authentication file to your machine. Source it typing:</p>
 <pre><code>source XX-XXXXXXXX-openrc.sh</code></pre>

@@ -171,7 +171,8 @@ ul.task-list li input[type="checkbox"] {
 <p>In this tutorial I’ll show how to create a data volume on Jetstream and share it using a NFS server to all JupyterHub users. All JupyterHub users run as the <code>jovyan</code> user, therefore each folder in the shared filesystem can be either read-only, or writable by every user. The main concern is that a user could delete by mistake data of another user, however the users still have access to their own home folder.</p>
 <section id="deploy-kubernetes-and-jupyterhub" class="level1">
 <h1>Deploy Kubernetes and JupyterHub</h1>
-<p>I assume here you already have a deployment of JupyterHub on top of Kubernetes on Jetstream, deployed either <a href="https://zonca.dev/2020/06/kubernetes-jetstream-kubespray.html">via Kubespray</a> or <a href="https://zonca.dev/2020/05/kubernetes-jupyterhub-jetstream-magnum.html">via Magnum</a>.</p>
+<p><strong>Note</strong>: Jetstream 1 has been retired. See <a href="https://docs.jetstream-cloud.org/">Jetstream 2 documentation</a> for current tutorials.</p>
+<p>I assume here you already have a deployment of JupyterHub on top of Kubernetes on Jetstream, deployed using one of the Jetstream 1 tutorials (now archived).</p>
 </section>
 <section id="deploy-the-nfs-server" class="level1">
 <h1>Deploy the NFS server</h1>

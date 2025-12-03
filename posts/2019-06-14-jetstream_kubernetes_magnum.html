@@ -166,7 +166,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 <div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2019-06-14-jetstream_kubernetes_magnum.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2019-06-14-jetstream_kubernetes_magnum.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
-<p>This tutorial is obsolete, please checkout the updated version at <a href="https://zonca.dev/2020/05/kubernetes-jupyterhub-jetstream-magnum.html" class="uri">https://zonca.dev/2020/05/kubernetes-jupyterhub-jetstream-magnum.html</a>.</p>
+<p><strong>Note</strong>: Jetstream 1 has been retired. See <a href="https://docs.jetstream-cloud.org/">Jetstream 2 documentation</a> for current tutorials.</p>
 <p>This tutorial deploys Kubernetes on Jetstream with Magnum and then JupyterHub on top of that using <a href="https://zero-to-jupyterhub.readthedocs.io/">zero-to-jupyterhub</a>.</p>
 <p>In my <a href="https://zonca.github.io/2019/02/kubernetes-jupyterhub-jetstream-kubespray.html">previous tutorials</a> I deployed Kubernetes using Kubespray. The main driver to using Magnum is that there is support for autoscaling, i.e.&nbsp;create and destroy Openstack instances based on the load on JupyterHub. I haven’t tested that yet, though, that will come in a following tutorial.</p>
 <p>Magnum is a technology built into Openstack to deploy Container Orchestration engines based on templates. The main difference with kubespray is that is way less configurable, the user does not have access to modify those templates but has just a number of parameters to set. Instead Kubespray is based on <code>ansible</code> and the user has full control of how the system is setup, it also supports having more High Availability features like multiple master nodes. On the other hand, the <code>ansible</code> recipe takes a very long time to run, ~30 min, while Magnum creates a cluster in about 10 minutes.</p>
@@ -174,8 +174,8 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="setup-access-to-the-jetstream-api">Setup access to the Jetstream API</h2>
 <p>First install the OpenStack client, please use these exact versions, also please run at Indiana, which currently has the Rocky release of Openstack, the TACC deployment has an older release of Openstack.</p>
 <pre><code>pip install python-openstackclient==3.16 python-magnumclient==2.10</code></pre>
-<p>Load your API credentials from <code>openrc.sh</code>, check <a href="https://iujetstream.atlassian.net/wiki/spaces/JWT/pages/39682064/Setting+up+openrc.sh">documentation of the Jetstream wiki for details</a>.</p>
-<p>You need to have a keypair uploaded to Openstack, this just needs to be done once per account. See <a href="https://iujetstream.atlassian.net/wiki/spaces/JWT/pages/35913730/OpenStack+command+line">the Jetstream documentation</a> under the section “Upload SSH key - do this once”.</p>
+<p>Load your API credentials from <code>openrc.sh</code> (Jetstream 1 documentation is no longer available).</p>
+<p>You need to have a keypair uploaded to Openstack, this just needs to be done once per account.</p>
 </section>
 <section id="create-the-cluster-with-magnum" class="level2">
 <h2 class="anchored" data-anchor-id="create-the-cluster-with-magnum">Create the cluster with Magnum</h2>
