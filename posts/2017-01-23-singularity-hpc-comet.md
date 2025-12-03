@@ -3,68 +3,91 @@ aliases:
 - /2017/01/singularity-hpc-comet
 categories:
 - singularity
-- hpc
-date: 2017-01-13 12:00
+- comet
+- xsede
+date: 2017-01-23 11:00
 layout: post
 slug: singularity-hpc-comet
-title: Run Ubuntu in HPC with Singularity
+title: Using Singularity on SDSC Comet
 
 ---
 
-* Ever wanted to `sudo apt install` packages on a Supercomputer?
-* Ever wanted to freeze your software environment and reproduce a calculation after some time?
-* Ever wanted to dump your software environment to a file and move it to another Supercomputer? or wanted the same software on your laptop and on a computing node?
+The [San Diego Supercomputer Center](http://sdsc.edu) has recently deployed [Singularity](http://singularity.lbl.gov/) on Comet.
+This allows any user to execute containers in a batch job.
 
-If your answer to any of those question is yes, read on! Otherwise, well, still read on, it's awesome!
+Singularity allows to pack a full operating system and its applications into a single image file, copy it to Comet and execute it seamlessly.
+For example if you have a workflow that runs on Ubuntu and needs some packages that are difficult to install on CentOS (the OS of Comet), you can build a Ubuntu image on your laptop, install what you need and then run it on Comet.
 
-## Singularity
+Most of the documentation available online for Singularity refers to the upcoming version 2.3, instead currently on Comet we have version 2.2.1, so some commands are slightly different.
 
-[Singularity](http://singularity.lbl.gov) is a software project by Lawrence Berkeley Labs to provide a safe container technology for High Performance Computing,
-and it has been available for some time on my favorite Supercomputer, i.e. Comet at the San Diego Supercomputer Center.
+## Build the image
 
-You can read more details on their website, in summary you choose your own Operative System (any GNU/Linux distribution), describe its configuration in a standard format or even
-import an existing `Dockerfile` (from the popular Docker container technology) and Singularity is able to build an image contained in a single file.
-This file can then be executed on any Linux machine with Singularity installed (even on a Comet computing node), so you can run Ubuntu 16.10 or Red Hat 5 or any other flavor, your choice!
-It doesn't need any deamon running like Docker, you can just execute a command inside the container by running:
+You need a Linux machine to build a Singularity image, if you have Mac or Windows, you need to install Vagrant and Virtualbox and run a Linux Virtual Machine. Singularity provides a script to do this easily, see [the docs](http://singularity.lbl.gov/docs-build-container).
 
-    singularity exec /path/to/your/image.img your_executable
+Once you have a Linux terminal, you can create an image, I had issues with the size of the image so I recommend using `ext3` instead of `squashfs`:
 
-And your executable is run within the OS of the container.
+    singularity create -s 4000 --fs ext3 ubuntu.img
 
-The container technology is just sandboxing the environment, not executing a complete OS inside the host OS, so the loss of performance is minimal.
+`4000` is the size in MB.
 
-In summary, referring to the questions above:
+Then you can bootstrap the image using a definition file, for example `ubuntu.def`:
 
-* This allows you to `sudo apt install` any package inside this environment when it is on your laptop, and then copy it to any Supercomputer and run your software inside that OS.
-* You can store this image to help reproduce your scientific results anytime in the future
-* You can develop your software inside a Singularity container and never have to worry about environment issues when you are ready for production runs on HPC or moving across different Supercomputers
+    BootStrap: debootstrap
+    OSVersion: xenial
+    MirrorURL: http://archive.ubuntu.com/ubuntu/
 
-## Build a Singularity image for SDSC Comet with MPI support
+    %post
+        sed -i 's/main/main restricted universe/g' /etc/apt/sources.list
+        apt-get update
+        apt-get -y install python-numpy
 
-One of the trickiest things for such technology in HPC is support for MPI, the key stack for high speed network communication. I have prepared a tutorial on Github on how to build either a CentOS 7 or a Ubuntu 16.04 Singularity container for Comet that allows to use the `mpirun` command provided by the host OS on Comet but execute a code that supports MPI within the container.
+With:
 
-* <https://github.com/zonca/singularity-comet>
+    sudo singularity bootstrap ubuntu.img ubuntu.def
 
-## More complicated setup for Julia with MPI support
+If you need to modify the image, you can open a shell inside the image with:
 
-For a project that needed a setup with Julia with MPI support I built a more complicated container, see:
+    sudo singularity shell -w ubuntu.img
 
-* <https://github.com/zonca/singularity-comet/tree/master/debian_julia>
+The `-w` option allows to write into the image, so you can install new packages with `apt-get`.
 
-## Prebuilt containers
+## Execution on Comet
 
-I made also available my containers on Comet, they are located in my scratch space:
+Copy the image to Comet (e.g. `scp` or `rsync` or Globus) to your scratch folder `/oasis/scratch/comet/$USER/temp_project`.
 
-`/oasis/scratch/comet/zonca/temp_project`
+Login to Comet and request an interactive node:
 
-and are named `Centos7.img`, `Ubuntu.img` and `julia.img`.
+    srun --pty --nodes=1 --ntasks-per-node=24 -p compute -t 00:30:00 --wait 0 /bin/bash
 
-You can also copy those images to your local machine and customize them more.
+Load the module:
 
-## Trial accounts on Comet
+    module load singularity
 
-If you don't have an account on Comet yet, you can request a trial allocation:
+Execute a command inside the image:
 
-<https://www.xsede.org/web/xup/allocations-overview#types-trial>
+    singularity exec /oasis/scratch/comet/$USER/temp_project/ubuntu.img cat /etc/issue
 
-Enjoy!
+This should print: `Ubuntu 16.04.1 LTS \n \l`.
+
+You can notice that you are running with your own user, not root, and your home folder is automatically mounted in the container, so you can access your data.
+
+## Access other folders
+
+If you want to access your scratch folder, you need to create the folder inside the image (once):
+
+    sudo singularity exec -w ubuntu.img mkdir -p /oasis
+
+Then, on Comet, you can specify to bind mount that folder:
+
+    singularity exec -B /oasis /oasis/scratch/comet/$USER/temp_project/ubuntu.img ls /oasis/scratch/comet/$USER/temp_project
+
+## MPI
+
+It is also possible to run MPI jobs with Singularity, but you need to install the same version of MPI inside the container and on the host system.
+On Comet we use `mvapich2/2.1` or `openmpi_ib/1.10.2`.
+
+## Documentation
+
+See the [official Singularity documentation](http://singularity.lbl.gov/docs-home) and the [SDSC User Portal](https://portal.xsede.org/sdsc-comet) (needs login) for more details.
+
+Allocations on Comet are available to any US researcher, see [XSEDE Allocations](link removed as XSEDE is retired).

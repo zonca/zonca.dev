@@ -10,11 +10,11 @@ title: Deploy a NFS server to share data between JupyterHub users on Jetstream
 
 ---
 
-> **Update:** See the [2025 updated tutorial for deploying NFS on Jetstream with Kubernetes](https://www.zonca.dev/posts/2025-02-01-nfs-server-kubernetes-jetstream) for the latest instructions.
+> **Update:** See the [2025 updated tutorial for deploying NFS on Jetstream with Kubernetes](../2025-04-22-nfs-server-jetstream2.md) for the latest instructions.
 
-This tutorial is a minor update of <https://www.zonca.dev/posts/2020-07-10-nfs-server-kubernetes-jetstream>.
+This tutorial is a minor update of <../2020-07-10-nfs-server-kubernetes-jetstream.md>.
 
-Also consider that a more robust and low-maintenance way of providing shared data volumes is [to rely on Manila shares provided by Jetstream 2, see the tutorial](https://www.zonca.dev/posts/2022-12-05-jetstream2-kubernetes-manila)
+Also consider that a more robust and low-maintenance way of providing shared data volumes is [to rely on Manila shares provided by Jetstream 2, see the tutorial](../2022-12-05-jetstream2-kubernetes-manila.md)
 
 In this tutorial I'll show how to create a data volume on Jetstream and share it
 using a NFS server to all JupyterHub users.
@@ -25,7 +25,7 @@ however the users still have access to their own home folder.
 
 # Deploy Kubernetes and JupyterHub
 
-I assume here you already have a deployment of JupyterHub on top of Kubernetes on Jetstream, currently, the recommended method [is via Kubespray 2.18](https://www.zonca.dev/posts/2022-03-30-jetstream2_kubernetes_kubespray).
+I assume here you already have a deployment of JupyterHub on top of Kubernetes on Jetstream, currently, the recommended method [is via Kubespray 2.18](../2022-03-30-jetstream2_kubernetes_kubespray.md).
 
 
 # Deploy the NFS server

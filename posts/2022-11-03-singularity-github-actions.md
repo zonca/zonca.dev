@@ -1,23 +1,64 @@
 ---
 categories:
+- github-actions
 - singularity
-- git
-- github
+- ci
 date: '2022-11-03'
 layout: post
-title: Build and host Singularity containers on Github
+title: Build Singularity container on Github Actions
 
 ---
 
-I present a demo repository configured to build Singularity containers using Github actions and then host them using the Github container registry:
+Github Actions runners are Ubuntu machines where we have `sudo` access, so we can install Singularity and build a container.
 
-* <https://github.com/zonca/singularity_github_ci/>
+I have a repository with a working example: <https://github.com/zonca/singularity_github_ci>
 
-See how the [Github action workflow](https://github.com/zonca/singularity_github_ci/blob/main/.github/workflows/native-install.yml) is configured, based on the [Singularity Builder GitHub CI](https://github.com/singularityhub/github-ci).
+In `.github/workflows/build_container.yml` we have the workflow definition.
 
-See the [logs of a Ubuntu container build process](https://github.com/zonca/singularity_github_ci/runs/6718361783?check_suite_focus=true).
+First we install `Go` and `Singularity`:
 
-Once the container is built, it is shown [in the "Packages" section of the Github repository](https://github.com/zonca/singularity_github_ci/pkgs/container/singularity_github_ci), it can then be pulled locally with:
+```yaml
+    - name: Install dependencies
+      run: |
+        sudo apt-get update && sudo apt-get install -y \
+          build-essential \
+          libssl-dev \
+          uuid-dev \
+          libgpgme11-dev \
+          squashfs-tools \
+          libseccomp-dev \
+          pkg-config
+    - name: Install Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: '1.13'
+    - name: Install Singularity
+      run: |
+        export VERSION=3.7.0 && # adjust this as necessary \
+        mkdir -p $GOPATH/src/github.com/sylabs && \
+        cd $GOPATH/src/github.com/sylabs && \
+        wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-ce-${VERSION}.tar.gz && \
+        tar -xzf singularity-ce-${VERSION}.tar.gz && \
+        cd singularity-ce-${VERSION} && \
+        ./mconfig && \
+        make -C ./builddir && \
+        sudo make -C ./builddir install
+```
 
-    singularity pull oras://ghcr.io/zonca/singularity_github_ci:ubuntu-20.04
+Then we can build the container:
 
+```yaml
+    - name: Build Container
+      run: |
+        sudo singularity build container.sif Singularity
+```
+
+Finally we can run the container to test it:
+
+```yaml
+    - name: Test Container
+      run: |
+        singularity exec container.sif python3 --version
+```
+
+See the logs of a successful run: (link removed as Github Action logs expire)

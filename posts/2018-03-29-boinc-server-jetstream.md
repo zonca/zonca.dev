@@ -17,7 +17,7 @@ Scientists can create a project on the platform and submit computational jobs th
 be executed on computers of volunteers all over the world.
 
 In this post we'll deploy a BOINC server on Jetstream. All US scientists can get a free
-[allocation on Jetstream via XSEDE](https://jetstream-cloud.org/allocations.php).
+[allocation on Jetstream via XSEDE](https://jetstream-cloud.org/allocations.php) (link removed as Jetstream 1 is retired).
 
 The deployment will be based on the [Docker setup developed by the Cosmology@Home project](https://github.com/marius311/boinc-server-docker).
 
@@ -97,7 +97,7 @@ and inspect their logs with:
 After a few minutes you should be able to check that the server is running at the
 public address of your instance:
 
-<http://js-xxx-xxx.jetstream-cloud.org/boincserver/>
+<https://safdsafdsa.com>
 
 ## (Optional) Mount Jetstream volumes on the containers
 
@@ -168,7 +168,7 @@ sudo apt install virtualbox-dkms
 
 and reboot to make sure VirtualBox is active.
 
-    URL=http://js-xxx-xxx.jetstream-cloud.org/boincserver/
+    URL=https://safdsafdsa.com
     docker exec boinc boinccmd --create_account $URL email password name
 
     status: Success

@@ -58,7 +58,7 @@ Finally you can deploy it running:
 
     bash install_pangeo.sh
 
-Login by pointing your browser at <http://js-XXX-YYY.jetstream-cloud.org>, the default dummy authenticator only needs a username and empty password.
+Login by pointing your browser at <https://safdsafdsa.com>, the default dummy authenticator only needs a username and empty password.
 
 ## Customize and launch dask workers
 

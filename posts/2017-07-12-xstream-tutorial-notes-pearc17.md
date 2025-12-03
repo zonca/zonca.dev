@@ -15,7 +15,7 @@ title: How to create pull requests on Github
 Pull Requests are the web-based version of sending software patches via email to code maintainers.
 They allow athat has no access to a code repository to submit a code change to the repository administrator that can review and mr
 I cannot find a guide to making pull requests on Github with the 
-Last year I wrote some tutorials on simple deployments of Jupyterhub on Ubuntu 16.04 on the OpenStack deployment [SDSC Cloud](http://www.sdsc.edu/services/it/cloud.html), even if most of the steps would also be suitable on other resources like Amazon EC2.
+Last year I wrote some tutorials on simple deployments of Jupyterhub on Ubuntu 16.04 on the OpenStack deployment [SDSC Cloud](http://www.sdsc.edu/services/it/cloud.html) (link removed as SDSC Cloud is retired), even if most of the steps would also be suitable on other resources like Amazon EC2.
 
 In more detail:
 
@@ -48,7 +48,7 @@ If you plan on using `nbgrader`, you need to create the home folder for the inst
 
 Automation of the server setup is provided by the [Ansible](http://ansible.com) software tool, it allows to describe a server configuration in great detail (a "playbook") and then connects via SSH to a Virtual Machine and runs Python to install and setup all the required software.
 
-On your local machine, install `Ansible`, at least version 2.1, see [Ansible docs](http://docs.ansible.com/ansible/intro_installation.html#getting-ansible), for Ubuntu just add the [Ansible PPA repository](https://launchpad.net/~ansible/+archive/ubuntu/ansible).
+On your local machine, install `Ansible`, at least version 2.1, see [Ansible docs](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html), for Ubuntu just add the [Ansible PPA repository](https://launchpad.net/~ansible/+archive/ubuntu/ansible).
 I tested this with Ansible version 2.2.1.0
 
 Then you need to configure passwordless SSH connection to your Virtual Machine. Download your SSH key from the OpenStack dashboard, copy it to your `~/.ssh` folder and then add an entry to `.ssh/config` for the server:
@@ -78,7 +78,7 @@ The exact version of the `jupyterhub-deploy-teaching` code I used for testing is
 
 ## Test the deployment
 
-Connect to <https://xxx-xxx-xxx-xxx.compute.cloud.sdsc.edu> on your browser, you should be redirected to Github for authentication and then access a Jupyter Notebook instance with the Python 3, R and bash kernels running locally on the machine.
+Connect to <https://safdsafdsa.com> on your browser, you should be redirected to Github for authentication and then access a Jupyter Notebook instance with the Python 3, R and bash kernels running locally on the machine.
 
 ## Optional: Docker
 
@@ -133,7 +133,7 @@ Connect to <https://xxx-xxx-xxx-xxx.compute.cloud.sdsc.edu> on your browser, you
 
 SSH into the machine run `docker ps` to find the hash of a running container and then `docker stat HASH` to check memory usage and the current limit.
 
-Check that you can connect to the `nbgrader` `formgrade` service that allows to manually grade assignments at <https://xxx-xxx-xxx-xxx.compute.cloud.sdsc.edu/services/formgrade-COURSEID>, replace `COURSEID` with the course identifier you setup in the Ansible script.
+Check that you can connect to the `nbgrader` `formgrade` service that allows to manually grade assignments at <https://safdsafdsa.com>, replace `COURSEID` with the course identifier you setup in the Ansible script.
 
 ### Hands-on
 

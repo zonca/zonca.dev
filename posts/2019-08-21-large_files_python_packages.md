@@ -98,7 +98,7 @@ First login to the AWS console and create a new bucket, set it public by turning
 
 You could upload files with the browser, but for larger files command line is better.
 
-The files will be available at <https://bucket-name.s3-us-west-1.amazonaws.com/>, this changes based on the chosen region.
+The files will be available at <https://safdsafdsa.com>, this changes based on the chosen region.
 
 #### (Advanced) Upload files from the command line
 

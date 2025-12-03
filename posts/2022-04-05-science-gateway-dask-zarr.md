@@ -34,7 +34,7 @@ In this tutorial, we will glue several intersting technologies together to show 
 
 As usual first checkout the `zonca/jupyterhub-deploy-kubernetes-jetstream` repository.
 
-Dask gateway has been deployed with JupyterHub based autentication, therefore we need to create a Token from the JupyterHub control panel at <https://jupyterhub-address.edu/hub/token>
+Dask gateway has been deployed with JupyterHub based autentication, therefore we need to create a Token from the JupyterHub control panel at <https://safdsafdsa.com>
 
 Request a new token with no expiration named for example `gatewaydaskzarr`, then save it into the `my_aws_config` file, the same used for the AWS credentials:
 

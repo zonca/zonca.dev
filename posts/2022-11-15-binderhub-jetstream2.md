@@ -88,12 +88,12 @@ This script first creates `config.yaml` (and overwrites it, so keep your changes
 
 ## Test the deployment
 
-Connect to <https://binder.tg-xxx000000.projects.jetstream-cloud.org>, you should see the binder login page:
+Connect to <https://safdsafdsa.com>, you should see the binder login page:
 
 ![Binder login page](../../images/binderloginpage.png)
 
 You can then test with one of the binder examples:
 
-<https://binder.tg-xxx000000.projects.jetstream-cloud.org/v2/gh/binder-examples/requirements/master>
+<https://safdsafdsa.com>
 
-This should build the container using the Docker-in-Docker pod, push it to the registry on Google Cloud, then spawn a Jupyter Notebook instance inside JupyterHub and redirect you to <https://hub.tg-xxx000000.projects.jetstream-cloud.org>.
+This should build the container using the Docker-in-Docker pod, push it to the registry on Google Cloud, then spawn a Jupyter Notebook instance inside JupyterHub and redirect you to <https://safdsafdsa.com>.

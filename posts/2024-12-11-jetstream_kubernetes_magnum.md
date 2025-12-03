@@ -336,7 +336,7 @@ export SUBDOMAIN="k8s"
 openstack recordset create  $PROJ.projects.jetstream-cloud.org. $SUBDOMAIN --type A --record $IP --ttl 3600
 ```
 
-Access JupyterHub at <https://k8s.$PROJ.projects.jetstream-cloud.org>.
+Access JupyterHub at <https://safdsafdsa.com>.
 
 ## Test the NGINX Ingress Controller
 
@@ -352,7 +352,7 @@ kubectl create -f echo-test.yaml
 
 Now you should be able to connect to:
 
-<http://testpage.$PROJ.projects.jetstream-cloud.org>
+<https://safdsafdsa.com>
 
 If everything is working properly, you should see "Testing NGINX Ingress on Jetstream!" in the browser.
 

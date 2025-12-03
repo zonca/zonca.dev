@@ -17,4 +17,4 @@ We can also combine this with [PyGithub](https://pygithub.readthedocs.io/en/late
 
 Notice that on [from your Developer Settings on Github](https://github.com/settings/apps) you both need to create an OAuth app (with `http://localhost:5000/auth/callback` callback) and a Personal Access Token (classic) with `read:orgs` scope to query group membership and store all their credentials in `github_env.sh`.
 
-Once the app is running, try accessing <http://127.0.0.1:5000/protected>, you should first get "Not authenticated", now login at <http://localhost:5000/auth/login>, you should be redirected to Github for authentication, then you should see if you are or not a member of the `ORG` organization as defined in the source file.
+Once the app is running, try accessing `http://127.0.0.1:5000/protected`, you should first get "Not authenticated", now login at `http://localhost:5000/auth/login`, you should be redirected to Github for authentication, then you should see if you are or not a member of the `ORG` organization as defined in the source file.

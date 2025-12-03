@@ -14,7 +14,7 @@ title: Deploy Hadoop on Kubernetes on Jetstream
 
 We are deploying the good old Hadoop on top of Kubernetes on Jetstream. Don't ask why.
 
-As usual we start with a full-fledged Kubernetes deployment on Jetstream (1) [deployed via Kubespray](https://zonca.dev/2021/01/kubernetes-jetstream-kubespray.html)
+As usual we start with a full-fledged Kubernetes deployment on Jetstream (1) [deployed via Kubespray](../2021-01-20-jetstream_kubernetes_kubespray_2.15.0.md)
 
 ## Deploy Hadoop via helm
 
@@ -63,4 +63,4 @@ You can also export the YARN dashboard from the cluster to your local machine.
 
 Connect locally to port 8088 to check the status of the jobs.
 
-Make sure this port is never exposed publicly. I learned the hard way that there are botnets scanning the internet and compromising the YARN service for crypto-mining, see [this article for details](https://tolisec.com/yarn-botnet/).
+Make sure this port is never exposed publicly. I learned the hard way that there are botnets scanning the internet and compromising the YARN service for crypto-mining, see [this article for details](https://tolisec.com/yarn-botnet/) (link removed as website disappeared).
