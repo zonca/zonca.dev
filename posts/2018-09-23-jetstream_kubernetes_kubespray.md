@@ -12,6 +12,8 @@ title: Deploy Kubernetes on Jetstream with Kubespray 1/3
 
 ---
 
+**Note**: Jetstream 1 has been retired. For current Kubernetes deployments, see [Jetstream 2 documentation](https://docs.jetstream-cloud.org/).
+
 **This tutorial is obsolete, check the [updated version of the tutorial](https://zonca.dev/2020/06/kubernetes-jetstream-kubespray.html)**
 
 The purpose of this tutorial series is to deploy Jupyterhub on top of
@@ -41,9 +43,11 @@ Any other platform works as well, also install `terraform` by copying the correc
 
 ### Request API access
 
-In order to make sure your XSEDE account can access the Jetstream API, you need to contact the Helpdesk, see the [instructions on the Jetstream Wiki](https://iujetstream.atlassian.net/wiki/spaces/JWT/pages/39682057/Using+the+Jetstream+API). You will also receive your **TACC** password, which could be different than your XSEDE one (username is generally the same).
+**Note**: Jetstream 1 documentation and services are no longer available.
 
-Login to the TACC Horizon panel at <https://tacc.jetstream-cloud.org/dashboard>, this is basically the low level web interface to OpenStack, a lot more complex and powerful than Atmosphere available at <https://use.jetstream-cloud.org/application>. Use `tacc` as domain, your TACC username (generally the same as your XSEDE username) and your TACC password.
+In order to make sure your XSEDE account can access the Jetstream API, you need to contact the Helpdesk (Jetstream 1 wiki is no longer available).
+
+Login to the TACC Horizon panel (Jetstream 1 dashboard is no longer available), this is basically the low level web interface to OpenStack, a lot more complex and powerful than Atmosphere.
 
 First choose the right project you would like to charge to in the top dropdown menu (see the XSEDE website if you don't recognize the grant code).
 

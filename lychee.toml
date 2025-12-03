@@ -1,0 +1,9 @@
+exclude_path = [
+    "file://.*?\\.\\.\\./",
+    "https://github.com/healpy/healpy/blob/main/CHANGELOG.rst",
+    "https://github.com/healpy/healpy/issues",
+    "https://github.com/zonca/zonca.dev/edit/main/posts/.*",
+    "https://help.openai.com/en/articles/10193193-1-800-chatgpt-calling-and-messaging-chatgpt-with-your-phone",
+    "https://chatgpt.com/",
+    "https://github.com/organizations/new"
+]

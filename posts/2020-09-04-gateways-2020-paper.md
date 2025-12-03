@@ -18,8 +18,10 @@ on the NSF-funded Jetstream Openstack cloud deployment at Indiana University.
 It refers to my previously published tutorials for step-by-step instructions and configuration files,
 the 2 most important tutorials explain the 2 strategies for deploying Kubernetes on Jetstream:
 
-* [Using Magnum, the Openstack functionality to provide a ready-made Kubernetes cluster](https://zonca.dev/2020/05/kubernetes-jupyterhub-jetstream-magnum.html)
-* [Using Terraform and Ansible via `kubespray`](https://zonca.dev/2020/06/kubernetes-jetstream-kubespray.html)
+**Note**: Jetstream 1 has been retired. See [Jetstream 2 documentation](https://docs.jetstream-cloud.org/) for current tutorials.
+
+* Using Magnum, the Openstack functionality to provide a ready-made Kubernetes cluster (Jetstream 1 - archived)
+* Using Terraform and Ansible via `kubespray` (Jetstream 1 - archived)
 
 Once Kubernetes is available, it is quite easy to deploy `JupyterHub` configuring properly [`zero-to-jupyterhub`](https://zero-to-jupyterhub.readthedocs.io/en/latest/)
 

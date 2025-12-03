@@ -20,6 +20,7 @@ Recording available of the webinar I gave about "Distributed computing with Pyth
 
 Live demo on my favorite Supercomputer Comet at the San Diego Supercomputer Center.
 
-* [Webinar recording](https://www.sdsc.edu/Events/training/webinars/distributed_parallel_computing_with_python_2019/recording/)
+**Note**: The webinar recording is no longer available.
+
 * Notebooks: <https://github.com/zonca/python_hpc_tutorial>
 

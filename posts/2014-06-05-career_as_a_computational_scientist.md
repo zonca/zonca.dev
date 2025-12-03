@@ -38,7 +38,7 @@ Usually there are 2 main areas, in any field of science:
 
 Starting out as a computational scientist nowadays is quite easy; with a background in any field of science, it is possible to improve computational skills thanks to several learning resources, for example:
 
-* Free online video classes on [Coursera](https://www.coursera.org/courses?search=python), [Udacity](https://www.udacity.com/courses#!/data-science) and others
+* Free online video classes on [Coursera](https://www.coursera.org/courses?search=python), [Udacity](https://www.udacity.com/) and others
 * [Software Carpentry](http://software-carpentry.org) runs bootcamps for scientists to improve their computational skills
 * Online tutorials on [Python for scientific computing](http://scipy-lectures.github.io/)
 * Books, e.g. [Python for Data Analysis](http://shop.oreilly.com/product/0636920023784.do)

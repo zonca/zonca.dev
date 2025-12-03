@@ -47,7 +47,9 @@ data on a Supercomputer from their browser and run data-intensive processing.
 
 ## Tour of Jupyterhub on the Gordon Supercomputer
 
-I'll show some screenshots to display how a test Jupyterhub installation on my machine is integrated with [Gordon](http://www.sdsc.edu/us/resources/gordon/) thanks to the plugin.
+**Note**: Gordon has been retired. See [SDSC](https://www.sdsc.edu/) for current resources.
+
+I'll show some screenshots to display how a test Jupyterhub installation on my machine is integrated with Gordon thanks to the plugin.
 
 Jupyterhub is accessed publicly via browser and the user can login. Jupyterhub supports authentication for `PAM`/`LDAP` so it could be integrated with XSEDE credential, at the moment I am testing with local authentication.
 

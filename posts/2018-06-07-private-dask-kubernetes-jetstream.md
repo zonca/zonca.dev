@@ -15,7 +15,7 @@ title: Setup private dask clusters in Kubernetes alongside JupyterHub on Jetstre
 
 In this post we will leverage software made available by the [Pangeo community](https://pangeo-data.github.io) to allow each user of a [Jupyterhub instance deployed on Jetstream on top of Kubernetes](https://zonca.github.io/2017/12/scalable-jupyterhub-kubernetes-jetstream.html) to launch a set of [`dask`](https://dask.pydata.org) workers as containers running inside Kubernetes itself and use them for distributed computing.
 
-Pangeo also maintains a deployment of this environment on Google Cloud freely accessible at [pangeo.pydata.org](https://pangeo.pydata.org).
+Pangeo also maintains a deployment of this environment on Google Cloud freely accessible at [pangeo.io](https://pangeo.io).
 
 **Security considerations**: This deployment grants each user administrative access to the Kubernetes API, so each user could use this privilege to terminate other users' pods or dask workers. Therefore it is suitable only for a community of trusted users. There is [discussion about leveraging namespaces to limit this](https://github.com/pangeo-data/pangeo/issues/135#issuecomment-384320753) but it hasn't been implemented yet.
 

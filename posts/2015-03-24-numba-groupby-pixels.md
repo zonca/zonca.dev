@@ -15,7 +15,7 @@ title: Accelerate groupby operation on pixels with Numba
 
 ## Astrophysics background
 
-It is very common in Astrophysics to work with sky pixels. The sky is tassellated in patches with specific properties and a sky map is then a collection of intensity values for each pixel. The most common pixelization used in Cosmology is [HEALPix](http://healpix.jpl.nasa.gov).
+It is very common in Astrophysics to work with sky pixels. The sky is tassellated in patches with specific properties and a sky map is then a collection of intensity values for each pixel. The most common pixelization used in Cosmology is [HEALPix](https://healpix.sourceforge.io).
 
 Measurements from telescopes are then represented as an array of pixels that encode the pointing of the instrument at each timestamp and the measurement output.
 

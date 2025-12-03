@@ -13,9 +13,9 @@ title: Deploy Kubernetes with Kubespray 2.8.2 and JupyterHub with helm recipe 0.
 
 ---
 
-**This tutorial is obsolete, check the [updated version of the tutorial](https://zonca.dev/2020/06/kubernetes-jetstream-kubespray.html)**
+**Note**: Jetstream 1 has been retired. See [Jetstream 2 documentation](https://docs.jetstream-cloud.org/) for current tutorials.
 
-Back in September 2018 I published a [tutorial to deploy Kubernetes on Jetstream](https://zonca.github.io/2018/09/kubernetes-jetstream-kubespray-jupyterhub.html) using Kubernetes.
+Back in September 2018 I published a tutorial to deploy Kubernetes on Jetstream using Kubernetes.
 
 Software in the Kubernetes space moves very fast, so I decided to update the recipe to use the newer Kubespray 2.8.2 that deploys Kubernetes v1.12.5.
 

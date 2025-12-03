@@ -9,9 +9,9 @@ layout: post
 title: Deploy the Dask Operator for JupyterHub on Kubernetes
 ---
 
-This post describes how to deploy the [Dask Operator for Kubernetes](https://kubernetes.dask.org/en/latest/operator.html) alongside a Helm-based JupyterHub installation. The Operator provides a Kubernetes-native way to create and manage Dask clusters via custom resources, simplifying multi-tenant setups, it is therefore more integrated into the Kubernetes ecosystem compared to Dask Gateway.
+This post describes how to deploy the [Dask Operator for Kubernetes](https://kubernetes.dask.org/) alongside a Helm-based JupyterHub installation. The Operator provides a Kubernetes-native way to create and manage Dask clusters via custom resources, simplifying multi-tenant setups, it is therefore more integrated into the Kubernetes ecosystem compared to Dask Gateway.
 
-These commands target a Jetstream 2 [Magnum deployment]({{< relref "posts/2024-12-11-jetstream_kubernetes_magnum.md" >}}). The upstream install docs are at <https://kubernetes.dask.org/en/latest/installing.html>; this is the condensed version aligned with the JupyterHub setup on Jetstream 2.
+These commands target a Jetstream 2 [Magnum deployment](https://www.zonca.dev/posts/2024-12-11-jetstream_kubernetes_magnum). The upstream install docs are at <https://kubernetes.dask.org/en/latest/installing.html>; this is the condensed version aligned with the JupyterHub setup on Jetstream 2.
 
 ## Preparation
 
@@ -155,7 +155,7 @@ I have created an example single-user image derived from `scipy-notebook` that i
 
 The list of available image tags is at [github.com/zonca/jupyterhub-dask-docker-image/pkgs/container/jupyterhub-dask-docker-image](https://github.com/zonca/jupyterhub-dask-docker-image/pkgs/container/jupyterhub-dask-docker-image).
 
-If you want the simplest maintenance flow for your own image, start from the custom template and just edit `requirements.txt`; a GitHub Actions workflow will rebuild and publish automatically: {{< relref "2025-12-01-custom-jupyterhub-docker-image.md" >}}.
+If you want the simplest maintenance flow for your own image, start from the [custom template and just edit `requirements.txt`; a GitHub Actions workflow will rebuild and publish automatically](https://www.zonca.dev/posts/2025-12-01-custom-jupyterhub-docker-image).
 
 To use one of these images in your JupyterHub deployment, you need to update your `config_standard_storage.yaml` file for the JupyterHub Helm chart. For example, to use a specific image tag, you would add:
 

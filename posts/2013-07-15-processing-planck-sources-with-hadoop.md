@@ -70,19 +70,13 @@ All files are available on github:
  I am running on the San Diego Supercomputing data intensive cluster Gordon:
 </div>
 <div>
- <a href="http://www.sdsc.edu/us/resources/gordon/">
-  http://www.sdsc.edu/us/resources/gordon/
- </a>
+ <strong>Note:</strong> Gordon has been retired. See <a href="https://www.sdsc.edu/">SDSC</a> for current resources.
 </div>
 <div>
- SDSC has a simplified Hadoop setup based on shell scripts,
- <a href="http://www.sdsc.edu/us/resources/gordon/gordon_hadoop.html">
-  myHadoop
- </a>
- , which allows running Hadoop as a regular PBS job.
+ SDSC had a simplified Hadoop setup based on shell scripts, myHadoop, which allowed running Hadoop as a regular PBS job.
 </div>
 <div>
- The most interesting feature is that the Hadoop distributed file-system HDFS is setup on the low-latency local flash drives, one of the distinctive features of Gordon.
+ The most interesting feature was that the Hadoop distributed file-system HDFS was setup on the low-latency local flash drives, one of the distinctive features of Gordon.
 </div>
 <h3>
  Using Python with Hadoop-streaming

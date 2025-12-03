@@ -13,42 +13,42 @@ title: some python resources
 <p>
  python tutorial:
  <br/>
- <a href="http://docs.python.org/tutorial/">
-  http://docs.python.org/tutorial/
+ <a href="https://docs.python.org/3/tutorial/">
+  https://docs.python.org/3/tutorial/
   <br/>
  </a>
  numpy tutorial [arrays]:
  <br/>
- <a href="http://www.scipy.org/Tentative_NumPy_Tutorial">
-  http://www.scipy.org/Tentative_NumPy_Tutorial
+ <a href="https://numpy.org/doc/stable/user/quickstart.html">
+  https://numpy.org/doc/stable/user/quickstart.html
   <br/>
  </a>
  plotting tutorial:
  <br/>
- <a href="http://matplotlib.sourceforge.net/users/pyplot_tutorial.html">
-  http://matplotlib.sourceforge.net/users/pyplot_tutorial.html
+ <a href="https://matplotlib.org/stable/tutorials/pyplot.html">
+  https://matplotlib.org/stable/tutorials/pyplot.html
  </a>
  <br/>
  <br/>
  free online books:
  <br/>
- <a href="http://diveintopython.org/toc/index.html">
-  http://diveintopython.org/toc/index.html
+ <a href="https://diveintopython3.net/">
+  https://diveintopython3.net/
   <br/>
  </a>
- <a href="http://www.ibiblio.org/swaroopch/byteofpython/read/">
-  http://www.ibiblio.org/swaroopch/byteofpython/read/
+ <a href="https://python.swaroopch.com/">
+  https://python.swaroopch.com/
  </a>
  <br/>
  <br/>
- install enthought python:
+ install python (recommended):
  <br/>
- <a href="http://www.enthought.com/products/edudownload.php">
-  http://www.enthought.com/products/edudownload.php
+ <a href="https://www.anaconda.com/download">
+  https://www.anaconda.com/download
  </a>
  <br/>
  <br/>
  video tut:
  <br/>
- http://www.youtube.com/watch?v=YW8jtSOTRAU&amp;feature=channel
+ https://www.youtube.com/watch?v=YW8jtSOTRAU
 </p>

@@ -50,7 +50,7 @@ On the other hand, you might be concerned about performance and prefer to have t
 
 ## Use a local Singularity registry
 
-Singularity released [`singularity-registry`](https://singularityhub.github.io/singularity-registry/inst/), an application to build a local image registry, like DockerHub, that can take care of building containers.
+Singularity released `singularity-registry`, an application to build a local image registry, like DockerHub, that can take care of building containers. (Note: The original documentation link is no longer available.)
 
 This can be hosted locally at a Supercomputing Center to provide a local building service. For example Texas Advanced Computing Center [builds locally Singularity images from BioContainers](https://www.slideshare.net/JohnFonner1/biocontainers-for-supercomputers-2000-accessible-discoverable-singularity-apps), software packages for the Life Sciences.
 

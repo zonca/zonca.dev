@@ -35,7 +35,7 @@ See for example the page of my PEARC18 paper on the `arXiv`: <https://arxiv.org/
 Before publishing any pre-print, you need to check on the Journal or Conference website
 if it is allowed and at what conditions.
 
-PEARC18 in particular publishes with ACM, therefore we can look at the [author rights page on the ACM website](http://authors.acm.org/main.html).
+PEARC18 in particular publishes with ACM, therefore we can look at the [author rights page on the ACM website](https://authors.acm.org/).
 
 Currently the requirements for posting a pre-print are:
 

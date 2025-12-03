@@ -16,7 +16,7 @@ title: Deploy Github Authenticator in JupyterHub
 Quick reference on how to deploy the Github Authenticator in JupyterHub,
 the main reference is [the Zero to JupyterHub docs](https://z2jh.jupyter.org/en/latest/administrator/authentication.html#github).
 
-For maintaining the single-user image used by this setup, the easiest path is the custom template where you only update `requirements.txt` and let GitHub Actions rebuild and publish: {{< relref "2025-12-01-custom-jupyterhub-docker-image.md" >}}.
+For maintaining the single-user image used by this setup, the easiest path is the [custom template where you only update `requirements.txt` and let GitHub Actions rebuild and publish](https://www.zonca.dev/posts/2025-12-01-custom-jupyterhub-docker-image).
 
 First create a Oauth app on Github, see under "Settings" and "Developer options", set your Hub Callback url, see for example the configuration file below.
 
