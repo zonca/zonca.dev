@@ -98,7 +98,7 @@ This will show your available allocations, for example:
 ╰───┴───────┴───────┴─────────┴──────────────┴──────┴───────────┴─────────────────╯
 ```
 
-From this output, you can see that `sdsxxx` is the SLURM `account`. You will use this to customize the `single_nextflow_job_expanse.slurm` file, located in the `expanse_nextflow` repository you cloned. Open this file and replace `sdsxxx` with your actual project account.
+From this output, you can see that `sdsxxx` is the SLURM `account`. You will use this to customize the `single_nextflow_job_expanse.slurm` file, located in the `expanse_nextflow` repository you cloned. Open this file and replace `sdsxxx` with your actual project account. Note that `nextflow.config` also requires this customization if you are using profiles that specify an account.
 
 Once customized, submit the job to the Slurm scheduler:
 
@@ -143,6 +143,10 @@ Succeeded   : 7
 Nextflow integrates seamlessly with container technologies like Singularity, enabling you to define your workflow's execution environment in a portable and reproducible manner. On Expanse, this is particularly useful for managing dependencies and ensuring consistent results across diverse computing environments.
 
 The `expanse_nextflow` repository's `nextflow.config` file already includes a profile that enables Singularity. To activate it, uncomment the `containers` line in your Nextflow workflow file (e.g., `hello-workflow-4.nf`). Before running the workflow, load the Singularity module using `module load singularitypro`. The Singularity environment will then be automatically propagated to the Slurm job.
+
+```bash
+module load singularitypro
+```
 
 Once enabled, processes like `convertToUpper` will execute inside a specified Singularity container instead of natively on the host system. The Singularity image is cached on the first run and reused for subsequent executions, saving time and resources. For this tutorial, we use a standard Ubuntu container from SDSC's Marty Kandes's [naked-singularity](https://github.com/mkandes/naked-singularity) project, ensuring a consistent and isolated execution for the `convertToUpper` process.
 
