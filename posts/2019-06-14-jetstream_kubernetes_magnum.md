@@ -12,7 +12,7 @@ title: Deploy Kubernetes and JupyterHub on Jetstream with Magnum
 
 ---
 
-This tutorial is obsolete, please checkout the updated version at <https://zonca.dev/2020/05/kubernetes-jupyterhub-jetstream-magnum.html>.
+**Note**: Jetstream 1 has been retired. See [Jetstream 2 documentation](https://docs.jetstream-cloud.org/) for current tutorials.
 
 This tutorial deploys Kubernetes on Jetstream with Magnum and then
 JupyterHub on top of that using [zero-to-jupyterhub](https://zero-to-jupyterhub.readthedocs.io/).
@@ -28,9 +28,9 @@ First install the OpenStack client, please use these exact versions, also please
 
     pip install python-openstackclient==3.16 python-magnumclient==2.10
 
-Load your API credentials from `openrc.sh`, check [documentation of the Jetstream wiki for details](https://iujetstream.atlassian.net/wiki/spaces/JWT/pages/39682064/Setting+up+openrc.sh).
+Load your API credentials from `openrc.sh` (Jetstream 1 documentation is no longer available).
 
-You need to have a keypair uploaded to Openstack, this just needs to be done once per account. See [the Jetstream documentation](https://iujetstream.atlassian.net/wiki/spaces/JWT/pages/35913730/OpenStack+command+line) under the section "Upload SSH key - do this once".
+You need to have a keypair uploaded to Openstack, this just needs to be done once per account.
 
 ## Create the cluster with Magnum
 

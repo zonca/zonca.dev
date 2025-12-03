@@ -23,8 +23,10 @@ however the users still have access to their own home folder.
 
 # Deploy Kubernetes and JupyterHub
 
+**Note**: Jetstream 1 has been retired. See [Jetstream 2 documentation](https://docs.jetstream-cloud.org/) for current tutorials.
+
 I assume here you already have a deployment of JupyterHub on top of Kubernetes on Jetstream,
-deployed either [via Kubespray](https://zonca.dev/2020/06/kubernetes-jetstream-kubespray.html) or [via Magnum](https://zonca.dev/2020/05/kubernetes-jupyterhub-jetstream-magnum.html).
+deployed using one of the Jetstream 1 tutorials (now archived).
 
 # Deploy the NFS server
 

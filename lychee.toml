@@ -5,17 +5,5 @@ exclude_path = [
     "https://github.com/zonca/zonca.dev/edit/main/posts/.*",
     "https://help.openai.com/en/articles/10193193-1-800-chatgpt-calling-and-messaging-chatgpt-with-your-phone",
     "https://chatgpt.com/",
-    "https://www.xsede.org/for-users/ecss",
-    "https://tacc.jetstream-cloud.org/dashboard",
-    "https://github.com/ged-lab",
-    "https://github.com/organizations/new",
-    "https://blink.ucsd.edu/technology/security/services/two-step-login/guide.html#token",
-    "https://zonca.dev/2020/05/kubernetes-jupyterhub-jetstream-magnum.html",
-    "https://zonca.dev/2020/06/kubernetes-jetstream-kubespray.html",
-    "http://www.sdsc.edu/us/resources/gordon/",
-    "http://www.sdsc.edu/us/resources/gordon/gordon_hadoop.html",
-    "https://iujetstream.atlassian.net/wiki/spaces/JWT/pages/39682057/Using+the+Jetstream+API",
-    "http://authors.acm.org/main.html",
-    "http://code.shutterstock.com/rickshaw/",
-    "https://www.sdsc.edu/Events/training/webinars/distributed_parallel_computing_with_python_2019/recording/"
+    "https://github.com/organizations/new"
 ]

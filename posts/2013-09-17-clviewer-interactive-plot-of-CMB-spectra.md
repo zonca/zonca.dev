@@ -14,7 +14,7 @@ title: clviewer, interactive plot of CMB spectra
 Today it was HackDay at [.Astronomy](http://dotastronomy.com), so I felt compelled to hack something around myself,
 creating something I have been thinking for a while after my previous work on [Interactive CMB power spectra in the browser](http://zonca.github.io/2013/08/interactive-figures-planck-power-spectra.html)
 
-The idea is to get text files from a user and load it in a browser-based interactive display built on top of the [d3.js](http://d3js.org) and [rickshaw](http://code.shutterstock.com/rickshaw/) libraries.
+The idea is to get text files from a user and load it in a browser-based interactive display built on top of the [d3.js](http://d3js.org) and rickshaw (documentation no longer available) libraries.
 
 Similar to [nbviewer](http://nbviewer.ipython.org/), I think it is very handy to load data from [Github gists](https://gist.github.com/), because then there is no need of uploading files and it is easier to circulate links.
 

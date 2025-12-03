@@ -16,7 +16,9 @@ the whole video as it is served in chunks.
 
 ## Load a test video on object store
 
-Login to [Horizon](https://iujetstream.atlassian.net/wiki/spaces/JWT/pages/44826638/Using+the+OpenStack+Horizon+GUI+Interface)
+**Note**: Jetstream 1 has been retired. See [Jetstream 2 documentation](https://docs.jetstream-cloud.org/) for current tutorials.
+
+Login to Horizon (Jetstream 1 documentation is no longer available)
 
 Go to Project > Object store
 

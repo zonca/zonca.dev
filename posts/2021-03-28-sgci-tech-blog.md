@@ -36,7 +36,7 @@ Jetstream (and the upcoming [Jetstream 2](https://news.iu.edu/stories/2020/06/iu
 
 Jetstream allows each user to programmatically launch Virtual Machines with the desired amount of CPU/RAM resources, a pre-configured OS (Ubuntu, CentOS...), connect them together on an internal network and expose them to the Internet with public IPs. Users have then full administrative access to the machines to install any software package.
 
-Jetstream has extensive documentation and training available both focused on [using the simplified Atmosphere interface](https://jetstream-cloud.org/support/training.php) and the [programmatic access via web API](https://iujetstream.atlassian.net/wiki/spaces/JWT/pages/39682057/Using+the+Jetstream+API). Once developers decide to try Jetstream, they can [request a trial or a startup allocation via XSEDE](https://iujetstream.atlassian.net/wiki/spaces/JWT/pages/49184781/Jetstream+Allocations).
+Jetstream has extensive documentation and training available both focused on [using the simplified Atmosphere interface](https://jetstream-cloud.org/support/training.php) and programmatic access via web API. Once developers decide to try Jetstream, they can request allocations via [ACCESS](https://access-ci.org/allocations/).
 
 Deployment on Jetstream should begin with gateway developers identifying the scale of their deployment: few-user or test deployment vs. large-memory, many-user deployment.
 
