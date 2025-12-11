@@ -1,5 +1,5 @@
 ---
-title: "Streamlining AI Agent Workflow with Jupyter Notebooks and Jupytext"
+title: "Jupytext for AI Agent Jupyter Workflows"
 description: "How using Jupytext with AI coding agents can simplify Jupyter Notebook development by avoiding JSON formatting issues."
 author: "Andrea Zonca"
 date: "2025-12-11"
