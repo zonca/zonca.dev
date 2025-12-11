@@ -4,9 +4,9 @@ This document outlines specific guidelines for interacting with the `zonca.dev` 
 
 ## General Workflow
 
-- **New Blog Posts:** When creating a new blog post, always start from the `main` branch, create a new topic branch for your changes, and then open a pull request using `gh pr create`.
+- **New Blog Posts or Significant Features:** For new blog posts, major feature additions, or changes that significantly alter existing content or structure, **you must** start from the `main` branch, create a new topic branch for your changes, and then open a pull request using `gh pr create`. This ensures proper review and integration.
+- **Minor Changes and Fixes:** For minor changes, typo corrections, or small bug fixes that do not warrant a full review process, you may commit directly to `main` and push.
 - **Commit and Push:** After making any changes, always commit your changes and push them to the remote repository. This ensures that your work is saved and synchronized.
-- **Autonomous Commits:** You do not need to ask for permission before committing or double-check commit messages. Proceed with committing and pushing once changes are complete.
 
 ## Blog Post Categories
 
