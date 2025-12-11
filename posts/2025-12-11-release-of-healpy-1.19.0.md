@@ -2,7 +2,6 @@
 categories:
 - healpy
 - python
-- release
 date: '2025-12-11'
 layout: post
 title: Release of healpy 1.19.0
@@ -10,7 +9,7 @@ title: Release of healpy 1.19.0
 
 I am happy to announce the release of healpy 1.19.0.
 
-This release includes a large number of fixes and improvements, many of which were made possible by adopting an "agentic" workflow. As detailed in my [recent blog post](./2025-11-10-agentic-scientific-software-development.md), I have been using AI coding agents to help triage and fix issues, allowing us to close old bugs and improve the codebase significantly.
+This release includes a large number of fixes and improvements, many of which were made possible by adopting an "agentic" workflow. As detailed in my [recent blog post]({{< relref "2025-11-10-agentic-scientific-software-development.md" >}}), I have been using AI coding agents to help triage and fix issues, allowing us to close old bugs and improve the codebase significantly.
 
 You can install the new version from [PyPI](https://pypi.org/project/healpy/1.19.0/):
 
@@ -28,7 +27,7 @@ conda install -c conda-forge healpy
 
 This release includes one breaking change that users should be aware of.
 
-The `blm_gauss()` function has been updated to use the `l(l+1)` formula, making it consistent with `gauss_beam()` and the standard definition from Challinor et al. 2000 (astro-ph/0008228). Previously, it used the `l²` formula from the LevelS Beam package.
+The `blm_gauss()` function has been updated to use the `l(l+1)` formula, making it consistent with `gauss_beam()` and the standard definition from Challinor et al. 2000 (astro-ph/0008228). Previously, it used the `l^2` formula from the LevelS Beam package.
 
 **Impact:** This change affects the computed spherical harmonic coefficients for Gaussian beams. If you rely on the exact values produced by `blm_gauss()` for precise beam modeling, you should check if this change affects your results. The new implementation is more accurate and consistent with other tools in the ecosystem.
 
