@@ -73,10 +73,17 @@ CMAKE_ARGS="-DGGML_CUDA=on -DCMAKE_CUDA_COMPILER=$(which nvcc) -DCMAKE_C_COMPILE
 
 Download the quantized GGUF file (`Q3_K_M` variant) from the QuantFactory model page: https://huggingface.co/QuantFactory/Meta-Llama-3.1-8B-Instruct-GGUF
 
+Set these variables once (then you can copy/paste the rest of the commands):
+
+```bash
+export HF_REPO="QuantFactory/Meta-Llama-3.1-8B-Instruct-GGUF"
+export MODEL="Meta-Llama-3.1-8B-Instruct.Q3_K_M.gguf"
+```
+
 ```bash
 mkdir -p ~/models
-hf download QuantFactory/Meta-Llama-3.1-8B-Instruct-GGUF \
-    Meta-Llama-3.1-8B-Instruct.Q3_K_M.gguf \
+hf download "$HF_REPO" \
+    "$MODEL" \
     --local-dir ~/models
 ```
 
@@ -84,7 +91,7 @@ Test run (Ctrl-C to stop):
 
 ```bash
 python -m llama_cpp.server \
-    --model /home/exouser/models/Meta-Llama-3.1-8B-Instruct.Q3_K_M.gguf \
+    --model "$HOME/models/$MODEL" \
     --chat_format llama-3 \
     --n_ctx 8192 \
     --n_gpu_layers -1 \
@@ -116,7 +123,8 @@ After=network.target
 User=exouser
 Group=exouser
 WorkingDirectory=/home/exouser
-ExecStart=/bin/bash -lc "module load nvhpc/24.7/nvhpc miniforge && conda run -n llama python -m llama_cpp.server --model /home/exouser/models/Meta-Llama-3.1-8B-Instruct.Q3_K_M.gguf --chat_format llama-3 --n_ctx 8192 --n_gpu_layers -1 --port 8000"
+Environment=MODEL=Meta-Llama-3.1-8B-Instruct.Q3_K_M.gguf
+ExecStart=/bin/bash -lc "module load nvhpc/24.7/nvhpc miniforge && conda run -n llama python -m llama_cpp.server --model $HOME/models/$MODEL --chat_format llama-3 --n_ctx 8192 --n_gpu_layers -1 --port 8000"
 Restart=always
 
 [Install]
@@ -185,7 +193,7 @@ sudo systemctl start webui
 If you already created the Conda environments (`llama` and `open-webui`) and downloaded the model, you can create, enable, and start both systemd services (model server + Open WebUI) in a single copy/paste. Adjust `MODEL`, `N_CTX`, `USER`, and `NVHPC_MOD` if needed before running:
 
 ```bash
-MODEL=/home/exouser/models/Meta-Llama-3.1-8B-Instruct.Q3_K_M.gguf N_CTX=8192 USER=exouser NVHPC_MOD=nvhpc/24.7/nvhpc ; sudo tee /etc/systemd/system/llama.service >/dev/null <<EOF && sudo tee /etc/systemd/system/webui.service >/dev/null <<EOF2 && sudo systemctl daemon-reload && sudo systemctl enable --now llama webui
+MODEL=Meta-Llama-3.1-8B-Instruct.Q3_K_M.gguf N_CTX=8192 USER=exouser NVHPC_MOD=nvhpc/24.7/nvhpc ; sudo tee /etc/systemd/system/llama.service >/dev/null <<EOF && sudo tee /etc/systemd/system/webui.service >/dev/null <<EOF2 && sudo systemctl daemon-reload && sudo systemctl enable --now llama webui
 [Unit]
 Description=Llama.cpp OpenAI-compatible server
 After=network.target
@@ -194,7 +202,8 @@ After=network.target
 User=$USER
 Group=$USER
 WorkingDirectory=/home/$USER
-ExecStart=/bin/bash -lc "module load $NVHPC_MOD miniforge && conda run -n llama python -m llama_cpp.server --model $MODEL --chat_format llama-3 --n_ctx $N_CTX --n_gpu_layers -1 --port 8000"
+Environment=MODEL=Meta-Llama-3.1-8B-Instruct.Q3_K_M.gguf
+ExecStart=/bin/bash -lc "module load $NVHPC_MOD miniforge && conda run -n llama python -m llama_cpp.server --model /home/$USER/models/$MODEL --chat_format llama-3 --n_ctx $N_CTX --n_gpu_layers -1 --port 8000"
 Restart=always
 
 [Install]
