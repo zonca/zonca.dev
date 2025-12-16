@@ -199,8 +199,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2025-09-30-jetstream-llm-llama-cpp.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2025-09-30-jetstream-llm-llama-cpp.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
-<p>Updated December 2025. This tutorial has been updated to clarify instructions for deploying a ChatGPT-like LLM service using <code>llama.cpp</code> on Jetstream. It details how to set up the <code>llama.cpp</code> server with an OpenAI-compatible API and configure Open WebUI for a chat interface, including guidance on model choice, instance creation, and web server setup with HTTPS using Caddy.</p>
+<p>Tutorial last updated in December 2025</p>
 <p>This is a crosspost of the official Jetstream documentation: <a href="https://docs.jetstream-cloud.org/general/llm/">Deploy a ChatGPT-like LLM service on Jetstream</a>. I built a brand new version of that tutorial that swaps in <code>llama.cpp</code> for <code>vLLM</code> so we can run GGUF quantized models on Jetstream’s GPUs without giving up speed or context length.</p>
+<p>This is the updated version of the tutorial using <code>llama.cpp</code> instead of <code>vLLM</code>, so we can run GGUF quantized models on Jetstream GPUs without giving up speed or context length.</p>
 <p>In this tutorial we deploy a Large Language Model (LLM) on Jetstream, run inference locally on the smallest currently available GPU node (<code>g3.medium</code>, 10 GB VRAM), then install a web chat interface (Open WebUI) and serve it with HTTPS using Caddy.</p>
 <p>Before spinning up your own GPU, consider the managed <a href="https://docs.jetstream-cloud.org/inference-service/overview/">Jetstream LLM inference service</a>. It may be more cost‑ and time‑effective if you just need API access to standard models.</p>
 <p>We will deploy a single (quantized) model: <strong><code>Meta Llama 3.1 8B Instruct Q3_K_M</code> (GGUF)</strong>. This quantized 8B model fits comfortably in ~8 GB of GPU memory, so it runs on a <code>g3.medium</code> (10 GB) with a little headroom. (The older <code>g3.small</code> flavor has been retired.)</p>
@@ -319,26 +320,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load miniforge</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-y</span> <span class="at">-n</span> open-webui python=3.11</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> run <span class="at">-n</span> open-webui python <span class="at">-m</span> pip install open-webui</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> run <span class="at">-n</span> open-webui open-webui serve</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Using <code>conda run -n open-webui ...</code> avoids common issues where <code>pip</code> installs into <code>~/.local</code> or tries to write into the centrally provided (read-only) Miniforge module.</p>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> run <span class="at">-n</span> open-webui open-webui serve <span class="at">--port</span> 8080</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If this starts with no error, we can kill it with <code>Ctrl-C</code> and create a service for it.</p>
 <p>Using <code>sudo</code> to run your preferred text editor, create <code>/etc/systemd/system/webui.service</code> with the following contents:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode ini code-with-copy"><code class="sourceCode ini"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[Unit]</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="dt">Description</span><span class="ot">=</span><span class="st">Open WebUI serving</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="dt">After</span><span class="ot">=</span><span class="st">network.target</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">[Service]</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="dt">User</span><span class="ot">=</span><span class="st">exouser</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="dt">Group</span><span class="ot">=</span><span class="st">exouser</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="dt">WorkingDirectory</span><span class="ot">=</span><span class="st">/home/exouser</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Activating the conda environment and starting the service</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="dt">ExecStart</span><span class="ot">=</span><span class="st">/bin/bash -lc "module load miniforge &amp;&amp; conda run -n open-webui open-webui serve"</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="dt">Restart</span><span class="ot">=</span><span class="st">always</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># PATH managed by module + conda</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="kw">[Install]</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="dt">WantedBy</span><span class="ot">=</span><span class="st">multi-user.target</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="dt">Description</span><span class="ot">=</span><span class="st">Open Web UI serving</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="dt">Wants</span><span class="ot">=</span><span class="st">network-online.target</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="dt">After</span><span class="ot">=</span><span class="st">network-online.target llama.service</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="dt">Requires</span><span class="ot">=</span><span class="st">llama.service</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="dt">PartOf</span><span class="ot">=</span><span class="st">llama.service</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">[Service]</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="dt">User</span><span class="ot">=</span><span class="st">exouser</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="dt">Group</span><span class="ot">=</span><span class="st">exouser</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="dt">WorkingDirectory</span><span class="ot">=</span><span class="st">/home/exouser</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="dt">Environment</span><span class="ot">=</span><span class="st">OPENAI_API_BASE_URL=http://localhost:8000/v1</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="dt">Environment</span><span class="ot">=</span><span class="st">OPENAI_API_KEY=local-no-key</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="dt">ExecStartPre</span><span class="ot">=</span><span class="st">/bin/bash -lc 'for i in {1..600}; do /usr/bin/curl -sf http://localhost:8000/v1/models &gt;/dev/null &amp;&amp; exit 0; sleep 1; done; echo "llama not ready" &gt;&amp;2; exit 1'</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="dt">ExecStart</span><span class="ot">=</span><span class="st">/bin/bash -lc 'source /etc/profile.d/modules.sh 2&gt;/dev/null || true; module load miniforge; conda run -n open-webui open-webui serve --port 8080'</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="dt">Restart</span><span class="ot">=</span><span class="st">on-failure</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="dt">RestartSec</span><span class="ot">=</span><span class="dv">5</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="dt">TimeoutStartSec</span><span class="ot">=</span><span class="dv">600</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="dt">Type</span><span class="ot">=</span><span class="st">simple</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="kw">[Install]</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="dt">WantedBy</span><span class="ot">=</span><span class="st">multi-user.target</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then enable and start the service:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl daemon-reload</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable webui</span>
@@ -363,19 +369,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="st">WantedBy=multi-user.target</span></span>
 <span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="st">EOF</span></span>
 <span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="st">[Unit]</span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="st">Description=Open WebUI serving</span></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="st">After=network.target</span></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="st">[Service]</span></span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="st">User=</span><span class="va">$USER</span></span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="st">Group=</span><span class="va">$USER</span></span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="st">WorkingDirectory=/home/</span><span class="va">$USER</span></span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="st">ExecStart=/bin/bash -lc "module load miniforge &amp;&amp; conda run -n open-webui open-webui serve"</span></span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="st">Restart=always</span></span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="st">[Install]</span></span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a><span class="st">WantedBy=multi-user.target</span></span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="op">EOF2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="st">Description=Open Web UI serving</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="st">Wants=network-online.target</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="st">After=network-online.target llama.service</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="st">Requires=llama.service</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="st">PartOf=llama.service</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="st">[Service]</span></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="st">User=</span><span class="va">$USER</span></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="st">Group=</span><span class="va">$USER</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="st">WorkingDirectory=/home/</span><span class="va">$USER</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="st">Environment=OPENAI_API_BASE_URL=http://localhost:8000/v1</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a><span class="st">Environment=OPENAI_API_KEY=local-no-key</span></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="st">ExecStartPre=/bin/bash -lc 'for i in {1..600}; do /usr/bin/curl -sf http://localhost:8000/v1/models &gt;/dev/null &amp;&amp; exit 0; sleep 1; done; echo "llama not ready" &gt;&amp;2; exit 1'</span></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a><span class="st">ExecStart=/bin/bash -lc 'source /etc/profile.d/modules.sh 2&gt;/dev/null || true; module load miniforge; conda run -n open-webui open-webui serve --port 8080'</span></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a><span class="st">Restart=on-failure</span></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a><span class="st">RestartSec=5</span></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a><span class="st">TimeoutStartSec=600</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a><span class="st">Type=simple</span></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a><span class="st">[Install]</span></span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a><span class="st">WantedBy=multi-user.target</span></span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a><span class="op">EOF2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>To later change context length: edit <code>/etc/systemd/system/llama.service</code>, modify <code>--n_ctx</code>, then run:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl daemon-reload</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart llama</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -401,7 +416,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Point your browser to <code>https://chat.xxx000000.projects.jetstream-cloud.org</code> and you should see the chat interface.</p>
 <p>Create an account, click the profile icon in the top right, then open “Admin panel” &gt; “Settings” &gt; “Connections”. Once you create the first account, that user becomes the admin. Anyone else who signs up is a regular user and must be approved by the admin. This approval step is the only protection in this setup; an attacker could still leverage vulnerabilities in Open WebUI to gain access. For stronger security, use <code>ufw</code> to allow connections only from your IP.</p>
 <p>Under “OpenAI API” enter the URL <code>http://localhost:8000/v1</code> and leave the API key empty (the local llama.cpp server is unsecured by default on localhost).</p>
-<p>Click on the “Verify connection” button, then click “Save” at the bottom.</p>
+<p>Click on the “Verify connection” button, then to “Save” on the bottom.</p>
 <p>Finally you can start chatting with the model!</p>
 <p>If you change context length (<code>--n_ctx</code>) or increase concurrent users you may approach the 10 GB limit. Reduce <code>--n_ctx</code> (e.g.&nbsp;4096) if you encounter out‑of‑memory errors. ## Scaling up or changing models</p>
 <p>Want a larger model or higher quality? Options:</p>
@@ -411,6 +426,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Increase context length (each 1k tokens adds memory usage). If you see OOM, lower <code>--n_ctx</code>.</li>
 </ul>
 <p>For production workloads, consider the managed Jetstream inference service or frameworks like <code>vllm</code> on larger GPUs for higher throughput.</p>
+</section>
+<section id="related-tutorials" class="level2">
+<h2 class="anchored" data-anchor-id="related-tutorials">Related tutorials</h2>
+<p>These resources are contributed by the community, make sure you understand all steps involved, if unsure consider opening a ticket.</p>
+<ul>
+<li><a href="https://www.zonca.dev/posts/2025-09-18-deploy-70b-llm-jetstream">Deploy a larger LLM (70B) on Jetstream</a></li>
+<li><a href="https://www.zonca.dev/posts/2025-09-22-openstack-unshelver-demo">Demo of a web application used to shelve and unshelve a Jetstream instance</a>, allows community members to unshelve an instance for a time even when they are not members of the allocation. This strategy conserves Jetstream2 service units for larger instances that do not need to run continuously, yet still host a community-facing service (such as an LLM specific to a single domain of science).</li>
+</ul>
 
 
 </section>
