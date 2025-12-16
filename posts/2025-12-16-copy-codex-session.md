@@ -4,6 +4,8 @@ date: "2025-12-16"
 categories: [ai]
 ---
 
+You might want to copy a Codex session to another machine to continue a conversation started on one device, such as moving from a laptop to a desktop or server.
+
 Each Codex chat is stored as a single `.jsonl` file under `~/.codex/sessions/`.
 
 ## 1. Locate the session file
