@@ -70,16 +70,6 @@ CMAKE_ARGS="-DGGML_CUDA=on -DCMAKE_CUDA_COMPILER=$(which nvcc) -DCMAKE_C_COMPILE
     conda run -n llama python -m pip install --no-cache-dir --no-build-isolation --force-reinstall "llama-cpp-python[server]==0.3.16"
 ```
 
-If you get a permissions error mentioning `/software/.../miniforge/.../site-packages`, your shell isn’t actually using the Conda environment. In that case, re-run the install explicitly via `conda run` without relying on activation:
-
-```bash
-module load miniforge nvhpc/24.7/nvhpc
-conda create -y -n llama python=3.11
-conda install -y -n llama cmake ninja scikit-build-core huggingface_hub
-CMAKE_ARGS="-DGGML_CUDA=on -DCMAKE_CUDA_COMPILER=$(which nvcc) -DCMAKE_C_COMPILER=$(which gcc) -DCMAKE_CXX_COMPILER=$(which g++) -DCMAKE_CUDA_ARCHITECTURES=80 -DCMAKE_BUILD_TYPE=Release" \
-    conda run -n llama python -m pip install --no-cache-dir --no-build-isolation --force-reinstall "llama-cpp-python[server]==0.3.16"
-```
-
 
 Download the quantized GGUF file (`Q3_K_M` variant) from the QuantFactory model page: https://huggingface.co/QuantFactory/Meta-Llama-3.1-8B-Instruct-GGUF
 
