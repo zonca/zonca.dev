@@ -258,7 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load nvhpc/24.7/nvhpc</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Enable CUDA acceleration with explicit compilers, arch, release build</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="va">CMAKE_ARGS</span><span class="op">=</span><span class="st">"-DGGML_CUDA=on -DCMAKE_CUDA_COMPILER=</span><span class="va">$(</span><span class="fu">which</span> nvcc<span class="va">)</span><span class="st"> -DCMAKE_C_COMPILER=</span><span class="va">$(</span><span class="fu">which</span> gcc<span class="va">)</span><span class="st"> -DCMAKE_CXX_COMPILER=</span><span class="va">$(</span><span class="fu">which</span> g++<span class="va">)</span><span class="st"> -DCMAKE_CUDA_ARCHITECTURES=80 -DCMAKE_BUILD_TYPE=Release"</span> <span class="dt">\</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">pip</span> install <span class="at">--no-cache-dir</span> <span class="at">--no-build-isolation</span> <span class="at">--force-reinstall</span> <span class="st">"llama-cpp-python[server]==0.3.16"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">conda</span> run <span class="at">-n</span> llama python <span class="at">-m</span> pip install <span class="at">--no-cache-dir</span> <span class="at">--no-build-isolation</span> <span class="at">--force-reinstall</span> <span class="st">"llama-cpp-python[server]==0.3.16"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Download the quantized GGUF file (<code>Q3_K_M</code> variant) from the QuantFactory model page: https://huggingface.co/QuantFactory/Meta-Llama-3.1-8B-Instruct-GGUF</p>
 <p>Set these variables once (then you can copy/paste the rest of the commands):</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">HF_REPO</span><span class="op">=</span><span class="st">"QuantFactory/Meta-Llama-3.1-8B-Instruct-GGUF"</span></span>
@@ -302,8 +302,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="kw">[Install]</span></span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="dt">WantedBy</span><span class="ot">=</span><span class="st">multi-user.target</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Enable and start:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable llama</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl start llama</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl daemon-reload</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable llama</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl start llama</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Troubleshooting:</p>
 <ul>
 <li>Logs: <code>sudo journalctl -u llama -f</code></li>
@@ -313,17 +314,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="configure-the-chat-interface" class="level2">
 <h2 class="anchored" data-anchor-id="configure-the-chat-interface">Configure the chat interface</h2>
-<p>The chat interface is provided by <a href="https://openwebui.com/">Open Web UI</a>.</p>
+<p>The chat interface is provided by <a href="https://openwebui.com/">Open WebUI</a>.</p>
 <p>Create the environment (in a new shell remember to <code>module load miniforge</code> first):</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load miniforge</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-y</span> <span class="at">-n</span> open-webui python=3.11</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate open-webui</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install open-webui</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">open-webui</span> serve</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> run <span class="at">-n</span> open-webui python <span class="at">-m</span> pip install open-webui</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> run <span class="at">-n</span> open-webui open-webui serve</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Using <code>conda run -n open-webui ...</code> avoids common issues where <code>pip</code> installs into <code>~/.local</code> or tries to write into the centrally provided (read-only) Miniforge module.</p>
 <p>If this starts with no error, we can kill it with <code>Ctrl-C</code> and create a service for it.</p>
 <p>Using <code>sudo</code> to run your preferred text editor, create <code>/etc/systemd/system/webui.service</code> with the following contents:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode ini code-with-copy"><code class="sourceCode ini"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[Unit]</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="dt">Description</span><span class="ot">=</span><span class="st">Open Web UI serving</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="dt">Description</span><span class="ot">=</span><span class="st">Open WebUI serving</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="dt">After</span><span class="ot">=</span><span class="st">network.target</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">[Service]</span></span>
@@ -339,12 +340,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="kw">[Install]</span></span>
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="dt">WantedBy</span><span class="ot">=</span><span class="st">multi-user.target</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then enable and start the service:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable webui</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl start webui</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl daemon-reload</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable webui</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl start webui</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="optional-one-liner-to-create-both-services" class="level3">
 <h3 class="anchored" data-anchor-id="optional-one-liner-to-create-both-services">(Optional) One-liner to create both services</h3>
 <p>If you already created the Conda environments (<code>llama</code> and <code>open-webui</code>) and downloaded the model, you can create, enable, and start both systemd services (model server + Open WebUI) in a single copy/paste. Adjust <code>MODEL</code>, <code>N_CTX</code>, <code>USER</code>, and <code>NVHPC_MOD</code> if needed before running:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="va">MODEL</span><span class="op">=</span>Meta-Llama-3.1-8B-Instruct.Q3_K_M.gguf <span class="va">N_CTX</span><span class="op">=</span>8192 <span class="va">USER</span><span class="op">=</span>exouser <span class="va">NVHPC_MOD</span><span class="op">=</span>nvhpc/24.7/nvhpc <span class="kw">;</span> <span class="fu">sudo</span> tee /etc/systemd/system/llama.service <span class="op">&gt;</span>/dev/null <span class="op">&lt;&lt;EOF</span> <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> tee /etc/systemd/system/webui.service <span class="op">&gt;</span>/dev/null <span class="op">&lt;&lt;EOF2</span> <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> systemctl daemon-reload <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> systemctl enable <span class="at">--now</span> llama webui</span>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">:</span> <span class="st">"</span><span class="va">${MODEL</span><span class="op">:?</span>export MODEL (model filename) first<span class="va">}</span><span class="st">"</span> <span class="kw">;</span> <span class="va">N_CTX</span><span class="op">=</span>8192 <span class="va">USER</span><span class="op">=</span>exouser <span class="va">NVHPC_MOD</span><span class="op">=</span>nvhpc/24.7/nvhpc <span class="kw">;</span> <span class="fu">sudo</span> tee /etc/systemd/system/llama.service <span class="op">&gt;</span>/dev/null <span class="op">&lt;&lt;EOF</span> <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> tee /etc/systemd/system/webui.service <span class="op">&gt;</span>/dev/null <span class="op">&lt;&lt;EOF2</span> <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> systemctl daemon-reload <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> systemctl enable <span class="at">--now</span> llama webui</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="st">[Unit]</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="st">Description=Llama.cpp OpenAI-compatible server</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="st">After=network.target</span></span>
@@ -353,7 +355,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="st">User=</span><span class="va">$USER</span></span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="st">Group=</span><span class="va">$USER</span></span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="st">WorkingDirectory=/home/</span><span class="va">$USER</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="st">Environment=MODEL=Meta-Llama-3.1-8B-Instruct.Q3_K_M.gguf</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="st">Environment=MODEL=</span><span class="va">${MODEL}</span></span>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="st">ExecStart=/bin/bash -lc "module load </span><span class="va">$NVHPC_MOD</span><span class="st"> miniforge &amp;&amp; conda run -n llama python -m llama_cpp.server --model /home/</span><span class="va">$USER</span><span class="st">/models/</span><span class="va">$MODEL</span><span class="st"> --chat_format llama-3 --n_ctx </span><span class="va">$N_CTX</span><span class="st"> --n_gpu_layers -1 --port 8000"</span></span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="st">Restart=always</span></span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
@@ -361,7 +363,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="st">WantedBy=multi-user.target</span></span>
 <span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="st">EOF</span></span>
 <span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="st">[Unit]</span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="st">Description=Open Web UI serving</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="st">Description=Open WebUI serving</span></span>
 <span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="st">After=network.target</span></span>
 <span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="st">[Service]</span></span>
@@ -397,9 +399,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="connect-the-model-and-test-the-chat-interface" class="level2">
 <h2 class="anchored" data-anchor-id="connect-the-model-and-test-the-chat-interface">Connect the model and test the chat interface</h2>
 <p>Point your browser to <code>https://chat.xxx000000.projects.jetstream-cloud.org</code> and you should see the chat interface.</p>
-<p>Create an account, click on the profile icon on the top right and enter the “Admin panel” section, open “Settings” then “Connections”. Once you create the first account, that will become admin, if anyone else creates an account they will be a regular user and need to be approved by the admin user. This is the only protection available in this setup, an attacker could still leverage vulnerabilities on Open WebUI to gain access. If you require more security the easiest way is to just open the firewall (using <code>ufw</code>) to only allow connections from your IP.</p>
+<p>Create an account, click the profile icon in the top right, then open “Admin panel” &gt; “Settings” &gt; “Connections”. Once you create the first account, that user becomes the admin. Anyone else who signs up is a regular user and must be approved by the admin. This approval step is the only protection in this setup; an attacker could still leverage vulnerabilities in Open WebUI to gain access. For stronger security, use <code>ufw</code> to allow connections only from your IP.</p>
 <p>Under “OpenAI API” enter the URL <code>http://localhost:8000/v1</code> and leave the API key empty (the local llama.cpp server is unsecured by default on localhost).</p>
-<p>Click on the “Verify connection” button, then to “Save” on the bottom.</p>
+<p>Click on the “Verify connection” button, then click “Save” at the bottom.</p>
 <p>Finally you can start chatting with the model!</p>
 <p>If you change context length (<code>--n_ctx</code>) or increase concurrent users you may approach the 10 GB limit. Reduce <code>--n_ctx</code> (e.g.&nbsp;4096) if you encounter out‑of‑memory errors. ## Scaling up or changing models</p>
 <p>Want a larger model or higher quality? Options:</p>
