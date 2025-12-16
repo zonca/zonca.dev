@@ -9,9 +9,11 @@ title: Deploy a ChatGPT-like LLM on Jetstream with llama.cpp
 
 ---
 
-Updated December 2025. This tutorial has been updated to clarify instructions for deploying a ChatGPT-like LLM service using `llama.cpp` on Jetstream. It details how to set up the `llama.cpp` server with an OpenAI-compatible API and configure Open WebUI for a chat interface, including guidance on model choice, instance creation, and web server setup with HTTPS using Caddy.
+Tutorial last updated in December 2025
 
 This is a crosspost of the official Jetstream documentation: [Deploy a ChatGPT-like LLM service on Jetstream](https://docs.jetstream-cloud.org/general/llm/). I built a brand new version of that tutorial that swaps in `llama.cpp` for `vLLM` so we can run GGUF quantized models on Jetstream's GPUs without giving up speed or context length.
+
+This is the updated version of the tutorial using `llama.cpp` instead of `vLLM`, so we can run GGUF quantized models on Jetstream GPUs without giving up speed or context length.
 
 In this tutorial we deploy a Large Language Model (LLM) on Jetstream, run inference locally on the smallest currently available GPU node (`g3.medium`, 10 GB VRAM), then install a web chat interface (Open WebUI) and serve it with HTTPS using Caddy.
 
@@ -155,10 +157,8 @@ Create the environment (in a new shell remember to `module load miniforge` first
 module load miniforge
 conda create -y -n open-webui python=3.11
 conda run -n open-webui python -m pip install open-webui
-conda run -n open-webui open-webui serve
+conda run -n open-webui open-webui serve --port 8080
 ```
-
-Using `conda run -n open-webui ...` avoids common issues where `pip` installs into `~/.local` or tries to write into the centrally provided (read-only) Miniforge module.
 
 If this starts with no error, we can kill it with `Ctrl-C` and create a service for it.
 
@@ -166,18 +166,24 @@ Using `sudo` to run your preferred text editor, create `/etc/systemd/system/webu
 
 ```ini
 [Unit]
-Description=Open WebUI serving
-After=network.target
+Description=Open Web UI serving
+Wants=network-online.target
+After=network-online.target llama.service
+Requires=llama.service
+PartOf=llama.service
 
 [Service]
 User=exouser
 Group=exouser
 WorkingDirectory=/home/exouser
-
-# Activating the conda environment and starting the service
-ExecStart=/bin/bash -lc "module load miniforge && conda run -n open-webui open-webui serve"
-Restart=always
-# PATH managed by module + conda
+Environment=OPENAI_API_BASE_URL=http://localhost:8000/v1
+Environment=OPENAI_API_KEY=local-no-key
+ExecStartPre=/bin/bash -lc 'for i in {1..600}; do /usr/bin/curl -sf http://localhost:8000/v1/models >/dev/null && exit 0; sleep 1; done; echo "llama not ready" >&2; exit 1'
+ExecStart=/bin/bash -lc 'source /etc/profile.d/modules.sh 2>/dev/null || true; module load miniforge; conda run -n open-webui open-webui serve --port 8080'
+Restart=on-failure
+RestartSec=5
+TimeoutStartSec=600
+Type=simple
 
 [Install]
 WantedBy=multi-user.target
@@ -213,15 +219,24 @@ Restart=always
 WantedBy=multi-user.target
 EOF
 [Unit]
-Description=Open WebUI serving
-After=network.target
+Description=Open Web UI serving
+Wants=network-online.target
+After=network-online.target llama.service
+Requires=llama.service
+PartOf=llama.service
 
 [Service]
 User=$USER
 Group=$USER
 WorkingDirectory=/home/$USER
-ExecStart=/bin/bash -lc "module load miniforge && conda run -n open-webui open-webui serve"
-Restart=always
+Environment=OPENAI_API_BASE_URL=http://localhost:8000/v1
+Environment=OPENAI_API_KEY=local-no-key
+ExecStartPre=/bin/bash -lc 'for i in {1..600}; do /usr/bin/curl -sf http://localhost:8000/v1/models >/dev/null && exit 0; sleep 1; done; echo "llama not ready" >&2; exit 1'
+ExecStart=/bin/bash -lc 'source /etc/profile.d/modules.sh 2>/dev/null || true; module load miniforge; conda run -n open-webui open-webui serve --port 8080'
+Restart=on-failure
+RestartSec=5
+TimeoutStartSec=600
+Type=simple
 
 [Install]
 WantedBy=multi-user.target
@@ -275,7 +290,7 @@ Once you create the first account, that user becomes the admin. Anyone else who 
 
 Under "OpenAI API" enter the URL `http://localhost:8000/v1` and leave the API key empty (the local llama.cpp server is unsecured by default on localhost).
 
-Click on the "Verify connection" button, then click "Save" at the bottom.
+Click on the "Verify connection" button, then to "Save" on the bottom.
 
 Finally you can start chatting with the model!
 
@@ -289,3 +304,10 @@ Want a larger model or higher quality? Options:
 * Increase context length (each 1k tokens adds memory usage). If you see OOM, lower `--n_ctx`.
 
 For production workloads, consider the managed Jetstream inference service or frameworks like `vllm` on larger GPUs for higher throughput.
+
+## Related tutorials
+
+These resources are contributed by the community, make sure you understand all steps involved, if unsure consider opening a ticket.
+
+* [Deploy a larger LLM (70B) on Jetstream](https://www.zonca.dev/posts/2025-09-18-deploy-70b-llm-jetstream)
+* [Demo of a web application used to shelve and unshelve a Jetstream instance](https://www.zonca.dev/posts/2025-09-22-openstack-unshelver-demo), allows community members to unshelve an instance for a time even when they are not members of the allocation. This strategy conserves Jetstream2 service units for larger instances that do not need to run continuously, yet still host a community-facing service (such as an LLM specific to a single domain of science).
