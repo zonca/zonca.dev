@@ -67,17 +67,17 @@ conda install -y cmake ninja scikit-build-core huggingface_hub
 module load nvhpc/24.7/nvhpc
 # Enable CUDA acceleration with explicit compilers, arch, release build
 CMAKE_ARGS="-DGGML_CUDA=on -DCMAKE_CUDA_COMPILER=$(which nvcc) -DCMAKE_C_COMPILER=$(which gcc) -DCMAKE_CXX_COMPILER=$(which g++) -DCMAKE_CUDA_ARCHITECTURES=80 -DCMAKE_BUILD_TYPE=Release" \
-    python -m pip install --no-user --no-cache-dir --no-build-isolation --force-reinstall "llama-cpp-python[server]==0.3.16"
+    conda run -n llama python -m pip install --no-cache-dir --no-build-isolation --force-reinstall "llama-cpp-python[server]==0.3.16"
 ```
 
-If you get a permissions error mentioning `/software/.../miniforge/.../site-packages`, your shell isn’t actually using the Conda environment. In that case, run the install via `conda run` instead of relying on activation:
+If you get a permissions error mentioning `/software/.../miniforge/.../site-packages`, your shell isn’t actually using the Conda environment. In that case, re-run the install explicitly via `conda run` without relying on activation:
 
 ```bash
 module load miniforge nvhpc/24.7/nvhpc
 conda create -y -n llama python=3.11
 conda install -y -n llama cmake ninja scikit-build-core huggingface_hub
 CMAKE_ARGS="-DGGML_CUDA=on -DCMAKE_CUDA_COMPILER=$(which nvcc) -DCMAKE_C_COMPILER=$(which gcc) -DCMAKE_CXX_COMPILER=$(which g++) -DCMAKE_CUDA_ARCHITECTURES=80 -DCMAKE_BUILD_TYPE=Release" \
-    conda run -n llama python -m pip install --no-user --no-cache-dir --no-build-isolation --force-reinstall "llama-cpp-python[server]==0.3.16"
+    conda run -n llama python -m pip install --no-cache-dir --no-build-isolation --force-reinstall "llama-cpp-python[server]==0.3.16"
 ```
 
 
@@ -164,7 +164,7 @@ Create the environment (in a new shell remember to `module load miniforge` first
 ```bash
 module load miniforge
 conda create -y -n open-webui python=3.11
-conda run -n open-webui python -m pip install --no-user open-webui
+conda run -n open-webui python -m pip install open-webui
 conda run -n open-webui open-webui serve
 ```
 
