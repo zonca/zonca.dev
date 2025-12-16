@@ -14,7 +14,7 @@ image: img/openstack-unshelver-demo-thumbnail.jpg
 
 I recently vibe-coded a lightweight web application, using `gpt-5-codex`, that revives shelved OpenStack instances on demand. The stack is intentionally minimal: a FastHTML frontend, GitHub for authentication, and the OpenStack SDK orchestrated through a YAML configuration that lists the instances the team cares about. I exercised the workflow against my Jetstream 2 project, and the video below captures the current experience end to end.
 
-Source code lives at [github.com/zonca/openstack_unshelver_webapp](https://github.com/zonca/openstack_unshelver_webapp).
+Source code lives at [github.com/zonca/openstack_unshelver_webapp](https://github.com/zonca/openstack_unshelver_webapp) and the demo is tagged as release [`2025.09.22`](https://github.com/zonca/openstack_unshelver_webapp/releases/tag/2025.09.22) so you can pin the exact build showcased here.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/xdVKyStD55M" title="OpenStack Unshelver demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
