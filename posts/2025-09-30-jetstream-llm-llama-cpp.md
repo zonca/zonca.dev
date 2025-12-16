@@ -67,7 +67,17 @@ conda install -y cmake ninja scikit-build-core huggingface_hub
 module load nvhpc/24.7/nvhpc
 # Enable CUDA acceleration with explicit compilers, arch, release build
 CMAKE_ARGS="-DGGML_CUDA=on -DCMAKE_CUDA_COMPILER=$(which nvcc) -DCMAKE_C_COMPILER=$(which gcc) -DCMAKE_CXX_COMPILER=$(which g++) -DCMAKE_CUDA_ARCHITECTURES=80 -DCMAKE_BUILD_TYPE=Release" \
-    pip install --no-cache-dir --no-build-isolation --force-reinstall "llama-cpp-python[server]==0.3.16"
+    python -m pip install --no-user --no-cache-dir --no-build-isolation --force-reinstall "llama-cpp-python[server]==0.3.16"
+```
+
+If you get a permissions error mentioning `/software/.../miniforge/.../site-packages`, your shell isn’t actually using the Conda environment. In that case, run the install via `conda run` instead of relying on activation:
+
+```bash
+module load miniforge nvhpc/24.7/nvhpc
+conda create -y -n llama python=3.11
+conda install -y -n llama cmake ninja scikit-build-core huggingface_hub
+CMAKE_ARGS="-DGGML_CUDA=on -DCMAKE_CUDA_COMPILER=$(which nvcc) -DCMAKE_C_COMPILER=$(which gcc) -DCMAKE_CXX_COMPILER=$(which g++) -DCMAKE_CUDA_ARCHITECTURES=80 -DCMAKE_BUILD_TYPE=Release" \
+    conda run -n llama python -m pip install --no-user --no-cache-dir --no-build-isolation --force-reinstall "llama-cpp-python[server]==0.3.16"
 ```
 
 
@@ -134,6 +144,7 @@ WantedBy=multi-user.target
 Enable and start:
 
 ```bash
+sudo systemctl daemon-reload
 sudo systemctl enable llama
 sudo systemctl start llama
 ```
@@ -146,17 +157,18 @@ Troubleshooting:
 
 ## Configure the chat interface
 
-The chat interface is provided by [Open Web UI](https://openwebui.com/).
+The chat interface is provided by [Open WebUI](https://openwebui.com/).
 
 Create the environment (in a new shell remember to `module load miniforge` first):
 
 ```bash
 module load miniforge
 conda create -y -n open-webui python=3.11
-conda activate open-webui
-pip install open-webui
-open-webui serve
+conda run -n open-webui python -m pip install --no-user open-webui
+conda run -n open-webui open-webui serve
 ```
+
+Using `conda run -n open-webui ...` avoids common issues where `pip` installs into `~/.local` or tries to write into the centrally provided (read-only) Miniforge module.
 
 If this starts with no error, we can kill it with `Ctrl-C` and create a service for it.
 
@@ -164,7 +176,7 @@ Using `sudo` to run your preferred text editor, create `/etc/systemd/system/webu
 
 ```ini
 [Unit]
-Description=Open Web UI serving
+Description=Open WebUI serving
 After=network.target
 
 [Service]
@@ -184,6 +196,7 @@ WantedBy=multi-user.target
 Then enable and start the service:
 
 ```bash
+sudo systemctl daemon-reload
 sudo systemctl enable webui
 sudo systemctl start webui
 ```
@@ -193,7 +206,7 @@ sudo systemctl start webui
 If you already created the Conda environments (`llama` and `open-webui`) and downloaded the model, you can create, enable, and start both systemd services (model server + Open WebUI) in a single copy/paste. Adjust `MODEL`, `N_CTX`, `USER`, and `NVHPC_MOD` if needed before running:
 
 ```bash
-MODEL=Meta-Llama-3.1-8B-Instruct.Q3_K_M.gguf N_CTX=8192 USER=exouser NVHPC_MOD=nvhpc/24.7/nvhpc ; sudo tee /etc/systemd/system/llama.service >/dev/null <<EOF && sudo tee /etc/systemd/system/webui.service >/dev/null <<EOF2 && sudo systemctl daemon-reload && sudo systemctl enable --now llama webui
+: "${MODEL:?export MODEL (model filename) first}" ; N_CTX=8192 USER=exouser NVHPC_MOD=nvhpc/24.7/nvhpc ; sudo tee /etc/systemd/system/llama.service >/dev/null <<EOF && sudo tee /etc/systemd/system/webui.service >/dev/null <<EOF2 && sudo systemctl daemon-reload && sudo systemctl enable --now llama webui
 [Unit]
 Description=Llama.cpp OpenAI-compatible server
 After=network.target
@@ -202,7 +215,7 @@ After=network.target
 User=$USER
 Group=$USER
 WorkingDirectory=/home/$USER
-Environment=MODEL=Meta-Llama-3.1-8B-Instruct.Q3_K_M.gguf
+Environment=MODEL=${MODEL}
 ExecStart=/bin/bash -lc "module load $NVHPC_MOD miniforge && conda run -n llama python -m llama_cpp.server --model /home/$USER/models/$MODEL --chat_format llama-3 --n_ctx $N_CTX --n_gpu_layers -1 --port 8000"
 Restart=always
 
@@ -210,7 +223,7 @@ Restart=always
 WantedBy=multi-user.target
 EOF
 [Unit]
-Description=Open Web UI serving
+Description=Open WebUI serving
 After=network.target
 
 [Service]
@@ -267,12 +280,12 @@ sudo systemctl reload caddy
 
 Point your browser to `https://chat.xxx000000.projects.jetstream-cloud.org` and you should see the chat interface.
 
-Create an account, click on the profile icon on the top right and enter the "Admin panel" section, open "Settings" then "Connections".
-Once you create the first account, that will become admin, if anyone else creates an account they will be a regular user and need to be approved by the admin user. This is the only protection available in this setup, an attacker could still leverage vulnerabilities on Open WebUI to gain access. If you require more security the easiest way is to just open the firewall (using `ufw`) to only allow connections from your IP.
+Create an account, click the profile icon in the top right, then open "Admin panel" > "Settings" > "Connections".
+Once you create the first account, that user becomes the admin. Anyone else who signs up is a regular user and must be approved by the admin. This approval step is the only protection in this setup; an attacker could still leverage vulnerabilities in Open WebUI to gain access. For stronger security, use `ufw` to allow connections only from your IP.
 
 Under "OpenAI API" enter the URL `http://localhost:8000/v1` and leave the API key empty (the local llama.cpp server is unsecured by default on localhost).
 
-Click on the "Verify connection" button, then to "Save" on the bottom.
+Click on the "Verify connection" button, then click "Save" at the bottom.
 
 Finally you can start chatting with the model!
 
