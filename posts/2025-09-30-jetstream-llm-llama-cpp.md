@@ -9,6 +9,8 @@ title: Deploy a ChatGPT-like LLM on Jetstream with llama.cpp
 
 ---
 
+Updated December 2025. This tutorial has been updated to clarify instructions for deploying a ChatGPT-like LLM service using `llama.cpp` on Jetstream. It details how to set up the `llama.cpp` server with an OpenAI-compatible API and configure Open WebUI for a chat interface, including guidance on model choice, instance creation, and web server setup with HTTPS using Caddy.
+
 This is a crosspost of the official Jetstream documentation: [Deploy a ChatGPT-like LLM service on Jetstream](https://docs.jetstream-cloud.org/general/llm/). I built a brand new version of that tutorial that swaps in `llama.cpp` for `vLLM` so we can run GGUF quantized models on Jetstream's GPUs without giving up speed or context length.
 
 Tutorial last updated in September 2025
