@@ -6,7 +6,7 @@ layout: post
 slug: cosmosage-unshelver
 ---
 
-This post describes the Cosmosage Unshelver. You can find the project on GitHub: [zonca/openstack_unshelver_webapp](https://github.com/zonca/openstack_unshelver_webapp). There is an active pull request for further development.
+This post describes the Cosmosage Unshelver. You can find the project on GitHub: [zonca/openstack_unshelver_webapp](https://github.com/zonca/openstack_unshelver_webapp). There is an active pull request for further development. You can find the branch I am working on here: [cosmosage_unshelver branch](https://github.com/zonca/openstack_unshelver_webapp/tree/cosmosage_unshelver).
 
 # Cosmosage Unshelver Controller Deployment Guide
 
