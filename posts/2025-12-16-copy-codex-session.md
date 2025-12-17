@@ -26,10 +26,15 @@ The long ID at the end uniquely identifies the chat.
 
 ## 2. Copy the session to the other machine
 
-Copy only that file using `scp`:
+First, create the directory structure on the remote machine:
 
 ```bash
-mkdir -p ~/.codex/sessions/2025/12/16
+ssh sshhost "mkdir -p ~/.codex/sessions/2025/12/16"
+```
+
+Then copy the session file using `scp`:
+
+```bash
 scp ~/.codex/sessions/2025/12/16/rollout-2025-12-16T08-52-19-019b2813-b881-7813-afe8-bf072950e53b.jsonl \
     sshhost:~/.codex/sessions/2025/12/16/
 ```
