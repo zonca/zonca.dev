@@ -11,4 +11,4 @@ You can download it from: <https://download.slicer.org/>
 
 On the USB drive, you will likely find a `Data` folder containing a list of `.dcm` files. You can simply point the 3D Slicer UI to that folder to load and visualize the data.
 
-I tested this on Linux (Debian) and it works fine.
+I tested this on Linux (Debian) in a Chromebook and it works fine.
