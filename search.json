@@ -4281,7 +4281,7 @@
     "href": "posts/2025-12-19-read-dicom-files.html",
     "title": "Read DICOM (Tomography) files with 3D Slicer",
     "section": "",
-    "text": "Download sourceContribute\nIf you receive a USB drive with tomography data (for example from a dentist), the files often come in DICOM format (extension .dcm).\nThese files can be read using 3D Slicer, a free and open source software platform for medical image informatics, image processing, and three-dimensional visualization. It is available for Windows, Linux, and Mac.\nYou can download it from: https://download.slicer.org/\nOn the USB drive, you will likely find a Data folder containing a list of .dcm files. You can simply point the 3D Slicer UI to that folder to load and visualize the data.\nI tested this on Linux (Debian) and it works fine."
+    "text": "Download sourceContribute\nIf you receive a USB drive with tomography data (for example from a dentist), the files often come in DICOM format (extension .dcm).\nThese files can be read using 3D Slicer, a free and open source software platform for medical image informatics, image processing, and three-dimensional visualization. It is available for Windows, Linux, and Mac.\nYou can download it from: https://download.slicer.org/\nOn the USB drive, you will likely find a Data folder containing a list of .dcm files. You can simply point the 3D Slicer UI to that folder to load and visualize the data.\nI tested this on Linux (Debian) in a Chromebook and it works fine."
   },
   {
     "objectID": "posts/2010-12-03-force-local-install-of-python-module.html",
