@@ -1,5 +1,5 @@
 ---
-title: "Chatbot as a frontend for a Google Form"
+title: "AI Chatbot as a frontend for a Google Form"
 author: "Andrea Zonca"
 date: "2026-01-01"
 categories: [ai]
@@ -21,7 +21,7 @@ GOOGLE_AI_STUDIO_API_KEY=your_api_key_here
 
 1.  Open your terminal.
 2.  Navigate to the folder where you saved the `.env` file.
-3.  Run the Codex CLI by typing `codex` in your terminal.
+3.  Run the [Codex CLI](https://www.npmjs.com/package/@openai/codex) by typing `codex` in your terminal.
 4.  Paste the following prompt to create the bot:
 
 ```markdown
