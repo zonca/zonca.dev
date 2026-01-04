@@ -17,6 +17,8 @@ Here is the built application which is specialized to my own simple form with na
 
 The entire app is at [https://github.com/san-diego-data-science/chatbot_voice](https://github.com/san-diego-data-science/chatbot_voice).
 
+The app is deployed at [https://chatbot-voice.onrender.com/](https://chatbot-voice.onrender.com/). Note that this is on the free tier so it might take 30s to spin up.
+
 You can follow instructions in the README to run it locally.
 
 Enjoy!
