@@ -4,6 +4,8 @@ date: "2026-01-04"
 categories: [ai]
 ---
 
+In this tutorial, we will explore how to create a voice-enabled chatbot using the new "Live" capabilities in Google AI Studio. Our goal is to build an assistant that can interactively help users fill out a Google Form through natural conversation.
+
 If you go to [Google AI Studio](https://aistudio.google.com/) under playground, you can click **Live** and select the latest available model, at the moment: `models/gemini-2.5-flash-native-audio-preview-12-2025`.
 
 Here you can choose configuration options on the right like the voice.
