@@ -5,6 +5,10 @@ date: "2025-12-02"
 categories: [ai]
 ---
 
+::: {.callout-note}
+This is actually not recommended because it mixes node packages with other packages installed in `.local`. Recommend instead to use [nvm](https://github.com/nvm-sh/nvm), once configured nvm, then the standard install command works without specifying any prefix.
+:::
+
 When installing `@google/gemini-cli` or `@openai/codex` using `npm`, you might encounter permission errors with the default global installation command.
 
 The simplest way to avoid this is to install the packages in your local user directory by providing `~/.local` as a prefix.
