@@ -198,6 +198,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2025-12-02-install-codex-gemini-cli.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2025-12-02-install-codex-gemini-cli.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is actually not recommended because it mixes node packages with other packages installed in <code>.local</code>. Recommend instead to use <a href="https://github.com/nvm-sh/nvm">nvm</a>, once configured nvm, then the standard install command works without specifying any prefix.</p>
+</div>
+</div>
 <p>When installing <code>@google/gemini-cli</code> or <code>@openai/codex</code> using <code>npm</code>, you might encounter permission errors with the default global installation command.</p>
 <p>The simplest way to avoid this is to install the packages in your local user directory by providing <code>~/.local</code> as a prefix.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install <span class="at">--global</span> <span class="at">--prefix</span> ~/.local @google/gemini-cli</span>
