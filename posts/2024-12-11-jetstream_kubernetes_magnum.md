@@ -81,7 +81,7 @@ At this point, decide if you prefer to use autoscaling or not. Autoscaling means
 
 In case of errors, you can check the error message with:
 
-    openstack coe cluster show k8s -f json | jq '.status_reason'
+    openstack coe cluster show $K8S_CLUSTER_NAME -f json | jq '.status_reason'
 
 The cluster consumes resources when active, it can be switched off with:
 
