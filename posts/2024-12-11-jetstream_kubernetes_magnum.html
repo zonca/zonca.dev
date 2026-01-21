@@ -201,6 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2024-12-11-jetstream_kubernetes_magnum.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2024-12-11-jetstream_kubernetes_magnum.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <ul>
+<li><strong>UPDATED 2026-01-21</strong>: Added python-designateclient to prerequisites.</li>
 <li><strong>UPDATED 2025-11-10</strong>: Documented how to inspect autoscaler status and scale-down activity.</li>
 <li><strong>UPDATED 2025-08-11</strong>: Recommended package versions updated.</li>
 <li><strong>UPDATED 2025-08-11</strong>: Added note about overriding DNS recordset IP.</li>
@@ -224,7 +225,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
 <ol type="1">
 <li><p><strong>Install OpenStack and Magnum Clients</strong>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install python-openstackclient python-magnumclient python-octaviaclient</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install python-openstackclient python-magnumclient python-octaviaclient python-designateclient</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ol>
 <p>The OpenStack client is used to create and manage the cluster, the Magnum client is used to create the cluster template, and the Octavia client is used to manage the load balancer.</p>
 <p>This tutorial used python-openstackclient 8.1.0, python-magnumclient 4.8.1, python-octaviaclient 3.11.1, and python-designateclient 6.3.0.</p>
