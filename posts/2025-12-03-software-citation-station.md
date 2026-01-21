@@ -3,7 +3,6 @@ aliases:
 - /2025/12/software-citation-station
 categories:
 - software
-- citation
 - github
 date: '2025-12-03'
 layout: post

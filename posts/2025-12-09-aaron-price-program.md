@@ -1,8 +1,6 @@
 ---
 title: "The Aaron Price Fellows Program: Fostering Community Leaders"
 date: "2025-12-09"
-categories:
-  - education
 ---
 
 # The Aaron Price Fellows Program: Fostering Community Leaders
