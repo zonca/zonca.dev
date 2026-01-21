@@ -9,6 +9,7 @@ slug: kubernetes-jupyterhub-jetstream-magnum-2024
 title: Deploy Kubernetes and JupyterHub on Jetstream with Magnum and Cluster API
 ---
 
+* **UPDATED 2026-01-21**: Added python-designateclient to prerequisites.
 * **UPDATED 2025-11-10**: Documented how to inspect autoscaler status and scale-down activity.
 * **UPDATED 2025-08-11**: Recommended package versions updated.
 * **UPDATED 2025-08-11**: Added note about overriding DNS recordset IP.
@@ -29,7 +30,7 @@ Magnum-based clusters offer several benefits over [Kubespray](https://www.zonca.
 
 1. **Install OpenStack and Magnum Clients**: 
    ```bash
-   pip install python-openstackclient python-magnumclient python-octaviaclient
+   pip install python-openstackclient python-magnumclient python-octaviaclient python-designateclient
    ```
 
 The OpenStack client is used to create and manage the cluster, the Magnum client is used to create the cluster template, and the Octavia client is used to manage the load balancer.
