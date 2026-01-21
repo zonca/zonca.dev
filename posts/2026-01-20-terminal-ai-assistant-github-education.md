@@ -4,7 +4,7 @@ date: "2026-01-20"
 categories: [ai, github]
 ---
 
-GitHub offers to all academic people a free GitHub Pro account which allows to use the Coding Assistant, which includes access to the latest and most powerful models from OpenAI, Anthropic, and Google.
+GitHub offers to all academic people a free GitHub Pro account which allows you to use **GitHub Copilot Pro**, which includes access to the latest and most powerful models from OpenAI, Anthropic, and Google.
 
 The easiest way of using these tools is through the [GitHub Copilot extension for VS Code](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot). However, the most efficient method is to use a terminal-based coding assistant like Codex CLI or Gemini.
 
