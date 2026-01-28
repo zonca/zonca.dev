@@ -261,8 +261,6 @@ As the shared filesystem was created explicitly using an OpenStack command, it m
 ```bash
 # Verify the volume you're about to delete is the correct one!
 openstack volume show ${CLUSTER}-nfs-homedirs
-# or
-openstack volume show ${VOLUME_ID}
 # If you'd like to proceed, delete the volume; this is a DESTRUCTIVE operation
-openstack volume delete ${CLUSTER}-nfs-homedirs # or ${VOLUME_ID}
+openstack volume delete ${CLUSTER}-nfs-homedirs
 ```
