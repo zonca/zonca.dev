@@ -405,10 +405,8 @@ home-nfs.jupyterhub-home-nfs.svc.cluster.local</code></pre>
 <p>As the shared filesystem was created explicitly using an OpenStack command, it must also explicitly be deleted when the cluster is torn down. Do this with the following commands:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify the volume you're about to delete is the correct one!</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> volume show <span class="va">${CLUSTER}</span>-nfs-homedirs</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> volume show <span class="va">${VOLUME_ID}</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># If you'd like to proceed, delete the volume; this is a DESTRUCTIVE operation</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> volume delete <span class="va">${CLUSTER}</span>-nfs-homedirs <span class="co"># or ${VOLUME_ID}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># If you'd like to proceed, delete the volume; this is a DESTRUCTIVE operation</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> volume delete <span class="va">${CLUSTER}</span>-nfs-homedirs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
