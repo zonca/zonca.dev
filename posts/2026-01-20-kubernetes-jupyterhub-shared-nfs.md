@@ -26,11 +26,11 @@ Define these variables at the start of your session to automate the subsequent c
 
 ```bash
 # Configuration Variables
-export CLUSTER=k8s2                        # Your cluster name
+export K8S_CLUSTER_NAME=k8s2              # Your cluster name
 export NFS_NAMESPACE=jupyterhub-home-nfs   # Namespace for the NFS server
 export JH_NAMESPACE=jhub                   # Namespace where JupyterHub runs
 export VOLUME_SIZE=500                     # Size in GB
-export VOLUME_NAME="${CLUSTER}-nfs-homedirs"
+export VOLUME_NAME="${K8S_CLUSTER_NAME}-nfs-homedirs"
 ```
 
 ## 2. Infrastructure: Create OpenStack Volume
@@ -194,10 +194,14 @@ spec:
 EOF
 
 # Run and cleanup the job
-kubectl apply -f init-shared-dir.yaml
-kubectl wait --for=condition=complete job/init-home-nfs-shared -n $JH_NAMESPACE --timeout=60s
-kubectl logs -n $JH_NAMESPACE job/init-home-nfs-shared
-kubectl delete -n $JH_NAMESPACE job/init-home-nfs-shared
+kubectl apply -f init-shared-dir.yaml \
+  && kubectl wait --for=condition=complete job/init-home-nfs-shared -n $JH_NAMESPACE --timeout=60s \
+  && kubectl logs -n $JH_NAMESPACE job/init-home-nfs-shared \
+  && kubectl delete -n $JH_NAMESPACE job/init-home-nfs-shared \
+  || {
+    echo "Job did not complete; leaving it in place for inspection."
+    exit 1
+  }
 ```
 
 ## 6. Update JupyterHub Configuration
@@ -260,7 +264,16 @@ As the shared filesystem was created explicitly using an OpenStack command, it m
 
 ```bash
 # Verify the volume you're about to delete is the correct one!
-openstack volume show ${CLUSTER}-nfs-homedirs
+openstack volume show ${K8S_CLUSTER_NAME}-nfs-homedirs
 # If you'd like to proceed, delete the volume; this is a DESTRUCTIVE operation
-openstack volume delete ${CLUSTER}-nfs-homedirs
+openstack volume delete ${K8S_CLUSTER_NAME}-nfs-homedirs
 ```
+
+## 10. Delete an Individual User Home Directory
+
+If you need to wipe a single user home directory (for example for testing), **stop that user's server in JupyterHub first** to avoid stale NFS file handles, then delete their directory and (optionally) recreate it before they log in again.
+
+I put the scripts here (set `JH_NAMESPACE` and `JH_USER` inside the scripts):
+
+- Delete user home: [delete-user-home.sh](https://gist.github.com/zonca/cbd7add9554e7b729f350268e659ed47#file-delete-user-home-sh)
+- Recreate user home: [recreate-user-home.sh](https://gist.github.com/zonca/cbd7add9554e7b729f350268e659ed47#file-recreate-user-home-sh)
