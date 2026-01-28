@@ -251,3 +251,18 @@ Example output showing both `/share` and `/home` as NFS mounts:
 ```
 
 This confirms both the home directory and the shared directory are NFS mounts.
+
+## 9. Cleanup
+
+Volumes created by the Cinder CSI controller through the default storage class are deleted when the cluster is destroyed. Here we explicitly created the volume with an OpenStack command, so the volume will remain even if the cluster is torn down (the NFS server pod and the PV/PVC resources will be cleaned up).
+
+As the shared filesystem was created explicitly using an OpenStack command, it must also explicitly be deleted when the cluster is torn down. Do this with the following commands:
+
+```bash
+# Verify the volume you're about to delete is the correct one!
+openstack volume show ${CLUSTER}-nfs-homedirs
+# or
+openstack volume show ${VOLUME_ID}
+# If you'd like to proceed, delete the volume; this is a DESTRUCTIVE operation
+openstack volume delete ${CLUSTER}-nfs-homedirs # or ${VOLUME_ID}
+```
