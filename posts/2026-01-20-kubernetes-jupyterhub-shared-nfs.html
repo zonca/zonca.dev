@@ -398,6 +398,17 @@ home-nfs.jupyterhub-home-nfs.svc.cluster.local</code></pre>
 <pre><code>172.31.235.50:/_shared on /share type nfs4 (rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,noresvport,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.1.90.61,local_lock=none,addr=172.31.235.50)
 172.31.235.50:/zonca on /home/jovyan type nfs4 (rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,noresvport,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.1.90.61,local_lock=none,addr=172.31.235.50)</code></pre>
 <p>This confirms both the home directory and the shared directory are NFS mounts.</p>
+</section>
+<section id="cleanup" class="level2">
+<h2 class="anchored" data-anchor-id="cleanup">9. Cleanup</h2>
+<p>Volumes created by the Cinder CSI controller through the default storage class are deleted when the cluster is destroyed. Here we explicitly created the volume with an OpenStack command, so the volume will remain even if the cluster is torn down (the NFS server pod and the PV/PVC resources will be cleaned up).</p>
+<p>As the shared filesystem was created explicitly using an OpenStack command, it must also explicitly be deleted when the cluster is torn down. Do this with the following commands:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify the volume you're about to delete is the correct one!</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> volume show <span class="va">${CLUSTER}</span>-nfs-homedirs</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> volume show <span class="va">${VOLUME_ID}</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># If you'd like to proceed, delete the volume; this is a DESTRUCTIVE operation</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> volume delete <span class="va">${CLUSTER}</span>-nfs-homedirs <span class="co"># or ${VOLUME_ID}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
