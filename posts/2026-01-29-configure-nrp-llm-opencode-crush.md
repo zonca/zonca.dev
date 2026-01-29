@@ -1,7 +1,7 @@
 ---
 title: "Configure NRP LLM with OpenCode and Crush"
 date: "2026-01-29"
-categories: [ai, nrp, opencode, crush]
+categories: [ai]
 ---
 
 The National Research Platform (NRP) provides a free Large Language Model (LLM) service for researchers. This service allows you to access powerful models like GLM 4.7, Llama 3, and Qwen 3 via an OpenAI-compatible API.
