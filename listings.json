@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2026-01-29-configure-nrp-llm-opencode-crush.html",
       "/posts/2026-01-20-kubernetes-jupyterhub-shared-nfs.html",
       "/posts/2026-01-20-terminal-ai-assistant-github-education.html",
       "/posts/2026-01-10-convenience-script-system-cli-updates.html",
