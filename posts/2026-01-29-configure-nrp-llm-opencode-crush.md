@@ -4,6 +4,8 @@ date: "2026-01-29"
 categories: [ai]
 ---
 
+* **UPDATED 2026-01-31**: Added details about namespace requirements for generating tokens.
+
 The National Research Platform (NRP) provides a free Large Language Model (LLM) service for researchers. This service allows you to access powerful models like GLM 4.7, Llama 3, and Qwen 3 via an OpenAI-compatible API.
 
 This tutorial shows how to configure two popular CLI AI tools, **Crush** and **OpenCode**, to use the NRP LLM service.
@@ -12,6 +14,11 @@ This tutorial shows how to configure two popular CLI AI tools, **Crush** and **O
 
 First, you need to generate an API token.
 Go to [https://nrp.ai/llmtoken/](https://nrp.ai/llmtoken/) and log in with your institutional credentials to get your free token.
+
+**Note:** A user has to be a member of a namespace with LLM feature in order to be able to generate tokens.
+SDSC users are privileged and are added to `sdsc-llm` namespace by a daemon every half an hour, but others might need to join a namespace first.
+Faculty members can have their own namespaces and add others with no restrictions.
+For more information on namespaces, see [Getting Started](https://nrp.ai/documentation/userdocs/start/getting-started/).
 
 In your terminal, export your token to a variable (replace `...` with your actual token):
 
