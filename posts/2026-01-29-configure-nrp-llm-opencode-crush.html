@@ -198,11 +198,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2026-01-29-configure-nrp-llm-opencode-crush.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2026-01-29-configure-nrp-llm-opencode-crush.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
+<ul>
+<li><strong>UPDATED 2026-01-31</strong>: Added details about namespace requirements for generating tokens.</li>
+</ul>
 <p>The National Research Platform (NRP) provides a free Large Language Model (LLM) service for researchers. This service allows you to access powerful models like GLM 4.7, Llama 3, and Qwen 3 via an OpenAI-compatible API.</p>
 <p>This tutorial shows how to configure two popular CLI AI tools, <strong>Crush</strong> and <strong>OpenCode</strong>, to use the NRP LLM service.</p>
 <section id="get-your-token" class="level2">
 <h2 class="anchored" data-anchor-id="get-your-token">Get your Token</h2>
 <p>First, you need to generate an API token. Go to <a href="https://nrp.ai/llmtoken/">https://nrp.ai/llmtoken/</a> and log in with your institutional credentials to get your free token.</p>
+<p><strong>Note:</strong> A user has to be a member of a namespace with LLM feature in order to be able to generate tokens. SDSC users are privileged and are added to <code>sdsc-llm</code> namespace by a daemon every half an hour, but others might need to join a namespace first. Faculty members can have their own namespaces and add others with no restrictions. For more information on namespaces, see <a href="https://nrp.ai/documentation/userdocs/start/getting-started/">Getting Started</a>.</p>
 <p>In your terminal, export your token to a variable (replace <code>...</code> with your actual token):</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">TOKEN</span><span class="op">=</span><span class="st">"your_token_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>

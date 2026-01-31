@@ -298,7 +298,7 @@
     "href": "posts/2026-01-29-configure-nrp-llm-opencode-crush.html#get-your-token",
     "title": "Configure NRP LLM with OpenCode and Crush",
     "section": "Get your Token",
-    "text": "Get your Token\nFirst, you need to generate an API token. Go to https://nrp.ai/llmtoken/ and log in with your institutional credentials to get your free token.\nIn your terminal, export your token to a variable (replace ... with your actual token):\nexport TOKEN=\"your_token_here\""
+    "text": "Get your Token\nFirst, you need to generate an API token. Go to https://nrp.ai/llmtoken/ and log in with your institutional credentials to get your free token.\nNote: A user has to be a member of a namespace with LLM feature in order to be able to generate tokens. SDSC users are privileged and are added to sdsc-llm namespace by a daemon every half an hour, but others might need to join a namespace first. Faculty members can have their own namespaces and add others with no restrictions. For more information on namespaces, see Getting Started.\nIn your terminal, export your token to a variable (replace ... with your actual token):\nexport TOKEN=\"your_token_here\""
   },
   {
     "objectID": "posts/2026-01-29-configure-nrp-llm-opencode-crush.html#configure-opencode",
