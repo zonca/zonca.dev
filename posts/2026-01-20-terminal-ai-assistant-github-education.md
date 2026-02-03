@@ -59,4 +59,4 @@ For more complicated tasks, the 2 best premium models are **GPT-5.2-codex** and 
 
 ## Alternatives
 
-If you prefer to use the free NRP LLM service, check out [Configure NRP LLM with OpenCode and Crush](./2026-01-29-configure-nrp-llm-opencode-crush.md).
+If you prefer to use the free National Research Platform (NRP) LLM service, check out [Configure NRP LLM with OpenCode and Crush](./2026-01-29-configure-nrp-llm-opencode-crush.md).
