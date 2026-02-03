@@ -71,8 +71,8 @@ opencode run -m nrp/gpt-oss "Hello"
 To configure it for NRP, run this command:
 
 ```bash
-mkdir -p ~/.local/share/crush
-cat <<JSON > ~/.local/share/crush/crush.json
+mkdir -p ~/.config/crush
+cat <<JSON > ~/.config/crush/crush.json
 {
   "providers": {
     "nrp": {
