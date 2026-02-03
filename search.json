@@ -315,6 +315,13 @@
     "text": "Configure Crush\nCrush is another excellent CLI tool.\nTo configure it for NRP, run this command:\nmkdir -p ~/.config/crush\ncat &lt;&lt;JSON &gt; ~/.config/crush/crush.json\n{\n  \"providers\": {\n    \"nrp\": {\n      \"id\": \"nrp\",\n      \"name\": \"NRP Nautilus\",\n      \"type\": \"openai\",\n      \"base_url\": \"https://ellm.nrp-nautilus.io/v1\",\n      \"api_key\": \"$TOKEN\",\n      \"models\": [\n        { \"id\": \"glm-4.7\", \"name\": \"GLM 4.7\", \"context_window\": 256000, \"default_max_tokens\": 4096 },\n        { \"id\": \"glm-v\", \"name\": \"GLM V\", \"context_window\": 256000, \"default_max_tokens\": 4096 },\n        { \"id\": \"gpt-oss\", \"name\": \"GPT-OSS\", \"context_window\": 128000, \"default_max_tokens\": 4096 },\n        { \"id\": \"llama3-sdsc\", \"name\": \"Llama 3 (SDSC)\", \"context_window\": 128000, \"default_max_tokens\": 4096 },\n        { \"id\": \"qwen3\", \"name\": \"Qwen 3\", \"context_window\": 128000, \"default_max_tokens\": 4096 },\n        { \"id\": \"gemma3\", \"name\": \"Gemma 3\", \"context_window\": 128000, \"default_max_tokens\": 4096 }\n      ]\n    }\n  },\n  \"models\": {\n    \"large\": { \"model\": \"glm-4.7\", \"provider\": \"nrp\" },\n    \"small\": { \"model\": \"gpt-oss\", \"provider\": \"nrp\" }\n  },\n  \"recent_models\": {\n    \"large\": [\n      { \"model\": \"glm-4.7\", \"provider\": \"nrp\" },\n      { \"model\": \"gpt-oss\", \"provider\": \"nrp\" }\n    ]\n  }\n}\nJSON\nVerify it works by running:\ncrush run -m nrp/glm-4.7 \"Hello\"\nYou are now ready to use powerful open-source models for free in your terminal!"
   },
   {
+    "objectID": "posts/2026-01-29-configure-nrp-llm-opencode-crush.html#alternatives",
+    "href": "posts/2026-01-29-configure-nrp-llm-opencode-crush.html#alternatives",
+    "title": "Configure NRP LLM with OpenCode and Crush",
+    "section": "Alternatives",
+    "text": "Alternatives\nIf you have access to GitHub Copilot, you can also use these tools with it. See Terminal-based AI Assistant with GitHub for Education."
+  },
+  {
     "objectID": "posts/2025-12-02-take-control-of-your-kaiser-permanente-blood-test-results-no-coding-knowledge-required.html",
     "href": "posts/2025-12-02-take-control-of-your-kaiser-permanente-blood-test-results-no-coding-knowledge-required.html",
     "title": "Take control of your Kaiser Permanente blood test results (no coding knowledge required)",
@@ -978,6 +985,13 @@
     "title": "Terminal-based AI Assistant with GitHub for Education",
     "section": "Start coding",
     "text": "Start coding\nYou can use /models to choose a model. GitHub Copilot has free and premium models, you can check your usage under https://github.com/settings/copilot/features.\nFor simpler tasks, the best unlimited model is Grok Code Fast 1, alternatively if you need a larger context you can use GPT 4.1.\nFor more complicated tasks, the 2 best premium models are GPT-5.2-codex and Gemini 3 pro. You have 300 requests per month to these models."
+  },
+  {
+    "objectID": "posts/2026-01-20-terminal-ai-assistant-github-education.html#alternatives",
+    "href": "posts/2026-01-20-terminal-ai-assistant-github-education.html#alternatives",
+    "title": "Terminal-based AI Assistant with GitHub for Education",
+    "section": "Alternatives",
+    "text": "Alternatives\nIf you prefer to use the free National Research Platform (NRP) LLM service, check out Configure NRP LLM with OpenCode and Crush."
   },
   {
     "objectID": "posts/2025-09-18-llm-unshelve.html",
