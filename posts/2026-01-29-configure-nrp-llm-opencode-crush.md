@@ -112,3 +112,7 @@ crush run -m nrp/glm-4.7 "Hello"
 ```
 
 You are now ready to use powerful open-source models for free in your terminal!
+
+## Alternatives
+
+If you have access to GitHub Copilot, you can also use these tools with it. See [Terminal-based AI Assistant with GitHub for Education](./2026-01-20-terminal-ai-assistant-github-education.md).

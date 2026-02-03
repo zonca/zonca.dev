@@ -56,3 +56,7 @@ You can use `/models` to choose a model. GitHub Copilot has free and premium mod
 For simpler tasks, the best unlimited model is **Grok Code Fast 1**, alternatively if you need a larger context you can use **GPT 4.1**.
 
 For more complicated tasks, the 2 best premium models are **GPT-5.2-codex** and **Gemini 3 pro**. You have 300 requests per month to these models.
+
+## Alternatives
+
+If you prefer to use the free NRP LLM service, check out [Configure NRP LLM with OpenCode and Crush](./2026-01-29-configure-nrp-llm-opencode-crush.md).
