@@ -54,17 +54,17 @@ kubectl apply -f manila/ceph-secret.yml
 
 If your pod shows `failed to get Plugin from volumeSpec ... err=no volume plugin matched`, your cluster does not have the CephFS volume plugin installed. Kubernetes 1.31 removed the in-tree CephFS plugin, so you must install the CephFS CSI driver.
 
-Download the Ceph CSI manifests:
+Download the Ceph CSI manifests in a local folder:
 
 ```bash
-git clone --depth 1 --branch v3.15.0 https://github.com/ceph/ceph-csi /tmp/ceph-csi
+git clone --depth 1 --branch v3.15.0 https://github.com/ceph/ceph-csi ceph-csi
 ```
 
 Create the CSI config and secret. Use the same Manila access rule name and key:
 
 ```bash
 KEY=$(kubectl get secret -n jhub ceph-secret -o jsonpath="{.data.key}" | base64 -d)
-cat <<EOF > /tmp/ceph-csi-config.yaml
+cat <<EOF > ceph-csi-config.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -94,7 +94,7 @@ stringData:
   userID: <ACCESS_RULE_NAME>
   userKey: ${KEY}
 EOF
-kubectl apply -f /tmp/ceph-csi-config.yaml
+kubectl apply -f ceph-csi-config.yaml
 ```
 
 Replace `<CEPH_FSID>` with the Ceph cluster FSID (ask Jetstream support if you do not have a way to query it).
@@ -102,12 +102,12 @@ Replace `<CEPH_FSID>` with the Ceph cluster FSID (ask Jetstream support if you d
 Install the CephFS CSI components (these use the `default` namespace):
 
 ```bash
-kubectl apply -f /tmp/ceph-csi/deploy/cephfs/kubernetes/csidriver.yaml
-kubectl apply -f /tmp/ceph-csi/deploy/cephfs/kubernetes/csi-provisioner-rbac.yaml
-kubectl apply -f /tmp/ceph-csi/deploy/cephfs/kubernetes/csi-nodeplugin-rbac.yaml
-kubectl apply -f /tmp/ceph-csi/deploy/ceph-conf.yaml
-kubectl apply -f /tmp/ceph-csi/deploy/cephfs/kubernetes/csi-cephfsplugin-provisioner.yaml
-kubectl apply -f /tmp/ceph-csi/deploy/cephfs/kubernetes/csi-cephfsplugin.yaml
+kubectl apply -f ceph-csi/deploy/cephfs/kubernetes/csidriver.yaml
+kubectl apply -f ceph-csi/deploy/cephfs/kubernetes/csi-provisioner-rbac.yaml
+kubectl apply -f ceph-csi/deploy/cephfs/kubernetes/csi-nodeplugin-rbac.yaml
+kubectl apply -f ceph-csi/deploy/ceph-conf.yaml
+kubectl apply -f ceph-csi/deploy/cephfs/kubernetes/csi-cephfsplugin-provisioner.yaml
+kubectl apply -f ceph-csi/deploy/cephfs/kubernetes/csi-cephfsplugin.yaml
 ```
 
 Verify the CSI pods are running:
