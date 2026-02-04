@@ -66,13 +66,10 @@ Add the ngshare service snippet to your JupyterHub values:
 * `nbgrader/jhub-ngshare-service.yaml`
 
 If you keep your Helm values in `config_standard_storage.yaml`, add the block there.  
-Then re-deploy JupyterHub:
+Then add the values file to `install_jhub.sh` (just before the last line), and re-deploy by running:
 
 ```bash
-helm upgrade --install jhub jupyterhub/jupyterhub \
-  --namespace jhub \
-  --values config_standard_storage.yaml \
-  --values secrets.yaml
+bash install_jhub.sh
 ```
 
 Verify the ngshare service:
@@ -103,7 +100,7 @@ singleuser:
     tag: "2026-02-04"
 ```
 
-Re-deploy JupyterHub after updating the values:
+After updating the values, add the file to `install_jhub.sh` and re-deploy:
 
 ## Step 4: Validate in JupyterHub
 
