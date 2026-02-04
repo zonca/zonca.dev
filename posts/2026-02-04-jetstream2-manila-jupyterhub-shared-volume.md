@@ -32,13 +32,13 @@ Exosphere supports Manila shares as an **Experimental feature**. Enable Experime
 
 - **Share path**
 - **Access rule name**
-- **Access key**
+- **Access key** (one read/write and one read-only)
 
 These are shown in the “Mount Your Share” section on the share status page.
 
 ## 2. Create the Kubernetes secret (edit `manila/ceph-secret.yml`)
 
-Open `manila/ceph-secret.yml` and replace the key with your **Access key**:
+Open `manila/ceph-secret.yml` and replace the key with your **Access key**. Use the read/write key for a shared writable mount, or the read-only key if you plan to mount it read-only:
 
 ```bash
 sed -n '1,120p' manila/ceph-secret.yml
