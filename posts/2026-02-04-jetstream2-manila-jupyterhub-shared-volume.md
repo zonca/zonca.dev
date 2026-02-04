@@ -116,10 +116,6 @@ helm upgrade --install jhub jupyterhub/jupyterhub \
 
 Users will now see `/share` inside their notebooks, and it will be shared across all users and all nodes.
 
-## 5. Is this similar to nbgrader?
-
-Yes. nbgrader’s “exchange” directory needs a shared RWX filesystem so instructors and students can access the same files concurrently. A Manila-backed CephFS share provides exactly that shared filesystem layer, so it’s a good fit for nbgrader’s exchange directory.
-
 ## Notes and cautions
 
 - Manila shares are optimized for shared data and software. Metadata-heavy workloads can be problematic, so avoid workflows that create or modify huge numbers of small files.
