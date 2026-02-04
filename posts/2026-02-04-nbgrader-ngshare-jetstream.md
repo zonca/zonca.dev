@@ -349,13 +349,11 @@ You may see `SAWarning` lines from SQLAlchemy during autograde. These are warnin
 
 ## Troubleshooting
 
-If you see:
+Before running exchange commands (`nbgrader list`, `nbgrader fetch_assignment`, `nbgrader submit`), make sure you are inside a real JupyterHub user server. Running them in a standalone test pod can raise:
 
 ```
 KeyError: 'USER'
 ```
-
-you are likely running outside a real JupyterHub user environment. This typically happens when running exchange commands like `nbgrader list`, `nbgrader fetch_assignment`, or `nbgrader submit` in a standalone test pod. Run those commands inside a spawned JupyterHub user server.
 
 If ngshare starts with:
 
