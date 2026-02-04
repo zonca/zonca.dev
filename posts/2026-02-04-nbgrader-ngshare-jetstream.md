@@ -108,18 +108,7 @@ nbgrader list
 
 If the exchange is correctly configured, `nbgrader list` should not error and should use ngshare as the exchange backend.
 
-## Step 5: Allow private IPs for ngshare (Z2JH 2.0+)
-
-If you are using a Z2JH version that enforces network policies by default, ensure user pods can reach the ngshare service:
-
-```yaml
-singleuser:
-  networkPolicy:
-    egressAllowRules:
-      privateIPs: true
-```
-
-## Step 6: Create the course and roster
+## Step 5: Create the course and roster
 
 Use `ngshare-course-management` (installed with `ngshare_exchange`) to create the course and add instructors/students.  
 Creating a course requires an **admin** user.
