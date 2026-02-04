@@ -91,16 +91,11 @@ Replace `COURSE_ID` with your course (e.g. `course101`).
 If you want a custom image instead, see:  
 `https://www.zonca.dev/posts/2025-12-01-custom-jupyterhub-docker-image`
 
-Build and push the image, then point JupyterHub to it:
-
-```yaml
-singleuser:
-  image:
-    name: YOUR_REGISTRY/nbgrader-ngshare
-    tag: "2026-02-04"
-```
-
 After updating the values, add the file to `install_jhub.sh` and re-deploy:
+
+```bash
+bash install_jhub.sh
+```
 
 ## Step 4: Validate in JupyterHub
 
