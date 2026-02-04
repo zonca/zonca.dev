@@ -10,6 +10,22 @@ title: Create a Manila Share in Exosphere and Mount It for All JupyterHub Users
 
 This tutorial shows how to create a Manila share in Exosphere and mount it into all JupyterHub single-user pods on Jetstream 2. This provides a ReadWriteMany (RWX) shared filesystem suitable for shared datasets and tools.
 
+## 0. Clone this repo and locate the Manila examples
+
+These steps reuse the example manifests already included in this repository:
+
+```bash
+git clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream.git
+cd jupyterhub-deploy-kubernetes-jetstream
+ls manila
+```
+
+You will use:
+
+- `manila/ceph-secret.yml` for the CephFS secret
+- `manila/ceph-pod.yml` for a quick mount test
+- `manila/jupyterhub_manila.yaml` for the Z2JH Helm values snippet
+
 ## 1. Create a Manila share in Exosphere
 
 Exosphere supports Manila shares as an **Experimental feature**. Enable Experimental features in Exosphere settings, then create a share from the allocation dashboard (Create → Share). After creation, open the share’s status page and copy:
@@ -20,52 +36,32 @@ Exosphere supports Manila shares as an **Experimental feature**. Enable Experime
 
 These are shown in the “Mount Your Share” section on the share status page.
 
-## 2. Create the Kubernetes secret
+## 2. Create the Kubernetes secret (edit `manila/ceph-secret.yml`)
 
-Create a secret in the JupyterHub namespace (replace values from Exosphere):
+Open `manila/ceph-secret.yml` and replace the key with your **Access key**:
 
 ```bash
-kubectl -n jhub create secret generic ceph-secret \
-  --from-literal=key='<ACCESS_KEY_FROM_EXOSPHERE>'
+sed -n '1,120p' manila/ceph-secret.yml
 ```
 
-## 3. Configure a test pod (optional but recommended)
+Apply it:
 
-Before mounting into JupyterHub, test with a simple pod:
-
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: ceph
-  namespace: jhub
-spec:
-  containers:
-  - name: cephfs-pod
-    image: httpd:buster
-    volumeMounts:
-    - mountPath: "/mnt/cephfs"
-      name: cephfs
-  volumes:
-  - name: cephfs
-    cephfs:
-      monitors:
-      - <MON1>:<PORT>
-      - <MON2>:<PORT>
-      - <MON3>:<PORT>
-      - <MON4>:<PORT>
-      - <MON5>:<PORT>
-      user: <ACCESS_RULE_NAME>
-      secretRef:
-        name: ceph-secret
-      readOnly: false
-      path: "<SHARE_PATH>"
+```bash
+kubectl apply -f manila/ceph-secret.yml
 ```
+
+## 3. Configure a test pod (edit `manila/ceph-pod.yml`)
+
+Before mounting into JupyterHub, test with a simple pod. Edit `manila/ceph-pod.yml` and set:
+
+- `monitors`: use the monitor list and ports from Exosphere
+- `user`: set to **Access rule name**
+- `path`: set to **Share path**
 
 Apply it and verify access:
 
 ```bash
-kubectl apply -f ceph-pod.yml
+kubectl apply -f manila/ceph-pod.yml
 kubectl exec --stdin -n jhub --tty ceph -- /bin/bash
 cd /mnt/cephfs
 ```
@@ -77,32 +73,9 @@ mkdir readwrite
 chown 1000:100 readwrite
 ```
 
-## 4. Mount the share in all JupyterHub user pods
+## 4. Mount the share in all JupyterHub user pods (edit `manila/jupyterhub_manila.yaml`)
 
-Add this to your Z2JH Helm values (for example in `manila/jupyterhub_manila.yaml`):
-
-```yaml
-singleuser:
-  storage:
-    extraVolumes:
-      - name: manila-share
-        cephfs:
-          monitors:
-          - <MON1>:<PORT>
-          - <MON2>:<PORT>
-          - <MON3>:<PORT>
-          - <MON4>:<PORT>
-          - <MON5>:<PORT>
-          user: <ACCESS_RULE_NAME>
-          secretRef:
-            name: ceph-secret
-          readOnly: false
-          path: "<SHARE_PATH>"
-    extraVolumeMounts:
-      - name: manila-share
-        mountPath: /share
-        readOnly: false
-```
+Edit `manila/jupyterhub_manila.yaml` to match the same **monitors**, **Access rule name**, and **Share path** you used above. The file already contains a correct CephFS volume configuration.
 
 Then upgrade JupyterHub:
 
