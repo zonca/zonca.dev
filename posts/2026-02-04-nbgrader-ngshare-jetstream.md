@@ -29,6 +29,13 @@ nbgrader's default exchange assumes a shared filesystem between user pods. Kuber
 * `kubectl` and `helm` configured.
 * This repository cloned locally.
 
+## Storage sizing for ngshare
+
+ngshare stores **metadata only** (users, courses, submissions metadata), not the actual notebook files.
+
+* Typical classes: **1–5 Gi** is plenty.
+* Large classes or many submissions: **10 Gi** is safe.
+
 ## Step 1: Install ngshare (Helm)
 
 Add the Helm repo and create a minimal `config.yaml`:
