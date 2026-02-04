@@ -147,9 +147,23 @@ python -m pip show nbgrader ngshare-exchange
 nbgrader list
 ```
 
-If the exchange is correctly configured, `nbgrader list` should not error and should use ngshare as the exchange backend.
+Expected output (example):
 
-Note: running `nbgrader list` in a standalone test pod (not a real JupyterHub user pod) can return a 404 from ngshare. Always validate from an actual user server.
+```
+[pip show output truncated]
+[ListApp | ERROR] ngshare service returned invalid status code 404.
+[ListApp | ERROR] ngshare endpoint /assignments/course101 returned failure: Course not found
+[ListApp | ERROR] Failed to get assignments from course course101.
+[ListApp | INFO] Released assignments:
+```
+
+The 404 "Course not found" is expected until you create the course in the next step.
+
+Note: running `nbgrader list` in a standalone test pod (not a real JupyterHub user pod) can also return a 404 from ngshare. Always validate from an actual user server.
+
+Full `pip show` output is available in this repo at:
+
+* `nbgrader/expected-output/pip-show-nbgrader-ngshare.txt`
 
 ## Step 5: Create the course and roster
 
@@ -160,6 +174,171 @@ Creating a course requires an **admin** user.
 ngshare-course-management create_course course101 instructor1
 ngshare-course-management add_student course101 student1
 ```
+
+After creating the course:
+
+```
+[ListApp | INFO] Released assignments:
+```
+
+## Step 6: Create and release a first assignment
+
+Initialize a course directory with example content:
+
+```bash
+nbgrader quickstart course101
+```
+
+Expected output (example):
+
+```
+[QuickStartApp | INFO] Creating directory '/home/jovyan/course101'...
+[QuickStartApp | INFO] Copying example from the user guide...
+[QuickStartApp | INFO] Generating example config file...
+[QuickStartApp | INFO] Done! The course files are located in '/home/jovyan/course101'.
+```
+
+Generate the assignment and release it to ngshare:
+
+```bash
+cd /home/jovyan/course101
+nbgrader generate_assignment ps1
+nbgrader release_assignment ps1
+```
+
+If you want ready-made test notebooks, this repo includes a minimal set at:
+
+* `nbgrader/quickstart-source/ps1/problem1.ipynb`
+* `nbgrader/quickstart-source/ps1/problem2.ipynb`
+
+Copy them into your course source before generating:
+
+```bash
+cp -r /path/to/jupyterhub-deploy-kubernetes-jetstream/nbgrader/quickstart-source/ps1 /home/jovyan/course101/source/
+```
+
+Expected output (example):
+
+```
+[GenerateAssignmentApp | INFO] Updating/creating assignment 'ps1': {}
+[GenerateAssignmentApp | INFO] Converting notebook /home/jovyan/course101/source/./ps1/problem1.ipynb
+[GenerateAssignmentApp | INFO] Converting notebook /home/jovyan/course101/source/./ps1/problem2.ipynb
+[ReleaseAssignmentApp | INFO] Successfully released ps1
+```
+
+If `nbgrader generate_assignment` fails with an “old nbgrader metadata format” error, run:
+
+```bash
+cd /home/jovyan/course101
+nbgrader update .
+```
+
+Then re-run `nbgrader generate_assignment ps1 --force`.
+
+If you re-run the release, add `--force`:
+
+```bash
+nbgrader release_assignment ps1 --force
+```
+
+Verify it shows up:
+
+```
+[ListApp | INFO] Released assignments:
+[ListApp | INFO] course101 ps1
+```
+
+## Step 7: Student workflow (fetch + submit)
+
+Make sure the student is added to the course:
+
+```bash
+ngshare-course-management add_student course101 student1
+```
+
+If a student is not added, they will see:
+
+```
+[ListApp | ERROR] ngshare service returned invalid status code 403.
+[ListApp | ERROR] ngshare endpoint /assignments/course101 returned failure: Permission denied
+```
+
+As the student, list available assignments:
+
+```bash
+nbgrader list
+```
+
+Expected output (example):
+
+```
+[ListApp | INFO] Released assignments:
+[ListApp | INFO] course101 ps1
+```
+
+Fetch the assignment:
+
+```bash
+nbgrader fetch_assignment ps1
+```
+
+Expected output (example):
+
+```
+[FetchAssignmentApp | INFO] Successfully fetched ps1. Will try to decode
+[FetchAssignmentApp | INFO] Decoding: /home/jovyan/ps1/problem2.ipynb
+[FetchAssignmentApp | INFO] Decoding: /home/jovyan/ps1/problem1.ipynb
+[FetchAssignmentApp | INFO] Successfully decoded ps1.
+```
+
+Submit the assignment:
+
+```bash
+nbgrader submit ps1
+```
+
+Expected output (example):
+
+```
+[SubmitApp | INFO] Source: /home/jovyan/ps1
+[SubmitApp | INFO] Encoding: problem1.ipynb
+[SubmitApp | INFO] Encoding: problem2.ipynb
+[SubmitApp | INFO] Submitted as: course101 ps1 2026-02-04 03:03:39.734930
+```
+
+## Step 8: Instructor workflow (collect + autograde)
+
+As the instructor:
+
+```bash
+cd /home/jovyan/course101
+nbgrader collect ps1
+```
+
+Expected output (example):
+
+```
+[CollectApp | INFO] Processing 1 submissions of "ps1" for course "course101"
+[CollectApp | INFO] Collecting submission: student1 ps1
+[CollectApp | INFO] Decoding: /home/jovyan/course101/submitted/student1/ps1/problem1.ipynb
+[CollectApp | INFO] Decoding: /home/jovyan/course101/submitted/student1/ps1/problem2.ipynb
+```
+
+Autograde:
+
+```bash
+nbgrader autograde ps1
+```
+
+Expected output (example):
+
+```
+[AutogradeApp | INFO] SubmittedAssignment<ps1 for student1> submitted at 2026-02-04 03:03:39.734930
+[AutogradeApp | INFO] Autograding /home/jovyan/course101/autograded/student1/ps1/problem1.ipynb
+[AutogradeApp | INFO] Autograding /home/jovyan/course101/autograded/student1/ps1/problem2.ipynb
+```
+
+You may see `SAWarning` lines from SQLAlchemy during autograde. These are warnings (not failures) and can be ignored for this workflow.
 
 ## Notes
 
