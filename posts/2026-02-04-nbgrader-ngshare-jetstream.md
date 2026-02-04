@@ -54,10 +54,33 @@ Install into the same namespace as JupyterHub (here `jhub`):
 ```bash
 helm install ngshare ngshare/ngshare \
   --namespace jhub \
-  -f ngshare-config.yaml
+  -f nbgrader/ngshare-config.yaml
+```
+
+Expected output (truncated):
+
+```
+NAME: ngshare
+NAMESPACE: jhub
+STATUS: deployed
+NOTES:
+Congrats, ngshare should be installed!
 ```
 
 At the end of the Helm install, ngshare prints the **exact JupyterHub config snippet** you should add. Keep it; we will use it in the next step.
+
+Verify the pod:
+
+```bash
+kubectl -n jhub get pods -l app.kubernetes.io/instance=ngshare
+```
+
+Example output:
+
+```
+NAME                       READY   STATUS    RESTARTS   AGE
+ngshare-57545bf697-rbrcz   1/1     Running   0          37s
+```
 
 ## Step 2: Register ngshare in JupyterHub
 
@@ -66,7 +89,13 @@ Add the ngshare service snippet to your JupyterHub values:
 * `nbgrader/jhub-ngshare-service.yaml`
 
 If you keep your Helm values in `config_standard_storage.yaml`, add the block there.  
-Then add the values file to `install_jhub.sh` (just before the last line), and re-deploy by running:
+Then add the values file to `install_jhub.sh` (just before the last line):
+
+```
+--values nbgrader/jhub-ngshare-service.yaml \
+```
+
+Re-deploy by running:
 
 ```bash
 bash install_jhub.sh
@@ -91,7 +120,13 @@ Replace `COURSE_ID` with your course (e.g. `course101`).
 If you want a custom image instead, see:  
 `https://www.zonca.dev/posts/2025-12-01-custom-jupyterhub-docker-image`
 
-After updating the values, add the file to `install_jhub.sh` and re-deploy:
+After updating the values, add the file to `install_jhub.sh`:
+
+```
+--values nbgrader/jhub-singleuser-nbgrader.yaml \
+```
+
+Re-deploy:
 
 ```bash
 bash install_jhub.sh
@@ -123,3 +158,26 @@ ngshare-course-management add_student course101 student1
 * Use **ngshare** for nbgrader exchange on Kubernetes.
 * Use a dedicated course ID per class (set in `nbgrader_config.py`).
 * To manage students and instructors, use the `ngshare-course-management` CLI installed with `ngshare_exchange` rather than the formgrader UI.
+
+## Troubleshooting
+
+If ngshare starts with:
+
+```
+sqlite3.OperationalError: unable to open database file
+```
+
+Your storage backend likely doesn't honor `fsGroup`.  
+Fix it by uncommenting the `deployment.initContainers` block in `nbgrader/ngshare-config.yaml` and re-install:
+
+```bash
+helm upgrade ngshare ngshare/ngshare \
+  --namespace jhub \
+  -f nbgrader/ngshare-config.yaml
+```
+
+Then restart the pod:
+
+```bash
+kubectl -n jhub delete pod -l app.kubernetes.io/instance=ngshare
+```
