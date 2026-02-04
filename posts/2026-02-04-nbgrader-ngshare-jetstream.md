@@ -349,6 +349,14 @@ You may see `SAWarning` lines from SQLAlchemy during autograde. These are warnin
 
 ## Troubleshooting
 
+If you see:
+
+```
+KeyError: 'USER'
+```
+
+you are likely running outside a real JupyterHub user environment. Run the validation inside a spawned JupyterHub user server.
+
 If ngshare starts with:
 
 ```
@@ -369,11 +377,3 @@ Then restart the pod:
 ```bash
 kubectl -n jhub delete pod -l app.kubernetes.io/instance=ngshare
 ```
-
-If you see:
-
-```
-KeyError: 'USER'
-```
-
-you are likely running outside a real JupyterHub user environment. Run the validation inside a spawned JupyterHub user server.
