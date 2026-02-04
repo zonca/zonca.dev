@@ -22,8 +22,10 @@ ls manila
 
 You will use:
 
-- `manila/ceph-secret.yml` for the CephFS secret
-- `manila/ceph-pod.yml` for a quick mount test
+- `manila/cephfs-csi-values.yaml` for the CephFS CSI Helm chart values
+- `manila/cephfs-csi-pv.yaml` for the static PV
+- `manila/cephfs-csi-pvc.yaml` for the static PVC
+- `manila/cephfs-csi-test-pod.yaml` for a quick mount test
 - `manila/jupyterhub_manila.yaml` for the Z2JH Helm values snippet
 
 ## 1. Create a Manila share in Exosphere
@@ -36,78 +38,30 @@ Exosphere supports Manila shares as an **Experimental feature**. Enable Experime
 
 These are shown in the “Mount Your Share” section on the share status page.
 
-## 2. Create the Kubernetes secret (edit `manila/ceph-secret.yml`)
+## 2. Install CephFS CSI with Helm (required on Kubernetes 1.31+)
 
-Open `manila/ceph-secret.yml` and replace the key with your **Access key**. Use the read/write key for a shared writable mount, or the read-only key if you plan to mount it read-only:
+Kubernetes 1.31 removed the in-tree CephFS plugin, so you must use the CephFS CSI driver. This tutorial uses the official Helm chart.
+
+First, edit `manila/cephfs-csi-values.yaml` with your Manila values:
 
 ```bash
-sed -n '1,120p' manila/ceph-secret.yml
+sed -n '1,120p' manila/cephfs-csi-values.yaml
 ```
 
-Apply it:
+Fill in:
+
+- `<CEPH_FSID>`: Ceph cluster FSID (request from Jetstream support)
+- `<ACCESS_RULE_NAME>`: the Manila access rule name (no `client.` prefix)
+- `<ACCESS_KEY>`: read/write or read-only key, depending on the mount you want
+
+Install the chart:
 
 ```bash
-kubectl apply -f manila/ceph-secret.yml
-```
-
-## 3. Install the CephFS CSI driver (required on Kubernetes 1.31+)
-
-If your pod shows `failed to get Plugin from volumeSpec ... err=no volume plugin matched`, your cluster does not have the CephFS volume plugin installed. Kubernetes 1.31 removed the in-tree CephFS plugin, so you must install the CephFS CSI driver.
-
-Download the Ceph CSI manifests in a local folder:
-
-```bash
-git clone --depth 1 --branch v3.15.0 https://github.com/ceph/ceph-csi ceph-csi
-```
-
-Create the CSI config and secret. Use the same Manila access rule name and key:
-
-```bash
-KEY=$(kubectl get secret -n jhub ceph-secret -o jsonpath="{.data.key}" | base64 -d)
-cat <<EOF > ceph-csi-config.yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: ceph-csi-config
-  namespace: default
-data:
-  config.json: |-
-    [
-      {
-        "clusterID": "<CEPH_FSID>",
-        "monitors": [
-          "149.165.158.38:6789",
-          "149.165.158.22:6789",
-          "149.165.158.54:6789",
-          "149.165.158.70:6789",
-          "149.165.158.86:6789"
-        ]
-      }
-    ]
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: csi-cephfs-secret
-  namespace: default
-stringData:
-  userID: <ACCESS_RULE_NAME>
-  userKey: ${KEY}
-EOF
-kubectl apply -f ceph-csi-config.yaml
-```
-
-Replace `<CEPH_FSID>` with the Ceph cluster FSID (ask Jetstream support if you do not have a way to query it).
-
-Install the CephFS CSI components (these use the `default` namespace):
-
-```bash
-kubectl apply -f ceph-csi/deploy/cephfs/kubernetes/csidriver.yaml
-kubectl apply -f ceph-csi/deploy/cephfs/kubernetes/csi-provisioner-rbac.yaml
-kubectl apply -f ceph-csi/deploy/cephfs/kubernetes/csi-nodeplugin-rbac.yaml
-kubectl apply -f ceph-csi/deploy/ceph-conf.yaml
-kubectl apply -f ceph-csi/deploy/cephfs/kubernetes/csi-cephfsplugin-provisioner.yaml
-kubectl apply -f ceph-csi/deploy/cephfs/kubernetes/csi-cephfsplugin.yaml
+helm repo add ceph-csi https://ceph.github.io/csi-charts
+helm repo update
+helm upgrade --install ceph-csi-cephfs ceph-csi/ceph-csi-cephfs \
+  --namespace default --create-namespace \
+  --values manila/cephfs-csi-values.yaml
 ```
 
 Verify the CSI pods are running:
@@ -117,19 +71,27 @@ kubectl -n default get pods -l app=csi-cephfsplugin-provisioner
 kubectl -n default get pods -l app=csi-cephfsplugin
 ```
 
-## 4. Configure a test pod (edit `manila/ceph-pod.yml`)
+## 3. Create a static PV/PVC for the Manila share
 
-Before mounting into JupyterHub, test with a simple pod. Edit `manila/ceph-pod.yml` and set:
-
-- `monitors`: use the monitor list and ports from Exosphere
-- `user`: set to **Access rule name**
-- `path`: set to **Share path**
-
-Apply it and verify access:
+Edit the files below to add your **CEPH_FSID** and **Share path** (the path portion after the monitors):
 
 ```bash
-kubectl apply -f manila/ceph-pod.yml
-kubectl exec --stdin -n jhub --tty ceph -- /bin/bash
+sed -n '1,200p' manila/cephfs-csi-pv.yaml
+sed -n '1,200p' manila/cephfs-csi-pvc.yaml
+```
+
+Apply them:
+
+```bash
+kubectl apply -f manila/cephfs-csi-pv.yaml
+kubectl apply -f manila/cephfs-csi-pvc.yaml
+```
+
+## 4. Test the mount with a pod
+
+```bash
+kubectl apply -f manila/cephfs-csi-test-pod.yaml
+kubectl exec --stdin -n jhub --tty cephfs-csi-test -- /bin/sh
 cd /mnt/cephfs
 ```
 
@@ -142,7 +104,7 @@ chown 1000:100 readwrite
 
 ## 5. Mount the share in all JupyterHub user pods (edit `manila/jupyterhub_manila.yaml`)
 
-Edit `manila/jupyterhub_manila.yaml` to match the same **monitors**, **Access rule name**, and **Share path** you used above. The file already contains a correct CephFS volume configuration.
+Edit `manila/jupyterhub_manila.yaml` to reference the PVC created above. The file already contains a `persistentVolumeClaim` reference.
 
 Then upgrade JupyterHub:
 
