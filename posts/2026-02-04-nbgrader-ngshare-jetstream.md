@@ -15,7 +15,7 @@ We will:
 
 * Deploy `ngshare` via Helm.
 * Configure JupyterHub to register the ngshare service.
-* Install `ngshare_exchange` and `nbgrader` in the singleuser image.
+* Install `ngshare_exchange` and `nbgrader` in the singleuser image (using an existing image).
 * Set a placeholder course ID.
 
 ## Why ngshare
@@ -73,15 +73,19 @@ Verify the ngshare service:
 * JupyterHub → Control Panel → Services → **ngshare**
 * If you see a 403, try with an admin user (ngshare enforces admin-only access to some endpoints).
 
-## Step 3: Build a singleuser image with nbgrader + ngshare_exchange
+## Step 3: Enable nbgrader in the singleuser image
 
-You need `nbgrader` and `ngshare_exchange` inside every user pod. The cleanest way is a custom singleuser image.
+You need `nbgrader` and `ngshare_exchange` inside every user pod.  
+This tutorial uses the standard Jupyter Docker Stacks image and installs the packages at startup.
 
-Use the template image in this repo:
+Use the template in this repo:
 
-* `nbgrader/Dockerfile`
+* `nbgrader/jhub-singleuser-nbgrader.yaml`
 
 Replace `COURSE_ID` with your course (e.g. `course101`).
+
+If you want a custom image instead, see:  
+`https://www.zonca.dev/posts/2025-12-01-custom-jupyterhub-docker-image`
 
 Build and push the image, then point JupyterHub to it:
 
@@ -92,7 +96,7 @@ singleuser:
     tag: "2026-02-04"
 ```
 
-Re-deploy JupyterHub after updating the image.
+Re-deploy JupyterHub after updating the values:
 
 ## Step 4: Validate in JupyterHub
 
