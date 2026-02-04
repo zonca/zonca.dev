@@ -355,7 +355,7 @@ If you see:
 KeyError: 'USER'
 ```
 
-you are likely running outside a real JupyterHub user environment. Run the validation inside a spawned JupyterHub user server.
+you are likely running outside a real JupyterHub user environment. This typically happens when running exchange commands like `nbgrader list`, `nbgrader fetch_assignment`, or `nbgrader submit` in a standalone test pod. Run those commands inside a spawned JupyterHub user server.
 
 If ngshare starts with:
 
