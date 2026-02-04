@@ -132,6 +132,12 @@ Re-deploy:
 bash install_jhub.sh
 ```
 
+If you forget to add the values file, user pods will not have the packages installed and you will see:
+
+```
+WARNING: Package(s) not found: nbgrader, ngshare-exchange
+```
+
 ## Step 4: Validate in JupyterHub
 
 In a user pod:
@@ -142,6 +148,8 @@ nbgrader list
 ```
 
 If the exchange is correctly configured, `nbgrader list` should not error and should use ngshare as the exchange backend.
+
+Note: running `nbgrader list` in a standalone test pod (not a real JupyterHub user pod) can return a 404 from ngshare. Always validate from an actual user server.
 
 ## Step 5: Create the course and roster
 
@@ -181,3 +189,11 @@ Then restart the pod:
 ```bash
 kubectl -n jhub delete pod -l app.kubernetes.io/instance=ngshare
 ```
+
+If you see:
+
+```
+KeyError: 'USER'
+```
+
+you are likely running outside a real JupyterHub user environment. Run the validation inside a spawned JupyterHub user server.
