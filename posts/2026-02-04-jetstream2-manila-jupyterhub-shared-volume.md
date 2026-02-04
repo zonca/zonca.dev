@@ -50,7 +50,74 @@ Apply it:
 kubectl apply -f manila/ceph-secret.yml
 ```
 
-## 3. Configure a test pod (edit `manila/ceph-pod.yml`)
+## 3. Install the CephFS CSI driver (required on Kubernetes 1.31+)
+
+If your pod shows `failed to get Plugin from volumeSpec ... err=no volume plugin matched`, your cluster does not have the CephFS volume plugin installed. Kubernetes 1.31 removed the in-tree CephFS plugin, so you must install the CephFS CSI driver.
+
+Download the Ceph CSI manifests:
+
+```bash
+git clone --depth 1 --branch v3.15.0 https://github.com/ceph/ceph-csi /tmp/ceph-csi
+```
+
+Create the CSI config and secret. Use the same Manila access rule name and key:
+
+```bash
+KEY=$(kubectl get secret -n jhub ceph-secret -o jsonpath="{.data.key}" | base64 -d)
+cat <<EOF > /tmp/ceph-csi-config.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ceph-csi-config
+  namespace: default
+data:
+  config.json: |-
+    [
+      {
+        "clusterID": "<CEPH_FSID>",
+        "monitors": [
+          "149.165.158.38:6789",
+          "149.165.158.22:6789",
+          "149.165.158.54:6789",
+          "149.165.158.70:6789",
+          "149.165.158.86:6789"
+        ]
+      }
+    ]
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: csi-cephfs-secret
+  namespace: default
+stringData:
+  userID: <ACCESS_RULE_NAME>
+  userKey: ${KEY}
+EOF
+kubectl apply -f /tmp/ceph-csi-config.yaml
+```
+
+Replace `<CEPH_FSID>` with the Ceph cluster FSID (ask Jetstream support if you do not have a way to query it).
+
+Install the CephFS CSI components (these use the `default` namespace):
+
+```bash
+kubectl apply -f /tmp/ceph-csi/deploy/cephfs/kubernetes/csidriver.yaml
+kubectl apply -f /tmp/ceph-csi/deploy/cephfs/kubernetes/csi-provisioner-rbac.yaml
+kubectl apply -f /tmp/ceph-csi/deploy/cephfs/kubernetes/csi-nodeplugin-rbac.yaml
+kubectl apply -f /tmp/ceph-csi/deploy/ceph-conf.yaml
+kubectl apply -f /tmp/ceph-csi/deploy/cephfs/kubernetes/csi-cephfsplugin-provisioner.yaml
+kubectl apply -f /tmp/ceph-csi/deploy/cephfs/kubernetes/csi-cephfsplugin.yaml
+```
+
+Verify the CSI pods are running:
+
+```bash
+kubectl -n default get pods -l app=csi-cephfsplugin-provisioner
+kubectl -n default get pods -l app=csi-cephfsplugin
+```
+
+## 4. Configure a test pod (edit `manila/ceph-pod.yml`)
 
 Before mounting into JupyterHub, test with a simple pod. Edit `manila/ceph-pod.yml` and set:
 
@@ -73,7 +140,7 @@ mkdir readwrite
 chown 1000:100 readwrite
 ```
 
-## 4. Mount the share in all JupyterHub user pods (edit `manila/jupyterhub_manila.yaml`)
+## 5. Mount the share in all JupyterHub user pods (edit `manila/jupyterhub_manila.yaml`)
 
 Edit `manila/jupyterhub_manila.yaml` to match the same **monitors**, **Access rule name**, and **Share path** you used above. The file already contains a correct CephFS volume configuration.
 
