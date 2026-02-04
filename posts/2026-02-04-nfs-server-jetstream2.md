@@ -9,7 +9,7 @@ layout: post
 title: Deploy a NFS server to share data between JupyterHub users on Jetstream
 ---
 
-This is an updated version of my [2023 tutorial](https://www.zonca.dev/posts/2023-02-06-nfs-server-kubernetes-jetstream) on deploying a NFS server to share data between JupyterHub users on Jetstream.
+This is an updated version of my [2025 tutorial](https://www.zonca.dev/posts/2025-04-22-nfs-server-jetstream2) on deploying a NFS server to share data between JupyterHub users on Jetstream.
 
 The recommended way to deploy Kubernetes on Jetstream is now using [Magnum and Cluster API](https://www.zonca.dev/posts/2024-12-11-jetstream_kubernetes_magnum.html). Please refer to that guide for the latest instructions on launching and managing Kubernetes clusters on Jetstream. This tutorial has been updated to reflect this change, but the NFS server deployment steps remain the same.
 
