@@ -226,6 +226,7 @@ Expected output (example):
 [ReleaseAssignmentApp | INFO] Successfully released ps1
 ```
 
+
 If `nbgrader generate_assignment` fails with an “old nbgrader metadata format” error, run:
 
 ```bash
