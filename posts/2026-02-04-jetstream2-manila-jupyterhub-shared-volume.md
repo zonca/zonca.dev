@@ -10,9 +10,9 @@ title: Create a Manila Share in Exosphere and Mount It for All JupyterHub Users
 
 This tutorial shows how to create a Manila share in Exosphere and mount it into all JupyterHub single-user pods on Jetstream 2. This provides a ReadWriteMany (RWX) shared filesystem suitable for shared datasets and tools.
 
-## 0. Clone this repo and locate the Manila examples
+## 0. Clone the JupyterHub deployment repo and locate the Manila examples
 
-These steps reuse the example manifests already included in this repository:
+These steps reuse the example manifests included in the JupyterHub deployment repository:
 
 ```bash
 git clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream.git
