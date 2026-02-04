@@ -88,8 +88,7 @@ Use the template in this repo:
 
 Replace `COURSE_ID` with your course (e.g. `course101`).
 
-If you want a custom image instead, see:  
-`https://www.zonca.dev/posts/2025-12-01-custom-jupyterhub-docker-image`
+Custom image guide: `https://www.zonca.dev/posts/2025-12-01-custom-jupyterhub-docker-image`
 
 After updating the values, add the file to `install_jhub.sh` and re-deploy:
 
