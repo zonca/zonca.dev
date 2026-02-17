@@ -66,7 +66,7 @@ opencode run -m nrp/gpt-oss "Hello"
 
 ## Configure Crush
 
-[Crush](https://github.com/crush-sh/crush) is another excellent CLI tool.
+[Crush](https://github.com/charmbracelet/crush) is another excellent CLI tool.
 
 To configure it for NRP, run this command:
 
