@@ -9,6 +9,12 @@ title: Deploy Kubernetes on Jetstream 2 with Kubespray 2.21.0
 
 ---
 
+::: {.callout-note}
+**Obsolete Tutorial**
+
+This tutorial is obsolete. Please refer to the [Magnum tutorial](./2024-12-11-jetstream_kubernetes_magnum.md) to deploy Kubernetes instead.
+:::
+
 This work has been supported by Indiana University and is cross-posted on the <a href="https://docs.jetstream-cloud.org/general/k8skubespray/" rel="canonical">Jetstream 2 official documentation website</a>.
 
 This tutorial will explain how to install Kubernetes on Jetstream 2 relying on Kubespray.
