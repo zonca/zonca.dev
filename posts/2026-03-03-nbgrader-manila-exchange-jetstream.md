@@ -63,8 +63,8 @@ You can create it in **Exosphere** (recommended), or via OpenStack CLI.
 Example CLI flow:
 
 ```bash
-# Load credentials first
-source /path/to/your-openrc.sh
+# First ensure your shell already has OpenStack credentials loaded.
+# Also ensure openstack/kubectl/helm are available in your current environment.
 
 # Create a 50 GiB CephFS share
 openstack share create \
@@ -90,13 +90,8 @@ Note: in this workflow, Kubernetes mounts the Manila share through CephFS CSI, b
 From the repo root:
 
 ```bash
-# Load your OpenStack credentials
-source /path/to/your-openrc.sh
-
-# Activate the environment where openstack/kubectl/helm are available
-# (conda env, virtualenv, module environment, etc.)
-# Example:
-# source /path/to/your/env/bin/activate
+# Ensure your current shell already has OpenStack credentials loaded
+# and has openstack/kubectl/helm available.
 
 export K8S_CLUSTER_NAME=k8s
 bash kubernetes_magnum/configure_kubectl_locally.sh
