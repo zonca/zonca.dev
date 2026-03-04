@@ -40,12 +40,12 @@ A Manila share mounted as `ReadWriteMany` provides exactly that.
 
 * A running Magnum cluster named `k8s`.
 * JupyterHub deployed with Helm.
-* A Manila share already created (or created in Step 0 below).
+* A Manila share already created (or created in Step 2 below).
 * OpenStack credentials file (`*openrc*.sh`) available.
 * A shell environment where required CLIs are installed and configured:
   `openstack`, `kubectl`, and `helm`.
 
-## Step -1: Check out this repository
+## Step 1: Check out this repository
 
 This tutorial uses config files from this repo (`manila/`, `nbgrader/`, `config_*.yaml`, etc.), so clone it first:
 
@@ -54,7 +54,7 @@ git clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream.git
 cd jupyterhub-deploy-kubernetes-jetstream
 ```
 
-## Step 0 (if needed): Create the Manila share
+## Step 2 (if needed): Create the Manila share
 
 This tutorial uses an existing Jetstream Manila share named `nbgraderexchange`.
 
@@ -85,7 +85,7 @@ openstack share access list nbgraderexchange
 
 Note: in this workflow, Kubernetes mounts the Manila share through CephFS CSI, but does not create the Manila share itself.
 
-## Step 1: Configure access to the Magnum cluster
+## Step 3: Configure access to the Magnum cluster
 
 From the repo root:
 
@@ -106,7 +106,7 @@ kubectl get nodes
 
 You should see nodes from your `k8s` cluster.
 
-## Step 2: Prepare the existing Manila share as a Kubernetes RWX volume
+## Step 4: Prepare the existing Manila share as a Kubernetes RWX volume
 
 This repo includes templates for Jetstream Manila CephFS:
 
@@ -163,7 +163,7 @@ NAME            STATUS   VOLUME             CAPACITY   ACCESS MODES
 manila-cephfs   Bound    manila-cephfs-pv   50Gi       RWX
 ```
 
-## Step 3: Mount the Manila share in all JupyterHub user pods
+## Step 5: Mount the Manila share in all JupyterHub user pods
 
 Use the values file already in this repo:
 
@@ -193,7 +193,7 @@ bash install_jhub.sh
 
 Then stop and start existing user servers so they pick up the new mount.
 
-## Step 4: Install nbgrader and configure filesystem exchange
+## Step 6: Install nbgrader and configure filesystem exchange
 
 Use this file from the repo:
 
@@ -215,7 +215,7 @@ bash install_jhub.sh
 
 Then stop and start existing user servers so the `postStart` hook re-runs and writes the updated `nbgrader_config.py`.
 
-## Step 5: Validate the shared mount and initialize exchange folders
+## Step 7: Validate the shared mount and initialize exchange folders
 
 Open a JupyterHub terminal as an instructor/admin user:
 
@@ -243,7 +243,7 @@ Then open a different user server and confirm the same files are visible:
 ls -la /share/nbgrader/exchange/course101
 ```
 
-## Step 6: Instructor workflow (create + release)
+## Step 8: Instructor workflow (create + release)
 
 As instructor:
 
@@ -256,7 +256,7 @@ nbgrader db student add student1
 nbgrader release_assignment ps1 --force
 ```
 
-## Step 7: Student workflow (list + fetch + submit)
+## Step 9: Student workflow (list + fetch + submit)
 
 As `student1`:
 
@@ -268,7 +268,7 @@ nbgrader submit /home/jovyan/course101/ps1
 
 Expected output includes `course101 ps1` in `nbgrader list` and a successful submit message.
 
-## Step 8: Instructor workflow (collect + autograde)
+## Step 10: Instructor workflow (collect + autograde)
 
 As instructor:
 
