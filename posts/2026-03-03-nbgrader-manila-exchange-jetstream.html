@@ -371,28 +371,25 @@ manila-cephfs   Bound    manila-cephfs-pv   50Gi       RWX</code></pre>
 </section>
 <section id="step-8-instructor-workflow-create-release" class="level2">
 <h2 class="anchored" data-anchor-id="step-8-instructor-workflow-create-release">Step 8: Instructor workflow (create + release)</h2>
-<p>As instructor:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> quickstart course101</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> /path/to/jupyterhub-deploy-kubernetes-jetstream/nbgrader/quickstart-source/ps1 /home/jovyan/course101/source/</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /home/jovyan/course101</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> generate_assignment ps1 <span class="at">--force</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> db student add student1</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> release_assignment ps1 <span class="at">--force</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>From this point, the nbgrader workflow is the same as in the previous tutorial:</p>
+<ul>
+<li>Create/release: <a href="../posts/2026-02-04-nbgrader-ngshare-jetstream.html#step-6-create-and-release-a-first-assignment"><code>./2026-02-04-nbgrader-ngshare-jetstream.md#step-6-create-and-release-a-first-assignment</code></a></li>
+<li>Student fetch/submit: <a href="../posts/2026-02-04-nbgrader-ngshare-jetstream.html#step-7-student-workflow-fetch--submit"><code>./2026-02-04-nbgrader-ngshare-jetstream.md#step-7-student-workflow-fetch--submit</code></a></li>
+<li>Instructor collect/autograde: <a href="../posts/2026-02-04-nbgrader-ngshare-jetstream.html#step-8-instructor-workflow-collect--autograde"><code>./2026-02-04-nbgrader-ngshare-jetstream.md#step-8-instructor-workflow-collect--autograde</code></a></li>
+</ul>
+<p>Manila-specific difference:</p>
+<ul>
+<li>You do <strong>not</strong> need <code>ngshare-course-management</code>.</li>
+<li>Student roster is managed with <code>nbgrader db student add ...</code> on the instructor side.</li>
+</ul>
 </section>
 <section id="step-9-student-workflow-list-fetch-submit" class="level2">
 <h2 class="anchored" data-anchor-id="step-9-student-workflow-list-fetch-submit">Step 9: Student workflow (list + fetch + submit)</h2>
-<p>As <code>student1</code>:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> list</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> fetch_assignment ps1</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> submit /home/jovyan/course101/ps1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Expected output includes <code>course101 ps1</code> in <code>nbgrader list</code> and a successful submit message.</p>
+<p>Use the same commands as linked in Step 8.</p>
 </section>
 <section id="step-10-instructor-workflow-collect-autograde" class="level2">
 <h2 class="anchored" data-anchor-id="step-10-instructor-workflow-collect-autograde">Step 10: Instructor workflow (collect + autograde)</h2>
-<p>As instructor:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /home/jovyan/course101</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> collect ps1</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> autograde ps1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Use the same commands as linked in Step 8.</p>
 </section>
 <section id="notes" class="level2">
 <h2 class="anchored" data-anchor-id="notes">Notes</h2>
@@ -405,7 +402,7 @@ manila-cephfs   Bound    manila-cephfs-pv   50Gi       RWX</code></pre>
 <section id="troubleshooting" class="level2">
 <h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
 <p>If <code>nbgrader fetch_assignment</code> or <code>submit</code> fails with permission errors:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> <span class="at">-R</span> 0777 /share/nbgrader/exchange</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> <span class="at">-R</span> 0777 /share/nbgrader/exchange</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If user pods don’t see <code>/share</code>, confirm both values files were included in <code>install_jhub.sh</code> and run <code>bash install_jhub.sh</code> again.</p>
 <p>If the Manila PVC is not <code>Bound</code>, re-check placeholders in:</p>
 <ul>
