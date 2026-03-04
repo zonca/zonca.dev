@@ -19,10 +19,17 @@ This is for the setup where:
 
 We will:
 
+* Check out this repository locally (contains all config files used below).
 * Configure `kubectl` for the Magnum cluster.
 * Mount the existing Manila share into all JupyterHub user pods at `/share`.
 * Configure nbgrader to use `/share/nbgrader/exchange`.
 * Run the full instructor/student workflow (`release`, `fetch`, `submit`, `collect`, `autograde`).
+
+If you want the API-based approach instead of a shared disk, see the previous tutorial:
+[`./2026-02-04-nbgrader-ngshare-jetstream.md`](./2026-02-04-nbgrader-ngshare-jetstream.md)
+
+Difference in one line:
+this tutorial uses nbgrader's native filesystem exchange on a Manila RWX share, while the previous tutorial uses `ngshare` (REST API exchange without shared filesystem).
 
 ## Why this approach
 
@@ -33,17 +40,64 @@ A Manila share mounted as `ReadWriteMany` provides exactly that.
 
 * A running Magnum cluster named `k8s`.
 * JupyterHub deployed with Helm.
-* A Manila share already created.
-* This repository cloned locally.
-* OpenStack credentials (`*openrc*.sh`) and local `.venv` available.
+* A Manila share already created (or created in Step 0 below).
+* OpenStack credentials file (`*openrc*.sh`) available.
+* A shell environment where required CLIs are installed and configured:
+  `openstack`, `kubectl`, and `helm`.
+
+## Step -1: Check out this repository
+
+This tutorial uses config files from this repo (`manila/`, `nbgrader/`, `config_*.yaml`, etc.), so clone it first:
+
+```bash
+git clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream.git
+cd jupyterhub-deploy-kubernetes-jetstream
+```
+
+## Step 0 (if needed): Create the Manila share
+
+This tutorial uses an existing Jetstream Manila share named `nbgraderexchange`.
+
+You can create it in **Exosphere** (recommended), or via OpenStack CLI.
+
+Example CLI flow:
+
+```bash
+# Load credentials first
+source /path/to/your-openrc.sh
+
+# Create a 50 GiB CephFS share
+openstack share create \
+  --name nbgraderexchange \
+  --share-type cephfsnativetype \
+  --share-protocol CEPHFS \
+  50
+
+# Create a CephX RW access rule
+openstack share access create \
+  --access-level rw \
+  nbgraderexchange cephx nbgraderexchange-rw
+
+# Verify
+openstack share list --name nbgraderexchange
+openstack share access list nbgraderexchange
+```
+
+Note: in this workflow, Kubernetes mounts the Manila share through CephFS CSI, but does not create the Manila share itself.
 
 ## Step 1: Configure access to the Magnum cluster
 
 From the repo root:
 
 ```bash
-source ./app-cred-coe-202504-openrc.sh
-source .venv/bin/activate
+# Load your OpenStack credentials
+source /path/to/your-openrc.sh
+
+# Activate the environment where openstack/kubectl/helm are available
+# (conda env, virtualenv, module environment, etc.)
+# Example:
+# source /path/to/your/env/bin/activate
+
 export K8S_CLUSTER_NAME=k8s
 bash kubernetes_magnum/configure_kubectl_locally.sh
 export KUBECONFIG=$(pwd)/config
