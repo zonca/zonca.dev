@@ -245,38 +245,24 @@ ls -la /share/nbgrader/exchange/course101
 
 ## Step 8: Instructor workflow (create + release)
 
-As instructor:
+From this point, the nbgrader workflow is the same as in the previous tutorial:
 
-```bash
-nbgrader quickstart course101
-cp -r /path/to/jupyterhub-deploy-kubernetes-jetstream/nbgrader/quickstart-source/ps1 /home/jovyan/course101/source/
-cd /home/jovyan/course101
-nbgrader generate_assignment ps1 --force
-nbgrader db student add student1
-nbgrader release_assignment ps1 --force
-```
+* Create/release: [`./2026-02-04-nbgrader-ngshare-jetstream.md#step-6-create-and-release-a-first-assignment`](./2026-02-04-nbgrader-ngshare-jetstream.md#step-6-create-and-release-a-first-assignment)
+* Student fetch/submit: [`./2026-02-04-nbgrader-ngshare-jetstream.md#step-7-student-workflow-fetch--submit`](./2026-02-04-nbgrader-ngshare-jetstream.md#step-7-student-workflow-fetch--submit)
+* Instructor collect/autograde: [`./2026-02-04-nbgrader-ngshare-jetstream.md#step-8-instructor-workflow-collect--autograde`](./2026-02-04-nbgrader-ngshare-jetstream.md#step-8-instructor-workflow-collect--autograde)
+
+Manila-specific difference:
+
+* You do **not** need `ngshare-course-management`.
+* Student roster is managed with `nbgrader db student add ...` on the instructor side.
 
 ## Step 9: Student workflow (list + fetch + submit)
 
-As `student1`:
-
-```bash
-nbgrader list
-nbgrader fetch_assignment ps1
-nbgrader submit /home/jovyan/course101/ps1
-```
-
-Expected output includes `course101 ps1` in `nbgrader list` and a successful submit message.
+Use the same commands as linked in Step 8.
 
 ## Step 10: Instructor workflow (collect + autograde)
 
-As instructor:
-
-```bash
-cd /home/jovyan/course101
-nbgrader collect ps1
-nbgrader autograde ps1
-```
+Use the same commands as linked in Step 8.
 
 ## Notes
 
