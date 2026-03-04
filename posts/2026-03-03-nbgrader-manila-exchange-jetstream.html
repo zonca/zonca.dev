@@ -244,8 +244,8 @@ A Manila share mounted as <code>ReadWriteMany</code> provides exactly that.</p>
 <p>This tutorial uses an existing Jetstream Manila share named <code>nbgraderexchange</code>.</p>
 <p>You can create it in <strong>Exosphere</strong> (recommended), or via OpenStack CLI.</p>
 <p>Example CLI flow:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load credentials first</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /path/to/your-openrc.sh</span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First ensure your shell already has OpenStack credentials loaded.</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Also ensure openstack/kubectl/helm are available in your current environment.</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a 50 GiB CephFS share</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> share create <span class="dt">\</span></span>
@@ -267,18 +267,13 @@ A Manila share mounted as <code>ReadWriteMany</code> provides exactly that.</p>
 <section id="step-3-configure-access-to-the-magnum-cluster" class="level2">
 <h2 class="anchored" data-anchor-id="step-3-configure-access-to-the-magnum-cluster">Step 3: Configure access to the Magnum cluster</h2>
 <p>From the repo root:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load your OpenStack credentials</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /path/to/your-openrc.sh</span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure your current shell already has OpenStack credentials loaded</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and has openstack/kubectl/helm available.</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Activate the environment where openstack/kubectl/helm are available</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># (conda env, virtualenv, module environment, etc.)</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Example:</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># source /path/to/your/env/bin/activate</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">K8S_CLUSTER_NAME</span><span class="op">=</span>k8s</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> kubernetes_magnum/configure_kubectl_locally.sh</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">KUBECONFIG</span><span class="op">=</span><span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>/config</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get nodes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">K8S_CLUSTER_NAME</span><span class="op">=</span>k8s</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> kubernetes_magnum/configure_kubectl_locally.sh</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">KUBECONFIG</span><span class="op">=</span><span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>/config</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get nodes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You should see nodes from your <code>k8s</code> cluster.</p>
 </section>
 <section id="step-4-prepare-the-existing-manila-share-as-a-kubernetes-rwx-volume" class="level2">
