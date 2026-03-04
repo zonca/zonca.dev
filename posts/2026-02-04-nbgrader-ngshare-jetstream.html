@@ -201,6 +201,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2026-02-04-nbgrader-ngshare-jetstream.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2026-02-04-nbgrader-ngshare-jetstream.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
+<blockquote class="blockquote">
+<p><strong>Update (March 3, 2026):</strong> See the newer tutorial: <a href="../posts/2026-03-03-nbgrader-manila-exchange-jetstream.html">Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)</a></p>
+<p>Short differences: - This tutorial uses <code>ngshare</code> (REST API exchange, no shared filesystem). - The newer tutorial uses nbgrader’s native filesystem exchange on a shared Manila RWX volume. - The newer tutorial removes the <code>ngshare</code> service dependency and focuses on shared storage setup.</p>
+</blockquote>
 <p>This tutorial shows how to deploy <strong>nbgrader</strong> on Jetstream using <strong>ngshare</strong>, a service designed to make nbgrader work on Kubernetes without a shared filesystem exchange. This is the recommended approach for Kubernetes deployments.</p>
 <p>We will:</p>
 <ul>
