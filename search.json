@@ -438,21 +438,21 @@
     "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-3-mount-the-manila-share-in-all-jupyterhub-user-pods",
     "title": "Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)",
     "section": "Step 3: Mount the Manila share in all JupyterHub user pods",
-    "text": "Step 3: Mount the Manila share in all JupyterHub user pods\nUse the values file already in this repo:\n\nmanila/jupyterhub_manila.yaml\n\nIt mounts the shared PVC at /share for every user pod.\nVerify JupyterHub exists in jhub namespace:\nhelm list -n jhub\nIf no jhub release is present yet, deploy JupyterHub first, then continue.\nAdd this values file to install_jhub.sh (before the last line):\n--values manila/jupyterhub_manila.yaml \\\nRe-deploy:\nbash install_jhub.sh"
+    "text": "Step 3: Mount the Manila share in all JupyterHub user pods\nUse the values file already in this repo:\n\nmanila/jupyterhub_manila.yaml\n\nIt mounts the shared PVC at /share for every user pod.\nVerify JupyterHub exists in jhub namespace:\nhelm list -n jhub\nIf no jhub release is present yet, deploy JupyterHub first, then continue.\nAdd this values file to install_jhub.sh (before the last line):\n--values manila/jupyterhub_manila.yaml \\\nRe-deploy:\nbash install_jhub.sh\nThen stop and start existing user servers so they pick up the new mount."
   },
   {
     "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-4-install-nbgrader-and-configure-filesystem-exchange",
     "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-4-install-nbgrader-and-configure-filesystem-exchange",
     "title": "Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)",
     "section": "Step 4: Install nbgrader and configure filesystem exchange",
-    "text": "Step 4: Install nbgrader and configure filesystem exchange\nUse this file from the repo:\n\nnbgrader/jhub-singleuser-nbgrader-filesystem.yaml\n\nReplace COURSE_ID with your course ID (example: course101).\nAdd this file to install_jhub.sh:\n--values nbgrader/jhub-singleuser-nbgrader-filesystem.yaml \\\nRe-deploy:\nbash install_jhub.sh"
+    "text": "Step 4: Install nbgrader and configure filesystem exchange\nUse this file from the repo:\n\nnbgrader/jhub-singleuser-nbgrader-filesystem.yaml\n\nReplace COURSE_ID with your course ID (example: course101).\nAdd this file to install_jhub.sh:\n--values nbgrader/jhub-singleuser-nbgrader-filesystem.yaml \\\nRe-deploy:\nbash install_jhub.sh\nThen stop and start existing user servers so the postStart hook re-runs and writes the updated nbgrader_config.py."
   },
   {
     "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-5-validate-the-shared-mount-and-initialize-exchange-folders",
     "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-5-validate-the-shared-mount-and-initialize-exchange-folders",
     "title": "Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)",
     "section": "Step 5: Validate the shared mount and initialize exchange folders",
-    "text": "Step 5: Validate the shared mount and initialize exchange folders\nOpen a JupyterHub terminal as an instructor/admin user:\npython -m pip show nbgrader\nmkdir -p /share/nbgrader/exchange\nmkdir -p /share/nbgrader/exchange/course101/{inbound,outbound,feedback}\nchmod -R 0777 /share/nbgrader/exchange\nls -la /share/nbgrader/exchange/course101\nIf /share is mounted but writing fails with Permission denied, run a one-time permission bootstrap pod:\nkubectl -n jhub apply -f nbgrader/manila-exchange-permissions-pod.yaml\nkubectl -n jhub logs manila-exchange-permissions\nkubectl -n jhub delete pod manila-exchange-permissions\nThen open a different user server and confirm the same files are visible:\nls -la /share/nbgrader/exchange/course101"
+    "text": "Step 5: Validate the shared mount and initialize exchange folders\nOpen a JupyterHub terminal as an instructor/admin user:\npython -m pip show nbgrader\nmkdir -p /share/nbgrader/exchange\nmkdir -p /share/nbgrader/exchange/course101/inbound\nmkdir -p /share/nbgrader/exchange/course101/outbound\nmkdir -p /share/nbgrader/exchange/course101/feedback\nchmod -R 0777 /share/nbgrader/exchange\nls -la /share/nbgrader/exchange/course101\nIf /share is mounted but writing fails with Permission denied, run a one-time permission bootstrap pod:\nkubectl -n jhub apply -f nbgrader/manila-exchange-permissions-pod.yaml\nkubectl -n jhub logs manila-exchange-permissions\nkubectl -n jhub delete pod manila-exchange-permissions\nThen open a different user server and confirm the same files are visible:\nls -la /share/nbgrader/exchange/course101"
   },
   {
     "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-6-instructor-workflow-create-release",
@@ -466,7 +466,7 @@
     "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-7-student-workflow-list-fetch-submit",
     "title": "Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)",
     "section": "Step 7: Student workflow (list + fetch + submit)",
-    "text": "Step 7: Student workflow (list + fetch + submit)\nAs student1:\nnbgrader list\nnbgrader fetch_assignment ps1\nnbgrader submit ps1\nExpected output includes course101 ps1 in nbgrader list and a successful submit message."
+    "text": "Step 7: Student workflow (list + fetch + submit)\nAs student1:\nnbgrader list\nnbgrader fetch_assignment ps1\nnbgrader submit /home/jovyan/course101/ps1\nExpected output includes course101 ps1 in nbgrader list and a successful submit message."
   },
   {
     "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-8-instructor-workflow-collect-autograde",

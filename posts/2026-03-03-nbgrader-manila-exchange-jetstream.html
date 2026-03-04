@@ -297,6 +297,7 @@ manila-cephfs   Bound    manila-cephfs-pv   50Gi       RWX</code></pre>
 <pre><code>--values manila/jupyterhub_manila.yaml \</code></pre>
 <p>Re-deploy:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> install_jhub.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then stop and start existing user servers so they pick up the new mount.</p>
 </section>
 <section id="step-4-install-nbgrader-and-configure-filesystem-exchange" class="level2">
 <h2 class="anchored" data-anchor-id="step-4-install-nbgrader-and-configure-filesystem-exchange">Step 4: Install nbgrader and configure filesystem exchange</h2>
@@ -309,15 +310,18 @@ manila-cephfs   Bound    manila-cephfs-pv   50Gi       RWX</code></pre>
 <pre><code>--values nbgrader/jhub-singleuser-nbgrader-filesystem.yaml \</code></pre>
 <p>Re-deploy:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> install_jhub.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then stop and start existing user servers so the <code>postStart</code> hook re-runs and writes the updated <code>nbgrader_config.py</code>.</p>
 </section>
 <section id="step-5-validate-the-shared-mount-and-initialize-exchange-folders" class="level2">
 <h2 class="anchored" data-anchor-id="step-5-validate-the-shared-mount-and-initialize-exchange-folders">Step 5: Validate the shared mount and initialize exchange folders</h2>
 <p>Open a JupyterHub terminal as an instructor/admin user:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip show nbgrader</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /share/nbgrader/exchange</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /share/nbgrader/exchange/course101/<span class="dt">{inbound</span><span class="op">,</span><span class="dt">outbound</span><span class="op">,</span><span class="dt">feedback}</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> <span class="at">-R</span> 0777 /share/nbgrader/exchange</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span> /share/nbgrader/exchange/course101</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /share/nbgrader/exchange/course101/inbound</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /share/nbgrader/exchange/course101/outbound</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /share/nbgrader/exchange/course101/feedback</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> <span class="at">-R</span> 0777 /share/nbgrader/exchange</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span> /share/nbgrader/exchange/course101</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If <code>/share</code> is mounted but writing fails with <code>Permission denied</code>, run a one-time permission bootstrap pod:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> jhub apply <span class="at">-f</span> nbgrader/manila-exchange-permissions-pod.yaml</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> jhub logs manila-exchange-permissions</span>
@@ -340,7 +344,7 @@ manila-cephfs   Bound    manila-cephfs-pv   50Gi       RWX</code></pre>
 <p>As <code>student1</code>:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> list</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> fetch_assignment ps1</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> submit ps1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> submit /home/jovyan/course101/ps1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Expected output includes <code>course101 ps1</code> in <code>nbgrader list</code> and a successful submit message.</p>
 </section>
 <section id="step-8-instructor-workflow-collect-autograde" class="level2">
