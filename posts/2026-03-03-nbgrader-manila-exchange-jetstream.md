@@ -70,8 +70,11 @@ Example CLI flow:
 openstack share create \
   --name nbgraderexchange \
   --share-type cephfsnativetype \
-  --share-protocol CEPHFS \
+  CEPHFS \
   50
+
+# Wait until available
+while [ "$(openstack share show nbgraderexchange -f value -c status)" != "available" ]; do sleep 5; done
 
 # Create a CephX RW access rule
 openstack share access create \
