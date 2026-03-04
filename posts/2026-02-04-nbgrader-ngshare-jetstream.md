@@ -9,6 +9,14 @@ layout: post
 title: Deploy nbgrader on Jetstream with ngshare (Kubernetes)
 ---
 
+> **Update (March 3, 2026):** See the newer tutorial:
+> [Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)](./2026-03-03-nbgrader-manila-exchange-jetstream.md)
+>
+> Short differences:
+> - This tutorial uses `ngshare` (REST API exchange, no shared filesystem).
+> - The newer tutorial uses nbgrader's native filesystem exchange on a shared Manila RWX volume.
+> - The newer tutorial removes the `ngshare` service dependency and focuses on shared storage setup.
+
 This tutorial shows how to deploy **nbgrader** on Jetstream using **ngshare**, a service designed to make nbgrader work on Kubernetes without a shared filesystem exchange. This is the recommended approach for Kubernetes deployments.
 
 We will:
