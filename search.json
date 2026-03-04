@@ -417,77 +417,77 @@
     "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#prerequisites",
     "title": "Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)",
     "section": "Prerequisites",
-    "text": "Prerequisites\n\nA running Magnum cluster named k8s.\nJupyterHub deployed with Helm.\nA Manila share already created (or created in Step 0 below).\nOpenStack credentials file (*openrc*.sh) available.\nA shell environment where required CLIs are installed and configured: openstack, kubectl, and helm."
+    "text": "Prerequisites\n\nA running Magnum cluster named k8s.\nJupyterHub deployed with Helm.\nA Manila share already created (or created in Step 2 below).\nOpenStack credentials file (*openrc*.sh) available.\nA shell environment where required CLIs are installed and configured: openstack, kubectl, and helm."
   },
   {
-    "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step--1-check-out-this-repository",
-    "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step--1-check-out-this-repository",
+    "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-1-check-out-this-repository",
+    "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-1-check-out-this-repository",
     "title": "Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)",
-    "section": "Step -1: Check out this repository",
-    "text": "Step -1: Check out this repository\nThis tutorial uses config files from this repo (manila/, nbgrader/, config_*.yaml, etc.), so clone it first:\ngit clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream.git\ncd jupyterhub-deploy-kubernetes-jetstream"
+    "section": "Step 1: Check out this repository",
+    "text": "Step 1: Check out this repository\nThis tutorial uses config files from this repo (manila/, nbgrader/, config_*.yaml, etc.), so clone it first:\ngit clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream.git\ncd jupyterhub-deploy-kubernetes-jetstream"
   },
   {
-    "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-0-if-needed-create-the-manila-share",
-    "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-0-if-needed-create-the-manila-share",
+    "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-2-if-needed-create-the-manila-share",
+    "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-2-if-needed-create-the-manila-share",
     "title": "Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)",
-    "section": "Step 0 (if needed): Create the Manila share",
-    "text": "Step 0 (if needed): Create the Manila share\nThis tutorial uses an existing Jetstream Manila share named nbgraderexchange.\nYou can create it in Exosphere (recommended), or via OpenStack CLI.\nExample CLI flow:\n# Load credentials first\nsource /path/to/your-openrc.sh\n\n# Create a 50 GiB CephFS share\nopenstack share create \\\n  --name nbgraderexchange \\\n  --share-type cephfsnativetype \\\n  --share-protocol CEPHFS \\\n  50\n\n# Create a CephX RW access rule\nopenstack share access create \\\n  --access-level rw \\\n  nbgraderexchange cephx nbgraderexchange-rw\n\n# Verify\nopenstack share list --name nbgraderexchange\nopenstack share access list nbgraderexchange\nNote: in this workflow, Kubernetes mounts the Manila share through CephFS CSI, but does not create the Manila share itself."
+    "section": "Step 2 (if needed): Create the Manila share",
+    "text": "Step 2 (if needed): Create the Manila share\nThis tutorial uses an existing Jetstream Manila share named nbgraderexchange.\nYou can create it in Exosphere (recommended), or via OpenStack CLI.\nExample CLI flow:\n# Load credentials first\nsource /path/to/your-openrc.sh\n\n# Create a 50 GiB CephFS share\nopenstack share create \\\n  --name nbgraderexchange \\\n  --share-type cephfsnativetype \\\n  --share-protocol CEPHFS \\\n  50\n\n# Create a CephX RW access rule\nopenstack share access create \\\n  --access-level rw \\\n  nbgraderexchange cephx nbgraderexchange-rw\n\n# Verify\nopenstack share list --name nbgraderexchange\nopenstack share access list nbgraderexchange\nNote: in this workflow, Kubernetes mounts the Manila share through CephFS CSI, but does not create the Manila share itself."
   },
   {
-    "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-1-configure-access-to-the-magnum-cluster",
-    "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-1-configure-access-to-the-magnum-cluster",
+    "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-3-configure-access-to-the-magnum-cluster",
+    "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-3-configure-access-to-the-magnum-cluster",
     "title": "Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)",
-    "section": "Step 1: Configure access to the Magnum cluster",
-    "text": "Step 1: Configure access to the Magnum cluster\nFrom the repo root:\n# Load your OpenStack credentials\nsource /path/to/your-openrc.sh\n\n# Activate the environment where openstack/kubectl/helm are available\n# (conda env, virtualenv, module environment, etc.)\n# Example:\n# source /path/to/your/env/bin/activate\n\nexport K8S_CLUSTER_NAME=k8s\nbash kubernetes_magnum/configure_kubectl_locally.sh\nexport KUBECONFIG=$(pwd)/config\nkubectl get nodes\nYou should see nodes from your k8s cluster."
+    "section": "Step 3: Configure access to the Magnum cluster",
+    "text": "Step 3: Configure access to the Magnum cluster\nFrom the repo root:\n# Load your OpenStack credentials\nsource /path/to/your-openrc.sh\n\n# Activate the environment where openstack/kubectl/helm are available\n# (conda env, virtualenv, module environment, etc.)\n# Example:\n# source /path/to/your/env/bin/activate\n\nexport K8S_CLUSTER_NAME=k8s\nbash kubernetes_magnum/configure_kubectl_locally.sh\nexport KUBECONFIG=$(pwd)/config\nkubectl get nodes\nYou should see nodes from your k8s cluster."
   },
   {
-    "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-2-prepare-the-existing-manila-share-as-a-kubernetes-rwx-volume",
-    "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-2-prepare-the-existing-manila-share-as-a-kubernetes-rwx-volume",
+    "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-4-prepare-the-existing-manila-share-as-a-kubernetes-rwx-volume",
+    "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-4-prepare-the-existing-manila-share-as-a-kubernetes-rwx-volume",
     "title": "Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)",
-    "section": "Step 2: Prepare the existing Manila share as a Kubernetes RWX volume",
-    "text": "Step 2: Prepare the existing Manila share as a Kubernetes RWX volume\nThis repo includes templates for Jetstream Manila CephFS:\n\nmanila/cephfs-csi-values.yaml\nmanila/cephfs-csi-pv.yaml\nmanila/cephfs-csi-pvc.yaml\n\nGet mount info from the existing Exosphere share:\nbash manila/generate_mount_command.sh nbgraderexchange\nUse the output to fill placeholders in manila/cephfs-csi-values.yaml and manila/cephfs-csi-pv.yaml:\n\n&lt;CEPH_FSID&gt; (any stable ID string is fine, but it must match in both files)\n&lt;ACCESS_RULE_NAME&gt;\n&lt;ACCESS_KEY&gt;\n&lt;SHARE_PATH&gt; as path only (/volumes/...), not the full mon1,mon2:/volumes/... string\n\nInstall CephFS CSI (if not already installed) and create PV/PVC:\nhelm repo add ceph-csi https://ceph.github.io/csi-charts/ || true\nhelm repo update\nhelm upgrade --install ceph-csi-cephfs ceph-csi/ceph-csi-cephfs \\\n  --namespace kube-system \\\n  -f manila/cephfs-csi-values.yaml\n\nkubectl create namespace jhub --dry-run=client -o yaml | kubectl apply -f -\nkubectl apply -f manila/cephfs-csi-pv.yaml\nkubectl apply -f manila/cephfs-csi-pvc.yaml\nkubectl -n jhub get pvc manila-cephfs\nImportant for manila/cephfs-csi-pv.yaml:\n\nAdd fsName: \"cephfs\" under volumeAttributes.\nKeep clusterID aligned with manila/cephfs-csi-values.yaml.\nEnsure nodeStageSecretRef.namespace matches where csi-cephfs-secret exists.\n\nIf the chart created csi-cephfs-secret in kube-system but your PV references default, copy it once:\nkubectl -n kube-system get secret csi-cephfs-secret -o yaml \\\n  | sed 's/namespace: kube-system/namespace: default/' \\\n  | kubectl apply -f -\nExpected PVC status:\nNAME            STATUS   VOLUME             CAPACITY   ACCESS MODES\nmanila-cephfs   Bound    manila-cephfs-pv   50Gi       RWX"
+    "section": "Step 4: Prepare the existing Manila share as a Kubernetes RWX volume",
+    "text": "Step 4: Prepare the existing Manila share as a Kubernetes RWX volume\nThis repo includes templates for Jetstream Manila CephFS:\n\nmanila/cephfs-csi-values.yaml\nmanila/cephfs-csi-pv.yaml\nmanila/cephfs-csi-pvc.yaml\n\nGet mount info from the existing Exosphere share:\nbash manila/generate_mount_command.sh nbgraderexchange\nUse the output to fill placeholders in manila/cephfs-csi-values.yaml and manila/cephfs-csi-pv.yaml:\n\n&lt;CEPH_FSID&gt; (any stable ID string is fine, but it must match in both files)\n&lt;ACCESS_RULE_NAME&gt;\n&lt;ACCESS_KEY&gt;\n&lt;SHARE_PATH&gt; as path only (/volumes/...), not the full mon1,mon2:/volumes/... string\n\nInstall CephFS CSI (if not already installed) and create PV/PVC:\nhelm repo add ceph-csi https://ceph.github.io/csi-charts/ || true\nhelm repo update\nhelm upgrade --install ceph-csi-cephfs ceph-csi/ceph-csi-cephfs \\\n  --namespace kube-system \\\n  -f manila/cephfs-csi-values.yaml\n\nkubectl create namespace jhub --dry-run=client -o yaml | kubectl apply -f -\nkubectl apply -f manila/cephfs-csi-pv.yaml\nkubectl apply -f manila/cephfs-csi-pvc.yaml\nkubectl -n jhub get pvc manila-cephfs\nImportant for manila/cephfs-csi-pv.yaml:\n\nAdd fsName: \"cephfs\" under volumeAttributes.\nKeep clusterID aligned with manila/cephfs-csi-values.yaml.\nEnsure nodeStageSecretRef.namespace matches where csi-cephfs-secret exists.\n\nIf the chart created csi-cephfs-secret in kube-system but your PV references default, copy it once:\nkubectl -n kube-system get secret csi-cephfs-secret -o yaml \\\n  | sed 's/namespace: kube-system/namespace: default/' \\\n  | kubectl apply -f -\nExpected PVC status:\nNAME            STATUS   VOLUME             CAPACITY   ACCESS MODES\nmanila-cephfs   Bound    manila-cephfs-pv   50Gi       RWX"
   },
   {
-    "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-3-mount-the-manila-share-in-all-jupyterhub-user-pods",
-    "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-3-mount-the-manila-share-in-all-jupyterhub-user-pods",
+    "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-5-mount-the-manila-share-in-all-jupyterhub-user-pods",
+    "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-5-mount-the-manila-share-in-all-jupyterhub-user-pods",
     "title": "Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)",
-    "section": "Step 3: Mount the Manila share in all JupyterHub user pods",
-    "text": "Step 3: Mount the Manila share in all JupyterHub user pods\nUse the values file already in this repo:\n\nmanila/jupyterhub_manila.yaml\n\nIt mounts the shared PVC at /share for every user pod.\nVerify JupyterHub exists in jhub namespace:\nhelm list -n jhub\nIf no jhub release is present yet, deploy JupyterHub first, then continue.\nAdd this values file to install_jhub.sh (before the last line):\n--values manila/jupyterhub_manila.yaml \\\nRe-deploy:\nbash install_jhub.sh\nThen stop and start existing user servers so they pick up the new mount."
+    "section": "Step 5: Mount the Manila share in all JupyterHub user pods",
+    "text": "Step 5: Mount the Manila share in all JupyterHub user pods\nUse the values file already in this repo:\n\nmanila/jupyterhub_manila.yaml\n\nIt mounts the shared PVC at /share for every user pod.\nVerify JupyterHub exists in jhub namespace:\nhelm list -n jhub\nIf no jhub release is present yet, deploy JupyterHub first, then continue.\nAdd this values file to install_jhub.sh (before the last line):\n--values manila/jupyterhub_manila.yaml \\\nRe-deploy:\nbash install_jhub.sh\nThen stop and start existing user servers so they pick up the new mount."
   },
   {
-    "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-4-install-nbgrader-and-configure-filesystem-exchange",
-    "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-4-install-nbgrader-and-configure-filesystem-exchange",
+    "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-6-install-nbgrader-and-configure-filesystem-exchange",
+    "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-6-install-nbgrader-and-configure-filesystem-exchange",
     "title": "Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)",
-    "section": "Step 4: Install nbgrader and configure filesystem exchange",
-    "text": "Step 4: Install nbgrader and configure filesystem exchange\nUse this file from the repo:\n\nnbgrader/jhub-singleuser-nbgrader-filesystem.yaml\n\nReplace COURSE_ID with your course ID (example: course101).\nAdd this file to install_jhub.sh:\n--values nbgrader/jhub-singleuser-nbgrader-filesystem.yaml \\\nRe-deploy:\nbash install_jhub.sh\nThen stop and start existing user servers so the postStart hook re-runs and writes the updated nbgrader_config.py."
+    "section": "Step 6: Install nbgrader and configure filesystem exchange",
+    "text": "Step 6: Install nbgrader and configure filesystem exchange\nUse this file from the repo:\n\nnbgrader/jhub-singleuser-nbgrader-filesystem.yaml\n\nReplace COURSE_ID with your course ID (example: course101).\nAdd this file to install_jhub.sh:\n--values nbgrader/jhub-singleuser-nbgrader-filesystem.yaml \\\nRe-deploy:\nbash install_jhub.sh\nThen stop and start existing user servers so the postStart hook re-runs and writes the updated nbgrader_config.py."
   },
   {
-    "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-5-validate-the-shared-mount-and-initialize-exchange-folders",
-    "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-5-validate-the-shared-mount-and-initialize-exchange-folders",
+    "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-7-validate-the-shared-mount-and-initialize-exchange-folders",
+    "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-7-validate-the-shared-mount-and-initialize-exchange-folders",
     "title": "Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)",
-    "section": "Step 5: Validate the shared mount and initialize exchange folders",
-    "text": "Step 5: Validate the shared mount and initialize exchange folders\nOpen a JupyterHub terminal as an instructor/admin user:\npython -m pip show nbgrader\nmkdir -p /share/nbgrader/exchange\nmkdir -p /share/nbgrader/exchange/course101/inbound\nmkdir -p /share/nbgrader/exchange/course101/outbound\nmkdir -p /share/nbgrader/exchange/course101/feedback\nchmod -R 0777 /share/nbgrader/exchange\nls -la /share/nbgrader/exchange/course101\nIf /share is mounted but writing fails with Permission denied, run a one-time permission bootstrap pod:\nkubectl -n jhub apply -f nbgrader/manila-exchange-permissions-pod.yaml\nkubectl -n jhub logs manila-exchange-permissions\nkubectl -n jhub delete pod manila-exchange-permissions\nThen open a different user server and confirm the same files are visible:\nls -la /share/nbgrader/exchange/course101"
+    "section": "Step 7: Validate the shared mount and initialize exchange folders",
+    "text": "Step 7: Validate the shared mount and initialize exchange folders\nOpen a JupyterHub terminal as an instructor/admin user:\npython -m pip show nbgrader\nmkdir -p /share/nbgrader/exchange\nmkdir -p /share/nbgrader/exchange/course101/inbound\nmkdir -p /share/nbgrader/exchange/course101/outbound\nmkdir -p /share/nbgrader/exchange/course101/feedback\nchmod -R 0777 /share/nbgrader/exchange\nls -la /share/nbgrader/exchange/course101\nIf /share is mounted but writing fails with Permission denied, run a one-time permission bootstrap pod:\nkubectl -n jhub apply -f nbgrader/manila-exchange-permissions-pod.yaml\nkubectl -n jhub logs manila-exchange-permissions\nkubectl -n jhub delete pod manila-exchange-permissions\nThen open a different user server and confirm the same files are visible:\nls -la /share/nbgrader/exchange/course101"
   },
   {
-    "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-6-instructor-workflow-create-release",
-    "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-6-instructor-workflow-create-release",
+    "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-8-instructor-workflow-create-release",
+    "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-8-instructor-workflow-create-release",
     "title": "Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)",
-    "section": "Step 6: Instructor workflow (create + release)",
-    "text": "Step 6: Instructor workflow (create + release)\nAs instructor:\nnbgrader quickstart course101\ncp -r /path/to/jupyterhub-deploy-kubernetes-jetstream/nbgrader/quickstart-source/ps1 /home/jovyan/course101/source/\ncd /home/jovyan/course101\nnbgrader generate_assignment ps1 --force\nnbgrader db student add student1\nnbgrader release_assignment ps1 --force"
+    "section": "Step 8: Instructor workflow (create + release)",
+    "text": "Step 8: Instructor workflow (create + release)\nAs instructor:\nnbgrader quickstart course101\ncp -r /path/to/jupyterhub-deploy-kubernetes-jetstream/nbgrader/quickstart-source/ps1 /home/jovyan/course101/source/\ncd /home/jovyan/course101\nnbgrader generate_assignment ps1 --force\nnbgrader db student add student1\nnbgrader release_assignment ps1 --force"
   },
   {
-    "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-7-student-workflow-list-fetch-submit",
-    "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-7-student-workflow-list-fetch-submit",
+    "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-9-student-workflow-list-fetch-submit",
+    "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-9-student-workflow-list-fetch-submit",
     "title": "Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)",
-    "section": "Step 7: Student workflow (list + fetch + submit)",
-    "text": "Step 7: Student workflow (list + fetch + submit)\nAs student1:\nnbgrader list\nnbgrader fetch_assignment ps1\nnbgrader submit /home/jovyan/course101/ps1\nExpected output includes course101 ps1 in nbgrader list and a successful submit message."
+    "section": "Step 9: Student workflow (list + fetch + submit)",
+    "text": "Step 9: Student workflow (list + fetch + submit)\nAs student1:\nnbgrader list\nnbgrader fetch_assignment ps1\nnbgrader submit /home/jovyan/course101/ps1\nExpected output includes course101 ps1 in nbgrader list and a successful submit message."
   },
   {
-    "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-8-instructor-workflow-collect-autograde",
-    "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-8-instructor-workflow-collect-autograde",
+    "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-10-instructor-workflow-collect-autograde",
+    "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-10-instructor-workflow-collect-autograde",
     "title": "Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)",
-    "section": "Step 8: Instructor workflow (collect + autograde)",
-    "text": "Step 8: Instructor workflow (collect + autograde)\nAs instructor:\ncd /home/jovyan/course101\nnbgrader collect ps1\nnbgrader autograde ps1"
+    "section": "Step 10: Instructor workflow (collect + autograde)",
+    "text": "Step 10: Instructor workflow (collect + autograde)\nAs instructor:\ncd /home/jovyan/course101\nnbgrader collect ps1\nnbgrader autograde ps1"
   },
   {
     "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#notes",
