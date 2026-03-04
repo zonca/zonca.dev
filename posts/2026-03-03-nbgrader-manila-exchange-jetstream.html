@@ -210,11 +210,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>We will:</p>
 <ul>
+<li>Check out this repository locally (contains all config files used below).</li>
 <li>Configure <code>kubectl</code> for the Magnum cluster.</li>
 <li>Mount the existing Manila share into all JupyterHub user pods at <code>/share</code>.</li>
 <li>Configure nbgrader to use <code>/share/nbgrader/exchange</code>.</li>
 <li>Run the full instructor/student workflow (<code>release</code>, <code>fetch</code>, <code>submit</code>, <code>collect</code>, <code>autograde</code>).</li>
 </ul>
+<p>If you want the API-based approach instead of a shared disk, see the previous tutorial: <a href="../posts/2026-02-04-nbgrader-ngshare-jetstream.html"><code>./2026-02-04-nbgrader-ngshare-jetstream.md</code></a></p>
+<p>Difference in one line: this tutorial uses nbgrader’s native filesystem exchange on a Manila RWX share, while the previous tutorial uses <code>ngshare</code> (REST API exchange without shared filesystem).</p>
 <section id="why-this-approach" class="level2">
 <h2 class="anchored" data-anchor-id="why-this-approach">Why this approach</h2>
 <p>nbgrader’s native exchange expects a shared filesystem visible from both instructor and student pods.<br>
@@ -225,20 +228,57 @@ A Manila share mounted as <code>ReadWriteMany</code> provides exactly that.</p>
 <ul>
 <li>A running Magnum cluster named <code>k8s</code>.</li>
 <li>JupyterHub deployed with Helm.</li>
-<li>A Manila share already created.</li>
-<li>This repository cloned locally.</li>
-<li>OpenStack credentials (<code>*openrc*.sh</code>) and local <code>.venv</code> available.</li>
+<li>A Manila share already created (or created in Step 0 below).</li>
+<li>OpenStack credentials file (<code>*openrc*.sh</code>) available.</li>
+<li>A shell environment where required CLIs are installed and configured: <code>openstack</code>, <code>kubectl</code>, and <code>helm</code>.</li>
 </ul>
+</section>
+<section id="step--1-check-out-this-repository" class="level2">
+<h2 class="anchored" data-anchor-id="step--1-check-out-this-repository">Step -1: Check out this repository</h2>
+<p>This tutorial uses config files from this repo (<code>manila/</code>, <code>nbgrader/</code>, <code>config_*.yaml</code>, etc.), so clone it first:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream.git</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> jupyterhub-deploy-kubernetes-jetstream</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="step-0-if-needed-create-the-manila-share" class="level2">
+<h2 class="anchored" data-anchor-id="step-0-if-needed-create-the-manila-share">Step 0 (if needed): Create the Manila share</h2>
+<p>This tutorial uses an existing Jetstream Manila share named <code>nbgraderexchange</code>.</p>
+<p>You can create it in <strong>Exosphere</strong> (recommended), or via OpenStack CLI.</p>
+<p>Example CLI flow:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load credentials first</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /path/to/your-openrc.sh</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a 50 GiB CephFS share</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> share create <span class="dt">\</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--name</span> nbgraderexchange <span class="dt">\</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--share-type</span> cephfsnativetype <span class="dt">\</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--share-protocol</span> CEPHFS <span class="dt">\</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  50</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a CephX RW access rule</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> share access create <span class="dt">\</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--access-level</span> rw <span class="dt">\</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  nbgraderexchange cephx nbgraderexchange-rw</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> share list <span class="at">--name</span> nbgraderexchange</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> share access list nbgraderexchange</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note: in this workflow, Kubernetes mounts the Manila share through CephFS CSI, but does not create the Manila share itself.</p>
 </section>
 <section id="step-1-configure-access-to-the-magnum-cluster" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-configure-access-to-the-magnum-cluster">Step 1: Configure access to the Magnum cluster</h2>
 <p>From the repo root:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ./app-cred-coe-202504-openrc.sh</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> .venv/bin/activate</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">K8S_CLUSTER_NAME</span><span class="op">=</span>k8s</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> kubernetes_magnum/configure_kubectl_locally.sh</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">KUBECONFIG</span><span class="op">=</span><span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>/config</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get nodes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load your OpenStack credentials</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /path/to/your-openrc.sh</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Activate the environment where openstack/kubectl/helm are available</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># (conda env, virtualenv, module environment, etc.)</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Example:</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># source /path/to/your/env/bin/activate</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">K8S_CLUSTER_NAME</span><span class="op">=</span>k8s</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> kubernetes_magnum/configure_kubectl_locally.sh</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">KUBECONFIG</span><span class="op">=</span><span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>/config</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get nodes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You should see nodes from your <code>k8s</code> cluster.</p>
 </section>
 <section id="step-2-prepare-the-existing-manila-share-as-a-kubernetes-rwx-volume" class="level2">
@@ -250,7 +290,7 @@ A Manila share mounted as <code>ReadWriteMany</code> provides exactly that.</p>
 <li><code>manila/cephfs-csi-pvc.yaml</code></li>
 </ul>
 <p>Get mount info from the existing Exosphere share:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> manila/generate_mount_command.sh nbgraderexchange</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> manila/generate_mount_command.sh nbgraderexchange</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Use the output to fill placeholders in <code>manila/cephfs-csi-values.yaml</code> and <code>manila/cephfs-csi-pv.yaml</code>:</p>
 <ul>
 <li><code>&lt;CEPH_FSID&gt;</code> (any stable ID string is fine, but it must match in both files)</li>
@@ -259,16 +299,16 @@ A Manila share mounted as <code>ReadWriteMany</code> provides exactly that.</p>
 <li><code>&lt;SHARE_PATH&gt;</code> as <strong>path only</strong> (<code>/volumes/...</code>), not the full <code>mon1,mon2:/volumes/...</code> string</li>
 </ul>
 <p>Install CephFS CSI (if not already installed) and create PV/PVC:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> repo add ceph-csi https://ceph.github.io/csi-charts/ <span class="kw">||</span> <span class="fu">true</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> repo update</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> upgrade <span class="at">--install</span> ceph-csi-cephfs ceph-csi/ceph-csi-cephfs <span class="dt">\</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--namespace</span> kube-system <span class="dt">\</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">-f</span> manila/cephfs-csi-values.yaml</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create namespace jhub <span class="at">--dry-run</span><span class="op">=</span>client <span class="at">-o</span> yaml <span class="kw">|</span> <span class="ex">kubectl</span> apply <span class="at">-f</span> <span class="at">-</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> apply <span class="at">-f</span> manila/cephfs-csi-pv.yaml</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> apply <span class="at">-f</span> manila/cephfs-csi-pvc.yaml</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> jhub get pvc manila-cephfs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> repo add ceph-csi https://ceph.github.io/csi-charts/ <span class="kw">||</span> <span class="fu">true</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> repo update</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> upgrade <span class="at">--install</span> ceph-csi-cephfs ceph-csi/ceph-csi-cephfs <span class="dt">\</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--namespace</span> kube-system <span class="dt">\</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">-f</span> manila/cephfs-csi-values.yaml</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create namespace jhub <span class="at">--dry-run</span><span class="op">=</span>client <span class="at">-o</span> yaml <span class="kw">|</span> <span class="ex">kubectl</span> apply <span class="at">-f</span> <span class="at">-</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> apply <span class="at">-f</span> manila/cephfs-csi-pv.yaml</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> apply <span class="at">-f</span> manila/cephfs-csi-pvc.yaml</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> jhub get pvc manila-cephfs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Important for <code>manila/cephfs-csi-pv.yaml</code>:</p>
 <ul>
 <li>Add <code>fsName: "cephfs"</code> under <code>volumeAttributes</code>.</li>
@@ -276,9 +316,9 @@ A Manila share mounted as <code>ReadWriteMany</code> provides exactly that.</p>
 <li>Ensure <code>nodeStageSecretRef.namespace</code> matches where <code>csi-cephfs-secret</code> exists.</li>
 </ul>
 <p>If the chart created <code>csi-cephfs-secret</code> in <code>kube-system</code> but your PV references <code>default</code>, copy it once:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> kube-system get secret csi-cephfs-secret <span class="at">-o</span> yaml <span class="dt">\</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/namespace: kube-system/namespace: default/'</span> <span class="dt">\</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="ex">kubectl</span> apply <span class="at">-f</span> <span class="at">-</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> kube-system get secret csi-cephfs-secret <span class="at">-o</span> yaml <span class="dt">\</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/namespace: kube-system/namespace: default/'</span> <span class="dt">\</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="ex">kubectl</span> apply <span class="at">-f</span> <span class="at">-</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Expected PVC status:</p>
 <pre><code>NAME            STATUS   VOLUME             CAPACITY   ACCESS MODES
 manila-cephfs   Bound    manila-cephfs-pv   50Gi       RWX</code></pre>
@@ -291,12 +331,12 @@ manila-cephfs   Bound    manila-cephfs-pv   50Gi       RWX</code></pre>
 </ul>
 <p>It mounts the shared PVC at <code>/share</code> for every user pod.</p>
 <p>Verify JupyterHub exists in <code>jhub</code> namespace:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> list <span class="at">-n</span> jhub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> list <span class="at">-n</span> jhub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If no <code>jhub</code> release is present yet, deploy JupyterHub first, then continue.</p>
 <p>Add this values file to <code>install_jhub.sh</code> (before the last line):</p>
 <pre><code>--values manila/jupyterhub_manila.yaml \</code></pre>
 <p>Re-deploy:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> install_jhub.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> install_jhub.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then stop and start existing user servers so they pick up the new mount.</p>
 </section>
 <section id="step-4-install-nbgrader-and-configure-filesystem-exchange" class="level2">
@@ -309,50 +349,50 @@ manila-cephfs   Bound    manila-cephfs-pv   50Gi       RWX</code></pre>
 <p>Add this file to <code>install_jhub.sh</code>:</p>
 <pre><code>--values nbgrader/jhub-singleuser-nbgrader-filesystem.yaml \</code></pre>
 <p>Re-deploy:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> install_jhub.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> install_jhub.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then stop and start existing user servers so the <code>postStart</code> hook re-runs and writes the updated <code>nbgrader_config.py</code>.</p>
 </section>
 <section id="step-5-validate-the-shared-mount-and-initialize-exchange-folders" class="level2">
 <h2 class="anchored" data-anchor-id="step-5-validate-the-shared-mount-and-initialize-exchange-folders">Step 5: Validate the shared mount and initialize exchange folders</h2>
 <p>Open a JupyterHub terminal as an instructor/admin user:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip show nbgrader</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /share/nbgrader/exchange</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /share/nbgrader/exchange/course101/inbound</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /share/nbgrader/exchange/course101/outbound</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /share/nbgrader/exchange/course101/feedback</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> <span class="at">-R</span> 0777 /share/nbgrader/exchange</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span> /share/nbgrader/exchange/course101</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip show nbgrader</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /share/nbgrader/exchange</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /share/nbgrader/exchange/course101/inbound</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /share/nbgrader/exchange/course101/outbound</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /share/nbgrader/exchange/course101/feedback</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> <span class="at">-R</span> 0777 /share/nbgrader/exchange</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span> /share/nbgrader/exchange/course101</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If <code>/share</code> is mounted but writing fails with <code>Permission denied</code>, run a one-time permission bootstrap pod:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> jhub apply <span class="at">-f</span> nbgrader/manila-exchange-permissions-pod.yaml</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> jhub logs manila-exchange-permissions</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> jhub delete pod manila-exchange-permissions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> jhub apply <span class="at">-f</span> nbgrader/manila-exchange-permissions-pod.yaml</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> jhub logs manila-exchange-permissions</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> jhub delete pod manila-exchange-permissions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then open a different user server and confirm the same files are visible:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span> /share/nbgrader/exchange/course101</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span> /share/nbgrader/exchange/course101</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="step-6-instructor-workflow-create-release" class="level2">
 <h2 class="anchored" data-anchor-id="step-6-instructor-workflow-create-release">Step 6: Instructor workflow (create + release)</h2>
 <p>As instructor:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> quickstart course101</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> /path/to/jupyterhub-deploy-kubernetes-jetstream/nbgrader/quickstart-source/ps1 /home/jovyan/course101/source/</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /home/jovyan/course101</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> generate_assignment ps1 <span class="at">--force</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> db student add student1</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> release_assignment ps1 <span class="at">--force</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> quickstart course101</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> /path/to/jupyterhub-deploy-kubernetes-jetstream/nbgrader/quickstart-source/ps1 /home/jovyan/course101/source/</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /home/jovyan/course101</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> generate_assignment ps1 <span class="at">--force</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> db student add student1</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> release_assignment ps1 <span class="at">--force</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="step-7-student-workflow-list-fetch-submit" class="level2">
 <h2 class="anchored" data-anchor-id="step-7-student-workflow-list-fetch-submit">Step 7: Student workflow (list + fetch + submit)</h2>
 <p>As <code>student1</code>:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> list</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> fetch_assignment ps1</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> submit /home/jovyan/course101/ps1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> list</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> fetch_assignment ps1</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> submit /home/jovyan/course101/ps1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Expected output includes <code>course101 ps1</code> in <code>nbgrader list</code> and a successful submit message.</p>
 </section>
 <section id="step-8-instructor-workflow-collect-autograde" class="level2">
 <h2 class="anchored" data-anchor-id="step-8-instructor-workflow-collect-autograde">Step 8: Instructor workflow (collect + autograde)</h2>
 <p>As instructor:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /home/jovyan/course101</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> collect ps1</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> autograde ps1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /home/jovyan/course101</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> collect ps1</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> autograde ps1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="notes" class="level2">
 <h2 class="anchored" data-anchor-id="notes">Notes</h2>
@@ -365,7 +405,7 @@ manila-cephfs   Bound    manila-cephfs-pv   50Gi       RWX</code></pre>
 <section id="troubleshooting" class="level2">
 <h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
 <p>If <code>nbgrader fetch_assignment</code> or <code>submit</code> fails with permission errors:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> <span class="at">-R</span> 0777 /share/nbgrader/exchange</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> <span class="at">-R</span> 0777 /share/nbgrader/exchange</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If user pods don’t see <code>/share</code>, confirm both values files were included in <code>install_jhub.sh</code> and run <code>bash install_jhub.sh</code> again.</p>
 <p>If the Manila PVC is not <code>Bound</code>, re-check placeholders in:</p>
 <ul>

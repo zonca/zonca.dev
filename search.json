@@ -403,7 +403,7 @@
     "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html",
     "title": "Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)",
     "section": "",
-    "text": "Download sourceContribute\nThis tutorial shows how to deploy nbgrader on Jetstream Kubernetes using a shared Manila disk mounted on all JupyterHub user pods.\nThis is for the setup where:\nWe will:"
+    "text": "Download sourceContribute\nThis tutorial shows how to deploy nbgrader on Jetstream Kubernetes using a shared Manila disk mounted on all JupyterHub user pods.\nThis is for the setup where:\nWe will:\nIf you want the API-based approach instead of a shared disk, see the previous tutorial: ./2026-02-04-nbgrader-ngshare-jetstream.md\nDifference in one line: this tutorial uses nbgrader’s native filesystem exchange on a Manila RWX share, while the previous tutorial uses ngshare (REST API exchange without shared filesystem)."
   },
   {
     "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#why-this-approach",
@@ -417,14 +417,28 @@
     "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#prerequisites",
     "title": "Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)",
     "section": "Prerequisites",
-    "text": "Prerequisites\n\nA running Magnum cluster named k8s.\nJupyterHub deployed with Helm.\nA Manila share already created.\nThis repository cloned locally.\nOpenStack credentials (*openrc*.sh) and local .venv available."
+    "text": "Prerequisites\n\nA running Magnum cluster named k8s.\nJupyterHub deployed with Helm.\nA Manila share already created (or created in Step 0 below).\nOpenStack credentials file (*openrc*.sh) available.\nA shell environment where required CLIs are installed and configured: openstack, kubectl, and helm."
+  },
+  {
+    "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step--1-check-out-this-repository",
+    "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step--1-check-out-this-repository",
+    "title": "Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)",
+    "section": "Step -1: Check out this repository",
+    "text": "Step -1: Check out this repository\nThis tutorial uses config files from this repo (manila/, nbgrader/, config_*.yaml, etc.), so clone it first:\ngit clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream.git\ncd jupyterhub-deploy-kubernetes-jetstream"
+  },
+  {
+    "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-0-if-needed-create-the-manila-share",
+    "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-0-if-needed-create-the-manila-share",
+    "title": "Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)",
+    "section": "Step 0 (if needed): Create the Manila share",
+    "text": "Step 0 (if needed): Create the Manila share\nThis tutorial uses an existing Jetstream Manila share named nbgraderexchange.\nYou can create it in Exosphere (recommended), or via OpenStack CLI.\nExample CLI flow:\n# Load credentials first\nsource /path/to/your-openrc.sh\n\n# Create a 50 GiB CephFS share\nopenstack share create \\\n  --name nbgraderexchange \\\n  --share-type cephfsnativetype \\\n  --share-protocol CEPHFS \\\n  50\n\n# Create a CephX RW access rule\nopenstack share access create \\\n  --access-level rw \\\n  nbgraderexchange cephx nbgraderexchange-rw\n\n# Verify\nopenstack share list --name nbgraderexchange\nopenstack share access list nbgraderexchange\nNote: in this workflow, Kubernetes mounts the Manila share through CephFS CSI, but does not create the Manila share itself."
   },
   {
     "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-1-configure-access-to-the-magnum-cluster",
     "href": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-1-configure-access-to-the-magnum-cluster",
     "title": "Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)",
     "section": "Step 1: Configure access to the Magnum cluster",
-    "text": "Step 1: Configure access to the Magnum cluster\nFrom the repo root:\nsource ./app-cred-coe-202504-openrc.sh\nsource .venv/bin/activate\nexport K8S_CLUSTER_NAME=k8s\nbash kubernetes_magnum/configure_kubectl_locally.sh\nexport KUBECONFIG=$(pwd)/config\nkubectl get nodes\nYou should see nodes from your k8s cluster."
+    "text": "Step 1: Configure access to the Magnum cluster\nFrom the repo root:\n# Load your OpenStack credentials\nsource /path/to/your-openrc.sh\n\n# Activate the environment where openstack/kubectl/helm are available\n# (conda env, virtualenv, module environment, etc.)\n# Example:\n# source /path/to/your/env/bin/activate\n\nexport K8S_CLUSTER_NAME=k8s\nbash kubernetes_magnum/configure_kubectl_locally.sh\nexport KUBECONFIG=$(pwd)/config\nkubectl get nodes\nYou should see nodes from your k8s cluster."
   },
   {
     "objectID": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.html#step-2-prepare-the-existing-manila-share-as-a-kubernetes-rwx-volume",
