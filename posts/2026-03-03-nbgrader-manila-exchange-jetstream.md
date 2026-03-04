@@ -137,6 +137,8 @@ Re-deploy:
 bash install_jhub.sh
 ```
 
+Then stop and start existing user servers so they pick up the new mount.
+
 ## Step 4: Install nbgrader and configure filesystem exchange
 
 Use this file from the repo:
@@ -157,6 +159,8 @@ Re-deploy:
 bash install_jhub.sh
 ```
 
+Then stop and start existing user servers so the `postStart` hook re-runs and writes the updated `nbgrader_config.py`.
+
 ## Step 5: Validate the shared mount and initialize exchange folders
 
 Open a JupyterHub terminal as an instructor/admin user:
@@ -164,7 +168,9 @@ Open a JupyterHub terminal as an instructor/admin user:
 ```bash
 python -m pip show nbgrader
 mkdir -p /share/nbgrader/exchange
-mkdir -p /share/nbgrader/exchange/course101/{inbound,outbound,feedback}
+mkdir -p /share/nbgrader/exchange/course101/inbound
+mkdir -p /share/nbgrader/exchange/course101/outbound
+mkdir -p /share/nbgrader/exchange/course101/feedback
 chmod -R 0777 /share/nbgrader/exchange
 ls -la /share/nbgrader/exchange/course101
 ```
@@ -203,7 +209,7 @@ As `student1`:
 ```bash
 nbgrader list
 nbgrader fetch_assignment ps1
-nbgrader submit ps1
+nbgrader submit /home/jovyan/course101/ps1
 ```
 
 Expected output includes `course101 ps1` in `nbgrader list` and a successful submit message.
