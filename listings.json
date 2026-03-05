@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2026-03-04-custom-jupyterhub-repo2docker-image.html",
       "/posts/2026-03-03-nbgrader-manila-exchange-jetstream.html",
       "/posts/2026-02-06-smithery-gmail-mcp-terminal-ai.html",
       "/posts/2026-02-04-nbgrader-ngshare-jetstream.html",
