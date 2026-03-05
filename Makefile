@@ -1,4 +1,4 @@
-.PHONY: list
+.PHONY: all list publish pull render clean
 
 all: pull render publish
 
@@ -17,3 +17,9 @@ pull:
 
 render:
 	quarto render
+
+clean:
+	rm -rf .quarto _site site_libs
+	rm -f ./*.html ./index-listing.json
+	rm -f ./posts/*.html ./posts/*.out.ipynb
+	rm -rf ./posts/*_files
