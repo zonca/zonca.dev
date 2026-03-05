@@ -7,36 +7,37 @@ layout: post
 title: Auto-build JupyterHub images with repo2docker and GitHub Actions
 ---
 
-Overview: Instead of maintaining a `Dockerfile`, you can build a JupyterHub-ready single-user image from repository configuration files (`environment.yml`, optional `postBuild`) using `repo2docker`. This keeps customization simple while still producing reproducible images for Zero to JupyterHub (Z2JH).
+Build and publish a JupyterHub-ready image directly from GitHub using `repo2docker`.
 
-Template repository: <https://github.com/zonca/custom-jupyterhub-repo2docker-image>
+Template repository: <https://github.com/zonca/custom-jupyterhub-repo2docker-image>  
+Latest integration run: <https://github.com/zonca/custom-jupyterhub-repo2docker-image/actions/runs/22652277154>
 
-Working CI example run: <https://github.com/zonca/custom-jupyterhub-repo2docker-image/actions/runs/22650073814>
+Quick start:
 
-How it works:
+1. Create your own repository from the template.
+2. Edit `environment.yml` with your packages.
+3. Push to `main`.
+4. Let GitHub Actions build and publish your image to GHCR.
 
-1. Edit `environment.yml` to add packages.
-2. Push to GitHub.
-3. GitHub Actions builds the image with `repo2docker`, runs JupyterHub smoke tests, and publishes to GHCR on `main`.
-4. The workflow signs images with Cosign, generates an SBOM, and attests build provenance.
+The workflow also signs images with Cosign, produces an SBOM, and adds build provenance.
 
-Suggested image tags:
-
-- `latest` for quick testing
-- `YYYY-MM-DD-<shortsha>` for reproducible JupyterHub deployments
-
-How to use in Z2JH (`config.yaml`):
+Use in Z2JH (`config.yaml`):
 
 ```yaml
 singleuser:
   image:
     name: ghcr.io/zonca/custom-jupyterhub-repo2docker-image
-    tag: 2026-03-04-c588129
+    tag: 2026-03-04-320a95e
   cmd: jupyterhub-singleuser
   defaultUrl: /lab
 ```
 
-Then deploy:
+Why set `cmd: jupyterhub-singleuser` explicitly:
+
+- It guarantees the pod starts the JupyterHub-aware server process.
+- It avoids image/entrypoint defaults that can leave pods running but not usable from Hub.
+
+Deploy:
 
 ```bash
 helm upgrade --install jhub jupyterhub/jupyterhub \
@@ -45,9 +46,12 @@ helm upgrade --install jhub jupyterhub/jupyterhub \
   --values config.yaml
 ```
 
-Why this is useful:
+Tagging strategy:
 
-- Lower maintenance than Dockerfiles for common scientific stacks
-- Fast iteration by editing only `environment.yml`
-- Security and provenance integrated into CI by default
-- Clear path from template repository to production JupyterHub image
+- `latest` for quick validation
+- `YYYY-MM-DD-<shortsha>` for reproducible production deploys
+
+CI flow:
+
+1. `image.yml`: build, test, push, sign, and attest.
+2. `z2jh-integration.yml`: run a real Hub test on Kind after a successful image workflow.
