@@ -9,8 +9,19 @@ title: Auto-build JupyterHub images with repo2docker and GitHub Actions
 
 Build and publish a JupyterHub-ready image directly from GitHub using `repo2docker`.
 
+This post shows a lightweight path from package configuration files to a production-ready JupyterHub image.
+The goal is to keep customization simple while still getting reproducible builds, security metadata, and an end-to-end integration test that verifies the image actually works in Hub.
+
 Template repository: <https://github.com/zonca/custom-jupyterhub-repo2docker-image>  
+Previous Dockerfile-based repository: <https://github.com/zonca/custom-jupyterhub-docker-image>  
 Latest integration run: <https://github.com/zonca/custom-jupyterhub-repo2docker-image/actions/runs/22652277154>
+
+How this differs from the Dockerfile approach:
+
+- With the Dockerfile repo, most customization happens in `Dockerfile` layers.
+- With this repo2docker template, most customization happens in `environment.yml` (and optional `postBuild`).
+- Dockerfiles give maximum low-level control; repo2docker reduces maintenance for standard scientific Python environments.
+- This template also adds a separate Z2JH integration workflow that runs after image build to validate real JupyterHub startup.
 
 Quick start:
 
