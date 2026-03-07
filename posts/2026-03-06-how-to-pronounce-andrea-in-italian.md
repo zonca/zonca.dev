@@ -1,5 +1,6 @@
 ---
 title: "How to pronounce Andrea in Italian"
+date: '2026-03-06'
 ---
 
 The Italian pronunciation of Andrea is:
