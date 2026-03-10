@@ -67,4 +67,4 @@ This approach is useful when:
 
 The extension currently supports GitHub Gist page URLs, direct raw `http(s)` notebook URLs, and local `file://` URLs for testing.
 
-If this matches your workflow, the code is here: <https://github.com/zonca/sphinxnotebookgist>
+If this matches your workflow, the code is here: <https://github.com/zonca/sphinxnotebookgist> and the package is published on PyPI at <https://pypi.org/project/sphinxnotebookgist/>.
