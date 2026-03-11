@@ -56,6 +56,8 @@ conda init
 ```
 
 > After running `conda init`, reload your shell so `conda` is available: run `exec bash -l` (avoids logging out and back in).
+>
+> In non-interactive shells (for example over SSH in a script, inside `nohup`, or in `systemd`), prefer `conda run -n ENV ...` instead of `conda activate ENV`. The latter depends on shell initialization and is less reliable outside an interactive login shell.
 
 ## Serve the model with `llama.cpp` (OpenAI‑compatible server)
 
