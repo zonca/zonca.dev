@@ -165,8 +165,6 @@ The chat interface is provided by [Open WebUI](https://openwebui.com/).
 
 Create the environment (in a new shell remember to initialize Lmod and then `module load miniforge` first):
 
-The `open-webui` install pulls in a very large dependency set and can take a while even on a fast connection, so expect this step to be noticeably slower than the earlier `llama-cpp-python` install.
-
 ```bash
 source /etc/profile.d/lmod.sh
 module load miniforge
