@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2026-03-11-export-confluence-markdown-cli.html",
       "/posts/2026-03-10-sphinxnotebookgist-executed-notebooks.html",
       "/posts/2026-03-06-how-to-pronounce-andrea-in-italian.html",
       "/posts/2026-03-04-custom-jupyterhub-repo2docker-image.html",
