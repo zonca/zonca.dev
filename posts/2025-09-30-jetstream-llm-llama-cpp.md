@@ -47,9 +47,10 @@ You will need the public hostname later for HTTPS, for example `chat.xxx000000.p
 
 ## Load Miniforge
 
-A centrally provided Miniforge module is available on Jetstream images. Load it (each new shell) and then create the two Conda environments used below (one for the model server, one for the web UI).
+A centrally provided Miniforge module is available on Jetstream images. First initialize Lmod, then load Miniforge (repeat this in each new shell) and create the two Conda environments used below (one for the model server, one for the web UI).
 
 ```bash
+source /etc/profile.d/lmod.sh
 module load miniforge
 conda init
 ```
@@ -60,11 +61,13 @@ conda init
 
 We use `llama.cpp` via the `llama-cpp-python` package, which provides an OpenAI‑style HTTP API (default port 8000) that Open WebUI can connect to.
 
-Create an environment and install (remember to `module load miniforge` first in any new shell).
+Create an environment and install (remember to initialize Lmod and then `module load miniforge` first in any new shell).
 
 The last `pip install` step may take several minutes to compile llama.cpp from source, so please be patient.
 
 ```bash
+source /etc/profile.d/lmod.sh
+module load miniforge
 conda create -y -n llama python=3.11
 conda activate llama
 conda install -y cmake ninja scikit-build-core huggingface_hub
@@ -128,7 +131,7 @@ User=exouser
 Group=exouser
 WorkingDirectory=/home/exouser
 Environment=MODEL=Meta-Llama-3.1-8B-Instruct.Q3_K_M.gguf
-ExecStart=/bin/bash -lc "module load nvhpc/24.7/nvhpc miniforge && conda run -n llama python -m llama_cpp.server --model $HOME/models/$MODEL --chat_format llama-3 --n_ctx 8192 --n_gpu_layers -1 --port 8000"
+ExecStart=/bin/bash -lc "source /etc/profile.d/lmod.sh; module load nvhpc/24.7/nvhpc miniforge && conda run -n llama python -m llama_cpp.server --model $HOME/models/$MODEL --chat_format llama-3 --n_ctx 8192 --n_gpu_layers -1 --port 8000"
 Restart=always
 
 [Install]
@@ -153,9 +156,10 @@ Troubleshooting:
 
 The chat interface is provided by [Open WebUI](https://openwebui.com/).
 
-Create the environment (in a new shell remember to `module load miniforge` first):
+Create the environment (in a new shell remember to initialize Lmod and then `module load miniforge` first):
 
 ```bash
+source /etc/profile.d/lmod.sh
 module load miniforge
 conda create -y -n open-webui python=3.11
 conda run -n open-webui python -m pip install open-webui
@@ -181,7 +185,7 @@ WorkingDirectory=/home/exouser
 Environment=OPENAI_API_BASE_URL=http://localhost:8000/v1
 Environment=OPENAI_API_KEY=local-no-key
 ExecStartPre=/bin/bash -lc 'for i in {1..600}; do /usr/bin/curl -sf http://localhost:8000/v1/models >/dev/null && exit 0; sleep 1; done; echo "llama not ready" >&2; exit 1'
-ExecStart=/bin/bash -lc 'source /etc/profile.d/modules.sh 2>/dev/null || true; module load miniforge; conda run -n open-webui open-webui serve --port 8080'
+ExecStart=/bin/bash -lc 'source /etc/profile.d/lmod.sh; module load miniforge; conda run -n open-webui open-webui serve --port 8080'
 Restart=on-failure
 RestartSec=5
 TimeoutStartSec=600
@@ -214,7 +218,7 @@ User=$USER
 Group=$USER
 WorkingDirectory=/home/$USER
 Environment=MODEL=${MODEL}
-ExecStart=/bin/bash -lc "module load $NVHPC_MOD miniforge && conda run -n llama python -m llama_cpp.server --model /home/$USER/models/$MODEL --chat_format llama-3 --n_ctx $N_CTX --n_gpu_layers -1 --port 8000"
+ExecStart=/bin/bash -lc "source /etc/profile.d/lmod.sh; module load $NVHPC_MOD miniforge && conda run -n llama python -m llama_cpp.server --model /home/$USER/models/$MODEL --chat_format llama-3 --n_ctx $N_CTX --n_gpu_layers -1 --port 8000"
 Restart=always
 
 [Install]
@@ -234,7 +238,7 @@ WorkingDirectory=/home/$USER
 Environment=OPENAI_API_BASE_URL=http://localhost:8000/v1
 Environment=OPENAI_API_KEY=local-no-key
 ExecStartPre=/bin/bash -lc 'for i in {1..600}; do /usr/bin/curl -sf http://localhost:8000/v1/models >/dev/null && exit 0; sleep 1; done; echo "llama not ready" >&2; exit 1'
-ExecStart=/bin/bash -lc 'source /etc/profile.d/modules.sh 2>/dev/null || true; module load miniforge; conda run -n open-webui open-webui serve --port 8080'
+ExecStart=/bin/bash -lc 'source /etc/profile.d/lmod.sh; module load miniforge; conda run -n open-webui open-webui serve --port 8080'
 Restart=on-failure
 RestartSec=5
 TimeoutStartSec=600
