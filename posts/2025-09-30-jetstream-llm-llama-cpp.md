@@ -122,7 +122,7 @@ You can inspect VRAM usage with `watch -n 2 nvidia-smi` after starting the serve
 
 Quick note on the “KV cache”: During generation the model reuses previously computed attention Key and Value tensors (instead of recalculating them each new token). These tensors are stored per layer and per processed token; as your prompt and conversation grow, the cache grows linearly with the number of tokens kept in context. That’s why idle VRAM (~weights only) is lower (~6 GB) and rises toward the higher number (up to ~8–9 GB here) only after longer prompts / chats. Reducing `--n_ctx` caps the maximum KV cache size; clearing history or restarting frees it.
 
-On the `g3.medium` setup tested for this tutorial (`Meta-Llama-3.1-8B-Instruct.Q3_K_M.gguf`, full GPU offload, `--n_ctx 8192`), short local chat-completion requests generated about **85-90 tokens/second** after warm-up. In practice that feels very fast for interactive chat, comparable to the “instant response” experience users expect from a non-reasoning assistant rather than a slow, step-by-step model. Treat it as an approximate reference point, not a guarantee: longer prompts, larger context, concurrent users, or different quantizations will reduce throughput.
+On the `g3.medium` setup tested for this tutorial (`Meta-Llama-3.1-8B-Instruct.Q3_K_M.gguf`, full GPU offload, `--n_ctx 8192`), short local chat-completion requests generated about **85-90 tokens/second** after warm-up. Treat that as an approximate reference point, not a guarantee: longer prompts, larger context, concurrent users, or different quantizations will reduce throughput.
 
 If it starts without errors, create a systemd service so it restarts automatically.
 
