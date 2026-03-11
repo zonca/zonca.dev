@@ -97,6 +97,9 @@ hf download "$HF_REPO" \
 Test run (Ctrl-C to stop):
 
 ```bash
+source /etc/profile.d/lmod.sh
+module load miniforge nvhpc/24.7/nvhpc
+conda activate llama
 python -m llama_cpp.server \
     --model "$HOME/models/$MODEL" \
     --chat_format llama-3 \
@@ -106,6 +109,8 @@ python -m llama_cpp.server \
 ```
 
 `--n_gpu_layers -1` tells `llama.cpp` to offload **all model layers** to the GPU (full GPU inference). Without this flag the default is CPU layers (`n_gpu_layers=0`), which results in only ~1 GB of VRAM being used and much slower generation. Full offload of this 8B `Q3_K_M` model plus context buffers should occupy roughly 8–9 GB VRAM at `--n_ctx 8192` on first real requests. If it fails to start with an out‑of‑memory (OOM) error you have a few mitigation options (apply one, then retry):
+
+The `nvhpc/24.7/nvhpc` module must still be loaded at runtime, not only during the build. Without it, `llama_cpp` may fail to import with an error like `libcudart.so.12: cannot open shared object file`.
 
 * Lower context length: e.g. `--n_ctx 4096` (largest single lever; roughly linear VRAM impact for KV cache).
 * Partially offload: replace `--n_gpu_layers -1` with a number (e.g. `--n_gpu_layers 20`). Remaining layers will run on CPU (slower, but reduces VRAM need).
