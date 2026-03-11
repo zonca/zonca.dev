@@ -15,6 +15,8 @@ This is a crosspost of the official Jetstream documentation: [Deploy a ChatGPT-l
 
 This is the updated version of the tutorial using `llama.cpp` instead of `vLLM`, so we can run GGUF quantized models on Jetstream GPUs without giving up speed or context length.
 
+Update on March 11, 2026: I tested this tutorial end to end on a fresh `g3.medium` instance and collected the corrections, runtime notes, and throughput measurements in the follow-up post [Testing the Jetstream llama.cpp tutorial on g3.medium](./2026-03-11-jetstream-llm-llama-cpp-review.md).
+
 In this tutorial we deploy a Large Language Model (LLM) on Jetstream, run inference locally on the smallest currently available GPU node (`g3.medium`, 10 GB VRAM), then install a web chat interface (Open WebUI) and serve it with HTTPS using Caddy.
 
 Before spinning up your own GPU, consider the managed [Jetstream LLM inference service](https://docs.jetstream-cloud.org/inference-service/overview/). It may be more cost‑ and time‑effective if you just need API access to standard models.
