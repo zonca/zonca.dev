@@ -8,7 +8,7 @@ layout: post
 title: PySM 3.4.4 Released with New SZ Models and NumPy 2 Support
 ---
 
-PySM 3.4.4 is now published on [PyPI](https://pypi.org/project/pysm3/3.4.4/). This release is mostly about extending the Sunyaev-Zeldovich model suite and making sure PySM works cleanly with NumPy 2.
+PySM 3.4.4 is now available both on [PyPI](https://pypi.org/project/pysm3/3.4.4/) and on [conda-forge](https://anaconda.org/conda-forge/pysm3). This release is mostly about extending the Sunyaev-Zeldovich model suite and making sure PySM works cleanly with NumPy 2.
 
 The main addition is a new set of SZ presets:
 
