@@ -24,7 +24,7 @@ The published PySM documentation now includes the notebook I added to compare th
 
 If you want the short reference page for these presets, see the SZ section in the models documentation:
 
-<https://pysm3.readthedocs.io/en/latest/models.html#sunyaev-zeldovich-emission>
+<https://pysm3.readthedocs.io/en/latest/models.html#sunyaevzeldovich-emission>
 
 On the compatibility side, PySM 3.4.4 adds NumPy 2 support by replacing the deprecated `np.trapz` call with `numpy.trapezoid`. This is the main change needed for users upgrading scientific Python environments to NumPy 2 while keeping PySM in their pipeline.
 
