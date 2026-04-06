@@ -248,21 +248,27 @@ kubectl create -f ../alpine-persistent-volume.yaml
 kubectl describe pod alpine
 ```
 
-## Install NGINX Controller
+## Install Traefik Controller
 
 In principle, we do not need an Ingress because the OpenStack Load Balancer can directly route traffic to JupyterHub. However, there is no way of getting an HTTPS certificate without an Ingress.
 
-Install the NGINX Ingress controller with:
+Install the Traefik Ingress controller with the snippet below. The last two `--set` flags are optional and will enable access logs and schedule the `traefik` Pod on a `default-worker` node, respectively.
 
 ```bash
-helm upgrade --install ingress-nginx ingress-nginx \
-             --repo https://kubernetes.github.io/ingress-nginx \
-             --namespace ingress-nginx --create-namespace
+helm repo add traefik https://traefik.github.io/charts
+helm repo update
+
+helm upgrade --install traefik traefik/traefik \
+        --namespace ingress-traefik --create-namespace \
+        --set 'api.dashboard=false' \
+        --set 'providers.kubernetesCRD.enabled=false' \
+        --set 'logs.access.enabled=true' \
+        --set 'nodeSelector.capi\.stackhpc\.com/node-group=default-worker'
 ```
 
 ### Use a Fixed IP Address
 
-Notice that deploying the NGINX ingress controller will create a new OpenStack Load Balancer, which will be assigned a random IP address. This address will be lost when the NGINX ingress controller is deleted or the cluster is deleted.
+Notice that deploying the Traefik ingress controller will create a new OpenStack Load Balancer, which will be assigned a random IP address. This address will be lost when the Traefik ingress controller is deleted or the cluster is deleted.
 
 To use a fixed IP address, first create a floating IP in OpenStack:
 
@@ -271,7 +277,7 @@ openstack floating ip create public
 export IP=<FLOATING_IP>
 ```
 
-Find the ID of the NGINX Load Balancer:
+Find the ID of the Traefik Load Balancer:
 
 ```bash
 openstack loadbalancer list
@@ -318,10 +324,10 @@ where `PROJ` is the ID of your Jetstream 2 allocation (all lowercase):
 export PROJ="xxx000000"
 ```
 
-First, get the public IP of the NGINX ingress controller:
+First, get the public IP of the Traefik ingress controller:
 
 ```bash
-export IP=$(kubectl get svc -n ingress-nginx ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+export IP=$(kubectl get svc -n ingress-traefik traefik -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 ```
 
 If you have a custom subdomain, you can configure an A record that points to the `EXTERNAL-IP` of the service. Otherwise, use OpenStack to create a record:
@@ -339,15 +345,20 @@ openstack recordset create  $PROJ.projects.jetstream-cloud.org. $SUBDOMAIN --typ
 
 Access JupyterHub at <https://k8s.$PROJ.projects.jetstream-cloud.org>.
 
-## Test the NGINX Ingress Controller
+## Test the Traefik Ingress Controller
 
-We have a deployment of a simple toy application to test that Kubernetes, the NGINX ingress, and the domain are working correctly.
+We have a deployment of a simple toy application to test that Kubernetes, the Traefik ingress, and the domain are working correctly.
 
-First, associate a subdomain to the IP address of the NGINX ingress controller:
+First, associate a subdomain to the IP address of the Traefik ingress controller:
 
 ```bash
 export SUBDOMAIN="testpage"
 openstack recordset create $PROJ.projects.jetstream-cloud.org. $SUBDOMAIN --type A --record $IP --ttl 3600
+```
+
+Next, edit the Ingress section of `echo-test.yaml` to include your `$PROJ` ID and apply the manifest:
+  
+```bash
 kubectl create -f echo-test.yaml
 ```
 
@@ -355,7 +366,13 @@ Now you should be able to connect to:
 
 <http://testpage.$PROJ.projects.jetstream-cloud.org>
 
-If everything is working properly, you should see "Testing NGINX Ingress on Jetstream!" in the browser.
+If everything is working properly, you should see "Testing Traefik Ingress on Jetstream!" in the browser.
+
+Delete the resources with:
+
+```bash
+kubectl delete -f echo-test.yaml
+```
 
 ## Install JupyterHub
 
@@ -383,6 +400,7 @@ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/
 and a Cluster Issuer:
 
 ```bash
+# after editing to update the `email` field
 kubectl create -f ../setup_https/https_cluster_issuer.yml
 ```
 
