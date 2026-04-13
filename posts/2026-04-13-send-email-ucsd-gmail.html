@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Andrea Zonca">
-<meta name="dcterms.date" content="2017-12-21">
+<meta name="dcterms.date" content="2026-04-13">
 
-<title>Install custom Python environment on Jupyter Notebooks at NERSC – Andrea Zonca</title>
+<title>Send email using UCSD SMTP with a GMAIL-based address – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -124,12 +124,9 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Install custom Python environment on Jupyter Notebooks at NERSC</h1>
+      <h1 class="title">Send email using UCSD SMTP with a GMAIL-based address</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">jupyterhub</div>
-                <div class="quarto-category">python</div>
-                <div class="quarto-category">hpc</div>
-                <div class="quarto-category">nersc</div>
+                <div class="quarto-category">Python</div>
               </div>
                   </div>
   </div>
@@ -147,7 +144,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">December 21, 2017</p>
+        <p class="date">April 13, 2026</p>
       </div>
     </div>
     
@@ -166,29 +163,18 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2017-12-21-custom-conda-python-jupyter-nersc.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2017-12-21-custom-conda-python-jupyter-nersc.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
-<section id="jupyter-notebooks-at-nersc" class="level2">
-<h2 class="anchored" data-anchor-id="jupyter-notebooks-at-nersc">Jupyter Notebooks at NERSC</h2>
-<p>NERSC has provided a JupyterHub instance for quite some time to all NERSC users. It is currently running on a dedicated large-memory node on Cori, so now it can access also data on Cori <code>$SCRATCH</code>, not only <code>/project</code> and <code>$HOME</code>. See <a href="https://docs.nersc.gov/services/jupyter/">their documentation</a></p>
-</section>
-<section id="customize-your-python-environment" class="level2">
-<h2 class="anchored" data-anchor-id="customize-your-python-environment">Customize your Python environment</h2>
-<p>NERSC provides Anaconda in a Ubuntu container, of course the user doesn’t have permission to write to the Anaconda folder to install new packages.</p>
-<p>The easiest way is to install a custom Python environment is to create another conda environment and then register the Kernel with Jupyter.</p>
-<p>Create a new conda environment, best choice is <code>/project</code> if you have one, otherwise <code>$HOME</code> would work. Access <a href="http://jupyter.nersc.gov" class="uri">http://jupyter.nersc.gov</a>, open a terminal with “New”-&gt;“Terminal”.</p>
-<pre><code>conda create --prefix $HOME/myconda python=3.6 ipykernel</code></pre>
-<p>This is the minimal requirement, you could just add <code>anaconda</code> to get all the latest packages, you can also specify <code>conda-forge</code> to install other packages, e.g.:</p>
-<pre><code>source activate myconda
-conda install -c conda-forge healpy</code></pre>
-<p>Register the kernel with the Jupyter Notebook:</p>
-<pre><code>ipython kernel install --name myconda --user</code></pre>
-<p>The name of the kernel specified here doesn’t need to be the same as the conda environment name, but it is simpler.</p>
-<p>Once the conda environment is active, you can also install packages with <code>pip</code>.</p>
-<pre><code>conda install pip
-pip install somepackage</code></pre>
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2026-04-13-send-email-ucsd-gmail.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2026-04-13-send-email-ucsd-gmail.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
+<p>If you have a GMAIL-based UCSD email address and need to send email programmatically or via an email client using SMTP, you can use Google’s SMTP servers.</p>
+<p>First, you need to generate an App Password: Go to <a href="https://myaccount.google.com/apppasswords">https://myaccount.google.com/apppasswords</a> to get an app password.</p>
+<p>Then, configure your application or email client with the following settings:</p>
+<ul>
+<li><strong>Username:</strong> <code>username@ucsd.edu</code></li>
+<li><strong>Password:</strong> your newly generated app password</li>
+<li><strong>SMTP Server:</strong> <code>smtp.gmail.com</code></li>
+<li><strong>Port:</strong> <code>465</code> (for SSL)</li>
+</ul>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
