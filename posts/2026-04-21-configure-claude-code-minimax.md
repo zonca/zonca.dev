@@ -13,6 +13,20 @@ title: Configure Claude Code with MiniMax on NRP
 
 This guide covers configuring Claude Code to use MiniMax models through the NRP (Nautilus Research Platform) infrastructure, including setting up Brave Search for web queries.
 
+### Why Use NRP Models and Brave Search?
+
+Claude Code's built-in web search feature requires a paid Claude Pro subscription. By using the free NRP infrastructure with MiniMax models and configuring the Brave Search MCP server, you get:
+
+- **Free access** to powerful LLMs without a Claude subscription
+- **Web search capabilities** via Brave Search API (separate free API key required)
+- **Research-friendly** infrastructure for academic users
+
+For real-time availability of NRP models, check the [LLM Managed Service Status](https://nrp.ai/documentation/userdocs/ai/llm-managed/#live-inference-status) page.
+
+### Available Models
+
+The NRP platform offers several models. While this guide focuses on **MiniMax-M2**, another excellent option is **GLM 4.7** (`glm-4.7`), which performs well for coding tasks. However, GLM 4.7 is often busy due to high demand, so MiniMax-M2 serves as a reliable alternative.
+
 ### Get Your NRP API Key
 
 First, you need an API token from the National Research Platform. See the detailed guide [Configure NRP LLM with OpenCode and Crush](./2026-01-29-configure-nrp-llm-opencode-crush.md) for instructions on generating your token at [https://nrp.ai/llmtoken/](https://nrp.ai/llmtoken/).
