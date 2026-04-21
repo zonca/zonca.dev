@@ -13,9 +13,13 @@ title: Configure Claude Code with MiniMax on NRP
 
 This guide covers configuring Claude Code to use MiniMax models through the NRP (Nautilus Research Platform) infrastructure, including setting up Brave Search for web queries.
 
+### Get Your NRP API Key
+
+First, you need an API token from the National Research Platform. See the detailed guide [Configure NRP LLM with OpenCode and Crush](./2026-01-29-configure-nrp-llm-opencode-crush.md) for instructions on generating your token at [https://nrp.ai/llmtoken/](https://nrp.ai/llmtoken/).
+
 ### Environment Variables
 
-Add the following to your `~/.bashrc` or shell configuration:
+Add the following to your `~/.bashrc` or shell configuration (replace `your-api-key-here` with your actual token):
 
 ```bash
 # Claude Code configuration for NRP with MiniMax
