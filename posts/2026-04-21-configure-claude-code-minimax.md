@@ -1,0 +1,91 @@
+---
+categories:
+- ai
+- tools
+date: 2026-04-21
+layout: post
+slug: configure-claude-code-minimax
+title: Configure Claude Code with MiniMax on NRP
+
+---
+
+## Setup Claude Code with MiniMax models on NRP infrastructure
+
+This guide covers configuring Claude Code to use MiniMax models through the NRP (Nautilus Research Platform) infrastructure, including setting up Brave Search for web queries.
+
+### Environment Variables
+
+Add the following to your `~/.bashrc` or shell configuration:
+
+```bash
+# Claude Code configuration for NRP with MiniMax
+export ANTHROPIC_BASE_URL="https://ellm.nrp-nautilus.io/anthropic"
+export ANTHROPIC_API_KEY="your-api-key-here"
+export ANTHROPIC_DEFAULT_OPUS_MODEL="minimax-m2"
+export ANTHROPIC_DEFAULT_SONNET_MODEL="minimax-m2"
+export ANTHROPIC_DEFAULT_HAIKU_MODEL="minimax-m2"
+export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC="1"
+export CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY="1"
+export CLAUDE_CODE_ENABLE_TELEMETRY="0"
+export API_TIMEOUT_MS="3000000"
+export DISABLE_TELEMETRY="1"
+```
+
+### Optional: YOLO Mode Alias
+
+For a frictionless experience with automatic permission approval:
+
+```bash
+alias claude="claude --dangerously-skip-permissions"
+```
+
+### Brave Search MCP Server
+
+For web search capabilities, configure the Brave Search MCP server:
+
+1. Get a Brave Search API key from [https://brave.com/search/api/](https://brave.com/search/api/)
+
+2. Add the MCP server configuration to your project's `.claude.json`:
+
+```json
+{
+  "mcpServers": {
+    "brave-search": {
+      "type": "stdio",
+      "command": "brave-search-mcp-server",
+      "args": ["--transport", "stdio", "--brave-api-key", "YOUR_BRAVE_API_KEY"],
+      "env": {}
+    }
+  }
+}
+```
+
+3. Install the server globally (optional, for faster startup):
+
+```bash
+npm install -g @brave/brave-search-mcp-server
+```
+
+### Instructions for Claude
+
+Create a `~/.config/claude/CLAUDE.md` file to instruct Claude to always use Brave Search:
+
+```markdown
+# Web Search Instructions
+
+Always use the Brave Search MCP server (`brave-search`) for web searches instead of built-in web search tools.
+```
+
+### Verification
+
+Verify the MCP server is connected:
+
+```bash
+claude mcp list
+```
+
+You should see:
+
+```
+brave-search: brave-search-mcp-server --transport stdio --brave-api-key ... - ✓ Connected
+```
