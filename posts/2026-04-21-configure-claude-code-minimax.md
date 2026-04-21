@@ -25,7 +25,35 @@ For real-time availability of NRP models, check the [LLM Managed Service Status]
 
 ### Available Models
 
-The NRP platform offers several models. While this guide focuses on **MiniMax-M2**, another excellent option is **GLM 4.7** (`glm-4.7`), which performs well for coding tasks. However, GLM 4.7 is often busy due to high demand, so MiniMax-M2 serves as a reliable alternative.
+The NRP platform offers several models. Check the [LLM Managed Service Status](https://nrp.ai/documentation/userdocs/ai/llm-managed/#live-inference-status) page for real-time availability.
+
+#### MiniMax-M2 (Recommended)
+
+The `minimax-m2` model is an excellent choice for coding and agentic tasks:
+
+- **Model**: [MiniMaxAI/MiniMax-M2.7](https://huggingface.co/MiniMaxAI/MiniMax-M2.7)
+- **Parameters**: 230B with native FP8 weights
+- **Context**: 196,608 tokens
+- **Capabilities**: Tool calling, frontier agentic coding performance
+- **Status**: Main deployment with batch inference support
+
+MiniMax-M2 delivers performance comparable to Claude Sonnet 4 and Gemini 2.5 Pro, while being optimized for agent workflows with excellent tool-calling capabilities. It excels at:
+
+- Code generation and refactoring
+- Multi-step task planning
+- Shell command execution
+- MCP tool coordination
+
+#### GLM 4.7 (Alternative)
+
+**GLM 4.7** (`glm-4.7`) is another strong option for coding tasks:
+
+- **Model**: [zai-org/GLM-4.7-FP8](https://huggingface.co/zai-org/GLM-4.7-FP8)
+- **Parameters**: 358B with official FP8 quantization
+- **Context**: 202,752 tokens
+- **Capabilities**: Tool calling, thinking mode support
+
+However, GLM 4.7 is often busy due to high demand, so MiniMax-M2 serves as a reliable alternative with similar performance characteristics.
 
 ### Get Your NRP API Key
 
