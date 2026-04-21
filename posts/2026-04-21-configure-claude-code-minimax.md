@@ -70,16 +70,6 @@ For web search capabilities, configure the Brave Search MCP server:
 npm install -g @brave/brave-search-mcp-server
 ```
 
-### Instructions for Claude
-
-Create a `~/.config/claude/CLAUDE.md` file to instruct Claude to always use Brave Search:
-
-```markdown
-# Web Search Instructions
-
-Always use the Brave Search MCP server (`brave-search`) for web searches instead of built-in web search tools.
-```
-
 ### Verification
 
 Verify the MCP server is connected:
