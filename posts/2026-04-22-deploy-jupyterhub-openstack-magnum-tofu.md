@@ -11,18 +11,21 @@ title: "Deploying JupyterHub on OpenStack Magnum with OpenTofu"
 In this tutorial, we will walk through the process of deploying a production-ready JupyterHub on OpenStack Magnum using **OpenTofu**. 
 
 ### What you get at the end
+
 By following this guide, you will have:
-- A fully functional **Kubernetes cluster** provisioned via OpenStack Magnum.
-- A **public Floating IP** automatically bound to an Nginx Ingress Controller.
-- Automatic **HTTPS certificates** provided by Let's Encrypt and Cert-Manager.
-- A customized **JupyterHub** installation accessible via a professional subdomain (e.g., `jhub-test.cis230085.projects.jetstream-cloud.org`).
-- A **modular OpenTofu configuration** that is easy to maintain and reproduce.
+
+* A fully functional **Kubernetes cluster** provisioned via OpenStack Magnum.
+* A **public Floating IP** automatically bound to an Nginx Ingress Controller.
+* Automatic **HTTPS certificates** provided by Let's Encrypt and Cert-Manager.
+* A customized **JupyterHub** installation accessible via a professional subdomain (e.g., `jhub-test.cis230085.projects.jetstream-cloud.org`).
+* A **modular OpenTofu configuration** that is easy to maintain and reproduce.
 
 ---
 
 ## 1. Prerequisites
 
 ### Install OpenTofu
+
 If you don't have OpenTofu installed, you can install it using the official script:
 
 ```bash
@@ -32,6 +35,7 @@ curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install.sh | sh
 Alternatively, on Linux with snap: `snap install opentofu --classic`.
 
 ### Clone the Material
+
 All the OpenTofu recipes and configuration templates are available in the following repository:
 
 ```bash
@@ -40,7 +44,9 @@ cd jupyterhub-deploy-kubernetes-jetstream/tofu_magnum
 ```
 
 ### Get OpenStack Credentials
+
 You need an "Application Credential" to allow OpenTofu to manage resources on your behalf:
+
 1. Log in to your OpenStack Dashboard (e.g., Jetstream2 Horizon).
 2. Navigate to **Identity** -> **Application Credentials**.
 3. Create a new credential and download the **OpenStack RC** file.
@@ -57,6 +63,7 @@ You need an "Application Credential" to allow OpenTofu to manage resources on yo
 All the details of your cluster—such as name, number of nodes, machine sizes (flavors), and your JupyterHub subdomain—are controlled via a single file: `terraform.tfvars`.
 
 ### Edit your settings
+
 Navigate to the deployment directory and create/edit your `terraform.tfvars`:
 
 ```bash
@@ -65,17 +72,19 @@ cp terraform.tfvars.example terraform.tfvars
 ```
 
 **Key variables to customize:**
-- `cluster_name`: The name of your Magnum cluster.
-- `node_count`: Initial number of worker nodes.
-- `worker_flavor`: The machine type (e.g., `m3.small`).
-- `subdomain`: The prefix for your URL (e.g., `my-hub`).
-- `letsencrypt_email`: Your email for HTTPS certificate notifications.
+
+* `cluster_name`: The name of your Magnum cluster.
+* `node_count`: Initial number of worker nodes.
+* `worker_flavor`: The machine type (e.g., `m3.small`).
+* `subdomain`: The prefix for your URL (e.g., `my-hub`).
+* `letsencrypt_email`: Your email for HTTPS certificate notifications.
 
 ---
 
 ## 3. Deployment
 
 ### Initialize and Apply
+
 First, initialize the OpenTofu workspace to download the necessary providers and modules:
 
 ```bash
@@ -91,6 +100,7 @@ tofu apply
 OpenTofu will first provision the Kubernetes VMs via Magnum, then automatically set up the networking, DNS, and finally install the Helm charts for Ingress and JupyterHub.
 
 **Sample Cluster Creation Output:**
+
 ```text
 module.kubernetes_cluster.openstack_containerinfra_cluster_v1.cluster: Creating...
 module.kubernetes_cluster.openstack_containerinfra_cluster_v1.cluster: Still creating... [1m0s elapsed]
@@ -99,6 +109,7 @@ module.kubernetes_cluster.openstack_containerinfra_cluster_v1.cluster: Creation 
 ```
 
 **Sample Helm Installation Output:**
+
 ```text
 null_resource.install_jupyterhub (local-exec): Release "jhub" does not exist. Installing it now.
 null_resource.install_jupyterhub: Creation complete after 1m24s
@@ -121,6 +132,7 @@ kubectl get pods -n jhub
 ```
 
 **Expected Result:**
+
 ```text
 NAME                              READY   STATUS    RESTARTS   AGE
 cm-acme-http-solver-pbwzf         1/1     Running   0          85s
