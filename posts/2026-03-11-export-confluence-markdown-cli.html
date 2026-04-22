@@ -216,6 +216,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Export page content and all attachments</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">confluence</span> export 123456789 <span class="at">--dest</span> ./exports</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Replace <code>123456789</code> with the ID of your Confluence page. You can find the Page ID in the URL when editing the page, or by using <code>Page Information</code> from the Confluence menu.</p>
+</section>
+<section id="updating-pages-from-markdown" class="level3">
+<h3 class="anchored" data-anchor-id="updating-pages-from-markdown">Updating pages from Markdown</h3>
+<p>You can also push Markdown files back to Confluence:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">confluence</span> update <span class="op">&lt;</span>PAGE_ID<span class="op">&gt;</span> -f page.md <span class="at">--format</span> markdown</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note: use <code>--format markdown</code> (not <code>storage</code> or <code>html</code>, those will break the formatting). Also, the CLI does not convert <code>[text](url)</code> markdown links. Put URLs on their own line instead:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="an">See the project at:</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="in">`https://github.com/user/repo`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
