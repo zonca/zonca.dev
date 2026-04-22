@@ -30,3 +30,18 @@ confluence export 123456789 --dest ./exports
 ```
 
 Replace `123456789` with the ID of your Confluence page. You can find the Page ID in the URL when editing the page, or by using `Page Information` from the Confluence menu.
+
+### Updating pages from Markdown
+
+You can also push Markdown files back to Confluence:
+
+```bash
+confluence update <PAGE_ID> -f page.md --format markdown
+```
+
+Note: use `--format markdown` (not `storage` or `html`, those will break the formatting). Also, the CLI does not convert `[text](url)` markdown links. Put URLs on their own line instead:
+
+```markdown
+See the project at:
+`https://github.com/user/repo`
+```
