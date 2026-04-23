@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Andrea Zonca">
-<meta name="dcterms.date" content="2017-12-21">
+<meta name="dcterms.date" content="2026-04-23">
 
-<title>Install custom Python environment on Jupyter Notebooks at NERSC – Andrea Zonca</title>
+<title>SDSC HPC and Data Science Summer Institute 2026 – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -124,12 +124,12 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Install custom Python environment on Jupyter Notebooks at NERSC</h1>
+      <h1 class="title">SDSC HPC and Data Science Summer Institute 2026</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">jupyterhub</div>
-                <div class="quarto-category">python</div>
-                <div class="quarto-category">hpc</div>
-                <div class="quarto-category">nersc</div>
+                <div class="quarto-category">events</div>
+                <div class="quarto-category">HPC</div>
+                <div class="quarto-category">data-science</div>
+                <div class="quarto-category">education</div>
               </div>
                   </div>
   </div>
@@ -147,7 +147,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">December 21, 2017</p>
+        <p class="date">April 23, 2026</p>
       </div>
     </div>
     
@@ -166,26 +166,31 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2017-12-21-custom-conda-python-jupyter-nersc.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2017-12-21-custom-conda-python-jupyter-nersc.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
-<section id="jupyter-notebooks-at-nersc" class="level2">
-<h2 class="anchored" data-anchor-id="jupyter-notebooks-at-nersc">Jupyter Notebooks at NERSC</h2>
-<p>NERSC has provided a JupyterHub instance for quite some time to all NERSC users. It is currently running on a dedicated large-memory node on Cori, so now it can access also data on Cori <code>$SCRATCH</code>, not only <code>/project</code> and <code>$HOME</code>. See <a href="https://docs.nersc.gov/services/jupyter/">their documentation</a></p>
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2026-04-23-sdsc-summer-institute-2026.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2026-04-23-sdsc-summer-institute-2026.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
+<p>The <a href="https://www.sdsc.edu/events/202608-HPC-Data-Science-Summer-Institute.html">SDSC HPC and Data Science Summer Institute 2026</a> is a week-long, in-person training event focused on introductory-to-intermediate topics in High Performance Computing (HPC), Data Science, and Artificial Intelligence (AI).</p>
+<p><strong>When:</strong> August 3–7, 2026 (in-person at UC San Diego) <strong>Location:</strong> San Diego Supercomputer Center, UC San Diego <strong>Limited to 45 participants</strong></p>
+<section id="what-youll-learn" class="level2">
+<h2 class="anchored" data-anchor-id="what-youll-learn">What You’ll Learn</h2>
+<p>The institute offers hands-on tutorials on the <a href="https://www.sdsc.edu/hpc/expanse/index.html">Expanse supercomputer</a> covering:</p>
+<ul>
+<li><strong>Parallel Computing</strong> with MPI &amp; OpenMP</li>
+<li><strong>High Throughput Computing</strong></li>
+<li><strong>Deep Learning</strong> with GPUs</li>
+<li><strong>GPU Computing and Programming</strong></li>
+<li><strong>Python for HPC</strong></li>
+<li><strong>Data Management</strong> and transfers</li>
+<li><strong>Performance Tuning</strong></li>
+<li><strong>Scientific Computing Best Practices</strong></li>
+</ul>
 </section>
-<section id="customize-your-python-environment" class="level2">
-<h2 class="anchored" data-anchor-id="customize-your-python-environment">Customize your Python environment</h2>
-<p>NERSC provides Anaconda in a Ubuntu container, of course the user doesn’t have permission to write to the Anaconda folder to install new packages.</p>
-<p>The easiest way is to install a custom Python environment is to create another conda environment and then register the Kernel with Jupyter.</p>
-<p>Create a new conda environment, best choice is <code>/project</code> if you have one, otherwise <code>$HOME</code> would work. Access <a href="http://jupyter.nersc.gov" class="uri">http://jupyter.nersc.gov</a>, open a terminal with “New”-&gt;“Terminal”.</p>
-<pre><code>conda create --prefix $HOME/myconda python=3.6 ipykernel</code></pre>
-<p>This is the minimal requirement, you could just add <code>anaconda</code> to get all the latest packages, you can also specify <code>conda-forge</code> to install other packages, e.g.:</p>
-<pre><code>source activate myconda
-conda install -c conda-forge healpy</code></pre>
-<p>Register the kernel with the Jupyter Notebook:</p>
-<pre><code>ipython kernel install --name myconda --user</code></pre>
-<p>The name of the kernel specified here doesn’t need to be the same as the conda environment name, but it is simpler.</p>
-<p>Once the conda environment is active, you can also install packages with <code>pip</code>.</p>
-<pre><code>conda install pip
-pip install somepackage</code></pre>
+<section id="who-should-apply" class="level2">
+<h2 class="anchored" data-anchor-id="who-should-apply">Who Should Apply</h2>
+<p>Researchers and educators in academia and industry with basic UNIX/Linux and programming experience.</p>
+</section>
+<section id="how-to-register" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-register">How to Register</h2>
+<p>Register at <a href="https://na.eventscloud.com/ereg/newreg.php?eventid=869582&amp;">na.eventscloud.com</a>.</p>
+<p><a href="https://github.com/sdsc/sdsc-summer-institute-2026/blob/main/AGENDA.md">View the full agenda on GitHub</a></p>
 
 
 </section>
