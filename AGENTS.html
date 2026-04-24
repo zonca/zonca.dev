@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -134,8 +168,64 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>Review GEMINI.md before working—contains project-specific guidance and expectations.</li>
 </ul>
+<section id="buffer-social-media" class="level2">
+<h2 class="anchored" data-anchor-id="buffer-social-media">Buffer Social Media</h2>
+<section id="setup" class="level3">
+<h3 class="anchored" data-anchor-id="setup">Setup</h3>
+<ul>
+<li>Buffer skill located at: <code>/home/zonca/.agents/skills/buffer/SKILL.md</code></li>
+<li>Uses GraphQL API at <code>https://api.buffer.com</code></li>
+<li>Environment variable <code>BUFFER_KEY</code> must be set</li>
+</ul>
+</section>
+<section id="channel-ids-organization-655270181efd918df3d33eff" class="level3">
+<h3 class="anchored" data-anchor-id="channel-ids-organization-655270181efd918df3d33eff">Channel IDs (organization: 655270181efd918df3d33eff)</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Platform</th>
+<th>Channel ID</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Twitter/X</td>
+<td><code>6552702d7a6cf4d23f916d5c</code></td>
+</tr>
+<tr class="even">
+<td>LinkedIn</td>
+<td><code>67c6746b3b85969eafee1ee4</code></td>
+</tr>
+<tr class="odd">
+<td>Bluesky</td>
+<td><code>67c6738e3b85969eafe22a07</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="quick-post-creation" class="level3">
+<h3 class="anchored" data-anchor-id="quick-post-creation">Quick post creation</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">buffer_query()</span> <span class="kw">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">curl</span> <span class="at">-s</span> <span class="at">-X</span> POST <span class="st">"https://api.buffer.com"</span> <span class="dt">\</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">-H</span> <span class="st">"Authorization: Bearer </span><span class="va">$BUFFER_KEY</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">-H</span> <span class="st">"Content-Type: application/json"</span> <span class="dt">\</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">-d</span> <span class="st">"{</span><span class="dt">\"</span><span class="st">query</span><span class="dt">\"</span><span class="st">: </span><span class="dt">\"</span><span class="va">$1</span><span class="dt">\"</span><span class="st">}"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">buffer_query</span> <span class="st">"mutation { createPost(input: { text: </span><span class="dt">\"</span><span class="st">POST TEXT</span><span class="dt">\"</span><span class="st">, channelId: </span><span class="dt">\"</span><span class="st">CHANNEL_ID</span><span class="dt">\"</span><span class="st">, schedulingType: automatic, mode: addToQueue }) { ... on PostActionSuccess { post { id text dueAt } } ... on MutationError { message } } }"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="workflow-for-new-blog-posts" class="level3">
+<h3 class="anchored" data-anchor-id="workflow-for-new-blog-posts">Workflow for new blog posts</h3>
+<ol type="1">
+<li>Read the post content</li>
+<li>Draft 1 announcement post adapted for each platform (Twitter: short + hashtags, LinkedIn: professional with bullet points, Mastodon/Bluesky: similar to Twitter)</li>
+<li>Show drafts to user for approval</li>
+<li>Once approved, queue to all 3 channels using Buffer API</li>
+</ol>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->

@@ -4071,7 +4071,14 @@
     "href": "AGENTS.html",
     "title": "Agent notes",
     "section": "",
-    "text": "Agent notes\n\nReview GEMINI.md before working—contains project-specific guidance and expectations."
+    "text": "Review GEMINI.md before working—contains project-specific guidance and expectations.\n\n\n\n\n\n\nBuffer skill located at: /home/zonca/.agents/skills/buffer/SKILL.md\nUses GraphQL API at https://api.buffer.com\nEnvironment variable BUFFER_KEY must be set\n\n\n\n\n\n\n\nPlatform\nChannel ID\n\n\n\n\nTwitter/X\n6552702d7a6cf4d23f916d5c\n\n\nLinkedIn\n67c6746b3b85969eafee1ee4\n\n\nBluesky\n67c6738e3b85969eafe22a07\n\n\n\n\n\n\nbuffer_query() {\n  curl -s -X POST \"https://api.buffer.com\" \\\n    -H \"Authorization: Bearer $BUFFER_KEY\" \\\n    -H \"Content-Type: application/json\" \\\n    -d \"{\\\"query\\\": \\\"$1\\\"}\"\n}\n\nbuffer_query \"mutation { createPost(input: { text: \\\"POST TEXT\\\", channelId: \\\"CHANNEL_ID\\\", schedulingType: automatic, mode: addToQueue }) { ... on PostActionSuccess { post { id text dueAt } } ... on MutationError { message } } }\"\n\n\n\n\nRead the post content\nDraft 1 announcement post adapted for each platform (Twitter: short + hashtags, LinkedIn: professional with bullet points, Mastodon/Bluesky: similar to Twitter)\nShow drafts to user for approval\nOnce approved, queue to all 3 channels using Buffer API"
+  },
+  {
+    "objectID": "AGENTS.html#buffer-social-media",
+    "href": "AGENTS.html#buffer-social-media",
+    "title": "Agent notes",
+    "section": "",
+    "text": "Buffer skill located at: /home/zonca/.agents/skills/buffer/SKILL.md\nUses GraphQL API at https://api.buffer.com\nEnvironment variable BUFFER_KEY must be set\n\n\n\n\n\n\n\nPlatform\nChannel ID\n\n\n\n\nTwitter/X\n6552702d7a6cf4d23f916d5c\n\n\nLinkedIn\n67c6746b3b85969eafee1ee4\n\n\nBluesky\n67c6738e3b85969eafe22a07\n\n\n\n\n\n\nbuffer_query() {\n  curl -s -X POST \"https://api.buffer.com\" \\\n    -H \"Authorization: Bearer $BUFFER_KEY\" \\\n    -H \"Content-Type: application/json\" \\\n    -d \"{\\\"query\\\": \\\"$1\\\"}\"\n}\n\nbuffer_query \"mutation { createPost(input: { text: \\\"POST TEXT\\\", channelId: \\\"CHANNEL_ID\\\", schedulingType: automatic, mode: addToQueue }) { ... on PostActionSuccess { post { id text dueAt } } ... on MutationError { message } } }\"\n\n\n\n\nRead the post content\nDraft 1 announcement post adapted for each platform (Twitter: short + hashtags, LinkedIn: professional with bullet points, Mastodon/Bluesky: similar to Twitter)\nShow drafts to user for approval\nOnce approved, queue to all 3 channels using Buffer API"
   },
   {
     "objectID": "posts/2018-10-24-compute-at-sdsc.html",
