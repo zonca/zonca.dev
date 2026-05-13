@@ -10,10 +10,10 @@ Want to make sense of your Kaiser Permanente blood test results without needing 
 ## Step 1: Download your Health Summary from kp.org
 
 1.  **Log in** to your kp.org account.
-2.  Navigate to **"Health Summary"**.
-3.  Click on **"Download Health Summary"**.
+2.  Navigate to the download page at [https://healthy.kaiserpermanente.org/southern-california/secure/medical-record/download-health-record](https://healthy.kaiserpermanente.org/southern-california/secure/medical-record/download-health-record).
+3.  Select **"All visits"** and then download.
 
-This action will download a `.zip` file to your computer.
+This action will download a `.zip` file to your computer. It also gives a nicely formatted PDF with all the information.
 
 ## Step 2: Extract the Data
 
