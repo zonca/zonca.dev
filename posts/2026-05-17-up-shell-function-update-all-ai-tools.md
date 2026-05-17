@@ -4,7 +4,7 @@ date: "2026-05-17"
 categories: [linux, ai, tools]
 ---
 
-I maintain a lot of AI coding assistants — Claude Code, Gemini CLI, Codex, Cline, Qwen Code, Crush, and more. Keeping them all updated was a chore: `apt upgrade` for the system, `npm install -g` for Node packages, `claude upgrade` for Claude, downloading releases for gog... I kept forgetting one or another.
+I use a lot of AI coding assistants — Claude Code, Gemini CLI, Codex, Cline, Qwen Code, Crush, and more. Keeping them all updated was a chore: `apt upgrade` for the system, `npm install -g` for Node packages, `claude upgrade` for Claude, downloading releases for gog... I kept forgetting one or another.
 
 So I wrote a shell function called `up` that handles everything in one shot and shows me a before/after version report so I can see exactly what changed.
 
