@@ -121,19 +121,23 @@ default (default)   cinder.csi.openstack.org   Retain          WaitForFirstConsu
 replicated-hdd      cinder.csi.openstack.org   Retain          WaitForFirstConsumer   true                   12m
 ```
 
-## Enable the Autoscaler
+## Autoscaling
 
-The `create_cluster.sh` script sets autoscaling labels (`auto_scaling_enabled=true`, `max_node_count=5`), but Magnum does not propagate `max_node_count` to the nodegroup. Verify this:
-
-```bash
-openstack coe nodegroup show $K8S_CLUSTER_NAME default-worker
-```
-
-You will see `max_node_count` is `None`, meaning the autoscaler is effectively disabled. Enable it by setting the max node count manually:
+The `create_cluster.sh` script creates the cluster with the label `auto_scaling_enabled=true` and `max_node_count=5`, which activates the Cluster Autoscaler. You can verify the label on the nodegroup:
 
 ```bash
-openstack coe nodegroup update $K8S_CLUSTER_NAME default-worker replace /max_node_count=5
+openstack coe nodegroup show $K8S_CLUSTER_NAME default-worker -c labels -c min_node_count -c max_node_count
 ```
+
+```
+| Field          | Value                                                                          |
++----------------+--------------------------------------------------------------------------------+
+| labels         | {'auto_scaling_enabled': 'true', 'min_node_count': '1', 'max_node_count': '5'} |
+| max_node_count | None                                                                           |
+| min_node_count | 1                                                                              |
+```
+
+Note that `max_node_count` on the nodegroup shows `None` even though the label is set to 5. This is a Magnum quirk — the nodegroup field and the label are separate. The autoscaler reads the **label** value, so it is active and capped at 5 regardless of what the nodegroup field shows. To change the maximum, edit the `max_node_count` label in `create_cluster.sh` before creating the cluster (e.g., set it to 7).
 
 ### Test Scale Up
 
@@ -144,7 +148,7 @@ kubectl create -f high_mem_dep.yaml
 kubectl scale deployment high-memory-deployment --replicas=6
 ```
 
-Each replica requests 4 GB of memory, so 6 replicas cannot fit on a single `m3.small` worker. The autoscaler detects the pending pods and adds nodes. You can see the scale-up event:
+Each replica requests 4 GB of memory, so 6 replicas cannot fit on a single `m3.small` worker. The autoscaler detects the pending pods and adds nodes. Check the scale-up event:
 
 ```bash
 kubectl get events --field-selector reason=TriggeredScaleUp
@@ -152,10 +156,10 @@ kubectl get events --field-selector reason=TriggeredScaleUp
 
 ```
 LAST SEEN   TYPE     REASON             OBJECT                                        MESSAGE
-3m20s       Normal   TriggeredScaleUp   pod/high-memory-deployment-844964899f-8mb4f   pod triggered scale-up: [{MachineDeployment/.../k8s-...-default-worker 1->5 (max: 5)}]
+2m19s       Normal   TriggeredScaleUp   pod/high-memory-deployment-844964899f-ngldm   pod triggered scale-up: [{MachineDeployment/.../k8s-...-default-worker 1->5 (max: 5)}]
 ```
 
-Within a couple of minutes, new worker nodes appear:
+Within a few minutes, new worker nodes appear:
 
 ```bash
 kubectl get nodes
@@ -163,15 +167,15 @@ kubectl get nodes
 
 ```
 NAME                                          STATUS   ROLES           AGE     VERSION
-k8s-wamiv264xiet-control-plane-p2zj6          Ready    control-plane   24m     v1.33.2
-k8s-wamiv264xiet-default-worker-x8cxp-4krr8   Ready    <none>          47s     v1.33.2
-k8s-wamiv264xiet-default-worker-x8cxp-87wtv   Ready    <none>          47s     v1.33.2
-k8s-wamiv264xiet-default-worker-x8cxp-q8b9d   Ready    <none>          52s     v1.33.2
-k8s-wamiv264xiet-default-worker-x8cxp-qxmcn   Ready    <none>          56s     v1.33.2
-k8s-wamiv264xiet-default-worker-x8cxp-vj9db   Ready    <none>          22m     v1.33.2
+k8s-2yo5qznljser-control-plane-g7nk4          Ready    control-plane   15m     v1.33.2
+k8s-2yo5qznljser-default-worker-m2pp7-2mq6z   Ready    <none>          2m40s   v1.33.2
+k8s-2yo5qznljser-default-worker-m2pp7-bc6jv   Ready    <none>          2m37s   v1.33.2
+k8s-2yo5qznljser-default-worker-m2pp7-kp28n   Ready    <none>          2m30s   v1.33.2
+k8s-2yo5qznljser-default-worker-m2pp7-t2nsg   Ready    <none>          15m     v1.33.2
+k8s-2yo5qznljser-default-worker-m2pp7-tzjdn   Ready    <none>          2m31s   v1.33.2
 ```
 
-The autoscaler scaled from 1 to 5 workers (the maximum). One pod remains pending because all 6 replicas cannot fit within the 5-worker limit.
+The autoscaler scaled from 1 to 5 workers (the maximum set in the label). One pod remains pending because all 6 replicas cannot fit within the 5-worker limit.
 
 ### Clean Up and Observe Scale Down
 
@@ -187,7 +191,7 @@ The autoscaler takes several minutes to identify idle nodes, drain them, and ter
 kubectl get nodes -w
 ```
 
-You can also inspect the autoscaler's internal status to see whether a scale-down is in progress:
+You can inspect the autoscaler's internal status to see whether a scale-down is in progress:
 
 ```bash
 kubectl -n kube-system get configmap cluster-autoscaler-status -o jsonpath='{.data.status}'
@@ -197,13 +201,7 @@ When `scaleDown.status` shows `CandidatesPresent`, the autoscaler has identified
 
 ## Scale Manually
 
-If you prefer not to use the autoscaler, you can scale the worker pool manually. First, make sure autoscaling is disabled by checking that `max_node_count` is `None`:
-
-```bash
-openstack coe nodegroup show $K8S_CLUSTER_NAME default-worker -c max_node_count
-```
-
-Then resize the nodegroup:
+If you prefer not to use the autoscaler, you can scale the worker pool manually. Resize the nodegroup:
 
 ```bash
 openstack coe cluster resize --nodegroup default-worker $K8S_CLUSTER_NAME 3
