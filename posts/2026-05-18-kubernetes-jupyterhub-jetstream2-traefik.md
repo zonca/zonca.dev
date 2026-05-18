@@ -28,34 +28,32 @@ Magnum-based clusters offer several benefits over [Kubespray](https://www.zonca.
    pip install python-openstackclient python-magnumclient python-octaviaclient python-designateclient
    ```
 
-   The OpenStack client is used to create and manage the cluster, the Magnum client is used to create the cluster template, and the Octavia client is used to manage the load balancer. The Designate client is used to manage DNS records.
+   The OpenStack client creates and manages the cluster, the Magnum client manages cluster templates, the Octavia client manages load balancers, and the Designate client manages DNS records.
 
-   This tutorial used python-openstackclient 8.1.0, python-magnumclient 4.8.1, python-octaviaclient 3.11.1, and python-designateclient 6.3.0.
+   This tutorial used python-openstackclient 9.0.0, python-magnumclient 4.8.1, python-octaviaclient 3.11.1, and python-designateclient 6.3.0.
 
 2. **Create an App Credential**:
-   Create an application credential for the client to access the API through [Horizon](https://js2.jetstream-cloud.org/) under [Identity → Application credentials](https://js2.jetstream-cloud.org/identity/application_credentials/).
-   Create an "Unrestricted" application credential with all permissions, including the "loadbalancer" permission, in the project where you will be creating the cluster. Download the `openrc` file and source it to expose the environment variables in your local environment where you'll be running the `openstack` commands.
+   Create an application credential through [Horizon](https://js2.jetstream-cloud.org/) under [Identity → Application credentials](https://js2.jetstream-cloud.org/identity/application_credentials/).
+   Choose "Unrestricted" and include all permissions, notably "loadbalancer", in the project where you will create the cluster. Download the `openrc` file and source it:
+
+   ```bash
+   source app-cred-XXXX-openrc.sh
+   ```
 
 3. **Install Kubernetes Tooling**:
    Once the cluster is launched, manage it using standard Kubernetes tools:
-   - `kubectl`: see <https://kubernetes.io/docs/tasks/tools/>, this tutorial used 1.30.
-   - `helm`: see <https://helm.sh/docs/intro/install/>, this tutorial used 3.17.
+   - `kubectl`: see <https://kubernetes.io/docs/tasks/tools/>, this tutorial used 1.35.
+   - `helm`: see <https://helm.sh/docs/intro/install/>, this tutorial used 3.18.
 
 ## Create the Cluster with Magnum
 
-Check the cluster templates available:
+Check the available cluster templates:
 
 ```bash
 openstack coe cluster template list
 ```
 
-List clusters (initially empty):
-
-```bash
-openstack coe cluster list
-```
-
-Clone the repository with all the configuration files on the machine you will use the Jetstream API from, typically your laptop:
+Clone the repository with all the configuration files:
 
 ```bash
 git clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream
@@ -69,9 +67,11 @@ export K8S_CLUSTER_NAME=k8s
 bash create_cluster.sh
 ```
 
-See inside `create_cluster.sh` for the most commonly used parameters. The script waits for the cluster to complete deployment, which should take about 10 minutes.
+The script uses the `kubernetes-1-33-jammy` template, creates 1 control-plane node and 1 worker (both `m3.small` flavor), enables autoscaling with min 1 / max 5 workers, and polls until the cluster status is `CREATE_COMPLETE`.
 
 > **Note**: The first time you create a cluster (or after a long period of inactivity), deployment can take 2–2.5 hours, likely because the images are not cached in OpenStack. After that, clusters should deploy in about 10 minutes.
+
+> **Known Issue**: The Magnum cluster status may remain `CREATE_IN_PROGRESS` even after the nodegroups are fully ready. If `kubectl get nodes` shows all nodes as `Ready`, the cluster is functional and you can proceed — you do not need to wait for the status to flip to `CREATE_COMPLETE`. You can also check nodegroup status with `openstack coe nodegroup list $K8S_CLUSTER_NAME`, which tends to update faster than the cluster-level status.
 
 In case of errors, check the error message with:
 
@@ -87,7 +87,7 @@ bash delete_cluster.sh
 
 **Warning**: This deletes all Jetstream virtual machines and any data stored in JupyterHub.
 
-Once the status is `CREATE_COMPLETE`, retrieve the Kubernetes config file:
+Once the nodes are ready, retrieve the Kubernetes config file:
 
 ```bash
 openstack coe cluster config $K8S_CLUSTER_NAME --force
@@ -101,12 +101,22 @@ Verify that `kubectl` commands work:
 kubectl get nodes
 ```
 
-Expected output:
+You should see output like:
 
 ```
-NAME                                          STATUS   ROLES           AGE     VERSION
-k8s-mbbffjfee7zs-control-plane-6rn2z          Ready    control-plane   2m22s   v1.30.4
-k8s-mbbffjfee7zs-control-plane-nw4cc          Ready    control-plane   41s     v1.30.4
-k8s-mbbffjfee7zs-control-plane-w9jln          Ready    control-plane   5m8s    v1.30.4
-k8s-mbbffjfee7zs-default-worker-jb5lm-gvvjm   Ready    <none>          2m21s   v1.30.4
+NAME                                          STATUS   ROLES           AGE   VERSION
+k8s-bexqcu3lzfdo-control-plane-4lqmn          Ready    control-plane   13m   v1.33.2
+k8s-bexqcu3lzfdo-default-worker-x6654-nk2s7   Ready    <none>          10m   v1.33.2
+```
+
+Check storage classes (Magnum provides Cinder-backed persistent volumes by default):
+
+```bash
+kubectl get storageclass
+```
+
+```
+NAME                PROVISIONER                RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+default (default)   cinder.csi.openstack.org   Retain          WaitForFirstConsumer   true                   12m
+replicated-hdd      cinder.csi.openstack.org   Retain          WaitForFirstConsumer   true                   12m
 ```
