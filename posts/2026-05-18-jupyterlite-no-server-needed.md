@@ -5,7 +5,7 @@ categories:
 - python
 date: '2026-05-18'
 layout: post
-title: "Do You Need JupyterHub for Your Workshop? JupyterLite Runs Python Entirely in the Browser"
+title: "Do you need JupyterHub for your workshop? JupyterLite runs Python in the browser"
 ---
 
 You're organizing a Python workshop or teaching a class that uses Jupyter notebooks.
