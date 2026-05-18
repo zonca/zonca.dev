@@ -123,7 +123,14 @@ replicated-hdd      cinder.csi.openstack.org   Retain          WaitForFirstConsu
 
 ## Autoscaling
 
-The `create_cluster.sh` script creates the cluster with the label `auto_scaling_enabled=true` and `max_node_count=5`, which activates the Cluster Autoscaler. You can verify the label on the nodegroup:
+The `create_cluster.sh` script creates the cluster with the label `auto_scaling_enabled=true` and `max_node_count=5`, which activates the Cluster Autoscaler. You can override the maximum before creating the cluster:
+
+```bash
+export MAX_NODE_COUNT=10
+bash create_cluster.sh
+```
+
+After the cluster is created, verify the label on the nodegroup:
 
 ```bash
 openstack coe nodegroup show $K8S_CLUSTER_NAME default-worker -c labels -c min_node_count -c max_node_count
@@ -137,7 +144,7 @@ openstack coe nodegroup show $K8S_CLUSTER_NAME default-worker -c labels -c min_n
 | min_node_count | 1                                                                              |
 ```
 
-Note that `max_node_count` on the nodegroup shows `None` even though the label is set to 5. This is a Magnum quirk — the nodegroup field and the label are separate. The autoscaler reads the **label** value, so it is active and capped at 5 regardless of what the nodegroup field shows. To change the maximum, edit the `max_node_count` label in `create_cluster.sh` before creating the cluster (e.g., set it to 7).
+Note that `max_node_count` on the nodegroup shows `None` even though the label is set to 5. This is a Magnum quirk — the nodegroup field and the label are separate. **The autoscaler reads the label value**, not the nodegroup field, so it is active and capped at 5 regardless. This means there is no need to run `openstack coe nodegroup update` to set `max_node_count` — the label set at cluster creation time is sufficient. To change the maximum, set `MAX_NODE_COUNT` before running `create_cluster.sh`.
 
 ### Test Scale Up
 
