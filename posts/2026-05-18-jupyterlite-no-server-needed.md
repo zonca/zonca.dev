@@ -16,7 +16,7 @@ But there's a simpler option that works for many scenarios: **JupyterLite**, whi
 
 ## JupyterHub: Powerful but Demanding
 
-JupyterHub (https://jupyter.org/hub) is the gold standard for multi-user notebook hosting.
+[JupyterHub](https://jupyter.org/hub) is the gold standard for multi-user notebook hosting.
 It gives every participant their own isolated Jupyter server, with full access to the host's Python environment, filesystem, and computing resources.
 
 **When you need JupyterHub:**
@@ -33,7 +33,7 @@ If you're deploying on cloud infrastructure, I've written about [deploying Jupyt
 
 ## JupyterLite: Zero Server, Zero Installation
 
-JupyterLite (https://github.com/jupyterlite/jupyterlite) takes a completely different approach: it runs a full Python environment compiled to **WebAssembly** directly in the browser.
+[JupyterLite](https://github.com/jupyterlite/jupyterlite) takes a completely different approach: it runs a full Python environment compiled to **WebAssembly** directly in the browser.
 No server, no installation, no setup time — participants just open a URL and start coding.
 
 **JupyterLite is ideal when:**
@@ -79,7 +79,7 @@ JupyterLite has some limitations you should be aware of:
 
 To demonstrate that JupyterLite works for real teaching material, I've deployed the Software Carpentry Python tutorials as a live JupyterLite site:
 
-`https://zonca.github.io/jupyterlite-carpentry/lab/`
+https://zonca.github.io/jupyterlite-carpentry/lab/
 
 This site includes two complete tutorials converted from the original Carpentries markdown episodes into interactive notebooks:
 
@@ -87,7 +87,6 @@ This site includes two complete tutorials converted from the original Carpentrie
 - **Python Novice: Gapminder** — Introduction to Python using Gapminder GDP data (Pandas, Matplotlib)
 
 The source code for this deployment is at https://github.com/zonca/jupyterlite-carpentry — it uses GitHub Pages with a GitHub Actions workflow that builds the JupyterLite site automatically on every push to main.
-The tutorial content is licensed under [Creative Commons Attribution 4.0 (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/) following the original Software Carpentry licensing.
 
 ### How the Deployment Works
 
@@ -100,6 +99,40 @@ The entire deployment is surprisingly simple:
 
 That's it. No Kubernetes, no Helm charts, no SSL certificates, no user authentication.
 The entire site is just static files served by GitHub.
+
+### GitHub Actions Configuration
+
+The deployment is automated with a simple two-job workflow:
+
+```yaml
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - run: make build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _output
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - uses: actions/deploy-pages@v4
+```
+
+The **build** job installs the JupyterLite dependencies, runs `jupyter lite build`, and uploads the generated static site as an artifact.
+The **deploy** job takes that artifact and publishes it to GitHub Pages — but only on pushes to `main`, not on pull requests.
+The `permissions` block grants the workflow access to the GitHub Pages API.
+You also need to enable GitHub Pages in your repository settings and set the **Source** to "GitHub Actions" (not "Deploy from a branch").
 
 ## Decision Guide: JupyterHub or JupyterLite?
 
