@@ -6,7 +6,7 @@ categories:
 date: '2026-05-18'
 layout: post
 slug: kubernetes-jetstream2-jupyterhub
-title: Deploy JupyterHub on Jetstream2 Kubernetes
+title: Deploy JupyterHub on Jetstream2 Kubernetes (3 of 4)
 ---
 
 This post is part of a series on deploying JupyterHub on Jetstream2:
