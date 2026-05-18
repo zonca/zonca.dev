@@ -4,13 +4,18 @@ categories:
 - jetstream
 date: '2026-05-18'
 layout: post
-slug: kubernetes-jetstream2-magnum-2026
+slug: kubernetes-jetstream2-magnum
 title: Deploy Kubernetes on Jetstream2 with Magnum and Cluster API
 ---
 
-This guide demonstrates how to deploy Kubernetes on Jetstream2 with Magnum.
+This post is part of a series on deploying JupyterHub on Jetstream2:
 
-Jetstream2 uses the Cluster API as the backend for Magnum, making it faster and more straightforward to launch Kubernetes clusters. Once the cluster is running, see [Install Traefik, HTTPS, and JupyterHub on Jetstream2 Kubernetes](/posts/kubernetes-jetstream2-traefik-jupyterhub-2026) to add an ingress controller, TLS, and JupyterHub.
+1. **Deploy Kubernetes on Jetstream2**
+2. [Install Traefik Ingress Controller](/posts/kubernetes-jetstream2-traefik)
+3. [Deploy JupyterHub](/posts/kubernetes-jetstream2-jupyterhub)
+4. [Setup HTTPS with cert-manager](/posts/kubernetes-jetstream2-certmanager)
+
+Jetstream2 uses the Cluster API as the backend for Magnum, making it faster and more straightforward to launch Kubernetes clusters. This guide walks through creating a cluster, configuring autoscaling, and verifying the deployment.
 
 ## Advantages of Magnum-Based Deployments
 
@@ -29,7 +34,7 @@ Magnum-based clusters offer several benefits over [Kubespray](https://www.zonca.
 
    The OpenStack client creates and manages the cluster, the Magnum client manages cluster templates, the Octavia client manages load balancers, and the Designate client manages DNS records.
 
-   This tutorial used python-openstackclient 9.0.0, python-magnumclient 4.8.1, python-octaviaclient 3.11.1, and python-designateclient 6.3.0.
+   This tutorial used python-openstackclient 9.0.0, python-magnumclient 4.8.1, python-octaviaclient 3.14.0, and python-designateclient 6.3.0.
 
 2. **Create an App Credential**:
    Create an application credential through [Horizon](https://js2.jetstream-cloud.org/) under [Identity → Application credentials](https://js2.jetstream-cloud.org/identity/application_credentials/).
