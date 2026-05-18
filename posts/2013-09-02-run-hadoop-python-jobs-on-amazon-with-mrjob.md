@@ -7,8 +7,7 @@ categories:
 date: 2013-09-02 02:36
 layout: post
 slug: run-hadoop-python-jobs-on-amazon-with-mrjob
-title: Run Hadoop Python jobs on Amazon with MrJob
-
+title: Run Hadoop Python jobs on Amazon with mrjob
 ---
 
 <br/>

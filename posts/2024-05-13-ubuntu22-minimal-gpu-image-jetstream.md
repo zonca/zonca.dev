@@ -5,8 +5,7 @@ categories:
 date: '2024-05-13'
 layout: post
 slug: ubuntu22-minimal-image-gpu-jetstream
-title: Ubuntu 22.04 Minimal on Jetstream with GPU Support
-
+title: Ubuntu 22.04 minimal on Jetstream with GPU support
 ---
 
 Just notes on how to create a Ubuntu 22.04 image with GPU support

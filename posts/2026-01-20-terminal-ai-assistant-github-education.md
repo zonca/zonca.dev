@@ -1,5 +1,5 @@
 ---
-title: "Terminal-based AI Assistant with GitHub for Education"
+title: "Terminal-based AI assistant with GitHub for Education"
 date: "2026-01-20"
 categories: [ai, github]
 ---

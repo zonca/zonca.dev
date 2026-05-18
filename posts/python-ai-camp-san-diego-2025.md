@@ -3,7 +3,7 @@ categories:
 - python
 date: '2025-05-18'
 layout: post
-title: Python and AI Coding Summer Camp in person in San Diego
+title: Python and AI coding summer camp in person in San Diego
 ---
 
 I'm excited to announce that I'll be teaching a brand new **Python and AI Coding Summer Camp** in person in San Diego, hosted at the Italian School of San Diego (Kearny Mesa)!

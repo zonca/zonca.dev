@@ -3,7 +3,7 @@ categories:
 - github
 date: '2025-01-22'
 layout: post
-title: Using GitHub Releases to keep track of Large Artifacts
+title: Using GitHub Releases to keep track of large artifacts
 ---
 
 ## Introduction

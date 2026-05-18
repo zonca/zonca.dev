@@ -1,5 +1,5 @@
 ---
-title: Container and Product EZID DOIs with Python
+title: Container and product EZID DOIs with Python
 date: '2025-12-02'
 categories:
   - python

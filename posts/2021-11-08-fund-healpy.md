@@ -5,8 +5,7 @@ categories:
 - healpy
 date: '2021-11-08'
 layout: post
-title: Fund healpy via Github Sponsors
-
+title: Fund healpy via GitHub Sponsors
 ---
 
 [**Github Sponsor page**](https://github.com/sponsors/zonca)

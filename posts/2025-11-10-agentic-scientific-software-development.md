@@ -5,7 +5,7 @@ categories:
 - python
 date: '2025-11-10'
 layout: post
-title: Going Full Agentic for Scientific Software Development
+title: Going full agentic for scientific software development
 ---
 
 The landscape of scientific software development is being transformed by AI coding agents. Over the past few weeks, I've been exploring GitHub Copilot's AI coding agent capabilities for maintaining [healpy](https://github.com/healpy/healpy), and the experience has been remarkable. What started as an experiment has evolved into a workflow that feels like managing a team of experienced developers rather than coding alone.

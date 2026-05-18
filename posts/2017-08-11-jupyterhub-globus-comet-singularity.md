@@ -8,7 +8,7 @@ categories:
 date: 2017-08-11 18:00
 layout: post
 slug: jupyterhub-globus-comet-singularity
-title: Deployment of Jupyterhub with Globus Auth to spawn Notebook on Comet in Singularity
+title: Deployment of Jupyterhub with Globus Auth to spawn notebook on Comet in Singularity
   containers
 
 ---

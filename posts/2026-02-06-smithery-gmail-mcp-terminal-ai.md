@@ -1,5 +1,5 @@
 ---
-title: "Connect Gmail (and More) to Codex CLI and Gemini CLI with Smithery (MCP)"
+title: "Connect Gmail (and more) to Codex CLI and Gemini CLI with Smithery (MCP)"
 description: "Use Smithery to connect Gmail, Google Sheets, and Calendar to terminal AI assistants via MCP, with OAuth handled in the browser."
 date: "2026-02-06"
 categories: [ai]

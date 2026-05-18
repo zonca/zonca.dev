@@ -4,8 +4,7 @@ categories:
 - sdsc
 date: '2023-04-24'
 layout: post
-title: Hiring a Computational Scientist at the San Diego Supercomputer Center
-
+title: Hiring a computational scientist at the San Diego Supercomputer Center
 ---
 
 * Early Career Scientist? Likes Supercomputers? Likes the Sun?

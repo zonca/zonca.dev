@@ -5,8 +5,7 @@ categories:
 - github
 date: '2022-11-03'
 layout: post
-title: Build and host Singularity containers on Github
-
+title: Build and host Singularity containers on GitHub
 ---
 
 I present a demo repository configured to build Singularity containers using Github actions and then host them using the Github container registry:

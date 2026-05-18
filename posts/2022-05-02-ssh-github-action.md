@@ -6,8 +6,7 @@ categories:
 - git
 date: '2022-05-02'
 layout: post
-title: Access running Github action with SSH
-
+title: Access running GitHub Action with SSH
 ---
 
 Sometimes Github actions are failing and it is difficult to reproduce the error locally,

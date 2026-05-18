@@ -6,8 +6,7 @@ categories:
 - python
 date: '2025-10-07'
 layout: post
-title: Building Singularity Containers with Conda Environments from requirements.txt
-
+title: Building Singularity containers with Conda environments from requirements.txt
 ---
 
 This post introduces a method for building Singularity containers that include a Conda environment based on a `requirements.txt` file. This approach provides a reproducible and portable environment for any Python project.

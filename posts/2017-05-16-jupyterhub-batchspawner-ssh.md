@@ -8,8 +8,7 @@ categories:
 date: 2017-05-16 22:00
 layout: post
 slug: jupyterhub-hpc-batchspawner-ssh
-title: Deploy Jupyterhub on a Supercomputer with SSH Authentication
-
+title: Deploy Jupyterhub on a supercomputer with SSH authentication
 ---
 
 The best way to deploy Jupyterhub with an interface to a Supercomputer is through the use of `batchspawner`. I have a sample deployment explained in an older blog post: <https://zonca.github.io/2017/02/sample-deployment-jupyterhub-hpc.html>

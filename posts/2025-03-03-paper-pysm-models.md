@@ -5,7 +5,7 @@ categories:
 - python
 date: '2025-03-03'
 layout: post
-title: New Paper on Arxiv about Models of Galactic Emission in the Microwaves for CMB Experiments
+title: New paper on arXiv about models of Galactic emission in the microwaves for CMB experiments
 ---
 
 A new paper has been published on Arxiv discussing models of Galactic emission in the microwaves for Cosmic Microwave Background (CMB) experiments:

@@ -7,8 +7,7 @@ categories:
 - github
 date: '2023-09-27'
 layout: post
-title: Deploy Github Authenticator in JupyterHub
-
+title: Deploy GitHub Authenticator in JupyterHub
 ---
 
 **Updated June 2024**: added more options to config file

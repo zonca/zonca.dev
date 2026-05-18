@@ -7,8 +7,7 @@ categories:
 date: 2013-12-18 16:30
 layout: post
 slug: run-ipython-notebook-on-HPC-cluster-via-PBS
-title: Run IPython Notebook on a HPC Cluster via PBS
-
+title: Run IPython Notebook on a HPC cluster via PBS
 ---
 
 The [IPython notebook](http://ipython.org/notebook.html) is a great tool for data exploration

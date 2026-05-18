@@ -4,8 +4,7 @@ categories:
 - github
 date: '2023-02-02'
 layout: post
-title: Work on a Latex Document with Github and Overleaf
-
+title: Work on a LaTeX document with GitHub and Overleaf
 ---
 
 In the past I have written about [coordinating a large document using multiple overleaf documents and Github repositories](https://www.zonca.dev/posts/2021-01-28-github-overleaf-large-document).

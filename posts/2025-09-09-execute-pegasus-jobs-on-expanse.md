@@ -1,5 +1,5 @@
 ---
-title: "Execute Pegasus Jobs on Expanse"
+title: "Execute Pegasus jobs on Expanse"
 date: 2025-09-09
 categories:
   - sdsc

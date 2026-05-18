@@ -1,5 +1,5 @@
 ---
-title: "Convenience Script for System & CLI Updates"
+title: "Convenience script for system & CLI updates"
 date: "2026-01-10"
 categories: [linux, ai]
 ---

@@ -7,8 +7,7 @@ categories:
 - jupyterhub
 date: '2020-03-13'
 layout: post
-title: Setup HTTPS on Kubernetes with Letsencrypt
-
+title: Setup HTTPS on Kubernetes with Let's Encrypt
 ---
 
 **This tutorial is obsolete since September 2023**, see [the updated tutorial](./2023-09-26-https-kubernetes-letsencrypt.md).

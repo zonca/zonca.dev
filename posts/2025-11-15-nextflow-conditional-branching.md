@@ -2,7 +2,7 @@
 categories: [hpc, sdsc, nextflow]
 date: '2025-11-15'
 layout: post
-title: Implementing Conditional Logic in Nextflow Workflows
+title: Implementing conditional logic in Nextflow workflows
 ---
 
 This post serves as a follow-up to my previous tutorial, "[Running Nextflow on Expanse](2025-10-07-running-nextflow-on-expanse.html)", where I covered the foundational aspects of deploying Nextflow workflows on an HPC environment. While the previous discussion focused on execution environments, this tutorial delves into a crucial aspect of building sophisticated and adaptive computational workflows: conditional logic.

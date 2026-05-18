@@ -4,8 +4,7 @@ categories:
 - jetstream
 date: '2023-03-23'
 layout: post
-title: Update Openstack credentials in Kubernetes
-
+title: Update OpenStack credentials in Kubernetes
 ---
 
 If you are deploying Kubernetes on top of Openstack, the Openstack External cloud provider stores the ID and Secret necessary to authenticate with the cloud infrastructure in a Secret.

@@ -4,8 +4,7 @@ categories:
 - github
 date: '2024-04-17'
 layout: post
-title: 2-way Synchronization of Overleaf and Github via a Github Action
-
+title: 2-way synchronization of Overleaf and GitHub via a GitHub Action
 ---
 
 **Updated: 2025-02-20**

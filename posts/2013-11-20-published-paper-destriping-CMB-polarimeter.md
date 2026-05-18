@@ -7,8 +7,7 @@ categories:
 date: 2013-11-20 21:30
 layout: post
 slug: published-paper-destriping-CMB-polarimeter
-title: Published paper on Destriping Cosmic Microwave Background Polarimeter data
-
+title: Published paper on destriping Cosmic Microwave Background polarimeter data
 ---
 
 TL;DR version:

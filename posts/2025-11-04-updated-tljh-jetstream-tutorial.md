@@ -2,7 +2,7 @@
 categories: [jupyterhub, jetstream2]
 date: '2025-11-04'
 layout: post
-title: Updated Tutorial on The Littlest JupyterHub on Jetstream
+title: Updated tutorial on The Littlest JupyterHub on Jetstream
 ---
 
 I'm excited to share that I've contributed an updated tutorial on how to deploy "The Littlest JupyterHub" (TLJH) on a Jetstream instance!

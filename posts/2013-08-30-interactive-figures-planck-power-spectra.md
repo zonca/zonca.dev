@@ -7,8 +7,7 @@ categories:
 date: 2013-08-30 08:52
 layout: post
 slug: interactive-figures-planck-power-spectra
-title: Interactive figures in the browser - CMB Power Spectra
-
+title: Interactive figures in the browser - CMB power spectra
 ---
 
 <p>

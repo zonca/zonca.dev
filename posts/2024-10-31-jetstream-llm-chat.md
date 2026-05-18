@@ -7,8 +7,7 @@ categories:
 layout: post
 date: 2024-10-31
 slug: jetstream-llm-chat
-title: Deploy a LLM Chat-GPT like service on Jetstream
-
+title: Deploy an LLM ChatGPT-like service on Jetstream
 ---
 
 In this tutorial we will deploy a LLM Chat-GPT like service on a GPU node on Jetstream.

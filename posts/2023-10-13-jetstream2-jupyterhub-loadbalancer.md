@@ -6,8 +6,7 @@ date: '2023-11-06'
 draft: true
 layout: post
 slug: jupyterhub-jetstream2-loadbalancer
-title: Deploy JupyterHub on Jetstream 2 with a Load Balancer
-
+title: Deploy JupyterHub on Jetstream 2 with a load balancer
 ---
 
 **Usage of Load Balancer discouraged**: Deploying load balancers through Kubespray is not reliable, not sure what is the reason for this behaviour. Once created Load Balancers switch between Pending Update and Pending Delete state and cannot be deleted anymore by the user.

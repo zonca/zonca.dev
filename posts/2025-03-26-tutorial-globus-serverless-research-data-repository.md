@@ -3,7 +3,7 @@ categories:
 - data
 date: '2025-03-26'
 layout: post
-title: Gateways 2024 - Tutorial on Creating a Serverless Research Data Repository based on Globus
+title: Gateways 2024 - Tutorial on creating a serverless research data repository based on Globus
 slug: tutorial-globus-serverless-research-data-repository
 ---
 
