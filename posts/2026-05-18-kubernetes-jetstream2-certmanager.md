@@ -45,6 +45,7 @@ On small Jetstream2 clusters, the worker node may be autoscaled away, which woul
 
 ```bash
 cd jupyterhub-deploy-kubernetes-jetstream/setup_https
+export KUBECONFIG=../kubernetes_magnum/config
 bash deploymentPatch.sh
 ```
 
@@ -55,6 +56,7 @@ This patches `cert-manager`, `cert-manager-cainjector`, and `cert-manager-webhoo
 Create a Let's Encrypt ClusterIssuer that uses HTTP01 challenges via Traefik. Replace `YOUREMAIL` with your email address:
 
 ```bash
+cd jupyterhub-deploy-kubernetes-jetstream/setup_https
 sed 's/YOUREMAIL/your@email.edu/' https_cluster_issuer.yml | kubectl apply -f -
 ```
 
@@ -81,8 +83,8 @@ certmanager-tls-jupyterhub   True    certmanager-tls-jupyterhub   2m
 
 When `READY` is `True`, the certificate has been issued. Your JupyterHub deployment is now accessible over HTTPS:
 
-```bash
-https://jhub.$PROJ.projects.jetstream-cloud.org
+```
+https://k8s.$PROJ.projects.jetstream-cloud.org
 ```
 
 ## Troubleshooting
@@ -102,4 +104,4 @@ Common issues:
 
 ## Issues and Feedback
 
-Please [open an issue on the repository](https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream/) to report any issue or give feedback.
+Please [open an issue on the repository](https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream) to report any issue or give feedback.

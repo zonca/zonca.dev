@@ -30,7 +30,7 @@ helm upgrade --install traefik traefik/traefik \
     --namespace traefik --create-namespace
 ```
 
-This deploys Traefik v3.7 and creates a Kubernetes Service of type `LoadBalancer`. On Jetstream2, this automatically provisions an OpenStack Octavia load balancer with a floating IP.
+This deploys Traefik (this tutorial tested with v3.7) and creates a Kubernetes Service of type `LoadBalancer`. On Jetstream2, this automatically provisions an OpenStack Octavia load balancer with a floating IP.
 
 Wait for the external IP to be assigned (takes about 2 minutes):
 
@@ -97,8 +97,8 @@ export IP=$FIXED_IP
 
 Jetstream2 provides a subdomain for each project:
 
-```bash
-xxxxxx.$PROJ.projects.jetstream-cloud.org
+```
+subdomain.$PROJ.projects.jetstream-cloud.org
 ```
 
 where `PROJ` is the ID of your Jetstream2 allocation (all lowercase). Create a DNS record pointing to the Traefik IP:
@@ -123,7 +123,7 @@ If you have a custom domain, create an A record pointing to `$IP` with your DNS 
 
 Deploy a simple echo server to verify that Traefik and DNS are working. The repository includes an `echo-test.yaml` manifest that creates a Deployment, a Service, and an Ingress with `ingressClassName: traefik`.
 
-Edit the `host` field in `echo-test.yaml` to match your domain, then deploy:
+Edit the `host` field in `echo-test.yaml` to match your subdomain, then deploy:
 
 ```bash
 kubectl create -f echo-test.yaml

@@ -24,12 +24,13 @@ JupyterHub requires two secrets: a cookie secret for the hub and a proxy secret 
 
 ```bash
 cd jupyterhub-deploy-kubernetes-jetstream
+export PROJ="xxx000000"
 bash create_secrets.sh
 ```
 
 The `create_secrets.sh` script generates random secrets and writes them to `secrets.yaml`. It also configures the JupyterHub Ingress with `ingressClassName: traefik` and enables TLS via cert-manager.
 
-The default `secrets.yaml` assumes you are deploying on a `projects.jetstream-cloud.org` subdomain. If using a custom domain, edit `secrets.yaml` and change the `hosts` and `tls.hosts` entries accordingly.
+The default `secrets.yaml` uses `k8s` as the subdomain (i.e., `k8s.$PROJ.projects.jetstream-cloud.org`). If you prefer a different subdomain, edit `secrets.yaml` and change the `hosts` and `tls.hosts` entries. If using a custom domain, update those entries accordingly.
 
 ## Configure the Helm Chart
 
@@ -53,10 +54,10 @@ Monitor the rollout:
 kubectl -n jhub get pods -w
 ```
 
-Once all pods are running, JupyterHub is accessible at your domain over HTTP:
+Once all pods are running, JupyterHub is accessible at your subdomain over HTTP:
 
-```bash
-http://jhub.$PROJ.projects.jetstream-cloud.org
+```
+http://k8s.$PROJ.projects.jetstream-cloud.org
 ```
 
 > **Security warning**: At this point JupyterHub is running over plain HTTP. Continue to [Setup HTTPS with cert-manager](/posts/kubernetes-jetstream2-certmanager) to enable HTTPS with Let's Encrypt.

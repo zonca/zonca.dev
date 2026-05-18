@@ -19,7 +19,7 @@ Jetstream2 uses the Cluster API as the backend for Magnum, making it faster and 
 
 ## Advantages of Magnum-Based Deployments
 
-Magnum-based clusters offer several benefits over [Kubespray](https://www.zonca.dev/posts/2023-07-19-jetstream2_kubernetes_kubespray):
+Magnum-based clusters offer several benefits over [Kubespray](/posts/kubernetes-jetstream2-kubespray):
 
 - **Faster Deployment**: Instead of using Ansible to configure each VM, Magnum uses pre-prepared images. Clusters typically deploy in about 10 minutes, and workers can scale up in around 5 minutes.
 - **Load Balancer Integration**: The OpenStack load balancer service provides easy support for multiple master nodes, ensuring high availability.
@@ -71,7 +71,7 @@ export K8S_CLUSTER_NAME=k8s
 bash create_cluster.sh
 ```
 
-The script uses the `kubernetes-1-33-jammy-fixed-labels` template, creates 1 control-plane node and 1 worker (both `m3.small` flavor), enables autoscaling with min 1 / max 5 workers, and polls until the cluster status is `CREATE_COMPLETE`. Cluster creation typically takes about 8 minutes.
+The script uses the `kubernetes-1-33-jammy-fixed-labels` template, creates 1 control-plane node and 1 worker (both `m3.small` flavor), enables autoscaling with min 1 / max 5 workers, and polls until the cluster status is `CREATE_COMPLETE`. Cluster creation typically takes about 10 minutes.
 
 > **Template choice**: We use the `kubernetes-1-33-jammy-fixed-labels` template rather than `kubernetes-1-33-jammy`. The default template deploys a Kubernetes dashboard app that is now defunct, which causes Magnum's post-create bookkeeping to get stuck at `CREATE_IN_PROGRESS` even though the cluster is fully functional. The `-fixed-labels` template omits the dashboard and completes cleanly. Alternatively, you can use any template with `--labels kube_dashboard_enabled=false`.
 
@@ -223,3 +223,7 @@ Confirm the change:
 ```bash
 kubectl get nodes
 ```
+
+## Issues and Feedback
+
+Please [open an issue on the repository](https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream) to report any issue or give feedback.
