@@ -163,4 +163,4 @@ jupyter lite build --contents /path/to/your/notebooks
 jupyter lite serve
 ```
 
-Or fork https://github.com/zonca/jupyterlite-carpentry and replace the notebooks with your own — the GitHub Actions workflow will build and deploy automatically.
+Or fork [zonca/jupyterlite-carpentry](https://github.com/zonca/jupyterlite-carpentry) and replace the notebooks with your own — the GitHub Actions workflow will build and deploy automatically.
