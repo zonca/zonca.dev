@@ -2,7 +2,7 @@
 categories:
 - kubernetes
 - jetstream
-date: '2026-05-18'
+date: '2026-05-18 09:00:00'
 layout: post
 slug: kubernetes-jetstream2-traefik
 title: Install Traefik Ingress Controller on Jetstream2 Kubernetes (2 of 4)

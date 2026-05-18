@@ -2,7 +2,7 @@
 categories:
 - kubernetes
 - jetstream
-date: '2026-05-18'
+date: '2026-05-18 08:00:00'
 layout: post
 slug: kubernetes-jetstream2-magnum
 title: Deploy Kubernetes on Jetstream2 with Magnum and Cluster API (1 of 4)

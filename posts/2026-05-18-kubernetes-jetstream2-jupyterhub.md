@@ -3,7 +3,7 @@ categories:
 - kubernetes
 - jetstream
 - jupyterhub
-date: '2026-05-18'
+date: '2026-05-18 10:00:00'
 layout: post
 slug: kubernetes-jetstream2-jupyterhub
 title: Deploy JupyterHub on Jetstream2 Kubernetes (3 of 4)
