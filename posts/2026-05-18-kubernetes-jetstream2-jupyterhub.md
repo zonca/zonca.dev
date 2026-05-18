@@ -27,7 +27,7 @@ cd jupyterhub-deploy-kubernetes-jetstream
 bash create_secrets.sh
 ```
 
-The `create_secrets.sh` script generates random secrets and writes them to `secrets.yaml`. It also configures the JupyterHub Ingress to use Traefik and enables TLS via cert-manager.
+The `create_secrets.sh` script generates random secrets and writes them to `secrets.yaml`. It also configures the JupyterHub Ingress with `ingressClassName: traefik` and enables TLS via cert-manager.
 
 The default `secrets.yaml` assumes you are deploying on a `projects.jetstream-cloud.org` subdomain. If using a custom domain, edit `secrets.yaml` and change the `hosts` and `tls.hosts` entries accordingly.
 
