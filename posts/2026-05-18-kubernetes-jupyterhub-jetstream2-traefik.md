@@ -67,11 +67,11 @@ export K8S_CLUSTER_NAME=k8s
 bash create_cluster.sh
 ```
 
-The script uses the `kubernetes-1-33-jammy` template, creates 1 control-plane node and 1 worker (both `m3.small` flavor), enables autoscaling with min 1 / max 5 workers, and polls until the cluster status is `CREATE_COMPLETE`.
+The script uses the `kubernetes-1-33-jammy-fixed-labels` template, creates 1 control-plane node and 1 worker (both `m3.small` flavor), enables autoscaling with min 1 / max 5 workers, and polls until the cluster status is `CREATE_COMPLETE`. Cluster creation typically takes about 8 minutes.
+
+> **Template choice**: We use the `kubernetes-1-33-jammy-fixed-labels` template rather than `kubernetes-1-33-jammy`. The default template deploys a Kubernetes dashboard app that is now defunct, which causes Magnum's post-create bookkeeping to get stuck at `CREATE_IN_PROGRESS` even though the cluster is fully functional. The `-fixed-labels` template omits the dashboard and completes cleanly. Alternatively, you can use any template with `--labels kube_dashboard_enabled=false`.
 
 > **Note**: The first time you create a cluster (or after a long period of inactivity), deployment can take 2–2.5 hours, likely because the images are not cached in OpenStack. After that, clusters should deploy in about 10 minutes.
-
-> **Known Issue**: The Magnum cluster status may remain `CREATE_IN_PROGRESS` even after the nodegroups are fully ready. If `kubectl get nodes` shows all nodes as `Ready`, the cluster is functional and you can proceed — you do not need to wait for the status to flip to `CREATE_COMPLETE`. You can also check nodegroup status with `openstack coe nodegroup list $K8S_CLUSTER_NAME`, which tends to update faster than the cluster-level status.
 
 In case of errors, check the error message with:
 
@@ -104,9 +104,9 @@ kubectl get nodes
 You should see output like:
 
 ```
-NAME                                          STATUS   ROLES           AGE   VERSION
-k8s-bexqcu3lzfdo-control-plane-4lqmn          Ready    control-plane   13m   v1.33.2
-k8s-bexqcu3lzfdo-default-worker-x6654-nk2s7   Ready    <none>          10m   v1.33.2
+NAME                                          STATUS   ROLES           AGE     VERSION
+k8s-wamiv264xiet-control-plane-p2zj6          Ready    control-plane   8m22s   v1.33.2
+k8s-wamiv264xiet-default-worker-x8cxp-vj9db   Ready    <none>          5m45s   v1.33.2
 ```
 
 Check storage classes (Magnum provides Cinder-backed persistent volumes by default):
