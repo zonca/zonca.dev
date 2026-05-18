@@ -1,5 +1,5 @@
 ---
-title: "Disable Gemini CLI Loading Phrases"
+title: "Disable Gemini CLI loading phrases"
 description: "How to disable the annoying loading phrases in Gemini CLI for a smoother experience."
 author: "Andrea Zonca"
 date: "2025-12-02"

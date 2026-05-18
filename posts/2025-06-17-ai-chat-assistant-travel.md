@@ -1,5 +1,5 @@
 ---
-title: "How to Use AI Chat Assistants While Traveling"
+title: "How to use AI chat assistants while traveling"
 date: 2025-06-17
 categories:
   - ai

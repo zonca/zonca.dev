@@ -1,5 +1,5 @@
 ---
-title: "VS Code Copilot Agent Mode: A Productivity Showcase"
+title: "VS Code Copilot agent mode: A productivity showcase"
 date: 2025-05-13
 categories: [llm, ai]
 ---

@@ -6,7 +6,7 @@ categories:
 date: 2025-12-15
 layout: post
 slug: request-access-aws-google-cloud-cloudbank
-title: Request Access to AWS and Google Cloud Resources via CloudBank for Scientists
+title: Request access to AWS and Google Cloud resources via CloudBank for scientists
 ---
 
 CloudBank provides a simplified way for scientists and educators to access commercial cloud resources, including Amazon Web Services (AWS) and Google Cloud. Access is free, but requires writing a proposal to justify the requested resources.

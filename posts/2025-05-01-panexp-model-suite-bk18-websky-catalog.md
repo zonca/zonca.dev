@@ -4,7 +4,7 @@ categories:
 - cmb
 date: '2025-05-01'
 layout: post
-title: BK18 Added to Panexp Model Suite and New Websky Radio Source Models in PySM 3.4.1
+title: BK18 added to Panexp model suite and new WebSky radio source models in PySM 3.4.1
 ---
 
 Following up on my [previous post about Panexp model suite simulations](./2025-03-30-panexp-model-suite-planck-wmap.md), there have been several important updates:

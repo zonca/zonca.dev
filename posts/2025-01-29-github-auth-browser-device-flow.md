@@ -3,7 +3,7 @@ categories:
 - github
 date: '2025-01-29'
 layout: post
-title: Authenticate to GitHub in the Browser with the Device Flow
+title: Authenticate to GitHub in the browser with the device flow
 ---
 
 ## Introduction

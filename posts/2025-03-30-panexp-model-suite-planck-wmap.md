@@ -4,7 +4,7 @@ categories:
 - cmb
 date: '2025-03-30'
 layout: post
-title: New Simulations of the Panexp Model Suite for Planck and WMAP
+title: New simulations of the Panexp model suite for Planck and WMAP
 ---
 
 Following up on my [recent post about PySM models for Galactic emission](./2025-03-03-paper-pysm-models.md), I have recently executed three new simulations of the Panexp model suite:

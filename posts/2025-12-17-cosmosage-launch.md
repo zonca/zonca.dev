@@ -1,5 +1,5 @@
 ---
-title: "Cosmosage: A Specialized AI Assistant for Cosmology"
+title: "Cosmosage: A specialized AI assistant for cosmology"
 date: 2025-12-17 10:00:00
 categories: [jetstream, llm, cosmology]
 layout: post

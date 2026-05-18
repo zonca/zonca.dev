@@ -1,5 +1,5 @@
 ---
-title: "Tampermonkey Script for Audible Filtering"
+title: "Tampermonkey script for Audible filtering"
 author: "Zonca"
 date: "2025-11-01"
 ---

@@ -3,7 +3,7 @@ categories:
 - github
 date: '2025-01-29'
 layout: post
-title: Save Jupyterlite Notebooks to GitHub
+title: Save Jupyterlite notebooks to GitHub
 ---
 
 ## Introduction

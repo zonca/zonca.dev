@@ -5,8 +5,7 @@ categories:
 layout: post
 date: 2025-09-18
 slug: llm-unshelve
-title: Timing the Unshelving of a Jetstream 70B LLM Instance
-
+title: Timing the unshelving of a Jetstream 70B LLM instance
 ---
 
 Following the work documented in [Deploy a 70B LLM to Jetstream](2025-09-18-deploy-70b-llm-jetstream.md), the `Meta-Llama-3.1-70B-Instruct-GGUF` deployment is now running on a `g3.xl` instance. The goal of this follow-up is to measure how long it takes to unshelve that virtual machine and bring the chat interface back online.

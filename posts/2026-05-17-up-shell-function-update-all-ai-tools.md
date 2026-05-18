@@ -1,5 +1,5 @@
 ---
-title: "up: One Command to Update All My AI Tools"
+title: "up: One command to update all my AI tools"
 date: "2026-05-17"
 categories: [linux, ai, tools]
 ---

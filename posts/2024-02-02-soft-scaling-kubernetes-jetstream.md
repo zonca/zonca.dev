@@ -6,8 +6,7 @@ categories:
 date: '2024-02-02'
 layout: post
 slug: soft-scaling-kubernetes-jetstream
-title: Soft Scaling Kubernetes on Jetstream
-
+title: Soft scaling Kubernetes on Jetstream
 ---
 
 Work and post contributed by [Ana Espinoza](https://github.com/ana-v-espinoza), only tested and benchmarked by [Andrea Zonca](https://github.com/zonca).

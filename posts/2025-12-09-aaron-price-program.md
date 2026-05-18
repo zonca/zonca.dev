@@ -1,5 +1,5 @@
 ---
-title: "The Aaron Price Fellows Program: Fostering Community Leaders"
+title: "The Aaron Price Fellows Program: Fostering community leaders"
 date: "2025-12-09"
 ---
 

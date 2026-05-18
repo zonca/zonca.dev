@@ -6,8 +6,7 @@ categories:
 - github
 date: '2020-09-01'
 layout: post
-title: Migrate from Travis-CI and Readthedocs to Github actions
-
+title: Migrate from Travis-CI and ReadTheDocs to GitHub Actions
 ---
 
 For a number of years I have been concerned about the duplication of work having to maintain

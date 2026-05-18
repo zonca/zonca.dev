@@ -1,5 +1,5 @@
 ---
-title: "Send email using UCSD SMTP with a GMAIL-based address"
+title: "Send email using UCSD SMTP with a Gmail-based address"
 date: "2026-04-13"
 categories:
 - Python

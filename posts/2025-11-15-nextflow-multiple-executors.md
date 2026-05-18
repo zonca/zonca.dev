@@ -2,7 +2,7 @@
 categories: [hpc, sdsc, nextflow]
 date: '2025-11-15'
 layout: post
-title: Mixing Nextflow Executors for Hybrid Workflows
+title: Mixing Nextflow executors for hybrid workflows
 ---
 
 This post demonstrates how to combine different Nextflow executors within a single workflow, a powerful pattern for optimizing resource usage in scientific computing. By running lightweight tasks locally and offloading computationally intensive processes to HPC clusters like Expanse (as discussed in my [previous tutorial on Nextflow on Expanse](2025-10-07-running-nextflow-on-expanse.html)), users can accelerate development and ensure scalability. This tutorial provides a minimal example of a Nextflow pipeline leveraging both local and Slurm executors.

@@ -1,5 +1,5 @@
 ---
-title: "Fixing Clipboard Issues with Opencode in Byobu/Tmux over SSH on Chromebook"
+title: "Fixing clipboard issues with Opencode in Byobu/Tmux over SSH on Chromebook"
 date: "2026-04-13"
 categories:
   - linux

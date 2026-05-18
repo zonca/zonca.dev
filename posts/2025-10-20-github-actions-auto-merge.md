@@ -3,7 +3,7 @@ categories:
 - github
 date: '2025-10-20'
 layout: post
-title: Auto-merge GitHub Pull Requests After GitHub Actions Pass
+title: Auto-merge GitHub pull requests after GitHub Actions pass
 ---
 
 Pull request auto-merge is a small feature that keeps teams from babysitting green builds. Once every required check is green, GitHub merges the PR for you—no extra clicks, no late-night merges. Here is how to get it running safely with GitHub Actions.

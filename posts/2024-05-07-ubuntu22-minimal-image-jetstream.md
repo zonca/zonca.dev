@@ -7,8 +7,7 @@ aliases:
 - 2024-05-07-ubuntu22-minimal-image-jetstream
 layout: post
 slug: ubuntu22-minimal-image-jetstream
-title: Ubuntu 22.04 Minimal on Jetstream
-
+title: Ubuntu 22.04 minimal on Jetstream
 ---
 
 **Update July 2024**: Ubuntu 22.04 Minimal image with Generic Kernel

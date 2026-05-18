@@ -1,5 +1,5 @@
 ---
-title: "Copy a Single Codex Session to Another Machine"
+title: "Copy a single Codex session to another machine"
 date: "2025-12-16"
 categories: [ai]
 ---

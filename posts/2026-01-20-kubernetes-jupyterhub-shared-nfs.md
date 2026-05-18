@@ -5,7 +5,7 @@ categories:
 - jupyterhub
 date: '2026-01-20'
 layout: post
-title: Setting Up Shared NFS Home Directories & Shared Data for JupyterHub on Kubernetes
+title: Setting up shared NFS home directories & shared data for JupyterHub on Kubernetes
 ---
 
 This tutorial provides a walkthrough on how to set up a shared NFS server for JupyterHub users' home directories and shared data.

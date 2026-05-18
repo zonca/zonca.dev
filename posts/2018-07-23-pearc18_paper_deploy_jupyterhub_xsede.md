@@ -10,8 +10,7 @@ categories:
 date: 2018-07-23 12:00
 layout: post
 slug: pearc18-paper-deploy-jupyterhub-xsede
-title: PEARC18 Paper on Deploying Jupyterhub at scale on XSEDE
-
+title: PEARC18 paper on deploying Jupyterhub at scale on XSEDE
 ---
 
 Bob Sinkovits and I are presenting a paper at PEARC18 about:

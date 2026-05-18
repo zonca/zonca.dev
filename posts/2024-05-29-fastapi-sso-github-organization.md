@@ -5,7 +5,7 @@ categories:
 - github
 date: '2024-05-29'
 layout: post
-title: Authenticate FastAPI endpoints with a Github organization
+title: Authenticate FastAPI endpoints with a GitHub organization
 ---
 
 [FastAPI](https://fastapi.tiangolo.com/) is a framework that simplifies building APIs in Python.

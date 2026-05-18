@@ -1,5 +1,5 @@
 ---
-title: "AI Chatbot as a frontend for a Google Form"
+title: "AI chatbot as a frontend for a Google Form"
 author: "Andrea Zonca"
 date: "2026-01-01"
 categories: [ai]

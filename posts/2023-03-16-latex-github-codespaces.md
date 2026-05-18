@@ -4,8 +4,7 @@ categories:
 - github
 date: '2023-03-16'
 layout: post
-title: Work on a Latex Document in Github Codespaces
-
+title: Work on a LaTeX document in GitHub Codespaces
 ---
 
 I was exploring using Github Codespaces instead of Overleaf to work on a Latex document.

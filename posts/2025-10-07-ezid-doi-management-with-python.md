@@ -1,5 +1,5 @@
 ---
-title: EZID DOI Management with Python
+title: EZID DOI management with Python
 date: '2025-10-07'
 categories:
   - python

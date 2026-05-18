@@ -5,7 +5,7 @@ categories:
 - python
 date: '2025-05-23'
 layout: post
-title: How to use GitHub Copilot for Scientific Computing
+title: How to use GitHub Copilot for scientific computing
 ---
 
 GitHub Copilot is rapidly transforming the landscape of scientific computing by streamlining code development and accelerating research workflows. This guide outlines how computational scientists can leverage Copilot, with a focus on professional and research-oriented use cases.

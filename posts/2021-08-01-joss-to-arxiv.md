@@ -6,8 +6,7 @@ categories:
 - openscience
 date: '2021-08-01'
 layout: post
-title: Upload a JOSS paper to Arxiv
-
+title: Upload a JOSS paper to arXiv
 ---
 
 If you are in Astrophysics, you probably want to have your [JOSS](https://joss.theoj.org/) paper published to the [Arxiv](https://arxiv.org/).

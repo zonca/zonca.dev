@@ -5,7 +5,7 @@ categories:
 - jupyterhub
 date: '2026-02-04'
 layout: post
-title: Create a Manila Share in Exosphere and Mount It for All JupyterHub Users
+title: Create a Manila share in Exosphere and mount it for all JupyterHub users
 ---
 
 This tutorial shows how to create a Manila share in Exosphere and mount it into all JupyterHub single-user pods on Jetstream 2. This provides a ReadWriteMany (RWX) shared filesystem suitable for shared datasets and tools.
