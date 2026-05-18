@@ -14,6 +14,11 @@ The first question that comes up is almost always the same: **how do I get every
 The traditional answer has been JupyterHub — a server that hosts Jupyter for all your participants.
 But there's a simpler option that works for many scenarios: **JupyterLite**, which runs Python entirely in the browser with zero server infrastructure.
 
+**An important caveat:** Software Carpentry workshops have an explicit goal that students leave with a functioning local Python installation they can continue using after the workshop.
+In that case, JupyterLite is not a replacement — the local install *is* the point.
+This guide is targeted at the many other workshops and classes that instead want to focus on teaching a specific package or subject and do not care much about the local environment of the students.
+For those, JupyterLite eliminates the installation hurdle entirely and lets you focus on the content.
+
 ## JupyterHub: Powerful but Demanding
 
 [JupyterHub](https://jupyter.org/hub) is the gold standard for multi-user notebook hosting.
