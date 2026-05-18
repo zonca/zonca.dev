@@ -79,7 +79,7 @@ JupyterLite has some limitations you should be aware of:
 
 To demonstrate that JupyterLite works for real teaching material, I've deployed the Software Carpentry Python tutorials as a live JupyterLite site:
 
-https://zonca.github.io/jupyterlite-carpentry/lab/
+`https://zonca.github.io/jupyterlite-carpentry/lab/`
 
 This site includes two complete tutorials converted from the original Carpentries markdown episodes into interactive notebooks:
 
@@ -103,8 +103,8 @@ The entire site is just static files served by GitHub.
 
 ## Decision Guide: JupyterHub or JupyterLite?
 
-| | JupyterLite | JupyterHub |
-|---|---|---|
+| Feature | JupyterLite | JupyterHub |
+|---------|-------------|------------|
 | **Setup effort** | Minutes (push to GitHub) | Hours to days |
 | **Server cost** | Free (GitHub Pages) | Cloud VM costs |
 | **Installation** | None for participants | None for participants |
