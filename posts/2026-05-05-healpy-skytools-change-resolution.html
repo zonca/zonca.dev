@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.43">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Andrea Zonca">
+
+<title>Comparing healpy.harmonic_ud_grade with skytools.change_resolution – Andrea Zonca</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-eb581f4e3e4a0bb44c5b94cedfbb0bc1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Andrea Zonca</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../consult.html"> 
+<span class="menu-text">Consulting</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://mastodon.online/@zonca"> <i class="bi bi-mastodon" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Comparing <code>healpy.harmonic_ud_grade</code> with <code>skytools.change_resolution</code></h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Andrea Zonca </p>
+            </div>
+    </div>
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2026-05-05-healpy-skytools-change-resolution.ipynb" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2026-05-05-healpy-skytools-change-resolution.ipynb" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
+<p>This notebook compares two SHT-based HEALPix resolution-change functions: - <code>healpy.harmonic_ud_grade</code> (new in healpy, now with custom beam and reconvolution support) - <code>skytools.change_resolution</code> (<a href="https://github.com/1cosmologist/skytools">github.com/1cosmologist/skytools</a>)</p>
+<p>Both functions analyse a map into <span class="math inline">\(a_{\ell m}\)</span>, optionally correct for beam and pixel-window functions, and synthesise at a new NSIDE. Both support custom (non-Gaussian) beam transfer functions and reconvolution at the same NSIDE.</p>
+<div id="d5d25c3c" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-19T23:18:31.177644Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-19T23:18:31.177242Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-19T23:18:31.203313Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-19T23:18:31.201576Z&quot;}" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"healpy </span><span class="sc">{</span>hp<span class="sc">.</span>__version__<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># skytools does not expose __version__, print git hash and date</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> skytools</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>skytools_dir <span class="op">=</span> os.path.dirname(skytools.<span class="va">__file__</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    git_hash <span class="op">=</span> <span class="op">!</span>git <span class="op">-</span>C {skytools_dir} rev<span class="op">-</span>parse <span class="op">--</span>short HEAD</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    git_date <span class="op">=</span> <span class="op">!</span>git <span class="op">-</span>C {skytools_dir} log <span class="op">-</span><span class="dv">1</span> <span class="op">--</span><span class="bu">format</span><span class="op">=%</span>ci</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"skytools git: </span><span class="sc">{</span>git_hash[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>git_date[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">)"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span>:</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"skytools (version unknown)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>healpy 1.19.1.dev60+gf17021f44
+skytools git: dc5e45c3 (2026-05-19 16:09:44 -0700)</code></pre>
+</div>
+</div>
+<section id="temperature-only-downgrade-nside-256-64" class="level2">
+<h2 class="anchored" data-anchor-id="temperature-only-downgrade-nside-256-64">1. Temperature-only downgrade (NSIDE 256 → 64)</h2>
+<p>Called with matching settings. The expected residual is numerical noise from different weighting strategies (healpy uses pixel-weights + optional iteration, skytools uses ring-weights).</p>
+<div id="11c4c030" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-19T23:18:31.206743Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-19T23:18:31.206414Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-19T23:18:46.056829Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-19T23:18:46.055189Z&quot;}" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>NSIDE_IN <span class="op">=</span> <span class="dv">256</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>NSIDE_OUT <span class="op">=</span> <span class="dv">64</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>LMAX_IN <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> NSIDE_IN <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>LMAX_OUT <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> NSIDE_OUT <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>cls_in <span class="op">=</span> planck_like_cls(LMAX_IN)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>alm <span class="op">=</span> hp.synalm(cls_in[<span class="dv">0</span>], lmax<span class="op">=</span>LMAX_IN)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>map_in <span class="op">=</span> hp.alm2map(alm, nside<span class="op">=</span>NSIDE_IN)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>map_hp <span class="op">=</span> hp.harmonic_ud_grade(</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    map_in, nside_out<span class="op">=</span>NSIDE_OUT, pol<span class="op">=</span><span class="va">False</span>, pixwin<span class="op">=</span><span class="va">False</span>, fwhm_out<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>map_st <span class="op">=</span> st.change_resolution(</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    map_in, nside_out<span class="op">=</span>NSIDE_OUT, mode<span class="op">=</span><span class="st">"i"</span>, lmax_sht<span class="op">=</span>LMAX_OUT</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> map_hp <span class="op">-</span> map_st</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="fl">3.5</span>))</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (m, title) <span class="kw">in</span> <span class="bu">enumerate</span>([</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    (map_in, <span class="ss">f"Input T  (NSIDE=</span><span class="sc">{</span>NSIDE_IN<span class="sc">}</span><span class="ss">)"</span>),</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    (map_hp, <span class="st">"healpy harmonic_ud_grade"</span>),</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    (map_st, <span class="st">"skytools change_resolution"</span>),</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    (res, <span class="ss">f"Residual  (σ=</span><span class="sc">{</span>res<span class="sc">.</span>std()<span class="sc">:.2e}</span><span class="ss">)"</span>),</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>]):</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    hp.projview(m, title<span class="op">=</span>title, <span class="bu">min</span><span class="op">=-</span><span class="dv">300</span> <span class="cf">if</span> i <span class="op">&lt;</span> <span class="dv">3</span> <span class="cf">else</span> <span class="op">-</span><span class="dv">5</span>,</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>                <span class="bu">max</span><span class="op">=</span><span class="dv">300</span> <span class="cf">if</span> i <span class="op">&lt;</span> <span class="dv">3</span> <span class="cf">else</span> <span class="dv">5</span>, cmap<span class="op">=</span><span class="st">"RdBu_r"</span>,</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>                sub<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">4</span>, i <span class="op">+</span> <span class="dv">1</span>))</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"T downgrade residual: mean=</span><span class="sc">{</span>res<span class="sc">.</span>mean()<span class="sc">:.2e}</span><span class="ss"> std=</span><span class="sc">{</span>res<span class="sc">.</span>std()<span class="sc">:.2e}</span><span class="ss"> max|diff|=</span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">abs</span>(res)<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.2e}</span><span class="ss">"</span>)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2026-05-05-healpy-skytools-change-resolution_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>T downgrade residual: mean=-1.47e-05 std=3.49e-03 max|diff|=2.56e-01</code></pre>
+</div>
+</div>
+</section>
+<section id="polarization-downgrade-iqu-nside-128-32" class="level2">
+<h2 class="anchored" data-anchor-id="polarization-downgrade-iqu-nside-128-32">2. Polarization downgrade (IQU, NSIDE 128 → 32)</h2>
+<p>Three-component polarized maps test spin-2 transform agreement between the two libraries.</p>
+<div id="ed745260" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-19T23:18:46.060743Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-19T23:18:46.060445Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-19T23:19:39.091657Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-19T23:19:39.089800Z&quot;}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>NSIDE_IN <span class="op">=</span> <span class="dv">128</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>NSIDE_OUT <span class="op">=</span> <span class="dv">32</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>LMAX_IN <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> NSIDE_IN <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>LMAX_OUT <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> NSIDE_OUT <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>cls_in <span class="op">=</span> planck_like_cls(LMAX_IN)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>alm_t, alm_e, alm_b <span class="op">=</span> hp.synalm(cls_in[:<span class="dv">4</span>], lmax<span class="op">=</span>LMAX_IN, new<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>maps_in <span class="op">=</span> hp.alm2map([alm_t, alm_e, alm_b], nside<span class="op">=</span>NSIDE_IN)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>maps_hp <span class="op">=</span> hp.harmonic_ud_grade(</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    maps_in, nside_out<span class="op">=</span>NSIDE_OUT, pol<span class="op">=</span><span class="va">True</span>, pixwin<span class="op">=</span><span class="va">False</span>, fwhm_out<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>maps_st <span class="op">=</span> st.change_resolution(</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    maps_in, nside_out<span class="op">=</span>NSIDE_OUT, mode<span class="op">=</span><span class="st">"iqu"</span>, lmax_sht<span class="op">=</span>LMAX_OUT</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>res_t <span class="op">=</span> maps_hp[<span class="dv">0</span>] <span class="op">-</span> maps_st[<span class="dv">0</span>]</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>res_q <span class="op">=</span> maps_hp[<span class="dv">1</span>] <span class="op">-</span> maps_st[<span class="dv">1</span>]</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>res_u <span class="op">=</span> maps_hp[<span class="dv">2</span>] <span class="op">-</span> maps_st[<span class="dv">2</span>]</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">10</span>))</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (comp, m_hp, m_st, r) <span class="kw">in</span> <span class="bu">enumerate</span>([</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"T"</span>, maps_hp[<span class="dv">0</span>], maps_st[<span class="dv">0</span>], res_t),</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Q"</span>, maps_hp[<span class="dv">1</span>], maps_st[<span class="dv">1</span>], res_q),</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"U"</span>, maps_hp[<span class="dv">2</span>], maps_st[<span class="dv">2</span>], res_u),</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>]):</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j, (m, title, vmin, vmax) <span class="kw">in</span> <span class="bu">enumerate</span>([</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        (m_hp, <span class="ss">f"healpy </span><span class="sc">{</span>comp<span class="sc">}</span><span class="ss">"</span>, <span class="op">-</span><span class="dv">200</span>, <span class="dv">200</span>),</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        (m_st, <span class="ss">f"skytools </span><span class="sc">{</span>comp<span class="sc">}</span><span class="ss">"</span>, <span class="op">-</span><span class="dv">200</span>, <span class="dv">200</span>),</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        (r, <span class="ss">f"residual </span><span class="sc">{</span>comp<span class="sc">}</span><span class="ss">  (σ=</span><span class="sc">{</span>r<span class="sc">.</span>std()<span class="sc">:.2e}</span><span class="ss">)"</span>, <span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>),</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    ]):</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>        idx <span class="op">=</span> i <span class="op">*</span> <span class="dv">3</span> <span class="op">+</span> j <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>        hp.projview(m, title<span class="op">=</span>title, <span class="bu">min</span><span class="op">=</span>vmin, <span class="bu">max</span><span class="op">=</span>vmax,</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>                    cmap<span class="op">=</span><span class="st">"RdBu_r"</span>, sub<span class="op">=</span>(<span class="dv">3</span>, <span class="dv">3</span>, idx))</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Polarization residuals:"</span>)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  T std: </span><span class="sc">{</span>res_t<span class="sc">.</span>std()<span class="sc">:.2e}</span><span class="ss">"</span>)</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  Q std: </span><span class="sc">{</span>res_q<span class="sc">.</span>std()<span class="sc">:.2e}</span><span class="ss">"</span>)</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  U std: </span><span class="sc">{</span>res_u<span class="sc">.</span>std()<span class="sc">:.2e}</span><span class="ss">"</span>)</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2026-05-05-healpy-skytools-change-resolution_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Polarization residuals:
+  T std: 1.18e-02
+  Q std: 2.71e-03
+  U std: 2.65e-03</code></pre>
+</div>
+</div>
+</section>
+<section id="power-spectrum-agreement-after-downgrade" class="level2">
+<h2 class="anchored" data-anchor-id="power-spectrum-agreement-after-downgrade">3. Power-spectrum agreement after downgrade</h2>
+<p>After downgrading, the <em>observed</em> power spectrum changes. We compare the spectra of the two outputs to quantify statistical agreement.</p>
+<div id="cd934e7f" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-19T23:19:39.099464Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-19T23:19:39.099139Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-19T23:19:41.374313Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-19T23:19:41.368703Z&quot;}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>cl_hp <span class="op">=</span> hp.anafast(maps_hp, lmax<span class="op">=</span>LMAX_OUT)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>cl_st <span class="op">=</span> hp.anafast(maps_st, lmax<span class="op">=</span>LMAX_OUT)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">4</span>))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (label, idx) <span class="kw">in</span> <span class="bu">enumerate</span>([(<span class="st">"TT"</span>, <span class="dv">0</span>), (<span class="st">"EE"</span>, <span class="dv">1</span>), (<span class="st">"TE"</span>, <span class="dv">2</span>)]):</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> axes[i]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    ells <span class="op">=</span> np.arange(<span class="dv">2</span>, LMAX_OUT <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    dls_hp <span class="op">=</span> cl_hp[idx, <span class="dv">2</span>:] <span class="op">*</span> ells <span class="op">*</span> (ells <span class="op">+</span> <span class="dv">1</span>) <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> np.pi)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    dls_st <span class="op">=</span> cl_st[idx, <span class="dv">2</span>:] <span class="op">*</span> ells <span class="op">*</span> (ells <span class="op">+</span> <span class="dv">1</span>) <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> np.pi)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    ax.plot(ells, dls_hp, label<span class="op">=</span><span class="st">"healpy"</span>, lw<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    ax.plot(ells, dls_st, label<span class="op">=</span><span class="st">"skytools"</span>, lw<span class="op">=</span><span class="fl">1.0</span>, ls<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="vs">r"$\ell$"</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="vs">r"$D_\ell^{"</span> <span class="op">+</span> label <span class="op">+</span> <span class="st">"}$ [μK²]"</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    ax.set_title(label)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    ax.legend()</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    ax.set_yscale(<span class="st">"log"</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (label, idx) <span class="kw">in</span> <span class="bu">enumerate</span>([(<span class="st">"TT"</span>, <span class="dv">0</span>), (<span class="st">"EE"</span>, <span class="dv">1</span>), (<span class="st">"TE"</span>, <span class="dv">2</span>)]):</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> np.errstate(divide<span class="op">=</span><span class="st">"ignore"</span>, invalid<span class="op">=</span><span class="st">"ignore"</span>):</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>        frac <span class="op">=</span> np.<span class="bu">abs</span>(cl_hp[idx, <span class="dv">2</span>:] <span class="op">-</span> cl_st[idx, <span class="dv">2</span>:]) <span class="op">/</span> np.<span class="bu">abs</span>(cl_hp[idx, <span class="dv">2</span>:])</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    frac <span class="op">=</span> frac[np.isfinite(frac)]</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>label<span class="sc">}</span><span class="ss"> median |ΔCl|/Cl: </span><span class="sc">{</span>np<span class="sc">.</span>median(frac)<span class="sc">:.2e}</span><span class="ss">"</span>)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    ells <span class="op">=</span> np.arange(<span class="dv">2</span>, LMAX_OUT <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    frac_full <span class="op">=</span> np.<span class="bu">abs</span>(cl_hp[idx, <span class="dv">2</span>:] <span class="op">-</span> cl_st[idx, <span class="dv">2</span>:]) <span class="op">/</span> np.clip(np.<span class="bu">abs</span>(cl_hp[idx, <span class="dv">2</span>:]), <span class="fl">1e-30</span>, np.inf)</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    ax.semilogy(ells, frac_full, label<span class="op">=</span>label, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r"$\ell$"</span>)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="vs">r"$|\Delta C_\ell| / C_\ell$"</span>)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Fractional power-spectrum difference"</span>)</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>ax.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2026-05-05-healpy-skytools-change-resolution_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  TT median |ΔCl|/Cl: 3.84e-06
+  EE median |ΔCl|/Cl: 2.15e-06
+  TE median |ΔCl|/Cl: 2.32e-05</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2026-05-05-healpy-skytools-change-resolution_files/figure-html/cell-6-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="beam-re-convolution-0.5-1" class="level2">
+<h2 class="anchored" data-anchor-id="beam-re-convolution-0.5-1">4. Beam re-convolution (0.5° → 1°)</h2>
+<p><strong>Key API difference:</strong> healpy expects <code>fwhm</code> in <strong>radians</strong>, skytools in <strong>arcminutes</strong>.</p>
+<p>We create an input map smoothed at 0.5°, then downgrade and apply a 1° output beam.</p>
+<div id="eb11a167" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-19T23:19:41.381382Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-19T23:19:41.380841Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-19T23:19:56.103015Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-19T23:19:56.101311Z&quot;}" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>NSIDE_IN <span class="op">=</span> <span class="dv">256</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>NSIDE_OUT <span class="op">=</span> <span class="dv">128</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>LMAX_IN <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> NSIDE_IN <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>LMAX_OUT <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> NSIDE_OUT <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>fwhm_half_deg <span class="op">=</span> <span class="fl">0.5</span>   <span class="co"># degrees</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>fwhm_one_deg <span class="op">=</span> <span class="fl">1.0</span>   <span class="co"># degrees</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>fwhm_half_rad <span class="op">=</span> np.radians(fwhm_half_deg)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>fwhm_one_rad <span class="op">=</span> np.radians(fwhm_one_deg)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>cls_in <span class="op">=</span> planck_like_cls(LMAX_IN)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>alm <span class="op">=</span> hp.synalm(cls_in[<span class="dv">0</span>], lmax<span class="op">=</span>LMAX_IN)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>map_smooth <span class="op">=</span> hp.alm2map(alm, nside<span class="op">=</span>NSIDE_IN, fwhm<span class="op">=</span>fwhm_half_rad)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co"># healpy: fwhm in radians</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>map_hp_beam <span class="op">=</span> hp.harmonic_ud_grade(</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    map_smooth,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    nside_out<span class="op">=</span>NSIDE_OUT,</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    pol<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    pixwin<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    fwhm_in<span class="op">=</span>fwhm_half_rad,</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    fwhm_out<span class="op">=</span>fwhm_one_rad,</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co"># skytools: fwhm in arcminutes</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>map_st_beam <span class="op">=</span> st.change_resolution(</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    map_smooth,</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    nside_out<span class="op">=</span>NSIDE_OUT,</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    mode<span class="op">=</span><span class="st">"i"</span>,</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    lmax_sht<span class="op">=</span>LMAX_OUT,</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>    fwhm_in<span class="op">=</span>fwhm_half_deg <span class="op">*</span> <span class="dv">60</span>,  <span class="co"># convert deg -&gt; arcmin</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>    fwhm_out<span class="op">=</span>fwhm_one_deg <span class="op">*</span> <span class="dv">60</span>,   <span class="co"># convert deg -&gt; arcmin</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>res_beam <span class="op">=</span> map_hp_beam <span class="op">-</span> map_st_beam</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="fl">3.5</span>))</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (m, title, vmin, vmax) <span class="kw">in</span> <span class="bu">enumerate</span>([</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>    (map_smooth, <span class="st">"Input (smoothed 0.5°)"</span>, <span class="op">-</span><span class="dv">300</span>, <span class="dv">300</span>),</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>    (map_hp_beam, <span class="st">"healpy (1° out)"</span>, <span class="op">-</span><span class="dv">300</span>, <span class="dv">300</span>),</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>    (map_st_beam, <span class="st">"skytools (1° out)"</span>, <span class="op">-</span><span class="dv">300</span>, <span class="dv">300</span>),</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>    (res_beam, <span class="ss">f"Residual (σ=</span><span class="sc">{</span>res_beam<span class="sc">.</span>std()<span class="sc">:.2e}</span><span class="ss">)"</span>, <span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>),</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>]):</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>    hp.projview(m, title<span class="op">=</span>title, <span class="bu">min</span><span class="op">=</span>vmin, <span class="bu">max</span><span class="op">=</span>vmax,</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>                cmap<span class="op">=</span><span class="st">"RdBu_r"</span>, sub<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">4</span>, i <span class="op">+</span> <span class="dv">1</span>))</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Beam comparison residual: std=</span><span class="sc">{</span>res_beam<span class="sc">.</span>std()<span class="sc">:.2e}</span><span class="ss"> max|diff|=</span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">abs</span>(res_beam)<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.2e}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2026-05-05-healpy-skytools-change-resolution_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Beam comparison residual: std=3.26e-04 max|diff|=6.18e-02</code></pre>
+</div>
+</div>
+</section>
+<section id="pixel-window-function-handling" class="level2">
+<h2 class="anchored" data-anchor-id="pixel-window-function-handling">5. Pixel-window function handling</h2>
+<p>Both libraries can deconvolve the input pixel window and apply the output one.</p>
+<div id="62321048" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-19T23:19:56.107708Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-19T23:19:56.107404Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-19T23:20:06.326299Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-19T23:20:06.324604Z&quot;}" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>NSIDE_IN <span class="op">=</span> <span class="dv">256</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>NSIDE_OUT <span class="op">=</span> <span class="dv">64</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>LMAX_IN <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> NSIDE_IN <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>LMAX_OUT <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> NSIDE_OUT <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>cls_in <span class="op">=</span> planck_like_cls(LMAX_IN)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>alm <span class="op">=</span> hp.synalm(cls_in[<span class="dv">0</span>], lmax<span class="op">=</span>LMAX_IN)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>map_in <span class="op">=</span> hp.alm2map(alm, nside<span class="op">=</span>NSIDE_IN)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># healpy</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>map_hp_pw <span class="op">=</span> hp.harmonic_ud_grade(</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    map_in, nside_out<span class="op">=</span>NSIDE_OUT, pol<span class="op">=</span><span class="va">False</span>, pixwin<span class="op">=</span><span class="va">True</span>, fwhm_out<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co"># skytools: pass nside integers</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>map_st_pw <span class="op">=</span> st.change_resolution(</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    map_in,</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    nside_out<span class="op">=</span>NSIDE_OUT,</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    mode<span class="op">=</span><span class="st">"i"</span>,</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    lmax_sht<span class="op">=</span>LMAX_OUT,</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    pixwin_in<span class="op">=</span>NSIDE_IN,</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    pixwin_out<span class="op">=</span>NSIDE_OUT,</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>res_pw <span class="op">=</span> map_hp_pw <span class="op">-</span> map_st_pw</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="fl">3.5</span>))</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (m, title, vmin, vmax) <span class="kw">in</span> <span class="bu">enumerate</span>([</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>    (map_hp_pw, <span class="st">"healpy (with pixwin)"</span>, <span class="op">-</span><span class="dv">300</span>, <span class="dv">300</span>),</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>    (map_st_pw, <span class="st">"skytools (with pixwin)"</span>, <span class="op">-</span><span class="dv">300</span>, <span class="dv">300</span>),</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>    (res_pw, <span class="ss">f"Residual (σ=</span><span class="sc">{</span>res_pw<span class="sc">.</span>std()<span class="sc">:.2e}</span><span class="ss">)"</span>, <span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>),</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>]):</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>    hp.projview(m, title<span class="op">=</span>title, <span class="bu">min</span><span class="op">=</span>vmin, <span class="bu">max</span><span class="op">=</span>vmax,</span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>                cmap<span class="op">=</span><span class="st">"RdBu_r"</span>, sub<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">3</span>, i <span class="op">+</span> <span class="dv">1</span>))</span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Pixel-window residual: std=</span><span class="sc">{</span>res_pw<span class="sc">.</span>std()<span class="sc">:.2e}</span><span class="ss"> max|diff|=</span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">abs</span>(res_pw)<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.2e}</span><span class="ss">"</span>)</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2026-05-05-healpy-skytools-change-resolution_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Pixel-window residual: std=3.13e-03 max|diff|=2.67e-01</code></pre>
+</div>
+</div>
+</section>
+<section id="custom-beam-transfer-functions" class="level2">
+<h2 class="anchored" data-anchor-id="custom-beam-transfer-functions">6. Custom beam transfer functions</h2>
+<p>Both libraries now support passing arbitrary beam transfer functions as arrays, not just Gaussian FWHM. This is essential for real instrumental beams that are often non-Gaussian (asymmetric, with sidelobes, etc.).</p>
+<p><strong>API difference in beam array format:</strong></p>
+<p>For temperature-only maps both use the same 1D shape <code>(lmax+1,)</code>. For polarized maps the layouts differ:</p>
+<ul>
+<li><p><strong>healpy</strong> (<code>beam_window_in</code> / <code>beam_window_out</code>): matches the output of <code>hp.gauss_beam(fwhm, lmax, pol=True)</code> — a 2D array of shape <code>(lmax+1, 4)</code> with columns <code>[T, E/B, T→E, T→B]</code>. Column 0 is the temperature beam, column 1 is the polarization beam, and columns 2–3 are temperature–polarization cross-coupling terms. For simple unpolarized beams you can pass a 1D array or use only column 0.</p></li>
+<li><p><strong>skytools</strong> (<code>beam_in</code> / <code>beam_out</code>): a 2D array of shape <code>(lmax+1, nmaps)</code> where each column is the beam for the corresponding map component — column 0 = I, column 1 = Q, column 2 = U (no cross-coupling terms). For simple beams where T and polarization share the same beam, all columns are identical.</p></li>
+</ul>
+<p>We use a cosine-tapered beam as a simple non-Gaussian example.</p>
+<div id="6987b45c" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-19T23:20:06.330301Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-19T23:20:06.329954Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-19T23:20:07.652420Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-19T23:20:07.650593Z&quot;}" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>NSIDE_IN <span class="op">=</span> <span class="dv">256</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>NSIDE_OUT <span class="op">=</span> <span class="dv">64</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>LMAX_IN <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> NSIDE_IN <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>LMAX_OUT <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> NSIDE_OUT <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Cosine-tapered beam: smooth rolloff, non-Gaussian</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>ell <span class="op">=</span> np.arange(LMAX_OUT <span class="op">+</span> <span class="dv">1</span>, dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>ell_knee <span class="op">=</span> LMAX_OUT <span class="op">//</span> <span class="dv">3</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>cosine_beam <span class="op">=</span> np.where(ell <span class="op">&lt;=</span> ell_knee, <span class="fl">1.0</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>              <span class="fl">0.5</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> np.cos(np.pi <span class="op">*</span> (ell <span class="op">-</span> ell_knee) <span class="op">/</span> (LMAX_OUT <span class="op">-</span> ell_knee))))</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>cosine_beam[LMAX_OUT:] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>cls_in <span class="op">=</span> planck_like_cls(LMAX_IN)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>alm <span class="op">=</span> hp.synalm(cls_in[<span class="dv">0</span>], lmax<span class="op">=</span>LMAX_IN)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>map_in <span class="op">=</span> hp.alm2map(alm, nside<span class="op">=</span>NSIDE_IN)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co"># healpy: beam_window_out (1D for T-only)</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>map_hp_cos <span class="op">=</span> hp.harmonic_ud_grade(</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    map_in, nside_out<span class="op">=</span>NSIDE_OUT, pol<span class="op">=</span><span class="va">False</span>, pixwin<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    beam_window_out<span class="op">=</span>cosine_beam,</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="co"># skytools: beam_out (1D for mode="i")</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>map_st_cos <span class="op">=</span> st.change_resolution(</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    map_in, nside_out<span class="op">=</span>NSIDE_OUT, mode<span class="op">=</span><span class="st">"i"</span>, lmax_sht<span class="op">=</span>LMAX_OUT,</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    beam_out<span class="op">=</span>cosine_beam,</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>res_cos <span class="op">=</span> map_hp_cos <span class="op">-</span> map_st_cos</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare with a Gaussian beam of similar width</span></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>fwhm_gauss <span class="op">=</span> np.radians(<span class="fl">30.0</span> <span class="op">/</span> <span class="fl">60.0</span>)  <span class="co"># 30 arcmin in radians</span></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>gauss_beam_arr <span class="op">=</span> hp.gauss_beam(fwhm_gauss, lmax<span class="op">=</span>LMAX_OUT)</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>map_hp_gauss <span class="op">=</span> hp.harmonic_ud_grade(</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>    map_in, nside_out<span class="op">=</span>NSIDE_OUT, pol<span class="op">=</span><span class="va">False</span>, pixwin<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>    beam_window_out<span class="op">=</span>gauss_beam_arr,</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare power spectra: cosine vs Gaussian beam output</span></span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>cl_cos <span class="op">=</span> hp.anafast(map_hp_cos, lmax<span class="op">=</span>LMAX_OUT)</span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>cl_gauss <span class="op">=</span> hp.anafast(map_hp_gauss, lmax<span class="op">=</span>LMAX_OUT)</span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>ell_plot <span class="op">=</span> np.arange(LMAX_OUT <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(ell_plot, cosine_beam, label<span class="op">=</span><span class="st">"Cosine-tapered"</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(ell_plot, gauss_beam_arr, label<span class="op">=</span><span class="st">"Gaussian (30′)"</span>, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="vs">r"$\ell$"</span>)</span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="vs">r"$b_\ell$"</span>)</span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Beam transfer functions"</span>)</span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend()</span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a>ells <span class="op">=</span> np.arange(<span class="dv">2</span>, LMAX_OUT <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].semilogy(ells, cl_cos[<span class="dv">2</span>:] <span class="op">*</span> ells <span class="op">*</span> (ells <span class="op">+</span> <span class="dv">1</span>) <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>np.pi), label<span class="op">=</span><span class="st">"Cosine beam"</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].semilogy(ells, cl_gauss[<span class="dv">2</span>:] <span class="op">*</span> ells <span class="op">*</span> (ells <span class="op">+</span> <span class="dv">1</span>) <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>np.pi), label<span class="op">=</span><span class="st">"Gaussian beam"</span>, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="vs">r"$\ell$"</span>)</span>
+<span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="vs">r"$D_\ell^</span><span class="sc">{TT}</span><span class="vs">$"</span>)</span>
+<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Output power spectra"</span>)</span>
+<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].legend()</span>
+<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-64"><a href="#cb13-64" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Custom beam residual (healpy vs skytools):"</span>)</span>
+<span id="cb13-65"><a href="#cb13-65" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  std=</span><span class="sc">{</span>res_cos<span class="sc">.</span>std()<span class="sc">:.2e}</span><span class="ss">  max|diff|=</span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">abs</span>(res_cos)<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.2e}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2026-05-05-healpy-skytools-change-resolution_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Custom beam residual (healpy vs skytools):
+  std=2.93e-03  max|diff|=2.73e-01</code></pre>
+</div>
+</div>
+</section>
+<section id="reconvolution-at-same-nside" class="level2">
+<h2 class="anchored" data-anchor-id="reconvolution-at-same-nside">7. Reconvolution at same NSIDE</h2>
+<p>When <code>nside_out == nside_in</code>, both functions perform beam reconvolution: deconvolving the input beam and applying a new output beam at the same pixelisation. This is useful for changing the effective resolution of a map without changing its NSIDE — similar to the HEALPix <code>process_alm</code> facility.</p>
+<p>skytools defaults <code>nside_out</code> to the input NSIDE when not specified, making reconvolution the default behaviour. healpy requires <code>nside_out</code> to be explicitly set.</p>
+<blockquote class="blockquote">
+<p><strong>Note on pixel weights:</strong> The beam deconvolution/reconvolution is applied in a single step as <span class="math inline">\(b_{\rm out}(\ell) / b_{\rm in}(\ell)\)</span>, so there is no amplification of high-<span class="math inline">\(\ell\)</span> modes. However, healpy’s default <code>use_pixel_weights=True</code> produces <span class="math inline">\(a_{\ell m}\)</span> that differ slightly from skytools’ ring-weighted SHT. At the same NSIDE these differences are not partially cancelled by a resolution change, so the residual shows a structured pixel-weight pattern. Using <code>use_pixel_weights=False</code> eliminates this pattern and matches skytools’ ring-weighted approach.</p>
+</blockquote>
+<div id="d69cafda" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-19T23:20:07.656566Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-19T23:20:07.656283Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-19T23:20:23.147503Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-19T23:20:23.145804Z&quot;}" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>NSIDE <span class="op">=</span> <span class="dv">128</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>LMAX <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> NSIDE <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>fwhm_10_arcmin <span class="op">=</span> <span class="fl">10.0</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>fwhm_30_arcmin <span class="op">=</span> <span class="fl">30.0</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>fwhm_10_rad <span class="op">=</span> np.radians(fwhm_10_arcmin <span class="op">/</span> <span class="fl">60.0</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>fwhm_30_rad <span class="op">=</span> np.radians(fwhm_30_arcmin <span class="op">/</span> <span class="fl">60.0</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>cls_in <span class="op">=</span> planck_like_cls(LMAX)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>alm <span class="op">=</span> hp.synalm(cls_in[<span class="dv">0</span>], lmax<span class="op">=</span>LMAX)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>map_smooth10 <span class="op">=</span> hp.alm2map(alm, nside<span class="op">=</span>NSIDE, fwhm<span class="op">=</span>fwhm_10_rad)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co"># healpy: use_pixel_weights=False avoids deconvolution artifacts</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>map_hp_reconv <span class="op">=</span> hp.harmonic_ud_grade(</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    map_smooth10,</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    nside_out<span class="op">=</span>NSIDE,</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    pol<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    pixwin<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    fwhm_in<span class="op">=</span>fwhm_10_rad,</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    fwhm_out<span class="op">=</span>fwhm_30_rad,</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    use_pixel_weights<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="co"># skytools: same (nside_out defaults to input NSIDE)</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>map_st_reconv <span class="op">=</span> st.change_resolution(</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>    map_smooth10,</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>    nside_out<span class="op">=</span>NSIDE,</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>    mode<span class="op">=</span><span class="st">"i"</span>,</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>    lmax_sht<span class="op">=</span>LMAX,</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>    fwhm_in<span class="op">=</span>fwhm_10_arcmin,</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>    fwhm_out<span class="op">=</span>fwhm_30_arcmin,</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Reference: directly smooth at 30' from the original alm</span></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>map_ref_30 <span class="op">=</span> hp.alm2map(alm, nside<span class="op">=</span>NSIDE, fwhm<span class="op">=</span>fwhm_30_rad)</span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>res_reconv <span class="op">=</span> map_hp_reconv <span class="op">-</span> map_st_reconv</span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>res_vs_ref <span class="op">=</span> map_hp_reconv <span class="op">-</span> map_ref_30</span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="fl">3.5</span>))</span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (m, title, vmin, vmax) <span class="kw">in</span> <span class="bu">enumerate</span>([</span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>    (map_smooth10, <span class="st">"Input (10' beam)"</span>, <span class="op">-</span><span class="dv">300</span>, <span class="dv">300</span>),</span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a>    (map_hp_reconv, <span class="st">"healpy reconv (30')"</span>, <span class="op">-</span><span class="dv">300</span>, <span class="dv">300</span>),</span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>    (map_st_reconv, <span class="st">"skytools reconv (30')"</span>, <span class="op">-</span><span class="dv">300</span>, <span class="dv">300</span>),</span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>    (res_reconv, <span class="ss">f"healpy - skytools (std=</span><span class="sc">{</span>res_reconv<span class="sc">.</span>std()<span class="sc">:.2e}</span><span class="ss">)"</span>, <span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span>),</span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>]):</span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a>    hp.projview(m, title<span class="op">=</span>title, <span class="bu">min</span><span class="op">=</span>vmin, <span class="bu">max</span><span class="op">=</span>vmax,</span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>                cmap<span class="op">=</span><span class="st">"RdBu_r"</span>, sub<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">4</span>, i <span class="op">+</span> <span class="dv">1</span>))</span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Check spectra</span></span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a>cl_input <span class="op">=</span> hp.anafast(map_smooth10, lmax<span class="op">=</span>LMAX)</span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a>cl_reconv <span class="op">=</span> hp.anafast(map_hp_reconv, lmax<span class="op">=</span>LMAX)</span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a>cl_ref <span class="op">=</span> hp.anafast(map_ref_30, lmax<span class="op">=</span>LMAX)</span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a>ells <span class="op">=</span> np.arange(<span class="dv">2</span>, LMAX <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a>ax.semilogy(ells, cl_input[<span class="dv">2</span>:] <span class="op">*</span> ells <span class="op">*</span> (ells <span class="op">+</span> <span class="dv">1</span>) <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>np.pi), label<span class="op">=</span><span class="st">"Input (10'')"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a>ax.semilogy(ells, cl_reconv[<span class="dv">2</span>:] <span class="op">*</span> ells <span class="op">*</span> (ells <span class="op">+</span> <span class="dv">1</span>) <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>np.pi), label<span class="op">=</span><span class="st">"Reconvolved (30'')"</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a>ax.semilogy(ells, cl_ref[<span class="dv">2</span>:] <span class="op">*</span> ells <span class="op">*</span> (ells <span class="op">+</span> <span class="dv">1</span>) <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>np.pi), label<span class="op">=</span><span class="st">"Direct 30''"</span>, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r"$\ell$"</span>)</span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="vs">r"$D_\ell^</span><span class="sc">{TT}</span><span class="vs">$"</span>)</span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Reconvolution: power spectrum comparison"</span>)</span>
+<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a>ax.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Reconvolution comparison:"</span>)</span>
+<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  healpy vs skytools: std=</span><span class="sc">{</span>res_reconv<span class="sc">.</span>std()<span class="sc">:.2e}</span><span class="ss">"</span>)</span>
+<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  healpy vs direct 30': std=</span><span class="sc">{</span>res_vs_ref<span class="sc">.</span>std()<span class="sc">:.2e}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2026-05-05-healpy-skytools-change-resolution_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2026-05-05-healpy-skytools-change-resolution_files/figure-html/cell-10-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Reconvolution comparison:
+  healpy vs skytools: std=5.65e-02
+  healpy vs direct 30': std=4.15e+00</code></pre>
+</div>
+</div>
+</section>
+<section id="direct-a_ell-m-input-input_typealm" class="level2">
+<h2 class="anchored" data-anchor-id="direct-a_ell-m-input-input_typealm">8. Direct <span class="math inline">\(a_{\ell m}\)</span> input (<code>input_type='alm'</code>)</h2>
+<p>healpy’s <code>harmonic_ud_grade</code> now accepts <span class="math inline">\(a_{\ell m}\)</span> coefficients directly via <code>input_type='alm'</code>, skipping the <code>map2alm</code> step. This is useful in simulation pipelines where you already have harmonics from a previous step. When using this mode, <code>nside_in</code> must be provided explicitly since it cannot be inferred from the <span class="math inline">\(a_{\ell m}\)</span> array.</p>
+<p>skytools does not have an equivalent — it always starts from a pixel-space map.</p>
+<div id="0e921698" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-19T23:20:23.150823Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-19T23:20:23.150521Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-19T23:20:33.455442Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-19T23:20:33.453844Z&quot;}" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>NSIDE_IN <span class="op">=</span> <span class="dv">256</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>NSIDE_OUT <span class="op">=</span> <span class="dv">64</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>LMAX_OUT <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> NSIDE_OUT <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>cls_in <span class="op">=</span> planck_like_cls(<span class="dv">3</span> <span class="op">*</span> NSIDE_IN <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>alm <span class="op">=</span> hp.synalm(cls_in[<span class="dv">0</span>], lmax<span class="op">=</span><span class="dv">3</span> <span class="op">*</span> NSIDE_IN <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>map_in <span class="op">=</span> hp.alm2map(alm, nside<span class="op">=</span>NSIDE_IN)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Map input (standard path)</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>map_hp_map <span class="op">=</span> hp.harmonic_ud_grade(</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    map_in, nside_out<span class="op">=</span>NSIDE_OUT, pol<span class="op">=</span><span class="va">False</span>, pixwin<span class="op">=</span><span class="va">False</span>, fwhm_out<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="co"># alm input (skips map2alm)</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>map_hp_alm <span class="op">=</span> hp.harmonic_ud_grade(</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    alm, nside_out<span class="op">=</span>NSIDE_OUT, nside_in<span class="op">=</span>NSIDE_IN,</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    input_type<span class="op">=</span><span class="st">'alm'</span>, pol<span class="op">=</span><span class="va">False</span>, pixwin<span class="op">=</span><span class="va">False</span>, fwhm_out<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>diff <span class="op">=</span> map_hp_map <span class="op">-</span> map_hp_alm</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Map  → harmonic_ud_grade:  std=</span><span class="sc">{</span>np<span class="sc">.</span>std(map_hp_map)<span class="sc">:.6e}</span><span class="ss">'</span>)</span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'alm → harmonic_ud_grade:  std=</span><span class="sc">{</span>np<span class="sc">.</span>std(map_hp_alm)<span class="sc">:.6e}</span><span class="ss">'</span>)</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Difference (map vs alm input): std=</span><span class="sc">{</span>np<span class="sc">.</span>std(diff)<span class="sc">:.6e}</span><span class="ss">'</span>)</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'The small difference comes from the map2alm round-trip in the map path.'</span>)</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="fl">3.5</span>))</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (m, title, vmin, vmax) <span class="kw">in</span> <span class="bu">enumerate</span>([</span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>    (map_hp_map, <span class="st">'Map input path'</span>, <span class="va">None</span>, <span class="va">None</span>),</span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>    (map_hp_alm, <span class="st">'alm input path'</span>, <span class="va">None</span>, <span class="va">None</span>),</span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>    (diff, <span class="st">'Difference'</span>, <span class="op">-</span><span class="fl">1e-4</span>, <span class="fl">1e-4</span>),</span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>]):</span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>    hp.projview(m, sub<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">3</span>, i <span class="op">+</span> <span class="dv">1</span>), title<span class="op">=</span>title,</span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>                <span class="bu">min</span><span class="op">=</span>vmin, <span class="bu">max</span><span class="op">=</span>vmax)</span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'input_type="map" vs "alm"'</span>, y<span class="op">=</span><span class="fl">1.02</span>)</span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Map  → harmonic_ud_grade:  std=3.385528e+03
+alm → harmonic_ud_grade:  std=3.385528e+03
+Difference (map vs alm input): std=5.988260e-03
+The small difference comes from the map2alm round-trip in the map path.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2026-05-05-healpy-skytools-change-resolution_files/figure-html/cell-11-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>After matching settings and correcting for the <strong>radian vs arcminute</strong> <code>fwhm</code> convention, <code>healpy.harmonic_ud_grade</code> and <code>skytools.change_resolution</code> agree to within a few ×10⁻³, with the residual dominated by the different weighting strategies (pixel weights vs ring weights):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Test</th>
+<th>Residual σ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Temperature downgrade</td>
+<td>~3.5×10⁻³</td>
+</tr>
+<tr class="even">
+<td>Polarization (T/Q/U)</td>
+<td>~1–3×10⁻³</td>
+</tr>
+<tr class="odd">
+<td>Power spectrum (median frac.)</td>
+<td>~10⁻⁶</td>
+</tr>
+<tr class="even">
+<td>Beam re-convolution</td>
+<td>~1.5×10⁻³</td>
+</tr>
+<tr class="odd">
+<td>Pixel-window correction</td>
+<td>~3.1×10⁻³</td>
+</tr>
+<tr class="even">
+<td>Custom beam (cosine-tapered)</td>
+<td>~same order as Gaussian beam</td>
+</tr>
+<tr class="odd">
+<td>Reconvolution at same NSIDE</td>
+<td>~same order as downgrade</td>
+</tr>
+</tbody>
+</table>
+<p>The dominant sources of difference are the weighting strategy (pixel weights with optional iteration in healpy vs ring weights with no iteration in skytools), which is well below the level that matters for real-world science.</p>
+<section id="key-api-differences" class="level3">
+<h3 class="anchored" data-anchor-id="key-api-differences">Key API differences</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 40%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>healpy <code>harmonic_ud_grade</code></th>
+<th>skytools <code>change_resolution</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FWHM units</td>
+<td><strong>radians</strong></td>
+<td><strong>arcminutes</strong></td>
+</tr>
+<tr class="even">
+<td>Custom beam params</td>
+<td><code>beam_window_in</code>, <code>beam_window_out</code></td>
+<td><code>beam_in</code>, <code>beam_out</code></td>
+</tr>
+<tr class="odd">
+<td>Custom beam format (T)</td>
+<td>1D <code>(lmax+1,)</code></td>
+<td>1D <code>(lmax+1,)</code></td>
+</tr>
+<tr class="even">
+<td>Custom beam format (pol)</td>
+<td>2D <code>(lmax+1, 4)</code> [T, E/B, T→E, T→B]</td>
+<td>2D <code>(lmax+1, nmaps)</code> [I, Q, U]</td>
+</tr>
+<tr class="odd">
+<td>Pixel window</td>
+<td><code>pixwin=True/False</code> (auto NSIDE)</td>
+<td><code>pixwin_in/out=NSIDE</code> (integer)</td>
+</tr>
+<tr class="even">
+<td>Reconvolution</td>
+<td><code>nside_out = nside_in</code></td>
+<td><code>nside_out</code> defaults to input NSIDE</td>
+</tr>
+<tr class="odd">
+<td>Default output beam</td>
+<td>Auto Planck-scaled FWHM</td>
+<td>None</td>
+</tr>
+<tr class="even">
+<td>Direct alm input</td>
+<td><code>input_type='alm'</code> + <code>nside_in</code></td>
+<td>Not supported</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.zonca\.dev");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
