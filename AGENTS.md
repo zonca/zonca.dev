@@ -33,3 +33,10 @@ buffer_query "mutation { createPost(input: { text: \"POST TEXT\", channelId: \"C
 2. Draft 1 announcement post adapted for each platform (Twitter: short + hashtags, LinkedIn: professional with bullet points, Mastodon/Bluesky: similar to Twitter)
 3. Show drafts to user for approval
 4. Once approved, queue to all 3 channels using Buffer API
+
+## Blog Post Formatting
+
+### Title Capitalization
+- Blog post titles should be formatted in **sentence case** (only the first word and proper nouns are capitalized).
+- Ensure that proper nouns, technical terms, and acronyms (e.g., `GitHub`, `JupyterHub`, `PySM`, `HEALPix`) remain correctly capitalized.
+- Example: "Fixing clipboard issues with Opencode in Byobu/Tmux over SSH on Chromebook"
