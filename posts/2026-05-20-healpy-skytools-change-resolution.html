@@ -7,8 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Andrea Zonca">
+<meta name="dcterms.date" content="2026-05-20">
+<meta name="description" content="A comparison of healpy.harmonic_ud_grade and skytools.change_resolution for HEALPix map resolution changes, highlighting API differences, beam/pixel-window support, direct alm input, and agreement levels.">
 
-<title>Comparing healpy.harmonic_ud_grade with skytools.change_resolution – Andrea Zonca</title>
+<title>healpy harmonic_ud_grade vs skytools change_resolution: A Comparison – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -186,8 +188,20 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Comparing <code>healpy.harmonic_ud_grade</code> with <code>skytools.change_resolution</code></h1>
-                      </div>
+      <h1 class="title">healpy harmonic_ud_grade vs skytools change_resolution: A Comparison</h1>
+                  <div>
+        <div class="description">
+          A comparison of healpy.harmonic_ud_grade and skytools.change_resolution for HEALPix map resolution changes, highlighting API differences, beam/pixel-window support, direct alm input, and agreement levels.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">python</div>
+                <div class="quarto-category">astrophysics</div>
+                <div class="quarto-category">healpy</div>
+                <div class="quarto-category">healpix</div>
+                <div class="quarto-category">cmb</div>
+              </div>
+                  </div>
   </div>
     
   
@@ -200,6 +214,12 @@ window.Quarto = {
             </div>
     </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 20, 2026</p>
+      </div>
+    </div>
     
       
     </div>
@@ -216,7 +236,9 @@ window.Quarto = {
 
 
 
-<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2026-05-05-healpy-skytools-change-resolution.ipynb" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2026-05-05-healpy-skytools-change-resolution.ipynb" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2026-05-20-healpy-skytools-change-resolution.ipynb" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2026-05-20-healpy-skytools-change-resolution.ipynb" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
+<section id="comparing-healpy.harmonic_ud_grade-with-skytools.change_resolution" class="level1">
+<h1>Comparing <code>healpy.harmonic_ud_grade</code> with <code>skytools.change_resolution</code></h1>
 <p>This notebook compares two SHT-based HEALPix resolution-change functions: - <code>healpy.harmonic_ud_grade</code> (new in healpy, now with custom beam and reconvolution support) - <code>skytools.change_resolution</code> (<a href="https://github.com/1cosmologist/skytools">github.com/1cosmologist/skytools</a>)</p>
 <p>Both functions analyse a map into <span class="math inline">\(a_{\ell m}\)</span>, optionally correct for beam and pixel-window functions, and synthesise at a new NSIDE. Both support custom (non-Gaussian) beam transfer functions and reconvolution at the same NSIDE.</p>
 <div id="d5d25c3c" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-19T23:59:49.938838Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-19T23:59:49.938445Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-19T23:59:49.962910Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-19T23:59:49.961469Z&quot;}" data-execution_count="2">
@@ -276,7 +298,7 @@ skytools git: c07a459b (2026-05-19 16:48:57 -0700)</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2026-05-05-healpy-skytools-change-resolution_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="2026-05-20-healpy-skytools-change-resolution_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -333,7 +355,7 @@ skytools git: c07a459b (2026-05-19 16:48:57 -0700)</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2026-05-05-healpy-skytools-change-resolution_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="2026-05-20-healpy-skytools-change-resolution_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -388,7 +410,7 @@ Polarization residuals:
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2026-05-05-healpy-skytools-change-resolution_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="2026-05-20-healpy-skytools-change-resolution_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -400,7 +422,7 @@ Polarization residuals:
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2026-05-05-healpy-skytools-change-resolution_files/figure-html/cell-6-output-3.png" class="img-fluid figure-img"></p>
+<p><img src="2026-05-20-healpy-skytools-change-resolution_files/figure-html/cell-6-output-3.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -462,7 +484,7 @@ Polarization residuals:
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2026-05-05-healpy-skytools-change-resolution_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="2026-05-20-healpy-skytools-change-resolution_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -517,7 +539,7 @@ Beam comparison residual: std=3.26e-04 max|diff|=6.18e-02</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2026-05-05-healpy-skytools-change-resolution_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="2026-05-20-healpy-skytools-change-resolution_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -606,7 +628,7 @@ Pixel-window residual: std=3.13e-03 max|diff|=2.67e-01</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2026-05-05-healpy-skytools-change-resolution_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="2026-05-20-healpy-skytools-change-resolution_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -698,14 +720,14 @@ Custom beam residual (healpy vs skytools):
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2026-05-05-healpy-skytools-change-resolution_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="2026-05-20-healpy-skytools-change-resolution_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2026-05-05-healpy-skytools-change-resolution_files/figure-html/cell-10-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="2026-05-20-healpy-skytools-change-resolution_files/figure-html/cell-10-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -767,7 +789,7 @@ The small difference comes from the map2alm round-trip in the map path.</code></
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2026-05-05-healpy-skytools-change-resolution_files/figure-html/cell-11-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="2026-05-20-healpy-skytools-change-resolution_files/figure-html/cell-11-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -875,6 +897,7 @@ The small difference comes from the map2alm round-trip in the map path.</code></
 </table>
 
 
+</section>
 </section>
 </section>
 
