@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.43">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Andrea Zonca">
+<meta name="dcterms.date" content="2026-05-29">
+<meta name="description" content="A beginner-friendly overview of SDSC’s computing platforms for AI research — Expanse, Voyager, Cosmos, NRP, and the National Data Platform — with step-by-step access instructions and links to get started.">
+
+<title>SDSC Cyberinfrastructure for AI-Enabled Science: A Beginner’s Guide – Andrea Zonca</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-d799d914314ee7fda185e7302036f355.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Andrea Zonca</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../consult.html"> 
+<span class="menu-text">Consulting</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://mastodon.online/@zonca"> <i class="bi bi-mastodon" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">SDSC Cyberinfrastructure for AI-Enabled Science: A Beginner’s Guide</h1>
+                  <div>
+        <div class="description">
+          A beginner-friendly overview of SDSC’s computing platforms for AI research — Expanse, Voyager, Cosmos, NRP, and the National Data Platform — with step-by-step access instructions and links to get started.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">hpc</div>
+                <div class="quarto-category">ai</div>
+                <div class="quarto-category">sdsc</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Andrea Zonca </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 29, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2026-05-29-sdsc-ci-ai-enabled-science.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2026-05-29-sdsc-ci-ai-enabled-science.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
+<p>If you’re a researcher looking to run AI workloads but don’t know where to start, the San Diego Supercomputer Center (SDSC) at UC San Diego offers a remarkable set of cyberinfrastructure resources purpose-built for data-intensive, AI-enabled science. This guide walks you through each platform, what it’s best for, and exactly how to get access — whether you need GPUs for deep learning, a Kubernetes cluster for flexible computing, or a data platform to discover and collaborate on datasets.</p>
+<p>This post is based on a talk by <a href="https://www.sdsc.edu/research_research_projects/mnguyen.html">Mai H. Nguyen</a> at the SMASH Lunch Seminar on May 26, 2026, with supplemental information and links for beginners.</p>
+<section id="what-is-cyberinfrastructure" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-cyberinfrastructure">What Is Cyberinfrastructure?</h2>
+<p>Cyberinfrastructure (CI) is the integrated set of computing resources, data storage, networking, software tools, and human expertise that supports research and innovation. Think of it as the technological backbone that enables complex, data-intensive work — from training large language models to analyzing genomic data.</p>
+<p>SDSC, part of UC San Diego’s Halicioglu School of Data Science and Computing (HSDSC), develops and operates several CI platforms. Here are the five key resources covered in this guide:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 32%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Platform</th>
+<th>Best For</th>
+<th>Accelerator Type</th>
+<th>Access Method</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Expanse</strong></td>
+<td>General HPC, heterogeneous computing</td>
+<td>NVIDIA V100/A100/H100</td>
+<td>ACCESS allocation</td>
+</tr>
+<tr class="even">
+<td><strong>Voyager</strong></td>
+<td>Deep learning at scale</td>
+<td>Intel Gaudi2</td>
+<td>ACCESS or NAIRR Pilot</td>
+</tr>
+<tr class="odd">
+<td><strong>Cosmos</strong></td>
+<td>GPU-accelerated science, easier GPU porting</td>
+<td>AMD MI300A APU</td>
+<td>Request via consult@sdsc.edu</td>
+</tr>
+<tr class="even">
+<td><strong>NRP (Nautilus)</strong></td>
+<td>Flexible K8s computing, Jupyter notebooks</td>
+<td>Various (A100, H100, V100, H200)</td>
+<td>CILogon signup</td>
+</tr>
+<tr class="odd">
+<td><strong>National Data Platform</strong></td>
+<td>Data discovery, collaboration, AI-ready datasets</td>
+<td>—</td>
+<td>CI Logon signup</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="expanse-the-workhorse-hpc-cluster" class="level2">
+<h2 class="anchored" data-anchor-id="expanse-the-workhorse-hpc-cluster">1. Expanse — The Workhorse HPC Cluster</h2>
+<p>Expanse is SDSC’s flagship HPC system for heterogeneous computing. It supports a wide range of science and engineering workloads, from molecular dynamics to AI/ML training, and is the most versatile entry point for researchers who need traditional HPC with GPU capabilities.</p>
+<section id="key-specs" class="level3">
+<h3 class="anchored" data-anchor-id="key-specs">Key Specs</h3>
+<ul>
+<li><strong>CPU nodes:</strong> 728 AMD EPYC 7742 (Rome) nodes, 128 cores each, 256 GB DRAM</li>
+<li><strong>GPU nodes:</strong> 52 NVIDIA V100 GPU nodes (4 GPUs per node, NVLINK) — available via NAIRR</li>
+<li><strong>PATh expansion:</strong> 112 AMD Milan CPU nodes + 8 A100 GPU nodes</li>
+<li><strong>Expanse AI Resource (new!):</strong> 34 nodes with Intel Sapphire Rapids CPUs, 1 TB memory, <strong>4 NVIDIA H100 GPUs per node</strong>, 6.4 TB NVMe</li>
+<li><strong>Storage:</strong> 12 PB Lustre + 7 PB Ceph</li>
+<li><strong>Interconnect:</strong> HDR InfiniBand, 100 Gb/s</li>
+</ul>
+</section>
+<section id="getting-started" class="level3">
+<h3 class="anchored" data-anchor-id="getting-started">Getting Started</h3>
+<ol type="1">
+<li><p><strong>Get an ACCESS account:</strong> Visit <code>https://identity.access-ci.org/new-user</code> and create an account using your institutional credentials.</p></li>
+<li><p><strong>Request an allocation:</strong> Go to <code>https://allocations.access-ci.org/</code> and choose a project type:</p>
+<ul>
+<li><strong>Explore</strong> (400K credits, 1-page proposal, approved in ~1 business day) — great for getting started, benchmarking, small classes</li>
+<li><strong>Discover</strong> (1.5M credits, 3-page proposal, any time) — for modest research needs</li>
+<li><strong>Accelerate</strong> (3M credits, 10-page proposal, any time) — mid-scale research</li>
+<li><strong>Maximize</strong> (largest, peer-reviewed, twice yearly) — large-scale campaigns</li>
+</ul></li>
+<li><p><strong>Log in:</strong> <code>ssh your_username@expanse.sdsc.edu</code> (requires 2FA with authenticator app)</p></li>
+<li><p><strong>Try the Expanse User Portal:</strong> <code>https://portal.expanse.sdsc.edu</code> — a web interface for file management, job submission, and launching Jupyter notebooks, RStudio, or MATLAB.</p></li>
+<li><p><strong>Trial accounts:</strong> If you just want to test things out, email <code>consult@sdsc.edu</code> for a trial account with 1,000 core-hours (approved within 1 business day).</p></li>
+</ol>
+</section>
+<section id="software-and-containers" class="level3">
+<h3 class="anchored" data-anchor-id="software-and-containers">Software and Containers</h3>
+<p>Expanse uses a <strong>Spack-based</strong> software stack with environment modules (<code>module load ...</code>). Popular AI/ML packages (PyTorch, TensorFlow) are available. SDSC also provides <strong>Singularity/Apptainer containers</strong> for tools like AlphaFold2, PyTorch, TensorFlow, and more.</p>
+</section>
+<section id="useful-links" class="level3">
+<h3 class="anchored" data-anchor-id="useful-links">Useful Links</h3>
+<ul>
+<li>Expanse overview: <code>https://www.sdsc.edu/systems/expanse/index.html</code></li>
+<li>Expanse user guide: <code>https://www.sdsc.edu/systems/expanse/user_guide.html</code></li>
+<li>Expanse 101 tutorial: <code>https://hpc-training.sdsc.edu/expanse-101/</code></li>
+<li>Expanse training repo: <code>https://github.com/sdsc-hpc-training-org/expanse-101</code></li>
+<li>ACCESS allocations: <code>https://allocations.access-ci.org/</code></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="voyager-purpose-built-for-deep-learning" class="level2">
+<h2 class="anchored" data-anchor-id="voyager-purpose-built-for-deep-learning">2. Voyager — Purpose-Built for Deep Learning</h2>
+<p>Voyager is an NSF-funded HPC system specifically designed for AI applications. Its unique feature is the <strong>Intel Gaudi2 accelerator</strong> — a chip purpose-built for deep learning training and inference, different from traditional NVIDIA GPUs but with easy PyTorch migration.</p>
+<section id="key-specs-1" class="level3">
+<h3 class="anchored" data-anchor-id="key-specs-1">Key Specs</h3>
+<ul>
+<li><strong>42 training nodes</strong>, each with <strong>8 Intel Gaudi2</strong> accelerators (336 total)</li>
+<li><strong>36 Intel x86 compute nodes</strong> for data processing</li>
+<li><strong>400 GbE RoCE interconnect</strong> with all-to-all networking within nodes</li>
+<li><strong>Storage:</strong> 3 PB Ceph + 324 TB home</li>
+<li><strong>Memory:</strong> 512 GB per training node, 96 GB HBM2 per Gaudi2 accelerator</li>
+</ul>
+</section>
+<section id="why-intel-gaudi" class="level3">
+<h3 class="anchored" data-anchor-id="why-intel-gaudi">Why Intel Gaudi?</h3>
+<p>If you’ve been using NVIDIA GPUs, migrating to Intel Gaudi is straightforward:</p>
+<ul>
+<li><strong>PyTorch is natively integrated</strong> with the SynapseAI software stack — minimal code changes needed</li>
+<li><strong>Easy GPU migration:</strong> Import <code>habana_frameworks</code> in your PyTorch code and you’re largely set</li>
+<li><strong>HuggingFace support:</strong> Use the <a href="https://github.com/huggingface/optimum-habana">Optimum Habana</a> library to run Transformers and Diffusers models with minimal modification</li>
+<li><strong>Advanced users</strong> can write custom kernels if needed</li>
+<li><strong>Jupyter notebooks</strong> are also available on Voyager</li>
+</ul>
+</section>
+<section id="getting-started-1" class="level3">
+<h3 class="anchored" data-anchor-id="getting-started-1">Getting Started</h3>
+<ol type="1">
+<li><p><strong>Request access</strong> via:</p>
+<ul>
+<li><strong>NAIRR Pilot:</strong> <code>https://nairrpilot.org/opportunities/allocations</code> — submit a 3-page proposal, reviewed monthly. Open to US-based researchers at academic institutions, nonprofits, and startups with federal grants.</li>
+<li><strong>ACCESS:</strong> <code>https://allocations.access-ci.org/</code> — Voyager is also available through ACCESS allocations.</li>
+</ul></li>
+<li><p><strong>Log in:</strong> <code>ssh login.voyager.sdsc.edu</code> (SSH key required — send your public key to <code>consult@sdsc.edu</code>)</p></li>
+<li><p><strong>Run jobs:</strong> Voyager uses <strong>Kubernetes</strong>, not Slurm. You submit workloads as Kubernetes pods using YAML files. Example:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Pod</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">image</span><span class="kw">:</span><span class="at"> vault.habana.ai/gaudi-docker/1.10.0/ubuntu22:1.8.0-2</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"hl-smi"</span><span class="kw">]</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">habana.ai/gaudi</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">hugepages-2Mi</span><span class="kw">:</span><span class="at"> 3800Mi</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> 32G</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol>
+</section>
+<section id="sample-applications" class="level3">
+<h3 class="anchored" data-anchor-id="sample-applications">Sample Applications</h3>
+<p>Researchers have already run diverse AI workloads on Voyager: diffusion models for cosmology super-resolution, BioBERT for biomedical text, U-Net for cardiac imaging, graph neural networks for high-energy physics, LLM fine-tuning for epilepsy, and more.</p>
+</section>
+<section id="useful-links-1" class="level3">
+<h3 class="anchored" data-anchor-id="useful-links-1">Useful Links</h3>
+<ul>
+<li>Voyager overview: <code>https://www.sdsc.edu/systems/voyager/index.html</code></li>
+<li>Voyager user guide: <code>https://www.sdsc.edu/systems/voyager/user_guide.html</code></li>
+<li>Reference models and tutorials: <code>https://github.com/javierhndev/Voyager-Reference-Models</code></li>
+<li>Intel Gaudi documentation: <code>https://docs.habana.ai/</code></li>
+<li>PyTorch on Intel Gaudi: <code>https://docs.habana.ai/en/latest/PyTorch/index.html</code></li>
+<li>Optimum Habana (HuggingFace on Gaudi): <code>https://github.com/huggingface/optimum-habana</code></li>
+<li>Voyager 101 webinar (Apr 2025): <code>https://github.com/sdsc-hpc-training-org/advanced-computing-webinars/tree/main/Apr-08-2025-Porting-PyTorch-to-Voyager</code></li>
+<li>NAIRR Pilot allocations: <code>https://nairrpilot.org/opportunities/allocations</code></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="cosmos-democratizing-gpu-acceleration" class="level2">
+<h2 class="anchored" data-anchor-id="cosmos-democratizing-gpu-acceleration">3. Cosmos — Democratizing GPU Acceleration</h2>
+<p>Cosmos is SDSC’s newest testbed system, built around the <strong>AMD Instinct MI300A APU</strong> — a chip that integrates both CPU and GPU on a single package with <strong>unified memory</strong>. This design eliminates the traditional hurdle of copying data between CPU and GPU memory, making GPU acceleration dramatically easier to adopt.</p>
+<section id="key-specs-2" class="level3">
+<h3 class="anchored" data-anchor-id="key-specs-2">Key Specs</h3>
+<ul>
+<li><strong>42 nodes</strong>, each with <strong>4 AMD MI300A APUs</strong> (168 APUs total)</li>
+<li><strong>Unified memory:</strong> 128 GB HBM3 per APU, shared coherently between CPU and GPU (5.3 TB/s peak throughput)</li>
+<li><strong>24 EPYC Zen4 CPU cores</strong> + 228 GPU compute cores per APU</li>
+<li><strong>HPE Slingshot interconnect</strong> with AMD Infinity xGMI between sockets</li>
+<li><strong>VAST flash storage:</strong> ~500 TB, high IOPS</li>
+<li><strong>Ceph capacity storage:</strong> 4.9 PB</li>
+<li><strong>100% liquid cooled</strong> HPE Cray EX system</li>
+</ul>
+</section>
+<section id="why-the-apu-matters-for-beginners" class="level3">
+<h3 class="anchored" data-anchor-id="why-the-apu-matters-for-beginners">Why the APU Matters for Beginners</h3>
+<p>Traditional GPU programming requires managing two separate memory spaces (CPU host memory and GPU device memory) and explicitly copying data between them. The MI300A APU’s <strong>unified memory</strong> means:</p>
+<ul>
+<li><strong>No host/device data copies</strong> — CPU and GPU share the same memory</li>
+<li><strong>Incremental porting approach</strong> — start with CPU code, gradually offload compute-intensive parts to GPU</li>
+<li><strong>“No code left behind”</strong> — many applications that were never ported to GPUs can now be accelerated with minimal effort</li>
+</ul>
+</section>
+<section id="getting-started-2" class="level3">
+<h3 class="anchored" data-anchor-id="getting-started-2">Getting Started</h3>
+<ol type="1">
+<li><strong>Cosmos is currently in testbed phase.</strong> Access is by project approval, not open allocation yet.</li>
+<li><strong>Email <code>consult@sdsc.edu</code></strong> with a summary of your project. The Cosmos team evaluates suitability and sets up a follow-up call.</li>
+<li><strong>Log in:</strong> <code>ssh your_username@login01.cosmos.sdsc.edu</code> (SSH key required)</li>
+<li><strong>Jobs use Slurm</strong> — the familiar batch scheduling system: <code>sbatch</code>, <code>srun</code>, etc.</li>
+</ol>
+<p>Cosmos uses <strong>ROCm</strong> (AMD’s GPU computing platform) and provides containerized environments with AI/ML frameworks pre-installed.</p>
+</section>
+<section id="useful-links-2" class="level3">
+<h3 class="anchored" data-anchor-id="useful-links-2">Useful Links</h3>
+<ul>
+<li>Cosmos overview: <code>https://www.sdsc.edu/systems/cosmos/index.html</code></li>
+<li>Cosmos user guide: <code>https://www.sdsc.edu/systems/cosmos/user_guide.html</code></li>
+<li>AMD CDNA 3 architecture white paper: <code>https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/white-papers/amd-cdna-3-white-paper.pdf</code></li>
+<li>NSF award announcement: <code>https://www.sdsc.edu/news/2024/PR20240712_Cosmos_award.html</code></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="national-research-platform-nrp-federated-flexible-and-free" class="level2">
+<h2 class="anchored" data-anchor-id="national-research-platform-nrp-federated-flexible-and-free">4. National Research Platform (NRP) — Federated, Flexible, and Free</h2>
+<p>The National Research Platform is a partnership of more than <strong>80 institutions</strong> across the US and globally, led by UC San Diego, University of Nebraska-Lincoln, and the Massachusetts Green High Performance Computing Center. Its primary computing resource is the <strong>Nautilus cluster</strong> — a massive Kubernetes-based distributed system spanning 4 continents.</p>
+<section id="what-makes-nrp-different" class="level3">
+<h3 class="anchored" data-anchor-id="what-makes-nrp-different">What Makes NRP Different</h3>
+<ul>
+<li><strong>No allocation proposals needed</strong> — sign up with your institutional credentials and start using it</li>
+<li><strong>Kubernetes-native</strong> — flexible, container-based computing</li>
+<li><strong>Diverse hardware</strong> — A100, H100, H200, V100 GPUs and more, contributed by partner institutions</li>
+<li><strong>Persistent storage</strong> — CephFS, CvmFS, S3, or bring your own</li>
+<li><strong>Built-in services</strong> — JupyterHub, GitLab with CI/CD runners, Nextcloud, Overleaf, and more</li>
+</ul>
+</section>
+<section id="three-ways-to-use-nrp" class="level3">
+<h3 class="anchored" data-anchor-id="three-ways-to-use-nrp">Three Ways to Use NRP</h3>
+<ol type="1">
+<li><p><strong>JupyterHub</strong> — The easiest way. Log in through your browser, choose your hardware, and start running notebooks. No Kubernetes knowledge required. Visit the NRP JupyterHub and authenticate with your institutional credentials.</p></li>
+<li><p><strong>Coder</strong> — A JupyterHub-like experience with a full VS Code environment in the browser. Also requires no Kubernetes knowledge.</p></li>
+<li><p><strong>kubectl</strong> — For maximum control. Define pods, jobs, and deployments with YAML files, specifying CPU, GPU, memory, and storage requirements. Requires basic Kubernetes knowledge.</p></li>
+</ol>
+</section>
+<section id="llm-inference-service" class="level3">
+<h3 class="anchored" data-anchor-id="llm-inference-service">LLM Inference Service</h3>
+<p>NRP provides <strong>free, authenticated access to large language models</strong> — a fantastic resource for researchers who need LLM capabilities without paying API costs:</p>
+<ul>
+<li><strong>Web chat interface:</strong> <code>https://librechat.nrp-nautilus.io</code> or <code>https://nrp-llm-chat.nrp-nautilus.io</code></li>
+<li><strong>API access</strong> (OpenAI-compatible): Get a token at <code>https://nrp.ai/llmtoken/</code>, then use the OpenAI Python client:</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    api_key<span class="op">=</span><span class="st">"your-nrp-token"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    base_url<span class="op">=</span><span class="st">"https://ellm.nrp-nautilus.io/v1"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>completion <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"gpt-oss"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">=</span>[</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Explain quantum computing in one paragraph."</span>}</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(completion.choices[<span class="dv">0</span>].message.content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="getting-started-3" class="level3">
+<h3 class="anchored" data-anchor-id="getting-started-3">Getting Started</h3>
+<ol type="1">
+<li><strong>Sign up:</strong> Go to <code>https://nrp.ai/get-access</code> and log in with your institutional credentials via CILogon</li>
+<li><strong>Get added to a namespace</strong> — contact your research supervisor or request to be promoted to admin to create your own namespace</li>
+<li><strong>Install kubectl</strong> and download your kubeconfig from the portal</li>
+<li><strong>Or just use JupyterHub</strong> for the simplest experience</li>
+</ol>
+</section>
+<section id="useful-links-3" class="level3">
+<h3 class="anchored" data-anchor-id="useful-links-3">Useful Links</h3>
+<ul>
+<li>NRP main site: <code>https://nrp.ai/</code></li>
+<li>Getting started: <code>https://nrp.ai/documentation/userdocs/start/getting-started</code></li>
+<li>Get access: <code>https://nrp.ai/get-access</code></li>
+<li>Full documentation: <code>https://docs.nationalresearchplatform.org/</code></li>
+<li>Using Nautilus (3 methods): <code>https://nrp.ai/documentation/userdocs/start/using-nautilus/</code></li>
+<li>LLM managed service: <code>https://nrp.ai/documentation/userdocs/ai/llm-managed/</code></li>
+<li>LLM API access: <code>https://nrp.ai/documentation/userdocs/ai/llm-managed/api-access/</code></li>
+<li>Dashboard: <code>https://dash.nrp-nautilus.io/</code></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="national-data-platform-ndp-data-discovery-and-collaboration" class="level2">
+<h2 class="anchored" data-anchor-id="national-data-platform-ndp-data-discovery-and-collaboration">5. National Data Platform (NDP) — Data Discovery and Collaboration</h2>
+<p>The National Data Platform is a federated ecosystem for discovering, sharing, and computing on data. It’s not a compute cluster — it’s a platform that connects data, services, AI tools, and computing resources in one place.</p>
+<section id="key-features" class="level3">
+<h3 class="anchored" data-anchor-id="key-features">Key Features</h3>
+<ul>
+<li><strong>Data Catalog</strong> — Search across registered datasets from multiple institutions using substring search, conceptual search (powered by Open Knowledge Networks), spatial-temporal search, and filtered search by organization</li>
+<li><strong>Collaborative Workspace</strong> — Web-based interface where multiple users can share resources, tools, and data in real time</li>
+<li><strong>AI-Ready Data</strong> — Structured, curated datasets optimized for AI projects</li>
+<li><strong>Compute Integration</strong> — Connect to HPC or cloud resources for data processing and ML training</li>
+<li><strong>Education Hub</strong> — Hands-on modules and classroom resources for courses that need computational tools and AI-ready data</li>
+</ul>
+</section>
+<section id="the-ndp-workflow" class="level3">
+<h3 class="anchored" data-anchor-id="the-ndp-workflow">The NDP Workflow</h3>
+<ol type="1">
+<li><strong>Discover</strong> — Find data and digital assets in the catalog</li>
+<li><strong>Collect</strong> — Add additional assets and workflow inputs</li>
+<li><strong>Collaborate</strong> — Create a shared workspace with collaborators</li>
+<li><strong>Compute</strong> — Execute workflows on HPC or cloud</li>
+<li><strong>Store/Export</strong> — Save final data products</li>
+<li><strong>Extend</strong> — Add endpoint services as needed</li>
+</ol>
+</section>
+<section id="getting-started-4" class="level3">
+<h3 class="anchored" data-anchor-id="getting-started-4">Getting Started</h3>
+<ol type="1">
+<li><strong>Go to</strong> <code>https://nationaldataplatform.org/</code></li>
+<li><strong>Click “Log in/Register”</strong> → Select “Sign in with CI Logon” → Choose “University of California, San Diego” as your Identity Provider → Log in with your UCSD Active Directory credentials</li>
+<li><strong>Browse the catalog</strong> or set up a workspace</li>
+</ol>
+</section>
+<section id="useful-links-4" class="level3">
+<h3 class="anchored" data-anchor-id="useful-links-4">Useful Links</h3>
+<ul>
+<li>NDP main site: <code>https://nationaldataplatform.org/</code></li>
+<li>NDP documentation: <code>https://nationaldataplatform.org/documentation/</code></li>
+<li>Data catalog: <code>https://nationaldataplatform.org/documentation/ndp-catalog/</code></li>
+<li>Set up workspace tutorial: <code>https://nationaldataplatform.org/documentation/quick-start/set-up-workspace/</code></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="which-platform-should-you-choose" class="level2">
+<h2 class="anchored" data-anchor-id="which-platform-should-you-choose">Which Platform Should You Choose?</h2>
+<p>Here’s a simple decision guide:</p>
+<ul>
+<li><strong>Need traditional HPC with GPU support?</strong> → Start with <strong>Expanse</strong> (ACCESS Explore allocation, approved in ~1 day)</li>
+<li><strong>Training large deep learning models?</strong> → <strong>Voyager</strong> (Intel Gaudi2, purpose-built for AI)</li>
+<li><strong>Have CPU-only code you want to accelerate with GPUs?</strong> → <strong>Cosmos</strong> (unified memory APUs make porting easy)</li>
+<li><strong>Want free, flexible computing without writing proposals?</strong> → <strong>NRP Nautilus</strong> (sign up and go)</li>
+<li><strong>Need to find and collaborate on datasets?</strong> → <strong>National Data Platform</strong></li>
+<li><strong>Just want to try things out?</strong> → <strong>NRP JupyterHub</strong> (fastest path from zero to running code) or <strong>Expanse trial account</strong> (email <code>consult@sdsc.edu</code>)</li>
+</ul>
+<hr>
+</section>
+<section id="sdsc-training-resources" class="level2">
+<h2 class="anchored" data-anchor-id="sdsc-training-resources">SDSC Training Resources</h2>
+<p>SDSC offers extensive training programs to help you get up to speed:</p>
+<ul>
+<li><strong>SDSC HPC/CI Training:</strong> <code>https://hpc-training.sdsc.edu/</code> — tutorials for Expanse, Voyager, and more</li>
+<li><strong>HPC Basic Skills:</strong> <code>https://hpc-training.sdsc.edu/basic_skills/</code> — Linux, bash, batch computing fundamentals</li>
+<li><strong>COMPLECS:</strong> Non-programming skills for using supercomputers (parallel computing concepts, security, data management)</li>
+<li><strong>CIML Summer Institute:</strong> Best practices for machine learning on HPC systems</li>
+<li><strong>HPC &amp; Data Science Summer Institute:</strong> Week-long introductory workshop</li>
+<li><strong>Advanced HPC/CI Webinars:</strong> <code>https://www.sdsc.edu/education/training-programs/index.html</code> — ongoing webinar series on AI/ML, performance analysis, and visualization</li>
+<li><strong>Expanse 101 Tutorial:</strong> <code>https://hpc-training.sdsc.edu/expanse-101/</code></li>
+</ul>
+</section>
+<section id="getting-help" class="level2">
+<h2 class="anchored" data-anchor-id="getting-help">Getting Help</h2>
+<p>For any SDSC resource, email <strong><code>consult@sdsc.edu</code></strong> — the HPC consulting team can help you choose the right platform, get access, and optimize your workflows.</p>
+<hr>
+<p><em>This post is based on the SMASH Lunch Talk “Cyberinfrastructure for AI-Enabled Research at SDSC” by Mai H. Nguyen (SDSC), presented May 26, 2026. The original slides are available on the <a href="https://trello.com/c/CA7e2WdI/271">Trello card for this project</a>. Thanks to Mai for permission to create this blog post.</em></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.zonca\.dev");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

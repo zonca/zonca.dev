@@ -2,6 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2026-05-29-sdsc-ci-ai-enabled-science.html",
+      "/posts/2026-05-29-healpy-1.20.0b1-beta-release.html",
       "/posts/2026-05-28-pysm-345-released.html",
       "/posts/2026-05-24-gdrivemd-tutorial.html",
       "/posts/2026-05-20-healpy-skytools-change-resolution.html",
