@@ -33,7 +33,7 @@ Expanse is SDSC's flagship HPC system for heterogeneous computing. It supports a
 ### Key Specs
 
 - **CPU nodes:** 728 AMD EPYC 7742 (Rome) nodes, 128 cores each, 256 GB DRAM
-- **GPU nodes:** 52 NVIDIA V100 GPU nodes (4 GPUs per node, NVLINK)
+- **GPU nodes:** 52 NVIDIA V100 GPU nodes (4 GPUs per node, NVLINK) — available via NAIRR
 - **PATh expansion:** 112 AMD Milan CPU nodes + 8 A100 GPU nodes
 - **Expanse AI Resource (new!):** 34 nodes with Intel Sapphire Rapids CPUs, 1 TB memory, **4 NVIDIA H100 GPUs per node**, 6.4 TB NVMe
 - **Storage:** 12 PB Lustre + 7 PB Ceph
@@ -79,7 +79,7 @@ Voyager is an NSF-funded HPC system specifically designed for AI applications. I
 - **36 Intel x86 compute nodes** for data processing
 - **400 GbE RoCE interconnect** with all-to-all networking within nodes
 - **Storage:** 3 PB Ceph + 324 TB home
-- **Memory:** 512 GB per training node, 32 GB HBM2 per Gaudi processor
+- **Memory:** 512 GB per training node, 96 GB HBM2 per Gaudi2 accelerator
 
 ### Why Intel Gaudi?
 
@@ -89,6 +89,7 @@ If you've been using NVIDIA GPUs, migrating to Intel Gaudi is straightforward:
 - **Easy GPU migration:** Import `habana_frameworks` in your PyTorch code and you're largely set
 - **HuggingFace support:** Use the [Optimum Habana](https://github.com/huggingface/optimum-habana) library to run Transformers and Diffusers models with minimal modification
 - **Advanced users** can write custom kernels if needed
+- **Jupyter notebooks** are also available on Voyager
 
 ### Getting Started
 
@@ -113,8 +114,6 @@ If you've been using NVIDIA GPUs, migrating to Intel Gaudi is straightforward:
            hugepages-2Mi: 3800Mi
            memory: 32G
    ```
-
-4. **Jupyter notebooks** are also available on Voyager.
 
 ### Sample Applications
 
