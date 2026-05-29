@@ -9,7 +9,7 @@
 <meta name="author" content="Andrea Zonca">
 <meta name="dcterms.date" content="2026-05-28">
 
-<title>PySM 3.4.5: scipy pin removed, Python 3.9 dropped – Andrea Zonca</title>
+<title>PySM 3.4.5: HalfDome TSZ model, scipy pin removed, Python 3.9 dropped – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -124,7 +124,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">PySM 3.4.5: scipy pin removed, Python 3.9 dropped</h1>
+      <h1 class="title">PySM 3.4.5: HalfDome TSZ model, scipy pin removed, Python 3.9 dropped</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">python</div>
                 <div class="quarto-category">astronomy</div>
@@ -169,9 +169,9 @@ ul.task-list li input[type="checkbox"] {
 <p>PySM 3.4.5 is now available on <a href="https://pypi.org/project/pysm3/3.4.5/">PyPI</a> and <a href="https://github.com/galsci/pysm/releases/tag/3.4.5">GitHub</a>.</p>
 <p>Changes in this release:</p>
 <ul>
+<li><strong>HalfDome TSZ model</strong> (<code>tsz4</code>) — thermal SZ emission from the <a href="https://doi.org/10.48550/arXiv.2407.17462">HalfDome simulations</a>, eleven realizations available at Nside=8192. See the <a href="https://pysm3.readthedocs.io/en/latest/models.html">tsz4 documentation</a>.</li>
 <li><strong>Relaxed SciPy upper bound</strong> — removed the <code>scipy &lt; 1.15</code> pin. This was a workaround for a <a href="https://github.com/healpy/healpy/issues/987">healpy bug</a> with scipy 1.15+, fixed in <a href="https://github.com/healpy/healpy/releases/tag/1.18.1">healpy 1.18.1</a>. PySM now requires <code>healpy &gt;= 1.18.1</code>.</li>
 <li><strong>Dropped Python 3.9 support</strong> — EOL since October 2025, and healpy &gt;= 1.18.1 only ships wheels for Python &gt;= 3.10.</li>
-<li><strong>HalfDome TSZ model</strong> (<code>tsz4</code>) — thermal SZ emission from the <a href="https://doi.org/10.48550/arXiv.2407.17462">HalfDome simulations</a>, eleven realizations available at Nside=8192. See the <a href="https://pysm3.readthedocs.io/en/latest/models.html">tsz4 documentation</a>.</li>
 </ul>
 <p>Code: <a href="https://github.com/galsci/pysm">github.com/galsci/pysm</a></p>
 <p>Upgrade with:</p>
