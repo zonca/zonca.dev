@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Andrea Zonca">
-<meta name="dcterms.date" content="2023-08-16">
+<meta name="dcterms.date" content="2026-05-28">
 
-<title>Tutorial on Python for HPC at the SDSC Summer Institute – Andrea Zonca</title>
+<title>PySM 3.4.5: scipy pin removed, Python 3.9 dropped – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -124,11 +124,11 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Tutorial on Python for HPC at the SDSC Summer Institute</h1>
+      <h1 class="title">PySM 3.4.5: scipy pin removed, Python 3.9 dropped</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">python</div>
-                <div class="quarto-category">hpc</div>
-                <div class="quarto-category">sdsc</div>
+                <div class="quarto-category">astronomy</div>
+                <div class="quarto-category">pysm</div>
               </div>
                   </div>
   </div>
@@ -146,7 +146,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">August 16, 2023</p>
+        <p class="date">May 28, 2026</p>
       </div>
     </div>
     
@@ -165,19 +165,17 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2023-08-16-python-for-hpc-tutorial.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2023-08-16-python-for-hpc-tutorial.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
-<p>Each August the San Diego Supercomputer Center organizes a week-long summer school that teaches a large number of topics related to Supercomputing and AI to early career scientists.</p>
-<p>For the past ~10 year I have been teaching “Python for HPC”, this year tutorial is mostly based on <code>numba</code> and <code>dask</code>.</p>
-<p>See the “Summer Institute” Github repository for all the notebooks I have used:</p>
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2026-05-28-pysm-345-released.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2026-05-28-pysm-345-released.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
+<p>PySM 3.4.5 is now available on <a href="https://pypi.org/project/pysm3/3.4.5/">PyPI</a> and <a href="https://github.com/galsci/pysm/releases/tag/3.4.5">GitHub</a>.</p>
+<p>Changes in this release:</p>
 <ul>
-<li><a href="https://github.com/sdsc/sdsc-summer-institute-2023/tree/main/4.2a_python_for_hpc" class="uri">https://github.com/sdsc/sdsc-summer-institute-2023/tree/main/4.2a_python_for_hpc</a></li>
+<li><strong>Relaxed SciPy upper bound</strong> — removed the <code>scipy &lt; 1.15</code> pin. This was a workaround for a <a href="https://github.com/healpy/healpy/issues/987">healpy bug</a> with scipy 1.15+, fixed in <a href="https://github.com/healpy/healpy/releases/tag/1.18.1">healpy 1.18.1</a>. PySM now requires <code>healpy &gt;= 1.18.1</code>.</li>
+<li><strong>Dropped Python 3.9 support</strong> — EOL since October 2025, and healpy &gt;= 1.18.1 only ships wheels for Python &gt;= 3.10.</li>
+<li><strong>HalfDome TSZ model</strong> (<code>tsz4</code>) — thermal SZ emission from the <a href="https://doi.org/10.48550/arXiv.2407.17462">HalfDome simulations</a>, eleven realizations available at Nside=8192. See the <a href="https://pysm3.readthedocs.io/en/latest/models.html">tsz4 documentation</a>.</li>
 </ul>
-<p>Notice another couple of interesting resources:</p>
-<ul>
-<li><a href="https://github.com/sdsc/sdsc-summer-institute-2023/blob/main/4.2a_python_for_hpc/singularity/Singularity.anaconda3-dask-numba">the Manifest to build the Singularity image used for the tutorial on the Expanse supercomputer</a></li>
-<li><a href="https://github.com/sdsc/sdsc-summer-institute-2023/tree/main/4.2a_python_for_hpc/dask_slurm">scripts to launch Dask on Expanse</a></li>
-<li>The Singularity container is available to all Expanse users at <code>/expanse/lustre/projects/sds166/zonca/dask-numba-si23.sif</code></li>
-</ul>
+<p>Code: <a href="https://github.com/galsci/pysm">github.com/galsci/pysm</a></p>
+<p>Upgrade with:</p>
+<pre><code>pip install --upgrade pysm3</code></pre>
 
 
 
