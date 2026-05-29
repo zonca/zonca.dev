@@ -241,28 +241,53 @@ window.Quarto = {
 <h1>Comparing <code>healpy.harmonic_ud_grade</code> with <code>skytools.change_resolution</code></h1>
 <p>This notebook compares two SHT-based HEALPix resolution-change functions: - <code>healpy.harmonic_ud_grade</code> (new in healpy, now with custom beam and reconvolution support) - <code>skytools.change_resolution</code> (<a href="https://github.com/1cosmologist/skytools">github.com/1cosmologist/skytools</a>)</p>
 <p>Both functions analyse a map into <span class="math inline">\(a_{\ell m}\)</span>, optionally correct for beam and pixel-window functions, and synthesise at a new NSIDE. Both support custom (non-Gaussian) beam transfer functions and reconvolution at the same NSIDE.</p>
-<div id="d5d25c3c" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-19T23:59:49.938838Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-19T23:59:49.938445Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-19T23:59:49.962910Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-19T23:59:49.961469Z&quot;}" data-execution_count="2">
+<div id="d5d25c3c" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-29T05:21:13.289086Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-29T05:21:13.288781Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-29T05:21:13.317673Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-29T05:21:13.316901Z&quot;}" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"healpy </span><span class="sc">{</span>hp<span class="sc">.</span>__version__<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># skytools does not expose __version__, print git hash and date</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> skytools</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> importlib.metadata</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>skytools_dir <span class="op">=</span> os.path.dirname(skytools.<span class="va">__file__</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    git_hash <span class="op">=</span> <span class="op">!</span>git <span class="op">-</span>C {skytools_dir} rev<span class="op">-</span>parse <span class="op">--</span>short HEAD</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    git_date <span class="op">=</span> <span class="op">!</span>git <span class="op">-</span>C {skytools_dir} log <span class="op">-</span><span class="dv">1</span> <span class="op">--</span><span class="bu">format</span><span class="op">=%</span>ci</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"skytools git: </span><span class="sc">{</span>git_hash[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>git_date[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">)"</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span>:</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"skytools (version unknown)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pathlib</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> skytools</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>skytools_dir <span class="op">=</span> pathlib.Path(skytools.<span class="va">__file__</span>).resolve().parent</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    skytools_version <span class="op">=</span> importlib.metadata.version(<span class="st">"skytools"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> importlib.metadata.PackageNotFoundError:</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    skytools_version <span class="op">=</span> <span class="st">"unknown"</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    repo_root <span class="op">=</span> pathlib.Path(</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        subprocess.check_output(</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>            [<span class="st">"git"</span>, <span class="st">"-C"</span>, <span class="bu">str</span>(skytools_dir), <span class="st">"rev-parse"</span>, <span class="st">"--show-toplevel"</span>],</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>            stderr<span class="op">=</span>subprocess.DEVNULL,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>            text<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        ).strip()</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    pyproject <span class="op">=</span> repo_root <span class="op">/</span> <span class="st">"pyproject.toml"</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pyproject.exists() <span class="kw">and</span> <span class="st">"skytools"</span> <span class="kw">in</span> pyproject.read_text().lower():</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        git_hash <span class="op">=</span> subprocess.check_output(</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>            [<span class="st">"git"</span>, <span class="st">"-C"</span>, <span class="bu">str</span>(repo_root), <span class="st">"rev-parse"</span>, <span class="st">"--short"</span>, <span class="st">"HEAD"</span>],</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>            text<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>        ).strip()</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        git_date <span class="op">=</span> subprocess.check_output(</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>            [<span class="st">"git"</span>, <span class="st">"-C"</span>, <span class="bu">str</span>(repo_root), <span class="st">"log"</span>, <span class="st">"-1"</span>, <span class="st">"--format=</span><span class="sc">%c</span><span class="st">i"</span>],</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>            text<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        ).strip()</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"skytools </span><span class="sc">{</span>skytools_version<span class="sc">}</span><span class="ss"> git: </span><span class="sc">{</span>git_hash<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>git_date<span class="sc">}</span><span class="ss">)"</span>)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"skytools </span><span class="sc">{</span>skytools_version<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>skytools_dir<span class="sc">}</span><span class="ss">)"</span>)</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span>:</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"skytools </span><span class="sc">{</span>skytools_version<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>skytools_dir<span class="sc">}</span><span class="ss">)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>healpy 1.19.1.dev62+g120128f08.d20260519
-skytools git: c07a459b (2026-05-19 16:48:57 -0700)</code></pre>
+<pre><code>healpy 1.19.1.dev89+g1b8b872ed.d20260529
+skytools 0.0.1b7 (/home/zonca/p/software/healpy/.venv/lib/python3.12/site-packages/skytools)</code></pre>
 </div>
 </div>
 <section id="temperature-only-downgrade-nside-256-64" class="level2">
 <h2 class="anchored" data-anchor-id="temperature-only-downgrade-nside-256-64">1. Temperature-only downgrade (NSIDE 256 → 64)</h2>
 <p>Called with matching settings. The expected residual is numerical noise from different weighting strategies (healpy uses pixel-weights + optional iteration, skytools uses ring-weights).</p>
-<div id="11c4c030" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-19T23:59:49.966563Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-19T23:59:49.966277Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-20T00:00:05.488639Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-20T00:00:05.486797Z&quot;}" data-execution_count="3">
+<div id="11c4c030" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-29T05:21:13.319377Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-29T05:21:13.319256Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-29T05:21:17.767789Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-29T05:21:17.767102Z&quot;}" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>NSIDE_IN <span class="op">=</span> <span class="dv">256</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>NSIDE_OUT <span class="op">=</span> <span class="dv">64</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>LMAX_IN <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> NSIDE_IN <span class="op">-</span> <span class="dv">1</span></span>
@@ -310,7 +335,7 @@ skytools git: c07a459b (2026-05-19 16:48:57 -0700)</code></pre>
 <section id="polarization-downgrade-iqu-nside-128-32" class="level2">
 <h2 class="anchored" data-anchor-id="polarization-downgrade-iqu-nside-128-32">2. Polarization downgrade (IQU, NSIDE 128 → 32)</h2>
 <p>Three-component polarized maps test spin-2 transform agreement between the two libraries.</p>
-<div id="ed745260" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-20T00:00:05.492083Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-20T00:00:05.491794Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-20T00:00:58.681296Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-20T00:00:58.679849Z&quot;}" data-execution_count="4">
+<div id="ed745260" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-29T05:21:17.771076Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-29T05:21:17.770932Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-29T05:21:32.537279Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-29T05:21:32.534645Z&quot;}" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>NSIDE_IN <span class="op">=</span> <span class="dv">128</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>NSIDE_OUT <span class="op">=</span> <span class="dv">32</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>LMAX_IN <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> NSIDE_IN <span class="op">-</span> <span class="dv">1</span></span>
@@ -371,7 +396,7 @@ Polarization residuals:
 <section id="power-spectrum-agreement-after-downgrade" class="level2">
 <h2 class="anchored" data-anchor-id="power-spectrum-agreement-after-downgrade">3. Power-spectrum agreement after downgrade</h2>
 <p>After downgrading, the <em>observed</em> power spectrum changes. We compare the spectra of the two outputs to quantify statistical agreement.</p>
-<div id="cd934e7f" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-20T00:00:58.688936Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-20T00:00:58.688496Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-20T00:01:00.987968Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-20T00:01:00.986601Z&quot;}" data-execution_count="5">
+<div id="cd934e7f" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-29T05:21:32.540632Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-29T05:21:32.540442Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-29T05:21:33.283673Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-29T05:21:33.282909Z&quot;}" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>cl_hp <span class="op">=</span> hp.anafast(maps_hp, lmax<span class="op">=</span>LMAX_OUT)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>cl_st <span class="op">=</span> hp.anafast(maps_st, lmax<span class="op">=</span>LMAX_OUT)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -432,7 +457,7 @@ Polarization residuals:
 <h2 class="anchored" data-anchor-id="beam-re-convolution-0.5-1">4. Beam re-convolution (0.5° → 1°)</h2>
 <p><strong>Key API difference:</strong> healpy expects <code>fwhm</code> in <strong>radians</strong>, skytools in <strong>arcminutes</strong>.</p>
 <p>We create an input map smoothed at 0.5°, then downgrade and apply a 1° output beam.</p>
-<div id="eb11a167" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-20T00:01:00.992726Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-20T00:01:00.992430Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-20T00:01:16.329690Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-20T00:01:16.326912Z&quot;}" data-execution_count="6">
+<div id="eb11a167" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-29T05:21:33.285925Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-29T05:21:33.285665Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-29T05:21:37.698348Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-29T05:21:37.697633Z&quot;}" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>NSIDE_IN <span class="op">=</span> <span class="dv">256</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>NSIDE_OUT <span class="op">=</span> <span class="dv">128</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>LMAX_IN <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> NSIDE_IN <span class="op">-</span> <span class="dv">1</span></span>
@@ -497,7 +522,7 @@ Beam comparison residual: std=3.26e-04 max|diff|=6.18e-02</code></pre>
 <section id="pixel-window-function-handling" class="level2">
 <h2 class="anchored" data-anchor-id="pixel-window-function-handling">5. Pixel-window function handling</h2>
 <p>Both libraries can deconvolve the input pixel window and apply the output one.</p>
-<div id="62321048" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-20T00:01:16.334800Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-20T00:01:16.334274Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-20T00:01:26.792320Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-20T00:01:26.790843Z&quot;}" data-execution_count="7">
+<div id="62321048" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-29T05:21:37.700656Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-29T05:21:37.700510Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-29T05:21:40.942131Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-29T05:21:40.941219Z&quot;}" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>NSIDE_IN <span class="op">=</span> <span class="dv">256</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>NSIDE_OUT <span class="op">=</span> <span class="dv">64</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>LMAX_IN <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> NSIDE_IN <span class="op">-</span> <span class="dv">1</span></span>
@@ -559,7 +584,7 @@ Pixel-window residual: std=3.13e-03 max|diff|=2.67e-01</code></pre>
 <li><p><strong>skytools</strong> (<code>beam_in</code> / <code>beam_out</code>): a 2D array of shape <code>(lmax+1, nmaps)</code> where each column is the beam for the corresponding map component — column 0 = I, column 1 = Q, column 2 = U (no cross-coupling terms). For simple beams where T and polarization share the same beam, all columns are identical.</p></li>
 </ul>
 <p>We use a cosine-tapered beam as a simple non-Gaussian example.</p>
-<div id="6987b45c" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-20T00:01:26.796804Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-20T00:01:26.796488Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-20T00:01:28.198835Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-20T00:01:28.197149Z&quot;}" data-execution_count="8">
+<div id="6987b45c" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-29T05:21:40.944518Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-29T05:21:40.944355Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-29T05:21:41.524283Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-29T05:21:41.523265Z&quot;}" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>NSIDE_IN <span class="op">=</span> <span class="dv">256</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>NSIDE_OUT <span class="op">=</span> <span class="dv">64</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>LMAX_IN <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> NSIDE_IN <span class="op">-</span> <span class="dv">1</span></span>
@@ -646,7 +671,7 @@ Custom beam residual (healpy vs skytools):
 <blockquote class="blockquote">
 <p><strong>Note on pixel weights:</strong> The beam deconvolution/reconvolution is applied in a single step as <span class="math inline">\(b_{\rm out}(\ell) / b_{\rm in}(\ell)\)</span>, so there is no amplification of high-<span class="math inline">\(\ell\)</span> modes. However, healpy’s default <code>use_pixel_weights=True</code> produces <span class="math inline">\(a_{\ell m}\)</span> that differ slightly from skytools’ ring-weighted SHT. At the same NSIDE these differences are not partially cancelled by a resolution change, so the residual shows a structured pixel-weight pattern. Using <code>use_pixel_weights=False</code> eliminates this pattern and matches skytools’ ring-weighted approach.</p>
 </blockquote>
-<div id="d69cafda" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-20T00:01:28.202978Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-20T00:01:28.202620Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-20T00:01:44.036017Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-20T00:01:44.034120Z&quot;}" data-execution_count="9">
+<div id="d69cafda" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-29T05:21:41.526144Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-29T05:21:41.525994Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-29T05:21:46.659342Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-29T05:21:46.658344Z&quot;}" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>NSIDE <span class="op">=</span> <span class="dv">128</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>LMAX <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> NSIDE <span class="op">-</span> <span class="dv">1</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -743,7 +768,7 @@ Reconvolution comparison:
 <h2 class="anchored" data-anchor-id="direct-a_ell-m-input-input_typealm">8. Direct <span class="math inline">\(a_{\ell m}\)</span> input (<code>input_type='alm'</code>)</h2>
 <p>healpy’s <code>harmonic_ud_grade</code> now accepts <span class="math inline">\(a_{\ell m}\)</span> coefficients directly via <code>input_type='alm'</code>, skipping the <code>map2alm</code> step. This is useful in simulation pipelines where you already have harmonics from a previous step. When using this mode, <code>nside_in</code> must be provided explicitly since it cannot be inferred from the <span class="math inline">\(a_{\ell m}\)</span> array.</p>
 <p>skytools does not have an equivalent — it always starts from a pixel-space map.</p>
-<div id="0e921698" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-20T00:01:44.039532Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-20T00:01:44.039229Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-20T00:01:54.411070Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-20T00:01:54.408271Z&quot;}" data-execution_count="10">
+<div id="0e921698" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-29T05:21:46.661450Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-29T05:21:46.661259Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-29T05:21:49.803784Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-29T05:21:49.803054Z&quot;}" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>NSIDE_IN <span class="op">=</span> <span class="dv">256</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>NSIDE_OUT <span class="op">=</span> <span class="dv">64</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>LMAX_OUT <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> NSIDE_OUT <span class="op">-</span> <span class="dv">1</span></span>
@@ -797,46 +822,49 @@ The small difference comes from the map2alm round-trip in the map path.</code></
 </section>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<p>After matching settings and correcting for the <strong>radian vs arcminute</strong> <code>fwhm</code> convention, <code>healpy.harmonic_ud_grade</code> and <code>skytools.change_resolution</code> agree to within a few ×10⁻³, with the residual dominated by the different weighting strategies (pixel weights vs ring weights):</p>
+<p>After matching settings and correcting for the <strong>radian vs arcminute</strong> <code>fwhm</code> convention, <code>healpy.harmonic_ud_grade</code> and <code>skytools.change_resolution</code> agree closely for the downgrade cases. Residuals are dominated by the different SHT weighting strategies (pixel weights with optional iteration in healpy vs ring weights in skytools) and by the exact transform path used in each package:</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 73%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Test</th>
-<th>Residual σ</th>
+<th>Latest residual</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Temperature downgrade</td>
-<td>~3.5×10⁻³</td>
+<td>σ ≈ 3.5×10⁻³</td>
 </tr>
 <tr class="even">
 <td>Polarization (T/Q/U)</td>
-<td>~1–3×10⁻³</td>
+<td>σ ≈ 1.2×10⁻² / 2.7×10⁻³ / 2.7×10⁻³</td>
 </tr>
 <tr class="odd">
-<td>Power spectrum (median frac.)</td>
-<td>~10⁻⁶</td>
+<td>Power spectrum (median frac. TT/EE/TE)</td>
+<td>≈ 3.8×10⁻⁶ / 2.2×10⁻⁶ / 2.3×10⁻⁵</td>
 </tr>
 <tr class="even">
 <td>Beam re-convolution</td>
-<td>~1.5×10⁻³</td>
+<td>σ ≈ 3.3×10⁻⁴</td>
 </tr>
 <tr class="odd">
 <td>Pixel-window correction</td>
-<td>~3.1×10⁻³</td>
+<td>σ ≈ 3.1×10⁻³</td>
 </tr>
 <tr class="even">
 <td>Custom beam (cosine-tapered)</td>
-<td>~same order as Gaussian beam</td>
+<td>σ ≈ 2.9×10⁻³</td>
 </tr>
 <tr class="odd">
 <td>Reconvolution at same NSIDE</td>
-<td>~same order as downgrade</td>
+<td>σ ≈ 5.7×10⁻²</td>
 </tr>
 </tbody>
 </table>
-<p>The dominant sources of difference are the weighting strategy (pixel weights with optional iteration in healpy vs ring weights with no iteration in skytools), which is well below the level that matters for real-world science.</p>
 <section id="key-api-differences" class="level3">
 <h3 class="anchored" data-anchor-id="key-api-differences">Key API differences</h3>
 <table class="caption-top table">
@@ -885,7 +913,7 @@ The small difference comes from the map2alm round-trip in the map path.</code></
 </tr>
 <tr class="odd">
 <td>Default output beam</td>
-<td>Auto Planck-scaled FWHM</td>
+<td><code>fwhm_out=0</code> (no extra beam); <code>fwhm_out=None</code> for Planck-scaled FWHM</td>
 <td>None</td>
 </tr>
 <tr class="even">
