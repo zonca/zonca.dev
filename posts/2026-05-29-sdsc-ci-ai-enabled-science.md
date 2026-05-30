@@ -8,7 +8,7 @@ description: "A beginner-friendly overview of SDSC's computing platforms for AI 
 
 If you're a researcher looking to run AI workloads but don't know where to start, the San Diego Supercomputer Center (SDSC) at UC San Diego offers a remarkable set of cyberinfrastructure resources purpose-built for data-intensive, AI-enabled science. This guide walks you through each platform, what it's best for, and exactly how to get access — whether you need GPUs for deep learning, a Kubernetes cluster for flexible computing, or a data platform to discover and collaborate on datasets.
 
-This post is based on a talk by [Mai H. Nguyen](https://www.sdsc.edu/research_research_projects/mnguyen.html) at the SMASH Lunch Seminar on May 26, 2026, with supplemental information and links for beginners.
+This post is based on a talk by [Mai H. Nguyen](https://www.sdsc.edu/research/experts/nguyen_mai.html) at the SMASH Lunch Seminar on May 26, 2026, with supplemental information and links for beginners.
 
 ## What Is Cyberinfrastructure?
 
