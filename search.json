@@ -6090,53 +6090,32 @@
     "text": "Download sourceContribute"
   },
   {
-    "objectID": "posts/2026-05-29-healpy-1.20.0b1-beta-release.html#generate-a-dust-like-map",
-    "href": "posts/2026-05-29-healpy-1.20.0b1-beta-release.html#generate-a-dust-like-map",
+    "objectID": "posts/2026-05-29-healpy-1.20.0b1-beta-release.html#fwhm_out0-bandlimit-truncation-only",
+    "href": "posts/2026-05-29-healpy-1.20.0b1-beta-release.html#fwhm_out0-bandlimit-truncation-only",
     "title": "healpy 1.20.0b1 beta — harmonic_ud_grade for artifact-safe map downgrading",
-    "section": "Generate a dust-like map",
-    "text": "Generate a dust-like map\nWe create a synthetic dust-like map with a steep power spectrum (\\(C_\\ell \\propto\n\\ell^{-2.5}\\)) at NSIDE 512, then downgrade to NSIDE 64.\n\nnside_in = 512\nnside_out = 64\nlmax_in = 3 * nside_in - 1\n\n# Dust-like power spectrum\nell = np.arange(lmax_in + 1)\ncl_dust = np.zeros(lmax_in + 1)\ncl_dust[2:] = (ell[2:] / 80.0) ** (-2.5)\ncl_dust[0] = 0\ncl_dust[1] = 0\n\nnp.random.seed(42)\nm = hp.synfast(cl_dust, nside_in, lmax=lmax_in, verbose=False)\n\n/tmp/ipykernel_3108949/1973081975.py:13: HealpyDeprecationWarning: \"verbose\" was deprecated in version 1.15.0 and will be removed in a future version. \n  m = hp.synfast(cl_dust, nside_in, lmax=lmax_in, verbose=False)"
+    "section": "fwhm_out=0 — bandlimit truncation only",
+    "text": "fwhm_out=0 — bandlimit truncation only\n\nm_beam0 = hp.harmonic_ud_grade(m, nside_out, fwhm_out=0)\nhp.mollview(m_beam0, title=\"fwhm_out=0 (bandlimit only)\", cmap=\"RdYlBu_r\")"
   },
   {
-    "objectID": "posts/2026-05-29-healpy-1.20.0b1-beta-release.html#downgrade-with-three-methods",
-    "href": "posts/2026-05-29-healpy-1.20.0b1-beta-release.html#downgrade-with-three-methods",
+    "objectID": "posts/2026-05-29-healpy-1.20.0b1-beta-release.html#fwhm_outnone-effective-resolution-beam",
+    "href": "posts/2026-05-29-healpy-1.20.0b1-beta-release.html#fwhm_outnone-effective-resolution-beam",
     "title": "healpy 1.20.0b1 beta — harmonic_ud_grade for artifact-safe map downgrading",
-    "section": "Downgrade with three methods",
-    "text": "Downgrade with three methods\n\n# 1. Pixel-space ud_grade\nm_pixel = hp.ud_grade(m, nside_out)\n\n# 2. harmonic_ud_grade with fwhm_out=0 (default): plain bandlimit truncation\nm_harm_beam0 = hp.harmonic_ud_grade(m, nside_out, fwhm_out=0)\n\n# 3. harmonic_ud_grade with fwhm_out=None: effective resolution beam\nm_harm_beam_auto = hp.harmonic_ud_grade(m, nside_out, fwhm_out=None)"
+    "section": "fwhm_out=None — effective resolution beam",
+    "text": "fwhm_out=None — effective resolution beam\nApplies a Gaussian beam with FWHM = \\(3 \\times \\theta_{\\rm pix}\\) at the output NSIDE, following the Planck convention.\n\nm_beam_auto = hp.harmonic_ud_grade(m, nside_out, fwhm_out=None)\nhp.mollview(m_beam_auto, title=\"fwhm_out=None (effective beam)\", cmap=\"RdYlBu_r\")"
   },
   {
-    "objectID": "posts/2026-05-29-healpy-1.20.0b1-beta-release.html#mollweide-comparison",
-    "href": "posts/2026-05-29-healpy-1.20.0b1-beta-release.html#mollweide-comparison",
+    "objectID": "posts/2026-05-29-healpy-1.20.0b1-beta-release.html#power-spectra",
+    "href": "posts/2026-05-29-healpy-1.20.0b1-beta-release.html#power-spectra",
     "title": "healpy 1.20.0b1 beta — harmonic_ud_grade for artifact-safe map downgrading",
-    "section": "Mollweide comparison",
-    "text": "Mollweide comparison\nThe pixel-space ud_grade map shows visible aliasing artifacts. The harmonic methods are cleaner. The effective beam option (fwhm_out=None) provides the smoothest result, suppressing Gibbs ringing from the sharp bandlimit cutoff.\n\nvmin = min(m_pixel.min(), m_harm_beam0.min(), m_harm_beam_auto.min())\nvmax = max(m_pixel.max(), m_harm_beam0.max(), m_harm_beam_auto.max())\n# Round to readable values\nvmin = np.floor(vmin)\nvmax = np.ceil(vmax)\n\nfig, axes = plt.subplots(1, 3, figsize=(18, 4))\n\nfor ax, (title, map_data) in zip(axes, [\n    (\"ud_grade (pixel averaging)\", m_pixel),\n    (\"harmonic_ud_grade\\nfwhm_out=0 (bandlimit only)\", m_harm_beam0),\n    (\"harmonic_ud_grade\\nfwhm_out=None (effective beam)\", m_harm_beam_auto),\n]):\n    hp.mollview(map_data, title=title, min=vmin, max=vmax,\n                cmap=\"RdYlBu_r\", hold=True, sub=(1, 3, axes.tolist().index(ax) + 1))\n\nplt.tight_layout()\n\n/tmp/ipykernel_3108949/3632554495.py:17: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.\n  plt.tight_layout()"
+    "section": "Power spectra",
+    "text": "Power spectra\n\nlmax_out = 3 * nside_out - 1\ncl_beam0 = hp.anafast(m_beam0, lmax=lmax_out)\ncl_beam_auto = hp.anafast(m_beam_auto, lmax=lmax_out)\nell = np.arange(lmax_out + 1)\n\nfig, ax = plt.subplots(figsize=(8, 5))\nax.loglog(ell[1:], cl_beam0[1:], label=\"fwhm_out=0\")\nax.loglog(ell[1:], cl_beam_auto[1:], label=\"fwhm_out=None\")\nax.axvline(2 * nside_out, color=\"gray\", ls=\":\", alpha=0.7)\nax.set_xlabel(r\"$\\ell$\")\nax.set_ylabel(r\"$C_\\ell$\")\nax.set_title(f\"Power spectra: NSIDE {nside_in} to {nside_out}\")\nax.legend()\nax.set_xlim(1, lmax_out)\nfig.tight_layout()"
   },
   {
-    "objectID": "posts/2026-05-29-healpy-1.20.0b1-beta-release.html#power-spectrum-comparison",
-    "href": "posts/2026-05-29-healpy-1.20.0b1-beta-release.html#power-spectrum-comparison",
+    "objectID": "posts/2026-05-29-healpy-1.20.0b1-beta-release.html#try-it",
+    "href": "posts/2026-05-29-healpy-1.20.0b1-beta-release.html#try-it",
     "title": "healpy 1.20.0b1 beta — harmonic_ud_grade for artifact-safe map downgrading",
-    "section": "Power spectrum comparison",
-    "text": "Power spectrum comparison\nThe power spectra reveal the key differences: - ud_grade leaks high-\\(\\ell\\) power into low-\\(\\ell\\) modes (aliasing) - harmonic_ud_grade with fwhm_out=0 truncates cleanly but shows a sharp cutoff at the output bandlimit - harmonic_ud_grade with fwhm_out=None applies the effective resolution beam, providing a smooth rolloff consistent with the Planck convention\n\nlmax_out = 3 * nside_out - 1\n\ncl_pixel = hp.anafast(m_pixel, lmax=lmax_out)\ncl_harm_beam0 = hp.anafast(m_harm_beam0, lmax=lmax_out)\ncl_harm_beam_auto = hp.anafast(m_harm_beam_auto, lmax=lmax_out)\n\n# Input spectrum at output ell range\ncl_input = cl_dust[:lmax_out + 1]\n\n\nell_out = np.arange(lmax_out + 1)\n\nfig, ax = plt.subplots(figsize=(8, 5))\nax.loglog(ell_out[1:], cl_input[1:], \"k-\", lw=2, label=\"Input $C_\\\\ell$\")\nax.loglog(ell_out[1:], cl_pixel[1:], \"C0--\", lw=1.5, label=\"ud_grade\")\nax.loglog(ell_out[1:], cl_harm_beam0[1:], \"C1-\", lw=1.5, label=\"harmonic, fwhm_out=0\")\nax.loglog(ell_out[1:], cl_harm_beam_auto[1:], \"C2-\", lw=1.5, label=\"harmonic, fwhm_out=None\")\n\nax.axvline(2 * nside_out, color=\"gray\", ls=\":\", alpha=0.7, label=f\"$\\\\ell = 2 \\\\times N_{{\\\\rm side}}^{{\\\\rm out}} = {2*nside_out}$\")\nax.set_xlabel(\"$\\\\ell$\", fontsize=12)\nax.set_ylabel(\"$C_\\\\ell$\", fontsize=12)\nax.set_title(f\"Power spectra: NSIDE {nside_in} → {nside_out}\", fontsize=13)\nax.legend(fontsize=9)\nax.set_xlim(1, lmax_out)\nplt.tight_layout()"
-  },
-  {
-    "objectID": "posts/2026-05-29-healpy-1.20.0b1-beta-release.html#fractional-difference-from-input",
-    "href": "posts/2026-05-29-healpy-1.20.0b1-beta-release.html#fractional-difference-from-input",
-    "title": "healpy 1.20.0b1 beta — harmonic_ud_grade for artifact-safe map downgrading",
-    "section": "Fractional difference from input",
-    "text": "Fractional difference from input\nTo see the effect more clearly, we plot the fractional difference of each downgraded spectrum from the input.\n\nfig, ax = plt.subplots(figsize=(8, 5))\n\nax.semilogy(ell_out[2:], np.abs(cl_pixel[2:] / cl_input[2:] - 1), \"C0--\", lw=1.5, label=\"ud_grade\")\nax.semilogy(ell_out[2:], np.abs(cl_harm_beam0[2:] / cl_input[2:] - 1), \"C1-\", lw=1.5, label=\"harmonic, fwhm_out=0\")\nax.semilogy(ell_out[2:], np.abs(cl_harm_beam_auto[2:] / cl_input[2:] - 1), \"C2-\", lw=1.5, label=\"harmonic, fwhm_out=None\")\n\nax.axvline(2 * nside_out, color=\"gray\", ls=\":\", alpha=0.7, label=f\"$\\\\ell = 2 \\\\times N_{{\\\\rm side}}^{{\\\\rm out}}$\")\nax.set_xlabel(\"$\\\\ell$\", fontsize=12)\nax.set_ylabel(\"$|C_\\\\ell^{\\\\rm out} / C_\\\\ell^{\\\\rm in} - 1|$\", fontsize=12)\nax.set_title(f\"Fractional power-spectrum error: NSIDE {nside_in} → {nside_out}\", fontsize=13)\nax.legend(fontsize=9)\nax.set_xlim(2, lmax_out)\nax.set_ylim(1e-4, 1e2)\nplt.tight_layout()"
-  },
-  {
-    "objectID": "posts/2026-05-29-healpy-1.20.0b1-beta-release.html#summary",
-    "href": "posts/2026-05-29-healpy-1.20.0b1-beta-release.html#summary",
-    "title": "healpy 1.20.0b1 beta — harmonic_ud_grade for artifact-safe map downgrading",
-    "section": "Summary",
-    "text": "Summary\n\n\n\n\n\n\n\n\nMethod\nfwhm_out\nBehavior\n\n\n\n\nud_grade\nN/A\nPixel averaging; aliases high-\\(\\ell\\) power\n\n\nharmonic_ud_grade\n0 (default)\nBandlimit truncation + pixel window correction\n\n\nharmonic_ud_grade\nNone\nAdds effective resolution beam (\\(3 \\times \\theta_{\\rm pix}\\)), suppresses Gibbs ringing\n\n\n\nFor diffuse signals like Galactic dust where aliasing artifacts are most problematic, harmonic_ud_grade provides a significantly cleaner downgrade than ud_grade. The fwhm_out=None option applies a smooth beam rolloff following the Planck 2015 X convention, while fwhm_out=0 gives the sharpest bandlimit."
-  },
-  {
-    "objectID": "posts/2026-05-29-healpy-1.20.0b1-beta-release.html#try-it-and-give-feedback",
-    "href": "posts/2026-05-29-healpy-1.20.0b1-beta-release.html#try-it-and-give-feedback",
-    "title": "healpy 1.20.0b1 beta — harmonic_ud_grade for artifact-safe map downgrading",
-    "section": "Try it and give feedback",
-    "text": "Try it and give feedback\npip install --pre healpy==1.20.0b1\n\nAPI docs: https://healpy.readthedocs.io/en/latest/generated/healpy.sphtfunc.harmonic_ud_grade.html\nComparison notebooks: https://healpy.readthedocs.io/en/latest/healpy_harmonic_ud_grade_comparison.html\nReport issues: https://github.com/healpy/healpy/issues"
+    "section": "Try it",
+    "text": "Try it\n\nAPI docs: https://healpy.readthedocs.io/en/latest/generated/healpy.sphtfunc.harmonic_ud_grade.html\nReport issues: https://github.com/healpy/healpy/issues"
   },
   {
     "objectID": "posts/2023-03-06-gzip-healpix-healpy.html",

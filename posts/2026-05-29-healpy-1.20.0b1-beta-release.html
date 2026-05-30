@@ -239,16 +239,14 @@ window.Quarto = {
 <div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2026-05-29-healpy-1.20.0b1-beta-release.ipynb" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2026-05-29-healpy-1.20.0b1-beta-release.ipynb" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <section id="healpy-1.20.0b1-beta-harmonic_ud_grade-for-artifact-safe-map-downgrading" class="level1">
 <h1>healpy 1.20.0b1 beta — <code>harmonic_ud_grade</code> for artifact-safe map downgrading</h1>
-<p>healpy 1.20.0b1 is now available as a beta release:</p>
 <pre><code>pip install --pre healpy==1.20.0b1</code></pre>
-<p>The headline feature is <code>harmonic_ud_grade</code>, a new function to change map NSIDE through spherical-harmonic transforms instead of pixel averaging. Compared to <code>ud_grade</code>, it suppresses aliasing artifacts by applying a bandlimit truncation with optional pixel-window and beam transfer corrections.</p>
-<p>The beam transfer framework follows Eq. 1 of <a href="https://arxiv.org/abs/1502.01588">Planck 2015 X (arXiv:1502.01588)</a>:</p>
-<p><span class="math display">\[a^{\rm out}_{\ell m} = \frac{p^{\rm out}_\ell}{p^{\rm in}_\ell}
-  \frac{b^{\rm out}_\ell}{b^{\rm in}_\ell}
-  a^{\rm in}_{\ell m}\]</span></p>
-<p>where <span class="math inline">\(p_\ell\)</span> is the pixel window function and <span class="math inline">\(b_\ell\)</span> the Gaussian beam transfer function.</p>
-<p>This notebook demonstrates the difference between <code>harmonic_ud_grade</code> with and without the effective resolution beam (<code>fwhm_out=0</code> vs <code>fwhm_out=None</code>).</p>
-<div id="e0f2008d" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-29T22:41:58.183580Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-29T22:41:58.183206Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-29T22:41:59.352779Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-29T22:41:59.351365Z&quot;}" data-papermill="{&quot;duration&quot;:1.175613,&quot;end_time&quot;:&quot;2026-05-29T22:41:59.354461+00:00&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2026-05-29T22:41:58.178848+00:00&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[&quot;setup&quot;]" data-execution_count="1">
+<p><code>harmonic_ud_grade</code> changes map NSIDE through spherical-harmonic transforms with pixel-window and beam transfer corrections following Eq. 1 of <a href="https://arxiv.org/abs/1502.01588">Planck 2015 X (arXiv:1502.01588)</a>.</p>
+<p>The two main modes are:</p>
+<ul>
+<li><code>fwhm_out=0</code> (default): plain bandlimit truncation with pixel window correction</li>
+<li><code>fwhm_out=None</code>: applies the effective resolution beam (<span class="math inline">\(3 \times \theta_{\rm pix}\)</span>) to suppress Gibbs ringing</li>
+</ul>
+<div id="0bd51f24" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-30T02:01:55.459724Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-30T02:01:55.459315Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-30T02:01:56.638413Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-30T02:01:56.637039Z&quot;}" data-papermill="{&quot;duration&quot;:1.185139,&quot;end_time&quot;:&quot;2026-05-30T02:01:56.639577+00:00&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2026-05-30T02:01:55.454438+00:00&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> healpy <span class="im">as</span> hp</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -259,187 +257,83 @@ window.Quarto = {
 <pre><code>healpy 1.19.1.dev34+gb6c6692e5.d20260529</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_3108949/3900260292.py:5: HealpyDeprecationWarning: The disable_warnings function is deprecated and may be removed in a future version.
+<pre><code>/tmp/ipykernel_72884/3900260292.py:5: HealpyDeprecationWarning: The disable_warnings function is deprecated and may be removed in a future version.
   hp.disable_warnings()</code></pre>
 </div>
 </div>
-<section id="generate-a-dust-like-map" class="level2">
-<h2 class="anchored" data-anchor-id="generate-a-dust-like-map">Generate a dust-like map</h2>
-<p>We create a synthetic dust-like map with a steep power spectrum (<span class="math inline">\(C_\ell \propto
-\ell^{-2.5}\)</span>) at NSIDE 512, then downgrade to NSIDE 64.</p>
-<div id="dd205917" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-29T22:41:59.368749Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-29T22:41:59.368223Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-29T22:42:00.003250Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-29T22:42:00.001767Z&quot;}" data-papermill="{&quot;duration&quot;:0.641946,&quot;end_time&quot;:&quot;2026-05-29T22:42:00.005482+00:00&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2026-05-29T22:41:59.363536+00:00&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="2">
+<div id="7e1eaea2" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-30T02:01:56.648475Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-30T02:01:56.648017Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-30T02:01:57.191373Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-30T02:01:57.190223Z&quot;}" data-papermill="{&quot;duration&quot;:0.549322,&quot;end_time&quot;:&quot;2026-05-30T02:01:57.192915+00:00&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2026-05-30T02:01:56.643593+00:00&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nside_in <span class="op">=</span> <span class="dv">512</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>nside_out <span class="op">=</span> <span class="dv">64</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>lmax_in <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> nside_in <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Dust-like power spectrum</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>ell <span class="op">=</span> np.arange(lmax_in <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>cl_dust <span class="op">=</span> np.zeros(lmax_in <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>cl_dust[<span class="dv">2</span>:] <span class="op">=</span> (ell[<span class="dv">2</span>:] <span class="op">/</span> <span class="fl">80.0</span>) <span class="op">**</span> (<span class="op">-</span><span class="fl">2.5</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>cl_dust[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>cl_dust[<span class="dv">1</span>] <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> hp.synfast(cl_dust, nside_in, lmax<span class="op">=</span>lmax_in, verbose<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> hp.synfast(cls<span class="op">=</span>np.arange(<span class="dv">1000</span>)<span class="op">**</span>(<span class="op">-</span><span class="fl">2.5</span>), nside<span class="op">=</span>nside_in, lmax<span class="op">=</span><span class="dv">3</span><span class="op">*</span>nside_in<span class="op">-</span><span class="dv">1</span>, verbose<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_3108949/1973081975.py:13: HealpyDeprecationWarning: "verbose" was deprecated in version 1.15.0 and will be removed in a future version. 
-  m = hp.synfast(cl_dust, nside_in, lmax=lmax_in, verbose=False)</code></pre>
+<pre><code>/tmp/ipykernel_72884/560164065.py:5: RuntimeWarning: divide by zero encountered in power
+  m = hp.synfast(cls=np.arange(1000)**(-2.5), nside=nside_in, lmax=3*nside_in-1, verbose=False)
+/tmp/ipykernel_72884/560164065.py:5: HealpyDeprecationWarning: "verbose" was deprecated in version 1.15.0 and will be removed in a future version. 
+  m = hp.synfast(cls=np.arange(1000)**(-2.5), nside=nside_in, lmax=3*nside_in-1, verbose=False)</code></pre>
 </div>
 </div>
-</section>
-<section id="downgrade-with-three-methods" class="level2">
-<h2 class="anchored" data-anchor-id="downgrade-with-three-methods">Downgrade with three methods</h2>
-<div id="8f0f5f0a" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-29T22:42:00.022617Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-29T22:42:00.022100Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-29T22:42:00.881692Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-29T22:42:00.880430Z&quot;}" data-papermill="{&quot;duration&quot;:0.86518,&quot;end_time&quot;:&quot;2026-05-29T22:42:00.882910+00:00&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2026-05-29T22:42:00.017730+00:00&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Pixel-space ud_grade</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>m_pixel <span class="op">=</span> hp.ud_grade(m, nside_out)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. harmonic_ud_grade with fwhm_out=0 (default): plain bandlimit truncation</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>m_harm_beam0 <span class="op">=</span> hp.harmonic_ud_grade(m, nside_out, fwhm_out<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. harmonic_ud_grade with fwhm_out=None: effective resolution beam</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>m_harm_beam_auto <span class="op">=</span> hp.harmonic_ud_grade(m, nside_out, fwhm_out<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="mollweide-comparison" class="level2">
-<h2 class="anchored" data-anchor-id="mollweide-comparison">Mollweide comparison</h2>
-<p>The pixel-space <code>ud_grade</code> map shows visible aliasing artifacts. The harmonic methods are cleaner. The effective beam option (<code>fwhm_out=None</code>) provides the smoothest result, suppressing Gibbs ringing from the sharp bandlimit cutoff.</p>
-<div id="ec9e76f7" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-29T22:42:00.897198Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-29T22:42:00.896866Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-29T22:42:02.213001Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-29T22:42:02.211662Z&quot;}" data-papermill="{&quot;duration&quot;:1.323145,&quot;end_time&quot;:&quot;2026-05-29T22:42:02.215360+00:00&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2026-05-29T22:42:00.892215+00:00&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>vmin <span class="op">=</span> <span class="bu">min</span>(m_pixel.<span class="bu">min</span>(), m_harm_beam0.<span class="bu">min</span>(), m_harm_beam_auto.<span class="bu">min</span>())</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>vmax <span class="op">=</span> <span class="bu">max</span>(m_pixel.<span class="bu">max</span>(), m_harm_beam0.<span class="bu">max</span>(), m_harm_beam_auto.<span class="bu">max</span>())</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Round to readable values</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>vmin <span class="op">=</span> np.floor(vmin)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>vmax <span class="op">=</span> np.ceil(vmax)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">4</span>))</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (title, map_data) <span class="kw">in</span> <span class="bu">zip</span>(axes, [</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"ud_grade (pixel averaging)"</span>, m_pixel),</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"harmonic_ud_grade</span><span class="ch">\n</span><span class="st">fwhm_out=0 (bandlimit only)"</span>, m_harm_beam0),</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"harmonic_ud_grade</span><span class="ch">\n</span><span class="st">fwhm_out=None (effective beam)"</span>, m_harm_beam_auto),</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>]):</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    hp.mollview(map_data, title<span class="op">=</span>title, <span class="bu">min</span><span class="op">=</span>vmin, <span class="bu">max</span><span class="op">=</span>vmax,</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>                cmap<span class="op">=</span><span class="st">"RdYlBu_r"</span>, hold<span class="op">=</span><span class="va">True</span>, sub<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">3</span>, axes.tolist().index(ax) <span class="op">+</span> <span class="dv">1</span>))</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_3108949/3632554495.py:17: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
-  plt.tight_layout()</code></pre>
-</div>
+<section id="fwhm_out0-bandlimit-truncation-only" class="level2">
+<h2 class="anchored" data-anchor-id="fwhm_out0-bandlimit-truncation-only"><code>fwhm_out=0</code> — bandlimit truncation only</h2>
+<div id="1892ff50" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-30T02:01:57.205709Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-30T02:01:57.205160Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-30T02:01:58.004777Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-30T02:01:58.003233Z&quot;}" data-papermill="{&quot;duration&quot;:0.80471,&quot;end_time&quot;:&quot;2026-05-30T02:01:58.005783+00:00&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2026-05-30T02:01:57.201073+00:00&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>m_beam0 <span class="op">=</span> hp.harmonic_ud_grade(m, nside_out, fwhm_out<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>hp.mollview(m_beam0, title<span class="op">=</span><span class="st">"fwhm_out=0 (bandlimit only)"</span>, cmap<span class="op">=</span><span class="st">"RdYlBu_r"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2026-05-29-healpy-1.20.0b1-beta-release_files/figure-html/cell-5-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="2026-05-29-healpy-1.20.0b1-beta-release_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="power-spectrum-comparison" class="level2">
-<h2 class="anchored" data-anchor-id="power-spectrum-comparison">Power spectrum comparison</h2>
-<p>The power spectra reveal the key differences: - <code>ud_grade</code> leaks high-<span class="math inline">\(\ell\)</span> power into low-<span class="math inline">\(\ell\)</span> modes (aliasing) - <code>harmonic_ud_grade</code> with <code>fwhm_out=0</code> truncates cleanly but shows a sharp cutoff at the output bandlimit - <code>harmonic_ud_grade</code> with <code>fwhm_out=None</code> applies the effective resolution beam, providing a smooth rolloff consistent with the Planck convention</p>
-<div id="0ff2f635" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-29T22:42:02.240482Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-29T22:42:02.240120Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-29T22:42:02.283657Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-29T22:42:02.282351Z&quot;}" data-papermill="{&quot;duration&quot;:0.051471,&quot;end_time&quot;:&quot;2026-05-29T22:42:02.284560+00:00&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2026-05-29T22:42:02.233089+00:00&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>lmax_out <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> nside_out <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>cl_pixel <span class="op">=</span> hp.anafast(m_pixel, lmax<span class="op">=</span>lmax_out)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>cl_harm_beam0 <span class="op">=</span> hp.anafast(m_harm_beam0, lmax<span class="op">=</span>lmax_out)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>cl_harm_beam_auto <span class="op">=</span> hp.anafast(m_harm_beam_auto, lmax<span class="op">=</span>lmax_out)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Input spectrum at output ell range</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>cl_input <span class="op">=</span> cl_dust[:lmax_out <span class="op">+</span> <span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="f0898529" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-29T22:42:02.295381Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-29T22:42:02.295016Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-29T22:42:03.148023Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-29T22:42:03.146607Z&quot;}" data-papermill="{&quot;duration&quot;:0.860105,&quot;end_time&quot;:&quot;2026-05-29T22:42:03.149310+00:00&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2026-05-29T22:42:02.289205+00:00&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ell_out <span class="op">=</span> np.arange(lmax_out <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>ax.loglog(ell_out[<span class="dv">1</span>:], cl_input[<span class="dv">1</span>:], <span class="st">"k-"</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">"Input $C_</span><span class="ch">\\</span><span class="st">ell$"</span>)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>ax.loglog(ell_out[<span class="dv">1</span>:], cl_pixel[<span class="dv">1</span>:], <span class="st">"C0--"</span>, lw<span class="op">=</span><span class="fl">1.5</span>, label<span class="op">=</span><span class="st">"ud_grade"</span>)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>ax.loglog(ell_out[<span class="dv">1</span>:], cl_harm_beam0[<span class="dv">1</span>:], <span class="st">"C1-"</span>, lw<span class="op">=</span><span class="fl">1.5</span>, label<span class="op">=</span><span class="st">"harmonic, fwhm_out=0"</span>)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>ax.loglog(ell_out[<span class="dv">1</span>:], cl_harm_beam_auto[<span class="dv">1</span>:], <span class="st">"C2-"</span>, lw<span class="op">=</span><span class="fl">1.5</span>, label<span class="op">=</span><span class="st">"harmonic, fwhm_out=None"</span>)</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>ax.axvline(<span class="dv">2</span> <span class="op">*</span> nside_out, color<span class="op">=</span><span class="st">"gray"</span>, ls<span class="op">=</span><span class="st">":"</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, label<span class="op">=</span><span class="ss">f"$</span><span class="ch">\\</span><span class="ss">ell = 2 </span><span class="ch">\\</span><span class="ss">times N_</span><span class="ch">{{\\</span><span class="ss">rm side</span><span class="ch">}}</span><span class="ss">^</span><span class="ch">{{\\</span><span class="ss">rm out</span><span class="ch">}}</span><span class="ss"> = </span><span class="sc">{</span><span class="dv">2</span><span class="op">*</span>nside_out<span class="sc">}</span><span class="ss">$"</span>)</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"$</span><span class="ch">\\</span><span class="st">ell$"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"$C_</span><span class="ch">\\</span><span class="st">ell$"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="ss">f"Power spectra: NSIDE </span><span class="sc">{</span>nside_in<span class="sc">}</span><span class="ss"> → </span><span class="sc">{</span>nside_out<span class="sc">}</span><span class="ss">"</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>ax.legend(fontsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">1</span>, lmax_out)</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="fwhm_outnone-effective-resolution-beam" class="level2">
+<h2 class="anchored" data-anchor-id="fwhm_outnone-effective-resolution-beam"><code>fwhm_out=None</code> — effective resolution beam</h2>
+<p>Applies a Gaussian beam with FWHM = <span class="math inline">\(3 \times \theta_{\rm pix}\)</span> at the output NSIDE, following the Planck convention.</p>
+<div id="bcf2f886" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-30T02:01:58.020920Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-30T02:01:58.020531Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-30T02:01:58.468996Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-30T02:01:58.467887Z&quot;}" data-papermill="{&quot;duration&quot;:0.453675,&quot;end_time&quot;:&quot;2026-05-30T02:01:58.469886+00:00&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2026-05-30T02:01:58.016211+00:00&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>m_beam_auto <span class="op">=</span> hp.harmonic_ud_grade(m, nside_out, fwhm_out<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>hp.mollview(m_beam_auto, title<span class="op">=</span><span class="st">"fwhm_out=None (effective beam)"</span>, cmap<span class="op">=</span><span class="st">"RdYlBu_r"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2026-05-29-healpy-1.20.0b1-beta-release_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="2026-05-29-healpy-1.20.0b1-beta-release_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="fractional-difference-from-input" class="level2">
-<h2 class="anchored" data-anchor-id="fractional-difference-from-input">Fractional difference from input</h2>
-<p>To see the effect more clearly, we plot the fractional difference of each downgraded spectrum from the input.</p>
-<div id="ffd3d64c" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-29T22:42:03.173609Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-29T22:42:03.173247Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-29T22:42:03.947794Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-29T22:42:03.946541Z&quot;}" data-papermill="{&quot;duration&quot;:0.782031,&quot;end_time&quot;:&quot;2026-05-29T22:42:03.948810+00:00&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2026-05-29T22:42:03.166779+00:00&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>ax.semilogy(ell_out[<span class="dv">2</span>:], np.<span class="bu">abs</span>(cl_pixel[<span class="dv">2</span>:] <span class="op">/</span> cl_input[<span class="dv">2</span>:] <span class="op">-</span> <span class="dv">1</span>), <span class="st">"C0--"</span>, lw<span class="op">=</span><span class="fl">1.5</span>, label<span class="op">=</span><span class="st">"ud_grade"</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>ax.semilogy(ell_out[<span class="dv">2</span>:], np.<span class="bu">abs</span>(cl_harm_beam0[<span class="dv">2</span>:] <span class="op">/</span> cl_input[<span class="dv">2</span>:] <span class="op">-</span> <span class="dv">1</span>), <span class="st">"C1-"</span>, lw<span class="op">=</span><span class="fl">1.5</span>, label<span class="op">=</span><span class="st">"harmonic, fwhm_out=0"</span>)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>ax.semilogy(ell_out[<span class="dv">2</span>:], np.<span class="bu">abs</span>(cl_harm_beam_auto[<span class="dv">2</span>:] <span class="op">/</span> cl_input[<span class="dv">2</span>:] <span class="op">-</span> <span class="dv">1</span>), <span class="st">"C2-"</span>, lw<span class="op">=</span><span class="fl">1.5</span>, label<span class="op">=</span><span class="st">"harmonic, fwhm_out=None"</span>)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>ax.axvline(<span class="dv">2</span> <span class="op">*</span> nside_out, color<span class="op">=</span><span class="st">"gray"</span>, ls<span class="op">=</span><span class="st">":"</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, label<span class="op">=</span><span class="ss">f"$</span><span class="ch">\\</span><span class="ss">ell = 2 </span><span class="ch">\\</span><span class="ss">times N_</span><span class="ch">{{\\</span><span class="ss">rm side</span><span class="ch">}}</span><span class="ss">^</span><span class="ch">{{\\</span><span class="ss">rm out</span><span class="ch">}}</span><span class="ss">$"</span>)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"$</span><span class="ch">\\</span><span class="st">ell$"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"$|C_</span><span class="ch">\\</span><span class="st">ell^{</span><span class="ch">\\</span><span class="st">rm out} / C_</span><span class="ch">\\</span><span class="st">ell^{</span><span class="ch">\\</span><span class="st">rm in} - 1|$"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="ss">f"Fractional power-spectrum error: NSIDE </span><span class="sc">{</span>nside_in<span class="sc">}</span><span class="ss"> → </span><span class="sc">{</span>nside_out<span class="sc">}</span><span class="ss">"</span>, fontsize<span class="op">=</span><span class="dv">13</span>)</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>ax.legend(fontsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">2</span>, lmax_out)</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="fl">1e-4</span>, <span class="fl">1e2</span>)</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="power-spectra" class="level2">
+<h2 class="anchored" data-anchor-id="power-spectra">Power spectra</h2>
+<div id="43d574d4" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2026-05-30T02:01:58.486250Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-30T02:01:58.485940Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-30T02:01:59.317073Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-30T02:01:59.315351Z&quot;}" data-papermill="{&quot;duration&quot;:0.836876,&quot;end_time&quot;:&quot;2026-05-30T02:01:59.318541+00:00&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2026-05-30T02:01:58.481665+00:00&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>lmax_out <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> nside_out <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>cl_beam0 <span class="op">=</span> hp.anafast(m_beam0, lmax<span class="op">=</span>lmax_out)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>cl_beam_auto <span class="op">=</span> hp.anafast(m_beam_auto, lmax<span class="op">=</span>lmax_out)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>ell <span class="op">=</span> np.arange(lmax_out <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>ax.loglog(ell[<span class="dv">1</span>:], cl_beam0[<span class="dv">1</span>:], label<span class="op">=</span><span class="st">"fwhm_out=0"</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>ax.loglog(ell[<span class="dv">1</span>:], cl_beam_auto[<span class="dv">1</span>:], label<span class="op">=</span><span class="st">"fwhm_out=None"</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>ax.axvline(<span class="dv">2</span> <span class="op">*</span> nside_out, color<span class="op">=</span><span class="st">"gray"</span>, ls<span class="op">=</span><span class="st">":"</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r"$\ell$"</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="vs">r"$C_\ell$"</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="ss">f"Power spectra: NSIDE </span><span class="sc">{</span>nside_in<span class="sc">}</span><span class="ss"> to </span><span class="sc">{</span>nside_out<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">1</span>, lmax_out)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2026-05-29-healpy-1.20.0b1-beta-release_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="2026-05-29-healpy-1.20.0b1-beta-release_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="summary" class="level2">
-<h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 27%">
-<col style="width: 37%">
-<col style="width: 34%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Method</th>
-<th><code>fwhm_out</code></th>
-<th>Behavior</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>ud_grade</code></td>
-<td>N/A</td>
-<td>Pixel averaging; aliases high-<span class="math inline">\(\ell\)</span> power</td>
-</tr>
-<tr class="even">
-<td><code>harmonic_ud_grade</code></td>
-<td><code>0</code> (default)</td>
-<td>Bandlimit truncation + pixel window correction</td>
-</tr>
-<tr class="odd">
-<td><code>harmonic_ud_grade</code></td>
-<td><code>None</code></td>
-<td>Adds effective resolution beam (<span class="math inline">\(3 \times \theta_{\rm pix}\)</span>), suppresses Gibbs ringing</td>
-</tr>
-</tbody>
-</table>
-<p>For diffuse signals like Galactic dust where aliasing artifacts are most problematic, <code>harmonic_ud_grade</code> provides a significantly cleaner downgrade than <code>ud_grade</code>. The <code>fwhm_out=None</code> option applies a smooth beam rolloff following the Planck 2015 X convention, while <code>fwhm_out=0</code> gives the sharpest bandlimit.</p>
-</section>
-<section id="try-it-and-give-feedback" class="level2">
-<h2 class="anchored" data-anchor-id="try-it-and-give-feedback">Try it and give feedback</h2>
-<pre><code>pip install --pre healpy==1.20.0b1</code></pre>
+<section id="try-it" class="level2">
+<h2 class="anchored" data-anchor-id="try-it">Try it</h2>
 <ul>
 <li>API docs: <a href="https://healpy.readthedocs.io/en/latest/generated/healpy.sphtfunc.harmonic_ud_grade.html" class="uri">https://healpy.readthedocs.io/en/latest/generated/healpy.sphtfunc.harmonic_ud_grade.html</a></li>
-<li>Comparison notebooks: <a href="https://healpy.readthedocs.io/en/latest/healpy_harmonic_ud_grade_comparison.html" class="uri">https://healpy.readthedocs.io/en/latest/healpy_harmonic_ud_grade_comparison.html</a></li>
 <li>Report issues: <a href="https://github.com/healpy/healpy/issues" class="uri">https://github.com/healpy/healpy/issues</a></li>
 </ul>
 
