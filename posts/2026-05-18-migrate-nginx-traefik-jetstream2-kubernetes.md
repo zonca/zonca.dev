@@ -24,13 +24,21 @@ This guide is based on [Ana V. Espinoza's migration instructions](https://github
 
 ## Overview
 
-The migration follows a side-by-side strategy: install Traefik alongside nginx, switch the Ingress class, update DNS, and then remove nginx. This approach minimizes downtime because both ingress controllers run simultaneously during the transition.
+The migration follows a side-by-side strategy: install Traefik alongside nginx, switch the Ingress class, update DNS, and then remove nginx.
+
+### Simple approach (brief downtime)
+
+This is the simplest method. After switching the JupyterHub Ingress to `ingressClassName: traefik`, nginx can no longer serve it, so there is a brief downtime window while DNS propagates.
 
 1. Install Traefik alongside `ingress-nginx`
 2. Update the JupyterHub Ingress to use `ingressClassName: traefik`
 3. Update the cert-manager ClusterIssuer to use Traefik
 4. Update DNS to point to the Traefik load balancer IP
 5. Remove `ingress-nginx`
+
+### Minimal-downtime approach
+
+If uptime is critical, use Traefik's [`kubernetesIngressNGINX`](https://doc.traefik.io/traefik/migrate/nginx-to-traefik/) provider, which makes Traefik serve existing `nginx`-class Ingresses without any changes. This allows you to switch DNS to Traefik first, verify everything works, and only then update the Ingress class and remove nginx. See the [Minimal-Downtime Migration](#minimal-downtime-migration) section below.
 
 ## Step 1: Install Traefik
 
@@ -222,6 +230,112 @@ You should see:
 | Secret annotation | `kubernetes.io/ingress.class: "nginx"` | `ingressClassName: traefik` |
 | cert-manager solver | `class: nginx` | `class: traefik` |
 | Load balancer IP | `$NGINX_IP` | `$TRAEFIK_IP` |
+
+## Minimal-Downtime Migration
+
+If uptime is critical, use Traefik's `kubernetesIngressNGINX` provider to serve existing `nginx`-class Ingresses through Traefik without any changes. This eliminates the downtime window between switching the Ingress class and updating DNS. The approach was [suggested by Ana V. Espinoza](https://github.com/zonca/zonca.dev/pull/94#issuecomment-4568109164) and follows [Traefik's official migration guide](https://doc.traefik.io/traefik/migrate/nginx-to-traefik/).
+
+The step order changes from the simple approach:
+
+1. Install Traefik **with** `kubernetesIngressNGINX.enabled=true` and `publishService.enabled=false`
+2. Switch DNS to the Traefik IP (nginx-class Ingresses still work via Traefik)
+3. Preserve the `nginx` IngressClass, then uninstall `ingress-nginx`
+4. Update the JupyterHub Ingress to `ingressClassName: traefik`
+5. Update the cert-manager ClusterIssuer
+6. (Optional) Re-install Traefik without `kubernetesIngressNGINX` and delete the `nginx` IngressClass
+
+### Step 1: Install Traefik with NGINX compatibility
+
+Install Traefik with the `kubernetesIngressNGINX` provider enabled. This provider makes Traefik watch for `nginx`-class Ingresses and serve them natively, translating NGINX annotations into Traefik configuration automatically.
+
+Disable `publishService` to prevent Traefik from overwriting the Ingress status with its own IP, which would cause a race condition with nginx:
+
+```bash
+helm repo add traefik https://traefik.github.io/charts
+helm repo update
+helm upgrade --install traefik traefik/traefik \
+    --namespace traefik --create-namespace \
+    --set providers.kubernetesIngressNGINX.enabled=true \
+    --set providers.kubernetesIngressNGINX.publishService.enabled=false
+```
+
+Wait for the external IP:
+
+```bash
+export TRAEFIK_IP=$(kubectl get svc -n traefik traefik -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+echo $TRAEFIK_IP
+```
+
+At this point, **both nginx and Traefik serve your existing Ingresses**. Traffic is still flowing through nginx since DNS points to the nginx IP.
+
+### Step 2: Switch DNS to Traefik
+
+Before changing DNS, verify that Traefik correctly serves your Ingresses by testing directly against the Traefik IP:
+
+```bash
+export FQDN=$K8S_CLUSTER_NAME.$PROJ.projects.jetstream-cloud.org
+
+# Test HTTPS via Traefik (should return 302)
+curl -s -o /dev/null -w "%{http_code}\n" \
+    --connect-to "${FQDN}:443:${TRAEFIK_IP}:443" "https://${FQDN}"
+```
+
+If that returns `302`, switch DNS to point to the Traefik IP:
+
+```bash
+openstack recordset set \
+  $PROJ.projects.jetstream-cloud.org. \
+  $K8S_CLUSTER_NAME.$PROJ.projects.jetstream-cloud.org. \
+  --record $TRAEFIK_IP
+```
+
+Wait for DNS propagation, then verify JupyterHub is accessible via the domain name. There is **zero downtime** because Traefik serves the `nginx`-class Ingresses identically.
+
+### Step 3: Remove ingress-nginx
+
+Before uninstalling nginx, preserve the `nginx` IngressClass with a `helm.sh/resource-policy: keep` annotation. Traefik's `kubernetesIngressNGINX` provider needs this IngressClass to discover the Ingresses:
+
+```bash
+helm upgrade ingress-nginx ingress-nginx \
+    --repo https://kubernetes.github.io/ingress-nginx \
+    --namespace ingress-nginx \
+    --reuse-values \
+    --set-json 'controller.ingressClassResource.annotations={"helm.sh/resource-policy":"keep"}'
+```
+
+> **Important:** The `--reuse-values` flag preserves your existing nginx configuration. Without it, Helm resets everything to defaults.
+
+Then uninstall nginx:
+
+```bash
+helm uninstall -n ingress-nginx ingress-nginx
+kubectl delete ns ingress-nginx
+```
+
+The `nginx` IngressClass is preserved by the annotation. Verify that JupyterHub still works — Traefik continues serving the `nginx`-class Ingresses through the `kubernetesIngressNGINX` provider.
+
+### Step 4: Update the JupyterHub Ingress
+
+Now update `secrets.yaml` to use `ingressClassName: traefik` and upgrade JupyterHub (same as Step 2 in the simple approach above).
+
+### Step 5: Update the cert-manager ClusterIssuer
+
+Update the ClusterIssuer to use `class: traefik` (same as Step 3 in the simple approach above).
+
+### Step 6: Clean up (optional)
+
+Once all Ingresses have been updated to `ingressClassName: traefik`, the `kubernetesIngressNGINX` provider is no longer needed. Re-install Traefik without it and delete the preserved `nginx` IngressClass:
+
+```bash
+helm upgrade --install traefik traefik/traefik \
+    --namespace traefik \
+    --reuse-values \
+    --set providers.kubernetesIngressNGINX.enabled=false
+
+kubectl delete ingressclass nginx
+```
+
+> **Note:** After disabling `kubernetesIngressNGINX`, any remaining `nginx`-class Ingresses will return 404. Make sure all Ingresses have been updated to `ingressClassName: traefik` before running this step.
 
 ## Issues and Feedback
 
