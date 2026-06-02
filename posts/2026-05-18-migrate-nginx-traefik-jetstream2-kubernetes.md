@@ -204,7 +204,7 @@ kubectl get ingress -n jhub
 kubectl get certificate -n jhub
 
 # Test HTTPS access
-curl -s -o /dev/null -w "%{http_code}" https://k8s.$PROJ.projects.jetstream-cloud.org/
+curl -s -o /dev/null -w "%{http_code}\n" https://$K8S_CLUSTER_NAME.$PROJ.projects.jetstream-cloud.org/
 ```
 
 You should see:
