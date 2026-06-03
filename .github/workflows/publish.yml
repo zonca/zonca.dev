@@ -49,8 +49,15 @@ jobs:
           args: >
             --base '${{ github.workspace }}/_site'
             --no-progress
+            --timeout 10
+            --max-concurrency 10
+            --exclude 'https://ucsd\.joinhandshake\.com/**'
+            --exclude 'https://www\.blogger\.com/**'
+            --exclude 'https://twitter\.com/**'
+            --exclude 'https://x\.com/**'
             '_site/**/*.html'
           fail: false
           failIfEmpty: false
           debug: true
+        timeout-minutes: 5
 
