@@ -216,6 +216,14 @@ completion = client.chat.completions.create(
 print(completion.choices[0].message.content)
 ```
 
+### Coding Assistants on NRP
+
+You can use the NRP LLM service to power local coding assistants like [OpenCode](https://github.com/opencode-ai/opencode) or Claude Code, giving you free, institutional-access AI coding help. See my step-by-step guides:
+
+- [Configure NRP LLM with OpenCode and Crush](/posts/2026-01-29-configure-nrp-llm-opencode-crush)
+- [Configure Claude Code with Minimax](/posts/2026-04-21-configure-claude-code-minimax)
+- [Fixing clipboard issues with Opencode in Byobu/Tmux over SSH](/posts/2026-04-13-opencode-byobu-clipboard)
+
 ### Getting Started
 
 1. **Sign up:** Go to `https://nrp.ai/get-access` and log in with your institutional credentials via CILogon
