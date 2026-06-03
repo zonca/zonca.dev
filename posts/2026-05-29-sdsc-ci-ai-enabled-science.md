@@ -1,6 +1,10 @@
 ---
 title: "SDSC Cyberinfrastructure for AI-Enabled Science: A Beginner's Guide"
-author: "Andrea Zonca"
+author:
+  - name: "Andrea Zonca"
+    url: https://www.zonca.dev
+  - name: "Mai H. Nguyen"
+    url: https://www.sdsc.edu/research/experts/nguyen_mai.html
 date: "2026-05-29"
 categories: [hpc, ai, sdsc]
 description: "A beginner-friendly overview of SDSC's computing platforms for AI research — Expanse, Voyager, Cosmos, NRP, and the National Data Platform — with step-by-step access instructions and links to get started."
@@ -222,7 +226,6 @@ You can use the NRP LLM service to power local coding assistants like [OpenCode]
 
 - [Configure NRP LLM with OpenCode and Crush](/posts/2026-01-29-configure-nrp-llm-opencode-crush)
 - [Configure Claude Code with Minimax](/posts/2026-04-21-configure-claude-code-minimax)
-- [Fixing clipboard issues with Opencode in Byobu/Tmux over SSH](/posts/2026-04-13-opencode-byobu-clipboard)
 
 ### Getting Started
 
