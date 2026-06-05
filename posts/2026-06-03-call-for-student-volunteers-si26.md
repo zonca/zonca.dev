@@ -44,7 +44,7 @@ You can volunteer for one or both of these programs:
 
 ## How to apply
 
-Apply through our Handshake posting: `https://ucsd.joinhandshake.com/public/jobs/11000308`
+Apply through our Handshake posting: `https://ucsd.joinhandshake.com/public/jobs/11054382`
 
 You need a valid UCSD student account to access Handshake. If you do not have one, you cannot apply through this channel.
 
