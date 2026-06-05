@@ -1,0 +1,9 @@
+This PR adds a new tutorial post on deploying JupyterHub on OpenStack Magnum using OpenTofu. 
+
+The tutorial covers:
+- The benefits of a modular Tofu architecture.
+- Creating a basic K8s cluster.
+- Deploying a full stack with Ingress, Cert-Manager, and JupyterHub.
+- Verification steps and sample anonymized outputs.
+
+The recipes used in this tutorial correspond to the recent refactoring in the `jupyterhub-deploy-kubernetes-jetstream` repository.
