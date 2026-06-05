@@ -55,9 +55,10 @@ jobs:
             --exclude 'https://www\.blogger\.com/**'
             --exclude 'https://twitter\.com/**'
             --exclude 'https://x\.com/**'
+            --exclude 'https://github\.com/**'
             '_site/**/*.html'
           fail: false
           failIfEmpty: false
           debug: true
-        timeout-minutes: 5
+        timeout-minutes: 3
 
