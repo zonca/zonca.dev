@@ -1,6 +1,6 @@
 ---
 title: "Italian Classes and Services in San Diego: 2026 Programs"
-date: 2026-06-15
+date: 2026-05-27
 categories: [italian]
 layout: post
 description: "Explore Italian classes for kids, teens, and adults in San Diego, plus AP preparation, translation, interpreting, and relocation services."
