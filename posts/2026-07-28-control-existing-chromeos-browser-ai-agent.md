@@ -1,5 +1,5 @@
 ---
-title: "Giving Any AI Coding Agent My Existing ChromeOS Browser"
+title: "Control your existing ChromeOS browser with any AI coding agent"
 date: 2026-07-28
 categories: [ai, llm, automation, tools]
 layout: post
