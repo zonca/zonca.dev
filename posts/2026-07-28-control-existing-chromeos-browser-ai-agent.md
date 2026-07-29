@@ -10,6 +10,11 @@ AI coding agents running inside a Chromebook's Crostini Linux container can easi
 separate Linux browser, but that loses the tabs, cookies, and authenticated sessions already
 present in the normal ChromeOS Chrome profile.
 
+::: {.callout-tip title="Get the skill on GitHub"}
+The source, installation script, agent runbook, and compatibility reports are in the
+[zonca/ai-browser-control-chromeos repository](https://github.com/zonca/ai-browser-control-chromeos).
+:::
+
 I wanted the useful experience of `claude --chrome`, but not tied to one agent. I wanted Codex,
 Qwen Code, Agy, OpenCode, and other coding agents to share the same safe browser-control workflow.
 
