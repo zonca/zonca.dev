@@ -40,7 +40,7 @@ be asked to babysit a terminal command or repeatedly paste stale connection addr
   across process boundaries
 * malformed and stale handoffs are rejected or recovered by state, not blind retry
 
-![Architecture of the AI Browser Control for ChromeOS](browser-control-architecture.png)
+![Architecture of the AI Browser Control for ChromeOS](browser-control-architecture.png){fig-alt="AI coding agents in Crostini reuse a durable named session, cross a validated one-time handoff through the Playwright extension, and control the user's existing ChromeOS Chrome profile."}
 
 ## Installation
 
