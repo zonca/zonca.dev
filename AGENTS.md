@@ -20,13 +20,16 @@ Every post starts with a YAML front matter block. Required and common fields:
 
 ```yaml
 ---
-title: "Your Post Title"
+title: "Your concise post title"
 date: YYYY-MM-DD
 categories: [category1, category2]
 ---
 ```
 
-- **title**: Always use quotes. Keep it concise and descriptive.
+- **title**: Always use quotes. Use sentence case, never title case. Capitalize
+  only the first word and proper nouns or acronyms such as ChromeOS and AI.
+  Prefer literal, concrete wording that says what the post helps the reader do.
+  Avoid vague metaphors such as "giving an agent my browser."
 - **date**: Must match the date in the filename.
 - **categories**: Use **existing categories only** — do not invent new ones. Common categories: `python`, `kubernetes`, `jupyterhub`, `jetstream`, `linux`, `hpc`, `github`, `git`, `openscience`, `dask`, `singularity`, `nersc`, `sdsc`, `ai`, `llm`, `automation`, `tools`, `documentation`, `events`, `education`, `nbgrader`, `healpy`, `pysm`, `cosmology`, `cloudcomputing`, `openstack`, `jetstream2`, `italian`.
 - **description** (optional): A one-sentence summary used for SEO and social previews.
