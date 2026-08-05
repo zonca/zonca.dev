@@ -17,6 +17,8 @@ models and self-hosted open-source models running on SDSC infrastructure.
 This tutorial walks through the full setup: requesting access, discovering available models,
 adding TritonAI as an opencode provider, and testing that everything works.
 
+![Diagram showing opencode connecting to the TritonAI gateway, which routes to five self-hosted models on SDSC infrastructure.](img/tritonai-opencode-diagram.png)
+
 ## Request API access
 
 Before you can use the TritonAI Developer API, you need to request access through the
