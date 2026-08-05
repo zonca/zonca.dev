@@ -8,7 +8,7 @@ description: "A step-by-step tutorial for adding UC San Diego's TritonAI Develop
 
 [opencode](https://opencode.ai) is a terminal-based AI coding agent that supports any
 OpenAI-compatible API as a provider. If you don't have it installed yet, see the
-[installation instructions](https://opencode.ai/docs/quickstart/). UC San Diego's [TritonAI
+[installation instructions](https://opencode.ai/docs/). UC San Diego's [TritonAI
 Developer
 API](https://tritonai.ucsd.edu/developer-apis/index.html) is exactly that: a secure,
 centralized LLM gateway powered by LiteLLM that provides access to both commercial cloud
