@@ -143,9 +143,15 @@ Once your config is in place, start opencode from any project directory:
 opencode
 ```
 
-Inside the opencode TUI, press `Tab` to open the model picker. You will see the `tritonai`
-provider with all five models. Select `tritonai/deepseek-v4-flash` (or any other) and start
-asking coding questions.
+Inside the opencode TUI, use `/models` (or `ctrl+x m`) to list all configured models and
+select `tritonai/deepseek-v4-flash` (or any other). You can also set a default model in
+`opencode.json`:
+
+```json
+"model": "tritonai/deepseek-v4-flash"
+```
+
+Note: `Tab` toggles between Build and Plan modes, not models.
 
 ### Example session
 
