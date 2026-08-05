@@ -7,7 +7,9 @@ description: "A step-by-step tutorial for adding UC San Diego's TritonAI Develop
 ---
 
 [opencode](https://opencode.ai) is a terminal-based AI coding agent that supports any
-OpenAI-compatible API as a provider. UC San Diego's [TritonAI Developer
+OpenAI-compatible API as a provider. If you don't have it installed yet, see the
+[installation instructions](https://opencode.ai/docs/quickstart/). UC San Diego's [TritonAI
+Developer
 API](https://tritonai.ucsd.edu/developer-apis/index.html) is exactly that: a secure,
 centralized LLM gateway powered by LiteLLM that provides access to both commercial cloud
 models and self-hosted open-source models running on SDSC infrastructure.
@@ -129,57 +131,48 @@ get:
 You can switch between them in the opencode interface or set a default model in the config
 with the `"model"` field at the top level.
 
-## Test the models
+## Run opencode with TritonAI
 
-Before relying on the models for coding work, test each one with a simple request. This
-verifies that your API key is valid, the models are online, and the opencode configuration is
-correct.
-
-### Quick curl test
+Once your config is in place, start opencode from any project directory:
 
 ```bash
-curl -s "https://tritonai-api.ucsd.edu/v1/chat/completions" \
-  -H "Authorization: Bearer $TRITONGPTKEY" \
-  -H "Content-Type: application/json" \
-  -d '{"model": "api-deepseek-v4-flash", "messages": [{"role": "user", "content": "What is 2+2?"}], "max_tokens": 200}' \
-  | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['choices'][0]['message']['content'])"
+opencode
 ```
 
-::: {.callout-note title="Use enough max_tokens for reasoning models"}
-Most TritonAI models produce a `reasoning_content` field before the final `content`. If
-`max_tokens` is too low (e.g. 50), the model spends all tokens on reasoning and returns
-`null` for content. Use at least 200 tokens for simple queries.
+Inside the opencode TUI, press `Tab` to open the model picker. You will see the `tritonai`
+provider with all five models. Select `tritonai/deepseek-v4-flash` (or any other) and start
+asking coding questions.
+
+### Example session
+
+```text
+$ opencode
+
+> What does the function calculate_alignment in src/alignment.py do?
+
+tritonai/deepseek-v4-flash:
+The function `calculate_alignment` takes two sequences as input and returns
+the optimal alignment score using a dynamic programming approach. It builds
+a scoring matrix where each cell represents the best alignment up to that
+point, then backtracks to reconstruct the aligned sequences.
+
+Key steps:
+1. Initialize a matrix of size (len(seq1)+1) x (len(seq2)+1)
+2. Fill the matrix using match/mismatch/gap penalties
+3. Backtrack from the bottom-right cell to find the alignment path
+
+> Can you add type hints and a docstring to it?
+
+tritonai/deepseek-v4-flash:
+[edits src/alignment.py]
+```
+
+::: {.callout-tip title="Choose the right model for the task"}
+- **`deepseek-v4-flash`** — fastest, best for quick questions and simple edits
+- **`gpt-oss-120b`** — strong reasoning, good for complex refactors
+- **`gemma-4-31b`** — large context window, good for reviewing long files
+- **`glm-5.2`** — balanced reasoning and speed, largest context at 320k
 :::
-
-### Test all chat models at once
-
-```bash
-for model in api-gpt-oss-120b api-glm-5.2 api-gemma-4-26b api-gemma-4-31b api-deepseek-v4-flash; do
-  echo "=== $model ==="
-  curl -s "https://tritonai-api.ucsd.edu/v1/chat/completions" \
-    -H "Authorization: Bearer $TRITONGPTKEY" \
-    -H "Content-Type: application/json" \
-    -d "{\"model\": \"$model\", \"messages\": [{\"role\": \"user\", \"content\": \"What is 2+2? Answer with just the number.\"}], \"max_tokens\": 200}" \
-    | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['choices'][0]['message'].get('content','(no content)'))"
-  echo ""
-done
-```
-
-All five models should respond. The `api-deepseek-v4-flash` and `api-gpt-oss-120b` models
-tend to return concise answers, while the Gemma and GLM models may include reasoning traces
-before the final answer.
-
-## Monitoring your credit usage
-
-You can check your current spend and remaining budget through the `/key/info` endpoint:
-
-```bash
-curl -s "https://tritonai-api.ucsd.edu/key/info" \
-  -H "Authorization: Bearer $TRITONGPTKEY" | python3 -m json.tool
-```
-
-The response includes fields like `spend`, `max_budget`, and `budget_reset_at` so you can
-track how much of your $15 monthly allocation you have used.
 
 ## Combining TritonAI with other providers
 
