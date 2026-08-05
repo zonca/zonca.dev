@@ -11,7 +11,7 @@ OpenAI-compatible API as a provider. If you don't have it installed yet, see the
 [installation instructions](https://opencode.ai/docs/). UC San Diego's [TritonAI
 Developer
 API](https://tritonai.ucsd.edu/developer-apis/index.html) is exactly that: a secure,
-centralized LLM gateway powered by LiteLLM that provides access to both commercial cloud
+centralized LLM gateway that provides access to both commercial cloud
 models and self-hosted open-source models running on SDSC infrastructure.
 
 This tutorial walks through the full setup: requesting access, discovering available models,
@@ -27,15 +27,16 @@ Before you can use the TritonAI Developer API, you need to request access throug
 - An intended use case description
 - A chart string for billing (only for usage beyond free credits)
 
-Access requests are typically reviewed within 2-3 business days. Once approved, you
-receive an API key and **$15 per month in free credits** for self-hosted models.
+Review timing depends on the use case and any required project-specific review. Once approved,
+you receive an API key and a monthly credit allocation for self-hosted models.
 
 ::: {.callout-important title="Limited free credits"}
-All UCSD affiliates receive **$15/month** in free credits for self-hosted models by default.
+UCSD affiliates receive a monthly credit allocation for self-hosted models by default.
 This is designed for experimentation, coursework, and light prototyping. If you need more
 capacity or access to cloud-hosted commercial models (GPT-4, Claude, Gemini), you can request
-[Extended Access](https://tritonai.ucsd.edu/developer-apis/faq.html) with a chart string for
-billing. Credits refresh monthly and are non-transferable.
+[extended access](https://tritonai.ucsd.edu/developer-apis/faq.html) with a chart string for
+billing. Allocations and rates can change; check the
+[Model Hub](https://tritonai-api.ucsd.edu/ui/model_hub_table/) for current details.
 :::
 
 ## Store your API key
@@ -71,14 +72,15 @@ At the time of writing, the API returns the following models:
 | `api-glm-5.2` | Chat (reasoning) | 320k |
 | `api-gemma-4-26b` | Chat (reasoning) | 128k |
 | `api-gemma-4-31b` | Chat (reasoning) | 256k |
-| `api-deepseek-v4-flash` | Chat | 1M |
+| `api-deepseek-v4-flash` | Chat (reasoning) | 1M |
 | `api-cohere-transcribe` | Audio transcription | — |
 | `api-lightonocr-1b` | OCR | 8k |
 | `api-tgpt-embeddings` | Embeddings | 32k |
 
-The self-hosted models (those starting with `api-`) run on UC San Diego infrastructure at the
-San Diego Supercomputer Center, meaning your data never leaves campus. This makes them suitable
-for research involving sensitive data that does not require P4/Health classification.
+The UC-hosted models run on UC San Diego infrastructure at the
+San Diego Supercomputer Center. Restricted or health information requires a separately
+approved service path — see the [Developer FAQ](https://tritonai.ucsd.edu/developer-apis/faq.html)
+for details.
 
 ## Add TritonAI as an opencode provider
 
@@ -113,8 +115,8 @@ models:
 ```
 
 ::: {.callout-warning title="Keep your API key private"}
-The `apiKey` field above contains a real key for illustration. In your own config, use your
-own key. Never commit your API key to version control or share it publicly.
+Replace `YOUR_TRITONGPTKEY` with your actual API key. Never commit your API key to
+version control or share it publicly.
 :::
 
 ### How the config maps to opencode model names
@@ -185,7 +187,7 @@ the `"provider"` key.
 
 UC San Diego's TritonAI Developer API provides a secure, OpenAI-compatible gateway to both
 self-hosted and cloud-hosted LLMs. By adding it as a provider in opencode, you get a
-terminal-based AI coding agent backed by campus infrastructure. The $15/month free credit
+terminal-based AI coding agent backed by campus infrastructure. The monthly free credit
 allocation is sufficient for experimentation and light prototyping with the self-hosted
 models.
 
