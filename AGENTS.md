@@ -2,6 +2,24 @@
 
 - Review GEMINI.md before working—contains project-specific guidance and expectations.
 
+## Pre-commit checklist
+
+Before committing any blog post, **always** run these checks:
+
+1. **Validate front matter**: Ensure `title`, `date`, `categories`, and `layout` are present and correct.
+2. **Check all links**: Extract every URL from the post and verify each returns HTTP 200 (or 401 for API endpoints requiring auth). Fix any broken links before committing.
+3. **Verify code blocks**: Ensure all fenced code blocks have a language tag and that commands are syntactically valid.
+4. **Check for secrets**: Scan the post for API keys, tokens, or passwords. Never commit secrets to version control.
+
+## Commit and push workflow
+
+- **Always commit and push** your changes after completing the pre-commit checklist.
+- **Branch strategy**:
+  - For new blog posts or significant changes: create a new branch from `main`, commit, push, and open a PR.
+  - For minor fixes: commit directly to `main` and push.
+- **Commit message format**: Use a concise, descriptive message that explains what changed and why.
+- **Never force-push** to `main` unless explicitly instructed.
+
 ## Creating a new blog post
 
 Blog posts live in the `posts/` directory as Markdown files.
