@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Andrea Zonca">
+<meta name="dcterms.date" content="2026-08-05">
+<meta name="description" content="A step-by-step tutorial for adding UC San Diego’s TritonAI Developer API as a provider in opencode, including how to request access, find available models, and test them.">
 
-<title>agents – Andrea Zonca</title>
+<title>Configure opencode to use TritonAI Developer API at UC San Diego – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,22 +60,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-4686f2217ba3a65fe3dcfb0fb7734603.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-4686f2217ba3a65fe3dcfb0fb7734603.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -102,17 +105,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Andrea Zonca</span>
     </a>
   </div>
@@ -123,11 +126,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./consult.html"> 
+    <a class="nav-link" href="../consult.html"> 
 <span class="menu-text">Consulting</span></a>
   </li>  
   <li class="nav-item compact">
@@ -153,166 +156,262 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Configure opencode to use TritonAI Developer API at UC San Diego</h1>
+                  <div>
+        <div class="description">
+          A step-by-step tutorial for adding UC San Diego’s TritonAI Developer API as a provider in opencode, including how to request access, find available models, and test them.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">ai</div>
+                <div class="quarto-category">llm</div>
+                <div class="quarto-category">tools</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Andrea Zonca </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 5, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
-<section id="agent-notes" class="level1">
-<h1>Agent notes</h1>
+
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2026-08-05-configure-opencode-tritonai-ucsd.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2026-08-05-configure-opencode-tritonai-ucsd.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
+<p><a href="https://opencode.ai">opencode</a> is a terminal-based AI coding agent that supports any OpenAI-compatible API as a provider. If you don’t have it installed yet, see the <a href="https://opencode.ai/docs/">installation instructions</a>. UC San Diego’s <a href="https://tritonai.ucsd.edu/developer-apis/index.html">TritonAI Developer API</a> is exactly that: a secure, centralized LLM gateway that provides access to both commercial cloud models and self-hosted open-source models running on SDSC infrastructure.</p>
+<p>This tutorial walks through the full setup: requesting access, discovering available models, adding TritonAI as an opencode provider, and testing that everything works.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/tritonai-opencode-diagram.png" class="img-fluid figure-img"></p>
+<figcaption>Diagram showing opencode connecting to the TritonAI gateway, which routes to five self-hosted models on SDSC infrastructure.</figcaption>
+</figure>
+</div>
+<section id="request-api-access" class="level2">
+<h2 class="anchored" data-anchor-id="request-api-access">Request API access</h2>
+<p>Before you can use the TritonAI Developer API, you need to request access through the <a href="https://tritonai.ucsd.edu/developer-apis/start.html">Kuali Build form</a>. You will need:</p>
 <ul>
-<li>Review GEMINI.md before working—contains project-specific guidance and expectations.</li>
+<li>Your UC San Diego credentials</li>
+<li>Department and project information</li>
+<li>An intended use case description</li>
+<li>A chart string for billing (only for usage beyond free credits)</li>
 </ul>
-<section id="pre-commit-checklist" class="level2">
-<h2 class="anchored" data-anchor-id="pre-commit-checklist">Pre-commit checklist</h2>
-<p>Before committing any blog post, <strong>always</strong> run these checks:</p>
-<ol type="1">
-<li><strong>Validate front matter</strong>: Ensure <code>title</code>, <code>date</code>, <code>categories</code>, and <code>layout</code> are present and correct.</li>
-<li><strong>Check all links</strong>: Extract every URL from the post and verify each returns HTTP 200 (or 401 for API endpoints requiring auth). Fix any broken links before committing.</li>
-<li><strong>Verify code blocks</strong>: Ensure all fenced code blocks have a language tag and that commands are syntactically valid.</li>
-<li><strong>Check for secrets</strong>: Scan the post for API keys, tokens, or passwords. Never commit secrets to version control.</li>
-</ol>
+<p>Review timing depends on the use case and any required project-specific review. Once approved, you receive an API key and a monthly credit allocation for self-hosted models.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Limited free credits">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Limited free credits
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>UCSD affiliates receive a monthly credit allocation for self-hosted models by default. This is designed for experimentation, coursework, and light prototyping. If you need more capacity or access to cloud-hosted commercial models (GPT-4, Claude, Gemini), you can request <a href="https://tritonai.ucsd.edu/developer-apis/faq.html">extended access</a> with a chart string for billing. Allocations and rates can change; check the <a href="https://tritonai-api.ucsd.edu/ui/model_hub_table/">Model Hub</a> for current details.</p>
+</div>
+</div>
 </section>
-<section id="commit-and-push-workflow" class="level2">
-<h2 class="anchored" data-anchor-id="commit-and-push-workflow">Commit and push workflow</h2>
-<ul>
-<li><strong>Always commit and push</strong> your changes after completing the pre-commit checklist.</li>
-<li><strong>Branch strategy</strong>:
-<ul>
-<li>For new blog posts or significant changes: create a new branch from <code>main</code>, commit, push, and open a PR.</li>
-<li>For minor fixes: commit directly to <code>main</code> and push.</li>
-</ul></li>
-<li><strong>Commit message format</strong>: Use a concise, descriptive message that explains what changed and why.</li>
-<li><strong>Never force-push</strong> to <code>main</code> unless explicitly instructed.</li>
-</ul>
+<section id="store-your-api-key" class="level2">
+<h2 class="anchored" data-anchor-id="store-your-api-key">Store your API key</h2>
+<p>Once you receive your API key, store it as an environment variable. Add this line to your <code>~/.bashrc</code> or <code>~/.zshrc</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">TRITONGPTKEY</span><span class="op">=</span><span class="st">'your-api-key-here'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then reload your shell:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="creating-a-new-blog-post" class="level2">
-<h2 class="anchored" data-anchor-id="creating-a-new-blog-post">Creating a new blog post</h2>
-<p>Blog posts live in the <code>posts/</code> directory as Markdown files.</p>
-<section id="file-naming" class="level3">
-<h3 class="anchored" data-anchor-id="file-naming">File naming</h3>
-<pre><code>posts/YYYY-MM-DD-slug.md</code></pre>
-<p>The slug should be lowercase, hyphenated, and descriptive (e.g., <code>2026-04-22-deploy-jupyterhub-openstack-magnum-tofu.md</code>).</p>
-</section>
-<section id="yaml-front-matter-header" class="level3">
-<h3 class="anchored" data-anchor-id="yaml-front-matter-header">YAML front matter (header)</h3>
-<p>Every post starts with a YAML front matter block. Required and common fields:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Your concise post title"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> YYYY-MM-DD</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">categories</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">category1</span><span class="kw">,</span><span class="at"> category2</span><span class="kw">]</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ul>
-<li><strong>title</strong>: Always use quotes. Use sentence case, never title case. Capitalize only the first word and proper nouns or acronyms such as ChromeOS and AI. Prefer literal, concrete wording that says what the post helps the reader do. Avoid vague metaphors such as “giving an agent my browser.”</li>
-<li><strong>date</strong>: Must match the date in the filename.</li>
-<li><strong>categories</strong>: Use <strong>existing categories only</strong> — do not invent new ones. Common categories: <code>python</code>, <code>kubernetes</code>, <code>jupyterhub</code>, <code>jetstream</code>, <code>linux</code>, <code>hpc</code>, <code>github</code>, <code>git</code>, <code>openscience</code>, <code>dask</code>, <code>singularity</code>, <code>nersc</code>, <code>sdsc</code>, <code>ai</code>, <code>llm</code>, <code>automation</code>, <code>tools</code>, <code>documentation</code>, <code>events</code>, <code>education</code>, <code>nbgrader</code>, <code>healpy</code>, <code>pysm</code>, <code>cosmology</code>, <code>cloudcomputing</code>, <code>openstack</code>, <code>jetstream2</code>, <code>italian</code>.</li>
-<li><strong>description</strong> (optional): A one-sentence summary used for SEO and social previews.</li>
-<li><strong>author</strong> (optional): Defaults to “Andrea Zonca” via <code>posts/_metadata.yml</code>.</li>
-<li><strong>layout</strong>: Set to <code>post</code> for blog posts (some older posts omit this).</li>
-<li><strong>slug</strong> (optional): Override the URL slug if it differs from the filename.</li>
-<li><strong>aliases</strong> (optional): Old URLs that should redirect to this post.</li>
-</ul>
-</section>
-<section id="body-content-and-style" class="level3">
-<h3 class="anchored" data-anchor-id="body-content-and-style">Body content and style</h3>
-<ul>
-<li>Write in Markdown. The site is built with <strong>Quarto</strong> using the <code>litera</code> theme.</li>
-<li>Use <code>##</code> for section headings (the title is rendered separately from the banner block).</li>
-<li>Keep an introductory paragraph right after the front matter that summarizes what the post is about.</li>
-<li>Use bullet points and numbered lists for step-by-step instructions.</li>
-<li>Link to relevant resources (GitHub repos, documentation, gists) inline.</li>
-<li>For images, use paths relative to the post’s directory (e.g., <code>img/screenshot.png</code>). Avoid absolute paths like <code>/img/...</code>.</li>
-<li>Use <code>---</code> horizontal rules to separate major sections.</li>
-</ul>
-</section>
-<section id="scripts-and-code" class="level3">
-<h3 class="anchored" data-anchor-id="scripts-and-code">Scripts and code</h3>
-<ul>
-<li><p><strong>Multi-line scripts</strong>: Upload to a <a href="https://gist.github.com/">GitHub Gist</a> and embed it in the post:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">"https://gist.github.com/zonca/GIST_ID.js"</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Also provide a plain-text link to the gist for accessibility.</p></li>
-<li><p><strong>One-liners</strong>: Can stay inline in the post body, for example:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-o</span> ~/.up.sh https://raw.githubusercontent.com/zonca/up/main/up.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p><strong>Code blocks</strong>: Use fenced code blocks with language tags (<code>```bash</code>, <code>```python</code>).</p></li>
-</ul>
-</section>
-<section id="categories-reference" class="level3">
-<h3 class="anchored" data-anchor-id="categories-reference">Categories reference</h3>
-<p>Only use categories that already exist in the blog. To check existing categories, search the <code>categories:</code> field across files in <code>posts/</code>. Never create new categories unless explicitly instructed.</p>
-</section>
-<section id="publishing-workflow" class="level3">
-<h3 class="anchored" data-anchor-id="publishing-workflow">Publishing workflow</h3>
-<ol type="1">
-<li>Create the new post file in <code>posts/</code>.</li>
-<li>Commit and push to the <code>main</code> branch (or open a PR for significant posts).</li>
-<li>GitHub Actions renders the Quarto project and publishes to GitHub Pages automatically.</li>
-<li>The Netlify build also triggers on pushes to <code>main</code>.</li>
-</ol>
-</section>
-</section>
-<section id="buffer-social-media" class="level2">
-<h2 class="anchored" data-anchor-id="buffer-social-media">Buffer Social Media</h2>
-<section id="setup" class="level3">
-<h3 class="anchored" data-anchor-id="setup">Setup</h3>
-<ul>
-<li>Buffer skill located at: <code>/home/zonca/.agents/skills/buffer/SKILL.md</code></li>
-<li>Uses GraphQL API at <code>https://api.buffer.com</code></li>
-<li>Environment variable <code>BUFFER_KEY</code> must be set</li>
-</ul>
-</section>
-<section id="channel-ids-organization-655270181efd918df3d33eff" class="level3">
-<h3 class="anchored" data-anchor-id="channel-ids-organization-655270181efd918df3d33eff">Channel IDs (organization: 655270181efd918df3d33eff)</h3>
+<section id="discover-available-models" class="level2">
+<h2 class="anchored" data-anchor-id="discover-available-models">Discover available models</h2>
+<p>The TritonAI API exposes a standard OpenAI-compatible <code>/v1/models</code> endpoint. Query it with your API key to see what is available:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="st">"https://tritonai-api.ucsd.edu/v1/models"</span> <span class="dt">\</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">"Authorization: Bearer </span><span class="va">$TRITONGPTKEY</span><span class="st">"</span> <span class="kw">|</span> <span class="ex">python3</span> <span class="at">-m</span> json.tool</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>At the time of writing, the API returns the following models:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Platform</th>
-<th>Channel ID</th>
+<th>Model ID</th>
+<th>Type</th>
+<th>Max context</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Twitter/X</td>
-<td><code>6552702d7a6cf4d23f916d5c</code></td>
+<td><code>api-gpt-oss-120b</code></td>
+<td>Chat (reasoning)</td>
+<td>128k</td>
 </tr>
 <tr class="even">
-<td>LinkedIn</td>
-<td><code>67c6746b3b85969eafee1ee4</code></td>
+<td><code>api-glm-5.2</code></td>
+<td>Chat (reasoning)</td>
+<td>320k</td>
 </tr>
 <tr class="odd">
-<td>Bluesky</td>
-<td><code>67c6738e3b85969eafe22a07</code></td>
+<td><code>api-gemma-4-26b</code></td>
+<td>Chat (reasoning)</td>
+<td>128k</td>
+</tr>
+<tr class="even">
+<td><code>api-gemma-4-31b</code></td>
+<td>Chat (reasoning)</td>
+<td>256k</td>
+</tr>
+<tr class="odd">
+<td><code>api-deepseek-v4-flash</code></td>
+<td>Chat (reasoning)</td>
+<td>1M</td>
+</tr>
+<tr class="even">
+<td><code>api-cohere-transcribe</code></td>
+<td>Audio transcription</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td><code>api-lightonocr-1b</code></td>
+<td>OCR</td>
+<td>8k</td>
+</tr>
+<tr class="even">
+<td><code>api-tgpt-embeddings</code></td>
+<td>Embeddings</td>
+<td>32k</td>
 </tr>
 </tbody>
 </table>
+<p>The UC-hosted models run on UC San Diego infrastructure at the San Diego Supercomputer Center. Restricted or health information requires a separately approved service path — see the <a href="https://tritonai.ucsd.edu/developer-apis/faq.html">Developer FAQ</a> for details.</p>
 </section>
-<section id="quick-post-creation" class="level3">
-<h3 class="anchored" data-anchor-id="quick-post-creation">Quick post creation</h3>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">buffer_query()</span> <span class="kw">{</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">curl</span> <span class="at">-s</span> <span class="at">-X</span> POST <span class="st">"https://api.buffer.com"</span> <span class="dt">\</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">-H</span> <span class="st">"Authorization: Bearer </span><span class="va">$BUFFER_KEY</span><span class="st">"</span> <span class="dt">\</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">-H</span> <span class="st">"Content-Type: application/json"</span> <span class="dt">\</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">-d</span> <span class="st">"{</span><span class="dt">\"</span><span class="st">query</span><span class="dt">\"</span><span class="st">: </span><span class="dt">\"</span><span class="va">$1</span><span class="dt">\"</span><span class="st">}"</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="ex">buffer_query</span> <span class="st">"mutation { createPost(input: { text: </span><span class="dt">\"</span><span class="st">POST TEXT</span><span class="dt">\"</span><span class="st">, channelId: </span><span class="dt">\"</span><span class="st">CHANNEL_ID</span><span class="dt">\"</span><span class="st">, schedulingType: automatic, mode: addToQueue }) { ... on PostActionSuccess { post { id text dueAt } } ... on MutationError { message } } }"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="add-tritonai-as-an-opencode-provider" class="level2">
+<h2 class="anchored" data-anchor-id="add-tritonai-as-an-opencode-provider">Add TritonAI as an opencode provider</h2>
+<p>opencode stores its configuration in <code>~/.config/opencode/opencode.json</code>. The config uses the <code>@ai-sdk/openai-compatible</code> npm package for any OpenAI-compatible provider.</p>
+<p>Here is a complete minimal config file that adds TritonAI as a provider with all five chat models:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"$schema"</span><span class="fu">:</span> <span class="st">"https://opencode.ai/config.json"</span><span class="fu">,</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"permission"</span><span class="fu">:</span> <span class="st">"allow"</span><span class="fu">,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"provider"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"tritonai"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"npm"</span><span class="fu">:</span> <span class="st">"@ai-sdk/openai-compatible"</span><span class="fu">,</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"TritonAI UCSD"</span><span class="fu">,</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"options"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"baseURL"</span><span class="fu">:</span> <span class="st">"https://tritonai-api.ucsd.edu/v1"</span><span class="fu">,</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"apiKey"</span><span class="fu">:</span> <span class="st">"YOUR_TRITONGPTKEY"</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">},</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"models"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"gpt-oss-120b"</span><span class="fu">:</span> <span class="fu">{</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"GPT-OSS 120B"</span> <span class="fu">},</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"glm-5.2"</span><span class="fu">:</span> <span class="fu">{</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"GLM 5.2"</span> <span class="fu">},</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"gemma-4-26b"</span><span class="fu">:</span> <span class="fu">{</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Gemma 4 26B"</span> <span class="fu">},</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"gemma-4-31b"</span><span class="fu">:</span> <span class="fu">{</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Gemma 4 31B"</span> <span class="fu">},</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"deepseek-v4-flash"</span><span class="fu">:</span> <span class="fu">{</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"DeepSeek V4 Flash"</span> <span class="fu">}</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Keep your API key private">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Keep your API key private
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Replace <code>YOUR_TRITONGPTKEY</code> with your actual API key. Never commit your API key to version control or share it publicly.</p>
+</div>
+</div>
+<section id="how-the-config-maps-to-opencode-model-names" class="level3">
+<h3 class="anchored" data-anchor-id="how-the-config-maps-to-opencode-model-names">How the config maps to opencode model names</h3>
+<p>opencode references models using the pattern <code>provider/model-id</code>. With the config above, you get:</p>
+<ul>
+<li><code>tritonai/gpt-oss-120b</code></li>
+<li><code>tritonai/glm-5.2</code></li>
+<li><code>tritonai/gemma-4-26b</code></li>
+<li><code>tritonai/gemma-4-31b</code></li>
+<li><code>tritonai/deepseek-v4-flash</code></li>
+</ul>
+<p>You can switch between them in the opencode interface or set a default model in the config with the <code>"model"</code> field at the top level.</p>
 </section>
-<section id="workflow-for-new-blog-posts" class="level3">
-<h3 class="anchored" data-anchor-id="workflow-for-new-blog-posts">Workflow for new blog posts</h3>
-<ol type="1">
-<li>Read the post content</li>
-<li>Draft 1 announcement post adapted for each platform (Twitter: short + hashtags, LinkedIn: professional with bullet points, Mastodon/Bluesky: similar to Twitter)</li>
-<li>Show drafts to user for approval</li>
-<li>Once approved, queue to all 3 channels using Buffer API</li>
-</ol>
+</section>
+<section id="run-opencode-with-tritonai" class="level2">
+<h2 class="anchored" data-anchor-id="run-opencode-with-tritonai">Run opencode with TritonAI</h2>
+<p>Once your config is in place, start opencode from any project directory:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">opencode</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Inside the opencode TUI, use <code>/models</code> to list all configured models and select <code>tritonai/deepseek-v4-flash</code> (or any other). You can also set a default model in <code>opencode.json</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="er">"model":</span> <span class="er">"tritonai/deepseek-v4-flash"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="example-session" class="level3">
+<h3 class="anchored" data-anchor-id="example-session">Example session</h3>
+<pre class="text"><code>$ opencode
+
+&gt; What does the function calculate_alignment in src/alignment.py do?
+
+tritonai/deepseek-v4-flash:
+The function `calculate_alignment` takes two sequences as input and returns
+the optimal alignment score using a dynamic programming approach. It builds
+a scoring matrix where each cell represents the best alignment up to that
+point, then backtracks to reconstruct the aligned sequences.
+
+Key steps:
+1. Initialize a matrix of size (len(seq1)+1) x (len(seq2)+1)
+2. Fill the matrix using match/mismatch/gap penalties
+3. Backtrack from the bottom-right cell to find the alignment path
+
+&gt; Can you add type hints and a docstring to it?
+
+tritonai/deepseek-v4-flash:
+[edits src/alignment.py]</code></pre>
+<div class="callout callout-style-default callout-tip callout-titled" title="Choose the right model for the task">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Choose the right model for the task
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong><code>deepseek-v4-flash</code></strong> — fastest, best for quick questions and simple edits</li>
+<li><strong><code>gpt-oss-120b</code></strong> — strong reasoning, good for complex refactors</li>
+<li><strong><code>gemma-4-31b</code></strong> — large context window, good for reviewing long files</li>
+<li><strong><code>glm-5.2</code></strong> — balanced reasoning and speed, largest context at 320k</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="combining-tritonai-with-other-providers" class="level2">
+<h2 class="anchored" data-anchor-id="combining-tritonai-with-other-providers">Combining TritonAI with other providers</h2>
+<p>One of the strengths of opencode is that you can configure multiple providers side by side. For example, you might use TritonAI for self-hosted models (keeping sensitive data on campus) and a commercial provider for frontier model capabilities. Simply add additional blocks under the <code>"provider"</code> key.</p>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>UC San Diego’s TritonAI Developer API provides a secure, OpenAI-compatible gateway to both self-hosted and cloud-hosted LLMs. By adding it as a provider in opencode, you get a terminal-based AI coding agent backed by campus infrastructure. The monthly free credit allocation is sufficient for experimentation and light prototyping with the self-hosted models.</p>
+<p>For more information, see the <a href="https://tritonai.ucsd.edu/developer-apis/index.html">TritonAI Developer API documentation</a>, the <a href="https://tritonai.ucsd.edu/developer-apis/start.html">Get Started</a> page, and the <a href="https://tritonai.ucsd.edu/developer-apis/faq.html">FAQs</a>.</p>
 
 
-</section>
-</section>
 </section>
 
 </main> <!-- /main -->
