@@ -121,3 +121,5 @@ buffer_query "mutation { createPost(input: { text: \"POST TEXT\", channelId: \"C
 2. Draft 1 announcement post adapted for each platform (Twitter: short + hashtags, LinkedIn: professional with bullet points, Mastodon/Bluesky: similar to Twitter)
 3. Show drafts to user for approval
 4. Once approved, queue to all 3 channels using Buffer API
+
+Note: If running with Jules, you do not need to do the Buffer social media posting step.
