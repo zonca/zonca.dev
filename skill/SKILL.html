@@ -170,7 +170,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="usage" class="level2">
 <h2 class="anchored" data-anchor-id="usage">Usage</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jules</span> new <span class="at">--repo</span> zonca/zonca.dev <span class="st">"&lt;paste all the useful content, notes, links, and context for the post here&gt;"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Jules will read the project’s <code>AGENTS.md</code> for instructions on how to format and create the post, then open a pull request with the new post. Do not stop at the “Publish PR” step — complete the PR creation.</p>
+<p>Jules will read the project’s <code>AGENTS.md</code> for instructions on how to format and create the post, then commit and push the new branch.</p>
+<p>After pushing the branch, Jules <strong>must</strong> create and open the pull request — do not stop after committing and pushing. Use <code>gh pr create</code> (or <code>jules</code>’ own PR flow) to open the PR with a descriptive title and body. The task is only complete once the PR has been created and its URL is reported to the user.</p>
 
 
 </section>
