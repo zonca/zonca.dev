@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Andrea Zonca">
+<meta name="dcterms.date" content="2026-08-19">
 
-<title>agents – Andrea Zonca</title>
+<title>OpenStack image sharing between projects on Jetstream2: a tested cheat-sheet – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,22 +59,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-0eea65c25dc878392376f467616f9e21.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-0eea65c25dc878392376f467616f9e21.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -102,17 +104,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Andrea Zonca</span>
     </a>
   </div>
@@ -123,11 +125,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./consult.html"> 
+    <a class="nav-link" href="../consult.html"> 
 <span class="menu-text">Consulting</span></a>
   </li>  
   <li class="nav-item compact">
@@ -153,167 +155,88 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">OpenStack image sharing between projects on Jetstream2: a tested cheat-sheet</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">jetstream2</div>
+                <div class="quarto-category">openstack</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Andrea Zonca </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 19, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
-<section id="agent-notes" class="level1">
-<h1>Agent notes</h1>
-<ul>
-<li>Review GEMINI.md before working—contains project-specific guidance and expectations.</li>
-</ul>
-<section id="pre-commit-checklist" class="level2">
-<h2 class="anchored" data-anchor-id="pre-commit-checklist">Pre-commit checklist</h2>
-<p>Before committing any blog post, <strong>always</strong> run these checks:</p>
-<ol type="1">
-<li><strong>Validate front matter</strong>: Ensure <code>title</code>, <code>date</code>, <code>categories</code>, and <code>layout</code> are present and correct.</li>
-<li><strong>Check all links</strong>: Extract every URL from the post and verify each returns HTTP 200 (or 401 for API endpoints requiring auth). Fix any broken links before committing.</li>
-<li><strong>Verify code blocks</strong>: Ensure all fenced code blocks have a language tag and that commands are syntactically valid.</li>
-<li><strong>Check for secrets</strong>: Scan the post for API keys, tokens, or passwords. Never commit secrets to version control.</li>
-</ol>
+
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2026-08-19-openstack-image-sharing-between-projects-on-jetstream2.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2026-08-19-openstack-image-sharing-between-projects-on-jetstream2.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
+<p>I recently needed to share a Magnum cluster node image with a colleague on a different Jetstream2 allocation. There are a few ways to do it and the documentation is confusing, so I tested every command live against Jetstream2 OpenStack (Image v2 API). Here is what actually works, with only commands verified live.</p>
+<p>Context: two projects. I own the image; my colleague needs to see and boot it. The example image here is <code>snapshot-image-name</code>, replace with your own image id.</p>
+<section id="option-1-community-visibility-recommended-simplest" class="level2">
+<h2 class="anchored" data-anchor-id="option-1-community-visibility-recommended-simplest">Option 1: community visibility (recommended, simplest)</h2>
+<p>Community images are visible and bootable by every project on the cloud. It does not even show up in everyone’s image list by default, but it can still be used to create servers, which is all Magnum cares about.</p>
+<p>As the owner:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> image set <span class="at">--community</span> <span class="op">&lt;</span>image-id<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note: <code>openstack image set --visibility community</code> does NOT work. It fails with “Image v1 option no longer supported in Image v2”. Use the <code>--community</code> flag.</p>
+<p>Verify:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> image show <span class="op">&lt;</span>image-id<span class="op">&gt;</span> -f value <span class="at">-c</span> visibility</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>output: <code>community</code></p>
+<p>I proved another project can actually boot a community image owned by a different project: I created a server from it with <code>auto_allocated_network</code> and it reached ACTIVE with an IP address (10.1.90.87). No membership step needed.</p>
+<p>Reverting:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> image set <span class="at">--private</span> <span class="op">&lt;</span>image-id<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="commit-and-push-workflow" class="level2">
-<h2 class="anchored" data-anchor-id="commit-and-push-workflow">Commit and push workflow</h2>
-<ul>
-<li><strong>Always commit and push</strong> your changes after completing the pre-commit checklist.</li>
-<li><strong>Branch strategy</strong>:
-<ul>
-<li>For new blog posts or significant changes: create a new branch from <code>main</code>, commit, push, and open a PR.</li>
-<li>For minor fixes: commit directly to <code>main</code> and push.</li>
-</ul></li>
-<li><strong>Commit message format</strong>: Use a concise, descriptive message that explains what changed and why.</li>
-<li><strong>Never force-push</strong> to <code>main</code> unless explicitly instructed.</li>
-</ul>
+<section id="option-2-shared-visibility-plus-member-more-steps-needs-the-recipient" class="level2">
+<h2 class="anchored" data-anchor-id="option-2-shared-visibility-plus-member-more-steps-needs-the-recipient">Option 2: shared visibility plus member (more steps, needs the recipient)</h2>
+<p>This is what “sharing” usually means, and it has an extra step that is easy to miss: the recipient must accept the membership.</p>
+<p>As the owner:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> image set <span class="at">--shared</span> <span class="op">&lt;</span>image-id<span class="op">&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> image add project <span class="op">&lt;</span>image-id<span class="op">&gt;</span> <span class="op">&lt;</span>recipient-project-id<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>openstack image add project</code> works as the owner, but it only creates a pending membership:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> image member list <span class="op">&lt;</span>image-id<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>status = pending</code></p>
+<p>Only the recipient can accept (the owner gets a 403 “You are not authorized to complete modify_member action”):</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> image set <span class="at">--accept</span> <span class="op">&lt;</span>image-id<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>(replace <code>image-id</code> with the image you were shared)</p>
+<p>If the image should no longer be shared:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> image remove project <span class="op">&lt;</span>image-id<span class="op">&gt;</span> <span class="op">&lt;</span>recipient-project-id<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="creating-a-new-blog-post" class="level2">
-<h2 class="anchored" data-anchor-id="creating-a-new-blog-post">Creating a new blog post</h2>
-<p>Blog posts live in the <code>posts/</code> directory as Markdown files.</p>
-<section id="file-naming" class="level3">
-<h3 class="anchored" data-anchor-id="file-naming">File naming</h3>
-<pre><code>posts/YYYY-MM-DD-slug.md</code></pre>
-<p>The slug should be lowercase, hyphenated, and descriptive (e.g., <code>2026-04-22-deploy-jupyterhub-openstack-magnum-tofu.md</code>).</p>
-</section>
-<section id="yaml-front-matter-header" class="level3">
-<h3 class="anchored" data-anchor-id="yaml-front-matter-header">YAML front matter (header)</h3>
-<p>Every post starts with a YAML front matter block. Required and common fields:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Your concise post title"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> YYYY-MM-DD</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">categories</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">category1</span><span class="kw">,</span><span class="at"> category2</span><span class="kw">]</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ul>
-<li><strong>title</strong>: Always use quotes. Use sentence case, never title case. Capitalize only the first word and proper nouns or acronyms such as ChromeOS and AI. Prefer literal, concrete wording that says what the post helps the reader do. Avoid vague metaphors such as “giving an agent my browser.”</li>
-<li><strong>date</strong>: Must match the date in the filename.</li>
-<li><strong>categories</strong>: Use <strong>existing categories only</strong> — do not invent new ones. Common categories: <code>python</code>, <code>kubernetes</code>, <code>jupyterhub</code>, <code>jetstream</code>, <code>linux</code>, <code>hpc</code>, <code>github</code>, <code>git</code>, <code>openscience</code>, <code>dask</code>, <code>singularity</code>, <code>nersc</code>, <code>sdsc</code>, <code>ai</code>, <code>llm</code>, <code>automation</code>, <code>tools</code>, <code>documentation</code>, <code>events</code>, <code>education</code>, <code>nbgrader</code>, <code>healpy</code>, <code>pysm</code>, <code>cosmology</code>, <code>cloudcomputing</code>, <code>openstack</code>, <code>jetstream2</code>, <code>italian</code>.</li>
-<li><strong>description</strong> (optional): A one-sentence summary used for SEO and social previews.</li>
-<li><strong>author</strong> (optional): Defaults to “Andrea Zonca” via <code>posts/_metadata.yml</code>.</li>
-<li><strong>layout</strong>: Set to <code>post</code> for blog posts (some older posts omit this).</li>
-<li><strong>slug</strong> (optional): Override the URL slug if it differs from the filename.</li>
-<li><strong>aliases</strong> (optional): Old URLs that should redirect to this post.</li>
-</ul>
-</section>
-<section id="body-content-and-style" class="level3">
-<h3 class="anchored" data-anchor-id="body-content-and-style">Body content and style</h3>
-<ul>
-<li>Write in Markdown. The site is built with <strong>Quarto</strong> using the <code>litera</code> theme.</li>
-<li>Use <code>##</code> for section headings (the title is rendered separately from the banner block).</li>
-<li>Keep an introductory paragraph right after the front matter that summarizes what the post is about.</li>
-<li>Use bullet points and numbered lists for step-by-step instructions.</li>
-<li>Link to relevant resources (GitHub repos, documentation, gists) inline.</li>
-<li>For images, use paths relative to the post’s directory (e.g., <code>img/screenshot.png</code>). Avoid absolute paths like <code>/img/...</code>.</li>
-<li>Use <code>---</code> horizontal rules to separate major sections.</li>
-</ul>
-</section>
-<section id="scripts-and-code" class="level3">
-<h3 class="anchored" data-anchor-id="scripts-and-code">Scripts and code</h3>
-<ul>
-<li><p><strong>Multi-line scripts</strong>: Upload to a <a href="https://gist.github.com/">GitHub Gist</a> and embed it in the post:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">"https://gist.github.com/zonca/GIST_ID.js"</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Also provide a plain-text link to the gist for accessibility.</p></li>
-<li><p><strong>One-liners</strong>: Can stay inline in the post body, for example:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-o</span> ~/.up.sh https://raw.githubusercontent.com/zonca/up/main/up.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p><strong>Code blocks</strong>: Use fenced code blocks with language tags (<code>```bash</code>, <code>```python</code>).</p></li>
-</ul>
-</section>
-<section id="categories-reference" class="level3">
-<h3 class="anchored" data-anchor-id="categories-reference">Categories reference</h3>
-<p>Only use categories that already exist in the blog. To check existing categories, search the <code>categories:</code> field across files in <code>posts/</code>. Never create new categories unless explicitly instructed.</p>
-</section>
-<section id="publishing-workflow" class="level3">
-<h3 class="anchored" data-anchor-id="publishing-workflow">Publishing workflow</h3>
-<ol type="1">
-<li>Create the new post file in <code>posts/</code>.</li>
-<li>Commit and push to the <code>main</code> branch (or open a PR for significant posts).</li>
-<li>GitHub Actions renders the Quarto project and publishes to GitHub Pages automatically.</li>
-<li>The Netlify build also triggers on pushes to <code>main</code>.</li>
-</ol>
-</section>
-</section>
-<section id="buffer-social-media" class="level2">
-<h2 class="anchored" data-anchor-id="buffer-social-media">Buffer Social Media</h2>
-<section id="setup" class="level3">
-<h3 class="anchored" data-anchor-id="setup">Setup</h3>
-<ul>
-<li>Buffer skill located at: <code>/home/zonca/.agents/skills/buffer/SKILL.md</code></li>
-<li>Uses GraphQL API at <code>https://api.buffer.com</code></li>
-<li>Environment variable <code>BUFFER_KEY</code> must be set</li>
-</ul>
-</section>
-<section id="channel-ids-organization-655270181efd918df3d33eff" class="level3">
-<h3 class="anchored" data-anchor-id="channel-ids-organization-655270181efd918df3d33eff">Channel IDs (organization: 655270181efd918df3d33eff)</h3>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Platform</th>
-<th>Channel ID</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Twitter/X</td>
-<td><code>6552702d7a6cf4d23f916d5c</code></td>
-</tr>
-<tr class="even">
-<td>LinkedIn</td>
-<td><code>67c6746b3b85969eafee1ee4</code></td>
-</tr>
-<tr class="odd">
-<td>Bluesky</td>
-<td><code>67c6738e3b85969eafe22a07</code></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="quick-post-creation" class="level3">
-<h3 class="anchored" data-anchor-id="quick-post-creation">Quick post creation</h3>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">buffer_query()</span> <span class="kw">{</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">curl</span> <span class="at">-s</span> <span class="at">-X</span> POST <span class="st">"https://api.buffer.com"</span> <span class="dt">\</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">-H</span> <span class="st">"Authorization: Bearer </span><span class="va">$BUFFER_KEY</span><span class="st">"</span> <span class="dt">\</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">-H</span> <span class="st">"Content-Type: application/json"</span> <span class="dt">\</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">-d</span> <span class="st">"{</span><span class="dt">\"</span><span class="st">query</span><span class="dt">\"</span><span class="st">: </span><span class="dt">\"</span><span class="va">$1</span><span class="dt">\"</span><span class="st">}"</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="ex">buffer_query</span> <span class="st">"mutation { createPost(input: { text: </span><span class="dt">\"</span><span class="st">POST TEXT</span><span class="dt">\"</span><span class="st">, channelId: </span><span class="dt">\"</span><span class="st">CHANNEL_ID</span><span class="dt">\"</span><span class="st">, schedulingType: automatic, mode: addToQueue }) { ... on PostActionSuccess { post { id text dueAt } } ... on MutationError { message } } }"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="workflow-for-new-blog-posts" class="level3">
-<h3 class="anchored" data-anchor-id="workflow-for-new-blog-posts">Workflow for new blog posts</h3>
-<ol type="1">
-<li>Read the post content</li>
-<li>Draft 1 announcement post adapted for each platform (Twitter: short + hashtags, LinkedIn: professional with bullet points, Mastodon/Bluesky: similar to Twitter)</li>
-<li>Show drafts to user for approval</li>
-<li>Once approved, queue to all 3 channels using Buffer API</li>
-</ol>
-<p>Note: If running with Jules, you do not need to do the Buffer social media posting step.</p>
+<section id="the-gotcha-that-started-this-post" class="level2">
+<h2 class="anchored" data-anchor-id="the-gotcha-that-started-this-post">The gotcha that started this post</h2>
+<p>My colleague ran <code>openstack image set --shared &lt;image-id&gt;</code> and told me to look. But the image never became visible to me: setting shared visibility alone does not create any membership. The missing steps were <code>image add project</code>, and then my <code>image set --accept</code>. Community visibility avoids both.</p>
+<p>How to find your project id</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> token issue <span class="at">-f</span> value <span class="at">-c</span> project_id</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>All commands above were tested live on Jetstream2 OpenStack (Image API v2, <code>python-openstackclient 9.0.0</code>). The owner-side commands work with a standard project user credential; the accept step must be run by the recipient project.</p>
 
 
-</section>
-</section>
 </section>
 
 </main> <!-- /main -->
