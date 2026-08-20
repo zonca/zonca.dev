@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Andrea Zonca">
-<meta name="dcterms.date" content="2025-11-17">
+<meta name="dcterms.date" content="2026-08-19">
 
-<title>Deploy the Dask Operator for JupyterHub on Kubernetes – Andrea Zonca</title>
+<title>Deploy the Dask Operator for Kubernetes on Jetstream2 and access it from JupyterHub – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -158,11 +158,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Deploy the Dask Operator for JupyterHub on Kubernetes</h1>
+      <h1 class="title">Deploy the Dask Operator for Kubernetes on Jetstream2 and access it from JupyterHub</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">kubernetes</div>
                 <div class="quarto-category">jetstream2</div>
                 <div class="quarto-category">jupyterhub</div>
+                <div class="quarto-category">dask</div>
                 <div class="quarto-category">python</div>
               </div>
                   </div>
@@ -181,7 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 17, 2025</p>
+        <p class="date">August 19, 2026</p>
       </div>
     </div>
     
@@ -200,21 +201,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2025-11-17-dask-operator-jupyterhub.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2025-11-17-dask-operator-jupyterhub.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
-<p><strong>Tutorial OBSOLETE</strong> Please check <a href="https://www.zonca.dev/posts/2026-08-19-dask-operator-jetstream2-jupyterhub">the updated version of this tutorial</a>.</p>
-<p>This post describes how to deploy the <a href="https://kubernetes.dask.org/">Dask Operator for Kubernetes</a> alongside a Helm-based JupyterHub installation. The Operator provides a Kubernetes-native way to create and manage Dask clusters via custom resources, simplifying multi-tenant setups, it is therefore more integrated into the Kubernetes ecosystem compared to Dask Gateway.</p>
-<p>These commands target a Jetstream 2 <a href="https://www.zonca.dev/posts/2024-12-11-jetstream_kubernetes_magnum">Magnum deployment</a>. The upstream install docs are at <a href="https://kubernetes.dask.org/en/latest/installing.html" class="uri">https://kubernetes.dask.org/en/latest/installing.html</a>; this is the condensed version aligned with the JupyterHub setup on Jetstream 2.</p>
-<section id="preparation" class="level2">
-<h2 class="anchored" data-anchor-id="preparation">Preparation</h2>
-<p>Assumptions:</p>
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2026-08-19-dask-operator-jetstream2-jupyterhub.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2026-08-19-dask-operator-jetstream2-jupyterhub.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
+<p>This post describes how to deploy the <a href="https://kubernetes.dask.org/">Dask Operator for Kubernetes</a> alongside a Helm-based JupyterHub installation on a Jetstream2 Kubernetes cluster (Magnum). The Operator provides a Kubernetes-native way to create and manage Dask clusters via custom resources, simplifying multi-tenant setups. Compared to Dask Gateway, it is more integrated into the Kubernetes ecosystem.</p>
+<p>These commands target a Jetstream 2 <a href="https://www.zonca.dev/posts/2022-03-30-jetstream2_kubernetes_kubespray">Kubernetes deployment</a> and assume you already have a running JupyterHub installed with <a href="https://www.zonca.dev/posts/2022-03-31-jetstream2_jupyterhub">the JupyterHub tutorial</a>. The upstream install docs are at <a href="https://kubernetes.dask.org/en/latest/installing.html" class="uri">https://kubernetes.dask.org/en/latest/installing.html</a>; this is the condensed version aligned with the JupyterHub setup on Jetstream2.</p>
+<section id="versions-tested" class="level2">
+<h2 class="anchored" data-anchor-id="versions-tested">Versions tested</h2>
+<p>This tutorial was tested (2026-08-19) against:</p>
 <ul>
-<li>Helm-based JupyterHub deployment already running.</li>
-<li><code>helm</code> and <code>kubectl</code> configured with cluster-admin permissions.</li>
-<li>SSL termination in place</li>
+<li>Kubernetes <strong>1.33.2</strong> (Magnum template <code>kubernetes-1-33-jammy-fixed-labels</code>)</li>
+<li>JupyterHub Helm chart <strong>4.3.3</strong></li>
+<li>dask-kubernetes Operator &amp; Python client <strong>2026.3.0</strong></li>
+<li>dask / distributed <strong>2026.7.1</strong></li>
+<li>jupyter-server-proxy <strong>4.5.0</strong></li>
 </ul>
 </section>
 <section id="install-the-dask-operator" class="level2">
-<h2 class="anchored" data-anchor-id="install-the-dask-operator">Install the Dask Operator</h2>
+<h2 class="anchored" data-anchor-id="install-the-dask-operator">1. Install the Dask Operator</h2>
 <p>Install the Operator (CRDs + controller) into its own namespace:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> install <span class="dt">\</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--repo</span> https://helm.dask.org <span class="dt">\</span></span>
@@ -222,90 +224,123 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-n</span> dask-operator <span class="dt">\</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--generate-name</span> <span class="dt">\</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  dask-kubernetes-operator</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Helm prints the release name (for example, <code>dask-kubernetes-operator-1762815110</code>). Keep it if you plan to <code>upgrade</code> later instead of reinstalling.</p>
+<p>Helm prints the release name (for example, <code>dask-kubernetes-operator-1787187822</code>). Keep it if you plan to <code>upgrade</code> later instead of reinstalling.</p>
 </section>
 <section id="validate-the-controller" class="level2">
-<h2 class="anchored" data-anchor-id="validate-the-controller">Validate the controller</h2>
+<h2 class="anchored" data-anchor-id="validate-the-controller">2. Validate the controller</h2>
 <p>Confirm the controller pod comes up cleanly:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pods <span class="at">-A</span> <span class="at">-l</span> app.kubernetes.io/name=dask-kubernetes-operator</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pods <span class="at">-n</span> dask-operator</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If you do not see the pod, verify the CRDs are present:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get crds <span class="kw">|</span> <span class="fu">grep</span> dask</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You should see <code>daskclusters</code>, <code>daskworkergroups</code>, <code>daskjobs</code>, and <code>daskautoscalers</code>:</p>
+<pre><code>daskautoscalers.kubernetes.dask.org
+daskclusters.kubernetes.dask.org
+daskjobs.kubernetes.dask.org
+daskworkergroups.kubernetes.dask.org</code></pre>
+<blockquote class="blockquote">
+<p><strong>Important</strong>: apply the JupyterHub RBAC (next section) <strong>before</strong> starting a user notebook server, otherwise spawning fails with a <code>serviceaccount "dask-sa" not found</code> error.</p>
+</blockquote>
 </section>
 <section id="prepare-a-service-account-for-jupyterhub" class="level2">
-<h2 class="anchored" data-anchor-id="prepare-a-service-account-for-jupyterhub">Prepare a service account for JupyterHub</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream.git</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> jupyterhub-deploy-kubernetes-jetstream</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> dask_operator</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> apply <span class="at">-f</span> dask_cluster_role.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<h2 class="anchored" data-anchor-id="prepare-a-service-account-for-jupyterhub">3. Prepare a service account for JupyterHub</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream.git</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> jupyterhub-deploy-kubernetes-jetstream</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> dask_operator</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> apply <span class="at">-f</span> dask_cluster_role.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This creates a <code>dask-sa</code> ServiceAccount in the <code>jhub</code> namespace, a <code>dask-cluster-role</code> ClusterRole, and a binding so that user pods can create and manage Dask custom resources.</p>
 </section>
 <section id="configure-jupyterhub" class="level2">
-<h2 class="anchored" data-anchor-id="configure-jupyterhub">Configure JupyterHub</h2>
-<p>Apply it via the existing Helm deployment script. First edit <code>install_jhub.sh</code> in the deployment repository and add the extra <code>--values dask_operator/jupyterhub_config.yaml</code> flag to the <code>helm upgrade --install</code> line (alongside any other <code>--values</code> files you already use). Then run:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> install_jhub.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<h2 class="anchored" data-anchor-id="configure-jupyterhub">4. Configure JupyterHub</h2>
+<p>Apply it via the existing Helm deployment script. First edit <code>install_jhub.sh</code> in the deployment repository and add the extra <code>--values dask_operator/jupyterhub_config.yaml</code> flag to the <code>helm upgrade --install</code> line (alongside any other <code>--values</code> files you already use). Also add <code>--values dask_operator/jupyterhub_dask_dashboard_config.yaml</code> to enable the Dask dashboard proxy. Then run:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> install_jhub.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="create-a-dask-cluster-from-jupyterhub" class="level2">
-<h2 class="anchored" data-anchor-id="create-a-dask-cluster-from-jupyterhub">Create a Dask cluster from JupyterHub</h2>
+<h2 class="anchored" data-anchor-id="create-a-dask-cluster-from-jupyterhub">5. Create a Dask cluster from JupyterHub</h2>
 <p>From JupyterHub, start a new notebook server and open a Python notebook.</p>
 <p>In the first cell, install <code>dask-kubernetes</code> (this ensures the Operator Python client is available inside the user environment):</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install dask<span class="op">-</span>kubernetes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If you want to avoid running <code>%pip install dask-kubernetes</code> every time a pod restarts, build your JupyterHub spawn image with <code>dask-kubernetes</code> already included so the dependency is available as soon as the notebook starts.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install dask<span class="op">-</span>kubernetes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you want to avoid running <code>%pip install dask-kubernetes</code> every time a pod restarts, build your JupyterHub spawn image with <code>dask-kubernetes</code> already included so the dependency is available as soon as the notebook starts (see the recommended image below).</p>
 <p>In the next cell, create a Dask cluster using the Operator. The <code>namespace</code> must match the JupyterHub namespace so the spawned pods are visible and accessible to the user environment:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dask_kubernetes.operator <span class="im">import</span> KubeCluster</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>cluster <span class="op">=</span> KubeCluster(</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  name<span class="op">=</span><span class="st">"my-dask-cluster"</span>,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  namespace<span class="op">=</span><span class="st">"jhub"</span>,            <span class="co"># important: JupyterHub namespace</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  image<span class="op">=</span><span class="st">"ghcr.io/dask/dask:latest"</span>,  <span class="co"># use the same image set in config_standard_storage.yaml</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>cluster.scale(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The image must match the one specified for the JupyterHub single-user pods (for example in <code>config_standard_storage.yaml</code>). Mixing images leads to client/scheduler/worker incompatibilities that are hard to debug.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dask_kubernetes.operator <span class="im">import</span> KubeCluster</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>cluster <span class="op">=</span> KubeCluster(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  name<span class="op">=</span><span class="st">"my-dask-cluster"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  namespace<span class="op">=</span><span class="st">"jhub"</span>,                 <span class="co"># important: JupyterHub namespace</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  image<span class="op">=</span><span class="st">"ghcr.io/dask/dask:2026.7.1"</span>,  <span class="co"># pin a version matching your client</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>cluster.scale(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The scheduler/worker image should be the official Dask image <code>ghcr.io/dask/dask</code> and its version should be close to the <code>distributed</code> version in your user environment to avoid a <code>VersionMismatchWarning</code>. Mixing very different versions leads to client/scheduler/worker incompatibilities that are hard to debug.</p>
+<blockquote class="blockquote">
+<p><strong>Tip</strong>: If your user image is built on a different Python minor version than the Dask image (e.g., the scipy-notebook image uses Python 3.13 while <code>ghcr.io/dask/dask</code> ships Python 3.10), you may see a benign <code>VersionMismatchWarning</code> listing only the <code>python</code> and <code>tornado</code> rows. As long as <code>dask</code> and <code>distributed</code> match, this is harmless and does not affect correctness.</p>
+</blockquote>
 <p>Finally, display the cluster object to get a realtime view on the number of workers:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cluster</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>cluster</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can see it scale with:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> jhub get pods <span class="at">-l</span> dask.org/component</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="specify-worker-cpu-and-memory" class="level2">
-<h2 class="anchored" data-anchor-id="specify-worker-cpu-and-memory">Specify worker CPU and memory</h2>
-<p>Simpler: pass a <code>resources</code> dict directly to <code>KubeCluster</code>. This sets requests/limits for both scheduler and the default worker group. Then scale.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dask_kubernetes.operator <span class="im">import</span> KubeCluster</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>cluster <span class="op">=</span> KubeCluster(</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  name<span class="op">=</span><span class="st">"my-dask-cluster-resources"</span>,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  namespace<span class="op">=</span><span class="st">"jhub"</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  resources<span class="op">=</span>{</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"requests"</span>: {<span class="st">"cpu"</span>: <span class="st">"2"</span>, <span class="st">"memory"</span>: <span class="st">"2Gi"</span>},</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"limits"</span>: {<span class="st">"cpu"</span>: <span class="st">"2"</span>, <span class="st">"memory"</span>: <span class="st">"2Gi"</span>},</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  },</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  n_workers<span class="op">=</span><span class="dv">0</span>,  <span class="co"># start with zero, then scale explicitly</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>cluster.scale(<span class="dv">5</span>)  <span class="co"># create 5 workers with 2 CPU / 2Gi each</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>cluster</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<h2 class="anchored" data-anchor-id="specify-worker-cpu-and-memory">6. Specify worker CPU and memory</h2>
+<p>Pass a <code>resources</code> dict directly to <code>KubeCluster</code>. This sets requests/limits for both the scheduler and the default worker group. Then scale.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dask_kubernetes.operator <span class="im">import</span> KubeCluster</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>cluster <span class="op">=</span> KubeCluster(</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  name<span class="op">=</span><span class="st">"my-dask-cluster-resources"</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  namespace<span class="op">=</span><span class="st">"jhub"</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  resources<span class="op">=</span>{</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"requests"</span>: {<span class="st">"cpu"</span>: <span class="st">"2"</span>, <span class="st">"memory"</span>: <span class="st">"2Gi"</span>},</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"limits"</span>: {<span class="st">"cpu"</span>: <span class="st">"2"</span>, <span class="st">"memory"</span>: <span class="st">"2Gi"</span>},</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  },</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  n_workers<span class="op">=</span><span class="dv">0</span>,  <span class="co"># start with zero, then scale explicitly</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>cluster.scale(<span class="dv">5</span>)  <span class="co"># create 5 workers with 2 CPU / 2Gi each</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>cluster</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p><strong>Hint:</strong> If <code>cluster</code> shows the scheduler as <code>Pending</code>, the worker pods are waiting for nodes. On a fresh cluster the autoscaler needs a few minutes to add them. Check with <code>kubectl -n jhub get pods -l dask.org/cluster-name=&lt;CLUSTER_NAME&gt;</code> — once the scheduler is <code>Running</code>, continue.</p>
+</blockquote>
 <p>Different sizes? Add another worker group with its own resources:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cluster.add_worker_group(</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  name<span class="op">=</span><span class="st">"highmem"</span>,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  n_workers<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  resources<span class="op">=</span>{<span class="st">"requests"</span>: {<span class="st">"memory"</span>: <span class="st">"8Gi"</span>}, <span class="st">"limits"</span>: {<span class="st">"memory"</span>: <span class="st">"8Gi"</span>}},</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>cluster.scale(<span class="dv">4</span>, worker_group<span class="op">=</span><span class="st">"highmem"</span>)  <span class="co"># scale that group</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cluster.add_worker_group(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  name<span class="op">=</span><span class="st">"highmem"</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  n_workers<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  resources<span class="op">=</span>{<span class="st">"requests"</span>: {<span class="st">"memory"</span>: <span class="st">"8Gi"</span>}, <span class="st">"limits"</span>: {<span class="st">"memory"</span>: <span class="st">"8Gi"</span>}},</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>cluster.scale(<span class="dv">4</span>, worker_group<span class="op">=</span><span class="st">"highmem"</span>)  <span class="co"># scale that group</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Use <code>cluster.scale(N, worker_group="groupname")</code> to change replicas for a specific group later.</p>
-<p>Notice that if you have the the Kubernetes Autocaler enabled in your cluster, it will automatically scale the number of nodes to accommodate the requested resources.</p>
+<p>Notice that if you have the Kubernetes Autoscaler enabled in your cluster (as in <a href="https://www.zonca.dev/posts/2022-03-30-jetstream2_kubernetes_kubespray">the Kubespray tutorial</a>), it will automatically scale the number of nodes to accommodate the requested resources.</p>
 <p>When you are done with the cluster, shut it down cleanly:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cluster.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cluster.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="run-distributed-work-and-connect-with-the-client" class="level2">
+<h2 class="anchored" data-anchor-id="run-distributed-work-and-connect-with-the-client">7. Run distributed work and connect with the Client</h2>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> distributed <span class="im">import</span> Client</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dask.array <span class="im">as</span> da</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> Client(cluster)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> da.random.random((<span class="dv">10000</span>, <span class="dv">10000</span>), chunks<span class="op">=</span>(<span class="dv">1000</span>, <span class="dv">1000</span>))</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>x.<span class="bu">sum</span>().compute()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>After you are done, close both the client and the cluster:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>client.close()</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>cluster.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="access-the-dask-dashboard" class="level2">
-<h2 class="anchored" data-anchor-id="access-the-dask-dashboard">Access the dask dashboard</h2>
+<h2 class="anchored" data-anchor-id="access-the-dask-dashboard">8. Access the Dask dashboard</h2>
 <p>One of the most important features of Dask is its dashboard, which provides real-time insight into distributed calculations. To visualize the Dask dashboard from within JupyterHub, we need to use <code>jupyter-server-proxy</code>.</p>
-<p>A critical point is that <code>jupyter-server-proxy</code> must be baked into the single-user Docker image that JupyterHub spawns. This is because the proxy needs to be available when the user’s pod starts. Installing it with <code>%pip install</code> inside a running notebook will not work, as the server proxy components are not loaded dynamically.</p>
+<p>A critical point is that <code>jupyter-server-proxy</code> must be baked into the single-user Docker image that JupyterHub spawns. This is because the proxy needs to be available when the user’s pod starts. Installing it with <code>%pip install</code> inside a running notebook will not work, as the server-proxy components are not loaded dynamically.</p>
 <p>Ensure <code>install_jhub.sh</code> also passes <code>--values dask_operator/jupyterhub_dask_dashboard_config.yaml</code> to the <code>helm upgrade --install</code> command so JupyterHub is configured to expose the Dask dashboard through the proxy.</p>
-<p>I have created an example single-user image derived from <code>scipy-notebook</code> that includes <code>jupyter-server-proxy</code> and other useful packages for scientific computing. The repository is available at <a href="https://github.com/zonca/jupyterhub-dask-docker-image">github.com/zonca/jupyterhub-dask-docker-image</a>. The image is automatically built using GitHub Actions and hosted on the GitHub Container Registry (which is a container registry similar to Docker Hub or Quay.io).</p>
+<p>I maintain an example single-user image derived from Jupyter’s <code>scipy-notebook</code> that includes <code>jupyter-server-proxy</code>, <code>dask</code>, and <code>dask-kubernetes</code> at current versions. The repository is <a href="https://github.com/zonca/jupyterhub-dask-docker-image">github.com/zonca/jupyterhub-dask-docker-image</a>, and the image is automatically built with GitHub Actions and hosted on the GitHub Container Registry.</p>
 <p>The list of available image tags is at <a href="https://github.com/zonca/jupyterhub-dask-docker-image/pkgs/container/jupyterhub-dask-docker-image">github.com/zonca/jupyterhub-dask-docker-image/pkgs/container/jupyterhub-dask-docker-image</a>.</p>
 <p>If you want the simplest maintenance flow for your own image, start from the <a href="https://www.zonca.dev/posts/2025-12-01-custom-jupyterhub-docker-image">custom template and just edit <code>requirements.txt</code>; a GitHub Actions workflow will rebuild and publish automatically</a>.</p>
-<p>To use one of these images in your JupyterHub deployment, you need to update your <code>config_standard_storage.yaml</code> file for the JupyterHub Helm chart. For example, to use a specific image tag, you would add:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">singleuser</span><span class="kw">:</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">image</span><span class="kw">:</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> ghcr.io/zonca/jupyterhub-dask-docker-image</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">tag</span><span class="kw">:</span><span class="at"> </span><span class="st">"2025-11-18-018e8a6"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>After updating your JupyterHub configuration to use a compatible image, when you create a <code>KubeCluster</code> and print the <code>cluster</code> object in your notebook, it will now include a clickable link to the Dask dashboard. The link will have a format similar to this:</p>
-<p><code>/user/YOURUSER/proxy/my-dask-cluster-scheduler.jhub:8787/status</code></p>
-<p>This allows you to directly access the dashboard and monitor your Dask cluster’s activity.</p>
+<p>To use one of these images in your JupyterHub deployment, update your <code>config_standard_storage.yaml</code> file for the JupyterHub Helm chart:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">singleuser</span><span class="kw">:</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">image</span><span class="kw">:</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> ghcr.io/zonca/jupyterhub-dask-docker-image</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">tag</span><span class="kw">:</span><span class="at"> </span><span class="st">"latest"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p><strong>Pin the tag for reproducibility</strong> — replace <code>latest</code> with the dated tag (e.g.&nbsp;<code>2026-08-19-&lt;sha&gt;</code>) listed in the registry after you verify it works on your deployment.</p>
+</blockquote>
+<p>After updating your JupyterHub configuration to use a compatible image, when you create a <code>KubeCluster</code> and print the <code>cluster</code> object in your notebook, it will include a clickable link to the Dask dashboard. The link has this format:</p>
+<pre><code>/user/YOURUSER/proxy/my-dask-cluster-scheduler.jhub:8787/status</code></pre>
+<p>This lets you access the dashboard and monitor your Dask cluster’s activity in real time.</p>
 
 
 </section>

@@ -3,6 +3,7 @@
     "listing": "/index.html",
     "items": [
       "/posts/2026-08-19-openstack-image-sharing-between-projects-on-jetstream2.html",
+      "/posts/2026-08-19-dask-operator-jetstream2-jupyterhub.html",
       "/posts/2026-08-13-alphafold3-openfold3-protein-ligand-expanse.html",
       "/posts/2026-08-12-preview-local-documents-chromeos-ai-agent.html",
       "/posts/2026-08-05-configure-opencode-tritonai-ucsd.html",
