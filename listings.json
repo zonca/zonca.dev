@@ -2,6 +2,10 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2026-08-20-kubernetes-jetstream2-certmanager.html",
+      "/posts/2026-08-20-kubernetes-jetstream2-jupyterhub.html",
+      "/posts/2026-08-20-kubernetes-jetstream2-traefik.html",
+      "/posts/2026-08-20-kubernetes-jetstream2-magnum.html",
       "/posts/2026-08-19-openstack-image-sharing-between-projects-on-jetstream2.html",
       "/posts/2026-08-19-dask-operator-jetstream2-jupyterhub.html",
       "/posts/2026-08-13-alphafold3-openfold3-protein-ligand-expanse.html",
