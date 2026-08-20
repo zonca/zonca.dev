@@ -73,6 +73,20 @@ echo $NGINX_IP
 
 At this point, both ingress controllers are running. Nginx continues to serve traffic, while Traefik is idle.
 
+### Retain the existing IP (optional)
+
+By default, Traefik provisions a **new** load balancer with a new floating IP, so DNS must be repointed (Step 4). If you want Traefik to take over the **existing** nginx IP instead, install it with `service.spec.loadBalancerIP` set to the nginx IP:
+
+```bash
+helm upgrade --install traefik traefik/traefik \
+    --namespace traefik --create-namespace \
+    --set "service.spec.loadBalancerIP=$NGINX_IP"
+```
+
+> **Important — this flag only works on a fresh install:** On Jetstream2, re-running `helm upgrade --install` against an already-running Traefik does **not** change the floating IP — the OpenStack cloud controller ignores the new value. You must `helm uninstall traefik` first, then reinstall with the flag. (Discovered by Ana V. Espinoza during live testing — see the [PR #94 discussion](https://github.com/zonca/zonca.dev/pull/94).)
+
+If you keep the existing IP, you can **skip the DNS switch** in Step 4 entirely, since the DNS record already points to that IP. The trade-off is a brief window where the new Traefik LB is being created while the old nginx LB is being torn down.
+
 ## Step 2: Update the JupyterHub Ingress
 
 Update `secrets.yaml` to use `ingressClassName: traefik` instead of the deprecated `kubernetes.io/ingress.class: "nginx"` annotation. If your `secrets.yaml` still uses the annotation format, change it:
