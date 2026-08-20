@@ -112,6 +112,8 @@ cluster.scale(10)
 
 The scheduler/worker image should be the official Dask image `ghcr.io/dask/dask` and its version should be close to the `distributed` version in your user environment to avoid a `VersionMismatchWarning`. Mixing very different versions leads to client/scheduler/worker incompatibilities that are hard to debug.
 
+> **Tip**: If your user image is built on a different Python minor version than the Dask image (e.g., the scipy-notebook image uses Python 3.13 while `ghcr.io/dask/dask` ships Python 3.10), you may see a benign `VersionMismatchWarning` listing only the `python` and `tornado` rows. As long as `dask` and `distributed` match, this is harmless and does not affect correctness.
+
 Finally, display the cluster object to get a realtime view on the number of workers:
 
 ```python
