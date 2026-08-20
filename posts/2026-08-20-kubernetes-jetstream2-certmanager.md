@@ -3,7 +3,7 @@ categories:
 - kubernetes
 - jetstream
 - jupyterhub
-date: '2026-05-18 11:00:00'
+date: '2026-08-20 11:00:00'
 layout: post
 slug: kubernetes-jetstream2-certmanager
 title: Setup HTTPS with cert-manager on Jetstream2 Kubernetes (4 of 4)
@@ -11,9 +11,9 @@ title: Setup HTTPS with cert-manager on Jetstream2 Kubernetes (4 of 4)
 
 This post is part of a series on deploying JupyterHub on Jetstream2:
 
-1. [Deploy Kubernetes on Jetstream2](/posts/2026-05-18-kubernetes-jetstream2-magnum)
-2. [Install Traefik Ingress Controller](/posts/2026-05-18-kubernetes-jetstream2-traefik)
-3. [Deploy JupyterHub](/posts/2026-05-18-kubernetes-jetstream2-jupyterhub)
+1. [Deploy Kubernetes on Jetstream2](/posts/2026-08-20-kubernetes-jetstream2-magnum)
+2. [Install Traefik Ingress Controller](/posts/2026-08-20-kubernetes-jetstream2-traefik)
+3. [Deploy JupyterHub](/posts/2026-08-20-kubernetes-jetstream2-jupyterhub)
 4. **Setup HTTPS with cert-manager**
 
 This guide covers how to set up HTTPS with Let's Encrypt on a Jetstream2 Kubernetes cluster using [cert-manager](https://cert-manager.io/). It assumes you already have a running cluster with Traefik as the ingress controller and JupyterHub deployed — see the earlier posts in this series if you need to set those up.

@@ -3,7 +3,7 @@ categories:
 - kubernetes
 - jetstream
 - jupyterhub
-date: '2026-05-18 10:00:00'
+date: '2026-08-20 10:00:00'
 layout: post
 slug: kubernetes-jetstream2-jupyterhub
 title: Deploy JupyterHub on Jetstream2 Kubernetes (3 of 4)
@@ -11,10 +11,10 @@ title: Deploy JupyterHub on Jetstream2 Kubernetes (3 of 4)
 
 This post is part of a series on deploying JupyterHub on Jetstream2:
 
-1. [Deploy Kubernetes on Jetstream2](/posts/2026-05-18-kubernetes-jetstream2-magnum)
-2. [Install Traefik Ingress Controller](/posts/2026-05-18-kubernetes-jetstream2-traefik)
+1. [Deploy Kubernetes on Jetstream2](/posts/2026-08-20-kubernetes-jetstream2-magnum)
+2. [Install Traefik Ingress Controller](/posts/2026-08-20-kubernetes-jetstream2-traefik)
 3. **Deploy JupyterHub**
-4. [Setup HTTPS with cert-manager](/posts/2026-05-18-kubernetes-jetstream2-certmanager)
+4. [Setup HTTPS with cert-manager](/posts/2026-08-20-kubernetes-jetstream2-certmanager)
 
 This guide covers how to deploy JupyterHub on a Jetstream2 Kubernetes cluster using [zero-to-jupyterhub](https://zero-to-jupyterhub.readthedocs.io/). It assumes you already have a running cluster with Traefik as the ingress controller and DNS configured — see the earlier posts in this series if you need to set those up.
 
@@ -60,7 +60,7 @@ Once all pods are running, JupyterHub is accessible at your subdomain over HTTP:
 http://k8s.$PROJ.projects.jetstream-cloud.org
 ```
 
-> **Security warning**: At this point JupyterHub is running over plain HTTP. Continue to [Setup HTTPS with cert-manager](/posts/2026-05-18-kubernetes-jetstream2-certmanager) to enable HTTPS with Let's Encrypt.
+> **Security warning**: At this point JupyterHub is running over plain HTTP. Continue to [Setup HTTPS with cert-manager](/posts/2026-08-20-kubernetes-jetstream2-certmanager) to enable HTTPS with Let's Encrypt.
 
 ## Troubleshooting
 
@@ -78,4 +78,4 @@ kubectl get svc -n traefik traefik
 kubectl get ingress -n jhub
 ```
 
-**Next**: [Setup HTTPS with cert-manager](/posts/2026-05-18-kubernetes-jetstream2-certmanager)
+**Next**: [Setup HTTPS with cert-manager](/posts/2026-08-20-kubernetes-jetstream2-certmanager)

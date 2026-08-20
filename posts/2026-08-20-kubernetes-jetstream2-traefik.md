@@ -2,7 +2,7 @@
 categories:
 - kubernetes
 - jetstream
-date: '2026-05-18 09:00:00'
+date: '2026-08-20 09:00:00'
 layout: post
 slug: kubernetes-jetstream2-traefik
 title: Install Traefik Ingress Controller on Jetstream2 Kubernetes (2 of 4)
@@ -10,14 +10,14 @@ title: Install Traefik Ingress Controller on Jetstream2 Kubernetes (2 of 4)
 
 This post is part of a series on deploying JupyterHub on Jetstream2:
 
-1. [Deploy Kubernetes on Jetstream2](/posts/2026-05-18-kubernetes-jetstream2-magnum)
+1. [Deploy Kubernetes on Jetstream2](/posts/2026-08-20-kubernetes-jetstream2-magnum)
 2. **Install Traefik Ingress Controller**
-3. [Deploy JupyterHub](/posts/2026-05-18-kubernetes-jetstream2-jupyterhub)
-4. [Setup HTTPS with cert-manager](/posts/2026-05-18-kubernetes-jetstream2-certmanager)
+3. [Deploy JupyterHub](/posts/2026-08-20-kubernetes-jetstream2-jupyterhub)
+4. [Setup HTTPS with cert-manager](/posts/2026-08-20-kubernetes-jetstream2-certmanager)
 
 This guide covers how to install [Traefik](https://doc.traefik.io/traefik/) as an ingress controller on a Jetstream2 Kubernetes cluster and configure DNS. Traefik replaces `ingress-nginx`, which has been [retired](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/). Traefik supports both the standard Kubernetes Ingress API and the newer Gateway API, making it a forward-compatible choice.
 
-This guide assumes you already have a running cluster — see [Deploy Kubernetes on Jetstream2](/posts/2026-05-18-kubernetes-jetstream2-magnum) if you need to create one first. Make sure `KUBECONFIG` is set and `kubectl get nodes` works.
+This guide assumes you already have a running cluster — see [Deploy Kubernetes on Jetstream2](/posts/2026-08-20-kubernetes-jetstream2-magnum) if you need to create one first. Make sure `KUBECONFIG` is set and `kubectl get nodes` works.
 
 ## Install Traefik
 
@@ -91,7 +91,7 @@ openstack floating ip set --port $LB_VIP_PORT_ID $FIXED_IP
 export IP=$FIXED_IP
 ```
 
-> **Alternative — request the IP at install time:** You can instead ask Traefik to request a specific floating IP by passing `--set service.spec.loadBalancerIP=$FIXED_IP` to the `helm upgrade --install` command in the [Install Traefik](#install-traefik) section. This flag only takes effect on a **fresh** install; if Traefik is already running, `helm uninstall traefik` first, then reinstall with the flag. (Discovered by Ana V. Espinoza during live testing — see the [migration guide](/posts/2026-05-18-migrate-nginx-traefik-jetstream2-kubernetes#retain-the-existing-ip-optional).)
+> **Alternative — request the IP at install time:** You can instead ask Traefik to request a specific floating IP by passing `--set service.spec.loadBalancerIP=$FIXED_IP` to the `helm upgrade --install` command in the [Install Traefik](#install-traefik) section. This flag only takes effect on a **fresh** install; if Traefik is already running, `helm uninstall traefik` first, then reinstall with the flag. (Discovered by Ana V. Espinoza during live testing — see the [migration guide](/posts/2026-08-20-migrate-nginx-traefik-jetstream2-kubernetes#retain-the-existing-ip-optional).)
 
 ## Configure DNS
 
@@ -164,4 +164,4 @@ Once verified, clean up the test deployment:
 kubectl delete -f echo-test.yaml
 ```
 
-With Traefik installed and DNS configured, continue to [Deploy JupyterHub](/posts/2026-05-18-kubernetes-jetstream2-jupyterhub). You can also skip ahead to [Setup HTTPS with cert-manager](/posts/2026-05-18-kubernetes-jetstream2-certmanager) if you already have JupyterHub running.
+With Traefik installed and DNS configured, continue to [Deploy JupyterHub](/posts/2026-08-20-kubernetes-jetstream2-jupyterhub). You can also skip ahead to [Setup HTTPS with cert-manager](/posts/2026-08-20-kubernetes-jetstream2-certmanager) if you already have JupyterHub running.
