@@ -146,6 +146,8 @@ cluster.scale(5)  # create 5 workers with 2 CPU / 2Gi each
 cluster
 ```
 
+> **Hint:** If `cluster` shows the scheduler as `Pending`, the worker pods are waiting for nodes. On a fresh cluster the autoscaler needs a few minutes to add them. Check with `kubectl -n jhub get pods -l dask.org/cluster-name=<CLUSTER_NAME>` — once the scheduler is `Running`, continue.
+
 Different sizes? Add another worker group with its own resources:
 
 ```python
