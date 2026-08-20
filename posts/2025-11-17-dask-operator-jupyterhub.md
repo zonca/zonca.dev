@@ -9,6 +9,8 @@ layout: post
 title: Deploy the Dask Operator for JupyterHub on Kubernetes
 ---
 
+**Tutorial OBSOLETE** Please check [the updated version of this tutorial](https://www.zonca.dev/posts/2026-08-19-dask-operator-jetstream2-jupyterhub).
+
 This post describes how to deploy the [Dask Operator for Kubernetes](https://kubernetes.dask.org/) alongside a Helm-based JupyterHub installation. The Operator provides a Kubernetes-native way to create and manage Dask clusters via custom resources, simplifying multi-tenant setups, it is therefore more integrated into the Kubernetes ecosystem compared to Dask Gateway.
 
 These commands target a Jetstream 2 [Magnum deployment](https://www.zonca.dev/posts/2024-12-11-jetstream_kubernetes_magnum). The upstream install docs are at <https://kubernetes.dask.org/en/latest/installing.html>; this is the condensed version aligned with the JupyterHub setup on Jetstream 2.
