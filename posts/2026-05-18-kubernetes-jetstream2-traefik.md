@@ -91,6 +91,8 @@ openstack floating ip set --port $LB_VIP_PORT_ID $FIXED_IP
 export IP=$FIXED_IP
 ```
 
+> **Alternative — request the IP at install time:** You can instead ask Traefik to request a specific floating IP by passing `--set service.spec.loadBalancerIP=$FIXED_IP` to the `helm upgrade --install` command in the [Install Traefik](#install-traefik) section. This flag only takes effect on a **fresh** install; if Traefik is already running, `helm uninstall traefik` first, then reinstall with the flag. (Discovered by Ana V. Espinoza during live testing — see the [migration guide](/posts/2026-05-18-migrate-nginx-traefik-jetstream2-kubernetes#retain-the-existing-ip-optional).)
+
 ## Configure DNS
 
 ### Using the Jetstream Subdomain
