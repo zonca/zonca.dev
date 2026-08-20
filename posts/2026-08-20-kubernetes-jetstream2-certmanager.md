@@ -23,7 +23,7 @@ This guide covers how to set up HTTPS with Let's Encrypt on a Jetstream2 Kuberne
 Install cert-manager from the official manifest:
 
 ```bash
-kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.17.1/cert-manager.yaml
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.21.1/cert-manager.yaml
 ```
 
 Wait for all three pods to be ready:
@@ -97,10 +97,19 @@ kubectl get order -n jhub
 kubectl get challenge -n jhub
 ```
 
-Common issues:
-- The DNS record is not pointing to the correct IP (Traefik load balancer)
-- The ClusterIssuer references the wrong ingress class (should be `traefik`)
-- cert-manager pods are running on a worker node that was scaled away
+If the certificate is not being issued, check the cert-manager logs and the order/challenge status:
+
+```bash
+kubectl -n cert-manager logs deploy/cert-manager
+kubectl get order -n jhub
+kubectl get challenge -n jhub
+```
+
+Common causes:
+
+- The DNS record is not pointing to the correct IP (the Traefik load balancer's floating IP).
+- The ClusterIssuer references the wrong ingress class (should be `traefik`).
+- cert-manager pods are running on a worker node that was scaled away.
 
 ## Issues and Feedback
 

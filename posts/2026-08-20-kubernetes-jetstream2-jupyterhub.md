@@ -46,7 +46,7 @@ bash configure_helm_jupyterhub.sh
 bash install_jhub.sh
 ```
 
-This installs JupyterHub into the `jhub` namespace using the Helm chart version 4.3.3. The installation takes a few minutes as it pulls the JupyterHub images.
+This installs JupyterHub into the `jhub` namespace using the Helm chart version 4.4.1. The installation takes a few minutes as it pulls the JupyterHub images.
 
 Monitor the rollout:
 

@@ -8,12 +8,14 @@ slug: kubernetes-jetstream2-magnum
 title: Deploy Kubernetes on Jetstream2 with Magnum and Cluster API (1 of 4)
 ---
 
-This post is part of a series on deploying JupyterHub on Jetstream2:
+This post is part of a series on deploying JupyterHub on Jetstream2, on top of a Kubernetes cluster:
 
 1. **Deploy Kubernetes on Jetstream2**
 2. [Install Traefik Ingress Controller](/posts/2026-08-20-kubernetes-jetstream2-traefik)
 3. [Deploy JupyterHub](/posts/2026-08-20-kubernetes-jetstream2-jupyterhub)
 4. [Setup HTTPS with cert-manager](/posts/2026-08-20-kubernetes-jetstream2-certmanager)
+
+> **Already running `ingress-nginx`?** If you have an existing Jetstream2 cluster and want to switch it from `ingress-nginx` to Traefik, see the companion guide: [Migrate from NGINX to Traefik Ingress on Jetstream2 Kubernetes](/posts/2026-08-20-migrate-nginx-traefik-jetstream2-kubernetes). This series is for brand-new clusters.
 
 Jetstream2 uses the Cluster API as the backend for Magnum, making it faster and more straightforward to launch Kubernetes clusters. This guide walks through creating a cluster, configuring autoscaling, and verifying the deployment.
 
