@@ -17,8 +17,6 @@ This post is part of a series on deploying JupyterHub on Jetstream2:
 
 This guide covers how to install [Traefik](https://doc.traefik.io/traefik/) as an ingress controller on a Jetstream2 Kubernetes cluster and configure DNS. Traefik replaces `ingress-nginx`, which has been [retired](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/). Traefik supports both the standard Kubernetes Ingress API and the newer Gateway API, making it a forward-compatible choice.
 
-An **ingress controller** is the component that routes external HTTP/HTTPS traffic into your cluster based on hostnames and paths. Kubernetes `Ingress` resources describe *what* you want exposed (e.g. `jhub.example.org → the JupyterHub service`); the ingress controller is the pod that actually listens on the load balancer, reads those rules, and forwards each request to the right backend service. You need exactly one ingress controller running for this to work — in this series that controller is Traefik.
-
 This guide assumes you already have a running cluster — see [Deploy Kubernetes on Jetstream2](/posts/2026-08-20-kubernetes-jetstream2-magnum) if you need to create one first. Make sure `KUBECONFIG` is set and `kubectl get nodes` works.
 
 ## Install Traefik
