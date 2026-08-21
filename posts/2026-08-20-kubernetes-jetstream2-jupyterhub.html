@@ -225,7 +225,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="install-jupyterhub" class="level2">
 <h2 class="anchored" data-anchor-id="install-jupyterhub">Install JupyterHub</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> install_jhub.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This installs JupyterHub into the <code>jhub</code> namespace using the Helm chart version 4.4.1. The installation takes a few minutes as it pulls the JupyterHub images.</p>
+<p>This installs JupyterHub into the <code>jhub</code> namespace using the Helm chart version 4.3.3. The installation takes a few minutes as it pulls the JupyterHub images.</p>
 <p>Monitor the rollout:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> jhub get pods <span class="at">-w</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Once all pods are running, JupyterHub is accessible at your subdomain over HTTP:</p>

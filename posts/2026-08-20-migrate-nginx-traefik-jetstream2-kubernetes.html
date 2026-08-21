@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.43">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Andrea Zonca">
+<meta name="dcterms.date" content="2026-05-18">
+
+<title>Migrate from NGINX to Traefik Ingress on Jetstream2 Kubernetes – Andrea Zonca</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-0eea65c25dc878392376f467616f9e21.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Andrea Zonca</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../consult.html"> 
+<span class="menu-text">Consulting</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://mastodon.online/@zonca"> <i class="bi bi-mastodon" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Migrate from NGINX to Traefik Ingress on Jetstream2 Kubernetes</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">kubernetes</div>
+                <div class="quarto-category">jetstream</div>
+                <div class="quarto-category">jupyterhub</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Andrea Zonca </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 18, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2026-08-20-migrate-nginx-traefik-jetstream2-kubernetes.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2026-08-20-migrate-nginx-traefik-jetstream2-kubernetes.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
+<p><code>ingress-nginx</code> has been <a href="https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/">retired</a> and will no longer receive updates. This guide walks through migrating an existing Jetstream2 Kubernetes cluster from <code>ingress-nginx</code> to <a href="https://doc.traefik.io/traefik/">Traefik</a>, with minimal downtime.</p>
+<p>This guide is for <strong>existing clusters</strong> already running JupyterHub with <code>ingress-nginx</code>. For new clusters, see the <a href="../posts/2026-05-18-kubernetes-jetstream2-magnum">4-post tutorial series</a>.</p>
+<p>This guide is based on <a href="https://github.com/zonca/zonca.dev/pull/73">Ana V. Espinoza’s migration instructions</a> and <a href="https://doc.traefik.io/traefik/migrate/nginx-to-traefik/">Traefik’s official migration documentation</a>, adapted and live-tested on Jetstream2.</p>
+<section id="prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
+<ul>
+<li>An existing Jetstream2 Kubernetes cluster running <code>ingress-nginx</code> as the ingress controller</li>
+<li>JupyterHub deployed with HTTPS via cert-manager</li>
+<li><code>kubectl</code>, <code>helm</code>, and the <code>openstack</code> CLI installed and configured</li>
+<li>The <code>KUBECONFIG</code> environment variable set for your cluster</li>
+</ul>
+</section>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>The migration follows a side-by-side strategy: install Traefik alongside nginx, switch the Ingress class, update DNS, and then remove nginx.</p>
+<section id="simple-approach-brief-downtime" class="level3">
+<h3 class="anchored" data-anchor-id="simple-approach-brief-downtime">Simple approach (brief downtime)</h3>
+<p>This is the simplest method. After switching the JupyterHub Ingress to <code>ingressClassName: traefik</code>, nginx can no longer serve it, so there is a brief downtime window while DNS propagates.</p>
+<ol type="1">
+<li>Install Traefik alongside <code>ingress-nginx</code></li>
+<li>Update the JupyterHub Ingress to use <code>ingressClassName: traefik</code></li>
+<li>Update the cert-manager ClusterIssuer to use Traefik</li>
+<li>Update DNS to point to the Traefik load balancer IP</li>
+<li>Remove <code>ingress-nginx</code></li>
+</ol>
+</section>
+<section id="minimal-downtime-approach" class="level3">
+<h3 class="anchored" data-anchor-id="minimal-downtime-approach">Minimal-downtime approach</h3>
+<p>If uptime is critical, use Traefik’s <a href="https://doc.traefik.io/traefik/migrate/nginx-to-traefik/"><code>kubernetesIngressNGINX</code></a> provider, which makes Traefik serve existing <code>nginx</code>-class Ingresses without any changes. This allows you to switch DNS to Traefik first, verify everything works, and only then update the Ingress class and remove nginx. See the <a href="#minimal-downtime-migration">Minimal-Downtime Migration</a> section below.</p>
+</section>
+</section>
+<section id="step-1-install-traefik" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-install-traefik">Step 1: Install Traefik</h2>
+<p>Install the Traefik Helm chart. This creates a second load balancer alongside the existing nginx one:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> repo add traefik https://traefik.github.io/charts</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> repo update</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> upgrade <span class="at">--install</span> traefik traefik/traefik <span class="dt">\</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--namespace</span> traefik <span class="at">--create-namespace</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Wait for the external IP to be assigned (takes about 2 minutes):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get svc <span class="at">-n</span> traefik traefik <span class="at">-w</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note the Traefik IP:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">TRAEFIK_IP</span><span class="op">=</span><span class="va">$(</span><span class="ex">kubectl</span> get svc <span class="at">-n</span> traefik traefik <span class="at">-o</span> jsonpath=<span class="st">'{.status.loadBalancer.ingress[0].ip}'</span><span class="va">)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$TRAEFIK_IP</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Also note the existing nginx IP:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">NGINX_IP</span><span class="op">=</span><span class="va">$(</span><span class="ex">kubectl</span> get svc <span class="at">-n</span> ingress-nginx ingress-nginx-controller <span class="at">-o</span> jsonpath=<span class="st">'{.status.loadBalancer.ingress[0].ip}'</span><span class="va">)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$NGINX_IP</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>At this point, both ingress controllers are running. Nginx continues to serve traffic, while Traefik is idle.</p>
+<section id="retain-the-existing-ip-optional" class="level3">
+<h3 class="anchored" data-anchor-id="retain-the-existing-ip-optional">Retain the existing IP (optional)</h3>
+<p>By default, Traefik provisions a <strong>new</strong> load balancer with a new floating IP, so DNS must be repointed (Step 4). If you want Traefik to take over the <strong>existing</strong> nginx IP instead, install it with <code>service.spec.loadBalancerIP</code> set to the nginx IP:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> upgrade <span class="at">--install</span> traefik traefik/traefik <span class="dt">\</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--namespace</span> traefik <span class="at">--create-namespace</span> <span class="dt">\</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--set</span> <span class="st">"service.spec.loadBalancerIP=</span><span class="va">$NGINX_IP</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p><strong>Important — this flag only works on a fresh install:</strong> On Jetstream2, re-running <code>helm upgrade --install</code> against an already-running Traefik does <strong>not</strong> change the floating IP — the OpenStack cloud controller ignores the new value. You must <code>helm uninstall traefik</code> first, then reinstall with the flag. (Discovered by Ana V. Espinoza during live testing — see the <a href="https://github.com/zonca/zonca.dev/pull/94">PR #94 discussion</a>.)</p>
+</blockquote>
+<p>If you keep the existing IP, you can <strong>skip the DNS switch</strong> in Step 4 entirely, since the DNS record already points to that IP. The trade-off is a brief window where the new Traefik LB is being created while the old nginx LB is being torn down.</p>
+</section>
+</section>
+<section id="step-2-update-the-jupyterhub-ingress" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-update-the-jupyterhub-ingress">Step 2: Update the JupyterHub Ingress</h2>
+<p>Update <code>secrets.yaml</code> to use <code>ingressClassName: traefik</code> instead of the deprecated <code>kubernetes.io/ingress.class: "nginx"</code> annotation. If your <code>secrets.yaml</code> still uses the annotation format, change it:</p>
+<p><strong>Before:</strong></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ingress</span><span class="kw">:</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">enabled</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">annotations</span><span class="kw">:</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">kubernetes.io/ingress.class</span><span class="kw">:</span><span class="at"> </span><span class="st">"nginx"</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">cert-manager.io/cluster-issuer</span><span class="kw">:</span><span class="at"> </span><span class="st">"letsencrypt"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>After:</strong></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ingress</span><span class="kw">:</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">enabled</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ingressClassName</span><span class="kw">:</span><span class="at"> traefik</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">annotations</span><span class="kw">:</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">cert-manager.io/cluster-issuer</span><span class="kw">:</span><span class="at"> </span><span class="st">"letsencrypt"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then upgrade JupyterHub:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> upgrade jhub jupyterhub/jupyterhub <span class="dt">\</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--namespace</span> jhub <span class="at">--version</span> 4.3.3 <span class="dt">\</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--values</span> config_standard_storage.yaml <span class="at">--values</span> secrets.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This immediately changes the Ingress class from <code>nginx</code> to <code>traefik</code>. From this point:</p>
+<ul>
+<li><strong>Traffic through the Traefik load balancer</strong> reaches JupyterHub ✅</li>
+<li><strong>Traffic through the nginx load balancer</strong> gets a 404, because nginx no longer watches this Ingress ⚠️</li>
+</ul>
+<p>This is why the DNS switch in Step 4 is important.</p>
+<blockquote class="blockquote">
+<p><strong>Note on nginx-specific annotations</strong>: If you use nginx-specific annotations like <code>nginx.ingress.kubernetes.io/proxy-body-size</code>, replace them with the Traefik equivalent. For example, to allow large file uploads:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># nginx annotation (unsupported by Traefik):</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># nginx.ingress.kubernetes.io/proxy-body-size: "500m"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Traefik equivalent:</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">traefik.ingress.kubernetes.io/middlewares.limit.buffering.maxRequestBodyBytes</span><span class="kw">:</span><span class="at"> </span><span class="st">"500000000"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</blockquote>
+</section>
+<section id="step-3-update-the-cert-manager-clusterissuer" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-update-the-cert-manager-clusterissuer">Step 3: Update the cert-manager ClusterIssuer</h2>
+<p>Update the ClusterIssuer to use Traefik for HTTP01 challenges. Edit <code>https_cluster_issuer.yml</code> and change the <code>class</code> from <code>nginx</code> to <code>traefik</code>, then apply:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> jupyterhub-deploy-kubernetes-jetstream/setup_https</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">'s/YOUREMAIL/your@email.edu/'</span> https_cluster_issuer.yml <span class="kw">|</span> <span class="ex">kubectl</span> apply <span class="at">-f</span> <span class="at">-</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This ensures that future certificate renewals use Traefik for the HTTP01 challenge.</p>
+</section>
+<section id="step-4-update-dns" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-update-dns">Step 4: Update DNS</h2>
+<section id="option-a-direct-cutover-brief-downtime" class="level3">
+<h3 class="anchored" data-anchor-id="option-a-direct-cutover-brief-downtime">Option A: Direct cutover (brief downtime)</h3>
+<p>Update the DNS record to point to the Traefik IP:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PROJ</span><span class="op">=</span><span class="st">"xxx000000"</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">K8S_CLUSTER_NAME</span><span class="op">=</span>k8s</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> recordset set <span class="dt">\</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="va">$PROJ</span>.projects.jetstream-cloud.org. <span class="dt">\</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="va">$K8S_CLUSTER_NAME</span>.<span class="va">$PROJ</span>.projects.jetstream-cloud.org. <span class="dt">\</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--record</span> <span class="va">$TRAEFIK_IP</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>There will be a brief downtime while DNS caches update. You can verify when the change has propagated:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">watch</span> nslookup <span class="va">$K8S_CLUSTER_NAME</span>.<span class="va">$PROJ</span>.projects.jetstream-cloud.org</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="option-b-dual-a-record-zero-downtime" class="level3">
+<h3 class="anchored" data-anchor-id="option-b-dual-a-record-zero-downtime">Option B: Dual-A-record (zero downtime)</h3>
+<p>Add both IPs to the DNS record so that traffic can reach either ingress controller:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> recordset set <span class="dt">\</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="va">$PROJ</span>.projects.jetstream-cloud.org. <span class="dt">\</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">$K8S_CLUSTER_NAME</span>.<span class="va">$PROJ</span>.projects.jetstream-cloud.org. <span class="dt">\</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--record</span> <span class="va">$NGINX_IP</span> <span class="at">--record</span> <span class="va">$TRAEFIK_IP</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Clients that resolve to the Traefik IP get JupyterHub directly. Clients that still resolve to the nginx IP get a 404, but DNS round-robin means roughly half of requests succeed. After DNS fully propagates (wait a few minutes), switch to the Traefik-only record:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> recordset set <span class="dt">\</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="va">$PROJ</span>.projects.jetstream-cloud.org. <span class="dt">\</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">$K8S_CLUSTER_NAME</span>.<span class="va">$PROJ</span>.projects.jetstream-cloud.org. <span class="dt">\</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--record</span> <span class="va">$TRAEFIK_IP</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="verify-connectivity" class="level3">
+<h3 class="anchored" data-anchor-id="verify-connectivity">Verify connectivity</h3>
+<p>Test both load balancers directly to confirm Traefik is serving JupyterHub and nginx is no longer needed:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">FQDN</span><span class="op">=</span><span class="va">$K8S_CLUSTER_NAME</span>.<span class="va">$PROJ</span>.projects.jetstream-cloud.org</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Test HTTPS via Traefik</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--connect-to</span> <span class="st">"</span><span class="va">${FQDN}</span><span class="st">:443:</span><span class="va">${TRAEFIK_IP}</span><span class="st">:443"</span> <span class="st">"https://</span><span class="va">${FQDN}</span><span class="st">"</span> <span class="at">-v</span> <span class="at">-D</span> <span class="at">-</span> <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"HTTP/"</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Test HTTPS via nginx (should return 404)</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--connect-to</span> <span class="st">"</span><span class="va">${FQDN}</span><span class="st">:443:</span><span class="va">${NGINX_IP}</span><span class="st">:443"</span> <span class="st">"https://</span><span class="va">${FQDN}</span><span class="st">"</span> <span class="at">-v</span> <span class="at">-D</span> <span class="at">-</span> <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"HTTP/"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="step-5-remove-ingress-nginx" class="level2">
+<h2 class="anchored" data-anchor-id="step-5-remove-ingress-nginx">Step 5: Remove ingress-nginx</h2>
+<p>Once DNS points to the Traefik IP and JupyterHub is accessible, uninstall <code>ingress-nginx</code>:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> uninstall <span class="at">-n</span> ingress-nginx ingress-nginx</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> delete ns ingress-nginx</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This removes the nginx pods, the nginx load balancer, and its namespace. The associated OpenStack load balancer is also cleaned up automatically.</p>
+</section>
+<section id="verify-the-migration" class="level2">
+<h2 class="anchored" data-anchor-id="verify-the-migration">Verify the Migration</h2>
+<p>Confirm that everything works:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that only Traefik is running as an ingress controller</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get ns <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-E</span> <span class="st">"traefik|ingress"</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the Ingress class</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get ingress <span class="at">-n</span> jhub</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the certificate</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get certificate <span class="at">-n</span> jhub</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Test HTTPS access</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-o</span> /dev/null <span class="at">-w</span> <span class="st">"%{http_code}\n"</span> https://<span class="va">$K8S_CLUSTER_NAME</span>.<span class="va">$PROJ</span>.projects.jetstream-cloud.org/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You should see: - Only the <code>traefik</code> namespace (no <code>ingress-nginx</code>) - Ingress with <code>CLASS: traefik</code> - Certificate <code>READY: True</code> - HTTPS returns <code>302</code></p>
+</section>
+<section id="summary-of-changes" class="level2">
+<h2 class="anchored" data-anchor-id="summary-of-changes">Summary of Changes</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 30%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Component</th>
+<th>Before</th>
+<th>After</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ingress controller</td>
+<td><code>ingress-nginx</code></td>
+<td><code>traefik</code></td>
+</tr>
+<tr class="even">
+<td>Ingress class</td>
+<td><code>nginx</code></td>
+<td><code>traefik</code></td>
+</tr>
+<tr class="odd">
+<td>Secret annotation</td>
+<td><code>kubernetes.io/ingress.class: "nginx"</code></td>
+<td><code>ingressClassName: traefik</code></td>
+</tr>
+<tr class="even">
+<td>cert-manager solver</td>
+<td><code>class: nginx</code></td>
+<td><code>class: traefik</code></td>
+</tr>
+<tr class="odd">
+<td>Load balancer IP</td>
+<td><code>$NGINX_IP</code></td>
+<td><code>$TRAEFIK_IP</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="minimal-downtime-migration" class="level2">
+<h2 class="anchored" data-anchor-id="minimal-downtime-migration">Minimal-Downtime Migration</h2>
+<p>If uptime is critical, use Traefik’s <code>kubernetesIngressNGINX</code> provider to serve existing <code>nginx</code>-class Ingresses through Traefik without any changes. This eliminates the downtime window between switching the Ingress class and updating DNS. The approach was <a href="https://github.com/zonca/zonca.dev/pull/94#issuecomment-4568109164">suggested by Ana V. Espinoza</a> and follows <a href="https://doc.traefik.io/traefik/migrate/nginx-to-traefik/">Traefik’s official migration guide</a>.</p>
+<p>The step order changes from the simple approach:</p>
+<ol type="1">
+<li>Install Traefik <strong>with</strong> <code>kubernetesIngressNGINX.enabled=true</code> and <code>publishService.enabled=false</code></li>
+<li>Switch DNS to the Traefik IP (nginx-class Ingresses still work via Traefik)</li>
+<li>Preserve the <code>nginx</code> IngressClass, then uninstall <code>ingress-nginx</code></li>
+<li>Update the JupyterHub Ingress to <code>ingressClassName: traefik</code></li>
+<li>Update the cert-manager ClusterIssuer</li>
+<li>(Optional) Re-install Traefik without <code>kubernetesIngressNGINX</code> and delete the <code>nginx</code> IngressClass</li>
+</ol>
+<section id="step-1-install-traefik-with-nginx-compatibility" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-install-traefik-with-nginx-compatibility">Step 1: Install Traefik with NGINX compatibility</h3>
+<p>Install Traefik with the <code>kubernetesIngressNGINX</code> provider enabled. This provider makes Traefik watch for <code>nginx</code>-class Ingresses and serve them natively, translating NGINX annotations into Traefik configuration automatically.</p>
+<p>Disable <code>publishService</code> to prevent Traefik from overwriting the Ingress status with its own IP, which would cause a race condition with nginx:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> repo add traefik https://traefik.github.io/charts</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> repo update</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> upgrade <span class="at">--install</span> traefik traefik/traefik <span class="dt">\</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--namespace</span> traefik <span class="at">--create-namespace</span> <span class="dt">\</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--set</span> providers.kubernetesIngressNGINX.enabled=true <span class="dt">\</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">--set</span> providers.kubernetesIngressNGINX.publishService.enabled=false</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Wait for the external IP:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">TRAEFIK_IP</span><span class="op">=</span><span class="va">$(</span><span class="ex">kubectl</span> get svc <span class="at">-n</span> traefik traefik <span class="at">-o</span> jsonpath=<span class="st">'{.status.loadBalancer.ingress[0].ip}'</span><span class="va">)</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$TRAEFIK_IP</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>At this point, <strong>both nginx and Traefik serve your existing Ingresses</strong>. Traffic is still flowing through nginx since DNS points to the nginx IP.</p>
+</section>
+<section id="step-2-switch-dns-to-traefik" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-switch-dns-to-traefik">Step 2: Switch DNS to Traefik</h3>
+<p>Before changing DNS, verify that Traefik correctly serves your Ingresses by testing directly against the Traefik IP:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">FQDN</span><span class="op">=</span><span class="va">$K8S_CLUSTER_NAME</span>.<span class="va">$PROJ</span>.projects.jetstream-cloud.org</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Test HTTPS via Traefik (should return 302)</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-o</span> /dev/null <span class="at">-w</span> <span class="st">"%{http_code}\n"</span> <span class="dt">\</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--connect-to</span> <span class="st">"</span><span class="va">${FQDN}</span><span class="st">:443:</span><span class="va">${TRAEFIK_IP}</span><span class="st">:443"</span> <span class="st">"https://</span><span class="va">${FQDN}</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If that returns <code>302</code>, switch DNS to point to the Traefik IP:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> recordset set <span class="dt">\</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="va">$PROJ</span>.projects.jetstream-cloud.org. <span class="dt">\</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">$K8S_CLUSTER_NAME</span>.<span class="va">$PROJ</span>.projects.jetstream-cloud.org. <span class="dt">\</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--record</span> <span class="va">$TRAEFIK_IP</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Wait for DNS propagation, then verify JupyterHub is accessible via the domain name. There is <strong>zero downtime</strong> because Traefik serves the <code>nginx</code>-class Ingresses identically.</p>
+</section>
+<section id="step-3-remove-ingress-nginx" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-remove-ingress-nginx">Step 3: Remove ingress-nginx</h3>
+<p>Before uninstalling nginx, preserve the <code>nginx</code> IngressClass with a <code>helm.sh/resource-policy: keep</code> annotation. Traefik’s <code>kubernetesIngressNGINX</code> provider needs this IngressClass to discover the Ingresses:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> upgrade ingress-nginx ingress-nginx <span class="dt">\</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--repo</span> https://kubernetes.github.io/ingress-nginx <span class="dt">\</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--namespace</span> ingress-nginx <span class="dt">\</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--reuse-values</span> <span class="dt">\</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--set-json</span> <span class="st">'controller.ingressClassResource.annotations={"helm.sh/resource-policy":"keep"}'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p><strong>Important:</strong> The <code>--reuse-values</code> flag preserves your existing nginx configuration. Without it, Helm resets everything to defaults.</p>
+</blockquote>
+<p>Then uninstall nginx:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> uninstall <span class="at">-n</span> ingress-nginx ingress-nginx</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> delete ns ingress-nginx</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>nginx</code> IngressClass is preserved by the annotation. Verify that JupyterHub still works — Traefik continues serving the <code>nginx</code>-class Ingresses through the <code>kubernetesIngressNGINX</code> provider.</p>
+</section>
+<section id="step-4-update-the-jupyterhub-ingress" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-update-the-jupyterhub-ingress">Step 4: Update the JupyterHub Ingress</h3>
+<p>Now update <code>secrets.yaml</code> to use <code>ingressClassName: traefik</code> and upgrade JupyterHub (same as Step 2 in the simple approach above).</p>
+</section>
+<section id="step-5-update-the-cert-manager-clusterissuer" class="level3">
+<h3 class="anchored" data-anchor-id="step-5-update-the-cert-manager-clusterissuer">Step 5: Update the cert-manager ClusterIssuer</h3>
+<p>Update the ClusterIssuer to use <code>class: traefik</code> (same as Step 3 in the simple approach above).</p>
+</section>
+<section id="step-6-clean-up-optional" class="level3">
+<h3 class="anchored" data-anchor-id="step-6-clean-up-optional">Step 6: Clean up (optional)</h3>
+<p>Once all Ingresses have been updated to <code>ingressClassName: traefik</code>, the <code>kubernetesIngressNGINX</code> provider is no longer needed. Re-install Traefik without it and delete the preserved <code>nginx</code> IngressClass:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> upgrade <span class="at">--install</span> traefik traefik/traefik <span class="dt">\</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--namespace</span> traefik <span class="dt">\</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--reuse-values</span> <span class="dt">\</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--set</span> providers.kubernetesIngressNGINX.enabled=false</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> delete ingressclass nginx</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p><strong>Note:</strong> After disabling <code>kubernetesIngressNGINX</code>, any remaining <code>nginx</code>-class Ingresses will return 404. Make sure all Ingresses have been updated to <code>ingressClassName: traefik</code> before running this step.</p>
+</blockquote>
+</section>
+</section>
+<section id="issues-and-feedback" class="level2">
+<h2 class="anchored" data-anchor-id="issues-and-feedback">Issues and Feedback</h2>
+<p>Please <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream">open an issue on the repository</a> to report any issue or give feedback.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.zonca\.dev");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

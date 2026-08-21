@@ -199,16 +199,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2026-08-20-kubernetes-jetstream2-magnum.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2026-08-20-kubernetes-jetstream2-magnum.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
-<p>This post is part of a series on deploying JupyterHub on Jetstream2, on top of a Kubernetes cluster:</p>
+<p>This post is part of a series on deploying JupyterHub on Jetstream2:</p>
 <ol type="1">
 <li><strong>Deploy Kubernetes on Jetstream2</strong></li>
 <li><a href="../posts/2026-08-20-kubernetes-jetstream2-traefik">Install Traefik Ingress Controller</a></li>
 <li><a href="../posts/2026-08-20-kubernetes-jetstream2-jupyterhub">Deploy JupyterHub</a></li>
 <li><a href="../posts/2026-08-20-kubernetes-jetstream2-certmanager">Setup HTTPS with cert-manager</a></li>
 </ol>
-<blockquote class="blockquote">
-<p><strong>Already running <code>ingress-nginx</code>?</strong> If you have an existing Jetstream2 cluster and want to switch it from <code>ingress-nginx</code> to Traefik, see the companion guide: <a href="../posts/2026-08-20-migrate-nginx-traefik-jetstream2-kubernetes">Migrate from NGINX to Traefik Ingress on Jetstream2 Kubernetes</a>. This series is for brand-new clusters.</p>
-</blockquote>
 <p>Jetstream2 uses the Cluster API as the backend for Magnum, making it faster and more straightforward to launch Kubernetes clusters. This guide walks through creating a cluster, configuring autoscaling, and verifying the deployment.</p>
 <section id="advantages-of-magnum-based-deployments" class="level2">
 <h2 class="anchored" data-anchor-id="advantages-of-magnum-based-deployments">Advantages of Magnum-Based Deployments</h2>

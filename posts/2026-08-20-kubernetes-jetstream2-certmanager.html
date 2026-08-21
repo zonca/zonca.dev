@@ -211,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="install-cert-manager" class="level2">
 <h2 class="anchored" data-anchor-id="install-cert-manager">Install cert-manager</h2>
 <p>Install cert-manager from the official manifest:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> apply <span class="at">-f</span> https://github.com/cert-manager/cert-manager/releases/download/v1.21.1/cert-manager.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> apply <span class="at">-f</span> https://github.com/cert-manager/cert-manager/releases/download/v1.17.1/cert-manager.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Wait for all three pods to be ready:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> cert-manager get pods <span class="at">-w</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>NAME                                       READY   STATUS    RESTARTS   AGE
@@ -251,16 +251,7 @@ certmanager-tls-jupyterhub   True    certmanager-tls-jupyterhub   2m</code></pre
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> cert-manager logs deploy/cert-manager</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get order <span class="at">-n</span> jhub</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get challenge <span class="at">-n</span> jhub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If the certificate is not being issued, check the cert-manager logs and the order/challenge status:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> cert-manager logs deploy/cert-manager</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get order <span class="at">-n</span> jhub</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get challenge <span class="at">-n</span> jhub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Common causes:</p>
-<ul>
-<li>The DNS record is not pointing to the correct IP (the Traefik load balancer’s floating IP).</li>
-<li>The ClusterIssuer references the wrong ingress class (should be <code>traefik</code>).</li>
-<li>cert-manager pods are running on a worker node that was scaled away.</li>
-</ul>
+<p>Common issues: - The DNS record is not pointing to the correct IP (Traefik load balancer) - The ClusterIssuer references the wrong ingress class (should be <code>traefik</code>) - cert-manager pods are running on a worker node that was scaled away</p>
 </section>
 <section id="issues-and-feedback" class="level2">
 <h2 class="anchored" data-anchor-id="issues-and-feedback">Issues and Feedback</h2>
