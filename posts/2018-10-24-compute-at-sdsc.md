@@ -10,7 +10,7 @@ title: Bring your computing to the San Diego Supercomputer Center
 
 ---
 
-**Note (2024 update)**: This post was written in 2018. Comet has been retired and XSEDE has been replaced by [ACCESS](https://access-ci.org/). SDSC's current flagship system is [Expanse](https://www.sdsc.edu/support/user_guides/expanse.html). Please visit the [SDSC website](https://www.sdsc.edu/) for current information about available resources and allocations.
+**Note (2026 update)**: This post was written in 2018. Comet has been retired and XSEDE has been replaced by [ACCESS](https://access-ci.org/). SDSC's current flagship system is [Expanse](https://www.sdsc.edu/systems/expanse/user_guide.html). For updated information about the HPC@UC program for UC researchers, see my [2026 post on requesting an HPC@UC allocation on Expanse](/posts/2026-08-25-hpc-uc-allocation).
 
 ---
 
