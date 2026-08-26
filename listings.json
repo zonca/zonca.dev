@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2026-08-25-hpc-uc-allocation.html",
       "/posts/2026-08-20-kubernetes-jetstream2-certmanager.html",
       "/posts/2026-08-20-kubernetes-jetstream2-jupyterhub.html",
       "/posts/2026-08-20-kubernetes-jetstream2-traefik.html",

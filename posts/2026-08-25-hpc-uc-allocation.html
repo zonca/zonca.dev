@@ -7,9 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Andrea Zonca">
-<meta name="dcterms.date" content="2025-04-19">
+<meta name="dcterms.date" content="2026-08-25">
+<meta name="description" content="How UC researchers can request a 500K core-hour allocation on SDSC’s Expanse supercomputer through the HPC@UC program, including eligibility, the application process, and trial accounts.">
 
-<title>How to request High Performance Computing (HPC) resources – Andrea Zonca</title>
+<title>Request an HPC@UC allocation on Expanse at SDSC – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -124,8 +125,13 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">How to request High Performance Computing (HPC) resources</h1>
-                                <div class="quarto-categories">
+      <h1 class="title">Request an HPC@UC allocation on Expanse at SDSC</h1>
+                  <div>
+        <div class="description">
+          How UC researchers can request a 500K core-hour allocation on SDSC’s Expanse supercomputer through the HPC@UC program, including eligibility, the application process, and trial accounts.
+        </div>
+      </div>
+                          <div class="quarto-categories">
                 <div class="quarto-category">hpc</div>
                 <div class="quarto-category">sdsc</div>
               </div>
@@ -145,7 +151,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">April 19, 2025</p>
+        <p class="date">August 25, 2026</p>
       </div>
     </div>
     
@@ -164,55 +170,72 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2025-04-19-access-hpc.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2025-04-19-access-hpc.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
-<p>I am often asked how a scientist located in the US can access supercomputing resources. I decided to write a blog post with an overview of the options, consider that I’m writing this in April 2025, so please cross-check on the official websites.</p>
-<section id="expanse" class="level2">
-<h2 class="anchored" data-anchor-id="expanse">Expanse</h2>
-<p>At the San Diego Supercomputer Center, our national scale resource is the <a href="https://www.sdsc.edu/systems/expanse/index.html">Expanse Supercomputer</a>, a powerful system designed for diverse scientific workloads.</p>
-<p><strong>Expanse Specifications:</strong></p>
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2026-08-25-hpc-uc-allocation.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2026-08-25-hpc-uc-allocation.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
+<p>If you are a researcher at any University of California campus and need more computing power, the HPC@UC program at the San Diego Supercomputer Center (SDSC) gives you an accelerated and simple path to a substantial allocation on the Expanse supercomputer. This post explains what HPC@UC offers, who is eligible, and how to apply in 2026.</p>
+<section id="what-is-hpcuc" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-hpcuc">What is HPC@UC?</h2>
+<p>HPC@UC is a partnership between SDSC, the University of California Vice Chancellors of Research, and campus Chief Information Officers. It is designed to:</p>
 <ul>
-<li><strong>Peak Performance:</strong> 5 Pflop/s</li>
-<li><strong>CPU Cores:</strong> 93,184</li>
-<li><strong>GPUs:</strong> 208 NVIDIA V100s</li>
-<li><strong>Total DRAM:</strong> 220 TB</li>
-<li><strong>Total NVMe:</strong> 810 TB</li>
-<li><strong>Standard Compute Nodes (728 total):</strong> AMD EPYC 7742 (Rome) CPUs (128 cores/node @ 2.25 GHz), 256 GB DRAM/node, 1 TB NVMe/node.</li>
-<li><strong>GPU Nodes (52 total):</strong> 4x NVIDIA V100s GPUs/node (32 GB memory/GPU, NVLINK), 40 Intel Xeon 6248 CPU cores/node (@ 2.5 GHz), 384 GB CPU DRAM/node, 1.6 TB NVMe/node.</li>
-<li><strong>Large-memory Nodes (4 total):</strong> AMD Rome CPUs (128 cores/node @ 2.25 GHz), 2 TB DRAM/node, 3.2 TB SSD/node.</li>
-<li><strong>Interconnect:</strong> HDR InfiniBand (100 Gb/s), Hybrid Fat-Tree topology.</li>
-<li><strong>Storage:</strong> Access to Lustre (12 PB) and Ceph (7 PB) parallel file systems.</li>
-<li><strong>Architecture:</strong> Organized into 13 Scalable Compute Units (SSCUs), each with 56 standard nodes and 4 GPU nodes.</li>
+<li>Broaden the base of UC researchers who use advanced computing</li>
+<li>Provide an on-ramp for UC researchers who are new to high-performance computing</li>
+<li>Seed promising computational research</li>
+<li>Facilitate collaborations between SDSC and UC researchers</li>
+<li>Help UC researchers be successful when applying for larger allocations through the NSF’s <a href="https://access-ci.org/">ACCESS program</a></li>
 </ul>
-<p>Expanse is an ACCESS resource. ACCESS (Advanced Cyberinfrastructure Coordination Ecosystem: Services &amp; Support) is a consortium of large US supercomputers dedicated to Science. It reviews applications from US scientists and grants them supercomputing resources. It is funded by the National Science Foundation.</p>
-<section id="how-to-request-resources-on-expanse" class="level3">
-<h3 class="anchored" data-anchor-id="how-to-request-resources-on-expanse">How to request resources on Expanse</h3>
-<p>Ordered from the lowest to the largest amount of resources needed, which generally corresponds to the amount of effort required for the allocation request. Resource usage on Expanse is typically measured in Service Units (SUs). Please refer to the <a href="https://www.sdsc.edu/systems/expanse/user_guide.html">Expanse User Guide</a> for detailed billing information.</p>
-<section id="trial-account" class="level4">
-<h4 class="anchored" data-anchor-id="trial-account">Trial Account</h4>
-<p>Anybody can request a trial account on Expanse with a quick justification. This is useful to try Expanse out and run some test jobs. See the <a href="https://www.sdsc.edu/systems/expanse/user_guide.html#narrow-wysiwyg-2">“Trial account” section in the Expanse User Guide</a>.</p>
 </section>
-<section id="campus-champions" class="level4">
-<h4 class="anchored" data-anchor-id="campus-champions">Campus Champions</h4>
-<p>Most US universities have a reference person that facilitates access to ACCESS supercomputers, often someone in the Information Technology office, Office of Research, or a professor. This person manages an allocation of supercomputing hours on ACCESS resources, and local faculty, postdocs, and graduate students can request access through them. Campus champions are currently available in 362 US institutions, <a href="https://campuschampions.cyberinfrastructure.org/champions/current-campus-champions">see the list on the Campus Champions website</a>.</p>
+<section id="resources-available" class="level2">
+<h2 class="anchored" data-anchor-id="resources-available">Resources available</h2>
+<p>A successful request gives you access to SDSC’s HPC infrastructure and expertise:</p>
+<ul>
+<li><strong>Expanse</strong>: SDSC’s flagship 5+ PFlop/s system, with 728 CPU nodes (two 64-core AMD EPYC 7742 processors and 256 GB memory per node), 4 large-memory nodes with 2 TB memory, and 52 GPU nodes. See the <a href="https://www.sdsc.edu/systems/expanse/index.html">Expanse page</a> for details.</li>
+<li><strong>Data storage</strong>: more than 12 PB of fast Lustre parallel storage, including short-term Performance Storage and long-term Project Storage, plus a Durable Storage copy of Project Storage data.</li>
+<li><strong>Software</strong>: a large installed base of HPC and big-data analytics applications.</li>
+<li><strong>Expertise</strong>: SDSC staff to help you make the best use of the resources and prepare larger allocation requests.</li>
+</ul>
 </section>
-<section id="hpcuc" class="level4">
-<h4 class="anchored" data-anchor-id="hpcuc">HPC@UC</h4>
-<p>If you are at any of the University of California campuses, you have an expedited way of getting resources at SDSC. You can submit a request for a substantial allocation on Expanse via the <a href="https://www.sdsc.edu/hpc-at-uc.html">HPC@UC page</a>. It requires a justification and is typically reviewed within 10 business days. You might not be eligible if your research group has an active ACCESS allocation. See my <a href="../posts/2026-08-25-hpc-uc-allocation">detailed post on the HPC@UC program</a> for the full application process.</p>
+<section id="allocation-details" class="level2">
+<h2 class="anchored" data-anchor-id="allocation-details">Allocation details</h2>
+<ul>
+<li><strong>Size</strong>: up to 500K core-hours of computing, plus associated data storage and access to SDSC expertise.</li>
+<li><strong>Duration</strong>: awards are active for one year.</li>
+<li><strong>Review</strong>: applications are reviewed on an ongoing basis; you are notified within 10 business days of the review decision.</li>
+</ul>
+<section id="eligibility" class="level3">
+<h3 class="anchored" data-anchor-id="eligibility">Eligibility</h3>
+<ul>
+<li>The program is intended for UC researchers who are <strong>new to high-performance computing</strong>.</li>
+<li>You must <strong>not</strong> have an active award in the NSF’s <a href="https://access-ci.org/">ACCESS program</a>.</li>
+<li>You must <strong>not</strong> have previously received an HPC@UC award on Expanse.</li>
+</ul>
 </section>
-<section id="access-allocation" class="level4">
-<h4 class="anchored" data-anchor-id="access-allocation">ACCESS Allocation</h4>
-<p>ACCESS allocations are full proposals where you can request significant resources on Expanse. You must provide a detailed justification for the resources requested and often demonstrate that your software can efficiently utilize the system. These requests are reviewed periodically. See the <a href="https://allocations.access-ci.org/get-your-first-project">ACCESS Allocations page</a> for details on the process.</p>
 </section>
+<section id="how-to-apply" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-apply">How to apply</h2>
+<ol type="1">
+<li><strong>Create an ACCESS account</strong> at <a href="https://identity.access-ci.org/new-user">https://identity.access-ci.org/new-user</a>. Eligibility is evaluated through the ACCESS review infrastructure (XRAS), so you need an ACCESS_CI portal account first, as confirmed by the HPC@UC program staff.</li>
+<li><strong>Contact HPC@UC</strong> at <a href="mailto:hpc_uc@sdsc.edu">hpc_uc@sdsc.edu</a>, or via the <a href="https://www.sdsc.edu/hpc-at-uc.html">HPC@UC page</a>, and submit a request/help ticket describing your research project so staff can evaluate your eligibility.</li>
+<li><strong>Submit your request</strong>: once approved and an opportunity is opened, the ticket is updated with the instructions for submitting your allocation request, including a template to fill in.</li>
+</ol>
 </section>
+<section id="try-expanse-first" class="level2">
+<h2 class="anchored" data-anchor-id="try-expanse-first">Try Expanse first</h2>
+<p>If you are not sure Expanse is the right fit, request a <strong>Trial Account</strong> on Expanse before applying for HPC@UC: 1,000 core-hours, typically fulfilled within 1 working day, designed for a quick assessment of the system. You are still eligible for an HPC@UC allocation even if you already have a Trial Account. See the <a href="https://www.sdsc.edu/systems/expanse/user_guide.html">Trial Account section of the Expanse User Guide</a>.</p>
 </section>
-<section id="triton-shared-computing-cluster-tscc" class="level2">
-<h2 class="anchored" data-anchor-id="triton-shared-computing-cluster-tscc">Triton Shared Computing Cluster (TSCC)</h2>
-<p>The Triton Shared Computing Cluster is another supercomputer at SDSC, not allocated through ACCESS; resources are typically paid for by the users or their institutions. ACCESS resources can be oversubscribed, so groups needing additional resources might consider TSCC.</p>
-<p>The easiest way to get hours on TSCC is often a pay-as-you-go option. A more cost-effective method for sustained use is often purchasing nodes to be added to the cluster (condo model). This grants an allocation proportional to the contributed hardware, allowing flexible usage patterns. Check the <a href="http://www.sdsc.edu/services/hpc/tscc.html">TSCC page</a> or contact SDSC for current pricing and options.</p>
+<section id="related-options-at-sdsc" class="level2">
+<h2 class="anchored" data-anchor-id="related-options-at-sdsc">Related options at SDSC</h2>
+<ul>
+<li><strong>TSCC (Triton Shared Computing Cluster)</strong>: a paid cluster at SDSC; UCSD researchers currently benefit from subsidized costs. See the <a href="https://www.sdsc.edu/systems/tscc/index.html">TSCC page</a>.</li>
+<li><strong>ACCESS allocations</strong>: for larger, longer-term needs you can apply directly to the <a href="https://allocations.access-ci.org/">ACCESS program</a>. HPC@UC is intended as a stepping stone toward these larger national allocations.</li>
+</ul>
 </section>
-<section id="feedback" class="level2">
-<h2 class="anchored" data-anchor-id="feedback">Feedback</h2>
-<p>If you have questions please email me at zonca on the <code>ucsd.edu</code> domain.</p>
+<section id="notes" class="level2">
+<h2 class="anchored" data-anchor-id="notes">Notes</h2>
+<p>This post was written in August 2026 and updates the HPC@UC information in my earlier posts:</p>
+<ul>
+<li><a href="../posts/2018-10-24-compute-at-sdsc">Bring your computing to the San Diego Supercomputer Center</a> (2018, now outdated: Comet and XSEDE are retired)</li>
+<li><a href="../posts/2025-04-19-access-hpc">How to request High Performance Computing (HPC) resources</a> (2025)</li>
+</ul>
+<p>Always cross-check the official <a href="https://www.sdsc.edu/hpc-at-uc.html">HPC@UC page</a> for the latest information. Questions? Email the HPC@UC team at <a href="mailto:hpc_uc@sdsc.edu">hpc_uc@sdsc.edu</a>.</p>
 
 
 </section>
