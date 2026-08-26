@@ -46,7 +46,7 @@ Campus champions are currently available in 362 US institutions, [see the list o
 #### HPC@UC
 
 If you are at any of the University of California campuses, you have an expedited way of getting resources at SDSC.
-You can submit a request for a substantial allocation on Expanse via the [HPC@UC page](https://www.sdsc.edu/hpc-at-uc.html). It requires a justification and is typically reviewed within 10 business days. You might not be eligible if your research group has an active ACCESS allocation.
+You can submit a request for a substantial allocation on Expanse via the [HPC@UC page](https://www.sdsc.edu/hpc-at-uc.html). It requires a justification and is typically reviewed within 10 business days. You might not be eligible if your research group has an active ACCESS allocation. See my [detailed post on the HPC@UC program](/posts/2026-08-25-hpc-uc-allocation) for the full application process.
 
 #### ACCESS Allocation
 
