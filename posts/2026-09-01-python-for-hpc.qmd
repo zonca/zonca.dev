@@ -1,0 +1,40 @@
+---
+title: "Python for HPC"
+date: 2026-09-01
+categories: [python, hpc, sdsc, events, education, ai]
+layout: post
+---
+
+I updated the **Python for HPC** session I taught at the [SDSC Summer Institute
+2026](https://github.com/sdsc/sdsc-summer-institute-2026) (August 7, 2026). The material was
+**heavily rewritten** for this year - a substantial rework, not a refresh of the 2025 version.
+
+**What changed:**
+
+- **Slides improved** - a rebuilt deck with per-section time checks, an explicit action/stop marker
+  on each slide, and a "check your mental model" and debrief prompt per block, so the class holds to
+  its 170-minute clock.
+- **Notebook-first, timed flow** - slides drive the action, notebooks carry the executable
+  explanations: setup and environment staging -> Numba serial -> Numba threads -> Dask -> multi-node
+  Dask -> recap.
+- **Environment staging reworked** - the `pythonhpc` conda env is built once and conda-packed to
+  node-local scratch, cached in `~/.galyleo/`, then staged from that cache by Galyleo and the Dask
+  workers, so nothing rebuilds per job or per node.
+- **Multi-node Dask added** - the same Dask expression run on two Expanse nodes (a Slurm scheduler +
+  worker job).
+- **Real-world example** - a PySM dust-emission kernel (`@njit(parallel=True)`) shows Numba in a
+  production codebase.
+- **Optional AI-coding-assistant block** - OpenCode and GitHub Copilot, plus a safety-boundary
+  section, now offered as an optional slide set.
+
+The session follows one practical path: time a slow Python loop, speed it up with Numba, choose
+threads vs. processes by the type of work, spread the work across chunks with Dask, then run it on
+two Expanse nodes.
+
+**Repository:** https://github.com/sdsc/sdsc-summer-institute-2026 (session `6.1_python_for_HPC`).
+
+**License:** All teaching material is licensed under [CC BY-NC-SA
+4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+If you reuse or adapt any of it, please cite the **DOI: 10.5281/zenodo.21909401** - and if you have
+any problems or feedback, open an issue.
