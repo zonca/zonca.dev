@@ -29,9 +29,7 @@ agreements effective **February 25, 2026**.
 TSCC's compliant environment lets researchers analyze this data on campus cyberinfrastructure
 rather than standing up (and paying for) their own compliant system. As SDSC's Cyberinfrastructure
 Solutions and Services manager and TSCC program director, Subhashini Sivagnanam, put it:
-> "We are now able to ensure that researchers securely work with regulated biomedical and genomic
-> datasets while meeting the federal cybersecurity and data protection requirements mandated for
-> NIH-controlled research data."
+"We are now able to ensure that researchers securely work with regulated biomedical and genomic datasets while meeting the federal cybersecurity and data protection requirements mandated for NIH-controlled research data."
 
 ## Who should use this environment
 
@@ -123,9 +121,7 @@ acquired to support extramurally funded research. Include these costs in the exc
 Achieving NIST SP 800-171 compliance involved a rigorous review of the system security plan,
 controls, and data handling practices across the TSCC environment. As SDSC Chief Information
 Security Officer **Winston Armstrong** noted:
-> "Working closely with the TSCC team and campus OIA, we were able to build a compliant
-> infrastructure for researchers to work with NIH data that is required to meet the new CAD
-> requirement."
+"Working closely with the TSCC team and campus OIA, we were able to build a compliant infrastructure for researchers to work with NIH data that is required to meet the new CAD requirement."
 
 By providing this environment, SDSC streamlines access to advanced computing resources, letting
 researchers leverage the performance of TSCC without compromising their security or compliance
