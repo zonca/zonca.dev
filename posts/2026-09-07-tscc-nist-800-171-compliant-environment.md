@@ -40,17 +40,13 @@ attest to NIST SP 800-171 may instead attest to the equivalent **ISO/IEC 27001/2
 
 ## How to request access
 
-To initiate access, email [TSCC Support](mailto:tscc-support@ucsd.edu) and include the following
-information in your request:
+To request access to the TSCC compliant environment, email
+[TSCC Support](mailto:tscc-support@ucsd.edu) with a brief description of your research project and
+intended usage. The TSCC team will guide you through the attestation, required documentation, and
+the appropriate usage model.
 
-* Your name and affiliation (department/institution)
-* A brief description of the research project
-* A description of the data that will be accessed or processed
-* Whether you have already completed the required campus attestation for handling controlled data
-* Your preferred usage model (Hotel or Condo), with details:
-  * **Hotel**: how many hours you plan to use (10,000 core-hours minimum)
-  * **Condo**: number and type of nodes you plan to purchase
-* Your estimated number of users
+Full details on eligibility, required information, usage models, and rates are on the
+[TSCC NIST compliance information page](https://www.sdsc.edu/systems/tscc/nist.html).
 
 ## Available usage models
 
