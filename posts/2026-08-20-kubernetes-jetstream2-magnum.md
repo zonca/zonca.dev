@@ -121,9 +121,11 @@ kubectl get storageclass
 
 ```
 NAME                PROVISIONER                RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
-default (default)   cinder.csi.openstack.org   Retain          WaitForFirstConsumer   true                   12m
-replicated-hdd      cinder.csi.openstack.org   Retain          WaitForFirstConsumer   true                   12m
+default (default)   cinder.csi.openstack.org   Delete          WaitForFirstConsumer   true                   12m
+replicated-hdd      cinder.csi.openstack.org   Delete          WaitForFirstConsumer   true                   12m
 ```
+
+By default, both storage classes use `Delete` as the reclaim policy, so Cinder volumes are automatically removed when their PVC is deleted (for example when the cluster is deleted). Clusters created before this was configured (pre-September 2026) have `Retain`; on those, delete lingering Cinder volumes manually after removing the cluster.
 
 ## Autoscaling
 
