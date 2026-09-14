@@ -267,8 +267,9 @@ k8s-wamiv264xiet-default-worker-x8cxp-vj9db   Ready    &lt;none&gt;          5m4
 <p>Check storage classes (Magnum provides Cinder-backed persistent volumes by default):</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get storageclass</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>NAME                PROVISIONER                RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
-default (default)   cinder.csi.openstack.org   Retain          WaitForFirstConsumer   true                   12m
-replicated-hdd      cinder.csi.openstack.org   Retain          WaitForFirstConsumer   true                   12m</code></pre>
+default (default)   cinder.csi.openstack.org   Delete          WaitForFirstConsumer   true                   12m
+replicated-hdd      cinder.csi.openstack.org   Delete          WaitForFirstConsumer   true                   12m</code></pre>
+<p>By default, both storage classes use <code>Delete</code> as the reclaim policy, so Cinder volumes are automatically removed when their PVC is deleted (for example when the cluster is deleted). Clusters created before this was configured (pre-September 2026) have <code>Retain</code>; on those, delete lingering Cinder volumes manually after removing the cluster.</p>
 </section>
 <section id="autoscaling" class="level2">
 <h2 class="anchored" data-anchor-id="autoscaling">Autoscaling</h2>
