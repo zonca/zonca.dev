@@ -9,7 +9,7 @@
 <meta name="author" content="Andrea Zonca">
 <meta name="dcterms.date" content="2026-09-13">
 
-<title>See which AI agent terminal is still working in ChromeOS Overview – Andrea Zonca</title>
+<title>See if your opencode session is still working in ChromeOS Overview – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -158,7 +158,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">See which AI agent terminal is still working in ChromeOS Overview</h1>
+      <h1 class="title">See if your opencode session is still working in ChromeOS Overview</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">linux</div>
                 <div class="quarto-category">tools</div>
@@ -200,7 +200,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2026-09-13-agent-terminal-status-chromeos-overview.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2026-09-13-agent-terminal-status-chromeos-overview.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
-<p>Running several AI coding agents in separate ChromeOS Crostini terminals makes it easy to lose track of which one is still busy. Desktop notifications only tell you when something finishes, not which window to look at. This post shows how to color-code each terminal window’s right edge so ChromeOS Overview tells you the status of every agent at a glance: a thin colored bar on the right of each window.</p>
+<p>Running opencode in a ChromeOS Crostini terminal, you have to keep switching back to the window to know if the agent is still working. Desktop notifications only tell you when something finishes. This post shows how to color-code the terminal window’s right edge so ChromeOS Overview tells you at a glance whether opencode is still busy: a thin colored bar appears on the right of the window.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/agent-status-chromeos-overview.png" class="img-fluid figure-img"></p>
@@ -214,127 +214,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>OSC 11</code> sets the default background color</li>
 <li><code>OSC 111</code> resets it to the terminal default</li>
 </ul>
-<p>The background shows as a thin bar on the right of each window because the agent terminal UIs paint their own dark screen; only the unpainted right margin keeps the terminal background. In ChromeOS Overview the bar is clearly visible on each thumbnail, so you can scan all your agent windows at a glance.</p>
-<p>Agents like Claude Code, Codex, and opencode can run hooks when a turn starts and finishes. Each hook calls a small helper, <code>agent-state</code>, that writes the right escape sequence to the host terminal. The helper has to find the terminal even when the hook runs with stdin and stdout piped (no tty), so it walks up the process tree until it finds the tty that launched the agent.</p>
+<p>The opencode TUI paints its own dark screen, so the terminal background only shows through on the right margin of the window. That margin becomes the status bar: gold while the session is busy, green when the session becomes idle. In ChromeOS Overview the bar is clearly visible on the thumbnail, so you can scan all your opencode windows without switching to them.</p>
 </section>
 <section id="install-the-helper" class="level2">
 <h2 class="anchored" data-anchor-id="install-the-helper">Install the helper</h2>
-<p>The helper is a single bash script, available in the <a href="https://gist.github.com/zonca/900fa78ad943a971485d1affad82f291">gist</a>:</p>
+<p>A small bash script, <code>agent-state</code>, writes the right escape sequence to the host terminal. opencode runs hooks inside a server process that has no terminal attached, so the helper walks up the process tree to find the tty that launched the terminal window. The script is available in the <a href="https://gist.github.com/zonca/900fa78ad943a971485d1affad82f291">gist</a>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://gist.githubusercontent.com/zonca/900fa78ad943a971485d1affad82f291/raw/agent-state <span class="at">-o</span> ~/.local/bin/agent-state</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x ~/.local/bin/agent-state</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Usage: <code>agent-state &lt;working|done|waiting|error|reset&gt; [agent-name]</code>. Colors are configurable through <code>AGENT_STATE_WORKING_COLOR</code>, <code>AGENT_STATE_DONE_COLOR</code>, and <code>AGENT_STATE_ERROR_COLOR</code>.</p>
 <p>The full source of <code>agent-state</code> and the opencode plugin are in this GitHub Gist:</p>
 <script src="https://gist.github.com/zonca/900fa78ad943a971485d1affad82f291.js"></script>
 </section>
-<section id="wire-up-your-agents" class="level2">
-<h2 class="anchored" data-anchor-id="wire-up-your-agents">Wire up your agents</h2>
-<section id="opencode" class="level3">
-<h3 class="anchored" data-anchor-id="opencode">opencode</h3>
-<p>opencode loads plugins from <code>~/.config/opencode/plugins/</code>. Add the plugin <code>agent-status.js</code> (second file in the gist): the session status events set the bar gold while the model is generating, green when the session becomes idle, red on a session error.</p>
+<section id="install-the-opencode-plugin" class="level2">
+<h2 class="anchored" data-anchor-id="install-the-opencode-plugin">Install the opencode plugin</h2>
+<p>opencode loads plugins from <code>~/.config/opencode/plugins/</code>. Copy the second file of the gist, <code>agent-status.js</code>, into that directory, then restart opencode:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://gist.githubusercontent.com/zonca/900fa78ad943a971485d1affad82f291/raw/agent-status.js <span class="at">-o</span> ~/.config/opencode/plugins/agent-status.js</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/.config/opencode/plugins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The plugin listens to session events: while a session is busy the bar is gold, when it goes idle the bar turns green, and on a session error the bar turns red.</p>
 </section>
-<section id="claude-code" class="level3">
-<h3 class="anchored" data-anchor-id="claude-code">Claude Code</h3>
-<p>Add these hooks to <code>~/.claude/settings.json</code>. The <code>SessionStart</code> hook paints the window dark red immediately, <code>UserPromptSubmit</code> switches to orange while working, <code>Stop</code> returns it to red, and <code>SessionEnd</code> resets to black when you quit:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"hooks"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"SessionStart"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">{</span> <span class="dt">"hooks"</span><span class="fu">:</span> <span class="ot">[</span><span class="fu">{</span> <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"command"</span><span class="fu">,</span> <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"AGENT_STATE_FORCE=1 AGENT_STATE_DONE_COLOR=#7f1d1d /home/zonca/.local/bin/agent-state done claude"</span> <span class="fu">}</span><span class="ot">]</span> <span class="fu">}</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"UserPromptSubmit"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">{</span> <span class="dt">"hooks"</span><span class="fu">:</span> <span class="ot">[</span><span class="fu">{</span> <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"command"</span><span class="fu">,</span> <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"AGENT_STATE_WORKING_COLOR=#8a4a00 /home/zonca/.local/bin/agent-state working claude"</span> <span class="fu">}</span><span class="ot">]</span> <span class="fu">}</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Stop"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">{</span> <span class="dt">"hooks"</span><span class="fu">:</span> <span class="ot">[</span><span class="fu">{</span> <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"command"</span><span class="fu">,</span> <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"AGENT_STATE_DONE_COLOR=#7f1d1d /home/zonca/.local/bin/agent-state done claude"</span> <span class="fu">}</span><span class="ot">]</span> <span class="fu">}</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"SessionEnd"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">{</span> <span class="dt">"hooks"</span><span class="fu">:</span> <span class="ot">[</span><span class="fu">{</span> <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"command"</span><span class="fu">,</span> <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"/home/zonca/.local/bin/agent-state reset claude"</span> <span class="fu">}</span><span class="ot">]</span> <span class="fu">}</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="codex" class="level3">
-<h3 class="anchored" data-anchor-id="codex">Codex</h3>
-<p>Put <code>hooks.json</code> in <code>~/.codex/hooks.json</code> (the first time Codex shows the hooks, review and trust them with <code>/hooks</code>):</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"hooks"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"UserPromptSubmit"</span><span class="fu">:</span> <span class="ot">[</span><span class="fu">{</span> <span class="dt">"hooks"</span><span class="fu">:</span> <span class="ot">[</span><span class="fu">{</span> <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"command"</span><span class="fu">,</span> <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"/home/zonca/.local/bin/agent-state working codex"</span><span class="fu">,</span> <span class="dt">"async"</span><span class="fu">:</span> <span class="kw">true</span> <span class="fu">}</span><span class="ot">]</span> <span class="fu">}</span><span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Stop"</span><span class="fu">:</span> <span class="ot">[</span><span class="fu">{</span> <span class="dt">"hooks"</span><span class="fu">:</span> <span class="ot">[</span><span class="fu">{</span> <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"command"</span><span class="fu">,</span> <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"/home/zonca/.local/bin/agent-state done codex"</span><span class="fu">,</span> <span class="dt">"async"</span><span class="fu">:</span> <span class="kw">true</span> <span class="fu">}</span><span class="ot">]</span> <span class="fu">}</span><span class="ot">]</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="antigravity-cli-agy" class="level3">
-<h3 class="anchored" data-anchor-id="antigravity-cli-agy">Antigravity CLI (agy)</h3>
-<p>The agy CLI reads user hooks from <code>~/.gemini/config/hooks.json</code> and uses the same JSON shape without the extra <code>hooks</code> grouping:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"agent-status"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"PreInvocation"</span><span class="fu">:</span> <span class="ot">[</span><span class="fu">{</span> <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"command"</span><span class="fu">,</span> <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"AGENT_STATE_WORKING_COLOR=#4a4200 /home/zonca/.local/bin/agent-state working antigravity"</span> <span class="fu">}</span><span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Stop"</span><span class="fu">:</span> <span class="ot">[</span><span class="fu">{</span> <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"command"</span><span class="fu">,</span> <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"AGENT_STATE_DONE_COLOR=#333333 /home/zonca/.local/bin/agent-state done antigravity"</span> <span class="fu">}</span><span class="ot">]</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="reset-the-background-when-the-tui-exits" class="level3">
-<h3 class="anchored" data-anchor-id="reset-the-background-when-the-tui-exits">Reset the background when the TUI exits</h3>
-<p>When a terminal UI exits, the shell takes over the window and the colored background would cover the whole terminal. Add wrappers to <code>~/.bashrc</code> so each agent resets the background when it quits:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">agy()</span> <span class="kw">{</span> <span class="bu">command</span> agy <span class="st">"</span><span class="va">$@</span><span class="st">"</span><span class="kw">;</span> <span class="ex">agent-state</span> reset<span class="kw">;</span> <span class="kw">}</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">opencode()</span> <span class="kw">{</span> <span class="bu">command</span> opencode <span class="st">"</span><span class="va">$@</span><span class="st">"</span><span class="kw">;</span> <span class="ex">agent-state</span> reset<span class="kw">;</span> <span class="kw">}</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">codex()</span> <span class="kw">{</span> <span class="bu">command</span> codex <span class="st">"</span><span class="va">$@</span><span class="st">"</span><span class="kw">;</span> <span class="ex">agent-state</span> reset<span class="kw">;</span> <span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-</section>
-<section id="color-scheme-used-here" class="level2">
-<h2 class="anchored" data-anchor-id="color-scheme-used-here">Color scheme used here</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Agent</th>
-<th>Working</th>
-<th>Done</th>
-<th>On exit</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>opencode</td>
-<td>gold <code>#ffd700</code> bar</td>
-<td>green <code>#22c55e</code> bar</td>
-<td>black</td>
-</tr>
-<tr class="even">
-<td>Claude Code</td>
-<td>dark orange <code>#8a4a00</code></td>
-<td>dark red <code>#7f1d1d</code></td>
-<td>black</td>
-</tr>
-<tr class="odd">
-<td>Codex</td>
-<td>gold <code>#ffd700</code></td>
-<td>green <code>#22c55e</code></td>
-<td>black</td>
-</tr>
-<tr class="even">
-<td>Antigravity (agy)</td>
-<td>dark olive <code>#4a4200</code></td>
-<td>dark grey <code>#333333</code></td>
-<td>black</td>
-</tr>
-</tbody>
-</table>
-<p>The background is a single color for the whole window, so agents that do not paint an opaque UI (like agy) get a subtler full-window tint instead of a bar.</p>
+<section id="reset-the-background-when-you-quit-opencode" class="level2">
+<h2 class="anchored" data-anchor-id="reset-the-background-when-you-quit-opencode">Reset the background when you quit opencode</h2>
+<p>When opencode exits, the shell takes over the window and the colored background would cover the whole terminal. Add a wrapper to <code>~/.bashrc</code> so opencode resets the background when it quits:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">opencode()</span> <span class="kw">{</span> <span class="bu">command</span> opencode <span class="st">"</span><span class="va">$@</span><span class="st">"</span><span class="kw">;</span> <span class="ex">agent-state</span> reset<span class="kw">;</span> <span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="test-it" class="level2">
 <h2 class="anchored" data-anchor-id="test-it">Test it</h2>
 <ol type="1">
-<li>Start each agent in its own terminal window.</li>
+<li>Restart opencode (so the plugin loads).</li>
 <li>Give it a task that takes a while, for example: <code>Run "sleep 15 &amp;&amp; echo done" in your terminal.</code></li>
-<li>Open ChromeOS Overview: the bar is gold while the agent works, and turns green (or the configured done color) when it finishes.</li>
-<li>Quit the agent: the window returns to the default black background.</li>
+<li>Open ChromeOS Overview: the bar is gold while opencode works, and turns green when the session is idle again.</li>
+<li>Quit opencode: the window returns to the default black background.</li>
 </ol>
-<p>Helper source is also available in the <a href="https://gist.github.com/zonca/900fa78ad943a971485d1affad82f291">gist above</a>.</p>
+<p>The same helper can be wired to other agent CLIs through their own lifecycle hooks.</p>
 
 
 </section>
