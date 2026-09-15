@@ -104,9 +104,12 @@ Edit `terraform.tfvars` for your project. The important settings:
 | `cluster_name` | Name of the Magnum cluster |
 | `cluster_template_id` | UUID of the Magnum cluster template (see below) |
 | `ssh_public_key` | Name of your OpenStack keypair |
-| `project_id` | Lowercase Jetstream allocation ID (e.g. `cis230085`) |
-| `subdomain` | Hostname prefix, the hub will be at `https://<subdomain>.<project>.projects.jetstream-cloud.org` |
+| `project_id` | Lowercase Jetstream allocation ID (e.g. `cisXXXXXX`) |
+| `subdomain` | Hostname prefix of the hub URL |
 | `letsencrypt_email` | Email for Let's Encrypt notifications |
+
+The hub will be available at
+`https://<subdomain>.<project>.projects.jetstream-cloud.org`.
 
 Optional tuning: `master_count`, `master_flavor`, `node_count`,
 `worker_flavor`, `docker_volume_size`, `enable_autoscaling`,
@@ -163,7 +166,7 @@ Outputs:
 
 cluster_id = "68f23a9c-528f-4041-a64c-c6564aa46c14"
 ingress_fixed_ip = "149.165.169.231"
-jupyterhub_url = "https://tofu-traefik.cis230085.projects.jetstream-cloud.org"
+jupyterhub_url = "https://tofu-traefik.cisXXXXXX.projects.jetstream-cloud.org"
 kubeconfig_path = "./config"
 ```
 
@@ -217,7 +220,7 @@ kubectl get certificate -n jhub
 
 ```text
 NAME         CLASS     HOSTS                                                 ADDRESS         PORTS     AGE
-jupyterhub   traefik   tofu-traefik.cis230085.projects.jetstream-cloud.org   149.165.170.9   80, 443   4m59s
+jupyterhub   traefik   tofu-traefik.cisXXXXXX.projects.jetstream-cloud.org   149.165.170.9   80, 443   4m59s
 
 NAME                         READY   SECRET                       AGE
 certmanager-tls-jupyterhub   True    certmanager-tls-jupyterhub   4m59s
@@ -231,7 +234,8 @@ swap happens out of band after the load balancer is created). Verify
 with the actual URL:
 
 ```bash
-curl -s -o /dev/null -w "%{http_code}\n" https://tofu-traefik.cis230085.projects.jetstream-cloud.org/hub/login
+curl -s -o /dev/null -w "%{http_code}\n" \
+  https://tofu-traefik.cisXXXXXX.projects.jetstream-cloud.org/hub/login
 ```
 
 ```text
@@ -241,7 +245,7 @@ curl -s -o /dev/null -w "%{http_code}\n" https://tofu-traefik.cis230085.projects
 And confirm the hub API responds:
 
 ```bash
-curl -s https://tofu-traefik.cis230085.projects.jetstream-cloud.org/hub/api
+curl -s https://tofu-traefik.cisXXXXXX.projects.jetstream-cloud.org/hub/api
 ```
 
 ```text
