@@ -16,6 +16,10 @@ This post is part of a series on deploying JupyterHub on Jetstream2:
 3. [Deploy JupyterHub](/posts/2026-08-20-kubernetes-jetstream2-jupyterhub)
 4. **Setup HTTPS with cert-manager**
 
+**Prefer one command?** Deploy everything (cluster, Traefik,
+JupyterHub, HTTPS) in one go with this
+[OpenTofu tutorial](./2026-09-14-deploy-jupyterhub-jetstream2-magnum-opentofu.md).
+
 This guide covers how to set up HTTPS with Let's Encrypt on a Jetstream2 Kubernetes cluster using [cert-manager](https://cert-manager.io/). It assumes you already have a running cluster with Traefik as the ingress controller and JupyterHub deployed — see the earlier posts in this series if you need to set those up.
 
 ## Install cert-manager

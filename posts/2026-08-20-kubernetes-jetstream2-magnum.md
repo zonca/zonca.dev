@@ -15,6 +15,10 @@ This post is part of a series on deploying JupyterHub on Jetstream2:
 3. [Deploy JupyterHub](/posts/2026-08-20-kubernetes-jetstream2-jupyterhub)
 4. [Setup HTTPS with cert-manager](/posts/2026-08-20-kubernetes-jetstream2-certmanager)
 
+**Prefer one command?** Deploy everything (cluster, Traefik,
+JupyterHub, HTTPS) in one go with this
+[OpenTofu tutorial](./2026-09-14-deploy-jupyterhub-jetstream2-magnum-opentofu.md).
+
 Jetstream2 uses the Cluster API as the backend for Magnum, making it faster and more straightforward to launch Kubernetes clusters. This guide walks through creating a cluster, configuring autoscaling, and verifying the deployment.
 
 ## Advantages of Magnum-Based Deployments
