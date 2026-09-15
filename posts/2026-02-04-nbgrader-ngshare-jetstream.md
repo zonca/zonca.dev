@@ -17,11 +17,11 @@ title: Deploy nbgrader on Jetstream with ngshare (Kubernetes)
 > - The newer tutorial uses nbgrader's native filesystem exchange on a shared Manila RWX volume.
 > - The newer tutorial removes the `ngshare` service dependency and focuses on shared storage setup.
 
-> **Update (September 15, 2026):** The storage backend of this tutorial has been
-> updated: [Deploy ngshare on Jetstream with a Manila volume (Kubernetes)](./2026-09-15-ngshare-manila-jetstream.md).
-> The Manila CephFS volume honors `fsGroup` on RWX claims, so ngshare works
-> without the initContainer workaround described in the Troubleshooting section
-> below.
+* **UPDATED 2026-09-15**: The storage backend of this tutorial has been
+  updated: [Deploy ngshare on Jetstream with a Manila volume (Kubernetes)](./2026-09-15-ngshare-manila-jetstream.md).
+  The Manila CephFS volume honors `fsGroup` on RWX claims, so ngshare works
+  without the initContainer workaround described in the Troubleshooting section
+  below.
 
 This tutorial shows how to deploy **nbgrader** on Jetstream using **ngshare**, a service designed to make nbgrader work on Kubernetes without a shared filesystem exchange. This is the recommended approach for Kubernetes deployments.
 
