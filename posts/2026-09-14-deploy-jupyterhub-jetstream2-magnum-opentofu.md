@@ -77,7 +77,8 @@ virtual environment and install them:
 
 ```bash
 python3 -m venv .venv
-.venv/bin/pip install python-openstackclient python-magnumclient python-octaviaclient python-designateclient
+.venv/bin/pip install python-openstackclient python-magnumclient \
+  python-octaviaclient python-designateclient
 source .venv/bin/activate
 ```
 
