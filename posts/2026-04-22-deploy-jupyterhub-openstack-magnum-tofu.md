@@ -35,7 +35,7 @@ By following this guide, you will have:
 If you don't have OpenTofu installed, you can install it using the official script:
 
 ```bash
-curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install.sh | sh
+curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install-opentofu.sh | sh
 ```
 
 Alternatively, on Linux with snap: `snap install opentofu --classic`.

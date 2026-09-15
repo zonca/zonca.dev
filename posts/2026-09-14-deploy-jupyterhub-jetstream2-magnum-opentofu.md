@@ -9,7 +9,7 @@ layout: post
 title: "Deploy JupyterHub on Jetstream2 with OpenTofu, Magnum and Traefik"
 ---
 
-This tutorial deploys a production-ready JupyterHub on Jetstream2 with a single `tofu apply`. It combines the steps of the [four-post Jetstream2 Kubernetes series](/posts/2026-08-20-kubernetes-jetstream2-magnum) (Magnum cluster, Traefik ingress, JupyterHub, cert-manager) into one reproducible OpenTofu configuration.
+This tutorial deploys a JupyterHub on Jetstream2 with a single `tofu apply`. It combines the steps of the [four-post Jetstream2 Kubernetes series](/posts/2026-08-20-kubernetes-jetstream2-magnum) (Magnum cluster, Traefik ingress, JupyterHub, cert-manager) into one reproducible OpenTofu configuration.
 
 This post replaces the older [Deploying JupyterHub on OpenStack Magnum with OpenTofu](/posts/2026-04-22-deploy-jupyterhub-openstack-magnum-tofu) tutorial, which used `ingress-nginx`. Since `ingress-nginx` has been [retired](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/), the new recipe installs [Traefik](https://doc.traefik.io/traefik/), which supports both the Ingress and Gateway APIs.
 
@@ -145,10 +145,11 @@ k8s-tofu-traefik-cihlpc4q2a4a-control-plane-krz54          Ready    control-plan
 k8s-tofu-traefik-cihlpc4q2a4a-default-worker-vcbsw-fdhbj   Ready    <none>          18m   v1.33.2
 ```
 
-Autoscaling is on for the worker node group (the Cluster Autoscaler reads the labels set at creation):
+Autoscaling is on for the worker node group (the Cluster Autoscaler reads the labels set at creation). `CLUSTER_NAME` is the `cluster_name` you set in `terraform.tfvars`:
 
 ```bash
-openstack coe nodegroup show $K8S_CLUSTER_NAME default-worker -c labels -f value
+export CLUSTER_NAME=k8s
+openstack coe nodegroup show $CLUSTER_NAME default-worker -c labels -f value
 ```
 
 ```text
@@ -181,7 +182,7 @@ NAME                         READY   SECRET                       AGE
 certmanager-tls-jupyterhub   True    certmanager-tls-jupyterhub   4m59s
 ```
 
-When the certificate is `True`, JupyterHub is served over HTTPS. Use the fixated floating IP in the DNS record, not the load balancer status in `kubectl`: the service status keeps the originally assigned floating IP, whereas the DNS record and `jupyterhub_url` point to the fixed IP (the swap happens out of band after the load balancer is created). Verify with the actual URL:
+When the certificate is `True`, JupyterHub is served over HTTPS. Use the fixed floating IP in the DNS record, not the load balancer status in `kubectl`: the service status keeps the originally assigned floating IP, whereas the DNS record and `jupyterhub_url` point to the fixed IP (the swap happens out of band after the load balancer is created). Verify with the actual URL:
 
 ```bash
 curl -s -o /dev/null -w "%{http_code}\n" https://tofu-traefik.cis230085.projects.jetstream-cloud.org/hub/login
@@ -215,6 +216,10 @@ proxy-7cfd5f7b97-qbljs            1/1     Running   0          5m37s
 user-scheduler-6995f6f4d5-h26fh   1/1     Running   0          5m37s
 user-scheduler-6995f6f4d5-hlddn   1/1     Running   0          5m37s
 ```
+
+### Authentication
+
+This recipe does not configure an authenticator, so the hub runs with the JupyterHub chart default [DummyAuthenticator](https://zero-to-jupyterhub.readthedocs.io/en/latest/authentication.html), which accepts any username and password. That is fine for a quick test, but not for real users. Before exposing the hub, add an authenticator (GitHub OAuth, Google OAuth, or another OAuthenticator) to the JupyterHub values file (`config_standard_storage.yaml` or a supplementary `--values` file) and re-run `tofu apply`. The infrastructure setup in this tutorial (cluster, ingress, DNS, HTTPS) does not change.
 
 ## 5. Clean up
 
