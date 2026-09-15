@@ -8,6 +8,12 @@ layout: post
 title: "Deploying JupyterHub on OpenStack Magnum with OpenTofu"
 ---
 
+> **This tutorial is obsolete.** It deploys `ingress-nginx` as the ingress
+> controller. `ingress-nginx` has been [retired](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/),
+> so this workflow is no longer recommended. Use the new tutorial
+> [Deploy JupyterHub on Jetstream2 with OpenTofu, Magnum and Traefik](/posts/2026-09-14-deploy-jupyterhub-jetstream2-magnum-opentofu)
+> instead, which deploys Traefik and keeps the same single `tofu apply` workflow.
+
 In this tutorial, we will walk through the process of deploying a production-ready JupyterHub on OpenStack Magnum using **OpenTofu**. 
 
 ### What you get at the end
