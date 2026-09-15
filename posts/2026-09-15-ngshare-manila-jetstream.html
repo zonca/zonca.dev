@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Andrea Zonca">
-<meta name="dcterms.date" content="2026-02-04">
+<meta name="dcterms.date" content="2026-09-15">
 
-<title>Deploy nbgrader on Jetstream with ngshare (Kubernetes) – Andrea Zonca</title>
+<title>Deploy ngshare on Jetstream with a Manila volume (Kubernetes) – Andrea Zonca</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -158,7 +158,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Deploy nbgrader on Jetstream with ngshare (Kubernetes)</h1>
+      <h1 class="title">Deploy ngshare on Jetstream with a Manila volume (Kubernetes)</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">kubernetes</div>
                 <div class="quarto-category">jetstream</div>
@@ -181,7 +181,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">February 4, 2026</p>
+        <p class="date">September 15, 2026</p>
       </div>
     </div>
     
@@ -200,232 +200,130 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2026-02-04-nbgrader-ngshare-jetstream.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2026-02-04-nbgrader-ngshare-jetstream.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
-<blockquote class="blockquote">
-<p><strong>Update (March 3, 2026):</strong> See the newer tutorial: <a href="../posts/2026-03-03-nbgrader-manila-exchange-jetstream.html">Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)</a></p>
-<p>Short differences: - This tutorial uses <code>ngshare</code> (REST API exchange, no shared filesystem). - The newer tutorial uses nbgrader’s native filesystem exchange on a shared Manila RWX volume. - The newer tutorial removes the <code>ngshare</code> service dependency and focuses on shared storage setup.</p>
-</blockquote>
-<ul>
-<li><strong>UPDATED 2026-09-15</strong>: The storage backend of this tutorial has been updated: <a href="../posts/2026-09-15-ngshare-manila-jetstream.html">Deploy ngshare on Jetstream with a Manila volume (Kubernetes)</a>. The Manila CephFS volume honors <code>fsGroup</code> on RWX claims, so ngshare works without the initContainer workaround described in the Troubleshooting section below.</li>
-</ul>
-<p>This tutorial shows how to deploy <strong>nbgrader</strong> on Jetstream using <strong>ngshare</strong>, a service designed to make nbgrader work on Kubernetes without a shared filesystem exchange. This is the recommended approach for Kubernetes deployments.</p>
-<p>We will:</p>
-<ul>
-<li>Deploy <code>ngshare</code> via Helm.</li>
-<li>Configure JupyterHub to register the ngshare service.</li>
-<li>Install <code>ngshare_exchange</code> and <code>nbgrader</code> in the singleuser image (using an existing image).</li>
-<li>Set a placeholder course ID.</li>
-</ul>
-<section id="why-ngshare" class="level2">
-<h2 class="anchored" data-anchor-id="why-ngshare">Why ngshare</h2>
-<p>nbgrader’s default exchange assumes a shared filesystem between user pods. Kubernetes does not provide that by default, so ngshare replaces the exchange mechanism with a REST API.</p>
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2026-09-15-ngshare-manila-jetstream.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2026-09-15-ngshare-manila-jetstream.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
+<p>This tutorial shows how to deploy <strong>nbgrader</strong> with <strong>ngshare</strong> on Jetstream Kubernetes where ngshare’s SQLite database lives on a <strong>Manila CephFS share</strong> instead of a Cinder volume.</p>
+<p>It is the storage-backend update of the original ngshare tutorial: <a href="../posts/2026-02-04-nbgrader-ngshare-jetstream.html">Deploy nbgrader on Jetstream with ngshare (Kubernetes)</a>.</p>
+<section id="why-use-manila-for-ngshare" class="level2">
+<h2 class="anchored" data-anchor-id="why-use-manila-for-ngshare">Why use Manila for ngshare</h2>
+<p>ngshare keeps its SQLite database on a <strong>ReadWriteMany</strong> PVC (in case of multiple replicas or shared access). The default Cinder CSI driver on Jetstream registers <code>fsGroupPolicy: ReadWriteOnceWithFSType</code>, so per the CSI spec <code>fsGroup</code> is applied only to ReadWriteOnce claims; RWX volumes are mounted with root ownership, and ngshare fails with:</p>
+<pre class="text"><code>sqlite3.OperationalError: unable to open database file</code></pre>
+<p>The previous workaround was a root initContainer fixing ownership and mode (see the old tutorial’s Troubleshooting section).</p>
+<p>Manila CephFS volumes mounted through the <strong>CephFS CSI driver</strong> register <code>fsGroupPolicy: File</code>, so <code>fsGroup</code> is honored also for RWX mounts. ngshare then works out of the box, without initContainers. I verified this on 2026-09-15 on a fresh Jetstream2 cluster: the ngshare pod starts, runs its alembic migrations and creates the SQLite DB with fsGroup 1000 applied. All manifests below live in the <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream">jupyterhub-deploy-kubernetes-jetstream</a> deployment repository, and the reusable test case is at <code>nbgrader/ngshare-standalone-repro-manila/</code>.</p>
 </section>
 <section id="prerequisites" class="level2">
 <h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
 <ul>
-<li>A working Kubernetes cluster on Jetstream (Magnum + Cluster API).</li>
-<li>JupyterHub deployed with the Helm chart.</li>
-<li><code>kubectl</code> and <code>helm</code> configured.</li>
-<li>This repository cloned locally.</li>
+<li>A running Magnum cluster on Jetstream (see <a href="../posts/2026-08-20-kubernetes-jetstream2-magnum.html">Deploy Kubernetes on Jetstream2 with Magnum and Cluster API</a>).</li>
+<li>OpenStack credentials loaded, plus <code>openstack</code>, <code>jq</code>, <code>kubectl</code>, and <code>helm</code>.</li>
+<li>The deployment repository cloned locally: <code>git clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream.git</code> (all commands below run from its root).</li>
 </ul>
 </section>
-<section id="storage-sizing-for-ngshare" class="level2">
-<h2 class="anchored" data-anchor-id="storage-sizing-for-ngshare">Storage sizing for ngshare</h2>
-<p>ngshare stores <strong>metadata only</strong> (users, courses, submissions metadata), not the actual notebook files.</p>
+<section id="step-1-create-a-manila-share" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-create-a-manila-share">Step 1: Create a Manila share</h2>
+<p>Create a 10 GiB CEPHFS share and a cephx access rule:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> share create <span class="at">--name</span> ngshare <span class="at">--share-type</span> cephfsnativetype CEPHFS 10</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="bu">[</span> <span class="st">"</span><span class="va">$(</span><span class="ex">openstack</span> share show ngshare <span class="at">-f</span> value <span class="at">-c</span> status<span class="va">)</span><span class="st">"</span> <span class="ot">!=</span> <span class="st">"available"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">do</span> <span class="fu">sleep</span> 5<span class="kw">;</span> <span class="cf">done</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> share access create <span class="at">--access-level</span> rw ngshare cephx ngshare-rw</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Extract the mount details (monitors + path, access key):</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> share show ngshare <span class="at">-f</span> json <span class="kw">|</span> <span class="ex">jq</span> <span class="at">-r</span> <span class="st">'.export_locations[0].path'</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> share access list ngshare <span class="at">-f</span> value <span class="at">-c</span> <span class="st">"Access To"</span> <span class="at">-c</span> <span class="st">"Access Key"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The path looks like:</p>
+<pre class="text"><code>149.165.158.38:6789,149.165.158.22:6789,149.165.158.54:6789,149.165.158.70:6789,149.165.158.86:6789:/volumes/_nogroup/&lt;share-id&gt;/&lt;path&gt;</code></pre>
+<p>The Ceph monitors are the comma-separated <code>host:port</code> entries up to the colon that immediately precedes <code>/volumes/...</code>; the share path is everything from <code>/volumes/...</code> onward (use only that part in the PV).</p>
+</section>
+<section id="step-2-configure-access-to-the-cluster" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-configure-access-to-the-cluster">Step 2: Configure access to the cluster</h2>
+<p>From the deployment repository root, with OpenStack credentials loaded:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">K8S_CLUSTER_NAME</span><span class="op">=</span>k8s</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> kubernetes_magnum/configure_kubectl_locally.sh</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">KUBECONFIG</span><span class="op">=</span><span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>/config</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get nodes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="step-3-install-the-cephfs-csi-driver" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-install-the-cephfs-csi-driver">Step 3: Install the CephFS CSI driver</h2>
+<p>Copy the values template to a <strong>local, gitignored</strong> file (never edit the tracked template, it holds the share access key):</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> manila/cephfs-csi-values.yaml manila/cephfs-csi-values.local.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Fill <code>manila/cephfs-csi-values.local.yaml</code> with:</p>
 <ul>
-<li>Typical classes: <strong>1–5 Gi</strong> is plenty.</li>
-<li>Large classes or many submissions: <strong>10 Gi</strong> is safe.</li>
+<li><code>&lt;CEPH_FSID&gt;</code>: any stable ID string, e.g.&nbsp;<code>manila-cephfs</code> (it only needs to match the PV, see the next step)</li>
+<li><code>&lt;ACCESS_RULE_NAME&gt;</code>: the access rule name (<code>ngshare-rw</code>, no <code>client.</code> prefix)</li>
+<li><code>&lt;ACCESS_KEY&gt;</code>: the access key from Step 1</li>
+<li>the <code>monitors</code> list from the export location</li>
 </ul>
+<p>Then install in <code>kube-system</code> (the nodeStageSecretRef of the PV below points there):</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> repo add ceph-csi https://ceph.github.io/csi-charts/</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> repo update</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> upgrade <span class="at">--install</span> ceph-csi-cephfs ceph-csi/ceph-csi-cephfs <span class="dt">\</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--namespace</span> kube-system <span class="dt">\</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">-f</span> manila/cephfs-csi-values.local.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Verify the driver is registered and pods run:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get csidriver cephfs.csi.ceph.com <span class="at">-o</span> jsonpath=<span class="st">'{.spec.fsGroupPolicy}'</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get csidriver cephfs.csi.ceph.com</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> kube-system get pods <span class="kw">|</span> <span class="fu">grep</span> ceph-csi-cephfs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Expected <code>fsGroupPolicy</code>: <code>File</code>.</p>
 </section>
-<section id="step-1-install-ngshare-helm" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-install-ngshare-helm">Step 1: Install ngshare (Helm)</h2>
-<p>Add the Helm repo and create a minimal <code>config.yaml</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> repo add ngshare https://libretexts.github.io/ngshare-helm-repo/</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> repo update</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Use the template in this repo and edit it:</p>
+<section id="step-4-create-the-storageclass-pv-and-pvc" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-create-the-storageclass-pv-and-pvc">Step 4: Create the StorageClass, PV and PVC</h2>
+<p>This repo ships templates for the ngshare Manila PV:</p>
 <ul>
-<li><code>nbgrader/ngshare-config.yaml</code></li>
+<li><code>nbgrader/ngshare-standalone-repro-manila/00-storageclass.yaml</code>: <code>manila-cephfs</code> StorageClass with <code>provisioner: kubernetes.io/no-provisioner</code></li>
+<li><code>nbgrader/ngshare-manila-pv.yaml</code>: static PV (fill <code>&lt;SHARE_ID&gt;</code> and <code>&lt;SHARE_PATH&gt;</code>)</li>
 </ul>
-<p>Install into the same namespace as JupyterHub (here <code>jhub</code>):</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> install ngshare ngshare/ngshare <span class="dt">\</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--namespace</span> jhub <span class="dt">\</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-f</span> nbgrader/ngshare-config.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Expected output (truncated):</p>
-<pre><code>NAME: ngshare
-NAMESPACE: jhub
-STATUS: deployed
-NOTES:
-Congrats, ngshare should be installed!</code></pre>
-<p>At the end of the Helm install, ngshare prints the <strong>exact JupyterHub config snippet</strong> you should add. Keep it; we will use it in the next step.</p>
-<p>Verify the pod:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> jhub get pods <span class="at">-l</span> app.kubernetes.io/instance=ngshare</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Example output:</p>
-<pre><code>NAME                       READY   STATUS    RESTARTS   AGE
-ngshare-57545bf697-rbrcz   1/1     Running   0          37s</code></pre>
-</section>
-<section id="step-2-register-ngshare-in-jupyterhub" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-register-ngshare-in-jupyterhub">Step 2: Register ngshare in JupyterHub</h2>
-<p>Add the ngshare service snippet to your JupyterHub values:</p>
+<p>Fill <code>ngshare-manila-pv.yaml</code>:</p>
 <ul>
-<li><code>nbgrader/jhub-ngshare-service.yaml</code></li>
+<li><code>&lt;SHARE_ID&gt;</code>: the Manila share UUID (any unique string is fine as <code>volumeHandle</code>)</li>
+<li><code>&lt;SHARE_PATH&gt;</code>: <code>/volumes/_nogroup/...</code> from Step 1</li>
+<li><code>clusterID</code> must equal the <code>&lt;CEPH_FSID&gt;</code> used in Step 3</li>
 </ul>
-<p>If you keep your Helm values in <code>config_standard_storage.yaml</code>, add the block there.<br>
-Then add the values file to <code>install_jhub.sh</code> (just before the last line):</p>
-<pre><code>--values nbgrader/jhub-ngshare-service.yaml \</code></pre>
-<p>Re-deploy by running:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> install_jhub.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Verify the ngshare service:</p>
-<ul>
-<li>JupyterHub → Control Panel → Services → <strong>ngshare</strong></li>
-<li>If you see a 403, try with an admin user (ngshare enforces admin-only access to some endpoints).</li>
-</ul>
+<p>Apply the StorageClass and PV (do not create a PVC here: the ngshare Helm chart creates its own PVC in Step 5, and a static PV can be bound only once):</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> create namespace jhub <span class="at">--dry-run</span><span class="op">=</span>client <span class="at">-o</span> yaml <span class="kw">|</span> <span class="ex">kubectl</span> apply <span class="at">-f</span> <span class="at">-</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> apply <span class="at">-f</span> nbgrader/ngshare-standalone-repro-manila/00-storageclass.yaml</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> apply <span class="at">-f</span> nbgrader/ngshare-manila-pv.yaml</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pv ngshare-manila-pv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Expected: PV <code>Available</code>, access modes <code>RWX</code>.</p>
+<p>Why a <code>no-provisioner</code> StorageClass: the ngshare Helm chart creates its own PVC and we bind it statically with a <code>selector</code>. A StorageClass with a real provisioner would make the controller attempt dynamic provisioning, and the CephFS provisioner rejects PVC selectors with <code>claim Selector is not supported</code>.</p>
 </section>
-<section id="step-3-enable-nbgrader-in-the-singleuser-image" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-enable-nbgrader-in-the-singleuser-image">Step 3: Enable nbgrader in the singleuser image</h2>
-<p>You need <code>nbgrader</code> and <code>ngshare_exchange</code> inside every user pod.<br>
-This tutorial uses the standard Jupyter Docker Stacks image and installs the packages at startup.</p>
-<p>Use the template in this repo:</p>
-<ul>
-<li><code>nbgrader/jhub-singleuser-nbgrader.yaml</code></li>
-</ul>
-<p>Replace <code>COURSE_ID</code> with your course (e.g.&nbsp;<code>course101</code>).</p>
-<p>If you want a custom image instead, see:<br>
-<code>https://www.zonca.dev/posts/2025-12-01-custom-jupyterhub-docker-image</code></p>
-<p>After updating the values, add the file to <code>install_jhub.sh</code>:</p>
-<pre><code>--values nbgrader/jhub-singleuser-nbgrader.yaml \</code></pre>
-<p>Re-deploy:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> install_jhub.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If you forget to add the values file, user pods will not have the packages installed and you will see:</p>
-<pre><code>WARNING: Package(s) not found: nbgrader, ngshare-exchange</code></pre>
+<section id="step-5-install-ngshare" class="level2">
+<h2 class="anchored" data-anchor-id="step-5-install-ngshare">Step 5: Install ngshare</h2>
+<p>Add the ngshare Helm repository and use the values file <code>nbgrader/ngshare-manila-config.yaml</code>: it points the chart PVC at the static PV via <code>pvc.selector</code>, uses <code>storageClassName: manila-cephfs</code>, and contains no initContainer.</p>
+<p>Edit it (token, admins) and install:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> repo add ngshare https://libretexts.github.io/ngshare-helm-repo/</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> repo update</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> install ngshare ngshare/ngshare <span class="dt">\</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--namespace</span> jhub <span class="dt">\</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">-f</span> nbgrader/ngshare-manila-config.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Verify the PVC bound and the pod running:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> jhub get pvc ngshare-pvc</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> jhub get pods <span class="at">-l</span> app.kubernetes.io/instance=ngshare</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> jhub logs deploy/ngshare <span class="at">--tail</span><span class="op">=</span>20</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Expected: pod <code>1/1 Running</code>, log shows alembic migrations (<code>Context impl SQLiteImpl</code>, <code>Running upgrade -&gt; aa00db20c10a, Init</code>) and no permission errors. The SQLite database is created on the Manila volume with fsGroup ownership:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> jhub exec deploy/ngshare <span class="at">--</span> sh <span class="at">-c</span> <span class="st">'id; ls -ld /srv/ngshare; ls -l /srv/ngshare'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="step-4-validate-in-jupyterhub" class="level2">
-<h2 class="anchored" data-anchor-id="step-4-validate-in-jupyterhub">Step 4: Validate in JupyterHub</h2>
-<p>In a user pod:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip show nbgrader ngshare-exchange</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Expected output (example):</p>
-<pre><code>[pip show output truncated]
-[ListApp | ERROR] ngshare service returned invalid status code 404.
-[ListApp | ERROR] ngshare endpoint /assignments/course101 returned failure: Course not found
-[ListApp | ERROR] Failed to get assignments from course course101.
-[ListApp | INFO] Released assignments:</code></pre>
-<p>The 404 “Course not found” is expected until you create the course in the next step.</p>
-<p>Note: running <code>nbgrader list</code> in a standalone test pod (not a real JupyterHub user pod) can also return a 404 from ngshare. Always validate from an actual user server.</p>
-<p>Full <code>pip show</code> output is available in this repo at:</p>
-<ul>
-<li><code>nbgrader/expected-output/pip-show-nbgrader-ngshare.txt</code></li>
-</ul>
-</section>
-<section id="step-5-create-the-course-and-roster" class="level2">
-<h2 class="anchored" data-anchor-id="step-5-create-the-course-and-roster">Step 5: Create the course and roster</h2>
-<p>Use <code>ngshare-course-management</code> (installed with <code>ngshare_exchange</code>) to create the course and add instructors/students.<br>
-Creating a course requires an <strong>admin</strong> user.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ngshare-course-management</span> create_course course101 instructor1</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ngshare-course-management</span> add_student course101 student1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>After creating the course:</p>
-<pre><code>[ListApp | INFO] Released assignments:</code></pre>
-</section>
-<section id="step-6-create-and-release-a-first-assignment" class="level2">
-<h2 class="anchored" data-anchor-id="step-6-create-and-release-a-first-assignment">Step 6: Create and release a first assignment</h2>
-<p>Initialize a course directory with example content:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> quickstart course101</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Expected output (example):</p>
-<pre><code>[QuickStartApp | INFO] Creating directory '/home/jovyan/course101'...
-[QuickStartApp | INFO] Copying example from the user guide...
-[QuickStartApp | INFO] Generating example config file...
-[QuickStartApp | INFO] Done! The course files are located in '/home/jovyan/course101'.</code></pre>
-<p>Generate the assignment and release it to ngshare:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /home/jovyan/course101</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> generate_assignment ps1</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> release_assignment ps1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If you want ready-made test notebooks, this repo includes a minimal set at:</p>
-<ul>
-<li><code>nbgrader/quickstart-source/ps1/problem1.ipynb</code></li>
-<li><code>nbgrader/quickstart-source/ps1/problem2.ipynb</code></li>
-</ul>
-<p>Copy them into your course source before generating:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> /path/to/jupyterhub-deploy-kubernetes-jetstream/nbgrader/quickstart-source/ps1 /home/jovyan/course101/source/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Expected output (example):</p>
-<pre><code>[GenerateAssignmentApp | INFO] Updating/creating assignment 'ps1': {}
-[GenerateAssignmentApp | INFO] Converting notebook /home/jovyan/course101/source/./ps1/problem1.ipynb
-[GenerateAssignmentApp | INFO] Converting notebook /home/jovyan/course101/source/./ps1/problem2.ipynb
-[ReleaseAssignmentApp | INFO] Successfully released ps1</code></pre>
-<p>If <code>nbgrader generate_assignment</code> fails with an “old nbgrader metadata format” error, run:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /home/jovyan/course101</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> update .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Then re-run <code>nbgrader generate_assignment ps1 --force</code>.</p>
-<p>If you re-run the release, add <code>--force</code>:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> release_assignment ps1 <span class="at">--force</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Verify it shows up:</p>
-<pre><code>[ListApp | INFO] Released assignments:
-[ListApp | INFO] course101 ps1</code></pre>
-</section>
-<section id="step-7-student-workflow-fetch-submit" class="level2">
-<h2 class="anchored" data-anchor-id="step-7-student-workflow-fetch-submit">Step 7: Student workflow (fetch + submit)</h2>
-<p>Make sure the student is added to the course:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ngshare-course-management</span> add_student course101 student1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If a student is not added, they will see:</p>
-<pre><code>[ListApp | ERROR] ngshare service returned invalid status code 403.
-[ListApp | ERROR] ngshare endpoint /assignments/course101 returned failure: Permission denied</code></pre>
-<p>As the student, list available assignments:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Expected output (example):</p>
-<pre><code>[ListApp | INFO] Released assignments:
-[ListApp | INFO] course101 ps1</code></pre>
-<p>Fetch the assignment:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> fetch_assignment ps1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Expected output (example):</p>
-<pre><code>[FetchAssignmentApp | INFO] Successfully fetched ps1. Will try to decode
-[FetchAssignmentApp | INFO] Decoding: /home/jovyan/ps1/problem2.ipynb
-[FetchAssignmentApp | INFO] Decoding: /home/jovyan/ps1/problem1.ipynb
-[FetchAssignmentApp | INFO] Successfully decoded ps1.</code></pre>
-<p>Submit the assignment:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> submit ps1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Expected output (example):</p>
-<pre><code>[SubmitApp | INFO] Source: /home/jovyan/ps1
-[SubmitApp | INFO] Encoding: problem1.ipynb
-[SubmitApp | INFO] Encoding: problem2.ipynb
-[SubmitApp | INFO] Submitted as: course101 ps1 2026-02-04 03:03:39.734930</code></pre>
-</section>
-<section id="step-8-instructor-workflow-collect-autograde" class="level2">
-<h2 class="anchored" data-anchor-id="step-8-instructor-workflow-collect-autograde">Step 8: Instructor workflow (collect + autograde)</h2>
-<p>As the instructor:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /home/jovyan/course101</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> collect ps1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Expected output (example):</p>
-<pre><code>[CollectApp | INFO] Processing 1 submissions of "ps1" for course "course101"
-[CollectApp | INFO] Collecting submission: student1 ps1
-[CollectApp | INFO] Decoding: /home/jovyan/course101/submitted/student1/ps1/problem1.ipynb
-[CollectApp | INFO] Decoding: /home/jovyan/course101/submitted/student1/ps1/problem2.ipynb</code></pre>
-<p>Autograde:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nbgrader</span> autograde ps1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Expected output (example):</p>
-<pre><code>[AutogradeApp | INFO] SubmittedAssignment&lt;ps1 for student1&gt; submitted at 2026-02-04 03:03:39.734930
-[AutogradeApp | INFO] Autograding /home/jovyan/course101/autograded/student1/ps1/problem1.ipynb
-[AutogradeApp | INFO] Autograding /home/jovyan/course101/autograded/student1/ps1/problem2.ipynb</code></pre>
-<p>You may see <code>SAWarning</code> lines from SQLAlchemy during autograde. These are warnings (not failures) and can be ignored for this workflow.</p>
+<section id="step-6-register-ngshare-in-jupyterhub-and-enable-nbgrader" class="level2">
+<h2 class="anchored" data-anchor-id="step-6-register-ngshare-in-jupyterhub-and-enable-nbgrader">Step 6: Register ngshare in JupyterHub and enable nbgrader</h2>
+<p>Same as the original tutorial:</p>
+<ol type="1">
+<li>Add the ngshare service snippet from <code>nbgrader/jhub-ngshare-service.yaml</code> to your JupyterHub values and redeploy.</li>
+<li>Add <code>nbgrader/jhub-singleuser-nbgrader.yaml</code> so user pods have <code>nbgrader</code> and <code>ngshare_exchange</code>.</li>
+</ol>
+<p>See steps 2 to 4 of <a href="../posts/2026-02-04-nbgrader-ngshare-jetstream.html">Deploy nbgrader on Jetstream with ngshare (Kubernetes)</a>.</p>
 </section>
 <section id="notes" class="level2">
 <h2 class="anchored" data-anchor-id="notes">Notes</h2>
 <ul>
-<li>Use <strong>ngshare</strong> for nbgrader exchange on Kubernetes.</li>
-<li>Use a dedicated course ID per class (set in <code>nbgrader_config.py</code>).</li>
-<li>To manage students and instructors, use the <code>ngshare-course-management</code> CLI installed with <code>ngshare_exchange</code> rather than the formgrader UI.</li>
+<li>No initContainer is required: the Manila CephFS volume honors <code>fsGroup</code> on RWX claims.</li>
+<li>The ngshare PVC is standalone metadata storage; 10 GiB is plenty for typical classes.</li>
+<li>The <code>nbgrader/ngshare-standalone-repro-manila/</code> folder contains a standalone repro (same ngshare runtime conditions) if you want to verify a fresh setup before deploying. It uses its own PV (<code>ngshare-repro-pv</code>) and <strong>its own Manila share or subdirectory</strong>: never point it at the same share/path as the deployed ngshare volume, because its with-init variant recursively <code>chown</code>s the mount.</li>
 </ul>
 </section>
 <section id="troubleshooting" class="level2">
 <h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
-<p>Before running exchange commands (<code>nbgrader list</code>, <code>nbgrader fetch_assignment</code>, <code>nbgrader submit</code>), make sure you are inside a real JupyterHub user server. Running them in a standalone test pod can raise:</p>
-<pre><code>KeyError: 'USER'</code></pre>
-<p>If ngshare starts with:</p>
-<pre><code>sqlite3.OperationalError: unable to open database file</code></pre>
-<p>Your storage backend likely doesn’t honor <code>fsGroup</code>.<br>
-Fix it by uncommenting the <code>deployment.initContainers</code> block in <code>nbgrader/ngshare-config.yaml</code> and re-install:</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="ex">helm</span> upgrade ngshare ngshare/ngshare <span class="dt">\</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--namespace</span> jhub <span class="dt">\</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-f</span> nbgrader/ngshare-config.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Then restart the pod:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> jhub delete pod <span class="at">-l</span> app.kubernetes.io/instance=ngshare</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>PVC stuck Pending, event <code>claim Selector is not supported</code></strong>: the StorageClass has a real provisioner. Recreate it with <code>provisioner: kubernetes.io/no-provisioner</code> as in <code>00-storageclass.yaml</code>.</p>
+<p><strong>PVC Pending after the PV was previously bound and released</strong>: clear the <code>claimRef</code> on the PV:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> patch pv ngshare-manila-pv <span class="at">--type</span><span class="op">=</span>merge <span class="at">-p</span> <span class="st">'{"spec":{"claimRef":null}}'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Pod stuck ContainerCreating with Ceph mount errors</strong>: check the <code>secret</code> referenced by <code>nodeStageSecretRef</code> exists in <code>kube-system</code>, and that <code>rootPath</code> is only the <code>/volumes/...</code> part of the export location.</p>
+<p><strong>Old sqlite error still appears</strong>: make sure the ngshare pod uses the Manila PVC and that the volume directory is not a leftover Cinder mount. Delete the ngshare pod so it re-creates the DB on the new volume:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> <span class="at">-n</span> jhub delete pod <span class="at">-l</span> app.kubernetes.io/instance=ngshare</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
