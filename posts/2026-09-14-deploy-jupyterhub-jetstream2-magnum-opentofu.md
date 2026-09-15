@@ -219,7 +219,7 @@ user-scheduler-6995f6f4d5-hlddn   1/1     Running   0          5m37s
 
 ### Authentication
 
-This recipe does not configure an authenticator, so the hub runs with the JupyterHub chart default [DummyAuthenticator](https://zero-to-jupyterhub.readthedocs.io/en/latest/authentication.html), which accepts any username and password. That is fine for a quick test, but not for real users. Before exposing the hub, add an authenticator (GitHub OAuth, Google OAuth, or another OAuthenticator) to the JupyterHub values file (`config_standard_storage.yaml` or a supplementary `--values` file) and re-run `tofu apply`. The infrastructure setup in this tutorial (cluster, ingress, DNS, HTTPS) does not change.
+This recipe does not configure an authenticator, so the hub runs with the JupyterHub chart default [DummyAuthenticator](https://zero-to-jupyterhub.readthedocs.io/en/latest/administrator/authentication.html), which accepts any username and password. That is fine for a quick test, but not for real users. Before exposing the hub, add an authenticator, for example [GitHub OAuth](https://zero-to-jupyterhub.readthedocs.io/en/latest/administrator/authentication.html#github) or another [OAuthenticator](https://zero-to-jupyterhub.readthedocs.io/en/latest/administrator/authentication.html#oauth2-based-authentication), to the JupyterHub values file (`config_standard_storage.yaml` or a supplementary `--values` file) and re-run `tofu apply`. The infrastructure setup in this tutorial (cluster, ingress, DNS, HTTPS) does not change.
 
 ## 5. Clean up
 
