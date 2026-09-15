@@ -1,0 +1,28 @@
+name: Jules PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+concurrency:
+  group: jules-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+      statuses: write
+    steps:
+      - uses: sanjay3290/jules-pr-reviewer@v1
+        with:
+          jules_api_key: ${{ secrets.JULES_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          extra_instructions: |
+            This is a Quarto-based personal blog (zonca.dev). Follow the conventions
+            in AGENTS.md: front matter with title, date, categories, layout; use
+            existing categories only; date must match the filename; fenced code
+            blocks must have language tags; never commit secrets; internal links
+            use relative ./YYYY-MM-DD-slug.md paths.
