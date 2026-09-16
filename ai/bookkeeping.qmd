@@ -14,15 +14,7 @@ Use consistent rules to organize transactions and supporting documents, surface 
 reduce the time spent searching for evidence.
 :::
 
-::: {.ai-subnav}
-[Overview](/ai/)
-[Research and computing](/ai/research/)
-[Operations](/ai/operations/)
-[Customer systems](/ai/customers/)
-[Bookkeeping](/ai/bookkeeping/)
-[Italian School case study](/ai/italian-school/)
-[Responsible AI](/ai/responsible-ai/)
-:::
+{{< include _subnav.html >}}
 
 ::: {.ai-section}
 ## A traceable preparation workflow
