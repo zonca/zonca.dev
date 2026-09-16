@@ -383,10 +383,11 @@ lives in the cluster and is removed with it):
 tofu destroy
 ```
 
-The load balancer allocates one extra floating IP out of band; the recipe
-deletes it during the apply, so destroy leaves the project clean. If you
-ever see an unbound floating IP after a destroy (for example from a
-recipe version older than the one in this post), remove it manually:
+Two load balancers allocate their own floating IP out of band: the one
+of the Traefik service (the recipe deletes it during the apply) and the
+one of the cluster API load balancer (it can remain unbound after a
+destroy). Unbound floating IPs do not count as cost but they consume
+quota, so check for leftovers and remove them:
 
 ```bash
 openstack floating ip list
