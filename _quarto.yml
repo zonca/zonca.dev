@@ -5,6 +5,7 @@ project:
     - "*.png"
     - "docs"
     - "posts/img"
+    - "_redirects"
 
 website:
   title: "Andrea Zonca"
