@@ -191,6 +191,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Never force-push</strong> to <code>main</code> unless explicitly instructed.</li>
 </ul>
 </section>
+<section id="visual-and-navigation-changes" class="level2">
+<h2 class="anchored" data-anchor-id="visual-and-navigation-changes">Visual and navigation changes</h2>
+<ul>
+<li>For any navigation, layout, or CSS change, inspect the rendered page at desktop and mobile widths before publishing, then inspect the live page again after publishing. Build success and HTTP checks do not replace visual verification.</li>
+<li>Navigation markup must be semantic and structurally match its CSS. Links intended as flex or grid items must be direct children of the navigation container, not hidden inside an automatically generated paragraph wrapper.</li>
+<li>Verify the global header, page-level navigation, overflow, wrapping, active states, and mobile menu behavior on every page type affected by the change.</li>
+<li>If the connected visual browser is unavailable, do not report visual verification as complete. Make the source-level fix, publish a preview, and ask Andrea to confirm the rendering before closing the visual issue.</li>
+</ul>
+</section>
 <section id="creating-a-new-blog-post" class="level2">
 <h2 class="anchored" data-anchor-id="creating-a-new-blog-post">Creating a new blog post</h2>
 <p>Blog posts live in the <code>posts/</code> directory as Markdown files.</p>
