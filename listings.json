@@ -3,6 +3,7 @@
     "listing": "/index.html",
     "items": [
       "/posts/2026-09-15-ngshare-manila-jetstream.html",
+      "/posts/2026-09-14-deploy-jupyterhub-jetstream2-magnum-opentofu.html",
       "/posts/2026-09-13-agent-terminal-status-chromeos-overview.html",
       "/posts/2026-09-01-python-for-hpc.html",
       "/posts/2026-08-25-hpc-uc-allocation.html",

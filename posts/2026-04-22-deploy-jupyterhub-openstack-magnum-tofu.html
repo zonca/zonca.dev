@@ -200,6 +200,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2026-04-22-deploy-jupyterhub-openstack-magnum-tofu.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2026-04-22-deploy-jupyterhub-openstack-magnum-tofu.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
+<ul>
+<li><strong>UPDATED 2026-09-14</strong>: This tutorial is obsolete. It deploys <code>ingress-nginx</code>, which has been <a href="https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/">retired</a>, so this workflow is no longer recommended. Use the new tutorial <a href="../posts/2026-09-14-deploy-jupyterhub-jetstream2-magnum-opentofu.html">Deploy JupyterHub on Jetstream2 with OpenTofu, Magnum and Traefik</a> instead, which deploys Traefik and keeps the same single <code>tofu apply</code> workflow.</li>
+</ul>
 <p>In this tutorial, we will walk through the process of deploying a production-ready JupyterHub on OpenStack Magnum using <strong>OpenTofu</strong>.</p>
 <section id="what-you-get-at-the-end" class="level3">
 <h3 class="anchored" data-anchor-id="what-you-get-at-the-end">What you get at the end</h3>
@@ -218,7 +221,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="install-opentofu" class="level3">
 <h3 class="anchored" data-anchor-id="install-opentofu">Install OpenTofu</h3>
 <p>If you don’t have OpenTofu installed, you can install it using the official script:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--proto</span> <span class="st">'=https'</span> <span class="at">--tlsv1.2</span> <span class="at">-fsSL</span> https://get.opentofu.org/install.sh <span class="kw">|</span> <span class="fu">sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--proto</span> <span class="st">'=https'</span> <span class="at">--tlsv1.2</span> <span class="at">-fsSL</span> https://get.opentofu.org/install-opentofu.sh <span class="kw">|</span> <span class="fu">sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Alternatively, on Linux with snap: <code>snap install opentofu --classic</code>.</p>
 </section>
 <section id="clone-the-material" class="level3">

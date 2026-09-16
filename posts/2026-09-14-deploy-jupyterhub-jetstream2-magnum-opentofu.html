@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.43">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Andrea Zonca">
+<meta name="dcterms.date" content="2026-09-14">
+
+<title>Deploy JupyterHub on Jetstream2 with OpenTofu, Magnum and Traefik – Andrea Zonca</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-3260c940f7959e14cdb42c3461e14886.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Andrea Zonca</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../consult.html"> 
+<span class="menu-text">Consulting</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zonca"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/andreazonca"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://mastodon.online/@zonca"> <i class="bi bi-mastodon" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Deploy JupyterHub on Jetstream2 with OpenTofu, Magnum and Traefik</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">kubernetes</div>
+                <div class="quarto-category">jetstream</div>
+                <div class="quarto-category">jupyterhub</div>
+                <div class="quarto-category">openstack</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Andrea Zonca </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 14, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2026-09-14-deploy-jupyterhub-jetstream2-magnum-opentofu.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2026-09-14-deploy-jupyterhub-jetstream2-magnum-opentofu.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
+<p>This tutorial deploys a JupyterHub on Jetstream2 with a single <code>tofu apply</code>. It combines the steps of the <a href="../posts/2026-08-20-kubernetes-jetstream2-magnum.html">four-post Jetstream2 Kubernetes series</a> (Magnum cluster, Traefik ingress, JupyterHub, cert-manager) into one reproducible OpenTofu configuration.</p>
+<p>This post replaces the older <a href="../posts/2026-04-22-deploy-jupyterhub-openstack-magnum-tofu.html">Deploying JupyterHub on OpenStack Magnum with OpenTofu</a> tutorial, which used <code>ingress-nginx</code>. Since <code>ingress-nginx</code> has been <a href="https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/">retired</a>, the new recipe installs <a href="https://doc.traefik.io/traefik/">Traefik</a>, which supports both the Ingress and Gateway APIs.</p>
+<section id="what-you-get-at-the-end" class="level2">
+<h2 class="anchored" data-anchor-id="what-you-get-at-the-end">What you get at the end</h2>
+<ul>
+<li>A functional Kubernetes cluster on Jetstream2 via Magnum, with the Cluster API backend.</li>
+<li>A Traefik ingress controller with a public floating IP attached to its load balancer.</li>
+<li>A DNS record on your project subdomain (<code>&lt;project&gt;.projects.jetstream-cloud.org</code>).</li>
+<li>Automatic HTTPS certificates via cert-manager and Let’s Encrypt (HTTP01 challenge through Traefik).</li>
+<li>A JupyterHub accessible at <code>https://&lt;subdomain&gt;.&lt;project&gt;.projects.jetstream-cloud.org</code>.</li>
+<li>A modular, reproducible OpenTofu configuration in the <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream">jupyterhub-deploy-kubernetes-jetstream</a> repository.</li>
+</ul>
+</section>
+<section id="prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites">1. Prerequisites</h2>
+<section id="install-opentofu-and-the-kubernetes-tooling" class="level3">
+<h3 class="anchored" data-anchor-id="install-opentofu-and-the-kubernetes-tooling">Install OpenTofu and the Kubernetes tooling</h3>
+<p>Install OpenTofu with the official script:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--proto</span> <span class="st">'=https'</span> <span class="at">--tlsv1.2</span> <span class="at">-fsSL</span> https://get.opentofu.org/install-opentofu.sh <span class="kw">|</span> <span class="fu">sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You also need <code>kubectl</code> (official instructions at <a href="https://kubernetes.io/docs/tasks/tools/" class="uri">https://kubernetes.io/docs/tasks/tools/</a>) and <code>helm</code> (<a href="https://helm.sh/docs/intro/install/" class="uri">https://helm.sh/docs/intro/install/</a>). This tutorial was tested with OpenTofu 1.12.6, kubectl 1.36.1, and helm 3.21.4.</p>
+</section>
+<section id="clone-the-repository" class="level3">
+<h3 class="anchored" data-anchor-id="clone-the-repository">Clone the repository</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> jupyterhub-deploy-kubernetes-jetstream</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="check-your-project-has-the-openstack-resources-the-recipe-needs" class="level3">
+<h3 class="anchored" data-anchor-id="check-your-project-has-the-openstack-resources-the-recipe-needs">Check your project has the OpenStack resources the recipe needs</h3>
+<p>The recipe requires two things that Jetstream provisions per project, so check them before running anything:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> zone list   <span class="co"># the project zone must exist</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> network show auto_allocated_network   <span class="co"># must exist</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If <code>auto_allocated_network</code> is missing, launch any instance from the dashboard once, or ask your allocation administrator: the network appears the first time a project launches an instance. The recipe uses the first subnet of that network.</p>
+</section>
+<section id="create-an-application-credential" class="level3">
+<h3 class="anchored" data-anchor-id="create-an-application-credential">Create an application credential</h3>
+<p>Create an application credential in the Jetstream2 dashboard (Identity -&gt; Application credentials): choose <strong>Unrestricted</strong> and include all permissions, notably <strong>load balancer</strong>. Download the <code>openrc</code> file and place it at the repository root (it is gitignored), then source it:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> app-cred-XXXX-openrc.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="create-an-ssh-keypair" class="level3">
+<h3 class="anchored" data-anchor-id="create-an-ssh-keypair">Create an SSH keypair</h3>
+<p>Magnum uses an SSH keypair for the cluster nodes, so create one if you do not have it yet:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> keypair create <span class="at">--public-key</span> ~/.ssh/id_ed25519.pub mykey</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> keypair list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You will reference the keypair name in <code>terraform.tfvars</code> as <code>ssh_public_key</code>.</p>
+</section>
+<section id="python-environment-for-the-openstack-clients" class="level3">
+<h3 class="anchored" data-anchor-id="python-environment-for-the-openstack-clients">Python environment for the OpenStack clients</h3>
+<p>OpenTofu and the support scripts need the OpenStack clients. Create a virtual environment at the repository root and install the clients (pinned to the versions this tutorial was tested with):</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv .venv</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/bin/pip</span> install python-openstackclient==10.2.1 <span class="dt">\</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  python-magnumclient==4.11.0 <span class="dt">\</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  python-octaviaclient==3.14.0 <span class="dt">\</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  python-designateclient==7.0.0</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> .venv/bin/activate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="one-shell-for-the-whole-tutorial" class="level3">
+<h3 class="anchored" data-anchor-id="one-shell-for-the-whole-tutorial">One shell for the whole tutorial</h3>
+<p>Run every command below from the same shell where the <code>openrc</code> is sourced and the virtual environment is active, with <code>tofu</code>, <code>openstack</code>, <code>kubectl</code>, and <code>helm</code> in <code>PATH</code>. The steps that install Traefik, cert-manager, and JupyterHub run through those CLI tools, so a new shell without the environment fails partway through the apply.</p>
+</section>
+</section>
+<section id="configuration" class="level2">
+<h2 class="anchored" data-anchor-id="configuration">2. Configuration</h2>
+<p>Copy the example variables file:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> tofu_magnum/full_stack_https</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> terraform.tfvars.example terraform.tfvars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Edit <code>terraform.tfvars</code> for your project. The important settings:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>cluster_name</code></td>
+<td>Name of the Magnum cluster</td>
+</tr>
+<tr class="even">
+<td><code>cluster_template_id</code></td>
+<td>UUID of the Magnum cluster template (see below)</td>
+</tr>
+<tr class="odd">
+<td><code>ssh_public_key</code></td>
+<td>Name of your OpenStack keypair</td>
+</tr>
+<tr class="even">
+<td><code>project_id</code></td>
+<td>Lowercase Jetstream allocation ID of the project where you created the credential</td>
+</tr>
+<tr class="odd">
+<td><code>subdomain</code></td>
+<td>Hostname prefix of the hub URL</td>
+</tr>
+<tr class="even">
+<td><code>letsencrypt_email</code></td>
+<td>Email for Let’s Encrypt notifications</td>
+</tr>
+</tbody>
+</table>
+<p>The hub will be available at <code>https://&lt;subdomain&gt;.&lt;project&gt;.projects.jetstream-cloud.org</code>.</p>
+<p><code>project_id</code> must be the allocation the application credential was created in. The credential file does not contain it; find it with:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> token issue <span class="at">-f</span> json <span class="kw">|</span> <span class="ex">jq</span> <span class="at">-r</span> .project.id</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>It is also the lowercase name shown in the Jetstream2 dashboard.</p>
+<p>Optional tuning: <code>master_count</code>, <code>master_flavor</code>, <code>node_count</code>, <code>worker_flavor</code>, <code>docker_volume_size</code>, <code>enable_autoscaling</code>, <code>autoscaling_min_node_count</code>, <code>autoscaling_max_node_count</code>, <code>dns_zone_name</code>.</p>
+<section id="choosing-the-cluster-template" class="level3">
+<h3 class="anchored" data-anchor-id="choosing-the-cluster-template">Choosing the cluster template</h3>
+<p>Find the available templates:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> coe cluster template list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The example uses the <code>kubernetes-1-33-jammy-fixed-labels</code> template. Prefer the <strong>fixed-labels</strong> variant over <code>kubernetes-1-33-jammy</code>: the default template deploys a Kubernetes dashboard app that is now defunct, which can leave Magnum stuck at <code>CREATE_IN_PROGRESS</code> even though the cluster is functional. Also reference the template by its <strong>UUID</strong> (as in the example file), not by name: Magnum reads community-shared images referenced by name as <code>Unset</code> and rejects the request (HTTP 400).</p>
+</section>
+<section id="pick-a-free-subdomain" class="level3">
+<h3 class="anchored" data-anchor-id="pick-a-free-subdomain">Pick a free subdomain</h3>
+<p>The recipe only creates the DNS record, so the subdomain must not already have an A record in the project zone. Check first:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> recordset list <span class="op">&lt;</span>project_id<span class="op">&gt;</span>.projects.jetstream-cloud.org.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If the name is already there (left over from an earlier deployment) and the old cluster is gone, delete the record:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> recordset delete <span class="dt">\</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span>project_id<span class="op">&gt;</span>.projects.jetstream-cloud.org. <span class="dt">\</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span>subdomain<span class="op">&gt;</span>.<span class="op">&lt;</span>project_id<span class="op">&gt;</span>.projects.jetstream-cloud.org.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="deploy" class="level2">
+<h2 class="anchored" data-anchor-id="deploy">3. Deploy</h2>
+<p>Initialize the workspace, inspect the plan, then apply:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tofu</span> init</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tofu</span> plan</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">tofu</span> apply</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>tofu plan</code> catches configuration mistakes (wrong <code>project_id</code>, missing keypair, taken subdomain) in seconds, before a cluster starts consuming quota. For a throwaway test you can skip the interactive confirmation with <code>tofu apply -auto-approve</code>.</p>
+<p>OpenTofu performs these steps in order:</p>
+<ol type="1">
+<li>Creates the Magnum Kubernetes cluster (autoscaling labels enabled on the worker node group).</li>
+<li>Installs Traefik via Helm into the <code>traefik</code> namespace.</li>
+<li>Attaches a fixed floating IP to the Traefik load balancer and deletes the one the load balancer allocated automatically.</li>
+<li>Creates the DNS A record for your subdomain.</li>
+<li>Installs cert-manager (pinned to the control-plane node) and the Let’s Encrypt ClusterIssuer.</li>
+<li>Installs JupyterHub via Helm and requests the TLS certificate.</li>
+</ol>
+<p>The cluster takes about 10 minutes to create on warm OpenStack images; the first deployment in a project can take longer (up to a couple of hours) while images are being cached. The recipe waits up to 4 hours for the cluster to be ready, so a slow first deploy is not an error.</p>
+<p>When finished, OpenTofu prints:</p>
+<pre class="text"><code>Apply complete! Resources: 15 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+cluster_id = "68f23a9c-528f-4041-a64c-c6564aa46c14"
+ingress_fixed_ip = "149.165.169.231"
+jupyterhub_url = "https://tofu-traefik.cisXXXXXX.projects.jetstream-cloud.org"
+kubeconfig_path = "./config"</code></pre>
+<p>The examples in the rest of the post use this run (cluster_name <code>k8s-tofu-traefik</code>, subdomain <code>tofu-traefik</code>); your IDs and IPs will differ.</p>
+</section>
+<section id="verification" class="level2">
+<h2 class="anchored" data-anchor-id="verification">4. Verification</h2>
+<p>Export the kubeconfig and check the cluster:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">KUBECONFIG</span><span class="op">=</span><span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>/config</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get nodes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre class="text"><code>NAME                                                       STATUS   ROLES           AGE   VERSION
+k8s-tofu-traefik-cihlpc4q2a4a-control-plane-krz54          Ready    control-plane   22m   v1.33.2
+k8s-tofu-traefik-cihlpc4q2a4a-default-worker-vcbsw-fdhbj   Ready    &lt;none&gt;          18m   v1.33.2</code></pre>
+<p>Autoscaling is on for the worker node group (the Cluster Autoscaler reads the labels set at creation):</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> coe nodegroup show <span class="op">&lt;</span>your_cluster_name<span class="op">&gt;</span> default-worker <span class="at">-c</span> labels <span class="at">-f</span> value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Replace <code>&lt;your_cluster_name&gt;</code> with the <code>cluster_name</code> from <code>terraform.tfvars</code>. The output looks like:</p>
+<pre class="text"><code>{'auto_scaling_enabled': 'true', 'max_node_count': '5', 'min_node_count': '1'}</code></pre>
+<p>Check Traefik:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pods <span class="at">-n</span> traefik</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre class="text"><code>NAME                      READY   STATUS    RESTARTS   AGE
+traefik-8d4cf5d76-rqtth   1/1     Running   0          16m</code></pre>
+<p>Check the JupyterHub ingress (class <code>traefik</code>) and its certificate:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get ingress <span class="at">-n</span> jhub</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get certificate <span class="at">-n</span> jhub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre class="text"><code>NAME         CLASS     HOSTS                                                 ADDRESS         PORTS     AGE
+jupyterhub   traefik   tofu-traefik.cisXXXXXX.projects.jetstream-cloud.org   149.165.170.9   80, 443   4m59s
+
+NAME                         READY   SECRET                       AGE
+certmanager-tls-jupyterhub   True    certmanager-tls-jupyterhub   4m59s</code></pre>
+<section id="why-the-load-balancer-reports-a-different-ip" class="level3">
+<h3 class="anchored" data-anchor-id="why-the-load-balancer-reports-a-different-ip">Why the load balancer reports a different IP</h3>
+<p>Three IPs appear around this tutorial, and only one is authoritative:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Where</th>
+<th>Which IP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ingress_fixed_ip</code> in the <code>tofu apply</code> output</td>
+<td>the fixed IP, also in the DNS record</td>
+</tr>
+<tr class="even">
+<td><code>kubectl get ingress</code> ADDRESS</td>
+<td>the IP the load balancer allocated automatically, it is cosmetic</td>
+</tr>
+<tr class="odd">
+<td><code>dig +short</code> of your URL</td>
+<td>the fixed IP, this is what browsers use</td>
+</tr>
+</tbody>
+</table>
+<p>Use DNS as the source of truth, not the Ingress status:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dig</span> +short tofu-traefik.cisXXXXXX.projects.jetstream-cloud.org</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once the certificate is <code>True</code>, the hub is served over HTTPS. Verify with the actual URL:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-o</span> /dev/null <span class="at">-w</span> <span class="st">"%{http_code}\n"</span> <span class="dt">\</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  https://tofu-traefik.cisXXXXXX.projects.jetstream-cloud.org/hub/login</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre class="text"><code>200</code></pre>
+<p>And confirm the hub API responds:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> https://tofu-traefik.cisXXXXXX.projects.jetstream-cloud.org/hub/api</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre class="text"><code>{"version": "5.5.1"}</code></pre>
+<p>Finally, check the JupyterHub pods:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pods <span class="at">-n</span> jhub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre class="text"><code>NAME                              READY   STATUS    RESTARTS   AGE
+continuous-image-puller-26rrn     1/1     Running   0          5m37s
+hub-8544f8bbd8-7xlk6              1/1     Running   0          5m37s
+proxy-7cfd5f7b97-qbljs            1/1     Running   0          5m37s
+user-scheduler-6995f6f4d5-h26fh   1/1     Running   0          5m37s
+user-scheduler-6995f6f4d5-hlddn   1/1     Running   0          5m37s</code></pre>
+</section>
+<section id="authentication" class="level3">
+<h3 class="anchored" data-anchor-id="authentication">Authentication</h3>
+<p>This recipe does not configure an authenticator, so the hub runs with the JupyterHub chart default <a href="https://z2jh.jupyter.org/en/stable/administrator/authentication.html">DummyAuthenticator</a>, which accepts any username and password. The hub logs this explicitly:</p>
+<pre class="text"><code>Using Authenticator: jupyterhub.auth.DummyAuthenticator-5.5.1
+[W] Using testing authenticator DummyAuthenticator! This is not meant for production!</code></pre>
+<p>That is fine for a quick test, but not for real users. Before exposing the hub, add an authenticator, for example <a href="https://z2jh.jupyter.org/en/stable/administrator/authentication.html#github">GitHub OAuth</a> or another <a href="https://z2jh.jupyter.org/en/stable/administrator/authentication.html#oauth2-based-authentication">OAuthenticator</a>, to the JupyterHub values file: edit <code>config_standard_storage.yaml</code> directly, or point the <code>jhub_values_file</code> variable in <code>terraform.tfvars</code> at your own values file, then re-run <code>tofu apply</code>. The recipe picks up the change, because the JupyterHub install is triggered by a hash of that file. The infrastructure setup in this tutorial (cluster, ingress, DNS, HTTPS) does not change.</p>
+</section>
+</section>
+<section id="clean-up" class="level2">
+<h2 class="anchored" data-anchor-id="clean-up">5. Clean up</h2>
+<p><code>tofu destroy</code> removes the cluster, the load balancer, the fixed floating IP, the DNS record, and the JupyterHub Helm release (JupyterHub data lives in the cluster and is removed with it):</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tofu</span> destroy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Two load balancers allocate their own floating IP out of band: the one of the Traefik service (the recipe deletes it during the apply) and the one of the cluster API load balancer (it can remain unbound after a destroy). Unbound floating IPs do not count as cost but they consume quota, so check for leftovers and remove them:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> floating ip list</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="ex">openstack</span> floating ip delete <span class="op">&lt;</span>unbound_id<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If <code>tofu destroy</code> fails with a Magnum API 400 while waiting for the cluster to be deleted (a temporary Magnum-side error, the cluster is usually already gone), simply re-run <code>tofu destroy</code>.</p>
+</section>
+<section id="issues-and-feedback" class="level2">
+<h2 class="anchored" data-anchor-id="issues-and-feedback">Issues and feedback</h2>
+<p>Please <a href="https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream">open an issue on the repository</a> to report any problem or give feedback.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.zonca\.dev");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
