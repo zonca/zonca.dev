@@ -1,0 +1,53 @@
+---
+pagetitle: "AI-assisted bookkeeping preparation"
+description: "Transaction categorization, receipt collection, and document matching prepared for human review."
+---
+
+::: {.ai-page}
+::: {.ai-subhero}
+<p class="ai-kicker">Bookkeeping support</p>
+
+# Prepare cleaner records for review
+
+Use consistent rules to organize transactions and supporting documents, surface exceptions, and reduce the time spent searching for evidence.
+:::
+
+::: {.ai-subnav}
+[Overview](/ai/) [Research and computing](/ai/research/) [Operations](/ai/operations/) [Customer systems](/ai/customers/) [Bookkeeping](/ai/bookkeeping/) [Italian School case study](/ai/italian-school/) [Responsible AI](/ai/responsible-ai/)
+:::
+
+::: {.ai-section}
+## A traceable preparation workflow
+
+::: {.ai-grid}
+::: {.ai-card}
+### Transaction categorization
+
+Apply documented rules to suggest categories and flag ambiguous transactions instead of guessing.
+:::
+::: {.ai-card}
+### Receipt collection
+
+Search approved sources for receipts and invoices, then connect each document to the relevant transaction.
+:::
+::: {.ai-card}
+### Document matching
+
+Compare amounts, dates, vendors, and reference numbers while preserving the source document for review.
+:::
+::: {.ai-card}
+### Exception review
+
+Separate routine matches from missing, conflicting, or unusual items that need a person to decide.
+:::
+:::
+
+::: {.ai-policy}
+Bookkeeping automation prepares and documents suggestions. A responsible person reviews categorizations and approves any record change or payment action.
+:::
+
+<div class="ai-actions"><a class="ai-button" href="https://zonca.secureform.dev/contact">Discuss bookkeeping preparation</a></div>
+:::
+
+<p class="ai-disclaimer">Zonca AI Consulting is Andrea Zonca's private consulting service. It is independent from and not endorsed by the University of California San Diego.</p>
+:::
