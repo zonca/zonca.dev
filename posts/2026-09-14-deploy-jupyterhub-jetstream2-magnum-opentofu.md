@@ -394,6 +394,10 @@ openstack floating ip list
 openstack floating ip delete <unbound_id>
 ```
 
+If `tofu destroy` fails with a Magnum API 400 while waiting for the
+cluster to be deleted (a temporary Magnum-side error, the cluster is
+usually already gone), simply re-run `tofu destroy`.
+
 ## Issues and feedback
 
 Please [open an issue on the repository][repo] to report any problem
