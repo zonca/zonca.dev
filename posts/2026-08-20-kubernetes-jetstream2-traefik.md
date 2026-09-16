@@ -15,6 +15,10 @@ This post is part of a series on deploying JupyterHub on Jetstream2:
 3. [Deploy JupyterHub](/posts/2026-08-20-kubernetes-jetstream2-jupyterhub)
 4. [Setup HTTPS with cert-manager](/posts/2026-08-20-kubernetes-jetstream2-certmanager)
 
+**Prefer one command?** Deploy everything (cluster, Traefik,
+JupyterHub, HTTPS) in one go with this
+[OpenTofu tutorial](./2026-09-14-deploy-jupyterhub-jetstream2-magnum-opentofu.md).
+
 This guide covers how to install [Traefik](https://doc.traefik.io/traefik/) as an ingress controller on a Jetstream2 Kubernetes cluster and configure DNS. Traefik replaces `ingress-nginx`, which has been [retired](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/). Traefik supports both the standard Kubernetes Ingress API and the newer Gateway API, making it a forward-compatible choice.
 
 This guide assumes you already have a running cluster — see [Deploy Kubernetes on Jetstream2](/posts/2026-08-20-kubernetes-jetstream2-magnum) if you need to create one first. Make sure `KUBECONFIG` is set and `kubectl get nodes` works.

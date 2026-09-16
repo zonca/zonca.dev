@@ -8,6 +8,15 @@ layout: post
 title: "Deploying JupyterHub on OpenStack Magnum with OpenTofu"
 ---
 
+* **UPDATED 2026-09-14**: This tutorial is obsolete. It deploys
+  `ingress-nginx`, which has been
+  [retired](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/),
+  so this workflow is no longer recommended. Use the new tutorial
+  [Deploy JupyterHub on Jetstream2 with OpenTofu, Magnum and
+  Traefik](./2026-09-14-deploy-jupyterhub-jetstream2-magnum-opentofu.md)
+  instead, which deploys Traefik and keeps the same single `tofu apply`
+  workflow.
+
 In this tutorial, we will walk through the process of deploying a production-ready JupyterHub on OpenStack Magnum using **OpenTofu**. 
 
 ### What you get at the end
@@ -29,7 +38,7 @@ By following this guide, you will have:
 If you don't have OpenTofu installed, you can install it using the official script:
 
 ```bash
-curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install.sh | sh
+curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install-opentofu.sh | sh
 ```
 
 Alternatively, on Linux with snap: `snap install opentofu --classic`.
