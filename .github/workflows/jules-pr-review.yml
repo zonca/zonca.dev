@@ -26,3 +26,9 @@ jobs:
             existing categories only; date must match the filename; fenced code
             blocks must have language tags; never commit secrets; internal links
             use relative ./YYYY-MM-DD-slug.md paths.
+            Jetstream2 tutorials use project ID placeholders in the Jetstream2
+            style (e.g. cisXXXXXX, xxx000000). Do NOT require replacing these
+            subdomain examples with other example domains such as safdsafdsa.com.
+            Line length: keep prose and commands under 100 characters where
+            possible. Literal terminal output (kubectl/openstack output blocks)
+            and bare reference URL lines may exceed 100 characters.
