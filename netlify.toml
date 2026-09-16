@@ -4,3 +4,15 @@
 
 [build.environment]
   QUARTO_VERSION = "1.4.551"
+
+[[redirects]]
+  from = "/consult"
+  to = "/ai/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/consult/"
+  to = "/ai/"
+  status = 301
+  force = true

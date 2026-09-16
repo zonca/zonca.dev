@@ -1,0 +1,67 @@
+---
+pagetitle: "Responsible AI with human approval"
+description: >-
+  A practical approval policy for AI-assisted calculations, drafts, scheduling, records,
+  submissions, and payments.
+---
+
+::: {.ai-page}
+::: {.ai-subhero}
+<p class="ai-kicker">Responsible AI</p>
+
+# Automation with a clear human decision point
+
+Reliable systems define what software may prepare, what evidence a person sees, and which actions
+cannot happen without approval.
+:::
+
+::: {.ai-subnav}
+[Overview](/ai/)
+[Research and computing](/ai/research/)
+[Operations](/ai/operations/)
+[Customer systems](/ai/customers/)
+[Bookkeeping](/ai/bookkeeping/)
+[Italian School case study](/ai/italian-school/)
+[Responsible AI](/ai/responsible-ai/)
+:::
+
+::: {.ai-section}
+## The approval policy
+
+::: {.ai-grid}
+::: {.ai-card}
+### May be automatic
+
+- Calculations and comparisons
+- Research across approved records
+- Suggested classifications
+- Summaries and complete drafts
+- Detection of missing or conflicting information
+:::
+::: {.ai-card}
+### Requires a responsible person's approval
+
+- Sending a message
+- Submitting a form
+- Scheduling or changing an event
+- Creating, changing, or deleting a record
+- Initiating a bank or card payment
+:::
+:::
+
+## Controls built for the real workflow
+
+Approval is only useful when the reviewer can see the proposed action, its destination, the source
+information, and any uncertainty. A system should preserve an audit trail, stop when required
+information is missing, and make exceptions more visible instead of hiding them.
+
+<div class="ai-actions">
+<a class="ai-button" href="https://zonca.secureform.dev/contact">Discuss responsible automation</a>
+</div>
+:::
+
+<p class="ai-disclaimer">
+Zonca AI Consulting is Andrea Zonca's private consulting service. It is independent from and not
+endorsed by the University of California San Diego.
+</p>
+:::

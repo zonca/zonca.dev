@@ -12,7 +12,8 @@ website:
   navbar:
     right:
       - about.qmd
-      - consult.qmd
+      - text: "AI Consulting"
+        href: ai/index.qmd
       - icon: github
         href: https://github.com/zonca
       - icon: twitter

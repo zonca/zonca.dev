@@ -65,3 +65,253 @@ h1, h2, h3, h4, h5, h6,
 a {
     color: #000000 !important;
 }
+
+/* Zonca AI Consulting */
+.ai-page {
+    --ai-ink: #10243e;
+    --ai-blue: #0b4f6c;
+    --ai-teal: #087e8b;
+    --ai-coral: #ff5a5f;
+    --ai-sand: #f6f2ea;
+    --ai-mist: #e9f5f4;
+    color: var(--ai-ink);
+    font-size: 1.06rem;
+}
+
+.ai-page .ai-hero {
+    background:
+        radial-gradient(circle at 82% 15%, rgba(8, 126, 139, 0.22), transparent 28%),
+        linear-gradient(135deg, #0a2138, #0b4f6c 64%, #087e8b);
+    color: #fff;
+    margin: -2rem calc(50% - 50vw) 3rem;
+    padding: clamp(3.5rem, 8vw, 7rem) max(1.5rem, calc((100vw - 1120px) / 2));
+}
+
+.ai-page .ai-hero-grid,
+.ai-page .ai-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.6fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+}
+
+.ai-page .ai-kicker {
+    color: #8ce1da !important;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+}
+
+.ai-page .ai-hero h1,
+.ai-page .ai-hero p,
+.ai-page .ai-hero a {
+    color: #fff !important;
+}
+
+.ai-page .ai-hero h1 {
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+    line-height: 1.02;
+    margin-bottom: 1.2rem;
+    max-width: 820px;
+}
+
+.ai-page .ai-lede {
+    font-size: clamp(1.12rem, 2vw, 1.35rem);
+    line-height: 1.55;
+    max-width: 760px;
+}
+
+.ai-page .ai-portrait {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.26);
+    border-radius: 50% 50% 20% 50%;
+    box-shadow: 0 26px 60px rgba(0, 0, 0, 0.22);
+    display: block;
+    margin: 0 auto;
+    max-width: 300px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.ai-page .ai-portrait img {
+    aspect-ratio: 1;
+    display: block;
+    object-fit: cover;
+    width: 100%;
+}
+
+.ai-page .ai-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.6rem;
+}
+
+.ai-page .ai-button {
+    background: var(--ai-coral);
+    border-radius: 999px;
+    box-shadow: 0 10px 26px rgba(255, 90, 95, 0.28);
+    color: #fff !important;
+    display: inline-block;
+    font-weight: 800;
+    padding: 0.82rem 1.35rem;
+    text-decoration: none;
+}
+
+.ai-page .ai-button:hover {
+    background: #e7474c;
+    color: #fff !important;
+    transform: translateY(-1px);
+}
+
+.ai-page .ai-subnav {
+    background: #fff;
+    border: 1px solid #d8e4e8;
+    border-radius: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0 auto 2.5rem;
+    max-width: 1120px;
+    padding: 0.55rem;
+}
+
+.ai-page .ai-subnav a {
+    border-radius: 999px;
+    color: var(--ai-blue) !important;
+    font-size: 0.92rem;
+    font-weight: 700;
+    padding: 0.5rem 0.72rem;
+    text-decoration: none;
+}
+
+.ai-page .ai-subnav a:hover {
+    background: var(--ai-mist);
+}
+
+.ai-page .ai-section,
+.ai-page .ai-band {
+    margin: 0 auto;
+    max-width: 1120px;
+    padding: 1.5rem 0 3rem;
+}
+
+.ai-page .ai-band {
+    background: var(--ai-sand);
+    border-radius: 22px;
+    margin-bottom: 3rem;
+    padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+.ai-page .ai-section h2,
+.ai-page .ai-band h2 {
+    color: var(--ai-ink) !important;
+    font-size: clamp(1.7rem, 3vw, 2.45rem);
+    margin-bottom: 1rem;
+}
+
+.ai-page .ai-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ai-page .ai-card {
+    background: #fff;
+    border: 1px solid #d8e4e8;
+    border-radius: 16px;
+    box-shadow: 0 14px 34px rgba(16, 36, 62, 0.07);
+    padding: 1.35rem;
+}
+
+.ai-page .ai-card h3 {
+    color: var(--ai-blue) !important;
+    margin-bottom: 0.55rem;
+}
+
+.ai-page .ai-card a,
+.ai-page .ai-card-link {
+    color: var(--ai-teal) !important;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.ai-page .ai-policy {
+    background: var(--ai-mist);
+    border-left: 5px solid var(--ai-teal);
+    border-radius: 0 16px 16px 0;
+    padding: 1.35rem 1.5rem;
+}
+
+.ai-page .ai-checks {
+    display: grid;
+    gap: 0.8rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    list-style: none;
+    margin: 1.4rem 0;
+    padding: 0;
+}
+
+.ai-page .ai-checks li {
+    background: #fff;
+    border: 1px solid #d8e4e8;
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+}
+
+.ai-page .ai-checks li::before {
+    color: var(--ai-teal);
+    content: "✓";
+    font-weight: 900;
+    margin-right: 0.55rem;
+}
+
+.ai-page .ai-disclaimer {
+    border-top: 1px solid #d8e4e8;
+    color: #526579 !important;
+    font-size: 0.9rem;
+    margin: 2rem auto 0;
+    max-width: 1120px;
+    padding-top: 1rem;
+}
+
+.ai-page .ai-subhero {
+    background: linear-gradient(135deg, #0a2138, #0b4f6c);
+    border-radius: 22px;
+    color: #fff;
+    margin: 0 auto 2rem;
+    max-width: 1120px;
+    padding: clamp(2rem, 5vw, 4.5rem);
+}
+
+.ai-page .ai-subhero h1,
+.ai-page .ai-subhero p {
+    color: #fff !important;
+}
+
+.ai-page .ai-subhero h1 {
+    font-size: clamp(2.1rem, 5vw, 3.8rem);
+}
+
+@media (max-width: 800px) {
+    .ai-page .ai-hero-grid,
+    .ai-page .ai-split,
+    .ai-page .ai-grid,
+    .ai-page .ai-checks {
+        grid-template-columns: 1fr;
+    }
+
+    .ai-page .ai-portrait {
+        max-width: 220px;
+    }
+
+    .ai-page .ai-subnav {
+        border-radius: 0;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}

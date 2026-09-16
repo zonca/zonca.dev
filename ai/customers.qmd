@@ -1,0 +1,70 @@
+---
+pagetitle: "AI for websites and customer communication"
+description: >-
+  Websites, payment systems, inquiries, email drafts, outreach, and historical contact research for
+  small businesses.
+---
+
+::: {.ai-page}
+::: {.ai-subhero}
+<p class="ai-kicker">Customer systems</p>
+
+# Make it easier for customers to get an answer
+
+Connect the website, forms, payments, email, and internal records so routine inquiries move faster
+and unusual cases receive focused human attention.
+:::
+
+::: {.ai-subnav}
+[Overview](/ai/)
+[Research and computing](/ai/research/)
+[Operations](/ai/operations/)
+[Customer systems](/ai/customers/)
+[Bookkeeping](/ai/bookkeeping/)
+[Italian School case study](/ai/italian-school/)
+[Responsible AI](/ai/responsible-ai/)
+:::
+
+::: {.ai-section}
+## Customer-facing work that can be improved
+
+::: {.ai-grid}
+::: {.ai-card}
+### Websites and forms
+
+Build clear pages and structured forms that collect the information needed for the next step.
+:::
+::: {.ai-card}
+### Payment systems
+
+Connect payment status with the correct service, customer record, receipt, and follow-up workflow.
+:::
+::: {.ai-card}
+### Inquiries and email drafts
+
+Research the relevant record, prepare a direct response, and place the complete draft in front of a
+responsible person for approval.
+:::
+::: {.ai-card}
+### Outreach and contact research
+
+Find relevant historical contacts, organize prior interactions, and prepare focused outreach without
+sending it automatically.
+:::
+:::
+
+::: {.ai-policy}
+Customer communication always has an accountable owner. Drafting and research may be automatic,
+but sending and changing customer records require approval.
+:::
+
+<div class="ai-actions">
+<a class="ai-button" href="https://zonca.secureform.dev/contact">Discuss a customer workflow</a>
+</div>
+:::
+
+<p class="ai-disclaimer">
+Zonca AI Consulting is Andrea Zonca's private consulting service. It is independent from and not
+endorsed by the University of California San Diego.
+</p>
+:::

@@ -1,0 +1,76 @@
+---
+pagetitle: "Research, scientific computing, and AI"
+description: >-
+  Scientific software, supercomputing, distributed Python, cloud infrastructure, and AI consulting
+  experience.
+---
+
+::: {.ai-page}
+::: {.ai-subhero}
+<p class="ai-kicker">Research and computing</p>
+
+# Scientific computing and AI experience
+
+Andrea brings research-grade software practices to complex technical work, from data analysis and
+distributed computing to artificial intelligence workloads on large computing systems.
+:::
+
+::: {.ai-subnav}
+[Overview](/ai/)
+[Research and computing](/ai/research/)
+[Operations](/ai/operations/)
+[Customer systems](/ai/customers/)
+[Bookkeeping](/ai/bookkeeping/)
+[Italian School case study](/ai/italian-school/)
+[Responsible AI](/ai/responsible-ai/)
+:::
+
+::: {.ai-section}
+## Experience that connects research and delivery
+
+Andrea earned a doctorate in physics and astrophysics from the University of Milan. He has worked at
+the San Diego Supercomputer Center since 2013, helping researchers use high-performance computing
+resources and teaching Python for high-performance computing.
+
+His work spans distributed data processing, scientific Python, cloud platforms, Kubernetes,
+JupyterHub, and artificial intelligence workflows. This background is useful when a project needs
+more than a generic software integration, including careful data handling, reproducible analysis,
+performance testing, or custom model workflows.
+
+::: {.ai-grid}
+::: {.ai-card}
+### Scientific software
+
+Design, review, and improve Python software for analysis, simulation, automation, and repeatable
+research workflows.
+:::
+::: {.ai-card}
+### Supercomputers and cloud systems
+
+Plan workloads that use parallel computing, distributed systems, containers, Kubernetes, and
+interactive research platforms.
+:::
+::: {.ai-card}
+### Artificial intelligence workflows
+
+Develop and evaluate model-based systems, including language-model and neural-network workflows,
+with appropriate testing and human review.
+:::
+::: {.ai-card}
+### Technical translation
+
+Connect research requirements with practical software decisions, documentation, deployment, and
+operations.
+:::
+:::
+
+<div class="ai-actions">
+<a class="ai-button" href="https://zonca.secureform.dev/contact">Discuss a technical project</a>
+</div>
+:::
+
+<p class="ai-disclaimer">
+Zonca AI Consulting is Andrea Zonca's private consulting service. It is independent from and not
+endorsed by the University of California San Diego.
+</p>
+:::

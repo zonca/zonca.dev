@@ -1,0 +1,60 @@
+---
+pagetitle: "Italian School of San Diego case study"
+description: >-
+  A practical case study in connected small-business systems for enrollment, scheduling,
+  communication, payments, and bookkeeping.
+---
+
+::: {.ai-page}
+::: {.ai-subhero}
+<p class="ai-kicker">Case study</p>
+
+# Italian School of San Diego
+
+A small education business has many connected workflows: students, families, teachers, schedules,
+payments, documents, and regulatory records. Andrea uses that direct operating experience to design
+practical automation.
+:::
+
+::: {.ai-subnav}
+[Overview](/ai/)
+[Research and computing](/ai/research/)
+[Operations](/ai/operations/)
+[Customer systems](/ai/customers/)
+[Bookkeeping](/ai/bookkeeping/)
+[Italian School case study](/ai/italian-school/)
+[Responsible AI](/ai/responsible-ai/)
+:::
+
+::: {.ai-section}
+## One business, connected systems
+
+::: {.ai-checks}
+- Enrollment records connected to the correct class and communication workflow
+- Calendars aligned with schedules, locations, teachers, and students
+- Payment status connected to receipts and follow-up tasks
+- Employee hours prepared from approved calendar and operational records
+- Customer inquiries researched before a response is drafted
+- Transactions matched with receipts and supporting documents
+:::
+
+The useful lesson is not a particular software product. It is the operating model: define an
+authoritative source, automate repeatable preparation, keep a visible record, and require human
+approval before consequential actions.
+
+::: {.ai-policy}
+The same controls apply across the system. Calculations and drafts can run automatically. Sending,
+submitting, scheduling, changing records, and initiating payments wait for approval from a
+responsible person.
+:::
+
+<div class="ai-actions">
+<a class="ai-button" href="https://zonca.secureform.dev/contact">Discuss a similar business process</a>
+</div>
+:::
+
+<p class="ai-disclaimer">
+Zonca AI Consulting is Andrea Zonca's private consulting service. It is independent from and not
+endorsed by the University of California San Diego.
+</p>
+:::

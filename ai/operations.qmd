@@ -1,0 +1,72 @@
+---
+pagetitle: "AI for small-business operations"
+description: >-
+  Automation for calendars, employee hours, payroll preparation, and approved bank payments with
+  human controls.
+---
+
+::: {.ai-page}
+::: {.ai-subhero}
+<p class="ai-kicker">Business operations</p>
+
+# Reduce repetitive operational work
+
+Build a dependable path from schedules and source records to prepared actions, while keeping final
+approval with the responsible person.
+:::
+
+::: {.ai-subnav}
+[Overview](/ai/)
+[Research and computing](/ai/research/)
+[Operations](/ai/operations/)
+[Customer systems](/ai/customers/)
+[Bookkeeping](/ai/bookkeeping/)
+[Italian School case study](/ai/italian-school/)
+[Responsible AI](/ai/responsible-ai/)
+:::
+
+::: {.ai-section}
+## Examples of connected operations
+
+::: {.ai-grid}
+::: {.ai-card}
+### Calendars and schedules
+
+Create consistent scheduling workflows, detect conflicts, prepare invitations, and keep operational
+calendars aligned with the source of truth.
+:::
+::: {.ai-card}
+### Employee hours
+
+Collect scheduled and recorded hours, flag missing or unusual entries, and prepare clear summaries
+for review.
+:::
+::: {.ai-card}
+### Payroll preparation
+
+Organize approved hours and supporting records into a repeatable payroll-preparation process. A
+responsible person reviews the result before submission.
+:::
+::: {.ai-card}
+### Approved bank payments
+
+Prepare payment details from verified records and present them for approval. The system does not
+initiate a payment without approval from a responsible person.
+:::
+:::
+
+::: {.ai-policy}
+Automation can calculate, compare, and prepare. It must stop before sending, submitting, scheduling,
+changing records, or initiating a payment until a responsible person approves the action.
+:::
+
+<div class="ai-actions">
+<a class="ai-button" href="https://zonca.secureform.dev/contact">Discuss an operations workflow</a>
+</div>
+:::
+
+<p class="ai-disclaimer">
+Zonca AI Consulting is Andrea Zonca's private consulting service. It is independent from and not
+endorsed by the University of California San Diego.
+</p>
+:::

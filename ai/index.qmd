@@ -1,0 +1,126 @@
+---
+pagetitle: "AI consulting for San Diego small businesses"
+description: >-
+  Practical AI and business automation consulting from Andrea Zonca, with in-person consultations
+  in San Diego.
+---
+
+::: {.ai-page}
+::: {.ai-hero}
+::: {.ai-hero-grid}
+::: {}
+<p class="ai-kicker">Zonca AI Consulting</p>
+
+# AI consulting for San Diego small businesses
+
+<p class="ai-lede">
+Turn repetitive work into reliable systems. Andrea Zonca combines scientific computing, artificial
+intelligence on supercomputers, web development, and direct experience running small-business
+operations.
+</p>
+
+<div class="ai-actions">
+<a class="ai-button" href="https://zonca.secureform.dev/contact">Discuss your process</a>
+</div>
+
+In-person consultations are available at 4550 Kearny Villa Road, Suite 202, San Diego, CA 92123.
+Video meetings and email consultations are also available.
+:::
+::: {.ai-portrait}
+<img src="/profile.jpg" alt="Andrea Zonca">
+:::
+:::
+:::
+
+::: {.ai-subnav}
+[Overview](/ai/)
+[Research and computing](/ai/research/)
+[Operations](/ai/operations/)
+[Customer systems](/ai/customers/)
+[Bookkeeping](/ai/bookkeeping/)
+[Italian School case study](/ai/italian-school/)
+[Responsible AI](/ai/responsible-ai/)
+:::
+
+::: {.ai-section}
+## Practical systems, built around your business
+
+AI is most useful when it works with the tools, records, and approval process you already have. The
+goal is not to add another complicated platform. It is to reduce repetitive work, make information
+easier to find, and give the responsible person a clear decision point.
+
+::: {.ai-grid}
+::: {.ai-card}
+### Operations
+
+Connect calendars, employee hours, payroll preparation, and approved bank-payment workflows.
+
+[Explore operations automation →](/ai/operations/)
+:::
+::: {.ai-card}
+### Customer systems
+
+Improve websites, payment systems, inquiry handling, email drafting, outreach, and historical
+contact research.
+
+[Explore customer systems →](/ai/customers/)
+:::
+::: {.ai-card}
+### Bookkeeping support
+
+Categorize transactions, collect receipts, and match financial records with supporting documents for
+human review.
+
+[Explore bookkeeping automation →](/ai/bookkeeping/)
+:::
+::: {.ai-card}
+### Research and scientific computing
+
+Apply experience with scientific software, large computing systems, and artificial intelligence
+workloads to difficult technical problems.
+
+[Explore research experience →](/ai/research/)
+:::
+:::
+:::
+
+::: {.ai-band}
+::: {.ai-split}
+::: {}
+## Experience from research and a real small business
+
+Andrea has worked in scientific computing at the San Diego Supercomputer Center since 2013. His
+experience includes high-performance Python, distributed computing, cloud infrastructure,
+Kubernetes, and artificial intelligence workflows for research.
+
+He also builds and operates the systems behind the Italian School of San Diego, including
+enrollment, calendars, customer communication, payments, employee-hour tracking, and bookkeeping
+support.
+:::
+::: {.ai-policy}
+**A clear approval boundary**
+
+Calculations, research, classifications, and drafts may be automatic. Sending, submitting,
+scheduling, changing records, and initiating payments require approval from a responsible person.
+
+[Read the responsible AI policy →](/ai/responsible-ai/)
+:::
+:::
+:::
+
+::: {.ai-section}
+## Start with one process
+
+A useful first conversation focuses on one recurring task: what comes in, which tools are involved,
+where time is lost, and which decisions must remain with a person.
+
+<div class="ai-actions">
+<a class="ai-button" href="https://zonca.secureform.dev/contact">Contact Zonca AI Consulting</a>
+</div>
+:::
+
+<p class="ai-disclaimer">
+Zonca AI Consulting is Andrea Zonca's private consulting service. It is independent from and not
+endorsed by the University of California San Diego.
+</p>
+:::
