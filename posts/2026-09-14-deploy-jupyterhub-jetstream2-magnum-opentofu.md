@@ -65,8 +65,8 @@ The recipe requires two things that Jetstream provisions per project, so
 check them before running anything:
 
 ```bash
-openstack zone list                       # the <project_id>.projects.jetstream-cloud.org zone must exist
-openstack network show auto_allocated_network   # the default network must exist
+openstack zone list   # the project zone must exist
+openstack network show auto_allocated_network   # must exist
 ```
 
 If `auto_allocated_network` is missing, launch any instance from the
@@ -187,7 +187,9 @@ If the name is already there (left over from an earlier deployment) and
 the old cluster is gone, delete the record:
 
 ```bash
-openstack recordset delete <project_id>.projects.jetstream-cloud.org. <subdomain>.<project_id>.projects.jetstream-cloud.org.
+openstack recordset delete \
+  <project_id>.projects.jetstream-cloud.org. \
+  <subdomain>.<project_id>.projects.jetstream-cloud.org.
 ```
 
 ## 3. Deploy
@@ -369,9 +371,9 @@ infrastructure setup in this tutorial (cluster, ingress, DNS, HTTPS)
 does not change.
 
 [repo]: https://github.com/zonca/jupyterhub-deploy-kubernetes-jetstream
-[z2jh-auth]: https://zero-to-jupyterhub.readthedocs.io/en/latest/administrator/authentication.html
-[z2jh-github]: https://zero-to-jupyterhub.readthedocs.io/en/latest/administrator/authentication.html#github
-[z2jh-oauth]: https://zero-to-jupyterhub.readthedocs.io/en/latest/administrator/authentication.html#oauth2-based-authentication
+[z2jh-auth]: https://z2jh.jupyter.org/en/stable/administrator/authentication.html
+[z2jh-github]: https://z2jh.jupyter.org/en/stable/administrator/authentication.html#github
+[z2jh-oauth]: https://z2jh.jupyter.org/en/stable/administrator/authentication.html#oauth2-based-authentication
 
 ## 5. Clean up
 
