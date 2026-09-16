@@ -15,15 +15,7 @@ Andrea brings research-grade software practices to complex technical work, from 
 distributed computing to artificial intelligence workloads on large computing systems.
 :::
 
-::: {.ai-subnav}
-[Overview](/ai/)
-[Research and computing](/ai/research/)
-[Operations](/ai/operations/)
-[Customer systems](/ai/customers/)
-[Bookkeeping](/ai/bookkeeping/)
-[Italian School case study](/ai/italian-school/)
-[Responsible AI](/ai/responsible-ai/)
-:::
+{{< include _subnav.html >}}
 
 ::: {.ai-section}
 ## Experience that connects research and delivery

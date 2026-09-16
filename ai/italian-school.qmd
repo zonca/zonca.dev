@@ -16,15 +16,7 @@ payments, documents, and regulatory records. Andrea uses that direct operating e
 practical automation.
 :::
 
-::: {.ai-subnav}
-[Overview](/ai/)
-[Research and computing](/ai/research/)
-[Operations](/ai/operations/)
-[Customer systems](/ai/customers/)
-[Bookkeeping](/ai/bookkeeping/)
-[Italian School case study](/ai/italian-school/)
-[Responsible AI](/ai/responsible-ai/)
-:::
+{{< include _subnav.html >}}
 
 ::: {.ai-section}
 ## One business, connected systems

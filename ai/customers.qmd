@@ -15,15 +15,7 @@ Connect the website, forms, payments, email, and internal records so routine inq
 and unusual cases receive focused human attention.
 :::
 
-::: {.ai-subnav}
-[Overview](/ai/)
-[Research and computing](/ai/research/)
-[Operations](/ai/operations/)
-[Customer systems](/ai/customers/)
-[Bookkeeping](/ai/bookkeeping/)
-[Italian School case study](/ai/italian-school/)
-[Responsible AI](/ai/responsible-ai/)
-:::
+{{< include _subnav.html >}}
 
 ::: {.ai-section}
 ## Customer-facing work that can be improved

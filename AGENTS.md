@@ -20,6 +20,20 @@ Before committing any blog post, **always** run these checks:
 - **Commit message format**: Use a concise, descriptive message that explains what changed and why.
 - **Never force-push** to `main` unless explicitly instructed.
 
+## Visual and navigation changes
+
+- For any navigation, layout, or CSS change, inspect the rendered page at desktop and mobile widths
+  before publishing, then inspect the live page again after publishing. Build success and HTTP checks
+  do not replace visual verification.
+- Navigation markup must be semantic and structurally match its CSS. Links intended as flex or grid
+  items must be direct children of the navigation container, not hidden inside an automatically
+  generated paragraph wrapper.
+- Verify the global header, page-level navigation, overflow, wrapping, active states, and mobile menu
+  behavior on every page type affected by the change.
+- If the connected visual browser is unavailable, do not report visual verification as complete. Make
+  the source-level fix, publish a preview, and ask Andrea to confirm the rendering before closing the
+  visual issue.
+
 ## Creating a new blog post
 
 Blog posts live in the `posts/` directory as Markdown files.

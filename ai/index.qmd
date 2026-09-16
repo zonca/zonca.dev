@@ -32,15 +32,7 @@ Video meetings and email consultations are also available.
 :::
 :::
 
-::: {.ai-subnav}
-[Overview](/ai/)
-[Research and computing](/ai/research/)
-[Operations](/ai/operations/)
-[Customer systems](/ai/customers/)
-[Bookkeeping](/ai/bookkeeping/)
-[Italian School case study](/ai/italian-school/)
-[Responsible AI](/ai/responsible-ai/)
-:::
+{{< include _subnav.html >}}
 
 ::: {.ai-section}
 ## Practical systems, built around your business
