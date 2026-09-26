@@ -16,6 +16,18 @@ meeting notes are all documented as issues or markdown files. Since it is all te
 place, it provides perfect visibility for collaborators. More importantly, it creates a structured
 knowledge base that an AI agent can easily digest.
 
+## Issues and the project board
+
+Every activity is an issue, and the issue tracks its state over time: something you are doing now
+versus something you will do later. This matters because organizing an event is a long process —
+deadlines change, things get postponed, and without tracked state it is easy to lose sight of what
+is actually going on.
+
+The project board is the view that ties it all together. One column per state, and in a single
+glance I can see what we are working on right now and what is waiting in the queue: `Working` shows
+the tasks in progress, `ToDo` shows what to pick next, and `Snoozed` keeps postponed tasks visible
+until their new due date arrives.
+
 ## The AI agent assistant
 
 With the AI agent having access to all this information, it can understand the full context of the
