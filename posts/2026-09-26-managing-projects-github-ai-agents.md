@@ -1,5 +1,5 @@
 ---
-title: "Organizing events with GitHub and AI agents"
+title: "Managing projects with GitHub and AI agents"
 date: 2026-09-26
 categories: [events, github, ai, automation]
 layout: post
