@@ -5,17 +5,19 @@ categories: [events, sdsc]
 layout: post
 ---
 
-At the closing of Gateways 2026 in Washington, DC, we announced that Gateways 2027 will take
-place in San Diego, hosted by the San Diego Supercomputer Center (SDSC) at UC San Diego. I am
-honored to serve as chair of the conference, and I could not be more excited to bring it home to
-the community that makes it what it is.
+At the closing of [Gateways 2026](https://sciencegateways.org/gateways2026) in Washington, DC, we
+announced that Gateways 2027 will take place in San Diego, hosted by the San Diego Supercomputer
+Center (SDSC) at UC San Diego. I am honored to serve as chair of the conference, and I could not
+be more excited to bring it home to the community that makes it what it is.
 
 ## A conference for and by the community
 
-Gateways is not a conference with a fixed program that the audience attends. It is a gathering
-that the community owns, and it only works when the community shows up and helps shape it. The
-program committee, the talks, the keynotes, and the special sessions all come from people like
-you: the researchers, developers, and service providers who build and use science gateways.
+Gateways is organized by [SGX3](https://sciencegateways.org), the NSF Center of Excellence for
+science gateways led by Sandra Gesing, as the central community gathering of the science gateway
+ecosystem. It is not a conference with a fixed program that the audience attends: it is a
+gathering that the community owns, and it only works when the community shows up and helps shape
+it. The program committee, the talks, the keynotes, and the special sessions all come from people
+like you: the researchers, developers, and service providers who build and use science gateways.
 
 That is why I want to be explicit about my goal for Gateways 2027. More than anything, this
 edition should be an open invitation to participate. If you have ideas, experience, or energy to
