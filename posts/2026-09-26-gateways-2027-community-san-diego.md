@@ -48,5 +48,6 @@ If you are interested in volunteering or have an idea to propose, get in touch a
 `zonca` on the domain of SDSC (sdsc.edu). It is early, so this is the best moment to get involved
 while the program is still being shaped.
 
-I look forward to building Gateways 2027 together with you. Save the date, and see you in San
-Diego.
+Exact dates for Gateways 2027 are not announced yet, but the first round of calls for the program
+committee, keynotes, and special sessions will go out soon. I look forward to building Gateways
+2027 together with you, and I hope to see you in San Diego.
