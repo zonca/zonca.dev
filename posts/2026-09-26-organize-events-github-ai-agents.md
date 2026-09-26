@@ -9,6 +9,10 @@ contracts, and meeting notes are scattered across multiple platforms. To streaml
 use a single public GitHub repository as the source of truth for all project details, combined with
 the power of AI agents that assist me with the heavy lifting.
 
+In the past I used Trello together with GitHub. In that setup Trello was mostly a to-do list used to
+keep ongoing tasks alive by snoozing them until a later date. I think GitHub Projects can replace
+exactly that role, while living next to the issues and the code in a single place.
+
 ## The repository as a single source of truth
 
 Everything goes into the GitHub repository as Markdown: plans, meeting notes, decisions, people
