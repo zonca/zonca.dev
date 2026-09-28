@@ -166,6 +166,12 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="page-action-container mb-4"><div class="page-action-buttons d-flex flex-wrap gap-2"><a href="https://raw.githubusercontent.com/zonca/zonca.dev/main/posts/2026-09-28-software-citation-primer.md" class="btn btn-outline-secondary" role="button" target="_blank" rel="noopener">Download source</a><a href="https://github.com/zonca/zonca.dev/edit/main/posts/2026-09-28-software-citation-primer.md" class="btn btn-primary" role="button" target="_blank" rel="noopener">Contribute</a></div></div>
 <p>Software forms the foundation of modern research, yet citing code effectively remains a challenge across scientific disciplines. Following the 2026 <a href="https://softwarecitationworkshop.ucsd.edu/">Software Citation Workshop</a> hosted at UCSD and supported by NASA, our team published a practical guide titled “A Practical Primer on Software Citation in Research.” It outlines a 7-step workflow for researchers and a 5-step framework for developers, taking pragmatic positions on several grey areas in research software citation.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/software-citation-primer-figure.png" class="img-fluid figure-img"></p>
+<figcaption>The software citation workflow, summarized: seven steps to cite software and five steps to make software citeable</figcaption>
+</figure>
+</div>
 <section id="how-far-down-the-dependency-tree-should-you-cite" class="level2">
 <h2 class="anchored" data-anchor-id="how-far-down-the-dependency-tree-should-you-cite">1. How far down the dependency tree should you cite?</h2>
 <p>A common dilemma is deciding which underlying libraries warrant formal citation. Top-level libraries that directly shape your pipeline should always be formally cited. Foundational infrastructure (NumPy, SciPy, Astropy) should be cited when a specific routine plays a dominant role in your result. Deep dependencies generally do not require individual citations. Instead, scientific reproducibility is preserved by recording complete versions in environment configuration files (e.g., <code>requirements.txt</code>).</p>
