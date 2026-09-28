@@ -3,6 +3,7 @@ title: "A practical primer on software citation"
 date: '2026-09-28'
 categories: [openscience, documentation]
 layout: post
+image: img/software-citation-primer-figure.png
 ---
 
 Software forms the foundation of modern research, yet citing code effectively remains a challenge
@@ -11,6 +12,8 @@ across scientific disciplines. Following the 2026
 supported by NASA, our team published a practical guide titled "A Practical Primer on Software
 Citation in Research." It outlines a 7-step workflow for researchers and a 5-step framework for
 developers, taking pragmatic positions on several grey areas in research software citation.
+
+![The software citation workflow, summarized: seven steps to cite software and five steps to make software citeable](img/software-citation-primer-figure.png)
 
 ## 1. How far down the dependency tree should you cite?
 
