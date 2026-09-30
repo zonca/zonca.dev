@@ -1,0 +1,14 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const pages = await getCollection('pages', ({ id }) => id === 'AGENTS');
+const page = pages[0];
+const { Content } = await render(page);
+---
+
+<Base title="AGENTS.md" canonical="/AGENTS.html">
+  <article class="prose">
+    <Content />
+  </article>
+</Base>

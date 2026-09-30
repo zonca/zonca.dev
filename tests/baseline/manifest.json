@@ -1,0 +1,5778 @@
+[
+  {
+    "source": "posts/2006-09-20-pillole-di-astrofisica.md",
+    "source_type": "md",
+    "canonical": "/posts/2006-09-20-pillole-di-astrofisica.html",
+    "title": "pillole di astrofisica",
+    "date": "2006-09-20",
+    "categories": [
+      "astrophysics"
+    ],
+    "aliases": [
+      "/2006/09/pillole-di-astrofisica"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2006-09-22-awk-made-easy.md",
+    "source_type": "md",
+    "canonical": "/posts/2006-09-22-awk-made-easy.html",
+    "title": "awk made easy",
+    "date": "2006-09-22",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2006/09/awk-made-easy"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2006-09-22-command-line-processing.md",
+    "source_type": "md",
+    "canonical": "/posts/2006-09-22-command-line-processing.html",
+    "title": "command line processing",
+    "date": "2006-09-22",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2006/09/command-line-processing"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2006-09-22-software-libero-per-il-trattamento-di.md",
+    "source_type": "md",
+    "canonical": "/posts/2006-09-22-software-libero-per-il-trattamento-di.html",
+    "title": "Software libero per il trattamento di dati scientifici",
+    "date": "2006-09-22",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2006/09/software-libero-per-il-trattamento-di"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2006-09-25-software-carpentry.md",
+    "source_type": "md",
+    "canonical": "/posts/2006-09-25-software-carpentry.html",
+    "title": "software carpentry",
+    "date": "2006-09-25",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2006/09/software-carpentry"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2006-09-25-tar-quickref.md",
+    "source_type": "md",
+    "canonical": "/posts/2006-09-25-tar-quickref.html",
+    "title": "tar quickref",
+    "date": "2006-09-25",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2006/09/tar-quickref"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2006-10-03-beginners-bash-guide.md",
+    "source_type": "md",
+    "canonical": "/posts/2006-10-03-beginners-bash-guide.html",
+    "title": "beginners bash guide",
+    "date": "2006-10-03",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2006/10/beginners-bash-guide"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2006-10-03-using-gnu-find.md",
+    "source_type": "md",
+    "canonical": "/posts/2006-10-03-using-gnu-find.html",
+    "title": "using gnu find",
+    "date": "2006-10-03",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2006/10/using-gnu-find"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2006-10-17-vim-costumization.md",
+    "source_type": "md",
+    "canonical": "/posts/2006-10-17-vim-costumization.html",
+    "title": "vim costumization",
+    "date": "2006-10-17",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2006/10/vim-costumization"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2008-03-28-producing-pdf-from-xml-files.md",
+    "source_type": "md",
+    "canonical": "/posts/2008-03-28-producing-pdf-from-xml-files.html",
+    "title": "Producing PDF from XML files",
+    "date": "2008-03-28",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2008/03/producing-pdf-from-xml-files"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2008-03-28-relation-between-power-density-and.md",
+    "source_type": "md",
+    "canonical": "/posts/2008-03-28-relation-between-power-density-and.html",
+    "title": "Relation between Power density and temperature in an antenna",
+    "date": "2008-03-28",
+    "categories": [
+      "astrophysics"
+    ],
+    "aliases": [
+      "/2008/03/relation-between-power-density-and"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2008-03-29-decibels-db-and-dbm-in-terms-of-power.md",
+    "source_type": "md",
+    "canonical": "/posts/2008-03-29-decibels-db-and-dbm-in-terms-of-power.html",
+    "title": "Decibels, dB and dBm, in terms of Power and Amplitude",
+    "date": "2008-03-29",
+    "categories": [
+      "astrophysics"
+    ],
+    "aliases": [
+      "/2008/03/decibels-db-and-dbm-in-terms-of-power"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2008-04-29-netcat-quickly-send-binaries-through.md",
+    "source_type": "md",
+    "canonical": "/posts/2008-04-29-netcat-quickly-send-binaries-through.html",
+    "title": "netcat, quickly send binaries through network",
+    "date": "2008-04-29",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2008/04/netcat-quickly-send-binaries-through"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2008-09-17-forcefully-unmount-disk-partition.md",
+    "source_type": "md",
+    "canonical": "/posts/2008-09-17-forcefully-unmount-disk-partition.html",
+    "title": "forcefully unmount a disk partition",
+    "date": "2008-09-17",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2008/09/forcefully-unmount-disk-partition"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2009-12-10-number-of-files-in-folder-and-subfolders.md",
+    "source_type": "md",
+    "canonical": "/posts/2009-12-10-number-of-files-in-folder-and-subfolders.html",
+    "title": "number of files in a folder and subfolders",
+    "date": "2009-12-10",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2009/12/number-of-files-in-folder-and-subfolders"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2009-12-15-latest-maxima-and-wxmaxima-for-ubuntu.md",
+    "source_type": "md",
+    "canonical": "/posts/2009-12-15-latest-maxima-and-wxmaxima-for-ubuntu.html",
+    "title": "Latest Maxima and WxMaxima for Ubuntu Karmic",
+    "date": "2009-12-15",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2009/12/latest-maxima-and-wxmaxima-for-ubuntu"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2010-01-05-load-arrays-from-text-file-with-numpy.md",
+    "source_type": "md",
+    "canonical": "/posts/2010-01-05-load-arrays-from-text-file-with-numpy.html",
+    "title": "load arrays from a text file with numpy",
+    "date": "2010-01-05",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2010/01/load-arrays-from-text-file-with-numpy"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2010-01-07-execute-bash-script-remotely-with-ssh.md",
+    "source_type": "md",
+    "canonical": "/posts/2010-01-07-execute-bash-script-remotely-with-ssh.html",
+    "title": "execute bash script remotely with ssh",
+    "date": "2010-01-07",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2010/01/execute-bash-script-remotely-with-ssh"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2010-01-07-lock-pin-hold-package-using-apt-on.md",
+    "source_type": "md",
+    "canonical": "/posts/2010-01-07-lock-pin-hold-package-using-apt-on.html",
+    "title": "lock pin hold a package using apt on ubuntu",
+    "date": "2010-01-07",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2010/01/lock-pin-hold-package-using-apt-on"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2010-01-28-correlation.md",
+    "source_type": "md",
+    "canonical": "/posts/2010-01-28-correlation.html",
+    "title": "Correlation",
+    "date": "2010-01-28",
+    "categories": [],
+    "aliases": [
+      "/2010/01/correlation"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2010-02-19-stop-ipcluster-from-script.md",
+    "source_type": "md",
+    "canonical": "/posts/2010-02-19-stop-ipcluster-from-script.html",
+    "title": "Stop ipcluster from a script",
+    "date": "2010-02-19",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2010/02/stop-ipcluster-from-script"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2010-03-03-using-numpy-dtype-with-loadtxt.md",
+    "source_type": "md",
+    "canonical": "/posts/2010-03-03-using-numpy-dtype-with-loadtxt.html",
+    "title": "using numpy dtype with loadtxt",
+    "date": "2010-03-03",
+    "categories": [
+      "linux",
+      "python"
+    ],
+    "aliases": [
+      "/2010/03/using-numpy-dtype-with-loadtxt"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2010-03-16-aptitude-search.md",
+    "source_type": "md",
+    "canonical": "/posts/2010-03-16-aptitude-search.html",
+    "title": "aptitude search 'and'",
+    "date": "2010-03-16",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2010/03/aptitude-search"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2010-03-23-change-permission-recursively-to.md",
+    "source_type": "md",
+    "canonical": "/posts/2010-03-23-change-permission-recursively-to.html",
+    "title": "change permission recursively to folders only",
+    "date": "2010-03-23",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2010/03/change-permission-recursively-to"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2010-06-21-parallel-computing-python-way.md",
+    "source_type": "md",
+    "canonical": "/posts/2010-06-21-parallel-computing-python-way.html",
+    "title": "parallel computing the python way",
+    "date": "2010-06-21",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2010/06/parallel-computing-python-way"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2010-06-21-quaternions-for-python.md",
+    "source_type": "md",
+    "canonical": "/posts/2010-06-21-quaternions-for-python.html",
+    "title": "quaternions for python",
+    "date": "2010-06-21",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2010/06/quaternions-for-python"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2010-06-23-healpix-coordinates.md",
+    "source_type": "md",
+    "canonical": "/posts/2010-06-23-healpix-coordinates.html",
+    "title": "healpix coordinates",
+    "date": "2010-06-23",
+    "categories": [
+      "astrophysics"
+    ],
+    "aliases": [
+      "/2010/06/healpix-coordinates"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2010-06-30-change-column-name-in-fits-with-pyfits.md",
+    "source_type": "md",
+    "canonical": "/posts/2010-06-30-change-column-name-in-fits-with-pyfits.html",
+    "title": "change column name in a fits with pyfits",
+    "date": "2010-06-30",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2010/06/change-column-name-in-fits-with-pyfits"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2010-07-23-count-hits-with-numpy.md",
+    "source_type": "md",
+    "canonical": "/posts/2010-07-23-count-hits-with-numpy.html",
+    "title": "count hits with numpy",
+    "date": "2010-07-23",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2010/07/count-hits-with-numpy"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2010-08-04-numpy-dtypes-and-fits-keywords.md",
+    "source_type": "md",
+    "canonical": "/posts/2010-08-04-numpy-dtypes-and-fits-keywords.html",
+    "title": "numpy dtypes and fits keywords",
+    "date": "2010-08-04",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2010/08/numpy-dtypes-and-fits-keywords"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2010-08-21-switch-to-interactive-backend-with.md",
+    "source_type": "md",
+    "canonical": "/posts/2010-08-21-switch-to-interactive-backend-with.html",
+    "title": "switch to interactive backend with ipython -pylab",
+    "date": "2010-08-21",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2010/08/switch-to-interactive-backend-with"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2010-08-31-gnome-alt-f2-popup-launcher.md",
+    "source_type": "md",
+    "canonical": "/posts/2010-08-31-gnome-alt-f2-popup-launcher.html",
+    "title": "gnome alt f2 popup launcher",
+    "date": "2010-08-31",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2010/08/gnome-alt-f2-popup-launcher"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2010-12-03-force-local-install-of-python-module.md",
+    "source_type": "md",
+    "canonical": "/posts/2010-12-03-force-local-install-of-python-module.html",
+    "title": "force local install of python module",
+    "date": "2010-12-03",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2010/12/force-local-install-of-python-module"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2011-01-07-memory-map-npy-files.md",
+    "source_type": "md",
+    "canonical": "/posts/2011-01-07-memory-map-npy-files.html",
+    "title": "memory map npy files",
+    "date": "2011-01-07",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2011/01/memory-map-npy-files"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2011-02-02-git-make-local-branch-tracking-origin.md",
+    "source_type": "md",
+    "canonical": "/posts/2011-02-02-git-make-local-branch-tracking-origin.html",
+    "title": "git make local branch tracking origin",
+    "date": "2011-02-02",
+    "categories": [
+      "git"
+    ],
+    "aliases": [
+      "/2011/02/git-make-local-branch-tracking-origin"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2011-02-16-ipython-and-pytrilinos.md",
+    "source_type": "md",
+    "canonical": "/posts/2011-02-16-ipython-and-pytrilinos.html",
+    "title": "ipython and PyTrilinos",
+    "date": "2011-02-16",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2011/02/ipython-and-pytrilinos"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2011-03-28-pyfits-memory-leak-in-newtable.md",
+    "source_type": "md",
+    "canonical": "/posts/2011-03-28-pyfits-memory-leak-in-newtable.html",
+    "title": "pyfits memory leak in new_table",
+    "date": "2011-03-28",
+    "categories": [
+      "python",
+      "astrophysics"
+    ],
+    "aliases": [
+      "/2011/03/pyfits-memory-leak-in-newtable"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2011-04-13-set-python-logging-level.md",
+    "source_type": "md",
+    "canonical": "/posts/2011-04-13-set-python-logging-level.html",
+    "title": "set python logging level",
+    "date": "2011-04-13",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2011/04/set-python-logging-level"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2011-04-29-vim-regular-expressions.md",
+    "source_type": "md",
+    "canonical": "/posts/2011-04-29-vim-regular-expressions.html",
+    "title": "Vim regular expressions",
+    "date": "2011-04-29",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2011/04/vim-regular-expressions"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2011-05-18-pink-noise-1f-noise-simulations-in-numpy.md",
+    "source_type": "md",
+    "canonical": "/posts/2011-05-18-pink-noise-1f-noise-simulations-in-numpy.html",
+    "title": "Pink noise (1/f noise) simulations in numpy",
+    "date": "2011-05-18",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2011/05/pink-noise-1f-noise-simulations-in-numpy"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2011-06-21-cfitsio-wrapper-in-python.md",
+    "source_type": "md",
+    "canonical": "/posts/2011-06-21-cfitsio-wrapper-in-python.html",
+    "title": "cfitsio wrapper in python",
+    "date": "2011-06-21",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2011/06/cfitsio-wrapper-in-python"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2011-06-21-unit-testing-happiness.md",
+    "source_type": "md",
+    "canonical": "/posts/2011-06-21-unit-testing-happiness.html",
+    "title": "unit testing happiness",
+    "date": "2011-06-21",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2011/06/unit-testing-happiness"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2011-11-01-some-python-resources.md",
+    "source_type": "md",
+    "canonical": "/posts/2011-11-01-some-python-resources.html",
+    "title": "some python resources",
+    "date": "2011-11-01",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2011/11/some-python-resources"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2012-07-06-compile-python-module-with-mpi-support.md",
+    "source_type": "md",
+    "canonical": "/posts/2012-07-06-compile-python-module-with-mpi-support.html",
+    "title": "compile python module with mpi support",
+    "date": "2012-07-06",
+    "categories": [],
+    "aliases": [
+      "/2012/07/compile-python-module-with-mpi-support"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2012-08-16-doctests-and-unittests-happiness-2.md",
+    "source_type": "md",
+    "canonical": "/posts/2012-08-16-doctests-and-unittests-happiness-2.html",
+    "title": "doctests and unittests happiness 2",
+    "date": "2012-08-16",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2012/08/doctests-and-unittests-happiness-2"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2012-09-26-homepage-on-aboutme.md",
+    "source_type": "md",
+    "canonical": "/posts/2012-09-26-homepage-on-aboutme.html",
+    "title": "homepage on about.me",
+    "date": "2012-09-26",
+    "categories": [],
+    "aliases": [
+      "/2012/09/homepage-on-aboutme"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2012-09-27-ipythonparallel-for-planck-data.md",
+    "source_type": "md",
+    "canonical": "/posts/2012-09-27-ipythonparallel-for-planck-data.html",
+    "title": "IPython.parallel for Planck data analysis at NERSC",
+    "date": "2012-09-27",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2012/09/ipythonparallel-for-planck-data"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2012-10-06-butterworth-filter-with-python.md",
+    "source_type": "md",
+    "canonical": "/posts/2012-10-06-butterworth-filter-with-python.html",
+    "title": "Butterworth filter with Python",
+    "date": "2012-10-06",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2012/10/butterworth-filter-with-python"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2012-12-17-ubuntu-ppa-for-healpix-and-healpy.md",
+    "source_type": "md",
+    "canonical": "/posts/2012-12-17-ubuntu-ppa-for-healpix-and-healpy.html",
+    "title": "Ubuntu PPA for HEALPix and healpy",
+    "date": "2012-12-17",
+    "categories": [
+      "healpy",
+      "linux"
+    ],
+    "aliases": [
+      "/2012/12/ubuntu-ppa-for-healpix-and-healpy"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-01-18-elliptic-beams-fwhm-and-ellipticity.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-01-18-elliptic-beams-fwhm-and-ellipticity.html",
+    "title": "Elliptic beams, FWHM and ellipticity",
+    "date": "2013-01-18",
+    "categories": [
+      "astrophysics"
+    ],
+    "aliases": [
+      "/2013/01/elliptic-beams-fwhm-and-ellipticity"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-01-28-tag-blogger.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-01-28-tag-blogger.html",
+    "title": "Compile healpix C++ to javascript",
+    "date": "2013-01-28",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2013/01/tag-blogger"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-02-27-how-to-cite-hdf5-in-bibtex.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-02-27-how-to-cite-hdf5-in-bibtex.html",
+    "title": "How to cite HDF5 in bibtex",
+    "date": "2013-02-27",
+    "categories": [],
+    "aliases": [
+      "/2013/02/how-to-cite-hdf5-in-bibtex"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-03-12-interactive-3d-plot-of-sky-map.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-03-12-interactive-3d-plot-of-sky-map.html",
+    "title": "Interactive 3D plot of a sky map",
+    "date": "2013-03-12",
+    "categories": [
+      "python",
+      "astrophysics"
+    ],
+    "aliases": [
+      "/2013/03/interactive-3d-plot-of-sky-map"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-04-06-basic-forkpull-git-workflow.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-04-06-basic-forkpull-git-workflow.html",
+    "title": "Basic fork/pull git workflow",
+    "date": "2013-04-06",
+    "categories": [
+      "git"
+    ],
+    "aliases": [
+      "/2013/04/basic-forkpull-git-workflow"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-04-08-noise-in-spectra-and-map-domain.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-04-08-noise-in-spectra-and-map-domain.html",
+    "title": "Noise in spectra and map domain",
+    "date": "2013-04-08",
+    "categories": [
+      "healpy",
+      "astrophysics"
+    ],
+    "aliases": [
+      "/2013/04/noise-in-spectra-and-map-domain"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-04-08-simple-mixin-usage-in-python.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-04-08-simple-mixin-usage-in-python.html",
+    "title": "Simple Mixin usage in python",
+    "date": "2013-04-08",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2013/04/simple-mixin-usage-in-python"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-04-11-ipython-parallell-setup-on-carver-at.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-04-11-ipython-parallell-setup-on-carver-at.html",
+    "title": "IPython parallell setup on Carver at NERSC",
+    "date": "2013-04-11",
+    "categories": [
+      "hpc",
+      "python"
+    ],
+    "aliases": [
+      "/2013/04/ipython-parallell-setup-on-carver-at"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-06-22-how-to-use-ipython-notebook-on-small.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-06-22-how-to-use-ipython-notebook-on-small.html",
+    "title": "How to use the IPython notebook on a small computing cluster",
+    "date": "2013-06-22",
+    "categories": [
+      "hpc",
+      "python"
+    ],
+    "aliases": [
+      "/2013/06/how-to-use-ipython-notebook-on-small"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-07-15-processing-planck-sources-with-hadoop.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-07-15-processing-planck-sources-with-hadoop.html",
+    "title": "Processing sources in Planck maps with Hadoop and Python",
+    "date": "2013-07-15",
+    "categories": [
+      "hpc",
+      "python"
+    ],
+    "aliases": [
+      "/2013/07/processing-planck-sources-with-hadoop"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-08-04-export-google-analytics-data-via-api.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-08-04-export-google-analytics-data-via-api.html",
+    "title": "Export google analytics data via API with Python",
+    "date": "2013-08-04",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2013/08/export-google-analytics-data-via-api"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-08-08-healpix-map-of-earth-using-healpy.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-08-08-healpix-map-of-earth-using-healpy.html",
+    "title": "HEALPix map of the Earth using healpy",
+    "date": "2013-08-08",
+    "categories": [
+      "healpy"
+    ],
+    "aliases": [
+      "/2013/08/healpix-map-of-earth-using-healpy"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-08-20-planck-ctp-angular-power-spectrum-ell.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-08-20-planck-ctp-angular-power-spectrum-ell.html",
+    "title": "Planck CTP angular power spectrum ell binning",
+    "date": "2013-08-20",
+    "categories": [
+      "healpy"
+    ],
+    "aliases": [
+      "/2013/08/planck-ctp-angular-power-spectrum-ell"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-08-30-interactive-figures-planck-power-spectra.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-08-30-interactive-figures-planck-power-spectra.html",
+    "title": "Interactive figures in the browser - CMB power spectra",
+    "date": "2013-08-30",
+    "categories": [
+      "astrophysics",
+      "healpy"
+    ],
+    "aliases": [
+      "/2013/08/interactive-figures-planck-power-spectra"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-09-02-run-hadoop-python-jobs-on-amazon-with-mrjob.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-09-02-run-hadoop-python-jobs-on-amazon-with-mrjob.html",
+    "title": "Run Hadoop Python jobs on Amazon with mrjob",
+    "date": "2013-09-02",
+    "categories": [
+      "git",
+      "python"
+    ],
+    "aliases": [
+      "/2013/09/run-hadoop-python-jobs-on-amazon-with-mrjob"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-09-10-Planck-CMB-map-at-high-resolution.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-09-10-Planck-CMB-map-at-high-resolution.html",
+    "title": "Planck CMB map at high resolution",
+    "date": "2013-09-10",
+    "categories": [
+      "python",
+      "astrophysics",
+      "healpy"
+    ],
+    "aliases": [
+      "/2013/09/Planck-CMB-map-at-high-resolution"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-09-17-clviewer-interactive-plot-of-CMB-spectra.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-09-17-clviewer-interactive-plot-of-CMB-spectra.html",
+    "title": "clviewer, interactive plot of CMB spectra",
+    "date": "2013-09-17",
+    "categories": [
+      "python",
+      "astrophysics"
+    ],
+    "aliases": [
+      "/2013/09/clviewer-interactive-plot-of-CMB-spectra"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-09-26-automatically-build-pelican-and-publish-to-github-pages.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-09-26-automatically-build-pelican-and-publish-to-github-pages.html",
+    "title": "How to automatically build your Pelican blog and publish it to Github Pages",
+    "date": "2013-09-26",
+    "categories": [
+      "python",
+      "git"
+    ],
+    "aliases": [
+      "/2013/09/automatically-build-pelican-and-publish-to-github-pages"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-09-27-google-plus-comments-plugin-for-pelican.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-09-27-google-plus-comments-plugin-for-pelican.html",
+    "title": "Google Plus comments plugin for Pelican",
+    "date": "2013-09-27",
+    "categories": [
+      "python",
+      "github"
+    ],
+    "aliases": [
+      "/2013/09/google-plus-comments-plugin-for-pelican"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-10-01-how-to-log-exceptions-in-python.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-10-01-how-to-log-exceptions-in-python.html",
+    "title": "How to log exceptions in Python",
+    "date": "2013-10-01",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2013/10/how-to-log-exceptions-in-python"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-10-14-jiffylab-multiuser-ipython-notebooks.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-10-14-jiffylab-multiuser-ipython-notebooks.html",
+    "title": "Jiffylab multiuser IPython notebooks",
+    "date": "2013-10-14",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2013/10/jiffylab-multiuser-ipython-notebooks"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-11-20-published-paper-destriping-CMB-polarimeter.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-11-20-published-paper-destriping-CMB-polarimeter.html",
+    "title": "Published paper on destriping Cosmic Microwave Background polarimeter data",
+    "date": "2013-11-20",
+    "categories": [
+      "python",
+      "cosmology"
+    ],
+    "aliases": [
+      "/2013/11/published-paper-destriping-CMB-polarimeter"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-12-10-joining-sandiego-supercomputer-center.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-12-10-joining-sandiego-supercomputer-center.html",
+    "title": "Joining San Diego Supercomputer Center",
+    "date": "2013-12-10",
+    "categories": [],
+    "aliases": [
+      "/2013/12/joining-sandiego-supercomputer-center"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2013-12-18-run-ipython-notebook-on-HPC-cluster-via-PBS.md",
+    "source_type": "md",
+    "canonical": "/posts/2013-12-18-run-ipython-notebook-on-HPC-cluster-via-PBS.html",
+    "title": "Run IPython Notebook on a HPC cluster via PBS",
+    "date": "2013-12-18",
+    "categories": [
+      "python",
+      "hpc"
+    ],
+    "aliases": [
+      "/2013/12/run-ipython-notebook-on-HPC-cluster-via-PBS"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2014-01-31-wget-file-from-google-drive.md",
+    "source_type": "md",
+    "canonical": "/posts/2014-01-31-wget-file-from-google-drive.html",
+    "title": "wget file from google drive",
+    "date": "2014-01-31",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2014/01/wget-file-from-google-drive"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2014-02-13-openproceedings.md",
+    "source_type": "md",
+    "canonical": "/posts/2014-02-13-openproceedings.html",
+    "title": "openproceedings - Github/FigShare based publishing platform for conference proceedings",
+    "date": "2014-02-13",
+    "categories": [
+      "python",
+      "openscience"
+    ],
+    "aliases": [
+      "/2014/02/openproceedings"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2014-02-26-build-software-carpentry-with-pelican.md",
+    "source_type": "md",
+    "canonical": "/posts/2014-02-26-build-software-carpentry-with-pelican.html",
+    "title": "Build Software Carpentry lessons with Pelican",
+    "date": "2014-02-26",
+    "categories": [
+      "python",
+      "openscience"
+    ],
+    "aliases": [
+      "/2014/02/build-software-carpentry-with-pelican"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2014-03-20-machine-learning-at-scale-with-python.md",
+    "source_type": "md",
+    "canonical": "/posts/2014-03-20-machine-learning-at-scale-with-python.html",
+    "title": "Machine learning at scale with Python",
+    "date": "2014-03-20",
+    "categories": [
+      "python",
+      "hpc"
+    ],
+    "aliases": [
+      "/2014/03/machine-learning-at-scale-with-python"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2014-03-20-python-on-gordon.md",
+    "source_type": "md",
+    "canonical": "/posts/2014-03-20-python-on-gordon.html",
+    "title": "Python on Gordon",
+    "date": "2014-03-20",
+    "categories": [
+      "hpc",
+      "python"
+    ],
+    "aliases": [
+      "/2014/03/python-on-gordon"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2014-06-05-career_as_a_computational_scientist.md",
+    "source_type": "md",
+    "canonical": "/posts/2014-06-05-career_as_a_computational_scientist.html",
+    "title": "Thoughts on a career as a computational scientist",
+    "date": "2014-06-05",
+    "categories": [
+      "hpc"
+    ],
+    "aliases": [
+      "/2014/06/career_as_a_computational_scientist",
+      "/2014/06/career-as-a-computational-scientist"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2014-08-19-github-for-research-groups.md",
+    "source_type": "md",
+    "canonical": "/posts/2014-08-19-github-for-research-groups.html",
+    "title": "Create a Github account for your research group with free private repositories",
+    "date": "2014-08-19",
+    "categories": [
+      "github",
+      "git",
+      "openscience"
+    ],
+    "aliases": [
+      "/2014/08/github-for-research-groups"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2014-08-28-code-review-for-scientific-computing.md",
+    "source_type": "md",
+    "canonical": "/posts/2014-08-28-code-review-for-scientific-computing.html",
+    "title": "How to perform code review for scientific software",
+    "date": "2014-08-28",
+    "categories": [
+      "github",
+      "git",
+      "openscience"
+    ],
+    "aliases": [
+      "/2014/08/code-review-for-scientific-computing"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2014-09-30-unit-tests-ipython-notebook.md",
+    "source_type": "md",
+    "canonical": "/posts/2014-09-30-unit-tests-ipython-notebook.html",
+    "title": "Write unit tests as cells of IPython notebooks",
+    "date": "2014-09-30",
+    "categories": [
+      "python",
+      "jupyter"
+    ],
+    "aliases": [
+      "/2014/09/unit-tests-ipython-notebook"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2014-10-22-zero-based-indexing.md",
+    "source_type": "md",
+    "canonical": "/posts/2014-10-22-zero-based-indexing.html",
+    "title": "Zero based indexing",
+    "date": "2014-10-22",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2014/10/zero-based-indexing"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2015-02-10-software-carpentry-setup-chromebook.md",
+    "source_type": "md",
+    "canonical": "/posts/2015-02-10-software-carpentry-setup-chromebook.html",
+    "title": "Software Carpentry setup for Chromebook",
+    "date": "2015-02-10",
+    "categories": [
+      "linux",
+      "python"
+    ],
+    "aliases": [
+      "/2015/02/software-carpentry-setup-chromebook"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2015-03-24-numba-groupby-pixels.md",
+    "source_type": "md",
+    "canonical": "/posts/2015-03-24-numba-groupby-pixels.html",
+    "title": "Accelerate groupby operation on pixels with Numba",
+    "date": "2015-03-24",
+    "categories": [
+      "python",
+      "astrophysics"
+    ],
+    "aliases": [
+      "/2015/03/numba-groupby-pixels"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2015-04-02-jupyterhub-hpc.md",
+    "source_type": "md",
+    "canonical": "/posts/2015-04-02-jupyterhub-hpc.html",
+    "title": "Run Jupyterhub on a supercomputer",
+    "date": "2015-04-02",
+    "categories": [
+      "python",
+      "jupyterhub",
+      "hpc"
+    ],
+    "aliases": [
+      "/2015/04/jupyterhub-hpc"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2015-09-17-ipython-jupyter-notebook-sdsc-comet.md",
+    "source_type": "md",
+    "canonical": "/posts/2015-09-17-ipython-jupyter-notebook-sdsc-comet.html",
+    "title": "IPython/Jupyter notebook setup on SDSC Comet",
+    "date": "2015-09-17",
+    "categories": [
+      "python",
+      "hpc",
+      "jupyter"
+    ],
+    "aliases": [
+      "/2015/09/ipython-jupyter-notebook-sdsc-comet"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2015-09-24-ipython-jupyter-notebook-nersc-edison.md",
+    "source_type": "md",
+    "canonical": "/posts/2015-09-24-ipython-jupyter-notebook-nersc-edison.html",
+    "title": "IPython/Jupyter notebook setup on NERSC Edison",
+    "date": "2015-09-24",
+    "categories": [
+      "jupyter",
+      "python",
+      "hpc",
+      "nersc"
+    ],
+    "aliases": [
+      "/2015/09/ipython-jupyter-notebook-nersc-edison"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2015-10-05-use-own-python-in-jupyterhub.md",
+    "source_type": "md",
+    "canonical": "/posts/2015-10-05-use-own-python-in-jupyterhub.html",
+    "title": "Use your own Python installation (kernel) in Jupyterhub",
+    "date": "2015-10-05",
+    "categories": [
+      "python",
+      "jupyterhub"
+    ],
+    "aliases": [
+      "/2015/10/use-own-python-in-jupyterhub"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2016-04-16-jupyterhub-sdsc-cloud.md",
+    "source_type": "md",
+    "canonical": "/posts/2016-04-16-jupyterhub-sdsc-cloud.html",
+    "title": "Deploy Jupyterhub on a virtual machine for a workshop",
+    "date": "2016-04-16",
+    "categories": [
+      "python",
+      "jupyterhub"
+    ],
+    "aliases": [
+      "/2016/04/jupyterhub-sdsc-cloud"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2016-04-27-jupyterhub-image-sdsc-cloud.md",
+    "source_type": "md",
+    "canonical": "/posts/2016-04-27-jupyterhub-image-sdsc-cloud.html",
+    "title": "Quick Jupyterhub deployment for workshops with pre-built image",
+    "date": "2016-04-28",
+    "categories": [
+      "python",
+      "jupyterhub"
+    ],
+    "aliases": [
+      "/2016/04/jupyterhub-image-sdsc-cloud"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2016-05-24-jupyterhub-docker-swarm.md",
+    "source_type": "md",
+    "canonical": "/posts/2016-05-24-jupyterhub-docker-swarm.html",
+    "title": "Jupyterhub deployment on multiple nodes with Docker Swarm",
+    "date": "2016-05-24",
+    "categories": [
+      "jupyterhub",
+      "cloudcomputing"
+    ],
+    "aliases": [
+      "/2016/05/jupyterhub-docker-swarm"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2016-10-12-dockerspawner-cuda.md",
+    "source_type": "md",
+    "canonical": "/posts/2016-10-12-dockerspawner-cuda.html",
+    "title": "Jupyterhub Docker Spawner with GPU support",
+    "date": "2016-10-12",
+    "categories": [
+      "python",
+      "jupyterhub"
+    ],
+    "aliases": [
+      "/2016/10/dockerspawner-cuda"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2017-01-23-singularity-hpc-comet.md",
+    "source_type": "md",
+    "canonical": "/posts/2017-01-23-singularity-hpc-comet.html",
+    "title": "Run Ubuntu in HPC with Singularity",
+    "date": "2017-01-13",
+    "categories": [
+      "singularity",
+      "hpc"
+    ],
+    "aliases": [
+      "/2017/01/singularity-hpc-comet"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2017-02-01-publish-research-software-github.md",
+    "source_type": "md",
+    "canonical": "/posts/2017-02-01-publish-research-software-github.html",
+    "title": "How to publish your research software to Github",
+    "date": "2017-02-01",
+    "categories": [
+      "git",
+      "github",
+      "openscience"
+    ],
+    "aliases": [
+      "/2017/02/publish-research-software-github"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2017-02-03-automated-deployment-jupyterhub-ansible.md",
+    "source_type": "md",
+    "canonical": "/posts/2017-02-03-automated-deployment-jupyterhub-ansible.html",
+    "title": "Automated deployment of Jupyterhub with Ansible",
+    "date": "2017-02-03",
+    "categories": [
+      "jupyterhub",
+      "cloudcomputing"
+    ],
+    "aliases": [
+      "/2017/02/automated-deployment-jupyterhub-ansible"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2017-02-24-customize-your-python-environment-in-jupyterhub.md",
+    "source_type": "md",
+    "canonical": "/posts/2017-02-24-customize-your-python-environment-in-jupyterhub.html",
+    "title": "Customize your Python environment in Jupyterhub",
+    "date": "2017-02-24",
+    "categories": [
+      "python",
+      "jupyterhub"
+    ],
+    "aliases": [
+      "/2017/02/customize-your-python-environment-in-jupyterhub"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2017-02-26-sample-deployment-jupyterhub-hpc.md",
+    "source_type": "md",
+    "canonical": "/posts/2017-02-26-sample-deployment-jupyterhub-hpc.html",
+    "title": "Sample deployment of Jupyterhub in HPC on SDSC Comet",
+    "date": "2017-02-26",
+    "categories": [
+      "python",
+      "jupyterhub",
+      "hpc"
+    ],
+    "aliases": [
+      "/2017/02/sample-deployment-jupyterhub-hpc"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2017-04-19-globus-ftp-local-machine.md",
+    "source_type": "md",
+    "canonical": "/posts/2017-04-19-globus-ftp-local-machine.html",
+    "title": "Configure Globus on your local machine for GridFTP with XSEDE authentication",
+    "date": "2017-04-19",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2017/04/globus-ftp-local-machine"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2017-05-16-jupyterhub-batchspawner-ssh.md",
+    "source_type": "md",
+    "canonical": "/posts/2017-05-16-jupyterhub-batchspawner-ssh.html",
+    "title": "Deploy Jupyterhub on a supercomputer with SSH authentication",
+    "date": "2017-05-16",
+    "categories": [
+      "python",
+      "jupyterhub",
+      "hpc"
+    ],
+    "aliases": [
+      "/2017/05/jupyterhub-batchspawner-ssh"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2017-06-30-quick-github-pull-requests.md",
+    "source_type": "md",
+    "canonical": "/posts/2017-06-30-quick-github-pull-requests.html",
+    "title": "How to create pull requests on Github",
+    "date": "2017-06-30",
+    "categories": [
+      "git",
+      "github"
+    ],
+    "aliases": [
+      "/2017/06/quick-github-pull-requests"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2017-07-12-xstream-tutorial-notes-pearc17.md",
+    "source_type": "md",
+    "canonical": "/posts/2017-07-12-xstream-tutorial-notes-pearc17.html",
+    "title": "How to create pull requests on Github",
+    "date": "2017-06-30",
+    "categories": [
+      "git",
+      "github",
+      "cloudcomputing"
+    ],
+    "aliases": [
+      "/2017/07/xstream-tutorial-notes-pearc17"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2017-08-11-jupyterhub-globus-comet-singularity.md",
+    "source_type": "md",
+    "canonical": "/posts/2017-08-11-jupyterhub-globus-comet-singularity.html",
+    "title": "Deployment of Jupyterhub with Globus Auth to spawn notebook on Comet in Singularity containers",
+    "date": "2017-08-11",
+    "categories": [
+      "jupyterhub",
+      "singularity",
+      "hpc"
+    ],
+    "aliases": [
+      "/2017/08/jupyterhub-globus-comet-singularity"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2017-09-06-continous-integration-travis-ci-github.md",
+    "source_type": "md",
+    "canonical": "/posts/2017-09-06-continous-integration-travis-ci-github.html",
+    "title": "Setup automated testing on a Github repository with Travis-ci",
+    "date": "2017-09-06",
+    "categories": [
+      "github",
+      "git"
+    ],
+    "aliases": [
+      "/2017/09/continous-integration-travis-ci-github"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2017-10-25-compile-software-singularity.md",
+    "source_type": "md",
+    "canonical": "/posts/2017-10-25-compile-software-singularity.html",
+    "title": "How to modify Singularity images on a Supercomputer",
+    "date": "2017-11-06",
+    "categories": [
+      "singularity",
+      "hpc"
+    ],
+    "aliases": [
+      "/2017/10/compile-software-singularity"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2017-10-25-cudak8s.md",
+    "source_type": "md",
+    "canonical": "/posts/2017-10-25-cudak8s.html",
+    "title": "Setup automated testing on a Github repository with Travis-ci",
+    "date": "2017-10-25",
+    "categories": [
+      "github",
+      "git"
+    ],
+    "aliases": [
+      "/2017/10/cudak8s"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2017-10-26-scalable-jupyterhub-docker-swarm-mode.md",
+    "source_type": "md",
+    "canonical": "/posts/2017-10-26-scalable-jupyterhub-docker-swarm-mode.html",
+    "title": "Deploy scalable Jupyterhub on Docker Swarm mode",
+    "date": "2017-10-26",
+    "categories": [
+      "jupyterhub",
+      "jetstream",
+      "cloudcomputing"
+    ],
+    "aliases": [
+      "/2017/10/scalable-jupyterhub-docker-swarm-mode"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2017-12-04-store-conda-environment-inside-notebook.md",
+    "source_type": "md",
+    "canonical": "/posts/2017-12-04-store-conda-environment-inside-notebook.html",
+    "title": "Store a conda environment inside a Notebook",
+    "date": "2017-12-04",
+    "categories": [
+      "jupyter",
+      "python"
+    ],
+    "aliases": [
+      "/2017/12/store-conda-environment-inside-notebook"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2017-12-05-scalable-jupyterhub-kubernetes-jetstream.md",
+    "source_type": "md",
+    "canonical": "/posts/2017-12-05-scalable-jupyterhub-kubernetes-jetstream.html",
+    "title": "Deploy scalable Jupyterhub with Kubernetes on Jetstream",
+    "date": "2017-12-05",
+    "categories": [
+      "jupyterhub",
+      "jetstream",
+      "cloudcomputing"
+    ],
+    "aliases": [
+      "/2017/12/scalable-jupyterhub-kubernetes-jetstream"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2017-12-19-ecss-symposium.md",
+    "source_type": "md",
+    "canonical": "/posts/2017-12-19-ecss-symposium.html",
+    "title": "ECSS Symposium about Jupyterhub deployments on XSEDE",
+    "date": "2017-12-15",
+    "categories": [
+      "jupyterhub",
+      "jetstream",
+      "cloudcomputing"
+    ],
+    "aliases": [
+      "/2017/12/ecss-symposium"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2017-12-21-custom-conda-python-jupyter-nersc.md",
+    "source_type": "md",
+    "canonical": "/posts/2017-12-21-custom-conda-python-jupyter-nersc.html",
+    "title": "Install custom Python environment on Jupyter Notebooks at NERSC",
+    "date": "2017-12-21",
+    "categories": [
+      "jupyterhub",
+      "python",
+      "hpc",
+      "nersc"
+    ],
+    "aliases": [
+      "/2017/12/custom-conda-python-jupyter-nersc"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2018-01-01-deploy_jupyterhub_supercomputer_2018.md",
+    "source_type": "md",
+    "canonical": "/posts/2018-01-01-deploy_jupyterhub_supercomputer_2018.html",
+    "title": "Deploy JupyterHub on a Supercomputer for a workshop or tutorial 2018 edition",
+    "date": "2018-11-7 ",
+    "categories": [
+      "jupyterhub",
+      "hpc"
+    ],
+    "aliases": [
+      "/2018/01/deploy_jupyterhub_supercomputer_2018",
+      "/2018/01/deploy-jupyterhub-supercomputer-2018"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2018-03-03-zarr-on-jetstream.md",
+    "source_type": "md",
+    "canonical": "/posts/2018-03-03-zarr-on-jetstream.html",
+    "title": "Use the distributed file format Zarr on Jetstream Swift object storage",
+    "date": "2018-03-03",
+    "categories": [
+      "jupyter",
+      "jetstream",
+      "cloudcomputing"
+    ],
+    "aliases": [
+      "/2018/03/zarr-on-jetstream"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2018-03-03-zarr.md",
+    "source_type": "md",
+    "canonical": "/posts/2018-03-03-zarr.html",
+    "title": "Use the distributed file format Zarr on Jetstream Swift object storage",
+    "date": "2018-03-03",
+    "categories": [
+      "jupyter",
+      "jetstream"
+    ],
+    "aliases": [
+      "/2018/03/zarr"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2018-03-29-boinc-server-jetstream.md",
+    "source_type": "md",
+    "canonical": "/posts/2018-03-29-boinc-server-jetstream.html",
+    "title": "Install a BOINC server on Jetstream",
+    "date": "2018-03-29",
+    "categories": [
+      "jetstream",
+      "cloudcomputing"
+    ],
+    "aliases": [
+      "/2018/03/boinc-server-jetstream"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2018-05-04-shared-dask-kubernetes-jetstream.md",
+    "source_type": "md",
+    "canonical": "/posts/2018-05-04-shared-dask-kubernetes-jetstream.html",
+    "title": "Launch a shared dask cluster in Kubernetes alongside JupyterHub on Jetstream",
+    "date": "2018-05-04",
+    "categories": [
+      "jupyterhub",
+      "jetstream",
+      "dask"
+    ],
+    "aliases": [
+      "/2018/05/shared-dask-kubernetes-jetstream"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2018-05-12-pearc18-paper-preprint-arxiv.md",
+    "source_type": "md",
+    "canonical": "/posts/2018-05-12-pearc18-paper-preprint-arxiv.html",
+    "title": "How to post a PEARC18 paper pre-print to Arxiv",
+    "date": "2018-05-12",
+    "categories": [
+      "openscience"
+    ],
+    "aliases": [
+      "/2018/05/pearc18-paper-preprint-arxiv"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2018-06-07-private-dask-kubernetes-jetstream.md",
+    "source_type": "md",
+    "canonical": "/posts/2018-06-07-private-dask-kubernetes-jetstream.html",
+    "title": "Setup private dask clusters in Kubernetes alongside JupyterHub on Jetstream",
+    "date": "2018-06-07",
+    "categories": [
+      "jupyterhub",
+      "kubernetes",
+      "jetstream",
+      "dask"
+    ],
+    "aliases": [
+      "/2018/06/private-dask-kubernetes-jetstream"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2018-06-20-organize-code-simulations-nersc.md",
+    "source_type": "md",
+    "canonical": "/posts/2018-06-20-organize-code-simulations-nersc.html",
+    "title": "How to organize code and data for simulations at NERSC",
+    "date": "2018-06-20",
+    "categories": [
+      "hpc",
+      "python",
+      "nersc"
+    ],
+    "aliases": [
+      "/2018/06/organize-code-simulations-nersc"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2018-07-19-docker-auto-build.md",
+    "source_type": "md",
+    "canonical": "/posts/2018-07-19-docker-auto-build.html",
+    "title": "Create DockerHub auto build",
+    "date": "2018-07-19",
+    "categories": [
+      "github"
+    ],
+    "aliases": [
+      "/2018/07/docker-auto-build"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2018-07-22-updated-singularity-2.5-comet.md",
+    "source_type": "md",
+    "canonical": "/posts/2018-07-22-updated-singularity-2.5-comet.html",
+    "title": "Updated Singularity images for Comet",
+    "date": "2018-07-22",
+    "categories": [
+      "singularity",
+      "hpc"
+    ],
+    "aliases": [
+      "/2018/07/updated-singularity-2.5-comet"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2018-07-23-pearc18_paper_deploy_jupyterhub_xsede.md",
+    "source_type": "md",
+    "canonical": "/posts/2018-07-23-pearc18_paper_deploy_jupyterhub_xsede.html",
+    "title": "PEARC18 paper on deploying Jupyterhub at scale on XSEDE",
+    "date": "2018-07-23",
+    "categories": [
+      "singularity",
+      "jetstream",
+      "jupyterhub",
+      "kubernetes"
+    ],
+    "aliases": [
+      "/2018/07/pearc18_paper_deploy_jupyterhub_xsede",
+      "/2018/07/pearc18-paper-deploy-jupyterhub-xsede"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2018-09-23-jetstream_kubernetes_kubespray.md",
+    "source_type": "md",
+    "canonical": "/posts/2018-09-23-jetstream_kubernetes_kubespray.html",
+    "title": "Deploy Kubernetes on Jetstream with Kubespray 1/3",
+    "date": "2018-09-23",
+    "categories": [
+      "kubernetes",
+      "jetstream"
+    ],
+    "aliases": [
+      "/2018/09/jetstream_kubernetes_kubespray",
+      "/2018/09/jetstream-kubernetes-kubespray"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2018-09-23-jetstream_kubernetes_kubespray_explore.md",
+    "source_type": "md",
+    "canonical": "/posts/2018-09-23-jetstream_kubernetes_kubespray_explore.html",
+    "title": "Explore a Kubernetes deployment on Jetstream with Kubespray 2/3",
+    "date": "2018-09-23",
+    "categories": [
+      "kubernetes",
+      "jetstream"
+    ],
+    "aliases": [
+      "/2018/09/jetstream_kubernetes_kubespray_explore",
+      "/2018/09/jetstream-kubernetes-kubespray-explore"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2018-09-24-jetstream_kubernetes_kubespray_jupyterhub.md",
+    "source_type": "md",
+    "canonical": "/posts/2018-09-24-jetstream_kubernetes_kubespray_jupyterhub.html",
+    "title": "Deploy JupyterHub on Kubernetes deployment on Jetstream created with Kubespray 3/3",
+    "date": "2018-09-24",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub"
+    ],
+    "aliases": [
+      "/2018/09/jetstream_kubernetes_kubespray_jupyterhub",
+      "/2018/09/jetstream-kubernetes-kubespray-jupyterhub"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2018-10-24-compute-at-sdsc.md",
+    "source_type": "md",
+    "canonical": "/posts/2018-10-24-compute-at-sdsc.html",
+    "title": "Bring your computing to the San Diego Supercomputer Center",
+    "date": "2018-10-24",
+    "categories": [
+      "hpc"
+    ],
+    "aliases": [
+      "/2018/10/compute-at-sdsc"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2018-10-26-pandas-astro-example.md",
+    "source_type": "md",
+    "canonical": "/posts/2018-10-26-pandas-astro-example.html",
+    "title": "Advanced pandas with astrophysics example notebook",
+    "date": "2018-10-26",
+    "categories": [
+      "jupyter",
+      "astrophysics"
+    ],
+    "aliases": [
+      "/2018/10/pandas-astro-example"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.md",
+    "source_type": "md",
+    "canonical": "/posts/2018-11-07-deploy_jupyterhub_supercomputer_2018.html",
+    "title": "Deploy JupyterHub on a Supercomputer for a workshop or tutorial 2018 edition",
+    "date": "2018-11-7 ",
+    "categories": [
+      "jupyterhub",
+      "hpc"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2018-12-12-twofactor_ucsd.md",
+    "source_type": "md",
+    "canonical": "/posts/2018-12-12-twofactor_ucsd.html",
+    "title": "Setup two factor authentication for UCSD, and Lastpass",
+    "date": "2018-12-12",
+    "categories": [],
+    "aliases": [
+      "/2018/12/twofactor_ucsd",
+      "/2018/12/twofactor-ucsd"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2018-12-20-jetstream_kubernetes_jupyterhub_pangeo.md",
+    "source_type": "md",
+    "canonical": "/posts/2018-12-20-jetstream_kubernetes_jupyterhub_pangeo.html",
+    "title": "Deploy Pangeo on Kubernetes deployment on Jetstream created with Kubespray",
+    "date": "2018-12-20",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub"
+    ],
+    "aliases": [
+      "/2018/12/jetstream_kubernetes_jupyterhub_pangeo",
+      "/2018/12/jetstream-kubernetes-jupyterhub-pangeo"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2019-01-24-zarr_jetstream_2019.md",
+    "source_type": "md",
+    "canonical": "/posts/2019-01-24-zarr_jetstream_2019.html",
+    "title": "Use the distributed file format Zarr on Jetstream Swift object storage, 2019",
+    "date": "2019-01-24",
+    "categories": [
+      "jupyterhub",
+      "jetstream",
+      "dask"
+    ],
+    "aliases": [
+      "/2019/01/zarr_jetstream_2019",
+      "/2019/01/zarr-jetstream-2019",
+      "/2019/01/zarr-on-jetstream"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2019-02-22-jetstream_kubernetes_kubespray_282.md",
+    "source_type": "md",
+    "canonical": "/posts/2019-02-22-jetstream_kubernetes_kubespray_282.html",
+    "title": "Deploy Kubernetes with Kubespray 2.8.2 and JupyterHub with helm recipe 0.8 on Jetstream",
+    "date": "2019-02-22",
+    "categories": [
+      "kubernetes",
+      "jetstream"
+    ],
+    "aliases": [
+      "/2019/02/jetstream_kubernetes_kubespray_282",
+      "/2019/02/jetstream-kubernetes-kubespray-282"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2019-02-22-kubernetes-monitoring.md",
+    "source_type": "md",
+    "canonical": "/posts/2019-02-22-kubernetes-monitoring.html",
+    "title": "Kubernetes monitoring with Dashboard, Prometheus, and Grafana",
+    "date": "2019-02-22",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub"
+    ],
+    "aliases": [
+      "/2019/02/kubernetes-monitoring"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2019-02-22-scale-kubernetes-jupyterhub-manually.md",
+    "source_type": "md",
+    "canonical": "/posts/2019-02-22-scale-kubernetes-jupyterhub-manually.html",
+    "title": "Scale Kubernetes manually on Jetstream",
+    "date": "2019-02-22",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub"
+    ],
+    "aliases": [
+      "/2019/02/scale-kubernetes-jupyterhub-manually"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2019-03-24-folder-inherit-group-permission.md",
+    "source_type": "md",
+    "canonical": "/posts/2019-03-24-folder-inherit-group-permission.html",
+    "title": "Inherit group permission in folder",
+    "date": "2019-03-24",
+    "categories": [
+      "hpc",
+      "linux"
+    ],
+    "aliases": [
+      "/2019/03/folder-inherit-group-permission"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2019-04-20-jetstream_kubernetes_monitoring.md",
+    "source_type": "md",
+    "canonical": "/posts/2019-04-20-jetstream_kubernetes_monitoring.html",
+    "title": "Kubernetes monitoring with Prometheus and Grafana",
+    "date": "2019-04-20",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub"
+    ],
+    "aliases": [
+      "/2019/04/jetstream_kubernetes_monitoring",
+      "/2019/04/kubernetes-monitoring-prometheus-grafana"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2019-05-30-webinar_python_hpc.md",
+    "source_type": "md",
+    "canonical": "/posts/2019-05-30-webinar_python_hpc.html",
+    "title": "Webinar about distributed computing with Python",
+    "date": "2019-05-30",
+    "categories": [
+      "python",
+      "hpc"
+    ],
+    "aliases": [
+      "/2019/05/webinar_python_hpc"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2019-06-14-jetstream_kubernetes_magnum.md",
+    "source_type": "md",
+    "canonical": "/posts/2019-06-14-jetstream_kubernetes_magnum.html",
+    "title": "Deploy Kubernetes and JupyterHub on Jetstream with Magnum",
+    "date": "2019-06-14",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub"
+    ],
+    "aliases": [
+      "/2019/06/jetstream_kubernetes_magnum"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2019-08-21-large_files_python_packages.md",
+    "source_type": "md",
+    "canonical": "/posts/2019-08-21-large_files_python_packages.html",
+    "title": "Ship large files with Python packages",
+    "date": "2019-08-21",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2019/08/large_files_python_packages",
+      "/2019/08/large-files-python-packages"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2019-08-24-github-for-research-groups.md",
+    "source_type": "md",
+    "canonical": "/posts/2019-08-24-github-for-research-groups.html",
+    "title": "Create a Github account for your research group with free private repositories",
+    "date": "2019-08-24",
+    "categories": [
+      "github",
+      "git",
+      "openscience"
+    ],
+    "aliases": [
+      "/2019/08/github-for-research-groups"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2019-09-12-jetstream_kubernetes_magnum_autoscaler.md",
+    "source_type": "md",
+    "canonical": "/posts/2019-09-12-jetstream_kubernetes_magnum_autoscaler.html",
+    "title": "Deploy Cluster Autoscaler for Kubernetes on Jetstream",
+    "date": "2019-09-12",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub"
+    ],
+    "aliases": [
+      "/2019/09/jetstream_kubernetes_magnum_autoscaler"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2019-09-23-batch_notebook_execution.md",
+    "source_type": "md",
+    "canonical": "/posts/2019-09-23-batch_notebook_execution.html",
+    "title": "Execute Jupyter Notebooks not interactively",
+    "date": "2019-09-23",
+    "categories": [
+      "jupyter"
+    ],
+    "aliases": [
+      "/2019/09/batch_notebook_execution"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2019-10-30-jetstream_kubernetes_loadtest.md",
+    "source_type": "md",
+    "canonical": "/posts/2019-10-30-jetstream_kubernetes_loadtest.html",
+    "title": "Simulate users on JupyterHub",
+    "date": "2019-10-30",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub"
+    ],
+    "aliases": [
+      "/2019/10/jetstream_kubernetes_loadtest"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2019-12-02-organize_calendars_large_collaboration.md",
+    "source_type": "md",
+    "canonical": "/posts/2019-12-02-organize_calendars_large_collaboration.html",
+    "title": "Organize calendars for a large scientific collaboration",
+    "date": "2019-12-02",
+    "categories": [
+      "openscience"
+    ],
+    "aliases": [
+      "/2019/12/organize_calendars_large_collaboration"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-02-26-kubernetes_cvmfs.md",
+    "source_type": "md",
+    "canonical": "/posts/2020-02-26-kubernetes_cvmfs.html",
+    "title": "Deploy CVMFS on Kubernetes",
+    "date": "2020-02-26",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub"
+    ],
+    "aliases": [
+      "/2020/02/kubernetes_cvmfs",
+      "/2020/02/cvmfs-kubernetes"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-03-09-pelican-to-fastpages.md",
+    "source_type": "md",
+    "canonical": "/posts/2020-03-09-pelican-to-fastpages.html",
+    "title": "Migrate from Pelican to Fastpages",
+    "date": "2020-03-09",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2020/03/pelican-to-fastpages"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-03-12-kill-jupyter-notebook.md",
+    "source_type": "md",
+    "canonical": "/posts/2020-03-12-kill-jupyter-notebook.html",
+    "title": "Kill Jupyter Notebook servers",
+    "date": "2020-03-12",
+    "categories": [
+      "python",
+      "jupyter"
+    ],
+    "aliases": [
+      "/2020/03/kill-jupyter-notebook"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-03-13-setup-https-kubernetes-letsencrypt.md",
+    "source_type": "md",
+    "canonical": "/posts/2020-03-13-setup-https-kubernetes-letsencrypt.html",
+    "title": "Setup HTTPS on Kubernetes with Let's Encrypt",
+    "date": "2020-03-13",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub"
+    ],
+    "aliases": [
+      "/2020/03/setup-https-kubernetes-letsencrypt"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-04-01-jetstream-object-store.md",
+    "source_type": "md",
+    "canonical": "/posts/2020-04-01-jetstream-object-store.html",
+    "title": "Use the Jetstream object store",
+    "date": "2020-04-01",
+    "categories": [
+      "jetstream"
+    ],
+    "aliases": [
+      "/2020/04/jetstream-object-store"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-04-20-ecss-symposium-kubernetes-jetstream.md",
+    "source_type": "md",
+    "canonical": "/posts/2020-04-20-ecss-symposium-kubernetes-jetstream.html",
+    "title": "ECSS Symposium introduction to cloud computing with Jetstream and deployment of Kubernetes",
+    "date": "2020-04-20",
+    "categories": [
+      "jupyterhub",
+      "jetstream",
+      "kubernetes"
+    ],
+    "aliases": [
+      "/2020/04/ecss-symposium-kubernetes-jetstream"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-05-21-jetstream_kubernetes_magnum.md",
+    "source_type": "md",
+    "canonical": "/posts/2020-05-21-jetstream_kubernetes_magnum.html",
+    "title": "Deploy Kubernetes and JupyterHub on Jetstream with Magnum",
+    "date": "2020-05-21",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub"
+    ],
+    "aliases": [
+      "/2020/05/jetstream_kubernetes_magnum"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-05-27-readthedocs-conda.md",
+    "source_type": "md",
+    "canonical": "/posts/2020-05-27-readthedocs-conda.html",
+    "title": "Minimal example of readthedocs configuration for conda",
+    "date": "2020-05-27",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2020/05/readthedocs-conda"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-06-01-git.md",
+    "source_type": "md",
+    "canonical": "/posts/2020-06-01-git.html",
+    "title": "My own git cheatsheet",
+    "date": "2020-06-01",
+    "categories": [
+      "git"
+    ],
+    "aliases": [
+      "/2020/06/git"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-06-01-twitter-blocklist.md",
+    "source_type": "md",
+    "canonical": "/posts/2020-06-01-twitter-blocklist.html",
+    "title": "Import and export list of blocked users on Twitter",
+    "date": "2020-06-01",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2020/06/twitter-blocklist"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-06-15-jetstream_kubernetes_kubespray.md",
+    "source_type": "md",
+    "canonical": "/posts/2020-06-15-jetstream_kubernetes_kubespray.html",
+    "title": "Deploy Kubernetes on Jetstream with Kubespray",
+    "date": "2020-06-15",
+    "categories": [
+      "kubernetes",
+      "jetstream"
+    ],
+    "aliases": [
+      "/2020/06/jetstream_kubernetes_kubespray"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-07-10-nfs-server-kubernetes-jetstream.md",
+    "source_type": "md",
+    "canonical": "/posts/2020-07-10-nfs-server-kubernetes-jetstream.html",
+    "title": "Deploy a NFS server to share data between JupyterHub users on Jetstream",
+    "date": "2020-07-10",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub",
+      "linux"
+    ],
+    "aliases": [
+      "/2020/07/nfs-server-kubernetes-jetstream"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-08-11-dask-gateway-jupyterhub.md",
+    "source_type": "md",
+    "canonical": "/posts/2020-08-11-dask-gateway-jupyterhub.html",
+    "title": "Deploy Dask Gateway with JupyterHub on Kubernetes",
+    "date": "2020-08-11",
+    "categories": [
+      "kubernetes",
+      "cloudcomputing",
+      "jetstream",
+      "jupyterhub",
+      "dask"
+    ],
+    "aliases": [
+      "/2020/08/dask-gateway-jupyterhub"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-08-24-renew-letsencrypt-nginx.md",
+    "source_type": "md",
+    "canonical": "/posts/2020-08-24-renew-letsencrypt-nginx.html",
+    "title": "Renew letsencrypt certificate with NGINX",
+    "date": "2020-08-24",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2020/08/renew-letsencrypt-nginx"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-09-01-migrate-travisci-readthedocs-github-actions.md",
+    "source_type": "md",
+    "canonical": "/posts/2020-09-01-migrate-travisci-readthedocs-github-actions.html",
+    "title": "Migrate from Travis-CI and ReadTheDocs to GitHub Actions",
+    "date": "2020-09-01",
+    "categories": [
+      "python",
+      "github"
+    ],
+    "aliases": [
+      "/2020/09/migrate-travisci-readthedocs-github-actions"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-09-01-redirect-readthedocs.md",
+    "source_type": "md",
+    "canonical": "/posts/2020-09-01-redirect-readthedocs.html",
+    "title": "Redirect readthedocs documentation to another website",
+    "date": "2020-09-01",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2020/09/redirect-readthedocs"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-09-04-gateways-2020-paper.md",
+    "source_type": "md",
+    "canonical": "/posts/2020-09-04-gateways-2020-paper.html",
+    "title": "Gateways 2020 paper about Kubernetes and JupyterHub on Jetstream",
+    "date": "2020-09-04",
+    "categories": [
+      "jupyterhub",
+      "jetstream",
+      "kubernetes"
+    ],
+    "aliases": [
+      "/2020/09/gateways-2020-paper"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-09-15-how-to-share-jupyter-notebooks.md",
+    "source_type": "md",
+    "canonical": "/posts/2020-09-15-how-to-share-jupyter-notebooks.html",
+    "title": "How to share Jupyter Notebooks",
+    "date": "2020-09-15",
+    "categories": [
+      "jupyter",
+      "github"
+    ],
+    "aliases": [
+      "/2020/09/how-to-share-jupyter-notebooks"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-09-25-ffmpeg-edit-recordings.md",
+    "source_type": "md",
+    "canonical": "/posts/2020-09-25-ffmpeg-edit-recordings.html",
+    "title": "Edit video recordings with ffmpeg",
+    "date": "2020-09-25",
+    "categories": [],
+    "aliases": [
+      "/2020/09/ffmpeg-edit-recordings"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-10-14-install-healpix-polspice-conda-nersc.md",
+    "source_type": "md",
+    "canonical": "/posts/2020-10-14-install-healpix-polspice-conda-nersc.html",
+    "title": "Install HEALPix and PolSpice in a conda environment",
+    "date": "2020-10-14",
+    "categories": [
+      "healpy",
+      "hpc",
+      "nersc"
+    ],
+    "aliases": [
+      "/2020/10/install-healpix-polspice-conda-nersc"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-11-18-paper-review-overleaf-git-googledocs.md",
+    "source_type": "md",
+    "canonical": "/posts/2020-11-18-paper-review-overleaf-git-googledocs.html",
+    "title": "Paper review workflow with Overleaf, git and Google Docs",
+    "date": "2020-11-18",
+    "categories": [
+      "openscience",
+      "git"
+    ],
+    "aliases": [
+      "/2020/11/paper-review-overleaf-git-googledocs"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-11-30-cfitsio-checkpoint-write.md",
+    "source_type": "md",
+    "canonical": "/posts/2020-11-30-cfitsio-checkpoint-write.html",
+    "title": "CFITSIO file writing with checkpointing",
+    "date": "2020-11-30",
+    "categories": [
+      "astrophysics"
+    ],
+    "aliases": [
+      "/2020/11/cfitsio-checkpoint-write"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-01-20-autoscaling_script_kubespray_jupyterhub.md",
+    "source_type": "md",
+    "canonical": "/posts/2021-01-20-autoscaling_script_kubespray_jupyterhub.html",
+    "title": "Autoscaling script for JupyterHub on top of Kubespray",
+    "date": "2021-01-20",
+    "categories": [
+      "kubernetes",
+      "jetstream"
+    ],
+    "aliases": [
+      "/2021/01/autoscaling_script_kubespray_jupyterhub"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-01-20-jetstream_kubernetes_kubespray_2.15.0.md",
+    "source_type": "md",
+    "canonical": "/posts/2021-01-20-jetstream_kubernetes_kubespray_2.15.0.html",
+    "title": "Deploy Kubernetes on Jetstream with Kubespray 2.15.0",
+    "date": "2021-01-20",
+    "categories": [
+      "kubernetes",
+      "jetstream"
+    ],
+    "aliases": [
+      "/2021/01/jetstream_kubernetes_kubespray_2.15.0"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-01-28-github-overleaf-large-document.md",
+    "source_type": "md",
+    "canonical": "/posts/2021-01-28-github-overleaf-large-document.html",
+    "title": "Coordinate a large Latex document with multiple Overleaf projects and Github",
+    "date": "2021-01-28",
+    "categories": [
+      "git",
+      "github"
+    ],
+    "aliases": [
+      "/2021/01/github-overleaf-large-document"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-03-25-jetstream-video-stream-object-store.md",
+    "source_type": "md",
+    "canonical": "/posts/2021-03-25-jetstream-video-stream-object-store.html",
+    "title": "Stream video from object store on Jetstream",
+    "date": "2021-03-25",
+    "categories": [
+      "jetstream"
+    ],
+    "aliases": [
+      "/2021/03/jetstream-video-stream-object-store"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-03-28-sgci-tech-blog.md",
+    "source_type": "md",
+    "canonical": "/posts/2021-03-28-sgci-tech-blog.html",
+    "title": "Science Gateways Tech blog - Kubernetes and JupyterHub on Jetstream",
+    "date": "2021-03-28",
+    "categories": [
+      "kubernetes",
+      "jetstream"
+    ],
+    "aliases": [
+      "/2021/03/sgci-tech-blog",
+      "/2021/03/sgci-tech-blog-kubernetes-jupyterhub-jetstream"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-04-19-jetstream-backup-kubernetes-volumes-object-store.md",
+    "source_type": "md",
+    "canonical": "/posts/2021-04-19-jetstream-backup-kubernetes-volumes-object-store.html",
+    "title": "Backup Kubernetes volumes to OpenStorageNetwork object store",
+    "date": "2021-04-19",
+    "categories": [
+      "jetstream",
+      "kubernetes"
+    ],
+    "aliases": [
+      "/2021/04/jetstream-backup-kubernetes-volumes-object-store"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-05-20-google-docs-to-overleaf-github.md",
+    "source_type": "md",
+    "canonical": "/posts/2021-05-20-google-docs-to-overleaf-github.html",
+    "title": "Migrate from Google Docs to Overleaf and GitHub",
+    "date": "2021-05-20",
+    "categories": [
+      "github"
+    ],
+    "aliases": [
+      "/2021/05/google-docs-to-overleaf-github"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-06-17-learn-italian-in-san-diego.md",
+    "source_type": "md",
+    "canonical": "/posts/2021-06-17-learn-italian-in-san-diego.html",
+    "title": "Learn Italian in San Diego",
+    "date": "2021-06-17",
+    "categories": [
+      "italian"
+    ],
+    "aliases": [
+      "/2021/06/learn-italian-in-san-diego"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-06-22-healpy-1.15.0-release.md",
+    "source_type": "md",
+    "canonical": "/posts/2021-06-22-healpy-1.15.0-release.html",
+    "title": "healpy 1.15.0 released",
+    "date": "2021-06-22",
+    "categories": [
+      "healpy",
+      "python"
+    ],
+    "aliases": [
+      "/2021/06/healpy-1.15.0-release"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-06-27-dreamhost-email.md",
+    "source_type": "md",
+    "canonical": "/posts/2021-06-27-dreamhost-email.html",
+    "title": "Configure dreamhost email",
+    "date": "2021-06-27",
+    "categories": [],
+    "aliases": [
+      "/2021/06/dreamhost-email"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-08-01-joss-to-arxiv.md",
+    "source_type": "md",
+    "canonical": "/posts/2021-08-01-joss-to-arxiv.html",
+    "title": "Upload a JOSS paper to arXiv",
+    "date": "2021-08-01",
+    "categories": [
+      "github",
+      "openscience"
+    ],
+    "aliases": [
+      "/2021/08/joss-to-arxiv"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-08-04-pysm3-paper.md",
+    "source_type": "md",
+    "canonical": "/posts/2021-08-04-pysm3-paper.html",
+    "title": "New paper about PySM 3",
+    "date": "2021-08-04",
+    "categories": [
+      "openscience",
+      "python",
+      "pysm",
+      "cosmology"
+    ],
+    "aliases": [
+      "/2021/08/pysm3-paper"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-09-24-globus-groups-python-sdk.md",
+    "source_type": "md",
+    "canonical": "/posts/2021-09-24-globus-groups-python-sdk.html",
+    "title": "Manage Globus groups with the Python SDK",
+    "date": "2021-09-24",
+    "categories": [
+      "python",
+      "hpc"
+    ],
+    "aliases": [
+      "/2021/09/globus-groups-python-sdk"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-10-01-monitor-github-traffic.md",
+    "source_type": "md",
+    "canonical": "/posts/2021-10-01-monitor-github-traffic.html",
+    "title": "Monitor traffic on Github repositories",
+    "date": "2021-10-01",
+    "categories": [
+      "github"
+    ],
+    "aliases": [
+      "/2021/10/monitor-github-traffic"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-10-06-healpix-plot-pixel-boundaries.md",
+    "source_type": "md",
+    "canonical": "/posts/2021-10-06-healpix-plot-pixel-boundaries.html",
+    "title": "Plot HEALPix pixel boundaries",
+    "date": "2021-10-06",
+    "categories": [
+      "healpy"
+    ],
+    "aliases": [
+      "/2021/10/healpix-plot-pixel-boundaries"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-10-12-kubernetes-hadoop.md",
+    "source_type": "md",
+    "canonical": "/posts/2021-10-12-kubernetes-hadoop.html",
+    "title": "Deploy Hadoop on Kubernetes on Jetstream",
+    "date": "2021-10-12",
+    "categories": [
+      "kubernetes",
+      "jetstream"
+    ],
+    "aliases": [
+      "/2021/10/kubernetes-hadoop",
+      "/2021/10/hadoop-kubernetes-jetstream"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-11-04-cka-ckad-kubernetes-certification.md",
+    "source_type": "md",
+    "canonical": "/posts/2021-11-04-cka-ckad-kubernetes-certification.html",
+    "title": "Kubernetes certifications CKA and CKAD",
+    "date": "2021-11-04",
+    "categories": [
+      "kubernetes"
+    ],
+    "aliases": [
+      "/2021/11/cka-ckad-kubernetes-certification"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-11-08-fund-healpy.md",
+    "source_type": "md",
+    "canonical": "/posts/2021-11-08-fund-healpy.html",
+    "title": "Fund healpy via GitHub Sponsors",
+    "date": "2021-11-08",
+    "categories": [
+      "healpy"
+    ],
+    "aliases": [
+      "/2021/11/fund-healpy"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-01-07-make.md",
+    "source_type": "md",
+    "canonical": "/posts/2022-01-07-make.html",
+    "title": "Make for repeated commands",
+    "date": "2022-01-07",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [
+      "/2022/01/make"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-01-27-dask-gateway-jupyterhub.md",
+    "source_type": "md",
+    "canonical": "/posts/2022-01-27-dask-gateway-jupyterhub.html",
+    "title": "Deploy Dask Gateway with JupyterHub on Kubernetes",
+    "date": "2022-01-27",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub",
+      "dask",
+      "python"
+    ],
+    "aliases": [
+      "/2022/01/dask-gateway-jupyterhub"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-03-22-jupyter-notebooks-version-control.md",
+    "source_type": "md",
+    "canonical": "/posts/2022-03-22-jupyter-notebooks-version-control.html",
+    "title": "Workflow for Jupyter Notebooks under version control",
+    "date": "2022-03-22",
+    "categories": [
+      "jupyter",
+      "git"
+    ],
+    "aliases": [
+      "/2022/03/jupyter-notebooks-version-control"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-03-30-jetstream2_kubernetes_kubespray.md",
+    "source_type": "md",
+    "canonical": "/posts/2022-03-30-jetstream2_kubernetes_kubespray.html",
+    "title": "Deploy Kubernetes on Jetstream 2 with Kubespray 2.18.0",
+    "date": "2022-03-30",
+    "categories": [
+      "kubernetes",
+      "jetstream2"
+    ],
+    "aliases": [
+      "/2022/03/jetstream2_kubernetes_kubespray",
+      "/2022/03/kubernetes-jetstream2-kubespray"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-03-31-jetstream2_jupyterhub.md",
+    "source_type": "md",
+    "canonical": "/posts/2022-03-31-jetstream2_jupyterhub.html",
+    "title": "Deploy JupyterHub on Jetstream 2 on top of Kubernetes",
+    "date": "2022-03-31",
+    "categories": [
+      "kubernetes",
+      "jupyterhub",
+      "jetstream2"
+    ],
+    "aliases": [
+      "/2022/03/jetstream2_jupyterhub"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-04-04-dask-gateway-jupyterhub.md",
+    "source_type": "md",
+    "canonical": "/posts/2022-04-04-dask-gateway-jupyterhub.html",
+    "title": "Deploy Dask Gateway with JupyterHub on Kubernetes",
+    "date": "2022-04-04",
+    "categories": [
+      "kubernetes",
+      "jetstream2",
+      "jupyterhub",
+      "dask",
+      "python"
+    ],
+    "aliases": [
+      "/2022/04/dask-gateway-jupyterhub"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-04-04-zarr_jetstream2.md",
+    "source_type": "md",
+    "canonical": "/posts/2022-04-04-zarr_jetstream2.html",
+    "title": "Use the distributed file format Zarr on Jetstream 2 object storage",
+    "date": "2022-04-04",
+    "categories": [
+      "dask",
+      "jetstream2",
+      "python"
+    ],
+    "aliases": [
+      "/2022/04/zarr-jetstream2",
+      "/2022/04/zarr_jetstream2"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-04-05-science-gateway-dask-zarr.md",
+    "source_type": "md",
+    "canonical": "/posts/2022-04-05-science-gateway-dask-zarr.html",
+    "title": "Science Gateway with Dask and Zarr",
+    "date": "2022-04-05",
+    "categories": [
+      "kubernetes",
+      "jetstream2",
+      "jupyterhub",
+      "dask",
+      "python"
+    ],
+    "aliases": [
+      "/2022/04/science-gateway-dask-zarr"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-04-13-jupyterhub-custos-authentication.md",
+    "source_type": "md",
+    "canonical": "/posts/2022-04-13-jupyterhub-custos-authentication.html",
+    "title": "Custos authentication for JupyterHub",
+    "date": "2022-04-13",
+    "categories": [
+      "kubernetes",
+      "jetstream2",
+      "jupyterhub"
+    ],
+    "aliases": [
+      "/2022/04/jupyterhub-custos-authentication"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-04-15-jetstream2-su-calculator.md",
+    "source_type": "md",
+    "canonical": "/posts/2022-04-15-jetstream2-su-calculator.html",
+    "title": "Jetstream2 SU calculator",
+    "date": "2022-04-15",
+    "categories": [
+      "jetstream2"
+    ],
+    "aliases": [
+      "/2022/04/jetstream2-su-calculator"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-04-27-monitor-restic-backups-kubernetes.md",
+    "source_type": "md",
+    "canonical": "/posts/2022-04-27-monitor-restic-backups-kubernetes.html",
+    "title": "Monitor Restic backups on Kubernetes",
+    "date": "2022-04-27",
+    "categories": [
+      "jetstream2",
+      "kubernetes"
+    ],
+    "aliases": [
+      "/2022/04/monitor-restic-backups-kubernetes"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-05-02-ssh-github-action.md",
+    "source_type": "md",
+    "canonical": "/posts/2022-05-02-ssh-github-action.html",
+    "title": "Access running GitHub Action with SSH",
+    "date": "2022-05-02",
+    "categories": [
+      "github",
+      "git"
+    ],
+    "aliases": [
+      "/2022/05/ssh-github-action"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-05-17-remove-cell-id-jupyter-notebook.md",
+    "source_type": "md",
+    "canonical": "/posts/2022-05-17-remove-cell-id-jupyter-notebook.html",
+    "title": "Remove unique cell id from Jupyter Notebooks",
+    "date": "2022-05-17",
+    "categories": [
+      "git",
+      "jupyter"
+    ],
+    "aliases": [
+      "/2022/05/remove-cell-id-jupyter-notebook"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-06-06-mariadb.md",
+    "source_type": "md",
+    "canonical": "/posts/2022-06-06-mariadb.html",
+    "title": "Deploy MariaDB on Jetstream 2 on top of Kubernetes",
+    "date": "2022-06-06",
+    "categories": [
+      "kubernetes",
+      "jetstream2"
+    ],
+    "aliases": [
+      "/2022/06/mariadb"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-09-27-migrate-fastpages-quarto-preserve-history.md",
+    "source_type": "md",
+    "canonical": "/posts/2022-09-27-migrate-fastpages-quarto-preserve-history.html",
+    "title": "Migrate from fastpages to quarto preserving git history",
+    "date": "2022-09-27",
+    "categories": [],
+    "aliases": [
+      "/2022/09/migrate-fastpages-quarto-preserve-history"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-10-05-singularity-expanse-tutorial.md",
+    "source_type": "md",
+    "canonical": "/posts/2022-10-05-singularity-expanse-tutorial.html",
+    "title": "Singularity on Expanse tutorial",
+    "date": "2022-10-05",
+    "categories": [
+      "singularity",
+      "hpc",
+      "jetstream2"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-10-11-install-jupyroot-jupyterhub.md",
+    "source_type": "md",
+    "canonical": "/posts/2022-10-11-install-jupyroot-jupyterhub.html",
+    "title": "Install the JupyROOT Python kernel in JupyterHub",
+    "date": "2022-10-11",
+    "categories": [
+      "jupyterhub",
+      "kubernetes"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-11-03-singularity-github-actions.md",
+    "source_type": "md",
+    "canonical": "/posts/2022-11-03-singularity-github-actions.html",
+    "title": "Build and host Singularity containers on GitHub",
+    "date": "2022-11-03",
+    "categories": [
+      "singularity",
+      "git",
+      "github"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-11-08-python-nersc-conda.md",
+    "source_type": "md",
+    "canonical": "/posts/2022-11-08-python-nersc-conda.html",
+    "title": "Setup a conda environment at NERSC",
+    "date": "2022-11-08",
+    "categories": [
+      "python",
+      "nersc"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-11-15-binderhub-jetstream2.md",
+    "source_type": "md",
+    "canonical": "/posts/2022-11-15-binderhub-jetstream2.html",
+    "title": "Deploy BinderHub on top of Kubernetes on Jetstream 2",
+    "date": "2022-11-15",
+    "categories": [
+      "jetstream2",
+      "kubernetes"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-12-05-jetstream2-kubernetes-manila.md",
+    "source_type": "md",
+    "canonical": "/posts/2022-12-05-jetstream2-kubernetes-manila.html",
+    "title": "Share data between JupyterHub users with Manila shares",
+    "date": "2022-12-05",
+    "categories": [
+      "jetstream2",
+      "kubernetes"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2023-01-23-kubernetes-gpu-jetstream2.md",
+    "source_type": "md",
+    "canonical": "/posts/2023-01-23-kubernetes-gpu-jetstream2.html",
+    "title": "Deploy Kubernetes on Jetstream 2 with GPU support",
+    "date": "2023-01-23",
+    "categories": [
+      "jetstream2",
+      "jupyterhub"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2023-02-02-github-overleaf.md",
+    "source_type": "md",
+    "canonical": "/posts/2023-02-02-github-overleaf.html",
+    "title": "Work on a LaTeX document with GitHub and Overleaf",
+    "date": "2023-02-02",
+    "categories": [
+      "git",
+      "github"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2023-02-06-nfs-server-kubernetes-jetstream.md",
+    "source_type": "md",
+    "canonical": "/posts/2023-02-06-nfs-server-kubernetes-jetstream.html",
+    "title": "Deploy a NFS server to share data between JupyterHub users on Jetstream",
+    "date": "2023-02-06",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub",
+      "linux"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2023-02-21-show-your-work.md",
+    "source_type": "md",
+    "canonical": "/posts/2023-02-21-show-your-work.html",
+    "title": "Showyourwork! Globus demo",
+    "date": "2023-02-21",
+    "categories": [
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2023-02-24-nersc-share-files-html.md",
+    "source_type": "md",
+    "canonical": "/posts/2023-02-24-nersc-share-files-html.html",
+    "title": "Share data from NERSC publicly via web",
+    "date": "2023-02-24",
+    "categories": [
+      "nersc"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2023-03-16-latex-github-codespaces.md",
+    "source_type": "md",
+    "canonical": "/posts/2023-03-16-latex-github-codespaces.html",
+    "title": "Work on a LaTeX document in GitHub Codespaces",
+    "date": "2023-03-16",
+    "categories": [
+      "git",
+      "github"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2023-03-23-update-openstack-credentials-kubernetes.md",
+    "source_type": "md",
+    "canonical": "/posts/2023-03-23-update-openstack-credentials-kubernetes.html",
+    "title": "Update OpenStack credentials in Kubernetes",
+    "date": "2023-03-23",
+    "categories": [
+      "kubernetes",
+      "jetstream"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2023-04-01-dreamhost-letsencrypt.md",
+    "source_type": "md",
+    "canonical": "/posts/2023-04-01-dreamhost-letsencrypt.html",
+    "title": "Get a Letsencrypt certificate for Dreamhost with certbot",
+    "date": "2023-04-01",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2023-04-23-hyper-supreme-cam-cosmology.md",
+    "source_type": "md",
+    "canonical": "/posts/2023-04-23-hyper-supreme-cam-cosmology.html",
+    "title": "Cosmology webinar Hyper Suprime-Cam",
+    "date": "2023-04-23",
+    "categories": [
+      "cosmology"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2023-04-24-hiring-computational-scientist-ucsd.md",
+    "source_type": "md",
+    "canonical": "/posts/2023-04-24-hiring-computational-scientist-ucsd.html",
+    "title": "Hiring a computational scientist at the San Diego Supercomputer Center",
+    "date": "2023-04-24",
+    "categories": [
+      "hpc",
+      "sdsc"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2023-07-19-jetstream2_kubernetes_kubespray.md",
+    "source_type": "md",
+    "canonical": "/posts/2023-07-19-jetstream2_kubernetes_kubespray.html",
+    "title": "Deploy Kubernetes on Jetstream 2 with Kubespray 2.21.0",
+    "date": "2023-06-19",
+    "categories": [
+      "kubernetes",
+      "jetstream2"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2023-08-16-python-for-hpc-tutorial.md",
+    "source_type": "md",
+    "canonical": "/posts/2023-08-16-python-for-hpc-tutorial.html",
+    "title": "Tutorial on Python for HPC at the SDSC Summer Institute",
+    "date": "2023-08-16",
+    "categories": [
+      "python",
+      "hpc",
+      "sdsc"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2023-09-21-gateways-2023-dask-jupyterhub.md",
+    "source_type": "md",
+    "canonical": "/posts/2023-09-21-gateways-2023-dask-jupyterhub.html",
+    "title": "Gateways 2023 tutorial about Dask and JupyterHub on Kubernetes on Jetstream",
+    "date": "2023-10-11",
+    "categories": [
+      "jupyterhub",
+      "jetstream",
+      "kubernetes",
+      "python"
+    ],
+    "aliases": [
+      "/gw23",
+      "gw23"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2023-09-26-https-kubernetes-letsencrypt.md",
+    "source_type": "md",
+    "canonical": "/posts/2023-09-26-https-kubernetes-letsencrypt.html",
+    "title": "Setup HTTPS on Kubernetes with cert-manager",
+    "date": "2023-09-26",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2023-09-28-dask-gateway-jupyterhub.md",
+    "source_type": "md",
+    "canonical": "/posts/2023-09-28-dask-gateway-jupyterhub.html",
+    "title": "Deploy Dask Gateway with JupyterHub on Kubernetes",
+    "date": "2023-09-28",
+    "categories": [
+      "kubernetes",
+      "jetstream2",
+      "jupyterhub",
+      "dask",
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2023-10-13-jetstream2-jupyterhub-loadbalancer.md",
+    "source_type": "md",
+    "canonical": "/posts/2023-10-13-jetstream2-jupyterhub-loadbalancer.html",
+    "title": "Deploy JupyterHub on Jetstream 2 with a load balancer",
+    "date": "2023-11-06",
+    "categories": [
+      "kubernetes",
+      "jetstream2"
+    ],
+    "aliases": [],
+    "draft": true
+  },
+  {
+    "source": "posts/2023-10-27-buy-us-reasury-bonds-fidelity.md",
+    "source_type": "md",
+    "canonical": "/posts/2023-10-27-buy-us-reasury-bonds-fidelity.html",
+    "title": "Buy US Treasury bonds on Fidelity",
+    "date": "2023-10-27",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2023-10-27-jupyterhub-github-authentication.md",
+    "source_type": "md",
+    "canonical": "/posts/2023-10-27-jupyterhub-github-authentication.html",
+    "title": "Deploy GitHub Authenticator in JupyterHub",
+    "date": "2023-09-27",
+    "categories": [
+      "jupyterhub",
+      "jetstream",
+      "kubernetes",
+      "git",
+      "github"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2023-11-02-desouza-award.md",
+    "source_type": "md",
+    "canonical": "/posts/2023-11-02-desouza-award.html",
+    "title": "Received DeSouza award for work on deploying software infrastructure on Jetstream",
+    "date": "2023-11-02",
+    "categories": [
+      "jupyterhub",
+      "jetstream",
+      "kubernetes"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-01-12-pdf-from-screenshots.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-01-12-pdf-from-screenshots.html",
+    "title": "Make a PDF from a series of screenshots",
+    "date": "2024-01-12",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-02-02-soft-scaling-kubernetes-jetstream.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-02-02-soft-scaling-kubernetes-jetstream.html",
+    "title": "Soft scaling Kubernetes on Jetstream",
+    "date": "2024-02-02",
+    "categories": [
+      "kubernetes",
+      "jetstream2",
+      "ana-espinoza"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-02-09-kubernetes-gpu-jetstream2.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-02-09-kubernetes-gpu-jetstream2.html",
+    "title": "Deploy Kubernetes on Jetstream 2 with GPU support",
+    "date": "2024-02-08",
+    "categories": [
+      "jetstream2",
+      "jupyterhub",
+      "kubernetes"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-04-04-run-pytorch-gpu-expanse.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-04-04-run-pytorch-gpu-expanse.html",
+    "title": "Run PyTorch with GPU support on Expanse",
+    "date": "2024-04-04",
+    "categories": [
+      "hpc",
+      "jupyter",
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-04-17-overleaf-github-action.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-04-17-overleaf-github-action.html",
+    "title": "2-way synchronization of Overleaf and GitHub via a GitHub Action",
+    "date": "2024-04-17",
+    "categories": [
+      "git",
+      "github"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-04-25-whatsapp-poll.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-04-25-whatsapp-poll.html",
+    "title": "Automate sending polls via WhatsApp",
+    "date": "2024-04-25",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-04-30-flatcar-image-jetstream.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-04-30-flatcar-image-jetstream.html",
+    "title": "Flatcar Container Linux on Jetstream",
+    "date": "2024-04-30",
+    "categories": [
+      "kubernetes",
+      "jetstream2"
+    ],
+    "aliases": [
+      "2024-04-20-flatcar-image-jetstream"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-05-02-python-nersc-conda.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-05-02-python-nersc-conda.html",
+    "title": "Setup a conda environment at NERSC",
+    "date": "2024-05-02",
+    "categories": [
+      "python",
+      "nersc"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-05-07-ubuntu22-minimal-image-jetstream.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-05-07-ubuntu22-minimal-image-jetstream.html",
+    "title": "Ubuntu 22.04 minimal on Jetstream",
+    "date": "2024-07-31",
+    "categories": [
+      "kubernetes",
+      "jetstream2"
+    ],
+    "aliases": [
+      "2024-05-07-ubuntu22-minimal-image-jetstream"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-05-12-pysm-aso-sdsc.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-05-12-pysm-aso-sdsc.html",
+    "title": "News item on SDSC website about Advanced Simons Observatory and PySM",
+    "date": "2024-05-12",
+    "categories": [
+      "python",
+      "pysm",
+      "cosmology"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-05-13-ubuntu22-minimal-gpu-image-jetstream.html",
+    "title": "Ubuntu 22.04 minimal on Jetstream with GPU support",
+    "date": "2024-05-13",
+    "categories": [
+      "kubernetes",
+      "jetstream2"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-05-16-globus-javascript-sdk-pyscript.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-05-16-globus-javascript-sdk-pyscript.html",
+    "title": "Load data from Globus in the browser and plot with pyscript",
+    "date": "2024-05-16",
+    "categories": [
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-05-20-interactive-3d-plot-planck-map.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-05-20-interactive-3d-plot-planck-map.html",
+    "title": "Interactive 3D plot of a Planck map with Matplotlib",
+    "date": "2024-05-20",
+    "categories": [
+      "python",
+      "astrophysics"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-05-28-quarto-notebook-frontmatter.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-05-28-quarto-notebook-frontmatter.html",
+    "title": "Jupyter Notebook frontmatter for Quarto to download source notebook",
+    "date": "2024-05-28",
+    "categories": [
+      "python",
+      "jupyter"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-05-29-fastapi-sso-github-organization.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-05-29-fastapi-sso-github-organization.html",
+    "title": "Authenticate FastAPI endpoints with a GitHub organization",
+    "date": "2024-05-29",
+    "categories": [
+      "python",
+      "git",
+      "github"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-06-03-web-server-https-django-jetstream2.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-06-03-web-server-https-django-jetstream2.html",
+    "title": "Deploy a web server with automatic HTTPS for static website and Django app on Jestream 2",
+    "date": "2024-06-13",
+    "categories": [
+      "jetstream2",
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-06-27-fastapi-conditional-auth.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-06-27-fastapi-conditional-auth.html",
+    "title": "Conditional authentication on a single endpoint with FastAPI",
+    "date": "2024-06-27",
+    "categories": [
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-07-17-run-healpy-browser-pyodide.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-07-17-run-healpy-browser-pyodide.html",
+    "title": "Run (part of) healpy in the browser with pyodide",
+    "date": "2024-07-17",
+    "categories": [
+      "python",
+      "healpy"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-07-31-pearc-paper-cheapandfair-data-portal.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-07-31-pearc-paper-cheapandfair-data-portal.html",
+    "title": "PEARC24 paper Cheap and FAIR Data Portal",
+    "date": "2024-07-31",
+    "categories": [
+      "data"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-08-04-cmb-data-licensing.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-08-04-cmb-data-licensing.html",
+    "title": "Cosmic Microwave Background data licensing",
+    "date": "2024-08-04",
+    "categories": [
+      "data"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-08-04-export-confluence-markdown.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-08-04-export-confluence-markdown.html",
+    "title": "Export a Confluence page to Markdown",
+    "date": "2024-08-04",
+    "categories": [
+      "documentation"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-09-03-anki-flashcards-learn-spelling-kids.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-09-03-anki-flashcards-learn-spelling-kids.html",
+    "title": "How to use Anki flashcards to help kids learn spelling",
+    "date": "2024-09-03",
+    "categories": [
+      "documentation"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-09-11-python-for-hpc-tutorial.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-09-11-python-for-hpc-tutorial.html",
+    "title": "Tutorial on Python for HPC at the SDSC Summer Institute 2024",
+    "date": "2024-09-11",
+    "categories": [
+      "python",
+      "hpc",
+      "sdsc"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-10-02-ssh-agent.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-10-02-ssh-agent.html",
+    "title": "Configure ssh-agent on Linux",
+    "date": "2024-10-02",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-10-09-jetstream-manila-mount.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-10-09-jetstream-manila-mount.html",
+    "title": "Generate script to mount a Manila share",
+    "date": "2024-10-09",
+    "categories": [
+      "kubernetes",
+      "jetstream2"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-10-25-jetstream_kubernetes_grafana.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-10-25-jetstream_kubernetes_grafana.html",
+    "title": "Kubernetes monitoring with Prometheus and Grafana",
+    "date": "2024-10-25",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-10-31-jetstream-llm-chat.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-10-31-jetstream-llm-chat.html",
+    "title": "Deploy an LLM ChatGPT-like service on Jetstream",
+    "date": "2024-10-31",
+    "categories": [
+      "jetstream",
+      "llm",
+      "kubernetes",
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-11-13-self-invite-calendar-event.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-11-13-self-invite-calendar-event.html",
+    "title": "Allow users to self-invite to a Google Calendar event",
+    "date": "2024-11-13",
+    "categories": [
+      "openscience"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-12-04-jetstream-windows.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-12-04-jetstream-windows.html",
+    "title": "Run Windows and WSL on Jetstream",
+    "date": "2024-12-04",
+    "categories": [
+      "jetstream"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-12-06-simons-observatory-doi.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-12-06-simons-observatory-doi.html",
+    "title": "Proposal for Simons Observatory data products attribution",
+    "date": "2024-12-05",
+    "categories": [
+      "data",
+      "doi"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-12-11-jetstream_kubernetes_magnum.md",
+    "source_type": "md",
+    "canonical": "/posts/2024-12-11-jetstream_kubernetes_magnum.html",
+    "title": "Deploy Kubernetes and JupyterHub on Jetstream with Magnum and Cluster API",
+    "date": "2024-12-11",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-01-22-github-release-artifacts.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-01-22-github-release-artifacts.html",
+    "title": "Using GitHub Releases to keep track of large artifacts",
+    "date": "2025-01-22",
+    "categories": [
+      "github"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-01-29-github-auth-browser-device-flow.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-01-29-github-auth-browser-device-flow.html",
+    "title": "Authenticate to GitHub in the browser with the device flow",
+    "date": "2025-01-29",
+    "categories": [
+      "github"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-01-29-jupyterlite-save-github.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-01-29-jupyterlite-save-github.html",
+    "title": "Save Jupyterlite notebooks to GitHub",
+    "date": "2025-01-29",
+    "categories": [
+      "github"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-02-04-jetstream-llm-service-deepseek-jupyterai.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-02-04-jetstream-llm-service-deepseek-jupyterai.html",
+    "title": "Use Jetstream's DeepSeek R1 as a code assistant on JupyterAI",
+    "date": "2025-02-04",
+    "categories": [
+      "jetstream",
+      "llm"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-03-03-paper-pysm-models.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-03-03-paper-pysm-models.html",
+    "title": "New paper on arXiv about models of Galactic emission in the microwaves for CMB experiments",
+    "date": "2025-03-03",
+    "categories": [
+      "openscience",
+      "pysm",
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-03-26-binderhub-pythia.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-03-26-binderhub-pythia.html",
+    "title": "Deployment of BinderHub by Project Pythia on Jetstream 2",
+    "date": "2025-03-26",
+    "categories": [
+      "kubernetes",
+      "jetstream2"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-03-26-jetstream-usage-monitoring.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-03-26-jetstream-usage-monitoring.html",
+    "title": "Jetstream2 Usage Monitoring",
+    "date": "2025-03-26",
+    "categories": [
+      "jetstream2"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-03-26-tutorial-globus-serverless-research-data-repository.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-03-26-tutorial-globus-serverless-research-data-repository.html",
+    "title": "Gateways 2024 - Tutorial on creating a serverless research data repository based on Globus",
+    "date": "2025-03-26",
+    "categories": [
+      "data"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-03-30-healpy-1.18.1.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-03-30-healpy-1.18.1.html",
+    "title": "healpy 1.18.1 released",
+    "date": "2025-03-30",
+    "categories": [
+      "healpy",
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-03-30-panexp-model-suite-planck-wmap.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-03-30-panexp-model-suite-planck-wmap.html",
+    "title": "New simulations of the Panexp model suite for Planck and WMAP",
+    "date": "2025-03-30",
+    "categories": [
+      "pysm",
+      "cmb"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-04-15-release-of-pysm-3.4.1.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-04-15-release-of-pysm-3.4.1.html",
+    "title": "PySM 3.4.1 Released",
+    "date": "2025-04-15",
+    "categories": [
+      "openscience",
+      "pysm",
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-04-19-access-hpc.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-04-19-access-hpc.html",
+    "title": "How to request High Performance Computing (HPC) resources",
+    "date": "2025-04-19",
+    "categories": [
+      "hpc",
+      "sdsc"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-04-22-nfs-server-jetstream2.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-04-22-nfs-server-jetstream2.html",
+    "title": "Deploy a NFS server to share data between JupyterHub users on Jetstream",
+    "date": "2025-04-22",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub",
+      "linux"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-05-01-panexp-model-suite-bk18-websky-catalog.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-05-01-panexp-model-suite-bk18-websky-catalog.html",
+    "title": "BK18 added to Panexp model suite and new WebSky radio source models in PySM 3.4.1",
+    "date": "2025-05-01",
+    "categories": [
+      "pysm",
+      "cmb"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-05-13-vscode-copilot-agent-mode.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-05-13-vscode-copilot-agent-mode.html",
+    "title": "VS Code Copilot agent mode: A productivity showcase",
+    "date": "2025-05-13",
+    "categories": [
+      "llm",
+      "ai"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-05-23-github-copilot-scientific-computing.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-05-23-github-copilot-scientific-computing.html",
+    "title": "How to use GitHub Copilot for scientific computing",
+    "date": "2025-05-23",
+    "categories": [
+      "github",
+      "ai",
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-06-04-voyager-access-allocations.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-06-04-voyager-access-allocations.html",
+    "title": "Voyager enters ACCESS allocations phase",
+    "date": "2025-06-04",
+    "categories": [
+      "ai",
+      "sdsc"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-06-17-ai-chat-assistant-travel.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-06-17-ai-chat-assistant-travel.html",
+    "title": "How to use AI chat assistants while traveling",
+    "date": "2025-06-17",
+    "categories": [
+      "ai",
+      "llm"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-08-08-use-vs-code-on-expanse.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-08-08-use-vs-code-on-expanse.html",
+    "title": "Use VS Code on Expanse",
+    "date": "2025-08-08",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-09-09-execute-pegasus-jobs-on-expanse.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-09-09-execute-pegasus-jobs-on-expanse.html",
+    "title": "Execute Pegasus jobs on Expanse",
+    "date": "2025-09-09",
+    "categories": [
+      "sdsc",
+      "hpc"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-09-15-python-for-hpc.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-09-15-python-for-hpc.html",
+    "title": "Python for HPC",
+    "date": "2025-09-15",
+    "categories": [
+      "Python",
+      "hpc",
+      "sdsc"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-09-18-deploy-70b-llm-jetstream.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-09-18-deploy-70b-llm-jetstream.html",
+    "title": "Deploy a 70B LLM to Jetstream",
+    "date": "2025-09-18",
+    "categories": [
+      "jetstream",
+      "llm"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-09-18-llm-unshelve.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-09-18-llm-unshelve.html",
+    "title": "Timing the unshelving of a Jetstream 70B LLM instance",
+    "date": "2025-09-18",
+    "categories": [
+      "jetstream",
+      "llm"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-09-22-openstack-unshelver-demo.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-09-22-openstack-unshelver-demo.html",
+    "title": "OpenStack Unshelver Demo",
+    "date": "2025-09-22",
+    "categories": [
+      "openstack",
+      "jetstream"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-09-23-inspect-smtp-sending-through-ucsd.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-09-23-inspect-smtp-sending-through-ucsd.html",
+    "title": "Inspect SMTP sending through UCSD",
+    "date": "2025-09-23",
+    "categories": [
+      "Python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-09-24-pysm-methods-apj-publication.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-09-24-pysm-methods-apj-publication.html",
+    "title": "PySM methods paper published in ApJ",
+    "date": "2025-09-24",
+    "categories": [
+      "openscience",
+      "pysm",
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-09-30-jetstream-llm-llama-cpp.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-09-30-jetstream-llm-llama-cpp.html",
+    "title": "Deploy a ChatGPT-like LLM on Jetstream with llama.cpp",
+    "date": "2025-09-30",
+    "categories": [
+      "jetstream",
+      "llm"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-10-02-release-of-pysm-3.4.3.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-10-02-release-of-pysm-3.4.3.html",
+    "title": "PySM 3.4.3 Released",
+    "date": "2025-10-02",
+    "categories": [
+      "openscience",
+      "pysm",
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-10-07-ezid-doi-management-with-python.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-10-07-ezid-doi-management-with-python.html",
+    "title": "EZID DOI management with Python",
+    "date": "2025-10-07",
+    "categories": [
+      "python",
+      "doi"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-10-07-running-nextflow-on-expanse.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-10-07-running-nextflow-on-expanse.html",
+    "title": "Running Nextflow on Expanse",
+    "date": "2025-10-07",
+    "categories": [
+      "hpc",
+      "sdsc",
+      "nextflow"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-10-07-singularity-github-actions.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-10-07-singularity-github-actions.html",
+    "title": "Building Singularity containers with Conda environments from requirements.txt",
+    "date": "2025-10-07",
+    "categories": [
+      "singularity",
+      "python"
+    ],
+    "aliases": [
+      "/2025/10/singularity-dask-zarr-container"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-10-10-manage-calendar-of-a-scientific-collaboration-using-google-groups.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-10-10-manage-calendar-of-a-scientific-collaboration-using-google-groups.html",
+    "title": "Manage calendar of a scientific collaboration using Google Groups",
+    "date": "2025-10-10",
+    "categories": [
+      "openscience"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-10-20-github-actions-auto-merge.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-10-20-github-actions-auto-merge.html",
+    "title": "Auto-merge GitHub pull requests after GitHub Actions pass",
+    "date": "2025-10-20",
+    "categories": [
+      "github"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-10-27-running-nextflow-on-expanse-with-seqera.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-10-27-running-nextflow-on-expanse-with-seqera.html",
+    "title": "Running Nextflow on Expanse with Seqera",
+    "date": "2025-10-27",
+    "categories": [
+      "hpc",
+      "sdsc",
+      "nextflow"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-11-01-tampermonkey-audible-filter.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-11-01-tampermonkey-audible-filter.html",
+    "title": "Tampermonkey script for Audible filtering",
+    "date": "2025-11-01",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-11-04-updated-tljh-jetstream-tutorial.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-11-04-updated-tljh-jetstream-tutorial.html",
+    "title": "Updated tutorial on The Littlest JupyterHub on Jetstream",
+    "date": "2025-11-04",
+    "categories": [
+      "jupyterhub",
+      "jetstream2"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-11-06-software-citation-station-helper.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-11-06-software-citation-station-helper.html",
+    "title": "Software Citation Station helper script",
+    "date": "2025-11-06",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-11-10-agentic-scientific-software-development.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-11-10-agentic-scientific-software-development.html",
+    "title": "Going full agentic for scientific software development",
+    "date": "2025-11-10",
+    "categories": [
+      "github",
+      "ai",
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-11-13-ezid-hierarchical-doi-management.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-11-13-ezid-hierarchical-doi-management.html",
+    "title": "Hierarchical EZID DOIs with Python",
+    "date": "2025-11-13",
+    "categories": [
+      "python",
+      "doi"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-11-15-nextflow-conditional-branching.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-11-15-nextflow-conditional-branching.html",
+    "title": "Implementing conditional logic in Nextflow workflows",
+    "date": "2025-11-15",
+    "categories": [
+      "hpc",
+      "sdsc",
+      "nextflow"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-11-15-nextflow-multiple-executors.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-11-15-nextflow-multiple-executors.html",
+    "title": "Mixing Nextflow executors for hybrid workflows",
+    "date": "2025-11-15",
+    "categories": [
+      "hpc",
+      "sdsc",
+      "nextflow"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-11-17-dask-operator-jupyterhub.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-11-17-dask-operator-jupyterhub.html",
+    "title": "Deploy the Dask Operator for JupyterHub on Kubernetes",
+    "date": "2025-11-17",
+    "categories": [
+      "kubernetes",
+      "jetstream2",
+      "jupyterhub",
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-12-01-custom-jupyterhub-docker-image.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-12-01-custom-jupyterhub-docker-image.html",
+    "title": "Auto-build JupyterHub images with GitHub Actions",
+    "date": "2025-12-01",
+    "categories": [
+      "jupyterhub",
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-12-02-disable-gemini-cli-loading-phrases.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-12-02-disable-gemini-cli-loading-phrases.html",
+    "title": "Disable Gemini CLI loading phrases",
+    "date": "2025-12-02",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-12-02-ezid-container-product-dois.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-12-02-ezid-container-product-dois.html",
+    "title": "Container and product EZID DOIs with Python",
+    "date": "2025-12-02",
+    "categories": [
+      "python",
+      "doi"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-12-02-install-codex-gemini-cli.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-12-02-install-codex-gemini-cli.html",
+    "title": "How to install codex and gemini cli",
+    "date": "2025-12-02",
+    "categories": [
+      "ai"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-12-02-take-control-of-your-kaiser-permanente-blood-test-results-no-coding-knowledge-required.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-12-02-take-control-of-your-kaiser-permanente-blood-test-results-no-coding-knowledge-required.html",
+    "title": "Take control of your Kaiser Permanente blood test results (no coding knowledge required)",
+    "date": "2025-12-02",
+    "categories": [
+      "ai",
+      "github"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-12-03-software-citation-station.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-12-03-software-citation-station.html",
+    "title": "Software Citation Station",
+    "date": "2025-12-03",
+    "categories": [
+      "software",
+      "github"
+    ],
+    "aliases": [
+      "/2025/12/software-citation-station"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-12-09-aaron-price-program.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-12-09-aaron-price-program.html",
+    "title": "The Aaron Price Fellows Program: Fostering community leaders",
+    "date": "2025-12-09",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-12-11-healpy-1.19.0-release.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-12-11-healpy-1.19.0-release.html",
+    "title": "Release of healpy 1.19.0",
+    "date": "2025-12-11",
+    "categories": [
+      "healpy",
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-12-15-request-access-aws-google-cloud-cloudbank.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-12-15-request-access-aws-google-cloud-cloudbank.html",
+    "title": "Request access to AWS and Google Cloud resources via CloudBank for scientists",
+    "date": "2025-12-15",
+    "categories": [
+      "cloudcomputing",
+      "openscience",
+      "hpc"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-12-16-copy-codex-session.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-12-16-copy-codex-session.html",
+    "title": "Copy a single Codex session to another machine",
+    "date": "2025-12-16",
+    "categories": [
+      "ai"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-12-16-cosmosage-unshelver.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-12-16-cosmosage-unshelver.html",
+    "title": "Cosmosage Unshelver",
+    "date": "2025-12-16",
+    "categories": [
+      "github"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-12-17-cosmosage-launch.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-12-17-cosmosage-launch.html",
+    "title": "Cosmosage: A specialized AI assistant for cosmology",
+    "date": "2025-12-17",
+    "categories": [
+      "jetstream",
+      "llm",
+      "cosmology"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-12-19-read-dicom-files.md",
+    "source_type": "md",
+    "canonical": "/posts/2025-12-19-read-dicom-files.html",
+    "title": "Read DICOM (Tomography) files with 3D Slicer",
+    "date": "2025-12-19",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-01-01-ai-chatbot-google-form-frontend.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-01-01-ai-chatbot-google-form-frontend.html",
+    "title": "AI chatbot as a frontend for a Google Form",
+    "date": "2026-01-01",
+    "categories": [
+      "ai"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-01-04-voice-chatbot-gemini-live.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-01-04-voice-chatbot-gemini-live.html",
+    "title": "Voice chatbot with Gemini Live",
+    "date": "2026-01-04",
+    "categories": [
+      "ai"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-01-10-convenience-script-system-cli-updates.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-01-10-convenience-script-system-cli-updates.html",
+    "title": "Convenience script for system & CLI updates",
+    "date": "2026-01-10",
+    "categories": [
+      "linux",
+      "ai"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-01-20-kubernetes-jupyterhub-shared-nfs.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-01-20-kubernetes-jupyterhub-shared-nfs.html",
+    "title": "Setting up shared NFS home directories & shared data for JupyterHub on Kubernetes",
+    "date": "2026-01-20",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-01-20-terminal-ai-assistant-github-education.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-01-20-terminal-ai-assistant-github-education.html",
+    "title": "Terminal-based AI assistant with GitHub for Education",
+    "date": "2026-01-20",
+    "categories": [
+      "ai",
+      "github"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-01-29-configure-nrp-llm-opencode-crush.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-01-29-configure-nrp-llm-opencode-crush.html",
+    "title": "Configure NRP LLM with OpenCode and Crush",
+    "date": "2026-01-29",
+    "categories": [
+      "ai"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-02-04-jetstream2-manila-jupyterhub-shared-volume.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-02-04-jetstream2-manila-jupyterhub-shared-volume.html",
+    "title": "Create a Manila share in Exosphere and mount it for all JupyterHub users",
+    "date": "2026-02-04",
+    "categories": [
+      "kubernetes",
+      "jetstream2",
+      "jupyterhub"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-02-04-nbgrader-ngshare-jetstream.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-02-04-nbgrader-ngshare-jetstream.html",
+    "title": "Deploy nbgrader on Jetstream with ngshare (Kubernetes)",
+    "date": "2026-02-04",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub",
+      "nbgrader"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-02-04-nfs-server-jetstream2.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-02-04-nfs-server-jetstream2.html",
+    "title": "Deploy a NFS server to share data between JupyterHub users on Jetstream",
+    "date": "2026-02-04",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub",
+      "linux"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-02-06-smithery-gmail-mcp-terminal-ai.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-02-06-smithery-gmail-mcp-terminal-ai.html",
+    "title": "Connect Gmail (and more) to Codex CLI and Gemini CLI with Smithery (MCP)",
+    "date": "2026-02-06",
+    "categories": [
+      "ai"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-03-03-nbgrader-manila-exchange-jetstream.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-03-03-nbgrader-manila-exchange-jetstream.html",
+    "title": "Deploy nbgrader on Jetstream with a Manila exchange disk (Kubernetes)",
+    "date": "2026-03-03",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub",
+      "nbgrader"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-03-04-custom-jupyterhub-repo2docker-image.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-03-04-custom-jupyterhub-repo2docker-image.html",
+    "title": "Auto-build JupyterHub images with repo2docker and GitHub Actions",
+    "date": "2026-03-04",
+    "categories": [
+      "jupyterhub",
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-03-06-how-to-pronounce-andrea-in-italian.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-03-06-how-to-pronounce-andrea-in-italian.html",
+    "title": "How to pronounce Andrea in Italian",
+    "date": "2026-03-06",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-03-10-sphinxnotebookgist-executed-notebooks.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-03-10-sphinxnotebookgist-executed-notebooks.html",
+    "title": "Keep Jupyter notebooks clean in git, but rendered with outputs in Sphinx",
+    "date": "2026-03-10",
+    "categories": [
+      "python",
+      "jupyter"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-03-11-export-confluence-markdown-cli.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-03-11-export-confluence-markdown-cli.html",
+    "title": "Better way to export a Confluence page to Markdown",
+    "date": "2026-03-11",
+    "categories": [
+      "documentation"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-03-11-jetstream-llm-llama-cpp-review.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-03-11-jetstream-llm-llama-cpp-review.html",
+    "title": "Deploy a ChatGPT-like LLM on Jetstream with llama.cpp, tested on g3.medium",
+    "date": "2026-03-11",
+    "categories": [
+      "jetstream",
+      "llm"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-04-02-release-of-pysm-3.4.4.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-04-02-release-of-pysm-3.4.4.html",
+    "title": "PySM 3.4.4 released with new SZ models and NumPy 2 support",
+    "date": "2026-04-02",
+    "categories": [
+      "openscience",
+      "pysm",
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-04-13-opencode-byobu-clipboard.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-04-13-opencode-byobu-clipboard.html",
+    "title": "Fixing clipboard issues with Opencode in Byobu/Tmux over SSH on Chromebook",
+    "date": "2026-04-13",
+    "categories": [
+      "linux"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-04-13-send-email-ucsd-gmail.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-04-13-send-email-ucsd-gmail.html",
+    "title": "Send email using UCSD SMTP with a Gmail-based address",
+    "date": "2026-04-13",
+    "categories": [
+      "Python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-04-21-configure-claude-code-minimax.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-04-21-configure-claude-code-minimax.html",
+    "title": "Configure Claude Code with MiniMax on NRP",
+    "date": "2026-04-21",
+    "categories": [
+      "ai",
+      "tools"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-04-22-deploy-jupyterhub-openstack-magnum-tofu.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-04-22-deploy-jupyterhub-openstack-magnum-tofu.html",
+    "title": "Deploying JupyterHub on OpenStack Magnum with OpenTofu",
+    "date": "2026-04-22",
+    "categories": [
+      "kubernetes",
+      "openstack",
+      "jupyterhub"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-04-23-sdsc-summer-institute-2026.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-04-23-sdsc-summer-institute-2026.html",
+    "title": "SDSC HPC and Data Science Summer Institute 2026",
+    "date": "2026-04-23",
+    "categories": [
+      "events",
+      "HPC",
+      "data-science",
+      "education"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-05-17-up-shell-function-update-all-ai-tools.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-05-17-up-shell-function-update-all-ai-tools.html",
+    "title": "up: One command to update all my AI tools",
+    "date": "2026-05-17",
+    "categories": [
+      "linux",
+      "ai",
+      "tools"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-05-18-jupyterlite-no-server-needed.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-05-18-jupyterlite-no-server-needed.html",
+    "title": "Do you need JupyterHub for your workshop? JupyterLite runs Python in the browser",
+    "date": "2026-05-18",
+    "categories": [
+      "jupyter",
+      "teaching",
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-05-24-gdrivemd-tutorial.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-05-24-gdrivemd-tutorial.html",
+    "title": "Synchronizing Google Docs and GitHub with gdrivemd",
+    "date": "2026-05-24",
+    "categories": [
+      "tools",
+      "automation",
+      "github"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-05-27-italian-classes-services-san-diego-2026.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-05-27-italian-classes-services-san-diego-2026.html",
+    "title": "Italian Classes and Services in San Diego: 2026 Programs",
+    "date": "2026-05-27",
+    "categories": [
+      "italian"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-05-28-pysm-345-released.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-05-28-pysm-345-released.html",
+    "title": "PySM 3.4.5: HalfDome TSZ model, scipy pin removed, Python 3.9 dropped",
+    "date": "2026-05-28",
+    "categories": [
+      "python",
+      "astronomy",
+      "pysm"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-05-29-sdsc-ci-ai-enabled-science.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-05-29-sdsc-ci-ai-enabled-science.html",
+    "title": "SDSC Cyberinfrastructure for AI-Enabled Science: A Beginner's Guide",
+    "date": "2026-05-29",
+    "categories": [
+      "hpc",
+      "ai",
+      "sdsc"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-06-03-call-for-student-volunteers-si26.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-06-03-call-for-student-volunteers-si26.html",
+    "title": "Call for Student Volunteers: Summer 2026 HPC & Data Science Institute",
+    "date": "2026-06-03",
+    "categories": [
+      "sdsc",
+      "hpc",
+      "education"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-07-08-coding-agents-read-agents-md.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-07-08-coding-agents-read-agents-md.html",
+    "title": "Ensuring CLI coding agents read AGENTS.md",
+    "date": "2026-07-08",
+    "categories": [
+      "ai",
+      "tools"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-07-08-jules-based-blogging-skill.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-07-08-jules-based-blogging-skill.html",
+    "title": "Creating Blog Posts with a Jules-Based Blogging Skill",
+    "date": "2026-07-08",
+    "categories": [
+      "tools",
+      "automation"
+    ],
+    "aliases": [
+      "/posts/2026-07-08-zonca-dev-jules-skill"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-07-28-control-existing-chromeos-browser-ai-agent.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-07-28-control-existing-chromeos-browser-ai-agent.html",
+    "title": "Control your existing ChromeOS browser with any AI coding agent",
+    "date": "2026-07-28",
+    "categories": [
+      "ai",
+      "llm",
+      "automation",
+      "tools"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-08-05-configure-opencode-tritonai-ucsd.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-08-05-configure-opencode-tritonai-ucsd.html",
+    "title": "Configure opencode to use TritonAI Developer API at UC San Diego",
+    "date": "2026-08-05",
+    "categories": [
+      "ai",
+      "llm",
+      "tools"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-08-11-italian-classes-encinitas.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-08-11-italian-classes-encinitas.html",
+    "title": "Italian classes in Encinitas for kids and adults",
+    "date": "2026-08-11",
+    "categories": [
+      "italian"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-08-12-preview-local-documents-chromeos-ai-agent.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-08-12-preview-local-documents-chromeos-ai-agent.html",
+    "title": "Preview local documents from a Linux AI agent in ChromeOS Chrome",
+    "date": "2026-08-12",
+    "categories": [
+      "ai",
+      "automation",
+      "linux",
+      "tools"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-08-13-alphafold3-openfold3-protein-ligand-expanse.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-08-13-alphafold3-openfold3-protein-ligand-expanse.html",
+    "title": "Running AlphaFold3 and OpenFold3 protein-ligand structure prediction on SDSC Expanse",
+    "date": "2026-08-13",
+    "categories": [
+      "hpc",
+      "ai",
+      "github",
+      "sdsc",
+      "singularity"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-08-19-dask-operator-jetstream2-jupyterhub.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-08-19-dask-operator-jetstream2-jupyterhub.html",
+    "title": "Deploy the Dask Operator for Kubernetes on Jetstream2 and access it from JupyterHub",
+    "date": "2026-08-19",
+    "categories": [
+      "kubernetes",
+      "jetstream2",
+      "jupyterhub",
+      "dask",
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-08-19-openstack-image-sharing-between-projects-on-jetstream2.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-08-19-openstack-image-sharing-between-projects-on-jetstream2.html",
+    "title": "OpenStack image sharing between projects on Jetstream2: a tested cheat-sheet",
+    "date": "2026-08-19",
+    "categories": [
+      "jetstream2",
+      "openstack"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-08-20-kubernetes-jetstream2-certmanager.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-08-20-kubernetes-jetstream2-certmanager.html",
+    "title": "Setup HTTPS with cert-manager on Jetstream2 Kubernetes (4 of 4)",
+    "date": "2026-08-20",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-08-20-kubernetes-jetstream2-jupyterhub.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-08-20-kubernetes-jetstream2-jupyterhub.html",
+    "title": "Deploy JupyterHub on Jetstream2 Kubernetes (3 of 4)",
+    "date": "2026-08-20",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-08-20-kubernetes-jetstream2-magnum.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-08-20-kubernetes-jetstream2-magnum.html",
+    "title": "Deploy Kubernetes on Jetstream2 with Magnum and Cluster API (1 of 4)",
+    "date": "2026-08-20",
+    "categories": [
+      "kubernetes",
+      "jetstream"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-08-20-kubernetes-jetstream2-traefik.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-08-20-kubernetes-jetstream2-traefik.html",
+    "title": "Install Traefik Ingress Controller on Jetstream2 Kubernetes (2 of 4)",
+    "date": "2026-08-20",
+    "categories": [
+      "kubernetes",
+      "jetstream"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-08-20-migrate-nginx-traefik-jetstream2-kubernetes.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-08-20-migrate-nginx-traefik-jetstream2-kubernetes.html",
+    "title": "Migrate from NGINX to Traefik Ingress on Jetstream2 Kubernetes",
+    "date": "2026-05-18",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-08-25-hpc-uc-allocation.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-08-25-hpc-uc-allocation.html",
+    "title": "Request an HPC@UC allocation on Expanse at SDSC",
+    "date": "2026-08-25",
+    "categories": [
+      "hpc",
+      "sdsc"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-09-13-agent-terminal-status-chromeos-overview.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-09-13-agent-terminal-status-chromeos-overview.html",
+    "title": "See if your opencode session is still working in ChromeOS Overview",
+    "date": "2026-09-13",
+    "categories": [
+      "linux",
+      "tools",
+      "ai"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-09-14-deploy-jupyterhub-jetstream2-magnum-opentofu.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-09-14-deploy-jupyterhub-jetstream2-magnum-opentofu.html",
+    "title": "Deploy JupyterHub on Jetstream2 with OpenTofu, Magnum and Traefik",
+    "date": "2026-09-14",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub",
+      "openstack"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-09-15-ngshare-manila-jetstream.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-09-15-ngshare-manila-jetstream.html",
+    "title": "Deploy ngshare on Jetstream with a Manila volume (Kubernetes)",
+    "date": "2026-09-15",
+    "categories": [
+      "kubernetes",
+      "jetstream",
+      "jupyterhub",
+      "nbgrader"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-09-26-gateways-2027-community-san-diego.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-09-26-gateways-2027-community-san-diego.html",
+    "title": "Gateways 2027: a conference for and by the community, coming to San Diego",
+    "date": "2026-09-26",
+    "categories": [
+      "events",
+      "sdsc"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-09-26-managing-projects-github-ai-agents.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-09-26-managing-projects-github-ai-agents.html",
+    "title": "Managing projects with GitHub and AI agents",
+    "date": "2026-09-26",
+    "categories": [
+      "events",
+      "github",
+      "ai",
+      "automation"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-09-28-software-citation-primer.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-09-28-software-citation-primer.html",
+    "title": "A practical primer on software citation",
+    "date": "2026-09-28",
+    "categories": [
+      "openscience",
+      "documentation"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/italian-classes-chess-san-diego-2025.md",
+    "source_type": "md",
+    "canonical": "/posts/italian-classes-chess-san-diego-2025.html",
+    "title": "Italian and chess classes in San Diego",
+    "date": "2025-01-01",
+    "categories": [
+      "italian"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/italian-classes-san-diego.md",
+    "source_type": "md",
+    "canonical": "/posts/italian-classes-san-diego.html",
+    "title": "Italian classes in San Diego",
+    "date": "2024-05-11",
+    "categories": [
+      "italian"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/python-ai-camp-san-diego-2025.md",
+    "source_type": "md",
+    "canonical": "/posts/python-ai-camp-san-diego-2025.html",
+    "title": "Python and AI coding summer camp in person in San Diego",
+    "date": "2025-05-18",
+    "categories": [
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-12-11-jupytext-ai-agents.qmd",
+    "source_type": "qmd",
+    "canonical": "/posts/2025-12-11-jupytext-ai-agents.html",
+    "title": "Jupytext for AI agent Jupyter workflows",
+    "date": "2025-12-11",
+    "categories": [
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-09-01-python-for-hpc.qmd",
+    "source_type": "qmd",
+    "canonical": "/posts/2026-09-01-python-for-hpc.html",
+    "title": "Python for HPC at SDSC Summer Institute 2026",
+    "date": "2026-09-01",
+    "categories": [
+      "python",
+      "hpc",
+      "sdsc",
+      "events",
+      "education",
+      "ai"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-03-16-raise-check-flag-numpy.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2020-03-16-raise-check-flag-numpy.html",
+    "title": "Raise and check a flag array with numpy",
+    "date": "2020-03-16",
+    "categories": [
+      "python"
+    ],
+    "aliases": [
+      "/2020/03/raise-check-flag-numpy"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-04-24-white-noise-angular-power-spectrum.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2020-04-24-white-noise-angular-power-spectrum.html",
+    "title": "White noise NET in radio-astronomy and cosmology",
+    "date": "2020-04-24",
+    "categories": [
+      "cosmology",
+      "python",
+      "healpy"
+    ],
+    "aliases": [
+      "/2020/04/white-noise-angular-power-spectrum"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-06-19-white-noise-hitmap-fullsky.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2020-06-19-white-noise-hitmap-fullsky.html",
+    "title": "Handle white noise with healpy 1 Full sky coverage",
+    "date": "2020-06-19",
+    "categories": [
+      "cosmology",
+      "python",
+      "healpy"
+    ],
+    "aliases": [
+      "/2020/06/white-noise-hitmap-fullsky"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-06-20-white-noise-hitmap-uniform.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2020-06-20-white-noise-hitmap-uniform.html",
+    "title": "Handle white noise with healpy 2 partial sky coverage",
+    "date": "2020-06-20",
+    "categories": [
+      "cosmology",
+      "python",
+      "healpy"
+    ],
+    "aliases": [
+      "/2020/06/white-noise-hitmap-uniform"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-06-21-white-noise-hitmap-not-uniform.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2020-06-21-white-noise-hitmap-not-uniform.html",
+    "title": "Handle white noise with healpy 3 not-uniform and partial sky coverage",
+    "date": "2020-06-21",
+    "categories": [
+      "cosmology",
+      "python",
+      "healpy"
+    ],
+    "aliases": [
+      "/2020/06/white-noise-hitmap-not-uniform"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-08-04-dask-array-rounding.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2020-08-04-dask-array-rounding.html",
+    "title": "Dask array rounding",
+    "date": "2020-08-04",
+    "categories": [
+      "python",
+      "dask"
+    ],
+    "aliases": [
+      "/2020/08/dask-array-rounding"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-08-24-debug-bandpass-unit-conversion-pysm3.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2020-08-24-debug-bandpass-unit-conversion-pysm3.html",
+    "title": "Investigate broken implementation of bandpass unit conversion in PySM 3",
+    "date": "2020-08-24",
+    "categories": [
+      "cosmology",
+      "pysm"
+    ],
+    "aliases": [
+      "/2020/08/debug-bandpass-unit-conversion-pysm3"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-09-04-unit-conversion-broadband-cmb.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2020-09-04-unit-conversion-broadband-cmb.html",
+    "title": "Unit conversion with broadband detectors looking at the CMB",
+    "date": "2020-09-04",
+    "categories": [
+      "healpy",
+      "cosmology"
+    ],
+    "aliases": [
+      "/2020/09/unit-conversion-broadband-cmb"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-09-04-unit-conversion-broadband-foregrounds.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2020-09-04-unit-conversion-broadband-foregrounds.html",
+    "title": "Unit conversion with broadband detectors looking at foregrounds",
+    "date": "2020-09-04",
+    "categories": [
+      "cosmology"
+    ],
+    "aliases": [
+      "/2020/09/unit-conversion-broadband-foregrounds"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-09-10-wcs-astropy.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2020-09-10-wcs-astropy.html",
+    "title": "Simple WCS with astropy modeling and gwcs",
+    "date": "2020-09-10",
+    "categories": [
+      "astrophysics"
+    ],
+    "aliases": [
+      "/2020/09/wcs-astropy"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-09-30-planck-spectra-healpy.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2020-09-30-planck-spectra-healpy.html",
+    "title": "Read and process Planck CMB power spectra with `healpy`",
+    "date": "2020-09-30",
+    "categories": [
+      "healpy",
+      "cosmology"
+    ],
+    "aliases": [
+      "/2020/09/planck-spectra-healpy"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2020-10-02-example-healpy-query_disc.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2020-10-02-example-healpy-query_disc.html",
+    "title": "Example of the `healpy` query disc function",
+    "date": "2020-10-02",
+    "categories": [
+      "python",
+      "healpy",
+      "cosmology"
+    ],
+    "aliases": [
+      "/2020/10/example-healpy-query_disc"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-02-28-compute-planck-spectra-healpy-anafast.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2021-02-28-compute-planck-spectra-healpy-anafast.html",
+    "title": "Compute the Planck CMB temperature power spectrum with healpy anafast",
+    "date": "2021-02-28",
+    "categories": [
+      "healpy",
+      "cosmology"
+    ],
+    "aliases": [
+      "/2021/02/compute-planck-spectra-healpy-anafast"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-03-11-rotate-maps-healpy.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2021-03-11-rotate-maps-healpy.html",
+    "title": "Tutorial on how to rotate maps in healpy",
+    "date": "2021-03-11",
+    "categories": [],
+    "aliases": [
+      "/2021/03/rotate-maps-healpy"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-04-27-correct-beam-healpy.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2021-04-27-correct-beam-healpy.html",
+    "title": "Correct a power spectrum by the instrument beam with healpy",
+    "date": "2021-04-27",
+    "categories": [
+      "healpy",
+      "cosmology"
+    ],
+    "aliases": [
+      "/2021/04/correct-beam-healpy"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-06-18-healpy-rotate-mask.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2021-06-18-healpy-rotate-mask.html",
+    "title": "Investigate rotation of masks in healpy",
+    "date": "2021-06-18",
+    "categories": [
+      "healpy",
+      "cosmology"
+    ],
+    "aliases": [
+      "/2021/06/healpy-rotate-mask"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2021-11-02-healpix-gauss-legendre-pysm.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2021-11-02-healpix-gauss-legendre-pysm.html",
+    "title": "Compare HEALPix and Gauss-Legendre pixelizations for sky emission modelling",
+    "date": "2021-11-02",
+    "categories": [
+      "healpy",
+      "cosmology",
+      "pysm"
+    ],
+    "aliases": [
+      "/2021/11/healpix-gauss-legendre-pysm"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-10-24-numba-closures.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2022-10-24-numba-closures.html",
+    "title": "Closures in Numba",
+    "date": "2022-10-24",
+    "categories": [
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-10-26-click-commandline-class-arguments.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2022-10-26-click-commandline-class-arguments.html",
+    "title": "Generate Click command line options dynamically from class arguments",
+    "date": "2022-10-26",
+    "categories": [
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2022-12-01-radio-galaxies-websky-planck.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2022-12-01-radio-galaxies-websky-planck.html",
+    "title": "Compare WebSky radio galaxies maps from PySM to Planck",
+    "date": "2022-12-05",
+    "categories": [
+      "healpy",
+      "pysm"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2023-03-06-gzip-healpix-healpy.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2023-03-06-gzip-healpix-healpy.html",
+    "title": "Gzipping or not gzipping HEALPix maps",
+    "date": "2023-03-06",
+    "categories": [
+      "healpy",
+      "nersc"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-04-12-pysm-figures.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2024-04-12-pysm-figures.html",
+    "title": "Generate figures for PySM emissions",
+    "date": "2024-04-12",
+    "categories": [
+      "cosmology",
+      "healpy",
+      "pysm"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-05-02-pysm-point-source-pixell.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2024-05-02-pysm-point-source-pixell.html",
+    "title": "2024-05-02-pysm-point-source-pixell",
+    "date": "2024-05-02",
+    "categories": [
+      "cosmology",
+      "pysm"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-05-20-HEALPix-in-Megapixels.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2024-05-20-HEALPix-in-Megapixels.html",
+    "title": "2024-05-20-HEALPix-in-Megapixels",
+    "date": "2024-05-20",
+    "categories": [
+      "cosmology",
+      "healpy"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-05-28-ai-code-assistant-jupyter-nersc.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2024-05-28-ai-code-assistant-jupyter-nersc.html",
+    "title": "2024-05-28-ai-code-assistant-jupyter-nersc",
+    "date": "2024-05-28",
+    "categories": [
+      "python",
+      "nersc"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-07-29-pysm-point-source-pixell-healpix.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2024-07-29-pysm-point-source-pixell-healpix.html",
+    "title": "2024-07-29-pysm-point-source-pixell-healpix",
+    "date": "2024-07-29",
+    "categories": [
+      "cosmology",
+      "pysm"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2024-08-28-dataportal-data-pysm.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2024-08-28-dataportal-data-pysm.html",
+    "title": "Generate sample Cosmology data for Cheap and FAIR data portal with PySM",
+    "date": "2024-08-28",
+    "categories": [
+      "cosmology",
+      "healpy",
+      "pysm"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-05-08-astroph-llm-jetstream.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2025-05-08-astroph-llm-jetstream.html",
+    "title": "Astrophysics Papers Daily Summaries Notebook with the Jetstream LLM Inference Service",
+    "date": "2025-05-08",
+    "categories": [
+      "astrophysics",
+      "llm",
+      "jetstream2"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2025-12-11-blm-gaussian-change.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2025-12-11-blm-gaussian-change.html",
+    "title": "Healpy blm_gauss breaking change analysis",
+    "date": "2025-12-11",
+    "categories": [
+      "python",
+      "astrophysics",
+      "healpy"
+    ],
+    "aliases": [
+      "/2025/12/blm-gaussian-change"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-04-06-why-3-pixels-per-beam.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2026-04-06-why-3-pixels-per-beam.html",
+    "title": "Why 3 pixels per beam? The mathematics of HEALPix resolution matching",
+    "date": "2026-04-06",
+    "categories": [
+      "python",
+      "astrophysics",
+      "healpy"
+    ],
+    "aliases": [
+      "/2026/04/why-3-pixels-per-beam"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-04-21-spt3g-d1-planck-comparison.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2026-04-21-spt3g-d1-planck-comparison.html",
+    "title": "SPT-3G D1 high-ℓ CMB power spectra vs. Planck 2018",
+    "date": "2026-04-21",
+    "categories": [
+      "cosmology",
+      "python"
+    ],
+    "aliases": [
+      "/2026/04/spt3g-d1-planck-comparison"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-05-05-healpy-harmonic-ud-grade.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2026-05-05-healpy-harmonic-ud-grade.html",
+    "title": "harmonic_ud_grade vs ud_grade: A Focused Comparison",
+    "date": "2026-05-05",
+    "categories": [
+      "python",
+      "astrophysics",
+      "healpy"
+    ],
+    "aliases": [
+      "/2026/05/healpy-harmonic-ud-grade"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-05-20-healpy-skytools-change-resolution.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2026-05-20-healpy-skytools-change-resolution.html",
+    "title": "healpy harmonic_ud_grade vs skytools change_resolution: A Comparison",
+    "date": "2026-05-20",
+    "categories": [
+      "python",
+      "astrophysics",
+      "healpy",
+      "healpix",
+      "cmb"
+    ],
+    "aliases": [
+      "/posts/2026-05-05-healpy-skytools-change-resolution",
+      "/2026/05/healpy-skytools-change-resolution"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-05-29-healpy-1.20.0b1-beta-release.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2026-05-29-healpy-1.20.0b1-beta-release.html",
+    "title": "healpy 1.20.0b1 beta — harmonic_ud_grade for artifact-safe map downgrading",
+    "date": "2026-05-29",
+    "categories": [
+      "python",
+      "astrophysics",
+      "healpy",
+      "healpix",
+      "cmb"
+    ],
+    "aliases": [
+      "/2026/05/healpy-1.20.0b1-beta-release"
+    ],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-07-20-pysm-3.4.6-flamingo-ksz.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2026-07-20-pysm-3.4.6-flamingo-ksz.html",
+    "title": "PySM 3.4.6 released: FLAMINGO kSZ models and c1 documentation",
+    "date": "2026-07-20",
+    "categories": [
+      "python",
+      "pysm",
+      "cosmology"
+    ],
+    "aliases": [
+      "/2026/07/pysm-3.4.6-release"
+    ],
+    "draft": false
+  },
+  {
+    "source": "index.qmd",
+    "source_type": "qmd",
+    "canonical": "/index.html",
+    "title": "/index.html",
+    "date": "",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "about.qmd",
+    "source_type": "qmd",
+    "canonical": "/about.html",
+    "title": "About",
+    "date": "",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "AGENTS.md",
+    "source_type": "md",
+    "canonical": "/AGENTS.html",
+    "title": "/AGENTS.html",
+    "date": "",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "GEMINI.md",
+    "source_type": "md",
+    "canonical": "/GEMINI.html",
+    "title": "/GEMINI.html",
+    "date": "",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "skill/SKILL.md",
+    "source_type": "md",
+    "canonical": "/skill/SKILL.html",
+    "title": "/skill/SKILL.html",
+    "date": "",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "ai/bookkeeping.qmd",
+    "source_type": "qmd",
+    "canonical": "/ai/bookkeeping.html",
+    "title": "/ai/bookkeeping.html",
+    "date": "",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "ai/customers.qmd",
+    "source_type": "qmd",
+    "canonical": "/ai/customers.html",
+    "title": "/ai/customers.html",
+    "date": "",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "ai/index.qmd",
+    "source_type": "qmd",
+    "canonical": "/ai/index.html",
+    "title": "/ai/index.html",
+    "date": "",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "ai/italian-school.qmd",
+    "source_type": "qmd",
+    "canonical": "/ai/italian-school.html",
+    "title": "/ai/italian-school.html",
+    "date": "",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "ai/operations.qmd",
+    "source_type": "qmd",
+    "canonical": "/ai/operations.html",
+    "title": "/ai/operations.html",
+    "date": "",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "ai/research.qmd",
+    "source_type": "qmd",
+    "canonical": "/ai/research.html",
+    "title": "/ai/research.html",
+    "date": "",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "ai/responsible-ai.qmd",
+    "source_type": "qmd",
+    "canonical": "/ai/responsible-ai.html",
+    "title": "/ai/responsible-ai.html",
+    "date": "",
+    "categories": [],
+    "aliases": [],
+    "draft": false
+  }
+]

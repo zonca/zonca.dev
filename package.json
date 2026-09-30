@@ -1,5 +1,26 @@
 {
+  "name": "zonca-dev",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare": "python3 scripts/prepare_notebooks.py && python3 scripts/prepare_pages.py",
+    "build": "python3 scripts/prepare_notebooks.py && python3 scripts/prepare_pages.py && astro build",
+    "dev": "python3 scripts/prepare_notebooks.py && python3 scripts/prepare_pages.py && astro dev",
+    "check": "astro check",
+    "preview": "astro preview",
+    "validate": "python3 scripts/validate_urls.py"
+  },
   "dependencies": {
-    "@quarto/netlify-plugin-quarto": "^0.0.5"
+    "@astrojs/rss": "^4.0.11",
+    "astro": "^5.12.0",
+    "katex": "^0.16.21",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0",
+    "unist-util-visit": "^5.0.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^5.9.3"
   }
 }

@@ -1,0 +1,69 @@
+---
+import Base from '../../layouts/Base.astro';
+import AiSubnav from '../../components/AiSubnav.astro';
+import AiDisclaimer from '../../components/AiDisclaimer.astro';
+
+const description =
+  'Transaction categorization, receipt collection, and document matching prepared for human review.';
+---
+
+<Base
+  title="AI-assisted bookkeeping preparation"
+  description={description}
+  canonical="/ai/bookkeeping.html"
+>
+  <div class="ai-page">
+    <div class="ai-subhero">
+      <p class="ai-kicker">Bookkeeping support</p>
+      <h1 class="post-title">Prepare cleaner records for review</h1>
+      <p>
+        Use consistent rules to organize transactions and supporting documents, surface exceptions,
+        and reduce the time spent searching for evidence.
+      </p>
+    </div>
+    <AiSubnav />
+    <section class="ai-section">
+      <h2>A traceable preparation workflow</h2>
+      <div class="ai-grid">
+        <div class="ai-card">
+          <h3>Transaction categorization</h3>
+          <p>
+            Apply documented rules to suggest categories and flag ambiguous transactions instead of
+            guessing.
+          </p>
+        </div>
+        <div class="ai-card">
+          <h3>Receipt collection</h3>
+          <p>
+            Search approved sources for receipts and invoices, then connect each document to the
+            relevant transaction.
+          </p>
+        </div>
+        <div class="ai-card">
+          <h3>Document matching</h3>
+          <p>
+            Compare amounts, dates, vendors, and reference numbers while preserving the source
+            document for review.
+          </p>
+        </div>
+        <div class="ai-card">
+          <h3>Exception review</h3>
+          <p>
+            Separate routine matches from missing, conflicting, or unusual items that need a person
+            to decide.
+          </p>
+        </div>
+      </div>
+      <div class="ai-policy">
+        <p>
+          Bookkeeping automation prepares and documents suggestions. A responsible person reviews
+          categorizations and approves any record change or payment action.
+        </p>
+      </div>
+      <div class="ai-actions">
+        <a class="ai-button" href="https://zonca.secureform.dev/contact">Discuss bookkeeping preparation</a>
+      </div>
+    </section>
+    <AiDisclaimer />
+  </div>
+</Base>

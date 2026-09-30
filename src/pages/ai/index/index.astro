@@ -1,0 +1,116 @@
+---
+import Base from '../../../layouts/Base.astro';
+import AiSubnav from '../../../components/AiSubnav.astro';
+import AiDisclaimer from '../../../components/AiDisclaimer.astro';
+
+const description =
+  'Practical AI and business automation consulting from Andrea Zonca, with in-person consultations in San Diego.';
+---
+
+<Base title="AI consulting for San Diego small businesses" description={description} canonical="/ai/index.html">
+  <div class="ai-page">
+    <div class="ai-hero">
+      <div class="ai-hero-grid">
+        <div>
+          <p class="ai-kicker">Zonca AI Consulting</p>
+          <h1 class="post-title">AI consulting for San Diego small businesses</h1>
+          <p class="ai-lede">
+            Turn repetitive work into reliable systems. Andrea Zonca combines scientific computing,
+            artificial intelligence on supercomputers, web development, and direct experience running
+            small-business operations.
+          </p>
+          <div class="ai-actions">
+            <a class="ai-button" href="https://zonca.secureform.dev/contact">Discuss your process</a>
+          </div>
+          <p>
+            In-person consultations are available at 4550 Kearny Villa Road, Suite 202, San Diego, CA
+            92123. Video meetings and email consultations are also available.
+          </p>
+        </div>
+        <div class="ai-portrait">
+          <img src="/profile.jpg" alt="Andrea Zonca" />
+        </div>
+      </div>
+    </div>
+    <AiSubnav />
+    <section class="ai-section">
+      <h2>Practical systems, built around your business</h2>
+      <p>
+        AI is most useful when it works with the tools, records, and approval process you already
+        have. The goal is not to add another complicated platform. It is to reduce repetitive work,
+        make information easier to find, and give the responsible person a clear decision point.
+      </p>
+      <div class="ai-grid">
+        <div class="ai-card">
+          <h3>Operations</h3>
+          <p>
+            Connect calendars, employee hours, payroll preparation, and approved bank-payment
+            workflows.
+          </p>
+          <a href="/ai/operations.html">Explore operations automation →</a>
+        </div>
+        <div class="ai-card">
+          <h3>Customer systems</h3>
+          <p>
+            Improve websites, payment systems, inquiry handling, email drafting, outreach, and
+            historical contact research.
+          </p>
+          <a href="/ai/customers.html">Explore customer systems →</a>
+        </div>
+        <div class="ai-card">
+          <h3>Bookkeeping support</h3>
+          <p>
+            Categorize transactions, collect receipts, and match financial records with supporting
+            documents for human review.
+          </p>
+          <a href="/ai/bookkeeping.html">Explore bookkeeping automation →</a>
+        </div>
+        <div class="ai-card">
+          <h3>Research and scientific computing</h3>
+          <p>
+            Apply experience with scientific software, large computing systems, and artificial
+            intelligence workloads to difficult technical problems.
+          </p>
+          <a href="/ai/research.html">Explore research experience →</a>
+        </div>
+      </div>
+    </section>
+    <section class="ai-band">
+      <div class="ai-split">
+        <div>
+          <h2>Experience from research and a real small business</h2>
+          <p>
+            Andrea has worked in scientific computing at the San Diego Supercomputer Center since
+            2013. His experience includes high-performance Python, distributed computing, cloud
+            infrastructure, Kubernetes, and artificial intelligence workflows for research.
+          </p>
+          <p>
+            He also builds and operates the systems behind the Italian School of San Diego,
+            including enrollment, calendars, customer communication, payments, employee-hour
+            tracking, and bookkeeping support.
+          </p>
+        </div>
+        <div class="ai-policy">
+          <strong>A clear approval boundary</strong>
+          <p>
+            Calculations, research, classifications, and drafts may be automatic. Sending,
+            submitting, scheduling, changing records, and initiating payments require approval from
+            a responsible person.
+          </p>
+          <a href="/ai/responsible-ai.html">Read the responsible AI policy →</a>
+        </div>
+      </div>
+    </section>
+    <section class="ai-section">
+      <h2>Start with one process</h2>
+      <p>
+        A useful first conversation focuses on one recurring task: what comes in, which tools are
+        involved, where time is lost, and which decisions must remain with a person.
+      </p>
+      <div class="ai-actions">
+        <a class="ai-button" href="https://zonca.secureform.dev/contact">Contact Zonca AI Consulting</a>
+      </div>
+    </section>
+    <AiDisclaimer />
+  </div>
+</Base>

@@ -1,0 +1,15 @@
+---
+const items = [
+  { href: '/ai/index.html', label: 'Overview' },
+  { href: '/ai/research.html', label: 'Research and computing' },
+  { href: '/ai/operations.html', label: 'Operations' },
+  { href: '/ai/customers.html', label: 'Customer systems' },
+  { href: '/ai/bookkeeping.html', label: 'Bookkeeping' },
+  { href: '/ai/italian-school.html', label: 'Italian School case study' },
+  { href: '/ai/responsible-ai.html', label: 'Responsible AI' },
+];
+---
+
+<nav class="ai-subnav" aria-label="AI consulting services">
+  {items.map((item) => <a href={item.href}>{item.label}</a>)}
+</nav>

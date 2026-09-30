@@ -1,0 +1,58 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { formatDate } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const [posts, generated] = await Promise.all([
+    getCollection('posts'),
+    getCollection('generatedPosts'),
+  ]);
+  const entries = [...posts, ...generated].filter(
+    (p) => !p.data.draft && p.id !== 'README',
+  );
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'posts'> | CollectionEntry<'generatedPosts'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const date = entry.data.date ? formatDate(entry.data.date) : '';
+const source = entry.data.source ?? `posts/${entry.id}.md`;
+const canonical = `/posts/${entry.id}.html`;
+
+const githubRepo = 'https://github.com/zonca/zonca.dev';
+const rawRepo = 'https://raw.githubusercontent.com/zonca/zonca.dev/main';
+---
+
+<Base title={entry.data.title ?? entry.id} description={entry.data.description} canonical={canonical}>
+  <article>
+    <h1 class="post-title">{entry.data.title ?? entry.id}</h1>
+    <div class="post-meta">
+      {date && <time datetime={date}>{date}</time>}
+      {
+        (entry.data.categories ?? []).length > 0 && (
+          <span class="post-categories">
+            {(entry.data.categories ?? []).map((cat: string) => (
+              <span>{cat}</span>
+            ))}
+          </span>
+        )
+      }
+    </div>
+    <div class="page-action-buttons">
+      <a class="btn btn-outline-secondary" href={`${rawRepo}/${source}`} target="_blank" rel="noopener">Download source</a>
+      <a class="btn btn-primary" href={`${githubRepo}/edit/main/${source}`} target="_blank" rel="noopener">Contribute</a>
+    </div>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</Base>

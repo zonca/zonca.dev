@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+
+const description =
+  'Computational scientist at the San Diego Supercomputer Center working on distributed data processing in Python for astrophysics and cosmology.';
+---
+
+<Base title="About" description={description} canonical="/about.html">
+  <article class="prose">
+    <h1 class="post-title">About me</h1>
+    <img src="/profile.jpg" alt="Andrea Zonca" width="200" />
+    <p>
+      I am a computational scientist at the San Diego Supercomputer Center, University of
+      California San Diego, California, USA.
+    </p>
+    <p>
+      I mostly work on distributed data processing in Python of Astrophysics/Cosmology datasets.
+      I simulate and analyze data from Cosmic Microwave Background experiments; I got my Ph.D. at
+      the University of Milano, Italy, working on the Planck satellite (European Space Agency).
+      See my publications on
+      <a href="https://scholar.google.com/citations?user=wuR3UQ4AAAAJ&amp;hl=en">Google Scholar</a>
+      or <a href="https://arxiv.org/search/?searchtype=author&amp;query=Zonca%2C+A">Arxiv</a>.
+    </p>
+    <p>
+      Currently I also work on cloud deployments of interactive computing platforms based on
+      JupyterHub on top of Kubernetes.
+    </p>
+    <p>
+      I am available for
+      <a href="/consult">consulting, code-review, software infrastructure design</a>.
+    </p>
+    <p>
+      Contact me via <a href="https://twitter.com/andreazonca">Twitter</a> or email
+      (<code>andrea</code> on the domain andreazonca.com).
+    </p>
+    <p>
+      <a href="https://stackoverflow.com/users/597609/andrea-zonca">
+        <img
+          src="https://stackoverflow.com/users/flair/597609.png?theme=clean"
+          width="208"
+          height="58"
+          alt="profile for Andrea Zonca at Stack Overflow"
+          title="profile for Andrea Zonca at Stack Overflow"
+        />
+      </a>
+    </p>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
+      data-name="bmc-button"
+      data-slug="zonca"
+      data-color="#FFDD00"
+      data-emoji="☕"
+      data-font="Cookie"
+      data-text="Buy me a coffee"
+      data-outline-color="#000000"
+      data-font-color="#000000"
+      data-coffee-color="#ffffff"
+    ></script>
+  </article>
+</Base>

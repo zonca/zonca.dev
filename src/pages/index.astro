@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import { getAllPosts, formatDate } from '../lib/posts';
+
+const posts = await getAllPosts();
+---
+
+<Base title="Andrea Zonca - Scientific computing and astronomy">
+  <a style="display:none" rel="me" href="https://mastodon.online/@zonca">Mastodon</a>
+  <p class="home-intro">
+    Computational scientist at the San Diego Supercomputer Center. Distributed data
+    processing in Python for cosmology and astronomy; JupyterHub and Kubernetes; AI in science.
+  </p>
+  <ul class="post-list">
+    {
+      posts.map((post) => (
+        <li class="post-item">
+          <h2>
+            <a href={`/posts/${post.id}.html`}>{post.title}</a>
+          </h2>
+          {post.date && <div class="date">{formatDate(post.date)}</div>}
+        </li>
+      ))
+    }
+  </ul>
+</Base>
