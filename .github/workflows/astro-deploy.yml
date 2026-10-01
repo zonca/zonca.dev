@@ -13,8 +13,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  CF_WORKER_NAME: zonca-dev-astro-preview
-  CF_PUBLIC_URL: https://zonca-dev-astro-preview.zonca-dev.workers.dev
+  CF_WORKER_NAME: zonca-dev
+  CF_PUBLIC_URL: https://www.zonca.dev
 
 jobs:
   build:
@@ -57,6 +57,37 @@ jobs:
           name: dist
           path: dist
           retention-days: 7
+
+  preview:
+    if: github.event_name == 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Upload PR build as a Worker version
+        id: versions
+        shell: bash
+        run: |
+          OUTPUT=$(npx -y wrangler@4.139.0 versions upload --message "PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}" 2>&1)
+          echo "$OUTPUT"
+          PREVIEW_URL=$(echo "$OUTPUT" | grep -oE 'https://[^ ]+\.workers\.dev' | head -1)
+          echo "preview_url=$PREVIEW_URL" >> "$GITHUB_OUTPUT"
+
+      - name: Comment preview URL on the PR
+        run: |
+          gh pr comment "${{ github.event.pull_request.number }}" --body "Preview: ${{ steps.versions.outputs.preview_url }}" || true
 
   deploy:
     if: github.event_name == 'push'
