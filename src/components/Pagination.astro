@@ -1,0 +1,53 @@
+---
+export interface Props {
+  current: number;
+  total: number;
+}
+
+const { current, total } = Astro.props;
+const radius = 2;
+const pages = new Set<number>([1, total]);
+for (let p = current - radius; p <= current + radius; p++) {
+  if (p >= 1 && p <= total) pages.add(p);
+}
+const sorted = [...pages].sort((a, b) => a - b);
+const items: (number | 'gap')[] = [];
+let prev = 0;
+for (const p of sorted) {
+  if (p - prev > 1) items.push('gap');
+  items.push(p);
+  prev = p;
+}
+
+const href = (p: number) => (p === 1 ? '/' : `/page/${p}.html`);
+---
+
+<nav class="pagination" aria-label="Posts pagination">
+  {
+    current > 1 && (
+      <a class="page-link page-prev" href={href(current - 1)} rel="prev" aria-label={`Newer posts, page ${current - 1}`}>
+        &larr; Newer
+      </a>
+    )
+  }
+  <span class="page-numbers">
+    {
+      items.map((it) =>
+        it === 'gap' ? (
+          <span class="page-gap" aria-hidden="true">…</span>
+        ) : it === current ? (
+          <span class="page-num is-current" aria-current="page">{it}</span>
+        ) : (
+          <a class="page-num" href={href(it)}>{it}</a>
+        ),
+      )
+    }
+  </span>
+  {
+    current < total && (
+      <a class="page-link page-next" href={href(current + 1)} rel="next" aria-label={`Older posts, page ${current + 1}`}>
+        Older &rarr;
+      </a>
+    )
+  }
+</nav>

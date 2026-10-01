@@ -25,6 +25,7 @@ PUBLIC = os.path.join(ROOT, "public")
 FIXED_REDIRECTS = [
     ("/consult", "/ai/", 301),
     ("/consult/", "/ai/", 301),
+    ("/page/1", "/", 301),
 ]
 
 

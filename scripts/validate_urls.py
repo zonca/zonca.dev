@@ -70,19 +70,20 @@ def check_local():
     if os.path.exists(redirects_path):
         rules = [l.strip() for l in open(redirects_path, encoding="utf-8") if l.strip()]
         generated = {r.split()[0] for r in rules if not r.startswith("#")}
-        expected = set(aliases.keys()) | {"/consult", "/consult/"}
+        expected = set(aliases.keys()) | {"/consult", "/consult/", "/page/1"}
         missing_rules = expected - generated
         extra_rules = generated - expected
         if missing_rules:
             fail(f"redirects missing {len(missing_rules)} alias rules: {sorted(missing_rules)[:5]}")
         if extra_rules:
             fail(f"redirects contain {len(extra_rules)} unexpected rules: {sorted(extra_rules)[:5]}")
+        fixed_targets = {"/consult": "/ai/", "/consult/": "/ai/", "/page/1": "/"}
         for src in sorted(expected):
             rule = [r for r in rules if r.split()[0] == src]
             if rule:
                 parts = rule[0].split()
                 target = parts[1] if len(parts) > 1 else ""
-                if target != aliases.get(src, "/ai/") and src not in ("/consult", "/consult/"):
+                if target != aliases.get(src, fixed_targets.get(src, "/ai/")):
                     fail(f"redirect {src} -> {target} does not match manifest {aliases.get(src)}")
         # duplicate sources not allowed
         dupes = {r.split()[0] for r in rules} if len(generated) != len([r for r in rules]) else set()

@@ -41,3 +41,5 @@ export async function getAllPosts(): Promise<Post[]> {
 export function formatDate(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
+
+export const PAGE_SIZE = 15;

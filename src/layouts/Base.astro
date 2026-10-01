@@ -1,6 +1,7 @@
 ---
 import 'katex/dist/katex.min.css';
 import '../styles/site.css';
+import SocialIcons from '../components/SocialIcons.astro';
 
 export interface Props {
   title?: string;
@@ -12,7 +13,7 @@ const { title, description, canonical } = Astro.props;
 const pageTitle = title ? `${title} - Andrea Zonca` : 'Andrea Zonca';
 const path = Astro.url.pathname;
 const isActive = (href: string) =>
-  href === '/' ? path === '/' || path === '/index.html' : path.startsWith(href);
+  href === '/' ? path === '/' || path === '/index.html' || path.startsWith('/page/') : path.startsWith(href);
 ---
 
 <!doctype html>
@@ -37,23 +38,26 @@ const isActive = (href: string) =>
   </head>
   <body>
     <header class="site-header">
-      <nav class="container site-nav" aria-label="Main">
+      <nav class="site-nav" aria-label="Main">
         <a class="brand" href="/">Andrea Zonca</a>
-        <ul>
-          <li><a href="/about.html" aria-current={isActive('/about') ? 'page' : undefined}>About</a></li>
-          <li><a href="/ai/index.html" aria-current={isActive('/ai') ? 'page' : undefined}>AI Consulting</a></li>
-          <li><a class="nav-icon" href="https://github.com/zonca" aria-label="GitHub">GitHub</a></li>
-          <li><a class="nav-icon" href="https://twitter.com/andreazonca" aria-label="Twitter">Twitter</a></li>
-          <li><a class="nav-icon" href="https://mastodon.online/@zonca" aria-label="Mastodon">Mastodon</a></li>
-        </ul>
+        <div class="nav-right">
+          <a class="nav-link" href="/about.html" aria-current={isActive('/about') ? 'page' : undefined}>About</a>
+          <a class="nav-link" href="/ai/index.html" aria-current={isActive('/ai') ? 'page' : undefined}>
+            AI Consulting
+          </a>
+          <div class="nav-social">
+            <SocialIcons />
+          </div>
+        </div>
       </nav>
     </header>
-    <main class="container">
+    <main>
       <slot />
     </main>
     <footer class="site-footer">
-      <div class="container">
-        © Andrea Zonca, San Diego Supercomputer Center, UC San Diego. Powered by Astro.
+      <div class="footer-inner">
+        <span>© Andrea Zonca · San Diego Supercomputer Center, UC San Diego</span>
+        <span class="footer-built">Built with Astro</span>
       </div>
     </footer>
   </body>

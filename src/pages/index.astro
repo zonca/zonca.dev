@@ -1,26 +1,27 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getAllPosts, formatDate } from '../lib/posts';
+import { getAllPosts, PAGE_SIZE } from '../lib/posts';
+import PostList from '../components/PostList.astro';
+import Pagination from '../components/Pagination.astro';
 
 const posts = await getAllPosts();
+const totalPages = Math.max(1, Math.ceil(posts.length / PAGE_SIZE));
+const pagePosts = posts.slice(0, PAGE_SIZE);
 ---
 
 <Base title="Andrea Zonca - Scientific computing and astronomy">
   <a style="display:none" rel="me" href="https://mastodon.online/@zonca">Mastodon</a>
-  <p class="home-intro">
-    Computational scientist at the San Diego Supercomputer Center. Distributed data
-    processing in Python for cosmology and astronomy; JupyterHub and Kubernetes; AI in science.
-  </p>
-  <ul class="post-list">
+  <div class="home">
+    <section class="home-hero">
+      <h1 class="home-title">Scientific computing &amp; astronomy</h1>
+      <p class="home-subtitle">
+        Distributed data processing in Python for cosmology and astronomy. JupyterHub, Kubernetes,
+        and AI in science.
+      </p>
+    </section>
+    <PostList posts={pagePosts} />
     {
-      posts.map((post) => (
-        <li class="post-item">
-          <h2>
-            <a href={`/posts/${post.id}.html`}>{post.title}</a>
-          </h2>
-          {post.date && <div class="date">{formatDate(post.date)}</div>}
-        </li>
-      ))
+      totalPages > 1 && <Pagination current={1} total={totalPages} />
     }
-  </ul>
+  </div>
 </Base>
