@@ -119,32 +119,23 @@ def check_local():
     print(f"Checked {len(seen)} HTML files")
 
 
-def http_get(url: str, allow_redirects: bool = False):
+def http_get(url: str, timeout: int = 15):
     req = urllib.request.Request(url, headers={"User-Agent": "zonca-validator"})
-    opener = urllib.request.build_opener()
-    if allow_redirects:
-        return opener.open(req, timeout=20)
-    return opener.open(
-        urllib.request.HTTPRedirectHandler() if allow_redirects else NoRedirect(),
-        req,
-        timeout=20,
-    )
+    # Follows redirect chains; the final response/URL is what we validate.
+    return urllib.request.urlopen(req, timeout=timeout)
 
 
-class NoRedirect(urllib.request.HTTPRedirectHandler):
-    def redirect_request(self, req, fp, code, msg, headers, newurl):
-        return None
-
-
-def _http_status(base: str, path: str, timeout: int = 10) -> int:
+def _http_status(base: str, path: str, timeout: int = 10) -> tuple[int, str]:
     try:
-        resp = http_get(base + path)
+        resp = http_get(base + path, timeout)
+        url = resp.geturl()
+        status = resp.status
         resp.close()
-        return resp.status
+        return status, url
     except urllib.error.HTTPError as e:
-        return e.code
+        return e.code, base + path
     except Exception as exc:
-        return f"ERR:{type(exc).__name__}:{exc}"
+        return -1, f"ERR:{type(exc).__name__}:{exc}"
 
 
 def check_live(base: str, workers: int = 16):
@@ -164,7 +155,7 @@ def check_live(base: str, workers: int = 16):
                 displayed_errors += 1
                 print(f"  [diag] {path}: {value}")
 
-    # Canonical: /posts/x (200) and /posts/x.html (200 or 3xx chain to 200)
+    # Canonical: both /posts/x and /posts/x.html return 200
     canonical_ok = 0
     with ThreadPoolExecutor(max_workers=workers) as pool:
         futures = {}
@@ -172,29 +163,30 @@ def check_live(base: str, workers: int = 16):
             clean = re.sub(r"\.html$", "", r["canonical"])
             futures[r["canonical"]] = (r["canonical"], pool.submit(_http_status, base, clean), pool.submit(_http_status, base, r["canonical"]))
         for canonical, (_, f1, f2) in futures.items():
-            st1, st2 = f1.result(), f2.result()
-            if st1 == 200 and st2 in (200, 301, 302, 303, 307, 308):
+            st1, u1 = f1.result()
+            st2, u2 = f2.result()
+            if st1 == 200 and st2 == 200:
                 canonical_ok += 1
             else:
-                report_errors("canonical", canonical, st1 if isinstance(st1, str) else st2)
+                report_errors("canonical", canonical, u1 if st1 == -1 else u2 if st2 == -1 else st2)
                 fail(f"{canonical} extless={st1} .html={st2}")
     print(f"Canonical URLs OK: {canonical_ok}/{len(public_manifest)}")
 
+    # Aliases: must end at the canonical target with a 200 (redirect chain ok)
     alias_ok = 0
     with ThreadPoolExecutor(max_workers=workers) as pool:
         futures = {
-            src: (src, target, pool.submit(_http_status, base, src), pool.submit(_http_status, base, re.sub(r"\.html$", "", target)))
+            src: (src, target, pool.submit(_http_status, base, src))
             for src, target in aliases.items()
         }
-        for src, target, f1, f2 in futures.values():
-            first = f1.result()
-            if first in (301, 302, 303, 307, 308):
-                final = f2.result()
-                if final == 200:
-                    alias_ok += 1
-                    continue
-            report_errors("alias", src, first)
-            fail(f"alias {src} -> status {first}")
+        for src, target, f in futures.values():
+            status, final_url = f.result()
+            expected = base + re.sub(r"\.html$", "", target)
+            if status == 200 and final_url == expected:
+                alias_ok += 1
+            else:
+                report_errors("alias", src, f"{status} -> {final_url}")
+                fail(f"alias {src} -> status {status}, landed at {final_url} (expected {expected})")
     print(f"Alias redirects OK: {alias_ok}/{len(aliases)}")
 
 

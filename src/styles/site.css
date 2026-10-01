@@ -87,6 +87,18 @@ img {
   letter-spacing: -0.01em;
   color: var(--text);
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.brand::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--accent);
+  flex: 0 0 auto;
 }
 
 .brand:hover {
@@ -168,6 +180,15 @@ main {
 /* ---------------- Homepage ---------------- */
 .home-hero {
   padding: 0.6rem 0 1.6rem;
+}
+
+.home-kicker {
+  font-size: 0.78rem;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin: 0 0 0.55rem;
 }
 
 .home-title {
@@ -273,8 +294,8 @@ main {
   font-size: 0.8rem;
   font-weight: 650;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-faint);
+  letter-spacing: 0.1em;
+  color: var(--accent);
   margin: 0 0 0.9rem;
 }
 
