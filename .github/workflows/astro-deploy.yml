@@ -5,7 +5,6 @@ on:
   pull_request:
   push:
     branches:
-      - astro-migration
       - main
 
 concurrency:
@@ -87,11 +86,24 @@ jobs:
           PREVIEW_URL=$(echo "$OUTPUT" | grep -oE 'https://[^ ]+\.workers\.dev' | head -1)
           echo "preview_url=$PREVIEW_URL" >> "$GITHUB_OUTPUT"
 
-      - name: Comment preview URL on the PR
+      - name: Comment preview URL and changed post links on the PR
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh pr comment "${{ github.event.pull_request.number }}" --body "Preview: ${{ steps.versions.outputs.preview_url }}" || true
+          PREVIEW_URL="${{ steps.versions.outputs.preview_url }}"
+          BODY="Preview: ${PREVIEW_URL}"
+          FILES=$(gh pr diff --name-only "${{ github.event.pull_request.number }}" 2>/dev/null | grep -E '^posts/[^/]+\.(md|qmd|ipynb)$' | grep -v '^posts/README' || true)
+          if [ -n "$FILES" ]; then
+            POSTS_LINKS=$(echo "$FILES" | while read -r f; do
+              stem=$(basename "$f"); stem="${stem%.*}"
+              echo "- [${stem}]( ${PREVIEW_URL}/posts/${stem} )"
+            done)
+            BODY="${BODY}
+
+Updated post(s):
+${POSTS_LINKS}"
+          fi
+          gh pr comment "${{ github.event.pull_request.number }}" --body "$BODY" || true
 
   deploy:
     if: github.event_name == 'push'
