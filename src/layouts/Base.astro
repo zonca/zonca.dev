@@ -11,6 +11,8 @@ export interface Props {
 
 const { title, description, canonical } = Astro.props;
 const pageTitle = title ? `${title} - Andrea Zonca` : 'Andrea Zonca';
+const metaDescription =
+  description ?? 'Notes on Python, JupyterHub, Kubernetes and AI for science from the San Diego Supercomputer Center.';
 const path = Astro.url.pathname;
 const isActive = (href: string) =>
   href === '/' ? path === '/' || path === '/index.html' || path.startsWith('/page/') : path.startsWith(href);
@@ -23,17 +25,14 @@ const isActive = (href: string) =>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
-    {
-      description && <meta name="description" content={description} />
-    }
+    <meta name="description" content={metaDescription} />
     <meta property="og:title" content={pageTitle} />
-    {
-      description && <meta property="og:description" content={description} />
-    }
+    <meta property="og:description" content={metaDescription} />
     <meta property="og:type" content="website" />
     {
       canonical && <link rel="canonical" href={new URL(canonical, Astro.site).href} />
     }
+    <link rel="icon" href="/favicon.ico" />
     <link rel="alternate" type="application/rss+xml" title="Andrea Zonca" href="/rss.xml" />
   </head>
   <body>

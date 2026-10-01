@@ -6,20 +6,56 @@ export type Post = {
   date: Date | undefined;
   title: string;
   description?: string;
+  summary: string;
   categories: string[];
   source: string;
   notebook: boolean;
   draft: boolean;
 };
 
+export function makeSummary(body: string, fallback: string): string {
+  const lines = body.split('\n');
+  const structural = /^(#{1,6}\s|```|>|[-*+]\s|\d+\.\s|\||!\[|<div|<script|<iframe|<!--)/;
+  const para: string[] = [];
+  let started = false;
+  for (const line of lines) {
+    const t = line.trim();
+    if (t === '') {
+      if (started) break;
+      continue;
+    }
+    if (!started && structural.test(t)) continue;
+    if (started && structural.test(t)) break;
+    started = true;
+    para.push(line);
+    if (para.length >= 8) break;
+  }
+  let text = para.join(' ');
+  text = text
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+    .replace(/[*_`~#]/g, '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (text.length < 40) return fallback;
+  if (text.length > 240) {
+    text = text.slice(0, 240).trimEnd() + '…';
+  }
+  return text;
+}
+
 function fixEntry(entry: CollectionEntry<'posts' | 'generatedPosts'>): Post {
   const id = entry.id;
   const data = entry.data;
+  const body = entry.body ?? '';
+  const fallback = (data.description ?? data.title ?? id) as string;
   return {
     id,
     date: data.date ?? undefined,
     title: data.title ?? id,
     description: data.description,
+    summary: data.description || makeSummary(body, fallback),
     categories: data.categories ?? [],
     source: data.source ?? `posts/${id}.md`,
     notebook: !!data.notebook,

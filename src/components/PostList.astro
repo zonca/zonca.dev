@@ -21,6 +21,7 @@ const { posts } = Astro.props;
               </time>
             )
           }
+          {post.summary && <p class="post-item-summary">{post.summary}</p>}
         </a>
         {
           post.categories.length > 0 && (

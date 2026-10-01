@@ -2,7 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { formatDate } from '../../lib/posts';
+import { formatDate, makeSummary } from '../../lib/posts';
 
 export async function getStaticPaths() {
   const [posts, generated] = await Promise.all([
@@ -27,12 +27,14 @@ const { Content } = await render(entry);
 const date = entry.data.date ? formatDate(entry.data.date) : '';
 const source = entry.data.source ?? `posts/${entry.id}.md`;
 const canonical = `/posts/${entry.id}.html`;
+const description =
+  entry.data.description ?? makeSummary(entry.body ?? '', entry.data.title ?? entry.id);
 
 const githubRepo = 'https://github.com/zonca/zonca.dev';
 const rawRepo = 'https://raw.githubusercontent.com/zonca/zonca.dev/main';
 ---
 
-<Base title={entry.data.title ?? entry.id} description={entry.data.description} canonical={canonical}>
+<Base title={entry.data.title ?? entry.id} description={description} canonical={canonical}>
   <article class="page">
     <h1 class="post-title">{entry.data.title ?? entry.id}</h1>
     <div class="post-meta">

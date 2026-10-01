@@ -1,0 +1,96 @@
+name: Build and deploy Astro site
+
+on:
+  pull_request:
+  push:
+    branches:
+      - astro-migration
+      - main
+
+concurrency:
+  group: astro-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CF_WORKER_NAME: zonca-dev-astro-preview
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install --user pyyaml nbformat
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Generate notebooks, pages and redirects
+        run: |
+          python scripts/prepare_notebooks.py
+          python scripts/prepare_pages.py
+
+      - name: Build static site
+        run: npx astro build
+
+      - name: Type check
+        run: npx astro check
+
+      - name: Validate URLs and aliases against baseline manifest
+        run: python scripts/validate_urls.py
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 7
+
+  deploy:
+    if: github.event_name == 'push'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install --user pyyaml nbformat
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Generate notebooks, pages and redirects
+        run: |
+          python scripts/prepare_notebooks.py
+          python scripts/prepare_pages.py
+
+      - name: Build static site
+        run: npx astro build
+
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy --name ${{ env.CF_WORKER_NAME }}

@@ -13,6 +13,7 @@ export async function getStaticPaths() {
       name: cat.name,
       count: cat.count,
       posts: filterByCategory(posts, cat.name),
+      description: `${cat.count} ${cat.count === 1 ? 'post' : 'posts'} tagged ${cat.name} on zonca.dev.`,
     },
   }));
 }
@@ -20,10 +21,11 @@ export async function getStaticPaths() {
 interface Props {
   name: string;
   count: number;
+  description: string;
   posts: ReturnType<typeof getAllPosts> extends Promise<infer T> ? T : never;
 }
 
-const { name, count, posts } = Astro.props;
+const { name, count, description, posts } = Astro.props;
 const totalPages = Math.max(1, Math.ceil(posts.length / PAGE_SIZE));
 const pagePosts = posts.slice(0, PAGE_SIZE);
 const catSlug = slugifyCategory(name);
@@ -31,7 +33,7 @@ const catBase = `/categories/${catSlug}/page/`;
 const catFirst = `/categories/${catSlug}.html`;
 ---
 
-<Base title={`${name} posts (${count})`} canonical={catFirst}>
+<Base title={`${name} posts (${count})`} description={description} canonical={catFirst}>
   <div class="home">
     <section class="home-hero category-hero">
       <p class="cat-eyebrow">

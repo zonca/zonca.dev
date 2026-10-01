@@ -23,7 +23,10 @@ interface Props {
 const { page, totalPages, posts } = Astro.props;
 ---
 
-<Base title={`Page ${page} - Andrea Zonca`}>
+<Base
+  title={`Page ${page} - Andrea Zonca`}
+  description="Practical notes on Python, JupyterHub, Kubernetes and AI for science from the San Diego Supercomputer Center."
+>
   <div class="home">
     <section class="home-hero">
       <h1 class="home-title">Scientific computing &amp; astronomy</h1>

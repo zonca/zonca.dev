@@ -99,6 +99,48 @@ def main() -> int:
     # robots.txt
     with open(os.path.join(PUBLIC, "robots.txt"), "w", encoding="utf-8") as fh:
         fh.write("Sitemap: https://www.zonca.dev/sitemap.xml\n")
+
+    # favicon
+    favicon = os.path.join(ROOT, "posts", "favicon.ico")
+    if os.path.exists(favicon):
+        shutil.copy2(favicon, os.path.join(PUBLIC, "favicon.ico"))
+
+    # llms.txt (AI-agent oriented site overview)
+    os.makedirs(PUBLIC, exist_ok=True)
+    with open(os.path.join(PUBLIC, "llms.txt"), "w", encoding="utf-8") as fh:
+        fh.write(
+            "# zonca.dev\n\n"
+            "Andrea Zonca - computational scientist at the San Diego Supercomputer Center.\n"
+            "Notes on Python, JupyterHub, Kubernetes and AI for science.\n\n"
+            "Key pages:\n"
+            "- [About](https://www.zonca.dev/about)\n"
+            "- [AI consulting](https://www.zonca.dev/ai)\n"
+            "- [All posts](https://www.zonca.dev/)\n"
+        )
+
+    # .well-known/ard.json + ai-catalog.json (ARD spec-compliant manifest)
+    ard_manifest = {
+        "specVersion": "1.0",
+        "entries": [
+            {
+                "@context": "https://agenticresourcediscovery.org/context/v1",
+                "identifier": "urn:air:www.zonca.dev:site:zonca-dev",
+                "displayName": "zonca.dev",
+                "type": "application/ai-catalog+json",
+                "url": "https://www.zonca.dev/.well-known/ai-catalog.json",
+                "description": "Andrea Zonca: notes on Python, JupyterHub, Kubernetes and AI for science.",
+                "representativeQueries": [
+                    "Andrea Zonca high performance computing and AI blog",
+                    "JupyterHub Kubernetes tutorial",
+                ],
+            }
+        ],
+    }
+    well_known = os.path.join(PUBLIC, ".well-known")
+    os.makedirs(well_known, exist_ok=True)
+    for name in ("ard.json", "ai-catalog.json"):
+        with open(os.path.join(well_known, name), "w", encoding="utf-8") as fh:
+            fh.write(json.dumps(ard_manifest, indent=2) + "\n")
     print("public/ assets copied")
     return 0
 

@@ -44,7 +44,42 @@ def front_matter(text: str) -> tuple[dict, str]:
     return data, text[m.end():]
 
 
-def save_image(data: bytes | str, mime: str, stem: str, key: str) -> str:
+def image_size(raw: bytes, mime: str) -> tuple[int, int] | None:
+    """Return (width, height) for PNG/JPEG/SVG image data."""
+    try:
+        if mime == "image/png" and raw[:8] == b"\x89PNG\r\n\x1a\n":
+            w, h = int.from_bytes(raw[16:20], "big"), int.from_bytes(raw[20:24], "big")
+            return w, h
+        if mime == "image/jpeg" and raw[:2] == b"\xff\xd8":
+            i = 2
+            while i < len(raw):
+                if raw[i] != 0xFF:
+                    i += 1
+                    continue
+                marker = raw[i + 1]
+                if marker in (0xC0, 0xC1, 0xC2, 0xC3, 0xC5, 0xC6, 0xC7, 0xC9, 0xCA, 0xCB, 0xCD, 0xCE, 0xCF):
+                    h = int.from_bytes(raw[i + 5 : i + 7], "big")
+                    w = int.from_bytes(raw[i + 7 : i + 9], "big")
+                    return w, h
+                if marker in (0xD8, 0xD9):
+                    return None
+                seg_len = int.from_bytes(raw[i + 2 : i + 4], "big")
+                i += 2 + seg_len
+        if mime == "image/svg+xml":
+            text = raw.decode("utf-8", errors="replace")
+            m = re.search(r"width=\"?(\d+)", text)
+            h = re.search(r"height=\"?(\d+)", text)
+            if m and h:
+                return int(m.group(1)), int(h.group(1))
+            vb = re.search(r"viewBox=\"[\d.\- ]+\s+[\d.\- ]+\s+([\d.]+)\s+([\d.]+)\"", text)
+            if vb:
+                return int(float(vb.group(1))), int(float(vb.group(2)))
+    except Exception:
+        pass
+    return None
+
+
+def save_image(data: bytes | str, mime: str, stem: str, key: str) -> tuple[str, tuple[int, int] | None]:
     ext = {"image/png": "png", "image/svg+xml": "svg", "image/jpeg": "jpg", "image/gif": "gif"}.get(mime)
     if not ext:
         raise ValueError(f"unsupported image mime {mime}")
@@ -55,7 +90,12 @@ def save_image(data: bytes | str, mime: str, stem: str, key: str) -> str:
     os.makedirs(os.path.dirname(out), exist_ok=True)
     with open(out, "wb") as fh:
         fh.write(raw)
-    return f"/posts/{rel.replace(os.sep, '/')}"
+    return f"/posts/{rel.replace(os.sep, '/')}", image_size(raw, mime)
+
+
+def img_html(url: str, size: tuple[int, int] | None, alt: str) -> str:
+    dims = f' width="{size[0]}" height="{size[1]}"' if size else ""
+    return f'<img src="{url}"{dims} loading="lazy" decoding="async" alt="{alt}">'
 
 
 def cell_to_markdown(cell: dict, stem: str, counter: list[int]) -> str:
@@ -65,7 +105,7 @@ def cell_to_markdown(cell: dict, stem: str, counter: list[int]) -> str:
         image_assets = cell.get("attachments") or {}
         for name, payload in image_assets.items():
             for mime, data in payload.items():
-                url = save_image(data, mime, stem, f"att-{hashlib.sha1(name.encode()).hexdigest()[:8]}")
+                url, _size = save_image(data, mime, stem, f"att-{hashlib.sha1(name.encode()).hexdigest()[:8]}")
                 # Rewrite both attachment:name and plain filename references
                 text = re.sub(re.escape(name), url, text)
         if text.strip():
@@ -94,8 +134,8 @@ def cell_to_markdown(cell: dict, stem: str, counter: list[int]) -> str:
                 continue
             if mime.startswith("image/"):
                 counter[0] += 1
-                url = save_image(payload, mime, stem, f"output-{counter[0]}")
-                chunks.append(f"![output {counter[0]}]({url})\n")
+                url, size = save_image(payload, mime, stem, f"output-{counter[0]}")
+                chunks.append(img_html(url, size, f"output {counter[0]}") + "\n")
             elif mime == "text/html":
                 html = payload if isinstance(payload, str) else "".join(payload)
                 if html.strip():
