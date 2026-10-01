@@ -2,7 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { formatDate, makeSummary } from '../../lib/posts';
+import { formatDate, makeSummary, SHOW_DRAFTS } from '../../lib/posts';
 
 export async function getStaticPaths() {
   const [posts, generated] = await Promise.all([
@@ -10,7 +10,7 @@ export async function getStaticPaths() {
     getCollection('generatedPosts'),
   ]);
   const entries = [...posts, ...generated].filter(
-    (p) => !p.data.draft && p.id !== 'README',
+    (p) => (SHOW_DRAFTS || !p.data.draft) && p.id !== 'README',
   );
   return entries.map((entry) => ({
     params: { slug: entry.id },

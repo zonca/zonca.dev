@@ -84,13 +84,15 @@ function fixEntry(entry: CollectionEntry<'posts' | 'generatedPosts'>): Post {
   };
 }
 
+export const SHOW_DRAFTS = import.meta.env.PUBLIC_SHOW_DRAFTS === '1';
+
 export async function getAllPosts(): Promise<Post[]> {
   const [posts, generated] = await Promise.all([
     getCollection('posts'),
     getCollection('generatedPosts'),
   ]);
   return [...posts.map(fixEntry), ...generated.map(fixEntry)]
-    .filter((p) => p.id !== 'README' && !p.draft)
+    .filter((p) => p.id !== 'README' && (SHOW_DRAFTS || !p.draft))
     .filter((p) => p.date !== undefined)
     .sort((a, b) => (b.date!.getTime() ?? 0) - (a.date!.getTime() ?? 0));
 }

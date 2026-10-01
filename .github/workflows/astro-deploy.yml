@@ -19,6 +19,8 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PUBLIC_SHOW_DRAFTS: ${{ github.event_name == 'pull_request' && '1' || '0' }}
     steps:
       - uses: actions/checkout@v5
 
