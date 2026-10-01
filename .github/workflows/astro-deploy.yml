@@ -51,7 +51,7 @@ jobs:
         run: npx astro check
 
       - name: Validate URLs and aliases against baseline manifest
-        run: python scripts/validate_urls.py
+        run: python scripts/validate_urls.py ${{ github.event_name == 'pull_request' && '--allow-drafts' || '' }}
 
       - name: Upload dist artifact
         uses: actions/upload-artifact@v4

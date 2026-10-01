@@ -34,7 +34,7 @@ def fail(msg: str):
     print(f"  FAIL: {msg}")
 
 
-def check_local():
+def check_local(allow_drafts: bool = False):
     manifest = json.load(open(MANIFEST, encoding="utf-8"))
     aliases = json.load(open(ALIASES, encoding="utf-8"))
     dist = os.path.join(ROOT, "dist")
@@ -46,6 +46,8 @@ def check_local():
         if f.endswith(".html") and not f.startswith(".")
     ]
     expected_posts = sum(1 for r in public_manifest if r["canonical"].startswith("/posts/"))
+    if allow_drafts:
+        expected_posts += sum(1 for r in manifest if r["draft"] and r["canonical"].startswith("/posts/"))
     if len(dist_posts) != expected_posts:
         fail(f"post count mismatch: dist={len(dist_posts)} manifest={expected_posts}")
 
@@ -193,11 +195,12 @@ def check_live(base: str, workers: int = 16):
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--live", metavar="URL", help="validate a deployed site over HTTP")
+    parser.add_argument("--allow-drafts", action="store_true", help="PR builds include draft posts")
     args = parser.parse_args()
     if args.live:
         check_live(args.live.rstrip("/"))
     else:
-        check_local()
+        check_local(args.allow_drafts)
     if failures:
         print(f"\n{len(failures)} FAILURES")
         return 1
