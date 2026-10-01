@@ -109,5 +109,10 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Connectivity smoke test
+        run: |
+          curl -sS -o /tmp/smoke.html -w "robots.txt: %{http_code}\n" "${{ env.CF_PUBLIC_URL }}/robots.txt" || { echo "curl exit: $?"; exit 1; }
+          curl -sS -o /tmp/smoke.html -w "homepage: %{http_code}\n" "${{ env.CF_PUBLIC_URL }}/" || { echo "curl exit: $?"; exit 1; }
+
       - name: Verify all canonical URLs and legacy aliases on the live deployment
         run: python scripts/validate_urls.py --live "${{ env.CF_PUBLIC_URL }}"
