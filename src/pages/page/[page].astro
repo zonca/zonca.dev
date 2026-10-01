@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getAllPosts, PAGE_SIZE } from '../../lib/posts';
+import PostList from '../../components/PostList.astro';
+import Pagination from '../../components/Pagination.astro';
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts();
+  const totalPages = Math.ceil(posts.length / PAGE_SIZE);
+  const paths = [];
+  for (let page = 2; page <= totalPages; page++) {
+    paths.push({ params: { page: String(page) }, props: { page, totalPages, posts: posts.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE) } });
+  }
+  return paths;
+}
+
+interface Props {
+  page: number;
+  totalPages: number;
+  posts: ReturnType<typeof getAllPosts> extends Promise<infer T> ? T : never;
+}
+
+const { page, totalPages, posts } = Astro.props;
+---
+
+<Base
+  title={`Page ${page} - Andrea Zonca`}
+  description="Practical notes on Python, JupyterHub, Kubernetes and AI for science from the San Diego Supercomputer Center."
+>
+  <div class="home">
+    <section class="home-hero">
+      <h1 class="home-title">High Performance Computing &amp; AI</h1>
+      <p class="home-subtitle">
+        Practical notes on Python, JupyterHub, Kubernetes and AI for science — from the San Diego
+        Supercomputer Center.
+      </p>
+    </section>
+    <PostList posts={posts} />
+    <Pagination current={page} total={totalPages} />
+  </div>
+</Base>

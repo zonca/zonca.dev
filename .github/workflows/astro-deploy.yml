@@ -1,0 +1,165 @@
+name: Build and deploy Astro site
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: astro-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CF_WORKER_NAME: zonca-dev
+  CF_PUBLIC_URL: https://www.zonca.dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      PUBLIC_SHOW_DRAFTS: ${{ github.event_name == 'pull_request' && '1' || '0' }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install --user pyyaml nbformat
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Generate notebooks, pages and redirects
+        run: |
+          python scripts/prepare_notebooks.py
+          python scripts/prepare_pages.py
+
+      - name: Build static site
+        run: npx astro build
+
+      - name: Type check
+        run: npx astro check
+
+      - name: Validate URLs and aliases against baseline manifest
+        run: python scripts/validate_urls.py ${{ github.event_name == 'pull_request' && '--allow-drafts' || '' }}
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 7
+
+  preview:
+    if: github.event_name == 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Upload PR build as a Worker version
+        id: versions
+        shell: bash
+        run: |
+          OUTPUT=$(npx -y wrangler@4.139.0 versions upload --message "PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}" 2>&1)
+          echo "$OUTPUT"
+          PREVIEW_URL=$(echo "$OUTPUT" | grep -oE 'https://[^ ]+\.workers\.dev' | head -1)
+          echo "preview_url=$PREVIEW_URL" >> "$GITHUB_OUTPUT"
+
+      - name: Comment preview URL and changed post links on the PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PREVIEW_URL="${{ steps.versions.outputs.preview_url }}"
+          BODY="Preview: ${PREVIEW_URL}"
+          FILES=$(gh pr diff --name-only "${{ github.event.pull_request.number }}" 2>/dev/null | grep -E '^posts/[^/]+\.(md|qmd|ipynb)$' | grep -v '^posts/README' || true)
+          if [ -n "$FILES" ]; then
+            POSTS_LINKS=$(echo "$FILES" | while read -r f; do
+              stem=$(basename "$f"); stem="${stem%.*}"
+              echo "- [${stem}]( ${PREVIEW_URL}/posts/${stem} )"
+            done)
+            BODY="${BODY}
+
+Updated post(s):
+${POSTS_LINKS}"
+          fi
+          gh pr comment "${{ github.event.pull_request.number }}" --body "$BODY" || true
+
+  deploy:
+    if: github.event_name == 'push'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install --user pyyaml nbformat
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Generate notebooks, pages and redirects
+        run: |
+          python scripts/prepare_notebooks.py
+          python scripts/prepare_pages.py
+
+      - name: Build static site
+        run: npx astro build
+
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: "4.139.0"
+          command: deploy --name ${{ env.CF_WORKER_NAME }}
+
+  verify:
+    if: github.event_name == 'push'
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Connectivity smoke test
+        run: |
+          curl -sS -o /tmp/smoke.html -w "robots.txt: %{http_code}\n" "${{ env.CF_PUBLIC_URL }}/robots.txt" || { echo "curl exit: $?"; exit 1; }
+          curl -sS -o /tmp/smoke.html -w "homepage: %{http_code}\n" "${{ env.CF_PUBLIC_URL }}/" || { echo "curl exit: $?"; exit 1; }
+
+      - name: Verify all canonical URLs and legacy aliases on the live deployment
+        run: python scripts/validate_urls.py --live "${{ env.CF_PUBLIC_URL }}"

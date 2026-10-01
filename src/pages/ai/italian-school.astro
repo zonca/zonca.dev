@@ -1,0 +1,50 @@
+---
+import Base from '../../layouts/Base.astro';
+import AiSubnav from '../../components/AiSubnav.astro';
+import AiDisclaimer from '../../components/AiDisclaimer.astro';
+
+const description =
+  'A practical case study in connected small-business systems for enrollment, scheduling, communication, payments, and bookkeeping.';
+---
+
+<Base title="Italian School of San Diego case study" description={description} canonical="/ai/italian-school.html">
+  <div class="ai-page">
+    <div class="ai-subhero">
+      <p class="ai-kicker">Case study</p>
+      <h1 class="post-title">Italian School of San Diego</h1>
+      <p>
+        A small education business has many connected workflows: students, families, teachers,
+        schedules, payments, documents, and regulatory records. Andrea uses that direct operating
+        experience to design practical automation.
+      </p>
+    </div>
+    <AiSubnav />
+    <section class="ai-section">
+      <h2>One business, connected systems</h2>
+      <ul class="ai-checks">
+        <li>Enrollment records connected to the correct class and communication workflow</li>
+        <li>Calendars aligned with schedules, locations, teachers, and students</li>
+        <li>Payment status connected to receipts and follow-up tasks</li>
+        <li>Employee hours prepared from approved calendar and operational records</li>
+        <li>Customer inquiries researched before a response is drafted</li>
+        <li>Transactions matched with receipts and supporting documents</li>
+      </ul>
+      <p>
+        The useful lesson is not a particular software product. It is the operating model: define an
+        authoritative source, automate repeatable preparation, keep a visible record, and require
+        human approval before consequential actions.
+      </p>
+      <div class="ai-policy">
+        <p>
+          The same controls apply across the system. Calculations and drafts can run automatically.
+          Sending, submitting, scheduling, changing records, and initiating payments wait for
+          approval from a responsible person.
+        </p>
+      </div>
+      <div class="ai-actions">
+        <a class="ai-button" href="https://zonca.secureform.dev/contact">Discuss a similar business process</a>
+      </div>
+    </section>
+    <AiDisclaimer />
+  </div>
+</Base>

@@ -1,0 +1,58 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import { getAllPosts, getCategoryStats, filterByCategory, slugifyCategory, PAGE_SIZE } from '../../../../lib/posts';
+import PostList from '../../../../components/PostList.astro';
+import Pagination from '../../../../components/Pagination.astro';
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts();
+  const stats = getCategoryStats(posts);
+  const paths = [];
+  for (const cat of stats) {
+    const catPosts = filterByCategory(posts, cat.name);
+    const totalPages = Math.ceil(catPosts.length / PAGE_SIZE);
+    for (let page = 2; page <= totalPages; page++) {
+      paths.push({
+        params: { category: cat.slug, p: String(page) },
+        props: {
+          name: cat.name,
+          count: cat.count,
+          description: `${cat.count} ${cat.count === 1 ? 'post' : 'posts'} tagged ${cat.name} on zonca.dev.`,
+          page,
+          totalPages,
+          posts: catPosts.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE),
+        },
+      });
+    }
+  }
+  return paths;
+}
+
+interface Props {
+  name: string;
+  count: number;
+  description: string;
+  page: number;
+  totalPages: number;
+  posts: ReturnType<typeof getAllPosts> extends Promise<infer T> ? T : never;
+}
+
+const { name, count, description, page, totalPages, posts } = Astro.props;
+const catSlug = slugifyCategory(name);
+const catBase = `/categories/${catSlug}/page/`;
+const catFirst = `/categories/${catSlug}.html`;
+---
+
+<Base title={`${name} posts - page ${page} (${count})`} description={description}>
+  <div class="home">
+    <section class="home-hero category-hero">
+      <p class="cat-eyebrow">
+        <a href="/">← Home</a> · <a href={catFirst}>{name}</a>
+      </p>
+      <h1 class="home-title">{name}</h1>
+      <p class="home-subtitle">{count} {count === 1 ? 'post' : 'posts'} — page {page}</p>
+    </section>
+    <PostList posts={posts} />
+    <Pagination current={page} total={totalPages} base={catBase} firstHref={catFirst} />
+  </div>
+</Base>

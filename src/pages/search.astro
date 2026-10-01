@@ -1,0 +1,115 @@
+---
+import Base from '../layouts/Base.astro';
+
+const query = (() => {
+  const url = new URL(Astro.url);
+  return url.searchParams.get('q') ?? '';
+})();
+---
+
+<Base title="Search" description="Search posts on zonca.dev.">
+  <div class="search-page">
+    <h1 class="post-title">Search</h1>
+    <div class="search-box">
+      <label class="visually-hidden" for="q">Search posts</label>
+      <input
+        id="q"
+        type="search"
+        placeholder="Search posts…"
+        autocomplete="off"
+        autocapitalize="none"
+        value={query}
+      />
+    </div>
+    <p class="search-count" id="search-count" role="status"></p>
+    <ul class="search-results" id="search-results" aria-live="polite"></ul>
+    <noscript>
+      <p>JavaScript is required to search. You can browse the <a href="/">post list</a> instead.</p>
+    </noscript>
+  </div>
+</Base>
+
+<script>
+  interface Doc {
+    title: string;
+    url: string;
+    date: string;
+    categories: string[];
+    summary: string;
+  }
+
+  let index: Doc[] = [];
+  const input = document.getElementById('q') as HTMLInputElement;
+  const list = document.getElementById('search-results') as HTMLUListElement;
+  const countEl = document.getElementById('search-count') as HTMLParagraphElement;
+
+  const tokens = (text: string) => text.toLowerCase();
+  const highlight = (text: string, terms: string[]) => {
+    let out = text;
+    for (const t of terms) {
+      if (!t) continue;
+      const re = new RegExp(`(${t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      out = out.replace(re, '<mark>$1</mark>');
+    }
+    return out;
+  };
+
+  function render(q: string) {
+    const terms = q.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    const results = terms.length
+      ? index
+          .map((doc) => {
+            const title = tokens(doc.title);
+            const summary = tokens(doc.summary);
+            const rest = tokens(`${doc.date} ${doc.categories.join(' ')}`);
+            const matchAll = terms.every((t) => title.includes(t) || summary.includes(t) || rest.includes(t));
+            if (!matchAll) return null;
+            const score =
+              terms.filter((t) => title.includes(t)).length * 3 + terms.filter((t) => summary.includes(t)).length;
+            return { doc, score };
+          })
+          .filter((r): r is { doc: Doc; score: number } => r !== null)
+          .sort((a, b) => b.score - a.score || (a.doc.date < b.doc.date ? 1 : -1))
+          .slice(0, 50)
+          .map((r) => r.doc)
+      : index.slice(0, 20);
+
+    if (terms.length) {
+      countEl.textContent = `${results.length} results`;
+    } else {
+      countEl.textContent = `${index.length} posts`;
+    }
+    list.innerHTML = results
+      .map((doc) => {
+        const t = highlight(doc.title, terms);
+        const s = highlight(doc.summary, terms);
+        return `<li><a href="${doc.url}"><span class="sr-title">${t}</span><span class="sr-summary">${s}</span><span class="sr-meta">${doc.date} · ${doc.categories.join(', ')}</span></a></li>`;
+      })
+      .join('');
+    list.classList.toggle('empty', results.length === 0 && terms.length > 0);
+  }
+
+  let timer: ReturnType<typeof setTimeout>;
+  function onInput() {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      render(input.value);
+      const url = new URL(window.location.href);
+      const q = input.value.trim();
+      if (q) url.searchParams.set('q', q);
+      else url.searchParams.delete('q');
+      window.history.replaceState(null, '', url);
+    }, 150);
+  }
+  input.addEventListener('input', onInput);
+
+  (async () => {
+    const q = input.value;
+    if (!q) {
+      countEl.textContent = 'Loading posts…';
+    }
+    const res = await fetch('/search-index.json');
+    index = await res.json();
+    render(input.value.trim() ? input.value : '');
+  })();
+</script>

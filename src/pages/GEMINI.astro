@@ -1,0 +1,14 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const pages = await getCollection('pages', ({ id }) => id === 'GEMINI');
+const page = pages[0];
+const { Content } = await render(page);
+---
+
+<Base title="GEMINI.md" canonical="/GEMINI.html">
+  <article class="prose">
+    <Content />
+  </article>
+</Base>

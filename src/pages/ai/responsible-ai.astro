@@ -1,0 +1,57 @@
+---
+import Base from '../../layouts/Base.astro';
+import AiSubnav from '../../components/AiSubnav.astro';
+import AiDisclaimer from '../../components/AiDisclaimer.astro';
+
+const description =
+  'A practical approval policy for AI-assisted calculations, drafts, scheduling, records, submissions, and payments.';
+---
+
+<Base title="Responsible AI with human approval" description={description} canonical="/ai/responsible-ai.html">
+  <div class="ai-page">
+    <div class="ai-subhero">
+      <p class="ai-kicker">Responsible AI</p>
+      <h1 class="post-title">Automation with a clear human decision point</h1>
+      <p>
+        Reliable systems define what software may prepare, what evidence a person sees, and which
+        actions cannot happen without approval.
+      </p>
+    </div>
+    <AiSubnav />
+    <section class="ai-section">
+      <h2>The approval policy</h2>
+      <div class="ai-grid">
+        <div class="ai-card">
+          <h3>May be automatic</h3>
+          <ul>
+            <li>Calculations and comparisons</li>
+            <li>Research across approved records</li>
+            <li>Suggested classifications</li>
+            <li>Summaries and complete drafts</li>
+            <li>Detection of missing or conflicting information</li>
+          </ul>
+        </div>
+        <div class="ai-card">
+          <h3>Requires a responsible person's approval</h3>
+          <ul>
+            <li>Sending a message</li>
+            <li>Submitting a form</li>
+            <li>Scheduling or changing an event</li>
+            <li>Creating, changing, or deleting a record</li>
+            <li>Initiating a bank or card payment</li>
+          </ul>
+        </div>
+      </div>
+      <h2>Controls built for the real workflow</h2>
+      <p>
+        Approval is only useful when the reviewer can see the proposed action, its destination, the
+        source information, and any uncertainty. A system should preserve an audit trail, stop when
+        required information is missing, and make exceptions more visible instead of hiding them.
+      </p>
+      <div class="ai-actions">
+        <a class="ai-button" href="https://zonca.secureform.dev/contact">Discuss responsible automation</a>
+      </div>
+    </section>
+    <AiDisclaimer />
+  </div>
+</Base>

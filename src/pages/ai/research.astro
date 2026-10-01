@@ -1,0 +1,71 @@
+---
+import Base from '../../layouts/Base.astro';
+import AiSubnav from '../../components/AiSubnav.astro';
+import AiDisclaimer from '../../components/AiDisclaimer.astro';
+
+const description =
+  'Scientific software, supercomputing, distributed Python, cloud infrastructure, and AI consulting experience.';
+---
+
+<Base title="Research, scientific computing, and AI" description={description} canonical="/ai/research.html">
+  <div class="ai-page">
+    <div class="ai-subhero">
+      <p class="ai-kicker">Research and computing</p>
+      <h1 class="post-title">Scientific computing and AI experience</h1>
+      <p>
+        Andrea brings research-grade software practices to complex technical work, from data
+        analysis and distributed computing to artificial intelligence workloads on large computing
+        systems.
+      </p>
+    </div>
+    <AiSubnav />
+    <section class="ai-section">
+      <h2>Experience that connects research and delivery</h2>
+      <p>
+        Andrea earned a doctorate in physics and astrophysics from the University of Milan. He has
+        worked at the San Diego Supercomputer Center since 2013, helping researchers use
+        high-performance computing resources and teaching Python for high-performance computing.
+      </p>
+      <p>
+        His work spans distributed data processing, scientific Python, cloud platforms, Kubernetes,
+        JupyterHub, and artificial intelligence workflows. This background is useful when a project
+        needs more than a generic software integration, including careful data handling,
+        reproducible analysis, performance testing, or custom model workflows.
+      </p>
+      <div class="ai-grid">
+        <div class="ai-card">
+          <h3>Scientific software</h3>
+          <p>
+            Design, review, and improve Python software for analysis, simulation, automation, and
+            repeatable research workflows.
+          </p>
+        </div>
+        <div class="ai-card">
+          <h3>Supercomputers and cloud systems</h3>
+          <p>
+            Plan workloads that use parallel computing, distributed systems, containers, Kubernetes,
+            and interactive research platforms.
+          </p>
+        </div>
+        <div class="ai-card">
+          <h3>Artificial intelligence workflows</h3>
+          <p>
+            Develop and evaluate model-based systems, including language-model and neural-network
+            workflows, with appropriate testing and human review.
+          </p>
+        </div>
+        <div class="ai-card">
+          <h3>Technical translation</h3>
+          <p>
+            Connect research requirements with practical software decisions, documentation,
+            deployment, and operations.
+          </p>
+        </div>
+      </div>
+      <div class="ai-actions">
+        <a class="ai-button" href="https://zonca.secureform.dev/contact">Discuss a technical project</a>
+      </div>
+    </section>
+    <AiDisclaimer />
+  </div>
+</Base>

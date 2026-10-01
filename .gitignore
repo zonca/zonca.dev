@@ -1,6 +1,11 @@
 /.quarto/
 *.swp
 _site
+.generated/
+dist/
+node_modules/
+.astro/
+public/
 
 **/*.quarto_ipynb
 expanse_nextflow/

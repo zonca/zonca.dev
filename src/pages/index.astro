@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import { getAllPosts, getCategoryStats, PAGE_SIZE } from '../lib/posts';
+import PostList from '../components/PostList.astro';
+import Pagination from '../components/Pagination.astro';
+
+const posts = await getAllPosts();
+const totalPages = Math.max(1, Math.ceil(posts.length / PAGE_SIZE));
+const pagePosts = posts.slice(0, PAGE_SIZE);
+const topCategories = getCategoryStats(posts).slice(0, 24);
+---
+
+<Base
+  title="High Performance Computing & AI"
+  description="Practical notes on Python, JupyterHub, Kubernetes and AI for science from the San Diego Supercomputer Center."
+>
+  <a style="display:none" rel="me" href="https://mastodon.online/@zonca">Mastodon</a>
+  <div class="home">
+    <section class="home-hero">
+      <h1 class="home-title">High Performance Computing &amp; AI</h1>
+      <p class="home-subtitle">
+        Practical notes on Python, JupyterHub, Kubernetes and AI for science — from the San Diego
+        Supercomputer Center.
+      </p>
+    </section>
+
+    {
+      topCategories.length > 0 && (
+        <section class="pop-cats" aria-label="Popular categories">
+          <h2 class="home-section-title">Popular categories</h2>
+          <ul class="cat-chips">
+            {topCategories.map((cat) => (
+              <li>
+                <a class="cat-chip" href={`/categories/${cat.slug}.html`}>
+                  {cat.name}
+                  <span class="cat-count">{cat.count}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <section class="home-section">
+      <h2 class="home-section-title">Recent posts</h2>
+      <PostList posts={pagePosts} />
+    </section>
+    {totalPages > 1 && <Pagination current={1} total={totalPages} />}
+  </div>
+</Base>

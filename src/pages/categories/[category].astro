@@ -1,0 +1,48 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getAllPosts, getCategoryStats, filterByCategory, slugifyCategory, PAGE_SIZE } from '../../lib/posts';
+import PostList from '../../components/PostList.astro';
+import Pagination from '../../components/Pagination.astro';
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts();
+  const stats = getCategoryStats(posts);
+  return stats.map((cat) => ({
+    params: { category: cat.slug },
+    props: {
+      name: cat.name,
+      count: cat.count,
+      posts: filterByCategory(posts, cat.name),
+      description: `${cat.count} ${cat.count === 1 ? 'post' : 'posts'} tagged ${cat.name} on zonca.dev.`,
+    },
+  }));
+}
+
+interface Props {
+  name: string;
+  count: number;
+  description: string;
+  posts: ReturnType<typeof getAllPosts> extends Promise<infer T> ? T : never;
+}
+
+const { name, count, description, posts } = Astro.props;
+const totalPages = Math.max(1, Math.ceil(posts.length / PAGE_SIZE));
+const pagePosts = posts.slice(0, PAGE_SIZE);
+const catSlug = slugifyCategory(name);
+const catBase = `/categories/${catSlug}/page/`;
+const catFirst = `/categories/${catSlug}.html`;
+---
+
+<Base title={`${name} posts (${count})`} description={description} canonical={catFirst}>
+  <div class="home">
+    <section class="home-hero category-hero">
+      <p class="cat-eyebrow">
+        <a href="/">← Home</a>
+      </p>
+      <h1 class="home-title">{name}</h1>
+      <p class="home-subtitle">{count} {count === 1 ? 'post' : 'posts'}</p>
+    </section>
+    <PostList posts={pagePosts} />
+    {totalPages > 1 && <Pagination current={1} total={totalPages} base={catBase} firstHref={catFirst} />}
+  </div>
+</Base>

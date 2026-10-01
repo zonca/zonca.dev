@@ -1,0 +1,8 @@
+{
+  "name": "zonca-dev",
+  "compatibility_date": "2026-09-30",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash"
+  }
+}

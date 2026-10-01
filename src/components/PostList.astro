@@ -1,0 +1,40 @@
+---
+import type { Post } from '../lib/posts';
+import { formatDate, slugifyCategory } from '../lib/posts';
+
+export interface Props {
+  posts: Post[];
+}
+const { posts } = Astro.props;
+---
+
+<ul class="post-list">
+  {
+    posts.map((post) => (
+      <li class="post-item">
+        <a class="post-link" href={`/posts/${post.id}.html`}>
+          <h2 class="post-item-title">{post.title}</h2>
+          {
+            post.date && (
+              <time class="post-item-date" datetime={formatDate(post.date)}>
+                {formatDate(post.date)}
+              </time>
+            )
+          }
+          {post.summary && <p class="post-item-summary">{post.summary}</p>}
+        </a>
+        {
+          post.categories.length > 0 && (
+            <ul class="post-item-cats" aria-label="Categories">
+              {post.categories.map((cat) => (
+                <li>
+                  <a href={`/categories/${slugifyCategory(cat)}.html`}>{cat}</a>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </li>
+    ))
+  }
+</ul>

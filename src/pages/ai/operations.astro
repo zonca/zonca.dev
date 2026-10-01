@@ -1,0 +1,66 @@
+---
+import Base from '../../layouts/Base.astro';
+import AiSubnav from '../../components/AiSubnav.astro';
+import AiDisclaimer from '../../components/AiDisclaimer.astro';
+
+const description =
+  'Automation for calendars, employee hours, payroll preparation, and approved bank payments with human controls.';
+---
+
+<Base title="AI for small-business operations" description={description} canonical="/ai/operations.html">
+  <div class="ai-page">
+    <div class="ai-subhero">
+      <p class="ai-kicker">Business operations</p>
+      <h1 class="post-title">Reduce repetitive operational work</h1>
+      <p>
+        Build a dependable path from schedules and source records to prepared actions, while keeping
+        final approval with the responsible person.
+      </p>
+    </div>
+    <AiSubnav />
+    <section class="ai-section">
+      <h2>Examples of connected operations</h2>
+      <div class="ai-grid">
+        <div class="ai-card">
+          <h3>Calendars and schedules</h3>
+          <p>
+            Create consistent scheduling workflows, detect conflicts, prepare invitations, and keep
+            operational calendars aligned with the source of truth.
+          </p>
+        </div>
+        <div class="ai-card">
+          <h3>Employee hours</h3>
+          <p>
+            Collect scheduled and recorded hours, flag missing or unusual entries, and prepare clear
+            summaries for review.
+          </p>
+        </div>
+        <div class="ai-card">
+          <h3>Payroll preparation</h3>
+          <p>
+            Organize approved hours and supporting records into a repeatable payroll-preparation
+            process. A responsible person reviews the result before submission.
+          </p>
+        </div>
+        <div class="ai-card">
+          <h3>Approved bank payments</h3>
+          <p>
+            Prepare payment details from verified records and present them for approval. The system
+            does not initiate a payment without approval from a responsible person.
+          </p>
+        </div>
+      </div>
+      <div class="ai-policy">
+        <p>
+          Automation can calculate, compare, and prepare. It must stop before sending, submitting,
+          scheduling, changing records, or initiating a payment until a responsible person approves
+          the action.
+        </p>
+      </div>
+      <div class="ai-actions">
+        <a class="ai-button" href="https://zonca.secureform.dev/contact">Discuss an operations workflow</a>
+      </div>
+    </section>
+    <AiDisclaimer />
+  </div>
+</Base>
