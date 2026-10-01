@@ -142,15 +142,26 @@ def check_live(base: str):
     public_manifest = [r for r in manifest if not r["draft"]]
     print(f"Live site: {base}  ({len(public_manifest)} canonical, {len(aliases)} aliases)")
 
-    def status(path: str):
-        try:
-            resp = http_get(base + path)
-            resp.close()
-            return resp.status
-        except urllib.error.HTTPError as e:
-            return e.code
-        except Exception:
-            return -1
+    import time
+
+    printed_errors = 0
+
+    def status(path: str, retries: int = 3):
+        nonlocal printed_errors
+        for attempt in range(retries):
+            try:
+                resp = http_get(base + path)
+                resp.close()
+                return resp.status
+            except urllib.error.HTTPError as e:
+                return e.code
+            except Exception as exc:
+                if printed_errors < 3:
+                    printed_errors += 1
+                    print(f"  [diagnostic] {path}: {type(exc).__name__}: {exc}")
+                if attempt < retries - 1:
+                    time.sleep(3)
+        return -1
 
     # Canonical: /posts/x (200) and /posts/x.html (200 or 3xx chain to 200)
     canonical_ok = 0
