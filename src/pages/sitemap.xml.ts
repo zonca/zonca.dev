@@ -11,7 +11,6 @@ const staticPages = [
   '/ai/bookkeeping',
   '/ai/italian-school',
   '/ai/responsible-ai',
-  '/GEMINI',
   '/AGENTS',
   '/skill/SKILL',
   '/search',

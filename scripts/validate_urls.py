@@ -74,14 +74,14 @@ def check_local(allow_drafts: bool = False):
     if os.path.exists(redirects_path):
         rules = [l.strip() for l in open(redirects_path, encoding="utf-8") if l.strip()]
         generated = {r.split()[0] for r in rules if not r.startswith("#")}
-        expected = set(aliases.keys()) | {"/consult", "/consult/", "/page/1"}
+        expected = set(aliases.keys()) | {"/consult", "/consult/", "/page/1", "/GEMINI"}
         missing_rules = expected - generated
         extra_rules = generated - expected
         if missing_rules:
             fail(f"redirects missing {len(missing_rules)} alias rules: {sorted(missing_rules)[:5]}")
         if extra_rules:
             fail(f"redirects contain {len(extra_rules)} unexpected rules: {sorted(extra_rules)[:5]}")
-        fixed_targets = {"/consult": "/ai/", "/consult/": "/ai/", "/page/1": "/"}
+        fixed_targets = {"/consult": "/ai/", "/consult/": "/ai/", "/page/1": "/", "/GEMINI": "/AGENTS.html"}
         for src in sorted(expected):
             rule = [r for r in rules if r.split()[0] == src]
             if rule:

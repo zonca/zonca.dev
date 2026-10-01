@@ -108,7 +108,6 @@ def collect_pages() -> list[dict]:
         ("index.qmd", "/index.html"),
         ("about.qmd", "/about.html"),
         ("AGENTS.md", "/AGENTS.html"),
-        ("GEMINI.md", "/GEMINI.html"),
         ("skill/SKILL.md", "/skill/SKILL.html"),
     ]
     ai_files = sorted(glob.glob(os.path.join(ROOT, "ai", "*.qmd")))

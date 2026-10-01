@@ -2,7 +2,7 @@
 """Scaffold the Astro static site build inputs.
 
 - Copy the two QMD posts into .generated/posts/*.md (plain Markdown input).
-- Copy GEMINI.md, AGENTS.md, skill/SKILL.md into .generated/pages/*.md.
+- Copy AGENTS.md, skill/SKILL.md into .generated/pages/*.md.
 - Generate public/_redirects from the baseline alias table plus fixed rules.
 - Copy co-located post assets (images, fonts, scripts, docs/, profile.jpg)
   into public/ so relative URLs keep resolving exactly like production.
@@ -26,6 +26,7 @@ FIXED_REDIRECTS = [
     ("/consult", "/ai/", 301),
     ("/consult/", "/ai/", 301),
     ("/page/1", "/", 301),
+    ("/GEMINI", "/AGENTS.html", 301),
 ]
 
 
@@ -52,7 +53,6 @@ def main() -> int:
 
     # Root markdown pages
     for src, dest in [
-        ("GEMINI.md", os.path.join(gen_pages, "GEMINI.md")),
         ("AGENTS.md", os.path.join(gen_pages, "AGENTS.md")),
         ("skill/SKILL.md", os.path.join(gen_pages, "SKILL.md")),
     ]:

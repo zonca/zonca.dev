@@ -5076,6 +5076,20 @@
     "draft": false
   },
   {
+    "source": "posts/2026-10-01-migrate-zonca-dev-astro-cloudflare.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-10-01-migrate-zonca-dev-astro-cloudflare.html",
+    "title": "Migrating zonca.dev from Quarto to Astro on Cloudflare Workers",
+    "date": "2026-10-01",
+    "categories": [
+      "tools",
+      "github",
+      "cloudcomputing"
+    ],
+    "aliases": [],
+    "draft": true
+  },
+  {
     "source": "posts/italian-classes-chess-san-diego-2025.md",
     "source_type": "md",
     "canonical": "/posts/italian-classes-chess-san-diego-2025.html",
@@ -5680,16 +5694,6 @@
     "source_type": "md",
     "canonical": "/AGENTS.html",
     "title": "/AGENTS.html",
-    "date": "",
-    "categories": [],
-    "aliases": [],
-    "draft": false
-  },
-  {
-    "source": "GEMINI.md",
-    "source_type": "md",
-    "canonical": "/GEMINI.html",
-    "title": "/GEMINI.html",
     "date": "",
     "categories": [],
     "aliases": [],

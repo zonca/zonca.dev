@@ -1,6 +1,8 @@
 # Agent notes
 
-Review GEMINI.md before working—contains project-specific guidance and expectations.
+Guidelines for AI coding agents (opencode, Claude Code, Gemini CLI, Jules, Copilot,
+etc.) working in this repository. The old separate GEMINI.md guidance has been merged
+here; there is no GEMINI.md anymore.
 
 ## Pre-commit checklist
 
