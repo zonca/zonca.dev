@@ -235,7 +235,7 @@ main {
   padding: 0;
 }
 
-.post-item-cats li {
+.post-item-cats li a {
   font-size: 0.72rem;
   font-weight: 550;
   color: var(--text-muted);
@@ -244,6 +244,87 @@ main {
   border-radius: 999px;
   padding: 0.1rem 0.55rem;
   letter-spacing: 0.01em;
+}
+
+.post-item-cats li a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  text-decoration: none;
+  background: var(--accent-soft);
+}
+
+/* ---------------- Popular categories ---------------- */
+.home-section {
+  margin-top: 2.4rem;
+}
+
+.home-section-title {
+  font-size: 0.8rem;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+  margin: 0 0 0.9rem;
+}
+
+.pop-cats .cat-chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.cat-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 550;
+  box-shadow: var(--shadow-sm);
+}
+
+.cat-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
+  text-decoration: none;
+}
+
+.cat-count {
+  font-size: 0.72rem;
+  font-weight: 650;
+  color: var(--text-faint);
+  background: var(--bg-soft);
+  border-radius: 999px;
+  padding: 0.05rem 0.5rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.cat-chip:hover .cat-count {
+  color: var(--accent);
+  background: #fff;
+}
+
+.cat-eyebrow {
+  font-size: 0.85rem;
+  color: var(--text-faint);
+  margin: 0 0 0.6rem;
+}
+
+.cat-eyebrow a {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.cat-eyebrow a:hover {
+  color: var(--accent);
 }
 
 /* ---------------- Pagination ---------------- */

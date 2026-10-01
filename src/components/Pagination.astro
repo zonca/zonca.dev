@@ -2,9 +2,11 @@
 export interface Props {
   current: number;
   total: number;
+  base?: string;
+  firstHref?: string;
 }
 
-const { current, total } = Astro.props;
+const { current, total, base = '/page/', firstHref = '/' } = Astro.props;
 const radius = 2;
 const pages = new Set<number>([1, total]);
 for (let p = current - radius; p <= current + radius; p++) {
@@ -19,7 +21,7 @@ for (const p of sorted) {
   prev = p;
 }
 
-const href = (p: number) => (p === 1 ? '/' : `/page/${p}.html`);
+const href = (p: number) => (p === 1 ? firstHref : `${base}${p}.html`);
 ---
 
 <nav class="pagination" aria-label="Posts pagination">

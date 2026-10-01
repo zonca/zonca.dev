@@ -1,6 +1,6 @@
 ---
 import type { Post } from '../lib/posts';
-import { formatDate } from '../lib/posts';
+import { formatDate, slugifyCategory } from '../lib/posts';
 
 export interface Props {
   posts: Post[];
@@ -26,7 +26,9 @@ const { posts } = Astro.props;
           post.categories.length > 0 && (
             <ul class="post-item-cats" aria-label="Categories">
               {post.categories.map((cat) => (
-                <li>{cat}</li>
+                <li>
+                  <a href={`/categories/${slugifyCategory(cat)}.html`}>{cat}</a>
+                </li>
               ))}
             </ul>
           )

@@ -43,3 +43,33 @@ export function formatDate(date: Date): string {
 }
 
 export const PAGE_SIZE = 15;
+
+export function slugifyCategory(cat: string): string {
+  return cat.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+export function getCategoryStats(posts: Post[]): { name: string; slug: string; count: number }[] {
+  // Group case-insensitively (legacy posts use both "hpc" and "HPC"); display
+  // the most frequent casing as the canonical name.
+  const counts = new Map<string, number>();
+  const casing = new Map<string, Map<string, number>>();
+  for (const p of posts) {
+    for (const c of p.categories) {
+      const key = c.toLowerCase();
+      counts.set(key, (counts.get(key) ?? 0) + 1);
+      const byCase = casing.get(key) ?? new Map<string, number>();
+      byCase.set(c, (byCase.get(c) ?? 0) + 1);
+      casing.set(key, byCase);
+    }
+  }
+  const stats = [...counts.entries()].map(([key, count]) => {
+    const best = [...(casing.get(key)!.entries())].sort((a, b) => b[1] - a[1])[0][0];
+    return { name: best, slug: slugifyCategory(key), count };
+  });
+  return stats.sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+}
+
+export function filterByCategory(posts: Post[], name: string): Post[] {
+  const key = name.toLowerCase();
+  return posts.filter((p) => p.categories.some((c) => c.toLowerCase() === key));
+}
