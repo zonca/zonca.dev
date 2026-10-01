@@ -16,32 +16,53 @@ export type Post = {
 export function makeSummary(body: string, fallback: string): string {
   const lines = body.split('\n');
   const structural = /^(#{1,6}\s|```|>|[-*+]\s|\d+\.\s|\||!\[|<div|<script|<iframe|<!--)/;
-  const para: string[] = [];
-  let started = false;
+  const paragraphs: string[][] = [];
+  let cur: string[] = [];
+  const flush = () => {
+    if (cur.length) {
+      paragraphs.push(cur);
+      cur = [];
+    }
+  };
   for (const line of lines) {
     const t = line.trim();
     if (t === '') {
-      if (started) break;
+      flush();
       continue;
     }
-    if (!started && structural.test(t)) continue;
-    if (started && structural.test(t)) break;
-    started = true;
-    para.push(line);
-    if (para.length >= 8) break;
+    if (paragraphs.length === 0 && cur.length === 0 && structural.test(t)) continue;
+    if (cur.length && structural.test(t)) flush();
+    cur.push(line);
   }
-  let text = para.join(' ');
-  text = text
-    .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
-    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
-    .replace(/[*_`~#]/g, '')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+  flush();
+
+  const clean = (arr: string[]) =>
+    arr
+      .join(' ')
+      .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
+      .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+      .replace(/[*_`~#]/g, '')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+  // Keep complete sentences only - never cut mid-sentence.
+  let text = clean(paragraphs[0] ?? []);
+  if (text.length > 320) {
+    const cut = text.slice(0, 320);
+    let end = Math.max(cut.lastIndexOf('. '), cut.lastIndexOf('! '), cut.lastIndexOf('? '));
+    if (end < 80) {
+      const rest = text.slice(80);
+      const m = rest.match(/[.!?](\s|$)/);
+      end = m ? 80 + m.index! + 1 : -1;
+    }
+    text = end >= 0 ? text.slice(0, end + 1).trimEnd() : text.slice(0, 320).trimEnd();
+  }
+  if (text.length < 120 && paragraphs.length > 1) {
+    const p2 = clean(paragraphs[1] ?? []);
+    if (p2) text = `${text} ${p2}`;
+  }
   if (text.length < 40) return fallback;
-  if (text.length > 240) {
-    text = text.slice(0, 240).trimEnd() + '…';
-  }
   return text;
 }
 
