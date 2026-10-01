@@ -1,6 +1,6 @@
 # Agent notes
 
-- Review GEMINI.md before working—contains project-specific guidance and expectations.
+Review GEMINI.md before working—contains project-specific guidance and expectations.
 
 ## Pre-commit checklist
 
@@ -13,18 +13,19 @@ Before committing any blog post, **always** run these checks:
 
 ## Commit and push workflow
 
-- **Always commit and push** your changes after completing the pre-commit checklist.
-- **Branch strategy**:
-  - For new blog posts or significant changes: create a new branch from `main`, commit, push, and open a PR.
-  - For minor fixes: commit directly to `main` and push.
+- **Commit and push** every change to `main` after completing the checks; pushing to `main`
+  automatically builds, deploys and live-verifies the site (GitHub Actions). `main` is the
+  production branch.
 - **Commit message format**: Use a concise, descriptive message that explains what changed and why.
-- **Never force-push** to `main` unless explicitly instructed.
+- **Never force-push** to `main`.
+- For significant, experimental or multi-step work: push a topic branch and open a PR
+  (PRs get a version preview + URL comment, and never touch production).
 
 ## Visual and navigation changes
 
 - For any navigation, layout, or CSS change, inspect the rendered page at desktop and mobile widths
   before publishing, then inspect the live page again after publishing. Build success and HTTP checks
-  do not replace visual verification.
+  do not replace visual verification. Use the PR preview URL for review.
 - Navigation markup must be semantic and structurally match its CSS. Links intended as flex or grid
   items must be direct children of the navigation container, not hidden inside an automatically
   generated paragraph wrapper.
@@ -33,6 +34,33 @@ Before committing any blog post, **always** run these checks:
 - If the connected visual browser is unavailable, do not report visual verification as complete. Make
   the source-level fix, publish a preview, and ask Andrea to confirm the rendering before closing the
   visual issue.
+
+## URL integrity
+
+All existing URLs are frozen and verified in CI:
+
+- Post URLs are `/posts/<source-basename>` (with and without `.html`). They are derived from
+  the source basename, **never** from a legacy `slug:` field.
+- Never rename, move or delete a post file. If a slug must change, add the old path as an
+  `aliases:` entry in the new front matter — `public/_redirects` is generated from the
+  baseline manifest (`tests/baseline/aliases.json`), and `scripts/baseline_manifest.py`
+  regenerates it from source front matter.
+- `draft: true` posts stay off production but appear in PR previews.
+- Commit the regenerated `tests/baseline/` fixture when aliases/categories change.
+
+## Site build (Astro + Cloudflare)
+
+- The site is Astro static output served by Cloudflare Workers Static Assets
+  (`wrangler.jsonc`, custom domain `www.zonca.dev`, apex 301 → `www`).
+- Build pipeline (`npm run build`): `scripts/prepare_notebooks.py` (converts `.ipynb`
+  without executing; front matter read from first raw/markdown cell) →
+  `scripts/prepare_pages.py` (copies QMD posts, root pages, assets, generates
+  `public/_redirects` and `llms.txt`/`.well-known`) → `astro build`.
+- Validation: `python3 scripts/validate_urls.py` (dist) and `--live https://www.zonca.dev`
+  (production; run by CI after every deploy: 411 canonical URLs + 247 aliases).
+- Notebooks: never execute them during builds; stored outputs (text/markdown/HTML/PNG/SVG)
+  render as static content. Fix broken notebook output by editing the stored output.
+- The previous Quarto site is preserved in the `quarto-with-2026-10-01` release for rollback.
 
 ## Creating a new blog post
 
@@ -55,6 +83,7 @@ Every post starts with a YAML front matter block. Required and common fields:
 title: "Your concise post title"
 date: YYYY-MM-DD
 categories: [category1, category2]
+layout: post
 ---
 ```
 
@@ -64,15 +93,16 @@ categories: [category1, category2]
   Avoid vague metaphors such as "giving an agent my browser."
 - **date**: Must match the date in the filename.
 - **categories**: Use **existing categories only** — do not invent new ones. Common categories: `python`, `kubernetes`, `jupyterhub`, `jetstream`, `linux`, `hpc`, `github`, `git`, `openscience`, `dask`, `singularity`, `nersc`, `sdsc`, `ai`, `llm`, `automation`, `tools`, `documentation`, `events`, `education`, `nbgrader`, `healpy`, `pysm`, `cosmology`, `cloudcomputing`, `openstack`, `jetstream2`, `italian`.
-- **description** (optional): A one-sentence summary used for SEO and social previews.
+- **description** (optional): One-sentence summary used for SEO, social previews and the post-list summary.
 - **author** (optional): Defaults to "Andrea Zonca" via `posts/_metadata.yml`.
-- **layout**: Set to `post` for blog posts (some older posts omit this).
-- **slug** (optional): Override the URL slug if it differs from the filename.
-- **aliases** (optional): Old URLs that should redirect to this post.
+- **layout**: Set to `post` for blog posts.
+- **slug** (optional): Only used by the legacy site; new sites derive URLs from the filename. Use `aliases` instead for old URLs.
+- **aliases** (optional): Old URLs that should redirect to this post (used to generate `_redirects`).
+- **draft**: `true` hides the post from production while keeping it in PR previews.
 
 ### Body content and style
 
-- Write in Markdown. The site is built with **Quarto** using the `litera` theme.
+- Write in Markdown. The site is built with **Astro** (`litera`-inspired clean theme).
 - Use `##` for section headings (the title is rendered separately from the banner block).
 - Keep an introductory paragraph right after the front matter that summarizes what the post is about.
 - Use bullet points and numbered lists for step-by-step instructions.
@@ -92,6 +122,7 @@ categories: [category1, category2]
   curl -o ~/.up.sh https://raw.githubusercontent.com/zonca/up/main/up.sh
   ```
 - **Code blocks**: Use fenced code blocks with language tags (```` ```bash ````, ```` ```python ````).
+- Math (`$...$`, `$$...$$`) is supported and rendered with KaTeX.
 
 ### Categories reference
 
@@ -99,10 +130,9 @@ Only use categories that already exist in the blog. To check existing categories
 
 ### Publishing workflow
 
-1. Create the new post file in `posts/`.
-2. Commit and push to the `main` branch (or open a PR for significant posts).
-3. GitHub Actions renders the Quarto project and publishes to GitHub Pages automatically.
-4. The Netlify build also triggers on pushes to `main`.
+1. Create the new post file in `posts/` and commit to `main` (or a PR branch).
+2. Push to `main` → GitHub Actions builds, deploys to Cloudflare and live-verifies every URL.
+3. Push a PR branch → CI builds and comments a version preview URL; `draft: true` posts are visible in the preview.
 
 ## Buffer Social Media
 
