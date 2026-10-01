@@ -596,6 +596,119 @@ a.page-link:hover {
   padding: 0.4rem 0;
 }
 
+/* ---------------- Search ---------------- */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.search-page {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 2.2rem 1.25rem 3.5rem;
+}
+
+.search-box input {
+  width: 100%;
+  font: inherit;
+  font-size: 1.05rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--text);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.search-box input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+.search-count {
+  color: var(--text-faint);
+  font-size: 0.85rem;
+  margin: 0.9rem 0 0.5rem;
+}
+
+.search-results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.search-results li {
+  border-bottom: 1px solid var(--border);
+  margin: 0 -0.25rem;
+}
+
+.search-results li:first-child {
+  margin-top: 0.5rem;
+}
+
+.search-results a {
+  display: block;
+  padding: 0.85rem 0.25rem;
+  color: var(--text);
+}
+
+.search-results a:hover {
+  text-decoration: none;
+}
+
+.sr-title {
+  display: block;
+  font-weight: 650;
+  font-size: 1.02rem;
+  letter-spacing: -0.01em;
+}
+
+.search-results a:hover .sr-title {
+  color: var(--accent);
+}
+
+.sr-summary {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-top: 0.25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.sr-meta {
+  display: block;
+  color: var(--text-faint);
+  font-size: 0.78rem;
+  margin-top: 0.2rem;
+}
+
+.search-results mark {
+  background: #ffe6a3;
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 0.1em;
+}
+
+.search-results.empty::after {
+  content: "No results found.";
+  display: block;
+  color: var(--text-muted);
+  padding: 1rem 0.25rem;
+}
+
 /* ---------------- 404 ---------------- */
 .not-found {
   text-align: center;

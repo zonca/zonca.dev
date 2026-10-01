@@ -14,6 +14,7 @@ concurrency:
 
 env:
   CF_WORKER_NAME: zonca-dev-astro-preview
+  CF_PUBLIC_URL: https://zonca-dev-astro-preview.zonca-dev.workers.dev
 
 jobs:
   build:
@@ -96,3 +97,17 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           wranglerVersion: "4.139.0"
           command: deploy --name ${{ env.CF_WORKER_NAME }}
+
+  verify:
+    if: github.event_name == 'push'
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Verify all canonical URLs and legacy aliases on the live deployment
+        run: python scripts/validate_urls.py --live "${{ env.CF_PUBLIC_URL }}"

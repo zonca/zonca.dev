@@ -14,6 +14,7 @@ const staticPages = [
   '/GEMINI',
   '/AGENTS',
   '/skill/SKILL',
+  '/search',
 ];
 
 function esc(s: string): string {
