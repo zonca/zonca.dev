@@ -99,9 +99,7 @@ jobs:
               echo "- [${stem}]( ${PREVIEW_URL}/posts/${stem} )"
             done)
             BODY="${BODY}
-
-Updated post(s):
-${POSTS_LINKS}"
+            $(printf '\nUpdated post(s):\n%s' "$POSTS_LINKS")"
           fi
           gh pr comment "${{ github.event.pull_request.number }}" --body "$BODY" || true
 
