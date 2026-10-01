@@ -136,57 +136,65 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
         return None
 
 
-def check_live(base: str):
+def _http_status(base: str, path: str, timeout: int = 10) -> int:
+    try:
+        resp = http_get(base + path)
+        resp.close()
+        return resp.status
+    except urllib.error.HTTPError as e:
+        return e.code
+    except Exception as exc:
+        return f"ERR:{type(exc).__name__}:{exc}"
+
+
+def check_live(base: str, workers: int = 16):
+    from concurrent.futures import ThreadPoolExecutor
+
     manifest = json.load(open(MANIFEST, encoding="utf-8"))
     aliases = json.load(open(ALIASES, encoding="utf-8"))
     public_manifest = [r for r in manifest if not r["draft"]]
     print(f"Live site: {base}  ({len(public_manifest)} canonical, {len(aliases)} aliases)")
 
-    import time
+    displayed_errors = 0
 
-    printed_errors = 0
-
-    def status(path: str, retries: int = 3):
-        nonlocal printed_errors
-        for attempt in range(retries):
-            try:
-                resp = http_get(base + path)
-                resp.close()
-                return resp.status
-            except urllib.error.HTTPError as e:
-                return e.code
-            except Exception as exc:
-                if printed_errors < 3:
-                    printed_errors += 1
-                    print(f"  [diagnostic] {path}: {type(exc).__name__}: {exc}")
-                if attempt < retries - 1:
-                    time.sleep(3)
-        return -1
+    def report_errors(prefix: str, path: str, value):
+        nonlocal displayed_errors
+        if isinstance(value, str):
+            if displayed_errors < 5:
+                displayed_errors += 1
+                print(f"  [diag] {path}: {value}")
 
     # Canonical: /posts/x (200) and /posts/x.html (200 or 3xx chain to 200)
     canonical_ok = 0
-    for r in public_manifest:
-        extless = r["canonical"]
-        html = r["canonical"]
-        # built artifact is .html; canonical served URL is extensionless
-        clean = re.sub(r"\.html$", "", html)
-        st1 = status(clean)
-        st2 = status(html)
-        if st1 == 200 and st2 in (200, 301, 302, 303, 307, 308):
-            canonical_ok += 1
-        else:
-            fail(f"{r['canonical']} extless={st1} .html={st2}")
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futures = {}
+        for r in public_manifest:
+            clean = re.sub(r"\.html$", "", r["canonical"])
+            futures[r["canonical"]] = (r["canonical"], pool.submit(_http_status, base, clean), pool.submit(_http_status, base, r["canonical"]))
+        for canonical, (_, f1, f2) in futures.items():
+            st1, st2 = f1.result(), f2.result()
+            if st1 == 200 and st2 in (200, 301, 302, 303, 307, 308):
+                canonical_ok += 1
+            else:
+                report_errors("canonical", canonical, st1 if isinstance(st1, str) else st2)
+                fail(f"{canonical} extless={st1} .html={st2}")
     print(f"Canonical URLs OK: {canonical_ok}/{len(public_manifest)}")
 
     alias_ok = 0
-    for src, target in aliases.items():
-        first = status(src)
-        if first in (301, 302, 303, 307, 308):
-            final = status(re.sub(r"\.html$", "", target))
-            if final == 200:
-                alias_ok += 1
-                continue
-        fail(f"alias {src} -> status {first}")
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futures = {
+            src: (src, target, pool.submit(_http_status, base, src), pool.submit(_http_status, base, re.sub(r"\.html$", "", target)))
+            for src, target in aliases.items()
+        }
+        for src, target, f1, f2 in futures.values():
+            first = f1.result()
+            if first in (301, 302, 303, 307, 308):
+                final = f2.result()
+                if final == 200:
+                    alias_ok += 1
+                    continue
+            report_errors("alias", src, first)
+            fail(f"alias {src} -> status {first}")
     print(f"Alias redirects OK: {alias_ok}/{len(aliases)}")
 
 
