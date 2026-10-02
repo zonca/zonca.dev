@@ -17,11 +17,16 @@ const topCategories = getCategoryStats(posts).slice(0, 24);
   <a style="display:none" rel="me" href="https://mastodon.online/@zonca">Mastodon</a>
   <div class="home">
     <section class="home-hero">
-      <h1 class="home-title">High Performance Computing &amp; AI</h1>
-      <p class="home-subtitle">
-        Practical notes on Python, JupyterHub, Kubernetes and AI for science — from the San Diego
-        Supercomputer Center.
-      </p>
+      <div class="home-hero-row">
+        <img class="hero-avatar" src="/profile.jpg" alt="Andrea Zonca" width="76" height="76" />
+        <div>
+          <h1 class="home-title">High Performance Computing &amp; AI</h1>
+          <p class="home-subtitle">
+            Practical notes on Python, JupyterHub, Kubernetes and AI for science — from the San Diego
+            Supercomputer Center.
+          </p>
+        </div>
+      </div>
     </section>
 
     {

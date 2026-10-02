@@ -36,6 +36,7 @@ const rawRepo = 'https://raw.githubusercontent.com/zonca/zonca.dev/main';
 
 <Base title={entry.data.title ?? entry.id} description={description} canonical={canonical}>
   <article class="page">
+    <p class="post-back"><a href="/">← All posts</a></p>
     <h1 class="post-title">{entry.data.title ?? entry.id}</h1>
     <div class="post-meta">
       {date && <time datetime={date}>{date}</time>}
