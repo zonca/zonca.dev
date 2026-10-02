@@ -37,7 +37,7 @@ const isActive = (href: string) =>
     <link rel="icon" href="/favicon.ico" />
     <link rel="alternate" type="application/rss+xml" title="Andrea Zonca" href="/rss.xml" />
   </head>
-  <body>
+  <body id="top">
     <header class="site-header">
       <nav class="site-nav" aria-label="Main">
         <a class="brand" href="/">Andrea Zonca</a>
@@ -68,7 +68,10 @@ const isActive = (href: string) =>
             CC BY 4.0
           </a>
         </span>
-        <span class="footer-built">Built with Astro</span>
+        <span class="footer-right">
+          <span class="footer-built">Built with Astro</span>
+          <a class="footer-top" href="#top">↑ Top</a>
+        </span>
       </div>
     </footer>
   </body>

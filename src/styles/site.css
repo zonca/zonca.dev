@@ -218,6 +218,7 @@ main {
   letter-spacing: -0.025em;
   line-height: 1.15;
   margin: 0 0 0.5rem;
+  text-wrap: pretty;
 }
 
 .home-subtitle {
@@ -235,7 +236,15 @@ main {
 
 .post-item {
   border-bottom: 1px solid var(--border);
-  padding: 1.25rem 0.25rem;
+  padding: 1.25rem 0.5rem;
+  margin: 0 -0.5rem;
+  border-radius: var(--radius);
+}
+
+@media (hover: hover) {
+  .post-item:hover {
+    background: var(--bg-soft);
+  }
 }
 
 .post-item:first-child {
@@ -257,6 +266,7 @@ main {
   line-height: 1.3;
   margin: 0 0 0.3rem;
   color: var(--text);
+  text-wrap: pretty;
 }
 
 .post-link:hover .post-item-title {
@@ -530,16 +540,19 @@ a.page-link:hover {
   letter-spacing: -0.015em;
   margin: 2.2rem 0 0.65rem;
   line-height: 1.3;
+  text-wrap: pretty;
 }
 
 .prose h3 {
   font-size: 1.18rem;
   letter-spacing: -0.01em;
   margin: 1.8rem 0 0.55rem;
+  text-wrap: pretty;
 }
 
 .prose p {
   margin: 0.95rem 0;
+  overflow-wrap: break-word;
 }
 
 .prose ul,
@@ -575,6 +588,24 @@ a.page-link:hover {
   max-width: 100%;
   font-size: 0.875rem;
   line-height: 1.55;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+.prose pre::-webkit-scrollbar,
+.prose table::-webkit-scrollbar {
+  height: 8px;
+}
+
+.prose pre::-webkit-scrollbar-thumb,
+.prose table::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+}
+
+.prose table::-webkit-scrollbar-track,
+.prose pre::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .prose code {
@@ -790,6 +821,7 @@ a.page-link:hover {
 .site-footer {
   border-top: 1px solid var(--border);
   background: var(--bg-soft);
+  box-shadow: inset 0 3px 0 var(--accent-soft);
 }
 
 .footer-inner {
@@ -804,8 +836,23 @@ a.page-link:hover {
   color: var(--text-muted);
 }
 
+.footer-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .footer-built {
   color: var(--text-faint);
+}
+
+.footer-top {
+  color: var(--text-muted);
+  font-weight: 550;
+}
+
+.footer-top:hover {
+  color: var(--accent);
 }
 
 /* ---------------- AI consulting pages ---------------- */
@@ -905,6 +952,13 @@ a.page-link:hover {
   border-radius: var(--radius-lg);
   padding: 1.1rem 1.25rem;
   box-shadow: var(--shadow-sm);
+}
+
+@media (hover: hover) {
+  .ai-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 3px 10px rgba(11, 79, 108, 0.1);
+  }
 }
 
 .ai-card h3 {
