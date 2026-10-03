@@ -47,7 +47,7 @@ deploys the Worker, then **re-verifies the live site** (`www.zonca.dev`): every 
 URL must return 200 and every historical alias must redirect to its canonical post. The
 pipeline fails if any URL breaks.
 
-Every PR gets a Netlify-style preview: the build is uploaded as a non-production Worker
+Every PR gets a preview: the build is uploaded as a non-production Worker
 **version** and the preview URL is commented on the PR. If the PR only modifies blog
 posts, the comment links the modified post(s) directly.
 
