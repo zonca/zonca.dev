@@ -4809,6 +4809,19 @@
     "draft": false
   },
   {
+    "source": "posts/2026-07-23-healpy-1.20.0-release.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-07-23-healpy-1.20.0-release.html",
+    "title": "Release of healpy 1.20.0",
+    "date": "2026-07-23",
+    "categories": [
+      "healpy",
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
     "source": "posts/2026-07-28-control-existing-chromeos-browser-ai-agent.md",
     "source_type": "md",
     "canonical": "/posts/2026-07-28-control-existing-chromeos-browser-ai-agent.html",

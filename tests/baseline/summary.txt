@@ -1,5 +1,5 @@
-Generated: 2026-10-01T21:04:26.683436Z
-Post sources: 401  Pages: 11
-Public canonical URLs: 410  Draft (excluded): 2
+Generated: 2026-10-03T17:57:09.190433Z
+Post sources: 402  Pages: 11
+Public canonical URLs: 411  Draft (excluded): 2
 Aliases: 247
 Duplicate canonical URLs: 0
