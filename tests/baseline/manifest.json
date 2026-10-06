@@ -5696,6 +5696,23 @@
     "draft": false
   },
   {
+    "source": "posts/2026-10-06-pysm-car-output-at-smoothing-stage.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2026-10-06-pysm-car-output-at-smoothing-stage.html",
+    "title": "PySM: produce CAR output at the smoothing stage",
+    "date": "2026-10-06",
+    "categories": [
+      "python",
+      "pysm",
+      "astrophysics",
+      "cmb"
+    ],
+    "aliases": [
+      "/2026/10/pysm-car-output-at-smoothing-stage"
+    ],
+    "draft": false
+  },
+  {
     "source": "index.qmd",
     "source_type": "qmd",
     "canonical": "/index.html",
