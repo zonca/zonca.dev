@@ -5,51 +5,70 @@ categories: [healpy, python]
 layout: post
 ---
 
-NinaOeh proposed in a
-[healpy issue](https://github.com/healpy/healpy/issues/1131)
-a `slic` function that adapts SLIC superpixels to HEALPix maps, with a complete implementation
-attached. This post is what I found testing it; the executed notebook and the module are here:
+A recent [healpy issue](https://github.com/healpy/healpy/issues/1131) proposes a `slic` function
+that generates superpixels on the HEALPix grid, adapting the SLIC algorithm to the sphere, with a
+complete working implementation attached. This post is what I found testing it; the executed
+notebook (with all plots) and the module are here:
 https://gist.github.com/zonca/5f78963dbe49002399533f8ef08a237c
 
-## SLIC in one paragraph
+## What are superpixels, and what is SLIC?
 
-Superpixels oversegment an image into a few hundred compact regions of similar pixels, so
-downstream algorithms work with regions instead of millions of pixels. SLIC (Achanta et al. 2012)
-is an adapted k-means: each pixel joins the centre minimising
+In 2D image processing, superpixels oversegment an image into a few hundred small, contiguous
+regions that group neighbouring pixels with similar values: instead of working with millions of
+pixels, a downstream classifier or segmenter works with a few hundred coherent regions that
+mostly respect image edges.
+
+SLIC (Achanta et al. 2012) is the most widely used superpixel algorithm, an adapted k-means:
+each pixel is assigned to the cluster centre minimising a joint feature + spatial distance
 
 D = sqrt( (d_feature / c)^2 + (d_spatial / S)^2 )
 
-where c is the compactness parameter and S ~ 2 sqrt(f/k) the nominal spacing of k superpixels
-over a valid fraction f of the sky. Large c: regular, grid-like cells. Small c: superpixels
-follow the contours of the map. Only pixels within 2S of a centre are compared, so an iteration
-costs ~O(npix). The healpy version uses angular distances and supports RING/NESTED, masks and
-multi-feature stacks; the same idea exists for 360-degree panoramas as SphSLIC (Zhao et al. 2018).
+where d_feature is the difference in map value(s), d_spatial is the angular distance between
+pixel and centre (the spherical twist), c is the compactness parameter, and S ~ 2 sqrt(f/k) is
+the nominal spacing of k superpixels covering a valid fraction f of the sphere.
+
+- Large compactness: the spatial term dominates and superpixels become compact, regular and
+  grid-like.
+- Small compactness: superpixels follow the contours of the map.
+- Only pixels within 2S of a centre are compared, so an iteration costs ~O(npix): this local
+  search is what makes SLIC fast, also on the sphere.
+
+The proposed implementation works directly on the HEALPix grid in RING or NESTED ordering,
+supports masked maps and multi-feature stacks, and offers three ways to place the initial
+centres: greedy k-means++ seeding (random), farthest-point sampling, and hierarchical seeding at
+the centres of the coarser HEALPix level closest to the requested number of segments
+(deterministic and ordering-independent). The same idea exists in the computer-vision literature
+as SphSLIC, for 360-degree panoramic images (Zhao et al. 2018).
 
 ## Findings
 
-- Compactness is the knob: at 0.01 superpixels hug map contours and the superpixel-averaged map
-  is nearly the input; at 10 the segmentation degenerates into a regular grid, a fancier
-  ud_grade.
-- Fast: nside=256 (786k pixels), 64 superpixels, ~29 s.
-- RING vs NESTED: hierarchical seeding is ordering-independent, but exact gradient ties in the
-  seed nudge are broken by candidate order, so partitions are 87% identical, not 100%; a
+- Compactness is the knob: at 0.01 superpixels stretch along map contours and the
+  superpixel-averaged map is nearly identical to the input; at 10 the segmentation degenerates
+  into a quasi-regular sky partition, a fancier ud_grade. Intermediate values give roughly round
+  superpixels that still snap to strong edges.
+- Fast: nside=256 (786,432 pixels), 64 superpixels, ~29 s.
+- RING vs NESTED: hierarchical seeding is ordering-independent by construction, but exact
+  gradient ties in the low-gradient nudge (which moves seeds off edges) are broken by candidate
+  order, so partitions come out 87% identical, not 100%. Same quality either way; a
   deterministic tie-break would fix it.
-- compactness=0 gives divide-by-zero warnings and an empty result; negative values silently
-  behave like their absolute value. Needs validation.
-- compactness carries the units of the map: scaling the map by 1000 with the same c drops
-  agreement to 61%, scaling c with the map reproduces the segmentation exactly. Normalising
-  features internally would make it dimensionless.
-- Connectivity is not guaranteed (inherent to SLIC): 3/64 superpixels came out disconnected;
-  SNIC (Achanta & Sustrunk 2017) fixes this if needed.
+- compactness=0 gives divide-by-zero warnings and an all-unassigned result; negative values
+  silently behave like their absolute value (the feature term is squared). Needs validation.
+- compactness carries the units of the map: scaling the map by 1000 with the same compactness
+  drops agreement to 61%; scaling compactness along with the map reproduces the segmentation
+  exactly. A CMB map in K vs uK needs completely different values, so normalising features
+  internally would make compactness dimensionless.
+- Connectivity is not guaranteed (inherent to SLIC, same in 2D): 3/64 superpixels came out
+  spatially disconnected. SNIC (Achanta & Sustrunk 2017) enforces connectivity if needed.
 - Duplicate centres can occur after the seed nudge, silently giving fewer superpixels than
   requested.
-- Sparse masks are fine: a polar-cap test assigned 100% of valid pixels.
+- Sparse masks are fine: the nominal spacing is rescaled by the valid fraction, and a polar-cap
+  test assigned 100% of valid pixels with all clusters used.
 
 ## Verdict
 
-Works, fast, sensible output; init='hierarchical' is a good deterministic default. Worth
-discussing in the issue: naming, internal feature normalisation, exposing per-superpixel means,
-citing Zhao et al. (2018) as prior art.
+Works, fast, sensible segmentations; init='hierarchical' is a good deterministic default. Worth
+discussing in the issue: naming (hp.slic vs superpixels()), internal feature normalisation,
+exposing per-superpixel means as an output, citing Zhao et al. (2018) as prior art.
 
 ## References
 
