@@ -5119,7 +5119,7 @@
     "source": "posts/2026-10-09-slic-superpixels-on-the-healpix-grid.md",
     "source_type": "md",
     "canonical": "/posts/2026-10-09-slic-superpixels-on-the-healpix-grid.html",
-    "title": "SLIC superpixels on the HEALPix grid: exploring healpy issue #1131",
+    "title": "SLIC superpixels on the HEALPix grid",
     "date": "2026-10-09",
     "categories": [
       "healpy",

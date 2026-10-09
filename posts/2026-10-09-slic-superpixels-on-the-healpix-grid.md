@@ -1,127 +1,77 @@
 ---
-title: "SLIC superpixels on the HEALPix grid: exploring healpy issue #1131"
+title: "SLIC superpixels on the HEALPix grid"
 date: 2026-10-09
 categories: [healpy, python]
 layout: post
 ---
 
-An exploration of adapting the SLIC superpixel algorithm to the spherical HEALPix grid, motivated by
-a recent proposal in the healpy repository.
+NinaOeh proposed in a
+[healpy issue](https://github.com/healpy/healpy/issues/1131)
+a `slic` function that adapts SLIC superpixels to HEALPix maps, with a complete implementation
+attached. This post is what I found testing it; the executed notebook and the module are here:
+https://gist.github.com/zonca/5f78963dbe49002399533f8ef08a237c
 
-## The origin: healpy issue #1131
+## SLIC in one paragraph
 
-healpy issue #1131 "Superpixels in healpix grid" (https://github.com/healpy/healpy/issues/1131),
-opened by NinaOeh on 5 October 2026, asks whether a function generating superpixels on the HEALPix
-grid would be of interest for healpy. The proposal adapts the SLIC superpixel algorithm to the
-sphere and comes with a complete, working implementation (healpy_slic.py) attached to the issue.
-Eric Hivon, HEALPix co-author, commented that it looks "pretty cool"; the open question is whether
-such a feature belongs in healpy. Before answering, I built an exploration notebook to understand
-what SLIC superpixels actually do: the executed notebook (with all plots) and the module are in this
-gist: https://gist.github.com/zonca/5f78963dbe49002399533f8ef08a237c
-
-## What are superpixels, and what is SLIC?
-
-In 2D image processing, superpixels are the result of oversegmenting an image into a few hundred
-small, contiguous regions that group neighbouring pixels with similar values - instead of working
-with millions of pixels, a downstream classifier or segmenter works with a few hundred coherent
-regions that mostly respect image edges. The term was introduced by Ren & Malik (ICCV 2003).
-
-SLIC (Simple Linear Iterative Clustering, Achanta et al. 2012,
-https://doi.org/10.1109/TPAMI.2012.120) is the most widely used superpixel algorithm: an adapted
-k-means where each pixel is assigned to the cluster centre minimising a joint feature + spatial
-distance:
+Superpixels oversegment an image into a few hundred compact regions of similar pixels, so
+downstream algorithms work with regions instead of millions of pixels. SLIC (Achanta et al. 2012)
+is an adapted k-means: each pixel joins the centre minimising
 
 D = sqrt( (d_feature / c)^2 + (d_spatial / S)^2 )
 
-where d_feature is the difference in map value(s), d_spatial is the SPATIAL distance (in the healpy
-adaptation: the angular, great-circle distance between pixel centres - this is the spherical twist),
-c is the compactness parameter, and S ~ 2 sqrt(f/k) is the nominal spacing of k superpixels covering
-a valid fraction f of the sphere.
+where c is the compactness parameter and S ~ 2 sqrt(f/k) the nominal spacing of k superpixels
+over a valid fraction f of the sky. Large c: regular, grid-like cells. Small c: superpixels
+follow the contours of the map. Only pixels within 2S of a centre are compared, so an iteration
+costs ~O(npix). The healpy version uses angular distances and supports RING/NESTED, masks and
+multi-feature stacks; the same idea exists for 360-degree panoramas as SphSLIC (Zhao et al. 2018).
 
-- Large compactness -> spatial term dominates -> compact, regular, grid-like superpixels.
-- Small compactness -> superpixels follow contours of the map.
-- Only pixels within 2S of a centre are considered (local search) -> fast, roughly O(npix) per
-  iteration.
+## Findings
 
-The proposed healpy implementation works directly on the HEALPix grid in RING or NESTED ordering,
-supports masked maps and multi-feature stacks, and offers three initialisation strategies: greedy
-(k-means++ seeding on angular distance, Arthur & Vassilvitskii 2007), farthest (farthest-point
-sampling), and hierarchical (centres of the coarser HEALPix level closest to the requested number of
-segments - deterministic and ordering-independent by construction).
-
-Prior art worth knowing: adapting SLIC to the sphere already exists in the computer-vision
-literature for 360-degree panoramic images - "Spherical Superpixel Segmentation" (Zhao et al. 2018,
-IEEE Trans. Multimedia 20(6), 1406-1417, https://doi.org/10.1109/TMM.2017.2772842). The healpy
-proposal is essentially that idea (SphSLIC) realised natively on the HEALPix grid.
-
-## What the exploration showed
-
-The notebook (https://gist.github.com/zonca/5f78963dbe49002399533f8ef08a237c) runs the attached
-implementation on synthetic nside=64 maps (gradient plus Gaussian blobs), with all plots done via
-healpy's projview. Highlights:
-
-1. Compactness is THE knob. At compactness=0.01 superpixels stretch along map contours and the
-   superpixel-averaged map is nearly identical to the input; at compactness=10 the segmentation
-   degenerates into a quasi-regular sky partition - a fancier ud_grade. Intermediate values give the
-   classic compromise: roughly round superpixels that still snap to strong edges.
-
-2. Performance is good. nside=256 (786,432 pixels) with 64 superpixels runs in ~29 s, converging
-   after tens of assignment/update iterations.
-
-3. RING vs NESTED: the hierarchical seeding is ordering-independent by construction, but I found
-   that exact gradient ties in the low-gradient nudge (which moves seeds off edges) are broken by
-   candidate order, so partitions come out ~87% identical (not 100%) across orderings. Benign - the
-   results are of the same quality - and fixable with a deterministic tie-break (e.g. lowest pixel
-   index).
-
-4. Implementation review findings (all small, none blocking):
-   - compactness is not validated: 0 gives a divide-by-zero warning and an all-unassigned result;
-     negative values silently behave like their absolute value (the feature term is squared).
-   - compactness carries the units of the map: rescaling the map by 1000 with the same compactness
-     changes the segmentation (agreement drops to 61%); rescaling compactness along with the map
-     reproduces it exactly. A CMB map in K vs uK therefore needs completely different values -
-     normalising features internally would make compactness dimensionless.
-   - connectivity is not guaranteed (inherent to SLIC, same in 2D): 3/64 superpixels came out
-     spatially disconnected. If connected regions matter, SNIC (Achanta & Susstrunk, CVPR 2017)
-     is the standard fix:
-     https://openaccess.thecvf.com/content_cvpr_2017/html/Achanta_Superpixels_and_Polygons_CVPR_2017_paper.html
-   - duplicate centres can occur after the gradient nudge, silently giving fewer superpixels than
-     requested.
-   - sparse masks are handled well: polar-cap tests assigned 100% of valid pixels with all clusters
-     used, thanks to a sqrt(valid fraction) rescaling of the spacing.
+- Compactness is the knob: at 0.01 superpixels hug map contours and the superpixel-averaged map
+  is nearly the input; at 10 the segmentation degenerates into a regular grid, a fancier
+  ud_grade.
+- Fast: nside=256 (786k pixels), 64 superpixels, ~29 s.
+- RING vs NESTED: hierarchical seeding is ordering-independent, but exact gradient ties in the
+  seed nudge are broken by candidate order, so partitions are 87% identical, not 100%; a
+  deterministic tie-break would fix it.
+- compactness=0 gives divide-by-zero warnings and an empty result; negative values silently
+  behave like their absolute value. Needs validation.
+- compactness carries the units of the map: scaling the map by 1000 with the same c drops
+  agreement to 61%, scaling c with the map reproduces the segmentation exactly. Normalising
+  features internally would make it dimensionless.
+- Connectivity is not guaranteed (inherent to SLIC): 3/64 superpixels came out disconnected;
+  SNIC (Achanta & Sustrunk 2017) fixes this if needed.
+- Duplicate centres can occur after the seed nudge, silently giving fewer superpixels than
+  requested.
+- Sparse masks are fine: a polar-cap test assigned 100% of valid pixels.
 
 ## Verdict
 
-The proposal works, is fast, and produces sensible segmentations; init='hierarchical' is a good
-deterministic default. Points to discuss in the issue: naming (hp.slic vs superpixels()), internal
-feature normalisation to make compactness dimensionless, exposing per-superpixel means as an output,
-and citing Zhao et al. (2018) as the spherical prior art in the docstring.
-
-Full executed notebook with all the plots:
-https://gist.github.com/zonca/5f78963dbe49002399533f8ef08a237c (includes healpy_slic.py from the
-issue).
+Works, fast, sensible output; init='hierarchical' is a good deterministic default. Worth
+discussing in the issue: naming, internal feature normalisation, exposing per-superpixel means,
+citing Zhao et al. (2018) as prior art.
 
 ## References
 
-- Achanta, Shaji, Smith, Lucchi, Fua & Sustrunk (2012), SLIC Superpixels Compared to
-  State-of-the-Art Superpixel Methods, IEEE TPAMI 34(11), 2274-2282,
+- Achanta et al. (2012), SLIC Superpixels Compared to State-of-the-Art Superpixel Methods, IEEE
+  TPAMI 34(11), 2274-2282:
   https://doi.org/10.1109/TPAMI.2012.120
-- Ren & Malik (2003), Learning a Classification Model for Segmentation, Proc. IEEE ICCV, vol. 2,
-  pp. 10-17:
+- Ren & Malik (2003), Learning a Classification Model for Segmentation, IEEE ICCV:
   https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/papers/ren_malik_iccv03.pdf
-- Arthur & Vassilvitskii (2007), k-means++: The Advantages of Careful Seeding, Proc. ACM-SIAM SODA,
-  pp. 1027-1035, https://theory.stanford.edu/~sergei/papers/kMeansPP-soda.pdf
-- Zhao, Dai, Ma, Wan, Zhang & Zhang (2018), Spherical Superpixel Segmentation, IEEE Trans.
-  Multimedia 20(6), 1406-1417, https://doi.org/10.1109/TMM.2017.2772842
-- Wan, Xu, Zhao & Feng (2018), Spherical Superpixels: Benchmark and Evaluation, Proc. ACCV, LNCS
-  11366, pp. 703-717, http://cic.tju.edu.cn/faculty/lwan/paper/sphsp18/SphSP.html
-- Giraud, Borba Pinheiro & Berthoumieu (2020), Generalized Shortest Path-based Superpixels for
-  Accurate Segmentation of Spherical Images, Proc. ICPR, https://arxiv.org/abs/2004.07394 (journal
-  version in Pattern Recognition 2023, https://arxiv.org/abs/2509.19895)
-- Achanta & Sustrunk (2017), Superpixels and Polygons Using Simple Non-Iterative Clustering, Proc.
-  IEEE CVPR, pp. 4651-4660,
+- Arthur & Vassilvitskii (2007), k-means++: The Advantages of Careful Seeding, ACM-SIAM SODA:
+  https://theory.stanford.edu/~sergei/papers/kMeansPP-soda.pdf
+- Zhao et al. (2018), Spherical Superpixel Segmentation, IEEE Trans. Multimedia 20(6), 1406-1417:
+  https://doi.org/10.1109/TMM.2017.2772842
+- Wan et al. (2018), Spherical Superpixels: Benchmark and Evaluation, ACCV, LNCS 11366, 703-717:
+  http://cic.tju.edu.cn/faculty/lwan/paper/sphsp18/SphSP.html
+- Giraud et al. (2020), Generalized Shortest Path-based Superpixels for Accurate Segmentation of
+  Spherical Images, ICPR:
+  https://arxiv.org/abs/2004.07394
+  (journal version, Pattern Recognition 2023: https://arxiv.org/abs/2509.19895)
+- Achanta & Sustrunk (2017), Superpixels and Polygons Using Simple Non-Iterative Clustering,
+  IEEE CVPR:
   https://openaccess.thecvf.com/content_cvpr_2017/html/Achanta_Superpixels_and_Polygons_CVPR_2017_paper.html
-- Stutz, Hermans & Leibe (2018), Superpixels: An Evaluation of the State-of-the-Art, CVIU 166, 1-27,
+- Stutz et al. (2018), Superpixels: An Evaluation of the State-of-the-Art, CVIU 166, 1-27:
   https://arxiv.org/abs/1612.01601
-- Gorski, Hivon, Banday, Wandelt, Hansen, Reinecke & Bartelmann (2005), HEALPix, ApJ 622, 759-771,
+- Gorski et al. (2005), HEALPix, ApJ 622, 759-771:
   https://doi.org/10.1086/427976
