@@ -82,20 +82,13 @@ healpy's projview. Highlights:
      reproduces it exactly. A CMB map in K vs uK therefore needs completely different values -
      normalising features internally would make compactness dimensionless.
    - connectivity is not guaranteed (inherent to SLIC, same in 2D): 3/64 superpixels came out
-     spatially disconnected. If connected regions matter, SNIC (Achanta & Susstrunk, CVPR 2017,
-     https://openaccess.thecvf.com/content_cvpr_2017/html/Achanta_Superpixels_and_Polygons_CVPR_2017_paper.html)
-     is the standard fix.
+     spatially disconnected. If connected regions matter, SNIC (Achanta & Susstrunk, CVPR 2017)
+     is the standard fix:
+     https://openaccess.thecvf.com/content_cvpr_2017/html/Achanta_Superpixels_and_Polygons_CVPR_2017_paper.html
    - duplicate centres can occur after the gradient nudge, silently giving fewer superpixels than
      requested.
    - sparse masks are handled well: polar-cap tests assigned 100% of valid pixels with all clusters
      used, thanks to a sqrt(valid fraction) rescaling of the spacing.
-
-## A healpy plotting gotcha found along the way
-
-hp.projscatter silently does NOTHING on projview figures - it only supports the old mollview-style
-axes and returns None without any warning (the axes classes differ). To overlay points on a projview
-map, scatter directly in the axes data coordinates: longitude = -phi wrapped to [-pi, pi] (astro
-convention), latitude = pi/2 - theta, in radians. This is documented in the notebook.
 
 ## Verdict
 
@@ -113,8 +106,9 @@ issue).
 - Achanta, Shaji, Smith, Lucchi, Fua & Sustrunk (2012), SLIC Superpixels Compared to
   State-of-the-Art Superpixel Methods, IEEE TPAMI 34(11), 2274-2282,
   https://doi.org/10.1109/TPAMI.2012.120
-- Ren & Malik (2003), Learning a Classification Model for Segmentation, Proc. IEEE ICCV, vol. 2, pp.
-  10-17, https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/papers/ren_malik_iccv03.pdf
+- Ren & Malik (2003), Learning a Classification Model for Segmentation, Proc. IEEE ICCV, vol. 2,
+  pp. 10-17:
+  https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/papers/ren_malik_iccv03.pdf
 - Arthur & Vassilvitskii (2007), k-means++: The Advantages of Careful Seeding, Proc. ACM-SIAM SODA,
   pp. 1027-1035, https://theory.stanford.edu/~sergei/papers/kMeansPP-soda.pdf
 - Zhao, Dai, Ma, Wan, Zhang & Zhang (2018), Spherical Superpixel Segmentation, IEEE Trans.
