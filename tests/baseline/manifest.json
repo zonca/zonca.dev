@@ -5116,6 +5116,19 @@
     "draft": false
   },
   {
+    "source": "posts/2026-10-09-slic-superpixels-on-the-healpix-grid.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-10-09-slic-superpixels-on-the-healpix-grid.html",
+    "title": "SLIC superpixels on the HEALPix grid: exploring healpy issue #1131",
+    "date": "2026-10-09",
+    "categories": [
+      "healpy",
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
     "source": "posts/italian-classes-chess-san-diego-2025.md",
     "source_type": "md",
     "canonical": "/posts/italian-classes-chess-san-diego-2025.html",
