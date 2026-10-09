@@ -7,9 +7,7 @@ layout: post
 
 A recent [healpy issue](https://github.com/healpy/healpy/issues/1131) proposes a `slic` function
 that generates superpixels on the HEALPix grid, adapting the SLIC algorithm to the sphere, with a
-complete working implementation attached. This post is what I found testing it; the executed
-notebook (with all plots) and the module are here:
-https://gist.github.com/zonca/5f78963dbe49002399533f8ef08a237c
+complete working implementation attached. This post is what I found testing it.
 
 ## What are superpixels, and what is SLIC?
 
@@ -18,14 +16,16 @@ regions that group neighbouring pixels with similar values: instead of working w
 pixels, a downstream classifier or segmenter works with a few hundred coherent regions that
 mostly respect image edges.
 
-SLIC (Achanta et al. 2012) is the most widely used superpixel algorithm, an adapted k-means:
-each pixel is assigned to the cluster centre minimising a joint feature + spatial distance
+SLIC ([Achanta et al. 2012](https://doi.org/10.1109/TPAMI.2012.120)) is the most widely used
+superpixel algorithm, an adapted k-means: each pixel is assigned to the cluster centre minimising
+a joint feature + spatial distance
 
-D = sqrt( (d_feature / c)^2 + (d_spatial / S)^2 )
+$$D = \sqrt{(d_{\mathrm{feature}} / c)^2 + (d_{\mathrm{spatial}} / S)^2}$$
 
-where d_feature is the difference in map value(s), d_spatial is the angular distance between
-pixel and centre (the spherical twist), c is the compactness parameter, and S ~ 2 sqrt(f/k) is
-the nominal spacing of k superpixels covering a valid fraction f of the sphere.
+where $d_{\mathrm{feature}}$ is the difference in map value(s), $d_{\mathrm{spatial}}$ is the
+angular distance between pixel and centre (the spherical twist), $c$ is the compactness
+parameter, and $S \simeq 2\sqrt{f/k}$ is the nominal spacing of $k$ superpixels covering a valid
+fraction $f$ of the sphere.
 
 - Large compactness: the spatial term dominates and superpixels become compact, regular and
   grid-like.
@@ -40,12 +40,39 @@ the centres of the coarser HEALPix level closest to the requested number of segm
 (deterministic and ordering-independent). The same idea exists in the computer-vision literature
 as SphSLIC, for 360-degree panoramic images (Zhao et al. 2018).
 
+The three initialisation strategies converge to very similar partitions (black dots are the
+final centres of each superpixel):
+
+![Initialisation strategies: greedy, farthest and hierarchical](slic-superpixels-init.png)
+
+More superpixels just shrink the regions:
+
+![16, 64 and 256 superpixels on the test map](slic-superpixels-nsegments.png)
+
+Clustering can also run on a stack of maps, in the combined feature space:
+
+![Superpixels computed from two feature maps at once](slic-superpixels-multifeature.png)
+
 ## Findings
+
+All examples use a synthetic nside=64 map, a large-scale gradient plus Gaussian blobs:
+
+![Synthetic test map](slic-superpixels-test-map.png)
 
 - Compactness is the knob: at 0.01 superpixels stretch along map contours and the
   superpixel-averaged map is nearly identical to the input; at 10 the segmentation degenerates
   into a quasi-regular sky partition, a fancier ud_grade. Intermediate values give roughly round
   superpixels that still snap to strong edges.
+
+  Top row: superpixel labels. Bottom row: superpixel-averaged map, same colour scale as the test
+  map:
+
+  ![Compactness sweep, 64 superpixels](slic-superpixels-compactness.png)
+
+  Size distributions tell the same story, regular cells at high compactness, all scales at low
+  compactness:
+
+  ![Superpixel size distributions](slic-superpixels-sizes.png)
 - Fast: nside=256 (786,432 pixels), 64 superpixels, ~29 s.
 - RING vs NESTED: hierarchical seeding is ordering-independent by construction, but exact
   gradient ties in the low-gradient nudge (which moves seeds off edges) are broken by candidate
@@ -63,6 +90,10 @@ as SphSLIC, for 360-degree panoramic images (Zhao et al. 2018).
   requested.
 - Sparse masks are fine: the nominal spacing is rescaled by the valid fraction, and a polar-cap
   test assigned 100% of valid pixels with all clusters used.
+
+  Here a 40-degree galactic band is masked out (grey):
+
+  ![Superpixels with a masked galactic band](slic-superpixels-masked.png)
 
 ## Verdict
 
