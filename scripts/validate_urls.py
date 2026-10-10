@@ -20,6 +20,7 @@ import json
 import os
 import re
 import sys
+import time
 import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -129,17 +130,22 @@ def http_get(url: str, timeout: int = 15):
     return urllib.request.urlopen(req, timeout=timeout)
 
 
-def _http_status(base: str, path: str, timeout: int = 10) -> tuple[int, str]:
-    try:
-        resp = http_get(base + path, timeout)
-        url = resp.geturl()
-        status = resp.status
-        resp.close()
-        return status, url
-    except urllib.error.HTTPError as e:
-        return e.code, base + path
-    except Exception as exc:
-        return -1, f"ERR:{type(exc).__name__}:{exc}"
+def _http_status(base: str, path: str, timeout: int = 10, attempts: int = 3) -> tuple[int, str]:
+    for attempt in range(attempts):
+        try:
+            resp = http_get(base + path, timeout)
+            url = resp.geturl()
+            status = resp.status
+            resp.close()
+            return status, url
+        except urllib.error.HTTPError as e:
+            return e.code, base + path
+        except Exception as exc:
+            if attempt < attempts - 1:
+                time.sleep(1.0 + attempt)
+                continue
+            return -1, f"ERR:{type(exc).__name__}:{exc}"
+    return -1, "ERR:unreachable"
 
 
 def check_live(base: str, workers: int = 16):
