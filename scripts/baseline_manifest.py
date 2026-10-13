@@ -162,7 +162,6 @@ def main() -> int:
         json.dump(aliases, fh, indent=2, ensure_ascii=False, sort_keys=True)
 
     summary = [
-        f"Generated: {datetime.utcnow().isoformat()}Z",
         f"Post sources: {len(posts)}  Pages: {len(pages)}",
         f"Public canonical URLs: {len(public_rows)}  Draft (excluded): {len(draft_rows)}",
         f"Aliases: {len(aliases)}",
@@ -180,6 +179,7 @@ def main() -> int:
             summary.append(f"PARSE ISSUE: {r['source']}")
     with open(os.path.join(OUT_DIR, "summary.txt"), "w", encoding="utf-8") as fh:
         fh.write("\n".join(summary) + "\n")
+    print(f"Generated: {datetime.utcnow().isoformat()}Z")
     print("\n".join(summary))
     return 1 if duplicates or missing_meta else 0
 

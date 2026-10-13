@@ -18,6 +18,8 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       PUBLIC_SHOW_DRAFTS: ${{ github.event_name == 'pull_request' && '1' || '0' }}
     steps:
@@ -34,6 +36,20 @@ jobs:
 
       - name: Install Python dependencies
         run: pip install --user pyyaml nbformat
+
+      - name: Regenerate baseline manifest
+        run: python scripts/baseline_manifest.py
+
+      - name: Commit baseline updates
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          if [ -n "$(git status --porcelain tests/baseline)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add tests/baseline
+            git commit -m "auto: regenerate baseline manifest [skip ci]"
+            git push || echo "warning: could not push baseline updates (branch protection or token permissions)"
+          fi
 
       - name: Install Node dependencies
         run: npm ci

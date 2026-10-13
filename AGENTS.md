@@ -48,7 +48,11 @@ All existing URLs are frozen and verified in CI:
   baseline manifest (`tests/baseline/aliases.json`), and `scripts/baseline_manifest.py`
   regenerates it from source front matter.
 - `draft: true` posts stay off production but appear in PR previews.
-- Commit the regenerated `tests/baseline/` fixture when aliases/categories change.
+- CI regenerates and commits the `tests/baseline/` fixture automatically
+  (`auto: regenerate baseline manifest [skip ci]`); you do not need to do it
+  manually for content changes. If the auto-push failed (branch protection),
+  regenerate locally with `python3 scripts/baseline_manifest.py` and commit it
+  in the same push.
 
 ## Site build (Astro + Cloudflare)
 
