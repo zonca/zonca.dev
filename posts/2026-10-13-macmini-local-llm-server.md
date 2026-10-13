@@ -42,7 +42,7 @@ daemon** that runs as the user `zonca` at boot:
   `/tmp/ollama.err.log`.
 - Tuned environment: `OLLAMA_FLASH_ATTENTION=1`, `OLLAMA_KV_CACHE_TYPE=q8_0`,
   `OLLAMA_KEEP_ALIVE=48h` (the model stays resident),
-  `OLLAMA_CONTEXT_LENGTH=65536`, `OLLAMA_LLM_LIBRARY=mlx_metal_v3`.
+  `OLLAMA_CONTEXT_LENGTH=131072`, `OLLAMA_LLM_LIBRARY=mlx_metal_v3`.
 
 Manage it with `sudo launchctl bootout system/com.ollama.serve` and
 `sudo launchctl bootstrap system /Library/LaunchDaemons/com.ollama.serve.plist`.
@@ -78,8 +78,11 @@ instant revocation. There is no way to expose services to the public internet.
 
 Measured directly against Ollama's API (`/api/generate`), model warm, memory
 bandwidth bound. Context size during the benchmark: the server is configured
-with `OLLAMA_CONTEXT_LENGTH=65536`, while the model natively supports 262,144
-tokens.
+with `OLLAMA_CONTEXT_LENGTH=131072`, while the model natively supports 262,144
+tokens. I stress-tested the context limit: at 131 K there is no swapping and
+prefill stays at ~100 tok/s; at the native 262 K limit the Mac mini starts
+swapping (up to ~6 GB, memory free drops to ~11%) and prefill collapses to
+~25 tok/s, so 128 K is the practical default on 48 GB.
 
 | Metric | Result |
 |---|---|
