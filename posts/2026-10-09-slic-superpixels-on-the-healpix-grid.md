@@ -73,11 +73,26 @@ All examples use a synthetic nside=64 map, a large-scale gradient plus Gaussian 
   compactness:
 
   ![Superpixel size distributions](slic-superpixels-sizes.png)
+
+  The knob saturates beyond the feature range of the map, about 8 here, as the proposal author
+  pointed out; with features normalised to [0, 1] the interesting range would simply be 0 to 1:
+
+  ![Compactness saturation](slic-superpixels-saturation.png)
 - Fast: nside=256 (786,432 pixels), 64 superpixels, ~29 s.
-- RING vs NESTED: hierarchical seeding is ordering-independent by construction, but exact
-  gradient ties in the low-gradient nudge (which moves seeds off edges) are broken by candidate
-  order, so partitions come out 87% identical, not 100%. Same quality either way; a
-  deterministic tie-break would fix it.
+- RING vs NESTED: hierarchical seeding is ordering-independent by construction, but the original
+  attachment gave partitions 87% identical instead of 100%, for three reasons: exact gradient
+  ties in the low-gradient nudge broken by candidate order, pix2vec not being bitwise
+  reproducible across orderings, and map-order accumulation of the update sums. Three small
+  fixes (RING-index tie-break, canonical pixel vectors, canonical accumulation order) make the
+  partitions bit-identical.
+- Not resolution-invariant: the same analytic map at nside 32 to 256 with the same k and
+  compactness gives statistically equivalent but spatially different partitions (adjusted Rand
+  index 0.5 to 0.9). Fixed physical seeds barely help; skipping the low-gradient nudge helps
+  most in the spatial regime; the residual is k-means settling into different, equally good
+  local minima on different pixel grids. Fine for region statistics at one resolution, but do
+  not expect to track structures across resolutions:
+
+  ![Adjusted Rand index across nside pairs](slic-superpixels-nside-ari.png)
 - compactness=0 gives divide-by-zero warnings and an all-unassigned result; negative values
   silently behave like their absolute value (the feature term is squared). Needs validation.
 - compactness carries the units of the map: scaling the map by 1000 with the same compactness
@@ -100,6 +115,9 @@ All examples use a synthetic nside=64 map, a large-scale gradient plus Gaussian 
 Works, fast, sensible segmentations; init='hierarchical' is a good deterministic default. Worth
 discussing in the issue: naming (hp.slic vs superpixels()), internal feature normalisation,
 exposing per-superpixel means as an output, citing Zhao et al. (2018) as prior art.
+
+The proposal author reviewed these tests, confirmed the usage and the fix list, and will review
+the PR implementing the fixes.
 
 ## References
 
