@@ -5129,6 +5129,19 @@
     "draft": false
   },
   {
+    "source": "posts/2026-10-13-offline-speech-to-text-nerd-dictation.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-10-13-offline-speech-to-text-nerd-dictation.html",
+    "title": "Offline speech-to-text on Linux with nerd-dictation",
+    "date": "2026-10-13",
+    "categories": [
+      "linux",
+      "tools"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
     "source": "posts/italian-classes-chess-san-diego-2025.md",
     "source_type": "md",
     "canonical": "/posts/italian-classes-chess-san-diego-2025.html",
