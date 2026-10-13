@@ -179,7 +179,7 @@ def main() -> int:
             summary.append(f"PARSE ISSUE: {r['source']}")
     with open(os.path.join(OUT_DIR, "summary.txt"), "w", encoding="utf-8") as fh:
         fh.write("\n".join(summary) + "\n")
-    print(f"Generated: {datetime.now(timezone.utc).isoformat()}Z")
+    print(f"Generated: {datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')}")
     print("\n".join(summary))
     return 1 if duplicates or missing_meta else 0
 
