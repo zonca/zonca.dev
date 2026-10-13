@@ -1,5 +1,5 @@
 ---
-name: zonca.dev
+name: zonca-dev
 description: Create a new blog post on zonca.dev using Jules.
 ---
 
