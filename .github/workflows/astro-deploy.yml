@@ -140,6 +140,9 @@ jobs:
       - name: Install Python dependencies
         run: pip install --user pyyaml nbformat
 
+      - name: Regenerate baseline manifest
+        run: python scripts/baseline_manifest.py
+
       - name: Install Node dependencies
         run: npm ci
 
@@ -169,6 +172,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install --user pyyaml nbformat
+
+      - name: Regenerate baseline manifest
+        run: python scripts/baseline_manifest.py
 
       - name: Connectivity smoke test
         run: |
