@@ -77,7 +77,9 @@ instant revocation. There is no way to expose services to the public internet.
 ## Fresh benchmarks (2026-10-13)
 
 Measured directly against Ollama's API (`/api/generate`), model warm, memory
-bandwidth bound:
+bandwidth bound. Context size during the benchmark: the server is configured
+with `OLLAMA_CONTEXT_LENGTH=65536`, while the model natively supports 262,144
+tokens.
 
 | Metric | Result |
 |---|---|
