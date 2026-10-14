@@ -41,6 +41,14 @@ bf16 checkpoint sits on similar 80 GB-class GPUs.
   the model ends its answer early).
 - Same lorem-ipsum prompts at every context length.
 
+Fairness caveat: this is not a controlled benchmark. The two sides differ in
+quantization (NVFP4 vs bf16), inference engine (Ollama/MLX vs vLLM), and serving
+environment (a dedicated little machine vs a shared, multi-tenant GPU fleet
+where my requests share capacity with other users, and the NRP timings include
+network round-trip). It is simply the comparison I had access to: the same 27B
+model, available both locally and on a managed service, with numbers measured
+on each side as honestly as I could.
+
 ## Results
 
 ### pi startup (first answer)
