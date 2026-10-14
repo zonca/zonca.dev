@@ -5,14 +5,14 @@ categories: [ai]
 layout: post
 ---
 
-How much does datacenter hardware buy you over an Apple Silicon dev box? I had
-the rare chance to measure it without confounds: the [NRP managed LLM
+How much does datacenter hardware buy you over an Apple Silicon dev box? Fun
+coincidence: the [NRP managed LLM
 service](https://nrp.ai/documentation/userdocs/ai/llm-managed/) hosts
 **Qwen3.8-27B** (api name `qwen3-small`) in bf16 on their Nautilus GPU fleet,
 and my Mac mini (setup described in
 [this post's PR](https://github.com/zonca/zonca.dev/pull/142)) serves the **same
 model** quantized to NVFP4 on the MLX engine. Same weights, same task, two very
-different machines.
+different machines, so it is a fun apples-to-apples comparison.
 
 ## The two hosts
 
@@ -85,19 +85,14 @@ different floor.
 ## What this means in practice
 
 - If your work is **latency of long prompts or huge context**, the data center
-  wins decisively: 15-35× prefill, and a 1 M context window that a 48 GB Mac
-  cannot allocate (262 K is the native limit and swaps at max).
+  wins: 15-35× prefill, and a 1 M context window that a 48 GB Mac cannot
+  allocate (262 K is the native limit and swaps at max).
 - If your work is **interactive agents with short-ish context** (the pi startup
-  test), the Mac mini is completely fine once warm, and it is private, free,
-  quota-free, and revocable-free for server-side policies.
-- NRP is also free for researchers and requires only a token from
-  [nrp.ai/llmtoken](https://nrp.ai/llmtoken/) and a namespace with the LLM flag;
-  it is a shared fleet, so other tenants can add variance.
-- On price: the Mac mini was a **~$1,800 one-time purchase** (no per-token or
-  monthly fees, and no data leaves your machine), while NRP is free for
-  researchers but is a shared, hosted service. After a few months of daily
-  agent use the hardware is already the cheaper option, and it keeps working
-  without a token, a namespace, or a network egress path.
+  test), the Mac mini is fine once warm, and it is private, quota-free, and
+  nothing leaves your machine.
+- NRP is free for researchers, needs only a token from
+  [nrp.ai/llmtoken](https://nrp.ai/llmtoken/) and a namespace with the LLM flag,
+  and it is a shared fleet, so other tenants can add variance.
 
 ## What the NRP side would cost to buy
 
