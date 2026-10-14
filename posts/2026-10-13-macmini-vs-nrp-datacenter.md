@@ -99,5 +99,28 @@ different floor.
   agent use the hardware is already the cheaper option, and it keeps working
   without a token, a namespace, or a network egress path.
 
+## What the NRP side would cost to replicate
+
+Estimating what the NRP LLM service costs is hard (it is NSF-funded shared
+infrastructure), but the hardware alone gives a sense of scale. A single
+Qwen3.8-27B bf16 model needs roughly 54 GB of weights, so about **2x A100 80 GB
+GPUs** (or one heavily constrained), and a full catalog like NRP's (Qwen 180B,
+deepseek 304B, glm 753B, kimi 1T and more) means tens of GPUs. Order-of-magnitude
+in cloud-rental terms:
+
+| Component (catalog-scale) | Estimate |
+|---|---|
+| GPUs (roughly 25-40 A100/H100-class, 24/7 reserved rate ~$1.5-3/h each) | ~$30-60K/month |
+| Fast local storage for weights (~1-2 TB NVMe per host) | ~$1-3K/month |
+| Shared storage, network, load balancer, monitoring | ~$1-2K/month |
+| Staff to run the fleet and the gateway | the biggest real cost |
+| As a single model (qwen3-small only) | ~$2-3K/month (2x A100, reserved) |
+
+So a Mac mini at ~$1,800 is roughly **six months of one GPU's equivalent**; the
+whole NRP operation is more like a small datacenter budget, which is why it is
+funded by NSF awards (e.g., CNS-1730158, OAC-2112167) rather than billed
+per-user. For a single researcher, NRP is the free option; for a lab that needs
+many hours of private inference, the $1,800 box amortizes fast.
+
 My setup: I run the Mac mini as the always-on private server for daily agent
 work, and I keep NRP as the fast, long-context option when the prompt is huge.
