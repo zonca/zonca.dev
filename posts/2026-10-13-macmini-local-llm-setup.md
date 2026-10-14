@@ -6,11 +6,11 @@ layout: post
 ---
 
 This is the technical companion to the
-[experience post](/posts/2026-10-13-macmini-local-llm-experience): how the Mac
+[experience post](./2026-10-13-macmini-local-llm-experience.md): how the Mac
 mini is set up, how every service runs, and where the configuration lives.
 The benchmark details (prefill, decode, context stress test, agent context
 sizes) are here too. The data-center comparison is in the
-[comparison post](/posts/2026-10-13-macmini-vs-nrp-datacenter).
+[comparison post](./2026-10-13-macmini-vs-nrp-datacenter.md).
 
 ## The machine and the model
 

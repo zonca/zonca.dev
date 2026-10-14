@@ -10,8 +10,8 @@ coincidence: the [NRP managed LLM
 service](https://nrp.ai/documentation/userdocs/ai/llm-managed/) hosts
 **Qwen3.8-27B** (api name `qwen3-small`) in bf16 on their Nautilus GPU fleet,
 and my Mac mini (the high-level story is in the
-[experience post](/posts/2026-10-13-macmini-local-llm-experience), the full
-setup in the [setup post](/posts/2026-10-13-macmini-local-llm-setup)) serves the
+[experience post](./2026-10-13-macmini-local-llm-experience.md), the full
+setup in the [setup post](./2026-10-13-macmini-local-llm-setup.md)) serves the
 **same model** quantized to NVFP4 on the MLX engine. Same weights, same task, two
 very different machines, so it is a fun apples-to-apples comparison.
 

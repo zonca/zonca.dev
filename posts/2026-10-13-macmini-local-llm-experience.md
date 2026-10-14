@@ -10,9 +10,9 @@ Qwen 3.8 model, served over my Tailscale tailnet, used every day by my coding
 agent to handle emails, Trello cards, and general project work. This post is
 the high-level story: what it is good at, what the speed actually feels like,
 and where I would want more. The technical setup is in the
-[setup post](/posts/2026-10-13-macmini-local-llm-setup), and a fun comparison
+[setup post](./2026-10-13-macmini-local-llm-setup.md), and a fun comparison
 against data-center hardware is in the
-[comparison post](/posts/2026-10-13-macmini-vs-nrp-datacenter).
+[comparison post](./2026-10-13-macmini-vs-nrp-datacenter.md).
 
 ## By the numbers
 
@@ -56,4 +56,4 @@ full speed.
 
 So: capable enough, almost fast enough, and the tool use is great. Details on
 how it is set up are in the
-[next post](/posts/2026-10-13-macmini-local-llm-setup).
+[next post](./2026-10-13-macmini-local-llm-setup.md).
