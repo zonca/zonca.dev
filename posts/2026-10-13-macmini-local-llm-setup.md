@@ -51,8 +51,9 @@ plist: after an edit, use `bootout` plus `bootstrap`.
 The mini sits on the office LAN, where port 22 and 11434 should not be
 reachable. Two mechanisms do that:
 
-1. **Ollama bound to the tailnet IP:** `OLLAMA_HOST=100.91.172.9:11434` in the
-   plist, so the server listens only on the Tailscale address.
+1. **Ollama bound to the tailnet address:** `OLLAMA_HOST` set to the node's
+   Tailscale IP with port 11434 in the plist, so the server listens only on the
+   Tailscale interface.
 2. **pf firewall for SSH:** macOS sshd is launchd socket-activated and always
    creates a `*:22` socket (its `ListenAddress` in sshd_config is ignored). A
    pf anchor allows ports 22 and 11434 only on the tailnet interface `utun0`
@@ -60,8 +61,8 @@ reachable. Two mechanisms do that:
    automatically, so a second daemon (`com.zonca.pfctl-enable`) runs `pfctl -e`
    at boot.
 
-A listener audit shows only `launchd *:22` (pf-filtered),
-`ollama 100.91.172.9:11434`, and Tailscale's own sockets.
+A listener audit shows only `launchd *:22` (pf-filtered), Ollama on the
+Tailscale-only address `:11434`, and Tailscale's own sockets.
 
 **Sharing with colleagues:** Tailscale device sharing (admin console, Machines,
 Share this machine) gives each invited person access to only the Mac mini, with
