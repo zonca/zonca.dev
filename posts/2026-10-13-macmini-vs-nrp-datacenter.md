@@ -24,6 +24,7 @@ different machines.
 | Engine | Ollama + MLX, MTP speculative decoding | vLLM, chunked prefill |
 | Context | 200,000 (native 262,144) | 1,000,000 (262K native, YaRN-extended) |
 | Access | private tailnet | public OpenAI-compatible API, free for researchers |
+| Price | ~$1,800 one-time (new, 2026) | free (NSF-funded NRP service) |
 
 The NRP fleet serves many models (see the
 [catalog](https://nrp.ai/documentation/userdocs/ai/llm-managed/models/)); the docs
@@ -92,6 +93,11 @@ different floor.
 - NRP is also free for researchers and requires only a token from
   [nrp.ai/llmtoken](https://nrp.ai/llmtoken/) and a namespace with the LLM flag;
   it is a shared fleet, so other tenants can add variance.
+- On price: the Mac mini was a **~$1,800 one-time purchase** (no per-token or
+  monthly fees, and no data leaves your machine), while NRP is free for
+  researchers but is a shared, hosted service. After a few months of daily
+  agent use the hardware is already the cheaper option, and it keeps working
+  without a token, a namespace, or a network egress path.
 
 My setup: I run the Mac mini as the always-on private server for daily agent
 work, and I keep NRP as the fast, long-context option when the prompt is huge.
