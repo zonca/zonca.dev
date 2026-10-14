@@ -67,20 +67,19 @@ test above.
 
 | Context in KV | Mac mini | NRP |
 |---|---|---|
-| short | 29-33 tok/s | - |
+| short (2.8K prompt) | 29-33 tok/s | ~38 tok/s |
 | 50 K | 13.1 tok/s | 28.0 tok/s |
 | 100 K | 10.7 tok/s | 24.1 tok/s |
 | 150 K | 7.9 tok/s | 10.4 tok/s |
 
-Generation is where the gap almost disappears. Both are bandwidth bound per
-token, and the two sides trade advantages: the Mac mini reads 4-bit weights
-(NVFP4 is about a quarter of the bytes of bf16) and gets MTP speculative
-decoding (drafting 2-3 tokens per step, measured acceptance 0.8-0.94); NRP has
-far more memory bandwidth but reads bf16 weights and serves without the MTP
-speedup. The result is that decode is a wash at 50-100 K, and NRP stays ahead
-at 150 K. On both sides generation degrades with context (every token attends
-over the whole prefix), which is the same quadratic-ish behavior, just with a
-different floor.
+Generation is where the gap is smaller. Both are bandwidth bound per token, and
+the two sides trade advantages: the Mac mini reads 4-bit weights (NVFP4 is about
+a quarter of the bytes of bf16) and gets MTP speculative decoding (drafting 2-3
+tokens per step, measured acceptance 0.8-0.94); NRP has much more memory
+bandwidth but reads bf16 weights and serves without the MTP speedup. The result:
+NRP is about 30% faster at short context, both land close at 50-100 K, and NRP
+stays a bit ahead at 150 K. On both sides generation degrades with context
+(every token attends over the whole prefix), same behavior, different floor.
 
 ## What this means in practice
 
