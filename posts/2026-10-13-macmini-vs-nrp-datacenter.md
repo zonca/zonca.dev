@@ -7,7 +7,7 @@ layout: post
 
 How much does datacenter hardware buy you over an Apple Silicon dev box? I had
 the rare chance to measure it without confounds: the [NRP managed LLM
-service](https://nrp.ai/documentation/userdocs/ai/llm-managed) hosts
+service](https://nrp.ai/documentation/userdocs/ai/llm-managed/) hosts
 **Qwen3.8-27B** (api name `qwen3-small`) in bf16 on their Nautilus GPU fleet,
 and my Mac mini (setup described in
 [this post's PR](https://github.com/zonca/zonca.dev/pull/142)) serves the **same
@@ -26,7 +26,7 @@ different machines.
 | Access | private tailnet | public OpenAI-compatible API, free for researchers |
 
 The NRP fleet serves many models (see the
-[catalog](https://nrp.ai/documentation/userdocs/ai/llm-managed/models)); the docs
+[catalog](https://nrp.ai/documentation/userdocs/ai/llm-managed/models/)); the docs
 note, e.g., a 120B model fits "on a single A100 or two RTX A6000", so the 27B
 bf16 checkpoint sits on similar 80 GB-class GPUs.
 
@@ -57,8 +57,8 @@ but once the model is resident and the prefix is cached, pi comes back in ~2 s.
 
 | Prompt | Mac mini | NRP |
 |---|---|---|
-| 2-4 K tokens | ~101 tok/s | — |
-| 5 K tokens (TTFB) | — | ~0.75 s (~14.5 K tok/s est.) |
+| 2-4 K tokens | ~101 tok/s | - |
+| 5 K tokens (TTFB) | - | ~0.75 s (~14.5 K tok/s est.) |
 | 50 K tokens (TTFB) | 578 s | 33.7 s |
 | 100 K tokens (TTFB) | 854 s | 37.9 s |
 | 150 K tokens (TTFB) | 605 s (prefix-cached) | 41.8 s |
@@ -72,7 +72,7 @@ network and scheduling, so the real prefill speed is even higher.)
 
 | Context in KV | Mac mini | NRP |
 |---|---|---|
-| short | 29-33 tok/s | — |
+| short | 29-33 tok/s | - |
 | 50 K | 13.1 tok/s | 28.0 tok/s |
 | 100 K | 10.7 tok/s | 24.1 tok/s |
 | 150 K | 7.9 tok/s | 10.4 tok/s |
