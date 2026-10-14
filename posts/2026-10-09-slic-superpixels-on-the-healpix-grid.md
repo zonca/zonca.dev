@@ -93,6 +93,15 @@ All examples use a synthetic nside=64 map, a large-scale gradient plus Gaussian 
   not expect to track structures across resolutions:
 
   ![Adjusted Rand index across nside pairs](slic-superpixels-nside-ari.png)
+
+  Two follow-up experiments pin down the mechanism: from identical physical seeds the very first
+  assignment already agrees at ARI 0.96 to 0.98 and the agreement decays iteration by iteration
+  (the pixel grid itself is the perturbation that steers the k-means), while the quality of the
+  final partitions is the same at every resolution, within-superpixel feature RMS and angular
+  radius constant to within a percent. Different but equally good local minima; plain 2D SLIC is
+  not resolution-invariant either, so this is the algorithm, not a bug:
+
+  ![ARI divergence over k-means iterations](slic-superpixels-ari-divergence.png)
 - compactness=0 gives divide-by-zero warnings and an all-unassigned result; negative values
   silently behave like their absolute value (the feature term is squared). Needs validation.
 - compactness carries the units of the map: scaling the map by 1000 with the same compactness
