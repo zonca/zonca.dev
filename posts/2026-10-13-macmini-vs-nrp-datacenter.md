@@ -55,18 +55,12 @@ but once the model is resident and the prefix is cached, pi comes back in ~2 s.
 
 ### Prefill (ingesting the prompt)
 
-| Prompt | Mac mini | NRP |
-|---|---|---|
-| 2-4 K tokens | ~101 tok/s | - |
-| 5 K tokens (TTFB) | - | ~0.75 s (~14.5 K tok/s est.) |
-| 50 K tokens (TTFB) | 578 s | 33.7 s |
-| 100 K tokens (TTFB) | 854 s | 37.9 s |
-| 150 K tokens (TTFB) | 605 s (prefix-cached) | 41.8 s |
-
-Prefill is memory-bandwidth bound, and here the datacenter wins by 15-35×: the
-M4 Pro moves ~273 GB/s while an A100-class GPU moves multiple TB/s from HBM,
-and vLLM additionally pipelines/chunks the prefill. (NRP's TTFB includes
-network and scheduling, so the real prefill speed is even higher.)
+Local prefill is measured server-side: ~101 tok/s for short prompts (the clock
+here is memory bandwidth, and NRP's prefill is in a different league: A100-class
+HBM at multiple TB/s plus vLLM chunked prefill, versus ~273 GB/s on the M4 Pro).
+NRP's API does not expose server-side prefill timings, so I do not report a
+prefill number for it; the practical consequence shows up in the pi startup
+test above.
 
 ### Generation (decode) at growing context
 
