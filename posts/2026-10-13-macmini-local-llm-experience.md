@@ -65,9 +65,10 @@ time**: about 30 seconds for a cold first answer (loading the model plus the
 agent's preamble). It is a bit annoying, but honestly acceptable: 30 seconds
 is fine when you are starting a real task.
 
-The ideal would be an even smaller agent harness that gets to the first answer
-in about 5 seconds. I think that would be enough to feel instant, and it is
-what I am looking for next. In practice the startup pain mostly disappears
+To be clear, even 10 seconds of startup would already be fine. The ideal would
+be an even smaller agent harness that gets to the first answer in about 5
+seconds: I think that would be enough to feel instant, and it is what I am
+looking for next. In practice the startup pain mostly disappears
 once you are in a batch: the server keeps the model and the cached preamble
 warm for hours, so when I process several emails or several Trello cards one
 after the other, I pay the startup once and every following item starts
