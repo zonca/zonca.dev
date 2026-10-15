@@ -5,15 +5,17 @@ categories: [ai]
 layout: post
 ---
 
-How much does datacenter hardware buy you over an Apple Silicon dev box? Fun
-coincidence: the [NRP managed LLM
-service](https://nrp.ai/documentation/userdocs/ai/llm-managed/) hosts
+How much does datacenter hardware buy you over an Apple Silicon dev box? To get
+a feeling for it, I could use the [NRP managed LLM
+service](https://nrp.ai/documentation/userdocs/ai/llm-managed/), which hosts
 **Qwen3.8-27B** (api name `qwen3-small`) in bf16 on their Nautilus GPU fleet,
-and my Mac mini (the high-level story is in the
+against my Mac mini (the high-level story is in the
 [experience post](./2026-10-13-macmini-local-llm-experience.md), the full
-setup in the [setup post](./2026-10-13-macmini-local-llm-setup.md)) serves the
-**same model** quantized to NVFP4 on the MLX engine. Same weights, same task, two
-very different machines, so it is a fun apples-to-apples comparison.
+setup in the [setup post](./2026-10-13-macmini-local-llm-setup.md)), which
+serves the **same model** quantized to NVFP4 on the MLX engine. The weights
+are the same on both sides, but everything around them differs, so this is
+definitely not a fair comparison: it is a fun one, meant only to give a sense
+of how large the performance difference is.
 
 ## The two hosts
 
@@ -25,7 +27,7 @@ very different machines, so it is a fun apples-to-apples comparison.
 | Engine | Ollama + MLX, MTP speculative decoding | vLLM, chunked prefill |
 | Context | 200,000 (native 262,144) | 1,000,000 (262,144 native, YaRN-extended) |
 | Access | private tailnet | public OpenAI-compatible API, free for researchers |
-| Price | ~$1,800 one-time (new, 2026) | free (NSF-funded NRP service) |
+| Price | ~\$1,800 one-time (new, 2026) | free (NSF-funded NRP service) |
 
 The NRP fleet serves many models (see the
 [catalog](https://nrp.ai/documentation/userdocs/ai/llm-managed/models/)); the docs
@@ -127,16 +129,16 @@ would be tens of GPUs). Buying that equivalent today (current list prices):
 
 | Component (purchase) | Estimate |
 |---|---|
-| 2× NVIDIA A100 80 GB (new, ~$9-13K each) | ~$18-26K |
-| Minimal server: 1U EPYC/Xeon, 256 GB RAM, 2 TB NVMe, 2× 2400 W PSU | ~$6-9K |
-| Total one-time | **~$25-35K** |
+| 2× NVIDIA A100 80 GB (new, ~\$9-13K each) | ~\$18-26K |
+| Minimal server: 1U EPYC/Xeon, 256 GB RAM, 2 TB NVMe, 2× 2400 W PSU | ~\$6-9K |
+| Total one-time | **~\$25-35K** |
 
-That is 14-19× the Mac mini's ~$1,800, before putting it in a rack: the GPU
+That is 14-19× the Mac mini's ~\$1,800, before putting it in a rack: the GPU
 server draws ~1.2-1.5 kW under load (and ~300-500 W idle) versus the Mac mini's
 tens of watts idle, so running the GPU box also needs real power and cooling.
 This is why NRP is funded by NSF awards (e.g., CNS-1730158, OAC-2112167) and
 shared across researchers instead of being bought per lab. For a single lab,
-the $1,800 Mac mini provides private 27B inference with no quota and no per-user
+the \$1,800 Mac mini provides private 27B inference with no quota and no per-user
 token; for a research group with heavy, high-concurrency or multi-model needs,
 the GPU server is the right tool.
 
