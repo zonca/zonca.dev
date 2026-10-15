@@ -32,6 +32,18 @@ The NRP fleet serves many models (see the
 note, e.g., a 120B model fits "on a single A100 or two RTX A6000", so the 27B
 bf16 checkpoint sits on similar 80 GB-class GPUs.
 
+Two rows of the table deserve a note. The data types are two precisions of the
+same weights: bf16 is the native 2-byte format (~54 GB), NVFP4 is a 4-bit
+quantization (~18 GB) that trades a little quality for a lot of memory, and it
+is what lets a 27B model fit comfortably in 48 GB. The engines differ too:
+both speak the OpenAI-compatible API, but vLLM is the datacenter serving
+stack (continuous batching, chunked prefill, prefix caching), while Ollama
+with the MLX engine is the simplest way to run models natively on Apple
+Silicon. The context column: NRP stretches the model's native 262,144-token
+window to 1 M with YaRN, a rope-scaling method that extends a trained window;
+the Mac mini stops at the native size because that is what 48 GB of memory
+can hold.
+
 ## Method
 
 - **Local:** direct `/api/generate`; timings from the server
@@ -65,12 +77,13 @@ but once the model is resident and the prefix is cached, pi comes back in ~2 s.
 
 ### Prefill (ingesting the prompt)
 
-Local prefill is measured server-side: ~101 tok/s for short prompts (the clock
-here is memory bandwidth, and NRP's prefill is in a different league: A100-class
-HBM at multiple TB/s plus vLLM chunked prefill, versus ~273 GB/s on the M4 Pro).
-NRP's API does not expose server-side prefill timings, so I do not report a
-prefill number for it; the practical consequence shows up in the pi startup
-test above.
+Local prefill is measured server-side: ~101 tok/s for short prompts, which is
+the M4 Pro memory-bandwidth floor (~273 GB/s). NRP's API does not expose
+server-side prefill timings, so I do not report a number for it; its A100-class
+HBM (multiple TB/s) plus vLLM's chunked prefill (processing the prompt in
+chunks so one long request does not block the whole GPU) puts it in a
+different league, and you can see the practical effect in the pi startup test
+above.
 
 ### Generation (decode) at growing context
 
@@ -81,8 +94,9 @@ test above.
 | 100 K | 10.7 tok/s | 24.1 tok/s |
 | 150 K | 7.9 tok/s | 10.4 tok/s |
 
-Generation is where the gap is smaller. Both are bandwidth bound per token, and
-the two sides trade advantages: the Mac mini reads 4-bit weights (NVFP4 is about
+Generation is where the gap is smaller. Every generated token requires reading
+the whole model from memory once, so both sides are bandwidth bound per token,
+and they trade advantages: the Mac mini reads 4-bit weights (NVFP4 is about
 a quarter of the bytes of bf16) and gets MTP speculative decoding (drafting 2-3
 tokens per step, measured acceptance 0.8-0.94); NRP has much more memory
 bandwidth but reads bf16 weights and serves without the MTP speedup. The result:
