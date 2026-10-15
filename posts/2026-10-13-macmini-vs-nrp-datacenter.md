@@ -23,7 +23,7 @@ very different machines, so it is a fun apples-to-apples comparison.
 | Memory bandwidth | ~273 GB/s | 2 TB/s+ (HBM) |
 | Data type | NVFP4 (4-bit, 18 GB) | bf16 native (54 GB) |
 | Engine | Ollama + MLX, MTP speculative decoding | vLLM, chunked prefill |
-| Context | 200,000 (native 262,144) | 1,000,000 (262K native, YaRN-extended) |
+| Context | 200,000 (native 262,144) | 1,000,000 (262,144 native, YaRN-extended) |
 | Access | private tailnet | public OpenAI-compatible API, free for researchers |
 | Price | ~$1,800 one-time (new, 2026) | free (NSF-funded NRP service) |
 
@@ -38,7 +38,7 @@ bf16 checkpoint sits on similar 80 GB-class GPUs.
   (`prompt_eval_duration`, `eval_duration`), so no client overhead.
 - **NRP:** `/v1/chat/completions` streaming with thinking disabled
   (`chat_template_kwargs: {enable_thinking: false}`) and a `cache_salt`; decode
-  speed measured from stream timings (samples are small, 25-42 tokens, because
+  speed measured from stream timings (samples are small, 25-102 tokens, because
   the model ends its answer early).
 - Same lorem-ipsum prompts at every context length.
 
@@ -76,7 +76,7 @@ test above.
 
 | Context in KV | Mac mini | NRP |
 |---|---|---|
-| short (2.8K prompt) | 29-33 tok/s | ~38 tok/s |
+| short (2.8K prompt) | 28-33 tok/s | ~38 tok/s |
 | 50 K | 13.1 tok/s | 28.0 tok/s |
 | 100 K | 10.7 tok/s | 24.1 tok/s |
 | 150 K | 7.9 tok/s | 10.4 tok/s |
@@ -86,15 +86,18 @@ the two sides trade advantages: the Mac mini reads 4-bit weights (NVFP4 is about
 a quarter of the bytes of bf16) and gets MTP speculative decoding (drafting 2-3
 tokens per step, measured acceptance 0.8-0.94); NRP has much more memory
 bandwidth but reads bf16 weights and serves without the MTP speedup. The result:
-NRP is about 30% faster at short context, both land close at 50-100 K, and NRP
-stays a bit ahead at 150 K. On both sides generation degrades with context
-(every token attends over the whole prefix), same behavior, different floor.
+NRP is somewhat faster at short context (~38 vs ~30 tok/s), both land close at
+50-100 K, and NRP stays a bit ahead at 150 K. On both sides generation degrades
+with context (every token attends over the whole prefix), same behavior,
+different floor.
 
 ## What this means in practice
 
 - If your work is **latency of long prompts or huge context**, the data center
-  wins: 15-35× prefill, and a 1 M context window that a 48 GB Mac cannot
-  allocate (262 K is the native limit and swaps at max).
+  wins: the same cold-session agent test lands in ~3 s instead of ~31 s, prefill
+  there is easily an order of magnitude faster, and NRP offers a 1 M context
+  window that a 48 GB Mac cannot allocate (262,144 is the native limit and it
+  swaps at the max).
 - If your work is **interactive agents with short-ish context** (the pi startup
   test), the Mac mini is fine once warm, and it is private, quota-free, and
   nothing leaves your machine.
@@ -105,16 +108,16 @@ stays a bit ahead at 150 K. On both sides generation degrades with context
 ## What the NRP side would cost to buy
 
 A single Qwen3.8-27B bf16 model needs roughly 54 GB of weights, so about
-**2x A100 80 GB GPUs** is the realistic minimal setup (a full catalog like NRP's
+**2× A100 80 GB GPUs** is the realistic minimal setup (a full catalog like NRP's
 would be tens of GPUs). Buying that equivalent today (current list prices):
 
 | Component (purchase) | Estimate |
 |---|---|
-| 2x NVIDIA A100 80 GB (new, ~$9-13K each) | ~$18-26K |
-| Minimal server: 1U EPYC/Xeon, 256 GB RAM, 2 TB NVMe, 2x 2400 W PSU | ~$6-9K |
+| 2× NVIDIA A100 80 GB (new, ~$9-13K each) | ~$18-26K |
+| Minimal server: 1U EPYC/Xeon, 256 GB RAM, 2 TB NVMe, 2× 2400 W PSU | ~$6-9K |
 | Total one-time | **~$25-35K** |
 
-That is 14-19x the Mac mini's ~$1,800, before putting it in a rack: the GPU
+That is 14-19× the Mac mini's ~$1,800, before putting it in a rack: the GPU
 server draws ~1.2-1.5 kW under load (and ~300-500 W idle) versus the Mac mini's
 tens of watts idle, so running the GPU box also needs real power and cooling.
 This is why NRP is funded by NSF awards (e.g., CNS-1730158, OAC-2112167) and

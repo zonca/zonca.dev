@@ -61,8 +61,8 @@ reachable. Two mechanisms do that:
    automatically, so a second daemon (`com.zonca.pfctl-enable`) runs `pfctl -e`
    at boot.
 
-A listener audit shows only `launchd *:22` (pf-filtered), Ollama on the
-Tailscale-only address `:11434`, and Tailscale's own sockets.
+A listener audit then shows only `launchd *:22` (pf-filtered), Ollama bound to
+the Tailscale address on port 11434, and Tailscale's own sockets.
 
 **Sharing with colleagues:** Tailscale device sharing (admin console, Machines,
 Share this machine) gives each invited person access to only the Mac mini, with
@@ -86,8 +86,9 @@ tokens.
 | MTP acceptance (measured across runs) | 0.80-0.94 |
 | Cold model load (after full unload) | ~4 s |
 
-Prefill is stable at ~100 tok/s regardless of length: the M4 Pro memory
-bandwidth floor for a 27B dense hybrid.
+Prefill sits at ~100 tok/s for short prompts: the M4 Pro memory-bandwidth floor
+for a 27B dense hybrid. At very long contexts it degrades, which is what the
+stress test below shows.
 
 ### Context stress test
 
@@ -129,4 +130,6 @@ bottleneck, so pi wins.
 
 The complete configuration (launchd plist, pf anchor, pf-enable daemon, and the
 OpenAI-compatible provider configs for pi, goose, and crush) is in this
-[gist](https://gist.github.com/zonca/fdb12050fb7af8a092d1dbae10a2bf0e).
+[gist](https://gist.github.com/zonca/fdb12050fb7af8a092d1dbae10a2bf0e):
+
+<script src="https://gist.github.com/zonca/fdb12050fb7af8a092d1dbae10a2bf0e.js"></script>

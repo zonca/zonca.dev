@@ -20,18 +20,18 @@ against data-center hardware is in the
 |---|---|
 | First answer, cold session (model unloaded) | ~30 s |
 | First answer, warm session (model resident, prompt cached) | ~2 s |
-| Generation, small context | 20-30 tok/s |
+| Generation, small context | 26-33 tok/s |
 | Prompt processing (prefill) | ~100 tok/s |
 | Context window (practical) | 200 K |
 
 ## Verdict: capable enough and (almost) fast enough
 
-The headline is the verdict in the title. Tool use is great: the agent reads
-files, edits them, runs commands, and calls MCP tools reliably, and the model
-handles the multi-step back-and-forth that interactive work needs. Where it
-really shines is **project management work**: processing Trello cards, reading
-and writing emails, updating notes and documentation, one item at a time. That
-is what I use it for most, and it gets the job done comfortably.
+Short version: the title is the honest summary. Tool use is great: the agent
+reads files, edits them, runs commands, and calls MCP tools reliably, and the
+model handles the multi-step back-and-forth that interactive work needs. Where
+it really shines is **project management work**: processing Trello cards,
+reading and writing emails, updating notes and documentation, one item at a
+time. That is what I use it for most, and it gets the job done comfortably.
 
 I also tried it on more complicated coding tasks, and I was quite surprised at
 how good it was. That said, I also have access to much more powerful models
@@ -40,9 +40,9 @@ extensively, and I cannot give a genuinely solid opinion on that use case yet.
 
 ## On speed
 
-For interactive work, 20-30 tokens per second at small context is plenty: the
-responses stream smoothly and the wait is barely noticeable. The one speed
-feature I notice every session is the **startup time**: about 30 seconds for a
+For interactive work, about 30 tokens per second at small context is plenty:
+the responses stream smoothly and the wait is barely noticeable. The one speed
+bump I notice every session is the **startup time**: about 30 seconds for a
 cold first answer (loading the model plus the agent's preamble). It is a bit
 annoying, but honestly acceptable: 30 seconds is fine when you are starting a
 real task.
