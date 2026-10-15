@@ -159,3 +159,7 @@ OpenAI-compatible provider configs for pi, goose, and crush) is in this
 [gist](https://gist.github.com/zonca/fdb12050fb7af8a092d1dbae10a2bf0e):
 
 <script src="https://gist.github.com/zonca/fdb12050fb7af8a092d1dbae10a2bf0e.js"></script>
+
+Once all of this runs, the natural question is how the little machine compares
+against real data-center hardware serving the same model: that is the
+[next post](./2026-10-13-macmini-vs-nrp-datacenter.md).
