@@ -6,16 +6,21 @@ layout: post
 ---
 
 How much does datacenter hardware buy you over an Apple Silicon dev box? To get
-a feeling for it, I could use the [NRP managed LLM
+a feeling for it, I set the [NRP managed LLM
 service](https://nrp.ai/documentation/userdocs/ai/llm-managed/), which hosts
 **Qwen3.8-27B** (api name `qwen3-small`) in bf16 on their Nautilus GPU fleet,
 against my Mac mini (the high-level story is in the
 [experience post](./2026-10-13-macmini-local-llm-experience.md), the full
 setup in the [setup post](./2026-10-13-macmini-local-llm-setup.md)), which
-serves the **same model** quantized to NVFP4 on the MLX engine. The weights
-are the same on both sides, but everything around them differs, so this is
-definitely not a fair comparison: it is a fun one, meant only to give a sense
-of how large the performance difference is.
+serves the **same model** quantized to NVFP4 on the MLX engine.
+
+> **Read this first:** this is not a fair or controlled comparison, and it is
+> not meant to be. The two sides differ in quantization (NVFP4 vs bf16),
+> inference engine (Ollama/MLX vs vLLM), and serving environment: a dedicated
+> machine on my desk against a shared, multi-tenant GPU fleet, with network
+> latency included in the NRP timings. It is simply the comparison I had
+> access to, and the only goal is to get a feeling for how large the
+> performance difference is.
 
 ## The two hosts
 
@@ -56,13 +61,8 @@ can hold.
   the model ends its answer early).
 - Same lorem-ipsum prompts at every context length.
 
-Fairness caveat: this is not a controlled benchmark. The two sides differ in
-quantization (NVFP4 vs bf16), inference engine (Ollama/MLX vs vLLM), and serving
-environment (a dedicated little machine vs a shared, multi-tenant GPU fleet
-where my requests share capacity with other users, and the NRP timings include
-network round-trip). It is simply the comparison I had access to: the same 27B
-model, available both locally and on a managed service, with numbers measured
-on each side as honestly as I could.
+As the disclaimer at the top says, the sides are not directly comparable; the
+numbers below are simply what each side measured, as honestly as I could.
 
 ## Results
 
