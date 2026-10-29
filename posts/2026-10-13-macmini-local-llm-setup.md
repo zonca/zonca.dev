@@ -3,6 +3,8 @@ title: "Mac mini as a private LLM server: the technical setup"
 date: "2026-10-13"
 categories: [ai]
 layout: post
+aliases:
+- /posts/2026-10-29-lfm25-24b-a2b-mac-mini
 ---
 
 This is the technical companion to the

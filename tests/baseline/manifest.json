@@ -5149,7 +5149,9 @@
     "categories": [
       "ai"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/2026-10-29-lfm25-24b-a2b-mac-mini"
+    ],
     "draft": false
   },
   {
@@ -5188,18 +5190,6 @@
       "github",
       "ai",
       "automation"
-    ],
-    "aliases": [],
-    "draft": false
-  },
-  {
-    "source": "posts/2026-10-29-lfm25-24b-a2b-mac-mini.md",
-    "source_type": "md",
-    "canonical": "/posts/2026-10-29-lfm25-24b-a2b-mac-mini.html",
-    "title": "LFM2.5-24B-A2B on a Mac mini: 10x faster prefill and 4x faster generation than Qwen 3.8-27B",
-    "date": "2026-10-29",
-    "categories": [
-      "ai"
     ],
     "aliases": [],
     "draft": false
