@@ -30,7 +30,7 @@ const totalPages = Math.max(1, Math.ceil(posts.length / PAGE_SIZE));
 const pagePosts = posts.slice(0, PAGE_SIZE);
 const catSlug = slugifyCategory(name);
 const catBase = `/categories/${catSlug}/page/`;
-const catFirst = `/categories/${catSlug}.html`;
+const catFirst = `/categories/${catSlug}`;
 ---
 
 <Base title={`${name} posts (${count})`} description={description} canonical={catFirst}>

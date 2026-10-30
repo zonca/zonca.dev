@@ -13,6 +13,7 @@ const topCategories = getCategoryStats(posts).slice(0, 24);
 <Base
   title="High Performance Computing & AI"
   description="Practical notes on Python, JupyterHub, Kubernetes and AI for science from the San Diego Supercomputer Center."
+  canonical="/"
 >
   <a style="display:none" rel="me" href="https://mastodon.online/@zonca">Mastodon</a>
   <div class="home">
@@ -36,7 +37,7 @@ const topCategories = getCategoryStats(posts).slice(0, 24);
           <ul class="cat-chips">
             {topCategories.map((cat) => (
               <li>
-                <a class="cat-chip" href={`/categories/${cat.slug}.html`}>
+                <a class="cat-chip" href={`/categories/${cat.slug}`}>
                   {cat.name}
                   <span class="cat-count">{cat.count}</span>
                 </a>

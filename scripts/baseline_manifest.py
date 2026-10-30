@@ -3,7 +3,9 @@
 
 Canonical URL conventions (verified against production, www.zonca.dev):
   - Posts (Markdown/QMD/notebook): /posts/<source-basename>.html
-    The .html form is the URL in the production sitemap.
+    The manifest tracks the frozen .html URL form (still served via a
+    redirect); the public sitemap and <link rel="canonical"> tags use the
+    extensionless final URLs.
   - Pages: index.qmd -> /index.html, about.qmd -> /about.html,
     ai/*.qmd -> /ai/<stem>.html, AGENTS.md -> /AGENTS.html,
     GEMINI.md -> /GEMINI.html, skill/SKILL.md -> /skill/SKILL.html

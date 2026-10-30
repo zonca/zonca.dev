@@ -26,7 +26,7 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 const date = entry.data.date ? formatDate(entry.data.date) : '';
 const source = entry.data.source ?? `posts/${entry.id}.md`;
-const canonical = `/posts/${entry.id}.html`;
+const canonical = `/posts/${entry.id}`;
 const description =
   entry.data.description ?? makeSummary(entry.body ?? '', entry.data.title ?? entry.id);
 

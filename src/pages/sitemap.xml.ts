@@ -4,7 +4,7 @@ import type { APIContext } from 'astro';
 const staticPages = [
   '/',
   '/about',
-  '/ai',
+  '/ai/',
   '/ai/research',
   '/ai/operations',
   '/ai/customers',

@@ -26,6 +26,7 @@ const { page, totalPages, posts } = Astro.props;
 <Base
   title={`Page ${page} - Andrea Zonca`}
   description="Practical notes on Python, JupyterHub, Kubernetes and AI for science from the San Diego Supercomputer Center."
+  canonical={`/page/${page}`}
 >
   <div class="home">
     <section class="home-hero">

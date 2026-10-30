@@ -5,7 +5,7 @@ export async function GET(context: APIContext) {
   const posts = await getAllPosts();
   const index = posts.map((p) => ({
     title: p.title,
-    url: `/posts/${p.id}.html`,
+    url: `/posts/${p.id}`,
     date: p.date ? p.date.toISOString().slice(0, 10) : '',
     categories: p.categories,
     summary: p.summary,

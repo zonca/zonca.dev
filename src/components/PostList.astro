@@ -12,7 +12,7 @@ const { posts } = Astro.props;
   {
     posts.map((post) => (
       <li class="post-item">
-        <a class="post-link" href={`/posts/${post.id}.html`}>
+        <a class="post-link" href={`/posts/${post.id}`}>
           <h2 class="post-item-title">{post.title}</h2>
           {
             post.date && (
@@ -28,7 +28,7 @@ const { posts } = Astro.props;
             <ul class="post-item-cats" aria-label="Categories">
               {post.categories.map((cat) => (
                 <li>
-                  <a href={`/categories/${slugifyCategory(cat)}.html`}>{cat}</a>
+                  <a href={`/categories/${slugifyCategory(cat)}`}>{cat}</a>
                 </li>
               ))}
             </ul>

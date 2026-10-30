@@ -8,10 +8,11 @@ export async function GET(context: APIContext) {
     title: 'Andrea Zonca',
     description: 'Scientific computing, astronomy, and AI.',
     site: context.site ?? 'https://www.zonca.dev',
+    trailingSlash: false,
     items: posts.map((post) => ({
       title: post.title,
       description: post.description,
-      link: `/posts/${post.id}.html`,
+      link: `/posts/${post.id}`,
       pubDate: post.date,
     })),
   });
