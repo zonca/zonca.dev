@@ -40,10 +40,14 @@ interface Props {
 const { name, count, description, page, totalPages, posts } = Astro.props;
 const catSlug = slugifyCategory(name);
 const catBase = `/categories/${catSlug}/page/`;
-const catFirst = `/categories/${catSlug}.html`;
+const catFirst = `/categories/${catSlug}`;
 ---
 
-<Base title={`${name} posts - page ${page} (${count})`} description={description}>
+<Base
+  title={`${name} posts - page ${page} (${count})`}
+  description={description}
+  canonical={`${catBase}${page}`}
+>
   <div class="home">
     <section class="home-hero category-hero">
       <p class="cat-eyebrow">

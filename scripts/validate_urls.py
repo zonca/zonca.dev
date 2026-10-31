@@ -10,7 +10,8 @@ Checks:
     returns 200 / a redirect chain ending at 200 when --live)
   - every alias maps to an existing canonical target
   - no duplicate/extra post routes; post counts match the manifest
-  - internal absolute links resolve inside dist/ (or return 200 when --live)
+  - internal absolute links (extensionless or .html) resolve inside dist/
+    (or return 200 when --live)
   - the generated _redirects file covers every manifest alias exactly once
 """
 from __future__ import annotations
@@ -82,7 +83,7 @@ def check_local(allow_drafts: bool = False):
             fail(f"redirects missing {len(missing_rules)} alias rules: {sorted(missing_rules)[:5]}")
         if extra_rules:
             fail(f"redirects contain {len(extra_rules)} unexpected rules: {sorted(extra_rules)[:5]}")
-        fixed_targets = {"/consult": "/ai/", "/consult/": "/ai/", "/page/1": "/", "/GEMINI": "/AGENTS.html"}
+        fixed_targets = {"/consult": "/ai/", "/consult/": "/ai/", "/page/1": "/", "/GEMINI": "/AGENTS"}
         for src in sorted(expected):
             rule = [r for r in rules if r.split()[0] == src]
             if rule:
@@ -97,7 +98,27 @@ def check_local(allow_drafts: bool = False):
     else:
         fail("dist/_redirects missing")
 
-    # internal absolute links resolve inside dist
+    # internal absolute links resolve inside dist: every root-relative URL must
+    # match a build artifact directly, through its extensionless page route
+    # (/about -> about.html), or through its directory index (/ai/ ->
+    # ai/index.html), or be a source covered by _redirects
+    def resolve_dist(url: str) -> str | None:
+        path = os.path.join(dist, url.lstrip("/"))
+        if os.path.isfile(path):
+            return path
+        if os.path.isfile(path + ".html"):
+            return path + ".html"
+        if url.endswith("/") and os.path.isfile(os.path.join(path, "index.html")):
+            return os.path.join(path, "index.html")
+        return None
+
+    redirect_sources: set[str] = set()
+    if os.path.exists(redirects_path):
+        for line in open(redirects_path, encoding="utf-8"):
+            line = line.strip()
+            if line and not line.startswith("#"):
+                redirect_sources.add(line.split()[0])
+
     href_re = re.compile(r'(?:href|src)="(/[^"#?]*)(?:[?#][^"]*)?"')
     broken: list[str] = []
     seen: set[str] = set()
@@ -112,10 +133,8 @@ def check_local(allow_drafts: bool = False):
             html = open(fp, encoding="utf-8", errors="replace").read()
             for m in href_re.finditer(html):
                 url = m.group(1)
-                if url.endswith(".html"):
-                    target = os.path.join(dist, url.lstrip("/"))
-                    if not os.path.exists(target):
-                        broken.append((os.path.relpath(fp, dist), url))
+                if resolve_dist(url) is None and url not in redirect_sources:
+                    broken.append((os.path.relpath(fp, dist), url))
     if broken:
         fail(f"{len(broken)} broken internal links (first 10):")
         for b in broken[:10]:

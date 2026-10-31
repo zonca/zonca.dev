@@ -23,7 +23,7 @@ Jetstream2 uses the Cluster API as the backend for Magnum, making it faster and 
 
 ## Advantages of Magnum-Based Deployments
 
-Magnum-based clusters offer several benefits over [Kubespray](/posts/kubernetes-jetstream2-kubespray):
+Magnum-based clusters offer several benefits over [Kubespray](/posts/2023-07-19-jetstream2_kubernetes_kubespray):
 
 - **Faster Deployment**: Instead of using Ansible to configure each VM, Magnum uses pre-prepared images. Clusters typically deploy in about 10 minutes, and workers can scale up in around 5 minutes.
 - **Load Balancer Integration**: The OpenStack load balancer service provides easy support for multiple master nodes, ensuring high availability.
