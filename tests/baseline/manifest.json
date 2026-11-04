@@ -5851,6 +5851,21 @@
     "draft": false
   },
   {
+    "source": "posts/2026-11-04-gnilc-dust-templates-impact-zero-level-fix.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2026-11-04-gnilc-dust-templates-impact-zero-level-fix.html",
+    "title": "GNILC dust templates: impact of the zero-level offset fix",
+    "date": "2026-11-04",
+    "categories": [
+      "python",
+      "pysm",
+      "astrophysics",
+      "cmb"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
     "source": "posts/2026-11-04-gnilc-dust-zero-level-offset-low-velocity-hi.ipynb",
     "source_type": "ipynb",
     "canonical": "/posts/2026-11-04-gnilc-dust-zero-level-offset-low-velocity-hi.html",
