@@ -539,12 +539,24 @@ a.page-link:hover {
 
 /* Section index for notebook posts, built from Astro's own heading slugs */
 .post-toc {
-  margin: 0 0 1.8rem;
+  margin: 0;
   padding: 0.85rem 1.1rem;
   background: var(--bg-soft);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   font-size: 0.9rem;
+}
+
+/* The index box already separates itself from the body, so the prose must not
+   add its 2.2rem top padding on top of it, nor the first heading its own top
+   margin on top of that. Padding blocks margin collapsing, so all three gaps
+   would otherwise stack. */
+.post-toc + .prose {
+  padding-top: 1.25rem;
+}
+
+.post-toc + .prose > :first-child {
+  margin-top: 0;
 }
 
 .post-toc-title {
