@@ -20,6 +20,11 @@ Before committing any blog post, **always** run these checks:
   production branch.
 - **Commit message format**: Use a concise, descriptive message that explains what changed and why.
 - **Never force-push** to `main`.
+- `main` is protected by two repository rulesets: `Tests` (requires the `build` and `preview`
+  status checks) and `Branch protection` (no deletions, no force pushes). The repository deploy
+  key `baseline manifest bot (workflow push to main)` is a bypass actor of `Tests` only, which
+  is what lets the `commit-baseline` workflow job push the regenerated `tests/baseline/`
+  fixture to `main`; the key still cannot delete or rewrite `main`.
 - For significant, experimental or multi-step work: push a topic branch and open a PR
   (PRs get a version preview + URL comment, and never touch production).
 
@@ -48,11 +53,15 @@ All existing URLs are frozen and verified in CI:
   baseline manifest (`tests/baseline/aliases.json`), and `scripts/baseline_manifest.py`
   regenerates it from source front matter.
 - `draft: true` posts stay off production but appear in PR previews.
-- CI regenerates and commits the `tests/baseline/` fixture automatically
-  (`auto: regenerate baseline manifest [skip ci]`); you do not need to do it
-  manually for content changes. If the auto-push failed (branch protection),
-  regenerate locally with `python3 scripts/baseline_manifest.py` and commit it
-  in the same push.
+- CI regenerates and commits the `tests/baseline/` fixture automatically after
+  every merge to `main` (the `commit-baseline` job of
+  `.github/workflows/astro-deploy.yml`, commit
+  `auto: regenerate baseline manifest [skip ci]`); you do not need to do it
+  manually for content changes. The push authenticates with the
+  `BASELINE_DEPLOY_KEY` secret (a repository deploy key with write access) and
+  is a hard failure, there is no silent fallback: if that job is red, the
+  fixture was not updated, so regenerate it locally with
+  `python3 scripts/baseline_manifest.py` and commit it with your change.
 
 ## Site build (Astro + Cloudflare)
 
@@ -63,7 +72,7 @@ All existing URLs are frozen and verified in CI:
   `scripts/prepare_pages.py` (copies QMD posts, root pages, assets, generates
   `public/_redirects` and `llms.txt`/`.well-known`) → `astro build`.
 - Validation: `python3 scripts/validate_urls.py` (dist) and `--live https://www.zonca.dev`
-  (production; run by CI after every deploy: 411 canonical URLs + 247 aliases).
+  (production; run by CI after every deploy: 424 canonical URLs + 249 aliases).
 - Notebooks: never execute them during builds; stored outputs (text/markdown/HTML/PNG/SVG)
   render as static content. Fix broken notebook output by editing the stored output.
 - The previous Quarto site is preserved in the `quarto-with-2026-10-01` release for rollback.
