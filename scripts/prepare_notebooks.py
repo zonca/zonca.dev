@@ -16,6 +16,7 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import sys
 from typing import Any
 
@@ -28,6 +29,74 @@ OUT_POSTS = os.path.join(ROOT, ".generated", "posts")
 OUT_IMAGES = os.path.join(ROOT, "public", "posts", "notebooks")
 
 ERRORS: list[str] = []
+
+FENCE_RE = re.compile(r"^\s*(?:```|~~~)")
+HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*#*\s*$")
+
+
+def section_headings(text: str) -> list[str]:
+    """Return level-2+ ATX headings in a markdown string, ignoring fenced blocks.
+
+    Astro turns each of these into `<h2 id="...">`, which is the only way a reader
+    can link straight at one part of a long notebook post, so a notebook without
+    any of them cannot be cited section by section.
+    """
+    found: list[str] = []
+    fenced = False
+    for line in text.split("\n"):
+        if FENCE_RE.match(line):
+            fenced = not fenced
+            continue
+        if fenced:
+            continue
+        m = HEADING_RE.match(line)
+        if m and len(m.group(1)) >= 2:
+            found.append(m.group(2).strip())
+    return found
+
+
+def norm_heading(text: str) -> str:
+    """Normalise a heading for title comparison.
+
+    Inline markup is dropped because it does not survive rendering: a notebook
+    titled `harmonic_ud_grade` vs `ud_grade` in the front matter and written with
+    backticks in the body shows identical words on the page.
+    """
+    text = re.sub(r"[`*_]", "", text)
+    return re.sub(r"\s+", " ", text).strip().lower()
+
+
+def drop_duplicate_title(body: str, title: str) -> str:
+    """Remove a leading `#` heading that repeats the front-matter title.
+
+    The post page prints the title itself in `<h1 class="post-title">`, so a
+    notebook that opens with the same words as a `#` heading shows them twice on
+    the page. Only the first heading in the document qualifies, and only when it
+    is level 1 and matches the title; a `#` further down is a real section
+    heading and stays. The heading need not be the first line: some notebooks
+    open with a notice before it.
+    """
+    lines = body.split("\n")
+    fenced = False
+    for i, line in enumerate(lines):
+        if FENCE_RE.match(line):
+            fenced = not fenced
+            continue
+        if fenced:
+            continue
+        m = HEADING_RE.match(line)
+        if not m:
+            continue
+        if len(m.group(1)) != 1 or norm_heading(m.group(2)) != norm_heading(title):
+            return body
+        del lines[i]
+        while i < len(lines) and not lines[i].strip():
+            if i == 0 or not lines[i - 1].strip():
+                del lines[i]
+            else:
+                break
+        return "\n".join(lines)
+    return body
 
 
 def front_matter(text: str) -> tuple[dict, str]:
@@ -162,6 +231,7 @@ def convert_notebook(path: str) -> None:
     meta: dict[str, Any] = {}
     counter = [0]
     body_parts: list[str] = []
+    sections: list[str] = []
 
     for i, cell in enumerate(nb.cells):
         if i == 0 and cell["cell_type"] in ("raw", "markdown"):
@@ -176,19 +246,61 @@ def convert_notebook(path: str) -> None:
                 cell["source"] = rest.splitlines(keepends=True)
                 if not rest.strip():
                     continue
+        if cell["cell_type"] == "markdown":
+            sections.extend(section_headings("".join(cell.get("source", []))))
         body_parts.append(cell_to_markdown(cell, stem, counter))
+
+    if len(sections) < 2:
+        ERRORS.append(
+            f"{path}: only {len(sections)} `##` section heading(s). The published post needs "
+            "at least two: the section index is built from them and is not worth "
+            "rendering for a single entry. Give each part of the notebook a `##` heading"
+        )
 
     meta.setdefault("title", stem)
     meta["date"] = meta.get("date") or os.path.basename(path)[:10]
     meta["source"] = f"posts/{os.path.basename(path)}"
     meta["notebook"] = True
     body = "\n".join(body_parts).strip() + "\n"
+    body = drop_duplicate_title(body, str(meta["title"]))
 
     fm_yaml = yaml.safe_dump(meta, sort_keys=False, allow_unicode=True).strip()
     out = os.path.join(OUT_POSTS, f"{stem}.md")
     os.makedirs(OUT_POSTS, exist_ok=True)
     with open(out, "w", encoding="utf-8") as fh:
         fh.write(f"---\n{fm_yaml}\n---\n\n{body}")
+
+
+def prune_stale(stems: set[str]) -> list[str]:
+    """Delete generated output whose notebook no longer exists (renamed or removed).
+
+    Only posts carrying the `notebook: true` marker are eligible. `prepare_pages.py`
+    writes the QMD posts into this same directory, and those must survive.
+    """
+    removed: list[str] = []
+    if os.path.isdir(OUT_POSTS):
+        for name in sorted(os.listdir(OUT_POSTS)):
+            if not name.endswith(".md"):
+                continue
+            stem = os.path.splitext(name)[0]
+            if stem in stems:
+                continue
+            path = os.path.join(OUT_POSTS, name)
+            try:
+                with open(path, encoding="utf-8") as fh:
+                    head = fh.read(4096)
+            except OSError:
+                continue
+            if re.search(r"^notebook: true$", head, re.M):
+                os.remove(path)
+                removed.append(f"post for {stem}")
+    if os.path.isdir(OUT_IMAGES):
+        for name in sorted(os.listdir(OUT_IMAGES)):
+            path = os.path.join(OUT_IMAGES, name)
+            if os.path.isdir(path) and name not in stems:
+                shutil.rmtree(path)
+                removed.append(f"image dir for {name}")
+    return removed
 
 
 def main() -> int:
@@ -201,6 +313,10 @@ def main() -> int:
         for e in ERRORS:
             print(f"  - {e}", file=sys.stderr)
         return 1
+    # Prune only after every notebook converted, so a parse failure cannot
+    # delete the output of the notebook that caused it.
+    for what in prune_stale({os.path.splitext(n)[0] for n in notebooks}):
+        print(f"pruned stale {what}")
     # Fail loudly if any generated route collides (e.g. stem clash with .md)
     md_stems = {os.path.splitext(f)[0] for f in os.listdir(POSTS) if f.endswith(".md")}
     generated = {os.path.splitext(f)[0] for f in os.listdir(OUT_POSTS)} if os.path.isdir(OUT_POSTS) else set()
@@ -208,7 +324,7 @@ def main() -> int:
     if clashes:
         print("Route collisions between notebooks and markdown posts:", clashes, file=sys.stderr)
         return 1
-    print(f"OK: generated {len(generated)} notebook posts")
+    print(f"OK: generated {len(notebooks)} notebook posts")
     return 0
 
 

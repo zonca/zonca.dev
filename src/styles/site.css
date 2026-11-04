@@ -32,6 +32,9 @@ html {
 html {
   scroll-behavior: smooth;
   overflow-x: clip;
+  /* The sticky header is measured in Base.astro because the nav wraps, so its
+     height changes with the viewport. Keeps `#anchor` jumps clear of it. */
+  scroll-padding-top: calc(var(--site-header-h, 4.5rem) + 0.75rem);
 }
 
 body {
@@ -534,7 +537,87 @@ a.page-link:hover {
   color: #fff;
 }
 
+/* Section index for notebook posts, built from Astro's own heading slugs */
+.post-toc {
+  margin: 0;
+  padding: 0.85rem 1.1rem;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+}
+
+/* The index box already separates itself from the body, so the prose must not
+   add its 2.2rem top padding on top of it, nor the first heading its own top
+   margin on top of that. Padding blocks margin collapsing, so all three gaps
+   would otherwise stack. */
+.post-toc + .prose {
+  padding-top: 1.25rem;
+}
+
+.post-toc + .prose > :first-child {
+  margin-top: 0;
+}
+
+.post-toc-title {
+  margin: 0 0 0.45rem;
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.post-toc ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.post-toc li {
+  margin: 0.3rem 0;
+}
+
+.post-toc li::marker {
+  color: var(--text-faint);
+}
+
+.post-toc a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.post-toc a:hover {
+  text-decoration: underline;
+}
+
+/* A long index must not push the notebook itself off a phone screen: at 390x844 a
+   12-section box measured 536px tall (63% of the viewport) with the first line of
+   prose below the fold. The "Contents" label stays put and the list scrolls under
+   it, so the body comes back into view without losing any link. */
+@media (max-width: 640px) {
+  .post-toc ul {
+    max-height: 9rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
 /* Prose typography */
+
+/* Older posts and notebooks use a body `#` heading as a real section level, and
+   there was no rule for it, so it rendered at the browser default 2rem, the same
+   size as the page title above it. The bounds keep the hierarchy at every width:
+   1.8rem ceiling stays under .post-title (clamp max 2.05rem), and the 1.5rem
+   floor matches .post-title's own minimum while staying above .prose h2
+   (1.45rem). */
+.prose h1 {
+  font-size: clamp(1.5rem, 4vw, 1.8rem);
+  letter-spacing: -0.02em;
+  margin: 2.6rem 0 0.75rem;
+  line-height: 1.25;
+  text-wrap: pretty;
+}
+
 .prose h2 {
   font-size: 1.45rem;
   letter-spacing: -0.015em;

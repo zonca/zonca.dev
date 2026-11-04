@@ -74,5 +74,15 @@ const isActive = (href: string) =>
         </span>
       </div>
     </footer>
+    <script is:inline>
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || typeof ResizeObserver === 'undefined') return;
+        const set = () =>
+          document.documentElement.style.setProperty('--site-header-h', `${header.offsetHeight}px`);
+        set();
+        new ResizeObserver(set).observe(header);
+      })();
+    </script>
   </body>
 </html>
