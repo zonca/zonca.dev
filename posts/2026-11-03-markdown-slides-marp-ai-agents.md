@@ -36,6 +36,13 @@ updates and proposals all fall in this group. For these, Markdown has clear adva
 - an AI agent reads and edits it like any other file, and has the rest of the project as context;
 - the design lives in a separate CSS theme, so the content and the look are changed independently.
 
+A theme with a real brand behind it follows the same pattern. For the San Diego Supercomputer Center
+I extracted the colours, the fonts, the geometry and the logos from the official PowerPoint template
+and rebuilt it as a CSS theme:
+[A Marp theme that reproduces the official SDSC slide template](./2026-11-03-sdsc-marp-theme.md),
+with the [theme repository](https://github.com/zonca/sdsc-marp-theme) and a
+[live preview of the demo deck](https://zonca.github.io/sdsc-marp-theme/).
+
 ---
 
 ## What a Marp deck looks like

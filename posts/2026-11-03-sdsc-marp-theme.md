@@ -8,11 +8,17 @@ description: "An open source Marp theme that reproduces the official SDSC slide 
 
 I recently built an open source Marp theme that reproduces the official San Diego Supercomputer Center (SDSC) slide template. This allows you to write your presentations in Markdown and have them look exactly like the official branded PowerPoint template, without actually having to use PowerPoint.
 
+This is the companion of my other post,
+[Write slides in Markdown with Marp when working with AI agents](./2026-11-03-markdown-slides-marp-ai-agents.md),
+where I explain the general workflow and the basics of building a deck with Marp and a custom CSS
+theme. Here the focus is on the brand: where every value of the theme comes from, and how to apply
+it to a real template.
+
 ![Marp theme for SDSC - all slides preview](img/sdsc-marp-theme-preview.png)
 
 ## Why a Marp theme for the SDSC template?
 
-The motivation for this project was simple: I prefer writing my slides in Markdown using [Marp](https://yhatt.github.io/marp/). However, for the SDSC tutorial and other SDSC talks, I needed the slides to strictly adhere to the official branded template. I wanted a way to achieve that professional, branded look directly from my Markdown source, ensuring the Markdown deck and the PowerPoint deck look identical.
+The motivation for this project was simple: I prefer writing my slides in Markdown using [Marp](https://marp.app/). However, for the SDSC tutorial and other SDSC talks, I needed the slides to strictly adhere to the official branded template. I wanted a way to achieve that professional, branded look directly from my Markdown source, ensuring the Markdown deck and the PowerPoint deck look identical.
 
 The point of the exercise was to have a deck that is written in Markdown but is indistinguishable from the official branded template. I have published an [interactive HTML preview of the 11 slide demo deck](https://zonca.github.io/sdsc-marp-theme/) (you can navigate it with your arrow keys, and it is a single self-contained HTML file) so anyone can see the result before installing anything. There is also a [PDF of the same deck](https://zonca.github.io/sdsc-marp-theme/deck.pdf) available.
 
@@ -39,8 +45,12 @@ The theme implements several slide layouts as CSS classes to match the PowerPoin
 *   `section` (includes a navy divider)
 *   `statement` (designed for one large, centred sentence)
 *   `lead`
-*   `columns` helper
+*   `dense` (smaller body text, for slides with more content)
+*   `cols` (or `columns`) helper for two columns
 *   Standard Marp background keywords are supported, such as `![bg right:45%](image.jpg)` for image right/left layouts.
+
+A blockquote is styled as a callout, with a gold rule on the left. The theme draws its own footer
+bar, so the Marp `header` and `footer` directives are not used and are hidden by the theme.
 
 The footer bar is implemented efficiently: it's drawn with a `section::before` pseudo element that carries the gray bar and both logos as background images. This ensures it always sits on top of full bleed background photos, matching exactly the "Image right + copy" layout found in the PowerPoint template.
 
@@ -48,11 +58,18 @@ To verify the accuracy, I rendered the official `.potx` with LibreOffice and com
 
 ## How to use the theme
 
-If you want to use this theme for your own presentations, here are the short installation instructions.
+The general workflow, writing slides in Markdown, building them with the Marp command line tool and
+reviewing them with an AI agent, is covered in my other post,
+[Write slides in Markdown with Marp when working with AI agents](./2026-11-03-markdown-slides-marp-ai-agents.md),
+which also has a generic example repository to start from. What follows is only what is specific to
+this theme:
 
-1.  Install the two brand fonts (both free from Google Fonts: [Teko](https://fonts.google.com/specimen/Teko) and [Source Sans 3](https://fonts.google.com/specimen/Source+Sans+3)).
-2.  Copy the `themes/` and `assets/` folders from the [repository](https://github.com/zonca/sdsc-marp-theme) into your deck's folder.
-3.  Add the following front matter to your Markdown deck:
+1.  Install the two brand fonts, [Teko](https://fonts.google.com/specimen/Teko) for the headlines and
+    [Source Sans 3](https://fonts.google.com/specimen/Source+Sans+3) for the body text, both free from
+    Google Fonts.
+2.  Copy the `themes/` and `assets/` folders from the [repository](https://github.com/zonca/sdsc-marp-theme)
+    into the folder of your deck. The `assets/` folder holds the official logos and photographs.
+3.  Point the front matter of the deck at the theme:
 
 ```markdown
 ---
@@ -63,16 +80,25 @@ size: 16:9
 ---
 ```
 
-4.  Render it using the Marp CLI:
+4.  Render it with the Marp command line tool:
 
 ```bash
-npx @marp-team/marp-cli deck.md --theme ../themes/sdsc.css --allow-local-files --images png
-npx @marp-team/marp-cli deck.md --theme ../themes/sdsc.css --allow-local-files --pdf
+npx @marp-team/marp-cli@latest deck.md --theme ../themes/sdsc.css --allow-local-files --images png
+npx @marp-team/marp-cli@latest deck.md --theme ../themes/sdsc.css --allow-local-files --pdf
 ```
 
-Note that the `--allow-local-files` flag is required because the theme references the local logo and photo files in the `assets/` folder. In Marp CLI 4 the PNG and the PDF outputs are separate options, hence the two commands.
+The `--allow-local-files` flag is required because the theme references the local logo and photo
+files in the `assets/` folder. In Marp CLI 4 the PNG and the PDF outputs are separate options, hence
+the two commands.
 
-**A note on reproducible environments (Linux)**: On Linux hosts where AppArmor blocks unprivileged user namespaces (such as Ubuntu 23.10 and newer), Chrome may abort with a `No usable sandbox!` error, and the Marp CLI cannot directly pass `--no-sandbox` to Puppeteer. To solve this, the repository ships with `scripts/chrome-wrapper.sh`, a tiny wrapper script that adds the necessary flag. You can pass this to Marp by setting the `CHROME_PATH` environment variable.
+The theme file can also be loaded as a named theme set, the same way as in the other post, with
+`npx @marp-team/marp-cli@latest deck.md --theme-set themes/sdsc.css` and `theme: sdsc` in the front
+matter.
+
+If Chrome cannot start on your machine, for example on Linux hosts where AppArmor blocks
+unprivileged user namespaces and Chrome aborts with `No usable sandbox!`, the repository ships
+`scripts/chrome-wrapper.sh`, a small wrapper that adds the `--no-sandbox` flag. Point Marp at it
+with the `CHROME_PATH` environment variable.
 
 ---
 
