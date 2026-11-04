@@ -5224,6 +5224,21 @@
     "draft": false
   },
   {
+    "source": "posts/2026-11-03-sdsc-marp-theme.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-11-03-sdsc-marp-theme.html",
+    "title": "A Marp theme that reproduces the official SDSC slide template",
+    "date": "2026-11-03",
+    "categories": [
+      "sdsc",
+      "tools",
+      "documentation",
+      "github"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
     "source": "posts/italian-classes-chess-san-diego-2025.md",
     "source_type": "md",
     "canonical": "/posts/italian-classes-chess-san-diego-2025.html",
@@ -5826,6 +5841,21 @@
     "canonical": "/posts/2026-11-03-gnilc-dust-zero-level-offset.html",
     "title": "Measuring the zero-level offset of the GNILC dust intensity map with HI4PI",
     "date": "2026-11-03",
+    "categories": [
+      "python",
+      "pysm",
+      "astrophysics",
+      "cmb"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
+    "source": "posts/2026-11-04-gnilc-dust-zero-level-offset-low-velocity-hi.ipynb",
+    "source_type": "ipynb",
+    "canonical": "/posts/2026-11-04-gnilc-dust-zero-level-offset-low-velocity-hi.html",
+    "title": "GNILC dust zero-level offset with the Lenz et al. 2017 low-velocity HI map",
+    "date": "2026-11-04",
     "categories": [
       "python",
       "pysm",
