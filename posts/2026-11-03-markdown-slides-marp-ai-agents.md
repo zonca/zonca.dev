@@ -4,7 +4,6 @@ date: 2026-11-03
 categories: [tools, ai, documentation]
 layout: post
 description: "Why keeping presentations in Markdown and building them with Marp works well with AI agents, with a clean reusable theme and an example repository."
-draft: true
 ---
 
 Most of what I write is now Markdown: documentation, notes, READMEs, blog posts and the instruction
