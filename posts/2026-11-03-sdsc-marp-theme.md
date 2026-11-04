@@ -33,7 +33,8 @@ a [PDF of the same deck](https://zonca.github.io/sdsc-marp-theme/deck.pdf).
 
 The theme lives in a public GitHub repository at
 [https://github.com/zonca/sdsc-marp-theme](https://github.com/zonca/sdsc-marp-theme). The code is
-MIT licensed, though all brand assets remain the property of SDSC and UC San Diego.
+MIT licensed, though all brand assets remain the property of SDSC and UC San Diego. The source of
+the demo deck is in the `demo/` folder of the repository.
 
 ## Building the theme from the source of truth
 
