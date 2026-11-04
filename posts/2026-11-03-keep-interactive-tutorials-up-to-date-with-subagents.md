@@ -17,7 +17,9 @@ orchestrator decides when to stop.
 
 This post is about the general pattern rather than that one project, because the same shape works
 for any interactive tutorial: a Jupyter notebook you hand to students, a workshop walkthrough, a
-README that asks the reader to click through a dashboard.
+README that asks the reader to click through a dashboard. The configuration files are in a
+[gist](https://gist.github.com/zonca/5ebe5a0f82df0dc50e671ceaced16e80), so here I focus on what
+the system does and why.
 
 ## Why interactive tutorials need a different kind of testing
 
@@ -58,56 +60,25 @@ has no clean input.
 
 ## Enforce the roles with permissions, not with instructions
 
-"Do not edit any file" is a request. A denied `edit` permission is a fact. In OpenCode you can
-declare subagents as Markdown files with a permission block, and use that to make the roles real:
-
-```markdown
----
-description: Tests the tutorial by following it literally as a new user
-mode: subagent
-permissions:
-  - action: edit
-    resource: "*"
-    effect: deny
-  - action: shell
-    resource: "*"
-    effect: allow
----
-```
-
-```markdown
----
-description: Fixes the tutorial where a tester report shows it disagrees with reality
-mode: subagent
-permissions:
-  - action: edit
-    resource: "*"
-    effect: allow
-  - action: shell
-    resource: "*"
-    effect: deny
----
-```
-
-The rules are an ordered list and the last matching one wins, so a broad `deny` followed by narrow
-`allow` entries is the way to carve out exceptions. In the real tutorial loop the improver does need
-to run `git`, so its shell rule becomes a narrow allowlist instead of a blanket deny:
+"Do not edit any file" is a request. A denied `edit` permission is a fact. In OpenCode a subagent is
+a Markdown file with a permission block, so the executor is declared with editing turned off and the
+shell turned on:
 
 ```yaml
 permissions:
-  - action: shell
+  - action: edit
     resource: "*"
     effect: deny
   - action: shell
-    resource: "git status *"
-    effect: allow
-  - action: shell
-    resource: "git add *"
-    effect: allow
-  - action: shell
-    resource: "git commit *"
+    resource: "*"
     effect: allow
 ```
+
+The rules are an ordered list and the last matching one wins, so a broad `deny` followed by narrow
+`allow` entries is how you carve out exceptions. The improver is the mirror image: editing allowed,
+and the shell reduced to a narrow allowlist for `git`, so it can commit but cannot run the tutorial
+it is supposed to be fixing. Both complete files are in the
+[gist](https://gist.github.com/zonca/5ebe5a0f82df0dc50e671ceaced16e80).
 
 Two details from the [permissions documentation](https://opencode.ai/v2/docs/permissions) are worth
 knowing. A custom subagent uses its own permissions, not a subset of its parent's, so the executor
@@ -129,31 +100,18 @@ broken. Removing the hint fixed it.
 
 ## The interface between the roles is a machine-readable report
 
-Each round produces one JSON file with a fixed schema. This is the contract between the roles, and
-it buys three things: the run is resumable after a crash or a human interruption, the orchestrator
-can decide "clean" or "not clean" mechanically, and you can diff two rounds to see exactly what
-changed.
+Each round produces one JSON file with a fixed schema, and that file is the contract between the
+roles. It buys three things: the run is resumable after a crash or a human interruption, the
+orchestrator can decide "clean" or "not clean" mechanically, and you can diff two rounds to see
+exactly what changed.
 
-```json
-{
-  "round": 2,
-  "phase": "live_walkthrough",
-  "results": [
-    {
-      "guide": "1_access_gcp.md",
-      "status": "fail",
-      "severity": "critical",
-      "detail": "The guide sends the reader to a Google account chooser that never appears",
-      "evidence": "evidence/r2_login_wall.png"
-    }
-  ],
-  "resources": {"cluster": "toy-hydro-cluster", "project_id": "..."},
-  "actual_versions": {"kubernetes": "v1.36.4-gke.1495002"},
-  "cleaned_up": true,
-  "needs_human": null,
-  "summary": "..."
-}
-```
+The fields are the ones you would guess, with two of them carrying the weight. `results` has one
+entry per guide, always, even for a pure pass, and each entry carries a status (`pass`, `partial`,
+`fail`) and a severity that describes the damage to the reader rather than the difficulty for the
+agent. `needs_human` is null when nobody has to be involved, and otherwise gives the concrete
+reason and the URL, so the orchestrator can ask and then resume the same executor with the browser
+state intact. The full schema is in the
+[gist](https://gist.github.com/zonca/5ebe5a0f82df0dc50e671ceaced16e80).
 
 Keep the reports private (they contain resource identifiers and console details) and keep the
 *process* public. I wrote the reusable version of this process as a playbook that any project can
@@ -163,15 +121,12 @@ playbook](https://github.com/cloudbank-project/cloudbank_showcase/blob/main/veri
 ## Severity, stop rules, and the run budget
 
 Findings get a severity that describes the damage to the reader, not the difficulty for the agent:
+critical means the reader cannot finish, major means the step works but misleads or fails on a
+fresh account, minor means copy and formatting. A clean run is one with no critical and no major
+findings; minor findings can be collected and fixed in the same pass.
 
-- **critical**: the step fails as written, the reader cannot finish.
-- **major**: the step works but misleads, or fails on a fresh account (wrong ordering, stale pin,
-  missing prerequisite).
-- **minor**: copy and formatting, does not affect the outcome.
-
-A clean run is one with no critical and no major findings. Minor findings can be collected and fixed
-in the same pass. Beyond that, the loop needs hard limits, because an autonomous loop with no limit
-is just an expensive way to burn cloud credits:
+Beyond that, the loop needs hard limits, because an autonomous loop with no limit is just an
+expensive way to burn cloud credits:
 
 - Stop as soon as a live run is clean.
 - Cap the number of live runs per tutorial (I use four). When the cap is reached, report the status
@@ -186,27 +141,52 @@ consume the run budget. The mirror image is just as important: a guide that fail
 fresh environment *is* a documentation defect, usually major or critical. Conflating the two
 produces the worst possible outcome, a tutorial rewritten to match a broken environment.
 
-## The browser is the hard part
+## Driving the browser
 
-Everything above works on a laptop with no cloud account, but the browser side has its own rules,
-all of them learned the hard way:
+The executor needs a browser it can steer at every step, not a script that replays fixed clicks,
+because a tutorial is a sequence of decisions ("click the button that creates a cluster, then check
+whether the region field is already set") rather than a fixed list of coordinates. For the
+CloudBank tutorials I used the `browser-use` CLI driving a local Chrome over the Chrome DevTools
+Protocol, with a dedicated automation profile. The agent writes the interaction itself at each
+step, and the driver exposes the low-level primitives a tutorial needs and a high-level library
+hides.
 
-- **Use a dedicated automation profile**, not your daily browsing profile. Headless by default so
-  nothing pops up on your screen, with the debug endpoint checked before the run starts.
-- **Share the profile across rounds** so the session persists, and so you cannot silently land in a
-  different account halfway through.
-- **Multi-factor authentication and consent screens are human gates.** The agent stops, you complete
-  the login in a visible window, and then the agent resumes the *same* subagent, because the browser
-  state lives in that session. The agent never types your credentials and never clicks a consent
-  button.
-- **Web terminals are the most fragile surface of the whole thing.** A cloud shell is usually an
-  xterm.js canvas that ignores the generic "type this text" call of most automation tools. What
-  works is per-character trusted key events, or a synthetic paste of one line at a time followed by
-  a trusted Enter. Probe it with a single trivial command and confirm that it echoes before you
-  start a walkthrough, and record the method that worked so you never have to rediscover it.
-- **Check the account and the project before creating anything.** Local CLI credentials can point at
-  a completely different, personal project. Do the CLI work inside the browser terminal of the
-  tutorial project, and verify the active account and project there at the start of every round.
+**The setup.** Chrome is launched by a small script rather than by the driver, because recent
+Chrome versions refuse `--remote-debugging-port` on the default profile directory and the harness
+cannot pass a custom one. The script launches Chrome with a profile dedicated to automation on a
+fixed port, headless by default so nothing pops up on your screen, and the driver is pointed at
+that endpoint. The same profile is reused across rounds, so the login session persists and so you
+cannot silently land in a different account halfway through. Both the script and the setup commands
+are in the [gist](https://gist.github.com/zonca/5ebe5a0f82df0dc50e671ceaced16e80).
+
+**How a step is executed.** The agent opens the page in a tab, reads the *accessibility tree*
+instead of the raw DOM, because the tree pierces iframes and shadow DOM and shows what a screen
+reader, and therefore a user, actually sees. It locates the element by role and accessible name,
+asks the browser for the box of that element, clicks the center of it, waits, and reads the page
+again to decide what to do next. Coordinates are always computed from the element that was just
+found, never guessed. The helper functions that implement this are in the
+[gist](https://gist.github.com/zonca/5ebe5a0f82df0dc50e671ceaced16e80).
+
+**The three things that break.** First, web terminals: a cloud shell is usually an `xterm.js`
+canvas that ignores the generic "type this text" call of most automation tools. What works is
+per-character trusted key events, or a synthetic paste of one line at a time followed by a trusted
+Enter. Second, file uploads: the tutorial asks the reader to attach a 250 MB dataset to a web
+form, and that goes through the DevTools file input API rather than through the click path. Third,
+focus: some pages are focus-gated, and the fix is to emulate focus for the duration of the
+interaction instead of bringing the browser window to the front.
+
+**Safety.** Multi-factor authentication and consent screens are human gates: the agent stops,
+records what it needs, you complete the login in a visible window, and then the agent resumes the
+*same* subagent, because the browser state lives in that session. The agent never types your
+credentials and never clicks a consent button. It also keeps one working tab per site, and it
+screenshots every meaningful state (login, list, creation dialog, empty list after cleanup) because
+those screenshots are the evidence the next round works from.
+
+The driver is the replaceable part of the design. For the AWS console I used a different tool, a
+Playwright extension into the ChromeOS browser, and had to document its own quirks (scroll the
+element into the center of the viewport before clicking it, dispatch a full pointer event sequence
+when a click times out on a framework control, fill React-controlled inputs through the native
+setter). The roles, the report and the loop are the same in both cases.
 
 ## What actually breaks
 
@@ -264,14 +244,15 @@ needs a terminal. Two subagents, a primary agent that loops them, at most two ro
 account, no login and no cleanup:
 
 > Check that README.md works for a new user, using two subagents in a loop. Each round: call the
-  readme-tester subagent with exactly the message "Test README.md." and nothing else, no hints. If
-  it reports failures, give the readme-fixer subagent the tester's report word for word. Do at most
-  2 rounds, and stop early if the tester reports ALL PASS. Do not edit files yourself. At the end,
-  summarize each round: what failed and what changed.
+>   readme-tester subagent with exactly the message "Test README.md." and nothing else, no hints. If
+>   it reports failures, give the readme-fixer subagent the tester's report word for word. Do at
+>   most 2 rounds, and stop early if the tester reports ALL PASS. Do not edit files yourself. At the
+>   end, summarize each round: what failed and what changed.
 
 The tester runs every command in a fresh temporary directory and cannot edit anything. The fixer
-changes only the lines the report complains about and cannot run commands. The whole loop takes ten
-to fifteen minutes end to end, and it teaches you the part that is hard to learn from theory:
+changes only the lines the report complains about and cannot run commands. Both files are in the
+[gist](https://gist.github.com/zonca/5ebe5a0f82df0dc50e671ceaced16e80). The whole loop takes ten to
+fifteen minutes end to end, and it teaches you the part that is hard to learn from theory:
 whether your prompts are specific enough to be executed literally. When the tester reports a failure
 that you did not expect, the tutorial is usually under-specified, and that is a finding worth having
 before you discover it with a real user.
@@ -285,8 +266,9 @@ approval, and so do the logins that need a second factor. The right way to think
 the automation removes the boring part of maintenance, so the human attention goes to the parts that
 actually need a human.
 
-If you want the long version of the process, with the report schema, the round protocol and the
-checklist, it is all in the [CloudBank Showcase verification
-playbook](https://github.com/cloudbank-project/cloudbank_showcase/blob/main/verification/README.md).
-The agent definitions above are plain OpenCode subagent files, and the [agents
-documentation](https://opencode.ai/v2/docs/agents) covers the rest of the format.
+If you want the long version of the process, with the round protocol and the checklist, it is all in
+the [CloudBank Showcase verification
+playbook](https://github.com/cloudbank-project/cloudbank_showcase/blob/main/verification/README.md),
+and the configuration files are in the
+[gist](https://gist.github.com/zonca/5ebe5a0f82df0dc50e671ceaced16e80). The
+[agents documentation](https://opencode.ai/v2/docs/agents) covers the rest of the OpenCode format.

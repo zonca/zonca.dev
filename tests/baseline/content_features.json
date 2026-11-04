@@ -6931,7 +6931,7 @@
     "link_abs_post": false,
     "download_file": false,
     "custom_metadata": false,
-    "gist": false,
+    "gist": true,
     "youTube": false,
     "spoiler": false
   },
