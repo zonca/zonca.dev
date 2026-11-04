@@ -5195,6 +5195,21 @@
     "draft": false
   },
   {
+    "source": "posts/2026-11-03-keep-interactive-tutorials-up-to-date-with-subagents.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-11-03-keep-interactive-tutorials-up-to-date-with-subagents.html",
+    "title": "Keeping interactive tutorials up to date with an orchestrator and AI subagents",
+    "date": "2026-11-03",
+    "categories": [
+      "ai",
+      "llm",
+      "automation",
+      "documentation"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
     "source": "posts/italian-classes-chess-san-diego-2025.md",
     "source_type": "md",
     "canonical": "/posts/italian-classes-chess-san-diego-2025.html",
