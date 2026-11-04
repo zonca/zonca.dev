@@ -18,9 +18,9 @@ it to a real template.
 
 ## Why a Marp theme for the SDSC template?
 
-The motivation for this project was simple: I prefer writing my slides in Markdown using [Marp](https://marp.app/). However, for the SDSC tutorial and other SDSC talks, I needed the slides to strictly adhere to the official branded template. I wanted a way to achieve that professional, branded look directly from my Markdown source, ensuring the Markdown deck and the PowerPoint deck look identical.
+For the SDSC tutorial and other SDSC talks I needed the slides to adhere strictly to the official branded template, but I wanted to keep writing them in Markdown with [Marp](https://marp.app/). The theme gives me that branded look directly from the Markdown source, and the Markdown deck and the PowerPoint deck end up looking the same.
 
-The point of the exercise was to have a deck that is written in Markdown but is indistinguishable from the official branded template. I have published an [interactive HTML preview of the 11 slide demo deck](https://zonca.github.io/sdsc-marp-theme/) (you can navigate it with your arrow keys, and it is a single self-contained HTML file) so anyone can see the result before installing anything. There is also a [PDF of the same deck](https://zonca.github.io/sdsc-marp-theme/deck.pdf) available.
+I published an [interactive HTML preview of the 11 slide demo deck](https://zonca.github.io/sdsc-marp-theme/) (navigate it with the arrow keys, it is a single self-contained HTML file) so anyone can see the result before installing anything, and there is also a [PDF of the same deck](https://zonca.github.io/sdsc-marp-theme/deck.pdf).
 
 The theme lives in a public GitHub repository at [https://github.com/zonca/sdsc-marp-theme](https://github.com/zonca/sdsc-marp-theme). The code is MIT licensed, though all brand assets remain the property of SDSC and UC San Diego.
 
@@ -35,7 +35,7 @@ Instead of approximating the brand values by eye, I extracted the real values di
 *   **Geometry**: The PowerPoint master is defined as 12192000 x 6858000 EMU. This maps perfectly to the standard Marp canvas of 1280 x 720 px (1 px = 9525 EMU). Every element is precisely positioned: side margins are 88 px, the title band starts 38 px from the top and is 154 px tall. Body text is 22 pt (29 px) and the title is 54 pt (72 px). The footer bar is 52.5 px tall with the SDSC wordmark at 46 px from the left and the UC San Diego / HSDSC logo at 46 px from the right.
 *   **Assets**: The official logos (SVG, both colour and white variants), the dusk photograph of the SDSC building used on the title slide, and the other brand photographs were all extracted directly from the `.potx` package itself (`ppt/media/`). This means the theme ships with the real, official assets.
 
-## Supported Layouts
+## Supported layouts
 
 The theme implements several slide layouts as CSS classes to match the PowerPoint options:
 
