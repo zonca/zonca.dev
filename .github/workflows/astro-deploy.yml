@@ -43,17 +43,6 @@ jobs:
       - name: Regenerate baseline manifest
         run: python scripts/baseline_manifest.py
 
-      - name: Commit baseline updates
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          if [ -n "$(git status --porcelain tests/baseline)" ]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add tests/baseline/manifest.json tests/baseline/aliases.json tests/baseline/summary.txt
-            git commit -m "auto: regenerate baseline manifest [skip ci]"
-            git push origin HEAD:main || echo "warning: could not push baseline updates (branch protection or token permissions)"
-          fi
-
       - name: Install Node dependencies
         run: npm ci
 
@@ -77,6 +66,48 @@ jobs:
           name: dist
           path: dist
           retention-days: 7
+
+  commit-baseline:
+    # Refresh the committed tests/baseline/ fixture after a merge to main.
+    # The push authenticates with a repository deploy key (secret
+    # BASELINE_DEPLOY_KEY) that is a bypass actor of the "Tests" ruleset, so
+    # the job can push straight to main. The key is not a bypass actor of the
+    # "Branch protection" ruleset, so it still cannot delete or force-push
+    # main. A rejected push fails the job (and the run) instead of silently
+    # leaving the fixture stale.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ssh-key: ${{ secrets.BASELINE_DEPLOY_KEY }}
+          ssh-known-hosts: |
+            github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
+            github.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=
+            github.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCj7ndNxQowgcQnjshcLrqPEiiphnt+VTTvDP6mHBL9j1aNUkY4Ue1gvwnGLVlOhGeYrnZaMgRK6+PKCUXaDbC7qtbW8gIkhL7aGCsOr/C56SJMy/BCZfxd1nWzAOxSDPgVsmerOBYfNqltV9/hWCqBywINIR+5dIg6JTJ72pcEpEjcYgXkE2YEFXV1JHnsKgbLWNlhScqb2UmyRkQyytRLtL+38TGxkxCflmO+5Z8CSSNY7GidjMIZ7Q4zMjA2n1nGrlTDkzwDCsw+wqFPGQA179cnfGWOWRVruj16z6XyvxvjJwbz0wQZ75XK5tKSb7FNyeIEs4TT4jk+S4dhPeAUC5y+bDYirYgM4GC7uEnztnZyaVWQ7B381AK4Qdrwt51ZqExKbQpTUNn+EjqoTwvqNj4kqx5QUCI0ThS/YkOxJCXmPUWZbhjpCg56i+2aB6CmK2JGhn57K5mj0MNdBXA4/WnwH6XoPWJzK5Nyu2zB3nAZp+S5hpQs+p1vN1/wsjk=
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install --user pyyaml
+
+      - name: Regenerate baseline manifest
+        run: python scripts/baseline_manifest.py
+
+      - name: Commit baseline updates
+        run: |
+          if [ -n "$(git status --porcelain tests/baseline)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add tests/baseline/manifest.json tests/baseline/aliases.json tests/baseline/summary.txt
+            git commit -m "auto: regenerate baseline manifest [skip ci]"
+            git push origin HEAD:main
+          fi
 
   preview:
     if: github.event_name == 'pull_request'
