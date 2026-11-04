@@ -116,6 +116,30 @@ layout: post
 - For images, use paths relative to the post's directory (e.g., `img/screenshot.png`). Avoid absolute paths like `/img/...`.
 - Use `---` horizontal rules to separate major sections.
 
+### Notebook posts
+
+Notebook posts are `posts/*.ipynb`, converted to Markdown at build time by
+`scripts/prepare_notebooks.py` and never executed.
+
+- **Every notebook needs `##` section headings.** Astro turns each heading into
+  `<h2 id="...">`, which is the only way to link straight at one part of a long
+  notebook. `prepare_notebooks.py` fails the build when a notebook has no `##`
+  heading in any of its markdown cells.
+- The anchor is the slug of the heading text: lowercase, punctuation dropped,
+  spaces turned into hyphens. `## Aperture photometry` gives
+  `/posts/2024-05-02-pysm-point-source-pixell#aperture-photometry`.
+- Reserve `#` for the notebook's own title, use `##` for sections and `###` for
+  subsections. Never mark a section with bold text (`**Setup:**`), it produces no
+  anchor at all.
+- Notebook posts with two or more sections get a "Contents" index above the body,
+  generated from Astro's own heading slugs. Do not hand-write a table of contents
+  in a markdown cell, and do not add a plugin for it: `render()` in
+  `src/pages/posts/[slug].astro` already returns the same `headings` the page uses.
+- Keep section names short and stable: rewording a heading changes its anchor and
+  breaks any link already shared to it.
+- Do not repeat a heading text inside one notebook. Astro appends `-1` to the
+  duplicate, and that suffix shifts whenever a heading is inserted before it.
+
 ### Scripts and code
 
 - **Multi-line scripts**: Upload to a [GitHub Gist](https://gist.github.com/) and embed it in the post:

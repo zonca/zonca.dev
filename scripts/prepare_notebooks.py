@@ -29,6 +29,30 @@ OUT_IMAGES = os.path.join(ROOT, "public", "posts", "notebooks")
 
 ERRORS: list[str] = []
 
+FENCE_RE = re.compile(r"^\s*(?:```|~~~)")
+HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*#*\s*$")
+
+
+def section_headings(text: str) -> list[str]:
+    """Return level-2+ ATX headings in a markdown string, ignoring fenced blocks.
+
+    Astro turns each of these into `<h2 id="...">`, which is the only way a reader
+    can link straight at one part of a long notebook post, so a notebook without
+    any of them cannot be cited section by section.
+    """
+    found: list[str] = []
+    fenced = False
+    for line in text.split("\n"):
+        if FENCE_RE.match(line):
+            fenced = not fenced
+            continue
+        if fenced:
+            continue
+        m = HEADING_RE.match(line)
+        if m and len(m.group(1)) >= 2:
+            found.append(m.group(2).strip())
+    return found
+
 
 def front_matter(text: str) -> tuple[dict, str]:
     """Return (yaml dict, remaining text) for a notebook cell string."""
@@ -162,6 +186,7 @@ def convert_notebook(path: str) -> None:
     meta: dict[str, Any] = {}
     counter = [0]
     body_parts: list[str] = []
+    sections: list[str] = []
 
     for i, cell in enumerate(nb.cells):
         if i == 0 and cell["cell_type"] in ("raw", "markdown"):
@@ -176,7 +201,15 @@ def convert_notebook(path: str) -> None:
                 cell["source"] = rest.splitlines(keepends=True)
                 if not rest.strip():
                     continue
+        if cell["cell_type"] == "markdown":
+            sections.extend(section_headings("".join(cell.get("source", []))))
         body_parts.append(cell_to_markdown(cell, stem, counter))
+
+    if not sections:
+        ERRORS.append(
+            f"{path}: no `##` section headings, so the published post has no anchors "
+            "to link to; give each part of the notebook a `##` heading"
+        )
 
     meta.setdefault("title", stem)
     meta["date"] = meta.get("date") or os.path.basename(path)[:10]
