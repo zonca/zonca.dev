@@ -4,8 +4,6 @@ date: 2026-05-24
 categories: [tools, automation, github]
 ---
 
-# Synchronizing Google Docs and GitHub with `gdrivemd`
-
 Managing documentation often requires choosing between the collaborative ease of Google Docs and the version-controlled structure of GitHub. The **`gdrivemd`** scripts (usable as a skill for Gemini CLI or any other terminal-based AI agent) bridge this gap, providing a seamless two-way synchronization between a Google Doc and a local Markdown file.
 
 ## How it works
