@@ -32,6 +32,9 @@ html {
 html {
   scroll-behavior: smooth;
   overflow-x: clip;
+  /* The sticky header is measured in Base.astro because the nav wraps, so its
+     height changes with the viewport. Keeps `#anchor` jumps clear of it. */
+  scroll-padding-top: calc(var(--site-header-h, 4.5rem) + 0.75rem);
 }
 
 body {
@@ -532,6 +535,47 @@ a.page-link:hover {
   background: var(--accent-strong);
   border-color: var(--accent-strong);
   color: #fff;
+}
+
+/* Section index for notebook posts, built from Astro's own heading slugs */
+.post-toc {
+  margin: 0 0 1.8rem;
+  padding: 0.85rem 1.1rem;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+}
+
+.post-toc-title {
+  margin: 0 0 0.45rem;
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.post-toc ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.post-toc li {
+  margin: 0.3rem 0;
+}
+
+.post-toc li::marker {
+  color: var(--text-faint);
+}
+
+.post-toc a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.post-toc a:hover {
+  text-decoration: underline;
 }
 
 /* Prose typography */

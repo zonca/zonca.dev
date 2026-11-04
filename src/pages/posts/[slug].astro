@@ -23,7 +23,11 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const { Content } = await render(entry);
+const { Content, headings } = await render(entry);
+// `headings` comes from the same Astro slug pass that writes the heading `id`
+// attributes, so these anchors cannot drift from the rendered elements.
+const sections = headings.filter((h) => h.depth === 2);
+const showToc = Boolean(entry.data.notebook) && sections.length >= 2;
 const date = entry.data.date ? formatDate(entry.data.date) : '';
 const source = entry.data.source ?? `posts/${entry.id}.md`;
 const canonical = `/posts/${entry.id}`;
@@ -54,6 +58,18 @@ const rawRepo = 'https://raw.githubusercontent.com/zonca/zonca.dev/main';
       <a class="btn btn-outline-secondary" href={`${rawRepo}/${source}`} target="_blank" rel="noopener">Download source</a>
       <a class="btn btn-primary" href={`${githubRepo}/edit/main/${source}`} target="_blank" rel="noopener">Contribute</a>
     </div>
+    {showToc && (
+      <nav class="post-toc" aria-label="Table of contents">
+        <p class="post-toc-title">Contents</p>
+        <ul>
+          {sections.map((h) => (
+            <li>
+              <a href={`#${h.slug}`}>{h.text}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )}
     <div class="prose">
       <Content />
     </div>
