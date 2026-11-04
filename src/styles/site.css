@@ -591,6 +591,21 @@ a.page-link:hover {
 }
 
 /* Prose typography */
+
+/* Older posts and notebooks use a body `#` heading as a real section level, and
+   there was no rule for it, so it rendered at the browser default 2rem, the same
+   size as the page title above it. The bounds keep the hierarchy at every width:
+   1.8rem ceiling stays under .post-title (clamp max 2.05rem), and the 1.5rem
+   floor matches .post-title's own minimum while staying above .prose h2
+   (1.45rem). */
+.prose h1 {
+  font-size: clamp(1.5rem, 4vw, 1.8rem);
+  letter-spacing: -0.02em;
+  margin: 2.6rem 0 0.75rem;
+  line-height: 1.25;
+  text-wrap: pretty;
+}
+
 .prose h2 {
   font-size: 1.45rem;
   letter-spacing: -0.015em;
