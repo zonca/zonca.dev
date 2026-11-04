@@ -17,7 +17,7 @@ where I explain the general workflow and the basics of building a deck with Marp
 theme. Here the focus is on the brand: where every value of the theme comes from, and how to apply
 it to a real template.
 
-![Marp theme for SDSC - all slides preview](img/sdsc-marp-theme-preview.png)
+![Marp theme for SDSC - all slides preview](sdsc-marp-theme-preview.png)
 
 ## Why a Marp theme for the SDSC template?
 
@@ -38,7 +38,7 @@ the demo deck is in the `demo/` folder of the repository.
 
 ## Building the theme from the source of truth
 
-![Title slide](img/sdsc-marp-theme-title.png)
+![Title slide](sdsc-marp-theme-title.png)
 
 Instead of approximating the brand values by eye, I extracted the real values directly from the
 official source of truth: the SDSC brand guide at
