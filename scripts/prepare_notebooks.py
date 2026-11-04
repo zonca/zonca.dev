@@ -55,6 +55,50 @@ def section_headings(text: str) -> list[str]:
     return found
 
 
+def norm_heading(text: str) -> str:
+    """Normalise a heading for title comparison.
+
+    Inline markup is dropped because it does not survive rendering: a notebook
+    titled `harmonic_ud_grade` vs `ud_grade` in the front matter and written with
+    backticks in the body shows identical words on the page.
+    """
+    text = re.sub(r"[`*_]", "", text)
+    return re.sub(r"\s+", " ", text).strip().lower()
+
+
+def drop_duplicate_title(body: str, title: str) -> str:
+    """Remove a leading `#` heading that repeats the front-matter title.
+
+    The post page prints the title itself in `<h1 class="post-title">`, so a
+    notebook that opens with the same words as a `#` heading shows them twice on
+    the page. Only the first heading in the document qualifies, and only when it
+    is level 1 and matches the title; a `#` further down is a real section
+    heading and stays. The heading need not be the first line: some notebooks
+    open with a notice before it.
+    """
+    lines = body.split("\n")
+    fenced = False
+    for i, line in enumerate(lines):
+        if FENCE_RE.match(line):
+            fenced = not fenced
+            continue
+        if fenced:
+            continue
+        m = HEADING_RE.match(line)
+        if not m:
+            continue
+        if len(m.group(1)) != 1 or norm_heading(m.group(2)) != norm_heading(title):
+            return body
+        del lines[i]
+        while i < len(lines) and not lines[i].strip():
+            if i == 0 or not lines[i - 1].strip():
+                del lines[i]
+            else:
+                break
+        return "\n".join(lines)
+    return body
+
+
 def front_matter(text: str) -> tuple[dict, str]:
     """Return (yaml dict, remaining text) for a notebook cell string."""
     m = re.match(r"^\s*---\s*\n(.*?)\n\s*---\s*\n?", text, re.S)
@@ -206,10 +250,11 @@ def convert_notebook(path: str) -> None:
             sections.extend(section_headings("".join(cell.get("source", []))))
         body_parts.append(cell_to_markdown(cell, stem, counter))
 
-    if not sections:
+    if len(sections) < 2:
         ERRORS.append(
-            f"{path}: no `##` section headings, so the published post has no anchors "
-            "to link to; give each part of the notebook a `##` heading"
+            f"{path}: only {len(sections)} `##` section heading(s). The published post needs "
+            "at least two: the section index is built from them and is not worth "
+            "rendering for a single entry. Give each part of the notebook a `##` heading"
         )
 
     meta.setdefault("title", stem)
@@ -217,6 +262,7 @@ def convert_notebook(path: str) -> None:
     meta["source"] = f"posts/{os.path.basename(path)}"
     meta["notebook"] = True
     body = "\n".join(body_parts).strip() + "\n"
+    body = drop_duplicate_title(body, str(meta["title"]))
 
     fm_yaml = yaml.safe_dump(meta, sort_keys=False, allow_unicode=True).strip()
     out = os.path.join(OUT_POSTS, f"{stem}.md")
