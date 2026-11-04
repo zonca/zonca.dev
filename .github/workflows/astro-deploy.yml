@@ -35,7 +35,10 @@ jobs:
           python-version: "3.11"
 
       - name: Install Python dependencies
-        run: pip install --user pyyaml nbformat
+        run: pip install --user pyyaml nbformat pytest
+
+      - name: Run Python tests
+        run: python -m pytest tests -q
 
       - name: Regenerate baseline manifest
         run: python scripts/baseline_manifest.py
