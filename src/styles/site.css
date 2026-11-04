@@ -590,6 +590,18 @@ a.page-link:hover {
   text-decoration: underline;
 }
 
+/* A long index must not push the notebook itself off a phone screen: at 390x844 a
+   12-section box measured 536px tall (63% of the viewport) with the first line of
+   prose below the fold. The "Contents" label stays put and the list scrolls under
+   it, so the body comes back into view without losing any link. */
+@media (max-width: 640px) {
+  .post-toc ul {
+    max-height: 9rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
 /* Prose typography */
 
 /* Older posts and notebooks use a body `#` heading as a real section level, and
