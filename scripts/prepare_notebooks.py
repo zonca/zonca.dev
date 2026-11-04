@@ -16,6 +16,7 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import sys
 from typing import Any
 
@@ -224,6 +225,38 @@ def convert_notebook(path: str) -> None:
         fh.write(f"---\n{fm_yaml}\n---\n\n{body}")
 
 
+def prune_stale(stems: set[str]) -> list[str]:
+    """Delete generated output whose notebook no longer exists (renamed or removed).
+
+    Only posts carrying the `notebook: true` marker are eligible. `prepare_pages.py`
+    writes the QMD posts into this same directory, and those must survive.
+    """
+    removed: list[str] = []
+    if os.path.isdir(OUT_POSTS):
+        for name in sorted(os.listdir(OUT_POSTS)):
+            if not name.endswith(".md"):
+                continue
+            stem = os.path.splitext(name)[0]
+            if stem in stems:
+                continue
+            path = os.path.join(OUT_POSTS, name)
+            try:
+                with open(path, encoding="utf-8") as fh:
+                    head = fh.read(4096)
+            except OSError:
+                continue
+            if re.search(r"^notebook: true$", head, re.M):
+                os.remove(path)
+                removed.append(f"post for {stem}")
+    if os.path.isdir(OUT_IMAGES):
+        for name in sorted(os.listdir(OUT_IMAGES)):
+            path = os.path.join(OUT_IMAGES, name)
+            if os.path.isdir(path) and name not in stems:
+                shutil.rmtree(path)
+                removed.append(f"image dir for {name}")
+    return removed
+
+
 def main() -> int:
     notebooks = sorted(f for f in os.listdir(POSTS) if f.endswith(".ipynb"))
     print(f"Preparing {len(notebooks)} notebooks...")
@@ -234,6 +267,10 @@ def main() -> int:
         for e in ERRORS:
             print(f"  - {e}", file=sys.stderr)
         return 1
+    # Prune only after every notebook converted, so a parse failure cannot
+    # delete the output of the notebook that caused it.
+    for what in prune_stale({os.path.splitext(n)[0] for n in notebooks}):
+        print(f"pruned stale {what}")
     # Fail loudly if any generated route collides (e.g. stem clash with .md)
     md_stems = {os.path.splitext(f)[0] for f in os.listdir(POSTS) if f.endswith(".md")}
     generated = {os.path.splitext(f)[0] for f in os.listdir(OUT_POSTS)} if os.path.isdir(OUT_POSTS) else set()
@@ -241,7 +278,7 @@ def main() -> int:
     if clashes:
         print("Route collisions between notebooks and markdown posts:", clashes, file=sys.stderr)
         return 1
-    print(f"OK: generated {len(generated)} notebook posts")
+    print(f"OK: generated {len(notebooks)} notebook posts")
     return 0
 
 
