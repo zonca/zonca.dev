@@ -270,5 +270,4 @@ If you want the long version of the process, with the round protocol and the che
 the [CloudBank Showcase verification
 playbook](https://github.com/cloudbank-project/cloudbank_showcase/blob/main/verification/README.md),
 and the configuration files are in the
-[gist](https://gist.github.com/zonca/5ebe5a0f82df0dc50e671ceaced16e80). The
-[agents documentation](https://opencode.ai/v2/docs/agents) covers the rest of the OpenCode format.
+[gist](https://gist.github.com/zonca/5ebe5a0f82df0dc50e671ceaced16e80).

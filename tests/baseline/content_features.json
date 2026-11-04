@@ -6918,6 +6918,23 @@
     "youTube": false,
     "spoiler": false
   },
+  "posts/2026-11-03-gnilc-dust-zero-level-offset.ipynb": {
+    "raw_html": false,
+    "script_embed": false,
+    "math_inline": true,
+    "table": false,
+    "fence": false,
+    "code_indent": true,
+    "internal_link_md": false,
+    "internal_link_html": false,
+    "image_rel": false,
+    "link_abs_post": false,
+    "download_file": false,
+    "custom_metadata": false,
+    "gist": false,
+    "youTube": false,
+    "spoiler": false
+  },
   "posts/2026-11-03-keep-interactive-tutorials-up-to-date-with-subagents.md": {
     "raw_html": false,
     "script_embed": false,
@@ -6932,6 +6949,23 @@
     "download_file": false,
     "custom_metadata": false,
     "gist": true,
+    "youTube": false,
+    "spoiler": false
+  },
+  "posts/2026-11-03-markdown-slides-marp-ai-agents.md": {
+    "raw_html": false,
+    "script_embed": false,
+    "math_inline": false,
+    "table": false,
+    "fence": true,
+    "code_indent": false,
+    "internal_link_md": false,
+    "internal_link_html": false,
+    "image_rel": true,
+    "link_abs_post": false,
+    "download_file": true,
+    "custom_metadata": false,
+    "gist": false,
     "youTube": false,
     "spoiler": false
   },
