@@ -7,6 +7,8 @@ date: '2026-05-18 12:00:00'
 layout: post
 slug: migrate-nginx-traefik-jetstream2-kubernetes
 title: Migrate from NGINX to Traefik Ingress on Jetstream2 Kubernetes
+aliases:
+- /posts/2026-05-18-migrate-nginx-traefik-jetstream2-kubernetes
 ---
 
 `ingress-nginx` has been [retired](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/) and will no longer receive updates. This guide walks through migrating an existing Jetstream2 Kubernetes cluster from `ingress-nginx` to [Traefik](https://doc.traefik.io/traefik/), with minimal downtime.

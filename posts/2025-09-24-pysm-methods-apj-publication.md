@@ -8,6 +8,8 @@ date: 2025-09-24
 slug: pysm-methods-apj-publication
 title: PySM methods paper published in ApJ
 image: img/pysm-methods-figure.jpg
+aliases:
+- /posts/2025-09-12-pysm-methods-apj-publication
 ---
 
 ![Small-scale Galactic emission realizations from the PySM methods paper](img/pysm-methods-figure.jpg)

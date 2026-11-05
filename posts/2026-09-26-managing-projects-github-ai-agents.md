@@ -3,6 +3,8 @@ title: "Managing projects with GitHub and AI agents"
 date: 2026-09-26
 categories: [events, github, ai, automation]
 layout: post
+aliases:
+- /posts/2026-09-26-organize-events-github-ai-agents
 ---
 Organizing conferences and workshops can quickly become overwhelming when plans, decisions,
 contracts, and meeting notes are scattered across multiple platforms. To streamline this process, I

@@ -1,6 +1,8 @@
 ---
 title: "The Aaron Price Fellows Program: Fostering community leaders"
 date: "2025-12-09"
+aliases:
+- /posts/2025-12-09-aaron-price-program-blog
 ---
 
 The Aaron Price Fellows Program is an initiative dedicated to preparing highly motivated and diverse public high school students from San Diego to become responsible, engaged, and caring members of their community. Recruiting for the Class of 2029, the program seeks to cultivate future leaders through unique experiences and rigorous development.

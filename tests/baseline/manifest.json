@@ -3017,7 +3017,9 @@
       "jetstream2",
       "kubernetes"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/2022-10-21-binderhub-jetstream2"
+    ],
     "draft": false
   },
   {
@@ -3373,7 +3375,8 @@
       "jetstream2"
     ],
     "aliases": [
-      "2024-04-20-flatcar-image-jetstream"
+      "2024-04-20-flatcar-image-jetstream",
+      "/posts/2024-04-20-flatcar-image-jetstream"
     ],
     "draft": false
   },
@@ -3635,7 +3638,9 @@
       "kubernetes",
       "python"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/jetstream_llama"
+    ],
     "draft": false
   },
   {
@@ -4022,7 +4027,9 @@
       "pysm",
       "python"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/2025-09-12-pysm-methods-apj-publication"
+    ],
     "draft": false
   },
   {
@@ -4090,7 +4097,9 @@
       "python"
     ],
     "aliases": [
-      "/2025/10/singularity-dask-zarr-container"
+      "/2025/10/singularity-dask-zarr-container",
+      "/posts/2025-10-07-singularity-dask-zarr-container",
+      "/posts/2025-10-07-singularity-dask-zarr-repository-overview"
     ],
     "draft": false
   },
@@ -4189,7 +4198,9 @@
       "python",
       "doi"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/2025-10-10-ezid-hierarchical-doi-management"
+    ],
     "draft": false
   },
   {
@@ -4232,7 +4243,10 @@
       "jupyterhub",
       "python"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/2025-06-25-dask-operator-jupyterhub",
+      "/posts/2025-11-18-dask-operator-jupyterhub"
+    ],
     "draft": false
   },
   {
@@ -4318,7 +4332,9 @@
     "title": "The Aaron Price Fellows Program: Fostering community leaders",
     "date": "2025-12-09",
     "categories": [],
-    "aliases": [],
+    "aliases": [
+      "/posts/2025-12-09-aaron-price-program-blog"
+    ],
     "draft": false
   },
   {
@@ -4331,7 +4347,9 @@
       "healpy",
       "python"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/2025-12-11-release-of-healpy-1.19.0"
+    ],
     "draft": false
   },
   {
@@ -4405,7 +4423,9 @@
     "categories": [
       "ai"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/2026-01-01-chatbot-google-form-frontend"
+    ],
     "draft": false
   },
   {
@@ -4735,7 +4755,9 @@
     "categories": [
       "italian"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/2026-06-15-italian-classes-services-san-diego-2026"
+    ],
     "draft": false
   },
   {
@@ -4833,7 +4855,9 @@
       "automation",
       "tools"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/2026-07-28-giving-any-ai-coding-agent-my-existing-chromeos-browser"
+    ],
     "draft": false
   },
   {
@@ -4933,7 +4957,9 @@
       "jetstream",
       "jupyterhub"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/2026-05-18-kubernetes-jetstream2-certmanager"
+    ],
     "draft": false
   },
   {
@@ -4947,7 +4973,9 @@
       "jetstream",
       "jupyterhub"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/2026-05-18-kubernetes-jetstream2-jupyterhub"
+    ],
     "draft": false
   },
   {
@@ -4960,7 +4988,10 @@
       "kubernetes",
       "jetstream"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/2026-05-18-kubernetes-jetstream2-magnum-2026",
+      "/posts/2026-05-18-kubernetes-jetstream2-magnum"
+    ],
     "draft": false
   },
   {
@@ -4973,7 +5004,10 @@
       "kubernetes",
       "jetstream"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/2026-05-18-kubernetes-jetstream2-traefik-jupyterhub-2026",
+      "/posts/2026-05-18-kubernetes-jetstream2-traefik"
+    ],
     "draft": false
   },
   {
@@ -4987,7 +5021,9 @@
       "jetstream",
       "jupyterhub"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/2026-05-18-migrate-nginx-traefik-jetstream2-kubernetes"
+    ],
     "draft": false
   },
   {
@@ -5072,7 +5108,9 @@
       "ai",
       "automation"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/2026-09-26-organize-events-github-ai-agents"
+    ],
     "draft": false
   },
   {
@@ -5632,7 +5670,9 @@
       "cosmology",
       "pysm"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/pysm_point_source_pixell"
+    ],
     "draft": false
   },
   {
@@ -5699,7 +5739,9 @@
       "llm",
       "jetstream2"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/2025-05-08-astroph_llm_summary"
+    ],
     "draft": false
   },
   {

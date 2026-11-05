@@ -1,6 +1,8 @@
 ---
 aliases:
 - /2025/10/singularity-dask-zarr-container
+- /posts/2025-10-07-singularity-dask-zarr-container
+- /posts/2025-10-07-singularity-dask-zarr-repository-overview
 categories:
 - singularity
 - python

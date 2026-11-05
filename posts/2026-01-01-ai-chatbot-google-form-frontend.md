@@ -3,6 +3,8 @@ title: "AI chatbot as a frontend for a Google Form"
 author: "Andrea Zonca"
 date: "2026-01-01"
 categories: [ai]
+aliases:
+- /posts/2026-01-01-chatbot-google-form-frontend
 ---
 
 Using a chatbot as a frontend for a Google Form can significantly improve user engagement and completion rates. Instead of a static form, users interact with a conversational interface that guides them through the questions, validates their input, and submits the data seamlessly. This approach is particularly useful for lead generation, surveys, and feedback collection, providing a modern and user-friendly experience.

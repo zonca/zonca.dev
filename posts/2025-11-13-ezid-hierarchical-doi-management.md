@@ -4,6 +4,8 @@ date: '2025-11-13'
 categories:
   - python
   - doi
+aliases:
+- /posts/2025-10-10-ezid-hierarchical-doi-management
 ---
 
 This post refers to the [ezid_api repository](https://github.com/zonca/ezid_api).

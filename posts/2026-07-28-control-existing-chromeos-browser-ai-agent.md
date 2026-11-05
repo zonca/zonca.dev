@@ -4,6 +4,8 @@ date: 2026-07-28
 categories: [ai, llm, automation, tools]
 layout: post
 description: "A reliable architecture for safely connecting multiple AI coding agents to an existing ChromeOS browser session using the Playwright extension."
+aliases:
+- /posts/2026-07-28-giving-any-ai-coding-agent-my-existing-chromeos-browser
 ---
 
 AI coding agents running inside a Chromebook's Crostini Linux container can easily launch a
