@@ -56,7 +56,8 @@ posts, the comment links the modified post(s) directly.
 All current URLs are frozen. `/posts/<basename>.html` and `/posts/<basename>` both work,
 and `public/_redirects` is generated from every historical alias (from the baseline
 manifest in `tests/baseline/`). Never rename or remove a post file; if a slug must change,
-add the old one as an alias.
+add the old one as an alias. CI enforces this: `scripts/check_url_history.py` fails the
+build if a URL that was reachable before stops being reachable without an alias.
 
 ## Rollback
 
