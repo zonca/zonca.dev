@@ -9,6 +9,7 @@ title: Deploy Kubernetes on Jetstream2 with Magnum and Cluster API (1 of 4)
 aliases:
 - /posts/2026-05-18-kubernetes-jetstream2-magnum-2026
 - /posts/2026-05-18-kubernetes-jetstream2-magnum
+- /posts/2026-05-18-kubernetes-jupyterhub-jetstream2-traefik
 ---
 
 This post is part of a series on deploying JupyterHub on Jetstream2:

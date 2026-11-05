@@ -1871,7 +1871,9 @@
       "jupyterhub",
       "hpc"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/2018-11-7%20-deploy_jupyterhub_supercomputer_2018"
+    ],
     "draft": false
   },
   {
@@ -3058,7 +3060,9 @@
       "git",
       "github"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/2022-02-02-github-overleaf"
+    ],
     "draft": false
   },
   {
@@ -4990,7 +4994,8 @@
     ],
     "aliases": [
       "/posts/2026-05-18-kubernetes-jetstream2-magnum-2026",
-      "/posts/2026-05-18-kubernetes-jetstream2-magnum"
+      "/posts/2026-05-18-kubernetes-jetstream2-magnum",
+      "/posts/2026-05-18-kubernetes-jupyterhub-jetstream2-traefik"
     ],
     "draft": false
   },

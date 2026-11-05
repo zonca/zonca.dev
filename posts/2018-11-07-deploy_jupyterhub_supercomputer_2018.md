@@ -1,4 +1,6 @@
 ---
+aliases:
+- /posts/2018-11-7%20-deploy_jupyterhub_supercomputer_2018
 categories:
 - jupyterhub
 - hpc
