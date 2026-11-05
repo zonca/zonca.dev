@@ -126,23 +126,22 @@ def collect_pages() -> list[dict]:
                 "title": fm.get("title") or canonical,
                 "date": "",
                 "categories": [],
-                "aliases": [],
+                "aliases": list(fm.get("aliases") or []),
                 "draft": False,
             }
         )
     return rows
 
 
-def main() -> int:
-    posts = collect_posts()
-    pages = collect_pages()
-    all_rows = posts + pages
+def build_rows() -> list[dict]:
+    """Every manifest row, posts and pages, in the order they are written out."""
+    return collect_posts() + collect_pages()
 
-    canonical_urls = [r["canonical"] for r in all_rows]
-    duplicates = sorted({u for u in canonical_urls if canonical_urls.count(u) > 1})
 
+def build_aliases(rows: list[dict]) -> dict[str, str]:
+    """Alias source -> canonical target, collected from the front matter."""
     aliases: dict[str, str] = {}
-    for r in all_rows:
+    for r in rows:
         for a in r["aliases"]:
             a = str(a).strip()
             if a and not a.startswith("/"):
@@ -153,6 +152,18 @@ def main() -> int:
             if norm in aliases and aliases[norm] != r["canonical"]:
                 print(f"WARNING: conflicting alias {norm} -> {aliases[norm]} vs {r['canonical']}", file=sys.stderr)
             aliases[norm] = r["canonical"]
+    return aliases
+
+
+def main() -> int:
+    posts = collect_posts()
+    pages = collect_pages()
+    all_rows = posts + pages
+
+    canonical_urls = [r["canonical"] for r in all_rows]
+    duplicates = sorted({u for u in canonical_urls if canonical_urls.count(u) > 1})
+
+    aliases = build_aliases(all_rows)
 
     draft_rows = [r for r in all_rows if r["draft"]]
     public_rows = [r for r in all_rows if not r["draft"]]

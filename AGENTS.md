@@ -62,6 +62,13 @@ All existing URLs are frozen and verified in CI:
   is a hard failure, there is no silent fallback: if that job is red, the
   fixture was not updated, so regenerate it locally with
   `python3 scripts/baseline_manifest.py` and commit it with your change.
+- CI also checks that no published URL disappeared:
+  `scripts/check_url_history.py` compares the baseline manifest at the base
+  revision with the one regenerated from the sources, and fails if a URL that
+  was reachable before is no longer a page and no longer an alias. Run it
+  locally on a topic branch with `python3 scripts/check_url_history.py`. If it
+  fires, add the old path as an `aliases:` entry of the post that replaces it
+  (or restore the deleted file), then push again.
 
 ## Site build (Astro + Cloudflare)
 

@@ -43,6 +43,22 @@ jobs:
       - name: Regenerate baseline manifest
         run: python scripts/baseline_manifest.py
 
+      - name: Check that no published URL disappeared
+        env:
+          BASE_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          BASE="$BASE_SHA"
+          if [ -n "$BASE" ]; then
+            git fetch --no-tags --depth=1 origin "$BASE"
+          else
+            # Manual run: compare against the tip of the default branch.
+            git fetch --no-tags --depth=1 origin \
+              "+refs/heads/$DEFAULT_BRANCH:refs/remotes/origin/$DEFAULT_BRANCH"
+            BASE="origin/$DEFAULT_BRANCH"
+          fi
+          python3 scripts/check_url_history.py --base "$BASE"
+
       - name: Install Node dependencies
         run: npm ci
 
