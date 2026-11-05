@@ -1,4 +1,6 @@
 ---
+aliases:
+- /posts/2022-02-02-github-overleaf
 categories:
 - git
 - github
