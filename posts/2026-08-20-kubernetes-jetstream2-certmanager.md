@@ -7,6 +7,8 @@ date: '2026-08-20 11:00:00'
 layout: post
 slug: kubernetes-jetstream2-certmanager
 title: Setup HTTPS with cert-manager on Jetstream2 Kubernetes (4 of 4)
+aliases:
+- /posts/2026-05-18-kubernetes-jetstream2-certmanager
 ---
 
 This post is part of a series on deploying JupyterHub on Jetstream2:

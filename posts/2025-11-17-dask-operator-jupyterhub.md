@@ -7,6 +7,9 @@ categories:
 date: '2025-11-17'
 layout: post
 title: Deploy the Dask Operator for JupyterHub on Kubernetes
+aliases:
+- /posts/2025-06-25-dask-operator-jupyterhub
+- /posts/2025-11-18-dask-operator-jupyterhub
 ---
 
 **Tutorial OBSOLETE** Please check [the updated version of this tutorial](https://www.zonca.dev/posts/2026-08-19-dask-operator-jetstream2-jupyterhub).

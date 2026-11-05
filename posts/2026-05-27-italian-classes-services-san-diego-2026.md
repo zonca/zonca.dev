@@ -4,6 +4,8 @@ date: 2026-05-27
 categories: [italian]
 layout: post
 description: "Explore Italian classes for kids, teens, and adults in San Diego, plus AP preparation, translation, interpreting, and relocation services."
+aliases:
+- /posts/2026-06-15-italian-classes-services-san-diego-2026
 ---
 
 The [Italian School of San Diego](https://www.italianschoolsd.com/) now offers much more than weekly language lessons. Its 2026 programs include Italian classes for children, teens, and adults, flexible private instruction, AP Italian preparation, professional translation and interpreting, and practical support for people planning to live or work in Italy.

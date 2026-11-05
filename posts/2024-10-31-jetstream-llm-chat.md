@@ -8,6 +8,8 @@ layout: post
 date: 2024-10-31
 slug: jetstream-llm-chat
 title: Deploy an LLM ChatGPT-like service on Jetstream
+aliases:
+- /posts/jetstream_llama
 ---
 
 In this tutorial we will deploy a LLM Chat-GPT like service on a GPU node on Jetstream.

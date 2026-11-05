@@ -6,6 +6,8 @@ layout: post
 date: '2022-11-15'
 title: Deploy BinderHub on top of Kubernetes on Jetstream 2
 
+aliases:
+- /posts/2022-10-21-binderhub-jetstream2
 ---
 
 This work has been supported by Indiana University and is cross-posted on the <a href="https://docs.jetstream-cloud.org/general/k8sbinderhub" rel="canonical">Jetstream 2 official documentation website</a>.

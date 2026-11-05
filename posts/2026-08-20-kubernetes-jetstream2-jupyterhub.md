@@ -7,6 +7,8 @@ date: '2026-08-20 10:00:00'
 layout: post
 slug: kubernetes-jetstream2-jupyterhub
 title: Deploy JupyterHub on Jetstream2 Kubernetes (3 of 4)
+aliases:
+- /posts/2026-05-18-kubernetes-jetstream2-jupyterhub
 ---
 
 This post is part of a series on deploying JupyterHub on Jetstream2:

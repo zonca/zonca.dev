@@ -6,6 +6,9 @@ date: '2026-08-20 09:00:00'
 layout: post
 slug: kubernetes-jetstream2-traefik
 title: Install Traefik Ingress Controller on Jetstream2 Kubernetes (2 of 4)
+aliases:
+- /posts/2026-05-18-kubernetes-jetstream2-traefik-jupyterhub-2026
+- /posts/2026-05-18-kubernetes-jetstream2-traefik
 ---
 
 This post is part of a series on deploying JupyterHub on Jetstream2:
