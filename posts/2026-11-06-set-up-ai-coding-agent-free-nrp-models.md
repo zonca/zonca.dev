@@ -1,5 +1,5 @@
 ---
-title: "Set up an AI coding agent with free NRP models (November 2026)"
+title: "Set up an AI coding agent with free NRP models"
 date: 2026-11-06
 categories: [ai, llm, tools]
 layout: post
@@ -9,13 +9,13 @@ description: "Set up OpenCode with the free NRP models in a few minutes, with sa
 This is the setup companion to my seminar
 "Best Practices for AI-Assisted Coding: GitHub, Testing, and Continuous Integration"
 (November 6, 2026). It gets you from zero to a working coding agent in your terminal,
-using the free Large Language Models hosted by the
+using the free large language models hosted by the
 [National Research Platform](https://nrp.ai) (NRP). It updates my
-[January post](./2026-01-29-configure-nrp-llm-opencode-crush.md): the model catalog changed a lot since then.
+[January post](./2026-01-29-configure-nrp-llm-opencode-crush.md): the model catalog has changed a lot since then.
 
-If you already use an agent (Claude Code, Codex, Copilot CLI, Cursor), you only need the
-[API key](#get-an-api-key) and the [model advice](#which-model): NRP documents
-configurations for several clients in its
+If you already use an agent (Claude Code, Codex, Copilot CLI, Cursor), you only need an
+[API key](#get-an-api-key), the endpoint `https://ellm.nrp-nautilus.io/v1` and the [model advice](#which-model):
+NRP documents configurations for several clients on its
 [client configurations page](https://nrp.ai/documentation/userdocs/ai/llm-managed/client-configs/).
 
 ## Get an API key
@@ -50,17 +50,21 @@ curl -s https://ellm.nrp-nautilus.io/v1/models -H "Authorization: Bearer $NRP_AP
 ## Install OpenCode
 
 [OpenCode](https://opencode.ai) is an open source coding agent that runs in the terminal
-and works with any OpenAI-compatible provider:
+and works with any OpenAI-compatible provider. This post uses OpenCode 2:
 
 ```bash
-curl -fsSL https://opencode.ai/install | bash
+curl -fsSL https://opencode.ai/v2/install | bash
+opencode --version
 ```
+
+The version should start with 2. Note the `/v2/` in the address: the older `https://opencode.ai/install` script
+installs OpenCode 1. If you already have OpenCode 1, upgrade it with `opencode upgrade --major`.
 
 ## Configure OpenCode for NRP
 
 Create `~/.config/opencode/opencode.json`. The key is read from the environment with
-`{env:NRP_API_KEY}`, so the file contains no secret. This is the OpenCode 2 format (the install script gives you
-OpenCode 2; for OpenCode 1 see my [January post](./2026-01-29-configure-nrp-llm-opencode-crush.md)):
+`{env:NRP_API_KEY}`, so the file contains no secret. This is the OpenCode 2 format (for OpenCode 1 see my
+[January post](./2026-01-29-configure-nrp-llm-opencode-crush.md)):
 
 ```bash
 mkdir -p ~/.config/opencode
@@ -97,6 +101,8 @@ JSON
 `headerTimeout` and `chunkTimeout` (milliseconds) handle the rare NRP request that stalls and never answers: in my
 rehearsals, two requests hung for over 20 minutes. With these settings OpenCode gives up after 2 minutes without
 a response, or 90 seconds without new output, and retries up to three times (the defaults are 5 and 15 minutes).
+If an agent still shows nothing new for several minutes, quit, run `opencode service restart` (OpenCode 2 runs
+sessions in a background service, which keeps going after you close the terminal) and start again.
 
 Test it:
 
@@ -107,16 +113,19 @@ opencode run -m nrp/deepseek-v4-flash "Say hello in one sentence"
 The very first run can take a little longer, because OpenCode downloads the provider package;
 later runs answer in seconds.
 
-Then start the interactive agent inside a project with `opencode`. Switch models with `/models` (in OpenCode 2
-the interactive command has no `-m` flag: the default comes from `"model"` in the config), start a fresh
-session for each new task with `/new`, and press Shift+Tab to switch between the `build` agent and the `plan` agent,
-which reads and plans but cannot edit files: plan first, then build.
+Then start the interactive agent inside a project with `opencode`. A few commands to know:
+
+* `/models` switches model. The interactive command has no `-m` flag: the default comes from `"model"` in the config.
+* `/new` starts a fresh session: use one for each new task.
+* Shift+Tab switches between the `build` agent, which changes files, and the `plan` agent, which reads and plans
+  but cannot edit: plan first, then build.
 
 ## Decide what the agent may do without asking
 
 Out of the box OpenCode allows every action, including any shell command, and OpenCode 2 also allows
 reading and editing files outside the project. I recommend asking before the actions that are hard to undo.
-Add a `permission` block to `opencode.json`, either the global one or one in the project:
+Add a `permission` block to `opencode.json`, either the global one or one in the project (commit it, and the
+rules apply to everyone who works on the repository):
 
 ```json
 {
@@ -132,11 +141,11 @@ Add a `permission` block to `opencode.json`, either the global one or one in the
 }
 ```
 
-The last matching rule wins, so the catch all comes first. When a rule says `ask`, OpenCode stops and offers
+The last matching rule wins, so the rule for `*` comes first. When a rule says `ask`, OpenCode stops and offers
 Allow once, Always allow, or Reject. This syntax works in OpenCode 1 and 2; OpenCode 2 also has a native
 ordered `permissions` list, described in its
 [permissions documentation](https://opencode.ai/v2/docs/permissions/).
-Note that `opencode run` without `--auto` waits forever on an `ask` rule, so scripts need `--auto`
+In scripts, `opencode run` without `--auto` waits forever on an `ask` rule, so use `--auto`
 plus explicit `deny` rules for what must never happen.
 
 ## Which model?
@@ -154,7 +163,7 @@ All are Mixture of Experts models: only the active parameters are used for each 
 they are fast for their size. Parameter counts are from the Hugging Face model cards; the GLM-5.3 active
 count is computed from its published configuration.
 
-The catalog changes often, check the
+The catalog changes often: check the
 [NRP models page](https://nrp.ai/documentation/userdocs/ai/llm-managed/models/) and the
 [fair use policy](https://nrp.ai/documentation/userdocs/ai/llm-managed/fair-use/)
 (48,000 output tokens per minute per key and model, double limits for SDSC and Internet2 affiliates).
@@ -167,7 +176,7 @@ The agent can use any command line tool you have installed. In the seminar I use
 * [gog](https://github.com/steipete/gogcli), to read and download files from Google Drive
 
 The GitHub CLI ships an official skill that teaches agents how to use it well (JSON output, pagination, picking the
-right repository). Install it once for OpenCode, for all your projects (`gh skill` is a recent command, in preview: update `gh` if it is missing):
+right repository). Install it once for OpenCode, for all your projects:
 
 ```bash
 gh skill install cli/cli gh --agent opencode --scope user
@@ -175,6 +184,7 @@ gh skill install cli/cli gh --agent opencode --scope user
 
 It lands in `~/.config/opencode/skills/gh/`, and OpenCode loads it when a task involves `gh`. Use another `--agent`
 value for other agents (for example `claude-code` or `codex`), and `gh skill update` to refresh it.
+`gh skill` is a recent command, still in preview: if it is missing, update `gh`.
 
 List the tools you want the agent to use in the `AGENTS.md` file of your project, and give each tool the narrowest
 access that works. For example, gog can be limited to Drive and to one account, so the agent can neither read
@@ -205,7 +215,9 @@ You are a tutorial tester. ...
 ```
 
 The three files (`readme-loop.md`, `readme-tester.md`, `readme-fixer.md`) are in `.opencode/agents/` of the
-demo repository (from tag `checkpoint-5`): copy them into your project, press Shift+Tab to select `readme-loop`, and type `Check README.md.`
+demo repository (from tag `checkpoint-5`). Copy them into `.opencode/agents/` of your project, run
+`opencode service restart` so OpenCode picks them up, start `opencode`, press Shift+Tab until `readme-loop`
+appears, and type `Check README.md.`
 The same pattern, applied to browser tutorials, is described in
 [Keeping interactive tutorials up to date with an orchestrator and AI subagents](./2026-11-03-keep-interactive-tutorials-up-to-date-with-subagents.md).
 
