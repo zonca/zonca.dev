@@ -2,6 +2,8 @@
 title: "Configure NRP LLM with OpenCode and Crush"
 date: "2026-01-29"
 categories: [ai]
+aliases:
+- /posts/2026-01-29-configure-ostrn-llm-opencode-crush
 ---
 
 * **UPDATED 2026-01-31**: Added details about namespace requirements for generating tokens.

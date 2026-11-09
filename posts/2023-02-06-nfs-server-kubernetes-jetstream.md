@@ -10,7 +10,7 @@ title: Deploy a NFS server to share data between JupyterHub users on Jetstream
 
 ---
 
-> **Update:** See the [2025 updated tutorial for deploying NFS on Jetstream with Kubernetes](https://www.zonca.dev/posts/2025-02-01-nfs-server-kubernetes-jetstream) for the latest instructions.
+> **Update:** See the [2025 updated tutorial for deploying NFS on Jetstream with Kubernetes](https://www.zonca.dev/posts/2025-04-22-nfs-server-jetstream2) for the latest instructions.
 
 This tutorial is a minor update of <https://www.zonca.dev/posts/2020-07-10-nfs-server-kubernetes-jetstream>.
 

@@ -11,6 +11,7 @@
     "aliases": [
       "/2006/09/pillole-di-astrofisica"
     ],
+    "slug": "pillole-di-astrofisica",
     "draft": false
   },
   {
@@ -25,6 +26,7 @@
     "aliases": [
       "/2006/09/awk-made-easy"
     ],
+    "slug": "awk-made-easy",
     "draft": false
   },
   {
@@ -39,6 +41,7 @@
     "aliases": [
       "/2006/09/command-line-processing"
     ],
+    "slug": "command-line-processing",
     "draft": false
   },
   {
@@ -53,6 +56,7 @@
     "aliases": [
       "/2006/09/software-libero-per-il-trattamento-di"
     ],
+    "slug": "software-libero-per-il-trattamento-di",
     "draft": false
   },
   {
@@ -67,6 +71,7 @@
     "aliases": [
       "/2006/09/software-carpentry"
     ],
+    "slug": "software-carpentry",
     "draft": false
   },
   {
@@ -81,6 +86,7 @@
     "aliases": [
       "/2006/09/tar-quickref"
     ],
+    "slug": "tar-quickref",
     "draft": false
   },
   {
@@ -95,6 +101,7 @@
     "aliases": [
       "/2006/10/beginners-bash-guide"
     ],
+    "slug": "beginners-bash-guide",
     "draft": false
   },
   {
@@ -109,6 +116,7 @@
     "aliases": [
       "/2006/10/using-gnu-find"
     ],
+    "slug": "using-gnu-find",
     "draft": false
   },
   {
@@ -123,6 +131,7 @@
     "aliases": [
       "/2006/10/vim-costumization"
     ],
+    "slug": "vim-costumization",
     "draft": false
   },
   {
@@ -137,6 +146,7 @@
     "aliases": [
       "/2008/03/producing-pdf-from-xml-files"
     ],
+    "slug": "producing-pdf-from-xml-files",
     "draft": false
   },
   {
@@ -151,6 +161,7 @@
     "aliases": [
       "/2008/03/relation-between-power-density-and"
     ],
+    "slug": "relation-between-power-density-and",
     "draft": false
   },
   {
@@ -165,6 +176,7 @@
     "aliases": [
       "/2008/03/decibels-db-and-dbm-in-terms-of-power"
     ],
+    "slug": "decibels-db-and-dbm-in-terms-of-power",
     "draft": false
   },
   {
@@ -179,6 +191,7 @@
     "aliases": [
       "/2008/04/netcat-quickly-send-binaries-through"
     ],
+    "slug": "netcat-quickly-send-binaries-through",
     "draft": false
   },
   {
@@ -193,6 +206,7 @@
     "aliases": [
       "/2008/09/forcefully-unmount-disk-partition"
     ],
+    "slug": "forcefully-unmount-disk-partition",
     "draft": false
   },
   {
@@ -207,6 +221,7 @@
     "aliases": [
       "/2009/12/number-of-files-in-folder-and-subfolders"
     ],
+    "slug": "number-of-files-in-folder-and-subfolders",
     "draft": false
   },
   {
@@ -221,6 +236,7 @@
     "aliases": [
       "/2009/12/latest-maxima-and-wxmaxima-for-ubuntu"
     ],
+    "slug": "latest-maxima-and-wxmaxima-for-ubuntu",
     "draft": false
   },
   {
@@ -235,6 +251,7 @@
     "aliases": [
       "/2010/01/load-arrays-from-text-file-with-numpy"
     ],
+    "slug": "load-arrays-from-text-file-with-numpy",
     "draft": false
   },
   {
@@ -249,6 +266,7 @@
     "aliases": [
       "/2010/01/execute-bash-script-remotely-with-ssh"
     ],
+    "slug": "execute-bash-script-remotely-with-ssh",
     "draft": false
   },
   {
@@ -263,6 +281,7 @@
     "aliases": [
       "/2010/01/lock-pin-hold-package-using-apt-on"
     ],
+    "slug": "lock-pin-hold-package-using-apt-on",
     "draft": false
   },
   {
@@ -275,6 +294,7 @@
     "aliases": [
       "/2010/01/correlation"
     ],
+    "slug": "correlation",
     "draft": false
   },
   {
@@ -289,6 +309,7 @@
     "aliases": [
       "/2010/02/stop-ipcluster-from-script"
     ],
+    "slug": "stop-ipcluster-from-script",
     "draft": false
   },
   {
@@ -304,6 +325,7 @@
     "aliases": [
       "/2010/03/using-numpy-dtype-with-loadtxt"
     ],
+    "slug": "using-numpy-dtype-with-loadtxt",
     "draft": false
   },
   {
@@ -318,6 +340,7 @@
     "aliases": [
       "/2010/03/aptitude-search"
     ],
+    "slug": "aptitude-search",
     "draft": false
   },
   {
@@ -332,6 +355,7 @@
     "aliases": [
       "/2010/03/change-permission-recursively-to"
     ],
+    "slug": "change-permission-recursively-to",
     "draft": false
   },
   {
@@ -346,6 +370,7 @@
     "aliases": [
       "/2010/06/parallel-computing-python-way"
     ],
+    "slug": "parallel-computing-python-way",
     "draft": false
   },
   {
@@ -360,6 +385,7 @@
     "aliases": [
       "/2010/06/quaternions-for-python"
     ],
+    "slug": "quaternions-for-python",
     "draft": false
   },
   {
@@ -374,6 +400,7 @@
     "aliases": [
       "/2010/06/healpix-coordinates"
     ],
+    "slug": "healpix-coordinates",
     "draft": false
   },
   {
@@ -388,6 +415,7 @@
     "aliases": [
       "/2010/06/change-column-name-in-fits-with-pyfits"
     ],
+    "slug": "change-column-name-in-fits-with-pyfits",
     "draft": false
   },
   {
@@ -402,6 +430,7 @@
     "aliases": [
       "/2010/07/count-hits-with-numpy"
     ],
+    "slug": "count-hits-with-numpy",
     "draft": false
   },
   {
@@ -416,6 +445,7 @@
     "aliases": [
       "/2010/08/numpy-dtypes-and-fits-keywords"
     ],
+    "slug": "numpy-dtypes-and-fits-keywords",
     "draft": false
   },
   {
@@ -430,6 +460,7 @@
     "aliases": [
       "/2010/08/switch-to-interactive-backend-with"
     ],
+    "slug": "switch-to-interactive-backend-with",
     "draft": false
   },
   {
@@ -444,6 +475,7 @@
     "aliases": [
       "/2010/08/gnome-alt-f2-popup-launcher"
     ],
+    "slug": "gnome-alt-f2-popup-launcher",
     "draft": false
   },
   {
@@ -458,6 +490,7 @@
     "aliases": [
       "/2010/12/force-local-install-of-python-module"
     ],
+    "slug": "force-local-install-of-python-module",
     "draft": false
   },
   {
@@ -472,6 +505,7 @@
     "aliases": [
       "/2011/01/memory-map-npy-files"
     ],
+    "slug": "memory-map-npy-files",
     "draft": false
   },
   {
@@ -486,6 +520,7 @@
     "aliases": [
       "/2011/02/git-make-local-branch-tracking-origin"
     ],
+    "slug": "git-make-local-branch-tracking-origin",
     "draft": false
   },
   {
@@ -500,6 +535,7 @@
     "aliases": [
       "/2011/02/ipython-and-pytrilinos"
     ],
+    "slug": "ipython-and-pytrilinos",
     "draft": false
   },
   {
@@ -515,6 +551,7 @@
     "aliases": [
       "/2011/03/pyfits-memory-leak-in-newtable"
     ],
+    "slug": "pyfits-memory-leak-in-newtable",
     "draft": false
   },
   {
@@ -529,6 +566,7 @@
     "aliases": [
       "/2011/04/set-python-logging-level"
     ],
+    "slug": "set-python-logging-level",
     "draft": false
   },
   {
@@ -543,6 +581,7 @@
     "aliases": [
       "/2011/04/vim-regular-expressions"
     ],
+    "slug": "vim-regular-expressions",
     "draft": false
   },
   {
@@ -557,6 +596,7 @@
     "aliases": [
       "/2011/05/pink-noise-1f-noise-simulations-in-numpy"
     ],
+    "slug": "pink-noise-1f-noise-simulations-in-numpy",
     "draft": false
   },
   {
@@ -571,6 +611,7 @@
     "aliases": [
       "/2011/06/cfitsio-wrapper-in-python"
     ],
+    "slug": "cfitsio-wrapper-in-python",
     "draft": false
   },
   {
@@ -585,6 +626,7 @@
     "aliases": [
       "/2011/06/unit-testing-happiness"
     ],
+    "slug": "unit-testing-happiness",
     "draft": false
   },
   {
@@ -599,6 +641,7 @@
     "aliases": [
       "/2011/11/some-python-resources"
     ],
+    "slug": "some-python-resources",
     "draft": false
   },
   {
@@ -611,6 +654,7 @@
     "aliases": [
       "/2012/07/compile-python-module-with-mpi-support"
     ],
+    "slug": "compile-python-module-with-mpi-support",
     "draft": false
   },
   {
@@ -625,6 +669,7 @@
     "aliases": [
       "/2012/08/doctests-and-unittests-happiness-2"
     ],
+    "slug": "doctests-and-unittests-happiness-2",
     "draft": false
   },
   {
@@ -637,6 +682,7 @@
     "aliases": [
       "/2012/09/homepage-on-aboutme"
     ],
+    "slug": "homepage-on-aboutme",
     "draft": false
   },
   {
@@ -651,6 +697,7 @@
     "aliases": [
       "/2012/09/ipythonparallel-for-planck-data"
     ],
+    "slug": "ipythonparallel-for-planck-data",
     "draft": false
   },
   {
@@ -665,6 +712,7 @@
     "aliases": [
       "/2012/10/butterworth-filter-with-python"
     ],
+    "slug": "butterworth-filter-with-python",
     "draft": false
   },
   {
@@ -680,6 +728,7 @@
     "aliases": [
       "/2012/12/ubuntu-ppa-for-healpix-and-healpy"
     ],
+    "slug": "ubuntu-ppa-for-healpix-and-healpy",
     "draft": false
   },
   {
@@ -694,6 +743,7 @@
     "aliases": [
       "/2013/01/elliptic-beams-fwhm-and-ellipticity"
     ],
+    "slug": "elliptic-beams-fwhm-and-ellipticity",
     "draft": false
   },
   {
@@ -708,6 +758,7 @@
     "aliases": [
       "/2013/01/tag-blogger"
     ],
+    "slug": "tag:blogger",
     "draft": false
   },
   {
@@ -720,6 +771,7 @@
     "aliases": [
       "/2013/02/how-to-cite-hdf5-in-bibtex"
     ],
+    "slug": "how-to-cite-hdf5-in-bibtex",
     "draft": false
   },
   {
@@ -735,6 +787,7 @@
     "aliases": [
       "/2013/03/interactive-3d-plot-of-sky-map"
     ],
+    "slug": "interactive-3d-plot-of-sky-map",
     "draft": false
   },
   {
@@ -749,6 +802,7 @@
     "aliases": [
       "/2013/04/basic-forkpull-git-workflow"
     ],
+    "slug": "basic-forkpull-git-workflow",
     "draft": false
   },
   {
@@ -764,6 +818,7 @@
     "aliases": [
       "/2013/04/noise-in-spectra-and-map-domain"
     ],
+    "slug": "noise-in-spectra-and-map-domain",
     "draft": false
   },
   {
@@ -778,6 +833,7 @@
     "aliases": [
       "/2013/04/simple-mixin-usage-in-python"
     ],
+    "slug": "simple-mixin-usage-in-python",
     "draft": false
   },
   {
@@ -793,6 +849,7 @@
     "aliases": [
       "/2013/04/ipython-parallell-setup-on-carver-at"
     ],
+    "slug": "ipython-parallell-setup-on-carver-at",
     "draft": false
   },
   {
@@ -808,6 +865,7 @@
     "aliases": [
       "/2013/06/how-to-use-ipython-notebook-on-small"
     ],
+    "slug": "how-to-use-ipython-notebook-on-small",
     "draft": false
   },
   {
@@ -823,6 +881,7 @@
     "aliases": [
       "/2013/07/processing-planck-sources-with-hadoop"
     ],
+    "slug": "processing-planck-sources-with-hadoop",
     "draft": false
   },
   {
@@ -837,6 +896,7 @@
     "aliases": [
       "/2013/08/export-google-analytics-data-via-api"
     ],
+    "slug": "export-google-analytics-data-via-api",
     "draft": false
   },
   {
@@ -851,6 +911,7 @@
     "aliases": [
       "/2013/08/healpix-map-of-earth-using-healpy"
     ],
+    "slug": "healpix-map-of-earth-using-healpy",
     "draft": false
   },
   {
@@ -865,6 +926,7 @@
     "aliases": [
       "/2013/08/planck-ctp-angular-power-spectrum-ell"
     ],
+    "slug": "planck-ctp-angular-power-spectrum-ell",
     "draft": false
   },
   {
@@ -880,6 +942,7 @@
     "aliases": [
       "/2013/08/interactive-figures-planck-power-spectra"
     ],
+    "slug": "interactive-figures-planck-power-spectra",
     "draft": false
   },
   {
@@ -895,6 +958,7 @@
     "aliases": [
       "/2013/09/run-hadoop-python-jobs-on-amazon-with-mrjob"
     ],
+    "slug": "run-hadoop-python-jobs-on-amazon-with-mrjob",
     "draft": false
   },
   {
@@ -909,8 +973,10 @@
       "healpy"
     ],
     "aliases": [
+      "/posts/2013-09-10-planck-cmb-map-at-high-resolution",
       "/2013/09/Planck-CMB-map-at-high-resolution"
     ],
+    "slug": "Planck-CMB-map-at-high-resolution",
     "draft": false
   },
   {
@@ -926,6 +992,7 @@
     "aliases": [
       "/2013/09/clviewer-interactive-plot-of-CMB-spectra"
     ],
+    "slug": "clviewer-interactive-plot-of-CMB-spectra",
     "draft": false
   },
   {
@@ -941,6 +1008,7 @@
     "aliases": [
       "/2013/09/automatically-build-pelican-and-publish-to-github-pages"
     ],
+    "slug": "automatically-build-pelican-and-publish-to-github-pages",
     "draft": false
   },
   {
@@ -956,6 +1024,7 @@
     "aliases": [
       "/2013/09/google-plus-comments-plugin-for-pelican"
     ],
+    "slug": "google-plus-comments-plugin-for-pelican",
     "draft": false
   },
   {
@@ -970,6 +1039,7 @@
     "aliases": [
       "/2013/10/how-to-log-exceptions-in-python"
     ],
+    "slug": "how-to-log-exceptions-in-python",
     "draft": false
   },
   {
@@ -984,6 +1054,7 @@
     "aliases": [
       "/2013/10/jiffylab-multiuser-ipython-notebooks"
     ],
+    "slug": "jiffylab-multiuser-ipython-notebooks",
     "draft": false
   },
   {
@@ -999,6 +1070,7 @@
     "aliases": [
       "/2013/11/published-paper-destriping-CMB-polarimeter"
     ],
+    "slug": "published-paper-destriping-CMB-polarimeter",
     "draft": false
   },
   {
@@ -1011,6 +1083,7 @@
     "aliases": [
       "/2013/12/joining-sandiego-supercomputer-center"
     ],
+    "slug": "joining-sandiego-supercomputer-center",
     "draft": false
   },
   {
@@ -1026,6 +1099,7 @@
     "aliases": [
       "/2013/12/run-ipython-notebook-on-HPC-cluster-via-PBS"
     ],
+    "slug": "run-ipython-notebook-on-HPC-cluster-via-PBS",
     "draft": false
   },
   {
@@ -1040,6 +1114,7 @@
     "aliases": [
       "/2014/01/wget-file-from-google-drive"
     ],
+    "slug": "wget-file-from-google-drive",
     "draft": false
   },
   {
@@ -1055,6 +1130,7 @@
     "aliases": [
       "/2014/02/openproceedings"
     ],
+    "slug": "openproceedings-github-figshare-pelican-conference-proceedings",
     "draft": false
   },
   {
@@ -1070,6 +1146,7 @@
     "aliases": [
       "/2014/02/build-software-carpentry-with-pelican"
     ],
+    "slug": "build-software-carpentry-with-pelican",
     "draft": false
   },
   {
@@ -1085,6 +1162,7 @@
     "aliases": [
       "/2014/03/machine-learning-at-scale-with-python"
     ],
+    "slug": "machine-learning-at-scale-with-python",
     "draft": false
   },
   {
@@ -1100,6 +1178,7 @@
     "aliases": [
       "/2014/03/python-on-gordon"
     ],
+    "slug": "setup-ipython-notebook-parallel-Gordon",
     "draft": false
   },
   {
@@ -1115,6 +1194,7 @@
       "/2014/06/career_as_a_computational_scientist",
       "/2014/06/career-as-a-computational-scientist"
     ],
+    "slug": "career-as-a-computational-scientist",
     "draft": false
   },
   {
@@ -1131,6 +1211,7 @@
     "aliases": [
       "/2014/08/github-for-research-groups"
     ],
+    "slug": "github-for-research-groups",
     "draft": false
   },
   {
@@ -1147,6 +1228,7 @@
     "aliases": [
       "/2014/08/code-review-for-scientific-computing"
     ],
+    "slug": "code-review-for-scientific-computing",
     "draft": false
   },
   {
@@ -1162,6 +1244,7 @@
     "aliases": [
       "/2014/09/unit-tests-ipython-notebook"
     ],
+    "slug": "unit-tests-ipython-notebook",
     "draft": false
   },
   {
@@ -1176,6 +1259,7 @@
     "aliases": [
       "/2014/10/zero-based-indexing"
     ],
+    "slug": "zero-based-indexing",
     "draft": false
   },
   {
@@ -1191,6 +1275,7 @@
     "aliases": [
       "/2015/02/software-carpentry-setup-chromebook"
     ],
+    "slug": "software-carpentry-setup-chromebook",
     "draft": false
   },
   {
@@ -1206,6 +1291,7 @@
     "aliases": [
       "/2015/03/numba-groupby-pixels"
     ],
+    "slug": "numba-groupby-pixels",
     "draft": false
   },
   {
@@ -1222,6 +1308,7 @@
     "aliases": [
       "/2015/04/jupyterhub-hpc"
     ],
+    "slug": "jupyterhub-hpc",
     "draft": false
   },
   {
@@ -1238,6 +1325,7 @@
     "aliases": [
       "/2015/09/ipython-jupyter-notebook-sdsc-comet"
     ],
+    "slug": "ipython-jupyter-notebook-sdsc-comet",
     "draft": false
   },
   {
@@ -1255,6 +1343,7 @@
     "aliases": [
       "/2015/09/ipython-jupyter-notebook-nersc-edison"
     ],
+    "slug": "ipython-jupyter-notebook-nersc-edison",
     "draft": false
   },
   {
@@ -1270,6 +1359,7 @@
     "aliases": [
       "/2015/10/use-own-python-in-jupyterhub"
     ],
+    "slug": "use-own-python-in-jupyterhub",
     "draft": false
   },
   {
@@ -1285,6 +1375,7 @@
     "aliases": [
       "/2016/04/jupyterhub-sdsc-cloud"
     ],
+    "slug": "jupyterhub-sdsc-cloud",
     "draft": false
   },
   {
@@ -1300,6 +1391,7 @@
     "aliases": [
       "/2016/04/jupyterhub-image-sdsc-cloud"
     ],
+    "slug": "jupyterhub-image-sdsc-cloud",
     "draft": false
   },
   {
@@ -1315,6 +1407,7 @@
     "aliases": [
       "/2016/05/jupyterhub-docker-swarm"
     ],
+    "slug": "jupyterhub-docker-swarm",
     "draft": false
   },
   {
@@ -1330,6 +1423,7 @@
     "aliases": [
       "/2016/10/dockerspawner-cuda"
     ],
+    "slug": "dockerspawner-cuda",
     "draft": false
   },
   {
@@ -1345,6 +1439,7 @@
     "aliases": [
       "/2017/01/singularity-hpc-comet"
     ],
+    "slug": "singularity-hpc-comet",
     "draft": false
   },
   {
@@ -1361,6 +1456,7 @@
     "aliases": [
       "/2017/02/publish-research-software-github"
     ],
+    "slug": "publish-research-software-github",
     "draft": false
   },
   {
@@ -1376,6 +1472,7 @@
     "aliases": [
       "/2017/02/automated-deployment-jupyterhub-ansible"
     ],
+    "slug": "automated-deployment-jupyterhub-ansible",
     "draft": false
   },
   {
@@ -1391,6 +1488,7 @@
     "aliases": [
       "/2017/02/customize-your-python-environment-in-jupyterhub"
     ],
+    "slug": "customize-python-environment-jupyterhub",
     "draft": false
   },
   {
@@ -1407,6 +1505,7 @@
     "aliases": [
       "/2017/02/sample-deployment-jupyterhub-hpc"
     ],
+    "slug": "sample-deployment-jupyterhub-hpc",
     "draft": false
   },
   {
@@ -1421,6 +1520,7 @@
     "aliases": [
       "/2017/04/globus-ftp-local-machine"
     ],
+    "slug": "globus-gridftp-local",
     "draft": false
   },
   {
@@ -1437,6 +1537,7 @@
     "aliases": [
       "/2017/05/jupyterhub-batchspawner-ssh"
     ],
+    "slug": "jupyterhub-hpc-batchspawner-ssh",
     "draft": false
   },
   {
@@ -1452,6 +1553,7 @@
     "aliases": [
       "/2017/06/quick-github-pull-requests"
     ],
+    "slug": "quick-github-pull-requests",
     "draft": false
   },
   {
@@ -1468,6 +1570,7 @@
     "aliases": [
       "/2017/07/xstream-tutorial-notes-pearc17"
     ],
+    "slug": "quick-github-pull-requests",
     "draft": false
   },
   {
@@ -1484,6 +1587,7 @@
     "aliases": [
       "/2017/08/jupyterhub-globus-comet-singularity"
     ],
+    "slug": "jupyterhub-globus-comet-singularity",
     "draft": false
   },
   {
@@ -1499,6 +1603,7 @@
     "aliases": [
       "/2017/09/continous-integration-travis-ci-github"
     ],
+    "slug": "automated-testing-travis-ci-github",
     "draft": false
   },
   {
@@ -1514,6 +1619,7 @@
     "aliases": [
       "/2017/10/compile-software-singularity"
     ],
+    "slug": "modify-singularity-images",
     "draft": false
   },
   {
@@ -1529,6 +1635,7 @@
     "aliases": [
       "/2017/10/cudak8s"
     ],
+    "slug": "compile-software-singularity",
     "draft": false
   },
   {
@@ -1545,6 +1652,7 @@
     "aliases": [
       "/2017/10/scalable-jupyterhub-docker-swarm-mode"
     ],
+    "slug": "scalable-jupyterhub-docker-swarm-mode",
     "draft": false
   },
   {
@@ -1560,6 +1668,7 @@
     "aliases": [
       "/2017/12/store-conda-environment-inside-notebook"
     ],
+    "slug": "store-conda-environment-inside-notebook",
     "draft": false
   },
   {
@@ -1576,6 +1685,7 @@
     "aliases": [
       "/2017/12/scalable-jupyterhub-kubernetes-jetstream"
     ],
+    "slug": "scalable-jupyterhub-kubernetes-jetstream",
     "draft": false
   },
   {
@@ -1592,6 +1702,7 @@
     "aliases": [
       "/2017/12/ecss-symposium"
     ],
+    "slug": "ecss-symposium",
     "draft": false
   },
   {
@@ -1609,6 +1720,7 @@
     "aliases": [
       "/2017/12/custom-conda-python-jupyter-nersc"
     ],
+    "slug": "custom-conda-python-jupyter-nersc",
     "draft": false
   },
   {
@@ -1625,6 +1737,7 @@
       "/2018/01/deploy_jupyterhub_supercomputer_2018",
       "/2018/01/deploy-jupyterhub-supercomputer-2018"
     ],
+    "slug": "jupyterhub-supercomputer",
     "draft": false
   },
   {
@@ -1641,6 +1754,7 @@
     "aliases": [
       "/2018/03/zarr-on-jetstream"
     ],
+    "slug": "zarr-on-jetstream",
     "draft": false
   },
   {
@@ -1656,6 +1770,7 @@
     "aliases": [
       "/2018/03/zarr"
     ],
+    "slug": "zarr-on-jetstream",
     "draft": false
   },
   {
@@ -1671,6 +1786,7 @@
     "aliases": [
       "/2018/03/boinc-server-jetstream"
     ],
+    "slug": "boinc-server-jetstream",
     "draft": false
   },
   {
@@ -1687,6 +1803,7 @@
     "aliases": [
       "/2018/05/shared-dask-kubernetes-jetstream"
     ],
+    "slug": "shared-dask-kubernetes-jetstream",
     "draft": false
   },
   {
@@ -1701,6 +1818,7 @@
     "aliases": [
       "/2018/05/pearc18-paper-preprint-arxiv"
     ],
+    "slug": "pearc18-preprint-arxiv",
     "draft": false
   },
   {
@@ -1718,6 +1836,7 @@
     "aliases": [
       "/2018/06/private-dask-kubernetes-jetstream"
     ],
+    "slug": "private-dask-kubernetes-jetstream",
     "draft": false
   },
   {
@@ -1734,6 +1853,7 @@
     "aliases": [
       "/2018/06/organize-code-simulations-nersc"
     ],
+    "slug": "organize-code-data-simulations-nersc",
     "draft": false
   },
   {
@@ -1748,6 +1868,7 @@
     "aliases": [
       "/2018/07/docker-auto-build"
     ],
+    "slug": "create-dockerhub-autobuild",
     "draft": false
   },
   {
@@ -1763,6 +1884,7 @@
     "aliases": [
       "/2018/07/updated-singularity-2.5-comet"
     ],
+    "slug": "singularity-2.5-comet",
     "draft": false
   },
   {
@@ -1781,6 +1903,7 @@
       "/2018/07/pearc18_paper_deploy_jupyterhub_xsede",
       "/2018/07/pearc18-paper-deploy-jupyterhub-xsede"
     ],
+    "slug": "pearc18-paper-deploy-jupyterhub-xsede",
     "draft": false
   },
   {
@@ -1797,6 +1920,7 @@
       "/2018/09/jetstream_kubernetes_kubespray",
       "/2018/09/jetstream-kubernetes-kubespray"
     ],
+    "slug": "kubernetes-jetstream-kubespray",
     "draft": false
   },
   {
@@ -1813,6 +1937,7 @@
       "/2018/09/jetstream_kubernetes_kubespray_explore",
       "/2018/09/jetstream-kubernetes-kubespray-explore"
     ],
+    "slug": "kubernetes-jetstream-kubespray-explore",
     "draft": false
   },
   {
@@ -1830,6 +1955,7 @@
       "/2018/09/jetstream_kubernetes_kubespray_jupyterhub",
       "/2018/09/jetstream-kubernetes-kubespray-jupyterhub"
     ],
+    "slug": "kubernetes-jetstream-kubespray-jupyterhub",
     "draft": false
   },
   {
@@ -1844,6 +1970,7 @@
     "aliases": [
       "/2018/10/compute-at-sdsc"
     ],
+    "slug": "compute-at-sdsc",
     "draft": false
   },
   {
@@ -1859,6 +1986,7 @@
     "aliases": [
       "/2018/10/pandas-astro-example"
     ],
+    "slug": "pandas-astro-example",
     "draft": false
   },
   {
@@ -1872,6 +2000,7 @@
       "hpc"
     ],
     "aliases": [],
+    "slug": "jupyterhub-supercomputer",
     "draft": false
   },
   {
@@ -1885,6 +2014,7 @@
       "/2018/12/twofactor_ucsd",
       "/2018/12/twofactor-ucsd"
     ],
+    "slug": "twofactor-auth-ucsd",
     "draft": false
   },
   {
@@ -1902,6 +2032,7 @@
       "/2018/12/jetstream_kubernetes_jupyterhub_pangeo",
       "/2018/12/jetstream-kubernetes-jupyterhub-pangeo"
     ],
+    "slug": "kubernetes-jetstream-kubespray-pangeo",
     "draft": false
   },
   {
@@ -1920,6 +2051,7 @@
       "/2019/01/zarr-jetstream-2019",
       "/2019/01/zarr-on-jetstream"
     ],
+    "slug": "zarr-on-jetstream",
     "draft": false
   },
   {
@@ -1936,6 +2068,7 @@
       "/2019/02/jetstream_kubernetes_kubespray_282",
       "/2019/02/jetstream-kubernetes-kubespray-282"
     ],
+    "slug": "kubernetes-jupyterhub-jetstream-kubespray",
     "draft": false
   },
   {
@@ -1952,6 +2085,7 @@
     "aliases": [
       "/2019/02/kubernetes-monitoring"
     ],
+    "slug": "scale-kubernetes-jupyterhub-manually",
     "draft": false
   },
   {
@@ -1968,6 +2102,7 @@
     "aliases": [
       "/2019/02/scale-kubernetes-jupyterhub-manually"
     ],
+    "slug": "scale-kubernetes-jupyterhub-manually",
     "draft": false
   },
   {
@@ -1983,6 +2118,7 @@
     "aliases": [
       "/2019/03/folder-inherit-group-permission"
     ],
+    "slug": "folder-inherit-group-permission",
     "draft": false
   },
   {
@@ -2000,6 +2136,7 @@
       "/2019/04/jetstream_kubernetes_monitoring",
       "/2019/04/kubernetes-monitoring-prometheus-grafana"
     ],
+    "slug": "kubernetes-monitoring-prometheus-grafana",
     "draft": false
   },
   {
@@ -2015,6 +2152,7 @@
     "aliases": [
       "/2019/05/webinar_python_hpc"
     ],
+    "slug": "webinar-python-hpc",
     "draft": false
   },
   {
@@ -2031,6 +2169,7 @@
     "aliases": [
       "/2019/06/jetstream_kubernetes_magnum"
     ],
+    "slug": "kubernetes-jupyterhub-jetstream-magnum",
     "draft": false
   },
   {
@@ -2046,6 +2185,7 @@
       "/2019/08/large_files_python_packages",
       "/2019/08/large-files-python-packages"
     ],
+    "slug": "large-files-python-packages",
     "draft": false
   },
   {
@@ -2062,6 +2202,7 @@
     "aliases": [
       "/2019/08/github-for-research-groups"
     ],
+    "slug": "github-for-research-groups",
     "draft": false
   },
   {
@@ -2078,6 +2219,7 @@
     "aliases": [
       "/2019/09/jetstream_kubernetes_magnum_autoscaler"
     ],
+    "slug": "kubernetes-jetstream-autoscaler",
     "draft": false
   },
   {
@@ -2092,6 +2234,7 @@
     "aliases": [
       "/2019/09/batch_notebook_execution"
     ],
+    "slug": "batch-notebook-execution",
     "draft": false
   },
   {
@@ -2108,6 +2251,7 @@
     "aliases": [
       "/2019/10/jetstream_kubernetes_loadtest"
     ],
+    "slug": "loadtest-jupyterhub",
     "draft": false
   },
   {
@@ -2122,6 +2266,7 @@
     "aliases": [
       "/2019/12/organize_calendars_large_collaboration"
     ],
+    "slug": "organize-calendar-collaboration",
     "draft": false
   },
   {
@@ -2139,6 +2284,7 @@
       "/2020/02/kubernetes_cvmfs",
       "/2020/02/cvmfs-kubernetes"
     ],
+    "slug": "cvmfs-kubernetes",
     "draft": false
   },
   {
@@ -2153,6 +2299,7 @@
     "aliases": [
       "/2020/03/pelican-to-fastpages"
     ],
+    "slug": "pelican-to-fastpages",
     "draft": false
   },
   {
@@ -2168,6 +2315,7 @@
     "aliases": [
       "/2020/03/kill-jupyter-notebook"
     ],
+    "slug": "kill-jupyter-notebook",
     "draft": false
   },
   {
@@ -2230,6 +2378,7 @@
     "aliases": [
       "/2020/05/jetstream_kubernetes_magnum"
     ],
+    "slug": "kubernetes-jupyterhub-jetstream-magnum",
     "draft": false
   },
   {
@@ -2258,6 +2407,7 @@
     "aliases": [
       "/2020/06/git"
     ],
+    "slug": "git",
     "draft": false
   },
   {
@@ -2287,6 +2437,7 @@
     "aliases": [
       "/2020/06/jetstream_kubernetes_kubespray"
     ],
+    "slug": "kubernetes-jetstream-kubespray",
     "draft": false
   },
   {
@@ -2483,6 +2634,7 @@
     "aliases": [
       "/2021/01/jetstream_kubernetes_kubespray_2.15.0"
     ],
+    "slug": "kubernetes-jetstream-kubespray",
     "draft": false
   },
   {
@@ -2512,6 +2664,7 @@
     "aliases": [
       "/2021/03/jetstream-video-stream-object-store"
     ],
+    "slug": "video-streaming-jetstream",
     "draft": false
   },
   {
@@ -2528,6 +2681,7 @@
       "/2021/03/sgci-tech-blog",
       "/2021/03/sgci-tech-blog-kubernetes-jupyterhub-jetstream"
     ],
+    "slug": "sgci-tech-blog-kubernetes-jupyterhub-jetstream",
     "draft": false
   },
   {
@@ -2689,6 +2843,7 @@
       "/2021/10/kubernetes-hadoop",
       "/2021/10/hadoop-kubernetes-jetstream"
     ],
+    "slug": "hadoop-kubernetes-jetstream",
     "draft": false
   },
   {
@@ -2703,6 +2858,7 @@
     "aliases": [
       "/2021/11/cka-ckad-kubernetes-certification"
     ],
+    "slug": "cka-ckad-kubernetes-certification",
     "draft": false
   },
   {
@@ -2780,6 +2936,7 @@
       "/2022/03/jetstream2_kubernetes_kubespray",
       "/2022/03/kubernetes-jetstream2-kubespray"
     ],
+    "slug": "kubernetes-jetstream2-kubespray",
     "draft": false
   },
   {
@@ -2796,6 +2953,7 @@
     "aliases": [
       "/2022/03/jetstream2_jupyterhub"
     ],
+    "slug": "jetstream2-jupyterhub",
     "draft": false
   },
   {
@@ -2831,6 +2989,7 @@
       "/2022/04/zarr-jetstream2",
       "/2022/04/zarr_jetstream2"
     ],
+    "slug": "zarr-jetstream2",
     "draft": false
   },
   {
@@ -2939,6 +3098,7 @@
     "aliases": [
       "/2022/06/mariadb"
     ],
+    "slug": "mariadb-jetstream2-kubernetes",
     "draft": false
   },
   {
@@ -3171,7 +3331,10 @@
       "kubernetes",
       "jetstream2"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/kubernetes-jetstream2-kubespray"
+    ],
+    "slug": "kubernetes-jetstream2-kubespray",
     "draft": false
   },
   {
@@ -3186,6 +3349,7 @@
       "sdsc"
     ],
     "aliases": [],
+    "slug": "python-for-hpc-tutorial",
     "draft": false
   },
   {
@@ -3247,6 +3411,7 @@
       "jetstream2"
     ],
     "aliases": [],
+    "slug": "jupyterhub-jetstream2-loadbalancer",
     "draft": true
   },
   {
@@ -3311,6 +3476,7 @@
       "ana-espinoza"
     ],
     "aliases": [],
+    "slug": "soft-scaling-kubernetes-jetstream",
     "draft": false
   },
   {
@@ -3378,6 +3544,7 @@
       "2024-04-20-flatcar-image-jetstream",
       "/posts/2024-04-20-flatcar-image-jetstream"
     ],
+    "slug": "flatcar-image-jetstream",
     "draft": false
   },
   {
@@ -3406,6 +3573,7 @@
     "aliases": [
       "2024-05-07-ubuntu22-minimal-image-jetstream"
     ],
+    "slug": "ubuntu22-minimal-image-jetstream",
     "draft": false
   },
   {
@@ -3433,6 +3601,7 @@
       "jetstream2"
     ],
     "aliases": [],
+    "slug": "ubuntu22-minimal-image-gpu-jetstream",
     "draft": false
   },
   {
@@ -3458,6 +3627,7 @@
       "astrophysics"
     ],
     "aliases": [],
+    "slug": "interactive-3d-plot-planck-map",
     "draft": false
   },
   {
@@ -3498,6 +3668,7 @@
       "python"
     ],
     "aliases": [],
+    "slug": "web-server-https-django-jetstream2",
     "draft": false
   },
   {
@@ -3535,6 +3706,7 @@
       "data"
     ],
     "aliases": [],
+    "slug": "pearc-paper-cheapandfair-data-portal",
     "draft": false
   },
   {
@@ -3585,6 +3757,7 @@
       "sdsc"
     ],
     "aliases": [],
+    "slug": "python-for-hpc-tutorial-2024",
     "draft": false
   },
   {
@@ -3597,6 +3770,7 @@
       "linux"
     ],
     "aliases": [],
+    "slug": "ssh-agent",
     "draft": false
   },
   {
@@ -3610,6 +3784,7 @@
       "jetstream2"
     ],
     "aliases": [],
+    "slug": "jetstream-manila-mount",
     "draft": false
   },
   {
@@ -3624,6 +3799,7 @@
       "jupyterhub"
     ],
     "aliases": [],
+    "slug": "kubernetes-prometheus-grafana",
     "draft": false
   },
   {
@@ -3641,6 +3817,7 @@
     "aliases": [
       "/posts/jetstream_llama"
     ],
+    "slug": "jetstream-llm-chat",
     "draft": false
   },
   {
@@ -3653,6 +3830,7 @@
       "openscience"
     ],
     "aliases": [],
+    "slug": "self-invite-calendar-event",
     "draft": false
   },
   {
@@ -3665,6 +3843,7 @@
       "jetstream"
     ],
     "aliases": [],
+    "slug": "jetstream-windows-wsl",
     "draft": false
   },
   {
@@ -3692,6 +3871,7 @@
       "jupyterhub"
     ],
     "aliases": [],
+    "slug": "kubernetes-jupyterhub-jetstream-magnum-2024",
     "draft": false
   },
   {
@@ -3741,6 +3921,7 @@
       "llm"
     ],
     "aliases": [],
+    "slug": "jetstream-llm-service-deepseek-jupyterai",
     "draft": false
   },
   {
@@ -3780,6 +3961,7 @@
       "jetstream2"
     ],
     "aliases": [],
+    "slug": "jetstream2-usage-monitoring",
     "draft": false
   },
   {
@@ -3792,6 +3974,7 @@
       "data"
     ],
     "aliases": [],
+    "slug": "tutorial-globus-serverless-research-data-repository",
     "draft": false
   },
   {
@@ -3859,7 +4042,9 @@
       "jupyterhub",
       "linux"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/2025-02-01-nfs-server-kubernetes-jetstream"
+    ],
     "draft": false
   },
   {
@@ -3976,6 +4161,7 @@
       "llm"
     ],
     "aliases": [],
+    "slug": "deploy-70b-llm-jetstream",
     "draft": false
   },
   {
@@ -3989,6 +4175,7 @@
       "llm"
     ],
     "aliases": [],
+    "slug": "llm-unshelve",
     "draft": false
   },
   {
@@ -4002,6 +4189,7 @@
       "jetstream"
     ],
     "aliases": [],
+    "slug": "openstack-unshelver-demo",
     "draft": false
   },
   {
@@ -4030,6 +4218,7 @@
     "aliases": [
       "/posts/2025-09-12-pysm-methods-apj-publication"
     ],
+    "slug": "pysm-methods-apj-publication",
     "draft": false
   },
   {
@@ -4043,6 +4232,7 @@
       "llm"
     ],
     "aliases": [],
+    "slug": "jetstream-llm-llama-cpp",
     "draft": false
   },
   {
@@ -4364,6 +4554,7 @@
       "hpc"
     ],
     "aliases": [],
+    "slug": "request-access-aws-google-cloud-cloudbank",
     "draft": false
   },
   {
@@ -4388,6 +4579,7 @@
       "github"
     ],
     "aliases": [],
+    "slug": "cosmosage-unshelver",
     "draft": false
   },
   {
@@ -4402,6 +4594,7 @@
       "cosmology"
     ],
     "aliases": [],
+    "slug": "cosmosage-launch",
     "draft": false
   },
   {
@@ -4489,7 +4682,9 @@
     "categories": [
       "ai"
     ],
-    "aliases": [],
+    "aliases": [
+      "/posts/2026-01-29-configure-ostrn-llm-opencode-crush"
+    ],
     "draft": false
   },
   {
@@ -4622,6 +4817,7 @@
       "llm"
     ],
     "aliases": [],
+    "slug": "jetstream-llm-llama-cpp-review",
     "draft": false
   },
   {
@@ -4673,6 +4869,7 @@
       "tools"
     ],
     "aliases": [],
+    "slug": "configure-claude-code-minimax",
     "draft": false
   },
   {
@@ -4960,6 +5157,7 @@
     "aliases": [
       "/posts/2026-05-18-kubernetes-jetstream2-certmanager"
     ],
+    "slug": "kubernetes-jetstream2-certmanager",
     "draft": false
   },
   {
@@ -4976,6 +5174,7 @@
     "aliases": [
       "/posts/2026-05-18-kubernetes-jetstream2-jupyterhub"
     ],
+    "slug": "kubernetes-jetstream2-jupyterhub",
     "draft": false
   },
   {
@@ -4992,6 +5191,7 @@
       "/posts/2026-05-18-kubernetes-jetstream2-magnum-2026",
       "/posts/2026-05-18-kubernetes-jetstream2-magnum"
     ],
+    "slug": "kubernetes-jetstream2-magnum",
     "draft": false
   },
   {
@@ -5008,6 +5208,7 @@
       "/posts/2026-05-18-kubernetes-jetstream2-traefik-jupyterhub-2026",
       "/posts/2026-05-18-kubernetes-jetstream2-traefik"
     ],
+    "slug": "kubernetes-jetstream2-traefik",
     "draft": false
   },
   {
@@ -5024,6 +5225,7 @@
     "aliases": [
       "/posts/2026-05-18-migrate-nginx-traefik-jetstream2-kubernetes"
     ],
+    "slug": "migrate-nginx-traefik-jetstream2-kubernetes",
     "draft": false
   },
   {
@@ -5051,6 +5253,7 @@
       "ai"
     ],
     "aliases": [],
+    "slug": "agent-terminal-status-chromeos-overview",
     "draft": false
   },
   {

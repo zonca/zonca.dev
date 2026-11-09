@@ -1,4 +1,6 @@
 ---
+aliases:
+- /posts/2025-02-01-nfs-server-kubernetes-jetstream
 categories:
 - kubernetes
 - jetstream
