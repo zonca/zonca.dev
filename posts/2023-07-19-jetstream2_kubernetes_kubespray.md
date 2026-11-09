@@ -1,4 +1,6 @@
 ---
+aliases:
+- /posts/kubernetes-jetstream2-kubespray
 categories:
 - kubernetes
 - jetstream2

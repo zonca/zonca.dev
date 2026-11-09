@@ -11,7 +11,7 @@ title: Autoscaling script for JupyterHub on top of Kubespray
 ---
 
 I think the most reliable way of deploying Kubernetes on Openstack is Kubespray,
-see [my latest tutorial about it focused on Jetstream](https://zonca.dev/2021/01/kubernetes-jetstream-kubespray.html).
+see [my latest tutorial about it focused on Jetstream](https://www.zonca.dev/posts/2021-01-20-jetstream_kubernetes_kubespray_2.15.0).
 
 The main issue with this strategy, compared to using Magnum, is that it is not supported by the Cluster Autoscaler, so we don't have an automatic way of scaling up and down the deployment based on load.
 

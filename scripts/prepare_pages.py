@@ -3,7 +3,8 @@
 
 - Copy the two QMD posts into .generated/posts/*.md (plain Markdown input).
 - Copy AGENTS.md, skill/SKILL.md into .generated/pages/*.md.
-- Generate public/_redirects from the baseline alias table plus fixed rules.
+- Generate public/_redirects from the baseline alias table (every spelling of
+  each alias, plus .ipynb notebook URLs) and the fixed rules.
 - Copy co-located post assets (images, fonts, scripts, docs/, profile.jpg)
   into public/ so relative URLs keep resolving exactly like production.
 """
@@ -28,6 +29,45 @@ FIXED_REDIRECTS = [
     ("/page/1", "/", 301),
     ("/GEMINI", "/AGENTS", 301),
 ]
+
+
+def alias_variants(source: str) -> list[str]:
+    """The spellings of one legacy URL that crawlers and old links request.
+
+    Cloudflare `_redirects` matches paths exactly, so `/2020/09/post`,
+    `/2020/09/post/` and `/2020/09/post.html` each need their own rule.
+    """
+    base = source[:-5] if source.endswith(".html") else source.rstrip("/")
+    return [base, base + "/", base + ".html"]
+
+
+def redirect_rules(aliases: dict[str, str], manifest: list[dict]) -> list[tuple[str, str, int]]:
+    """Every (source, target, status) rule of public/_redirects, deduplicated.
+
+    - each alias plus its trailing-slash and `.html` spellings
+    - `/posts/<name>.ipynb` for notebook posts, which Google picks up from the
+      GitHub source links
+    - the fixed rules
+    Spellings that collide with a real page or an earlier rule are skipped.
+    """
+    pages = set()
+    for r in manifest:
+        c = r["canonical"]
+        pages |= {c, c[:-5] if c.endswith(".html") else c}
+    rules: dict[str, tuple[str, int]] = {}
+    for source, target in sorted(aliases.items()):
+        rules[source] = (target, 301)
+    for source, target in sorted(aliases.items()):
+        for variant in alias_variants(source):
+            if variant not in rules and variant not in pages:
+                rules[variant] = (target, 301)
+    for r in manifest:
+        if r.get("source_type") == "ipynb" and not r.get("draft"):
+            stem = os.path.splitext(os.path.basename(r["source"]))[0]
+            rules.setdefault(f"/posts/{stem}.ipynb", (r["canonical"], 301))
+    for source, target, status in FIXED_REDIRECTS:
+        rules[source] = (target, status)
+    return [(src, tgt, st) for src, (tgt, st) in rules.items()]
 
 
 def main() -> int:
@@ -63,11 +103,8 @@ def main() -> int:
     aliases_path = os.path.join(ROOT, "tests", "baseline", "aliases.json")
     if os.path.exists(aliases_path):
         aliases = json.load(open(aliases_path, encoding="utf-8"))
-        rules = []
-        for source, target in sorted(aliases.items()):
-            rules.append(f"{source} {target} 301")
-        for source, target, status in FIXED_REDIRECTS:
-            rules.append(f"{source} {target} {status}")
+        manifest = json.load(open(os.path.join(ROOT, "tests", "baseline", "manifest.json"), encoding="utf-8"))
+        rules = [f"{s} {t} {st}" for s, t, st in redirect_rules(aliases, manifest)]
         os.makedirs(PUBLIC, exist_ok=True)
         with open(os.path.join(PUBLIC, "_redirects"), "w", encoding="utf-8") as fh:
             fh.write("\n".join(rules) + "\n")

@@ -53,6 +53,10 @@ All existing URLs are frozen and verified in CI:
   baseline manifest (`tests/baseline/aliases.json`), and `scripts/baseline_manifest.py`
   regenerates it from source front matter.
 - `draft: true` posts stay off production but appear in PR previews.
+- `scripts/baseline_manifest.py` also derives the old Fastpages URL `/YYYY/MM/<slug>` from each
+  post's `slug:` and `date:` (explicit `aliases:` win), and `scripts/prepare_pages.py` writes every
+  alias in three spellings (bare, trailing slash, `.html`) plus `/posts/<name>.ipynb` for notebook
+  posts, because Cloudflare `_redirects` matches paths exactly. Keep `_redirects` under 2000 rules.
 - CI regenerates and commits the `tests/baseline/` fixture automatically after
   every merge to `main` (the `commit-baseline` job of
   `.github/workflows/astro-deploy.yml`, commit
@@ -79,7 +83,7 @@ All existing URLs are frozen and verified in CI:
   `scripts/prepare_pages.py` (copies QMD posts, root pages, assets, generates
   `public/_redirects` and `llms.txt`/`.well-known`) → `astro build`.
 - Validation: `python3 scripts/validate_urls.py` (dist) and `--live https://www.zonca.dev`
-  (production; run by CI after every deploy: 424 canonical URLs + 249 aliases).
+  (production; run by CI after every deploy: 427 canonical URLs + 343 aliases).
 - Notebooks: never execute them during builds; stored outputs (text/markdown/HTML/PNG/SVG)
   render as static content. Fix broken notebook output by editing the stored output.
 - The previous Quarto site is preserved in the `quarto-with-2026-10-01` release for rollback.

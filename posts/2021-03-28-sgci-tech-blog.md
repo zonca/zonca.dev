@@ -55,7 +55,7 @@ In this case, we can just spawn a single, large-memory Virtual Machine on Jetstr
 
 However, if the sum of the memory needed by all the users is higher than 120GB, we need to deploy JupyterHub across multiple Jetstream Virtual Machines. The recommended way of deploying a distributed instance of JupyterHub is on top of Kubernetes, which is able to provide networking, logging, reliability, and scalability.
 
-I have configured and adapted the Kubespray tool to deploy Kubernetes to Jetstream and have written a [step-by-step tutorial about it](https://zonca.dev/2021/01/kubernetes-jetstream-kubespray.html), which includes all the necessary configuration files. A Jetstream user can launch this script to programmatically launch any number of Jetstream instances and deploy Kubernetes across them. Consider also that Kubernetes would be a good platform to deploy a Science Gateway itself, especially if it already has a distributed architecture (for example, the gateway website, a database, and worker processes that execute computations). However, Kubernetes itself is a complex system, which requires someone in the Gateway development team to invest significant effort in learning how to configure and administer it.
+I have configured and adapted the Kubespray tool to deploy Kubernetes to Jetstream and have written a [step-by-step tutorial about it](https://www.zonca.dev/posts/2021-01-20-jetstream_kubernetes_kubespray_2.15.0), which includes all the necessary configuration files. A Jetstream user can launch this script to programmatically launch any number of Jetstream instances and deploy Kubernetes across them. Consider also that Kubernetes would be a good platform to deploy a Science Gateway itself, especially if it already has a distributed architecture (for example, the gateway website, a database, and worker processes that execute computations). However, Kubernetes itself is a complex system, which requires someone in the Gateway development team to invest significant effort in learning how to configure and administer it.
 
 After Kubernetes is deployed, we now have a programmatic interface where we can deploy applications packaged as Docker containers, monitor their execution, log their warnings or errors, and scale them based on load.
 
@@ -77,7 +77,7 @@ This is a basic overview of the different components involved in deploying a dis
 
 *   ["Gateways 2020" paper and video recording](https://zonca.dev/2020/09/gateways-2020-paper.html)
 *   [Video tutorial on Openstack and Kubernetes for the ECSS Symposium](https://www.youtube.com/watch?v=jiYw4g4RX-w)
-*   [Tutorial on how to deploy Kubernetes and JupyterHub on Jetstream via Kubespray](https://zonca.dev/2021/01/kubernetes-jetstream-kubespray.html)
+*   [Tutorial on how to deploy Kubernetes and JupyterHub on Jetstream via Kubespray](https://www.zonca.dev/posts/2021-01-20-jetstream_kubernetes_kubespray_2.15.0)
 *   [Tutorial on how to setup SSL for HTTPS connection to JupyterHub](https://zonca.dev/2020/03/setup-https-kubernetes-letsencrypt.html)
 *   [Tutorial on how to deploy Dask for distributed computing](https://zonca.dev/2020/08/dask-gateway-jupyterhub.html)
 *   [Prototype autoscaler for JupyterHub on Jetstream](https://zonca.dev/2021/01/autoscaling_script_kubespray_jupyterhub.html)

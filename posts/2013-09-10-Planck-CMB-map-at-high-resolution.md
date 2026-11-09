@@ -1,5 +1,6 @@
 ---
 aliases:
+- /posts/2013-09-10-planck-cmb-map-at-high-resolution
 - /2013/09/Planck-CMB-map-at-high-resolution
 categories:
 - python

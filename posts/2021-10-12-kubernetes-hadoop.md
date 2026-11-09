@@ -14,7 +14,7 @@ title: Deploy Hadoop on Kubernetes on Jetstream
 
 We are deploying the good old Hadoop on top of Kubernetes on Jetstream. Don't ask why.
 
-As usual we start with a full-fledged Kubernetes deployment on Jetstream (1) [deployed via Kubespray](https://zonca.dev/2021/01/kubernetes-jetstream-kubespray.html)
+As usual we start with a full-fledged Kubernetes deployment on Jetstream (1) [deployed via Kubespray](https://www.zonca.dev/posts/2021-01-20-jetstream_kubernetes_kubespray_2.15.0)
 
 ## Deploy Hadoop via helm
 

@@ -97,6 +97,7 @@ def collect_posts() -> list[dict]:
                 "date": date,
                 "categories": fm.get("categories") or [],
                 "aliases": list(fm.get("aliases") or []),
+                **({"slug": str(fm["slug"])} if fm.get("slug") else {}),
                 "draft": bool(fm.get("draft")),
                 **({"front_matter_error": True} if fm.get("_yaml_error") else {}),
                 **({"parse_error": True} if fm.get("_parse_error") else {}),
@@ -152,7 +153,43 @@ def build_aliases(rows: list[dict]) -> dict[str, str]:
             if norm in aliases and aliases[norm] != r["canonical"]:
                 print(f"WARNING: conflicting alias {norm} -> {aliases[norm]} vs {r['canonical']}", file=sys.stderr)
             aliases[norm] = r["canonical"]
+    for norm, canonical in legacy_slug_aliases(rows, set(aliases)).items():
+        aliases.setdefault(norm, canonical)
     return aliases
+
+
+SAFE_SLUG = re.compile(r"^[A-Za-z0-9._-]+$")
+
+
+def legacy_slug_aliases(rows: list[dict], declared: set[str]) -> dict[str, str]:
+    """Old Fastpages/Jekyll URLs, /YYYY/MM/<slug>, derived from `slug:` + `date:`.
+
+    The pre-Quarto site published every post with a `slug:` at that path, and
+    external sites and Google still request them. When two posts claim the same
+    path, the one whose file name carries the same year and month wins; if that
+    does not settle it, the path is skipped with a warning. Paths already
+    declared as explicit `aliases:` are left to the front matter.
+    """
+    claims: dict[str, list[dict]] = {}
+    for r in rows:
+        slug, date = r.get("slug"), r.get("date") or ""
+        if r.get("draft") or not slug or not re.match(r"^\d{4}-\d{2}", date) or not SAFE_SLUG.match(slug):
+            continue
+        path = f"/{date[:4]}/{date[5:7]}/{slug}"
+        claims.setdefault(path, []).append(r)
+    derived: dict[str, str] = {}
+    canonicals = {r["canonical"] for r in rows}
+    for path, claimants in sorted(claims.items()):
+        if path in canonicals or path in declared:
+            continue
+        if len(claimants) > 1:
+            ym = path[1:8].replace("/", "-")
+            claimants = [c for c in claimants if os.path.basename(c["source"]).startswith(ym)]
+            if len(claimants) != 1:
+                print(f"WARNING: legacy slug path {path} is ambiguous, skipped", file=sys.stderr)
+                continue
+        derived[path] = claimants[0]["canonical"]
+    return derived
 
 
 def main() -> int:

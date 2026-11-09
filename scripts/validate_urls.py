@@ -12,7 +12,8 @@ Checks:
   - no duplicate/extra post routes; post counts match the manifest
   - internal absolute links (extensionless or .html) resolve inside dist/
     (or return 200 when --live)
-  - the generated _redirects file covers every manifest alias exactly once
+  - the generated _redirects file covers every manifest alias exactly once,
+    with its trailing-slash and .html spellings and the .ipynb notebook URLs
 """
 from __future__ import annotations
 
@@ -76,25 +77,30 @@ def check_local(allow_drafts: bool = False):
     if os.path.exists(redirects_path):
         rules = [l.strip() for l in open(redirects_path, encoding="utf-8") if l.strip()]
         generated = {r.split()[0] for r in rules if not r.startswith("#")}
-        expected = set(aliases.keys()) | {"/consult", "/consult/", "/page/1", "/GEMINI"}
+        sys.path.insert(0, os.path.join(ROOT, "scripts"))
+        from prepare_pages import redirect_rules
+
+        expected_rules = {s: t for s, t, _ in redirect_rules(aliases, manifest)}
+        expected = set(expected_rules)
         missing_rules = expected - generated
         extra_rules = generated - expected
         if missing_rules:
             fail(f"redirects missing {len(missing_rules)} alias rules: {sorted(missing_rules)[:5]}")
         if extra_rules:
             fail(f"redirects contain {len(extra_rules)} unexpected rules: {sorted(extra_rules)[:5]}")
-        fixed_targets = {"/consult": "/ai/", "/consult/": "/ai/", "/page/1": "/", "/GEMINI": "/AGENTS"}
-        for src in sorted(expected):
-            rule = [r for r in rules if r.split()[0] == src]
-            if rule:
-                parts = rule[0].split()
-                target = parts[1] if len(parts) > 1 else ""
-                if target != aliases.get(src, fixed_targets.get(src, "/ai/")):
-                    fail(f"redirect {src} -> {target} does not match manifest {aliases.get(src)}")
+        for r in rules:
+            parts = r.split()
+            src, target = parts[0], (parts[1] if len(parts) > 1 else "")
+            if src in expected_rules and target != expected_rules[src]:
+                fail(f"redirect {src} -> {target} does not match manifest {expected_rules[src]}")
         # duplicate sources not allowed
-        dupes = {r.split()[0] for r in rules} if len(generated) != len([r for r in rules]) else set()
+        sources = [r.split()[0] for r in rules]
+        dupes = {s for s in sources if sources.count(s) > 1}
         if dupes:
             fail(f"duplicate redirect sources: {sorted(dupes)[:5]}")
+        # Cloudflare Workers Static Assets: at most 2000 static redirect rules
+        if len(rules) > 2000:
+            fail(f"_redirects has {len(rules)} rules, over the Cloudflare limit of 2000")
     else:
         fail("dist/_redirects missing")
 

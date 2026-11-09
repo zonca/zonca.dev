@@ -13,7 +13,7 @@ title: Deploy Kubernetes on Jetstream with Kubespray
 
 **Note**: Jetstream 1 has been retired. For current Kubernetes deployments, see [Jetstream 2 documentation](https://docs.jetstream-cloud.org/).
 
-**This tutorial is obsolete, check the [updated version of the tutorial](https://zonca.dev/2021/01/kubernetes-jetstream-kubespray.html)**
+**This tutorial is obsolete, check the [updated version of the tutorial](https://www.zonca.dev/posts/2021-01-20-jetstream_kubernetes_kubespray_2.15.0)**
 
 This is an update to previous tutorials, focused on deploying Kubernetes 1.17.6 (released in May 2020, based on 1.17.0 released in December 2019).
 
