@@ -12,7 +12,7 @@ in Balboa Park, San Diego:
 **The Cosmic Microwave Background: How the light of the Big Bang reveals the origin of our Universe**
 
 It is one of their monthly presentations, so the talk is followed by dinner prepared by Chef Mark
-Pelliccia. The talk is in English, it needs no background in physics, and it is open to everyone,
+Pelliccia. The talk is in English, it needs no background in Physics, and it is open to everyone,
 members or not.
 
 ## Details
@@ -59,11 +59,10 @@ I am originally from Milan. I studied Aerospace Engineering at the Politecnico d
 PhD in Physics and Astrophysics at the University of Milan, then moved to the United States in 2009,
 first to Santa Barbara and then to San Diego.
 
-Today I am a computational cosmologist at the San Diego Supercomputer Center, UC San Diego. I work on
-the data of two cosmic microwave background experiments:
-[Planck](https://www.cosmos.esa.int/web/planck), the European Space Agency satellite that mapped the
-whole sky between 2009 and 2013, and the [Simons Observatory](https://simonsobservatory.org/), a set
-of telescopes at 5,200 meters (17,000 feet) in the Atacama Desert in Chile that is now mapping the
+Today I am a computational cosmologist at the San Diego Supercomputer Center, UC San Diego. I worked
+on [Planck](https://www.cosmos.esa.int/web/planck), the European Space Agency satellite that mapped
+the whole sky between 2009 and 2013, and today I work on the
+[Simons Observatory](https://simonsobservatory.org/), a set of telescopes at 5,200 meters (17,000 feet) in the Atacama Desert in Chile that is now mapping the
 same light with much higher sensitivity. I also maintain two open source Python packages used across the field:
 [healpy](https://github.com/healpy/healpy), for working with maps of the whole sky, and
 [PySM](https://github.com/galsci/pysm), for simulating the emission of our own Galaxy that
