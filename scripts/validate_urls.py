@@ -173,6 +173,24 @@ def _http_status(base: str, path: str, timeout: int = 10, attempts: int = 3) -> 
     return -1, "ERR:unreachable"
 
 
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, *args, **kwargs):
+        return None
+
+
+def _first_hop(base: str, path: str, timeout: int = 10) -> tuple[int, str]:
+    """Status and Location of the first response, without following redirects."""
+    opener = urllib.request.build_opener(_NoRedirect)
+    req = urllib.request.Request(base + path, headers={"User-Agent": "zonca-validator"})
+    try:
+        resp = opener.open(req, timeout=timeout)
+        return resp.status, ""
+    except urllib.error.HTTPError as e:
+        return e.code, e.headers.get("Location", "")
+    except Exception as exc:
+        return -1, f"ERR:{type(exc).__name__}:{exc}"
+
+
 def check_live(base: str, workers: int = 16):
     from concurrent.futures import ThreadPoolExecutor
 
@@ -207,6 +225,23 @@ def check_live(base: str, workers: int = 16):
                 fail(f"{canonical} extless={st1} .html={st2}")
     print(f"Canonical URLs OK: {canonical_ok}/{len(public_manifest)}")
 
+    # The .html form must redirect permanently (301) in one hop to the clean URL,
+    # never with the temporary 307 that Cloudflare html_handling sends.
+    sys.path.insert(0, os.path.join(ROOT, "scripts"))
+    from prepare_pages import clean_url
+
+    html_ok = 0
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futures = {r["canonical"]: pool.submit(_first_hop, base, r["canonical"]) for r in public_manifest}
+        for canonical, f in futures.items():
+            status, location = f.result()
+            location = location.replace(base, "")
+            if status == 301 and location == clean_url(canonical):
+                html_ok += 1
+            else:
+                fail(f"{canonical} first hop {status} -> {location} (expected 301 -> {clean_url(canonical)})")
+    print(f".html permanent redirects OK: {html_ok}/{len(public_manifest)}")
+
     # Aliases: must end at the canonical target with a 200 (redirect chain ok)
     alias_ok = 0
     with ThreadPoolExecutor(max_workers=workers) as pool:
@@ -216,7 +251,7 @@ def check_live(base: str, workers: int = 16):
         }
         for src, target, f in futures.values():
             status, final_url = f.result()
-            expected = base + re.sub(r"\.html$", "", target)
+            expected = base + clean_url(target)
             if status == 200 and final_url == expected:
                 alias_ok += 1
             else:

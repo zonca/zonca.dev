@@ -41,13 +41,26 @@ def alias_variants(source: str) -> list[str]:
     return [base, base + "/", base + ".html"]
 
 
+def clean_url(path: str) -> str:
+    """The final public URL of a page: no `.html`, and `/dir/index.html` -> `/dir/`."""
+    if path.endswith("/index.html"):
+        return path[: -len("index.html")]
+    if path.endswith(".html"):
+        return path[:-5]
+    return path
+
+
 def redirect_rules(aliases: dict[str, str], manifest: list[dict]) -> list[tuple[str, str, int]]:
     """Every (source, target, status) rule of public/_redirects, deduplicated.
 
     - each alias plus its trailing-slash and `.html` spellings
     - `/posts/<name>.ipynb` for notebook posts, which Google picks up from the
       GitHub source links
+    - `<page>.html` -> `<page>` for every public page, so the `.html` form
+      answers with a permanent 301 instead of the temporary 307 that
+      Cloudflare `html_handling` sends
     - the fixed rules
+    Every target is the final extensionless URL, so a redirect is one hop.
     Spellings that collide with a real page or an earlier rule are skipped.
     """
     pages = set()
@@ -56,15 +69,19 @@ def redirect_rules(aliases: dict[str, str], manifest: list[dict]) -> list[tuple[
         pages |= {c, c[:-5] if c.endswith(".html") else c}
     rules: dict[str, tuple[str, int]] = {}
     for source, target in sorted(aliases.items()):
-        rules[source] = (target, 301)
+        rules[source] = (clean_url(target), 301)
     for source, target in sorted(aliases.items()):
         for variant in alias_variants(source):
             if variant not in rules and variant not in pages:
-                rules[variant] = (target, 301)
+                rules[variant] = (clean_url(target), 301)
     for r in manifest:
         if r.get("source_type") == "ipynb" and not r.get("draft"):
             stem = os.path.splitext(os.path.basename(r["source"]))[0]
-            rules.setdefault(f"/posts/{stem}.ipynb", (r["canonical"], 301))
+            rules.setdefault(f"/posts/{stem}.ipynb", (clean_url(r["canonical"]), 301))
+    for r in manifest:
+        c = r["canonical"]
+        if not r.get("draft") and c.endswith(".html") and c not in rules:
+            rules[c] = (clean_url(c), 301)
     for source, target, status in FIXED_REDIRECTS:
         rules[source] = (target, status)
     return [(src, tgt, st) for src, (tgt, st) in rules.items()]
