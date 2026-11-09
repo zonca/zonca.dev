@@ -1,5 +1,5 @@
 ---
-title: "Public talk on the cosmic microwave background at the House of Italy, November 15"
+title: "Public Talk on the Cosmic Microwave Background at the House of Italy, November 15"
 date: 2026-11-08
 categories: [italian, cosmology, events]
 layout: post
@@ -9,7 +9,7 @@ description: "On Sunday, November 15, 2026 I give a public talk in English at th
 On Sunday, November 15 I am giving a talk at the [House of Italy](https://houseofitalysandiego.org/)
 in Balboa Park, San Diego:
 
-**The Cosmic Microwave Background: how the light of the Big Bang reveals the origin of our Universe**
+**The Cosmic Microwave Background: How the light of the Big Bang reveals the origin of our Universe**
 
 It is one of their monthly presentations, so the talk is followed by dinner prepared by Chef Mark
 Pelliccia. The talk is in English, it needs no background in physics, and it is open to everyone,
