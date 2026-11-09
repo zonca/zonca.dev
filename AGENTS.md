@@ -56,7 +56,10 @@ All existing URLs are frozen and verified in CI:
 - `scripts/baseline_manifest.py` also derives the old Fastpages URL `/YYYY/MM/<slug>` from each
   post's `slug:` and `date:` (explicit `aliases:` win), and `scripts/prepare_pages.py` writes every
   alias in three spellings (bare, trailing slash, `.html`) plus `/posts/<name>.ipynb` for notebook
-  posts, because Cloudflare `_redirects` matches paths exactly. Keep `_redirects` under 2000 rules.
+  posts, because Cloudflare `_redirects` matches paths exactly. It also adds a 301 from every
+  page's `.html` URL to its extensionless URL (Cloudflare `html_handling` would otherwise answer
+  with a temporary 307), and every redirect target is the final extensionless URL, one hop.
+  `validate_urls.py --live` fails on a 307. Keep `_redirects` under 2000 rules.
 - CI regenerates and commits the `tests/baseline/` fixture automatically after
   every merge to `main` (the `commit-baseline` job of
   `.github/workflows/astro-deploy.yml`, commit
