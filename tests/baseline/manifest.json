@@ -5505,7 +5505,7 @@
       "events"
     ],
     "aliases": [],
-    "draft": false
+    "draft": true
   },
   {
     "source": "posts/italian-classes-chess-san-diego-2025.md",
@@ -6160,7 +6160,9 @@
     "title": "/index.html",
     "date": "",
     "categories": [],
-    "aliases": [],
+    "aliases": [
+      "/posts/2026-11-08-cmb-talk-house-of-italy"
+    ],
     "draft": false
   },
   {

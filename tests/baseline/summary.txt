@@ -1,4 +1,4 @@
 Post sources: 418  Pages: 11
-Public canonical URLs: 427  Draft (excluded): 2
-Aliases: 343
+Public canonical URLs: 426  Draft (excluded): 3
+Aliases: 344
 Duplicate canonical URLs: 0
