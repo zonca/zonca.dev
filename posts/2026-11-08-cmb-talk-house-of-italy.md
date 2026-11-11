@@ -1,6 +1,7 @@
 ---
 title: "Public Talk on the Cosmic Microwave Background at the House of Italy, November 15"
 date: 2026-11-16
+draft: true
 categories: [italian, cosmology, events]
 layout: post
 description: "On Sunday, November 15, 2026 I give a public talk in English at the House of Italy in Balboa Park, San Diego, on what the oldest light in the universe tells us about how it all began."
