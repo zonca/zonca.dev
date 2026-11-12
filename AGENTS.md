@@ -11,7 +11,7 @@ Before committing any blog post, **always** run these checks:
 1. **Validate front matter**: Ensure `title`, `date`, `categories`, and `layout` are present and correct.
 2. **Check all links**: Extract every URL from the post and verify each returns HTTP 200 (or 401 for API endpoints requiring auth). Fix any broken links before committing.
 3. **Verify code blocks**: Ensure all fenced code blocks have a language tag and that commands are syntactically valid.
-4. **Check for secrets**: Scan the post for API keys, tokens, or passwords. Never commit secrets to version control.
+4. **Check for secrets and email addresses**: Scan the post for API keys, tokens, passwords and email addresses (never publish an email address). Never commit secrets to version control.
 
 ## Commit and push workflow
 
@@ -162,6 +162,12 @@ Notebook posts are `posts/*.ipynb`, converted to Markdown at build time by
   breaks any link already shared to it.
 - Do not repeat a heading text inside one notebook. Astro appends `-1` to the
   duplicate, and that suffix shifts whenever a heading is inserted before it.
+
+### Never publish an email address
+
+Never write Andrea's email address (or any email address) in a post. For contact, link his SDSC page:
+`https://www.sdsc.edu/research/researcher_spotlight/zonca_andrea.html`. Check for `@` in the post before
+committing.
 
 ### Scripts and code
 
