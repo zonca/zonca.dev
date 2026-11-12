@@ -6,8 +6,8 @@ layout: post
 description: "A 52 minute video with five demos of coding with an AI agent under version control, tests and continuous integration, using OpenCode and free NRP models."
 ---
 
-This is the recording of my seminar "Best Practices for AI-Assisted Coding: GitHub, Testing, and Continuous
-Integration", re-recorded for YouTube after the live session on November 6, 2026. It shows, on a small real
+This video covers the same material as my seminar "Best Practices for AI-Assisted Coding: GitHub, Testing, and
+Continuous Integration" (November 6, 2026), recorded from scratch for YouTube. It shows, on a small real
 project, how to work with an AI coding agent without losing control of your code: an `AGENTS.md` file and
 permissions, precise prompts and plan mode, tests, continuous integration, and subagents with separate roles.
 The demos use [OpenCode](https://opencode.ai) with the free models of the

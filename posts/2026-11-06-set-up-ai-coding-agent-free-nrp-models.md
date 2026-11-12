@@ -240,5 +240,5 @@ The demo repository used in the seminar, with a tag for each step (`checkpoint-0
 [github.com/zonca/weather-agent-demo](https://github.com/zonca/weather-agent-demo).
 Check out any tag to start from that point of the seminar.
 
-The recording of the seminar, with the five demos, is on YouTube: see
+A video of the seminar material, with the five demos, is on YouTube: see
 [Video: best practices for AI-assisted coding with GitHub, tests and CI](./2026-11-11-ai-assisted-coding-seminar-video.md).
