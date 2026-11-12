@@ -8,7 +8,7 @@ description: "Set up OpenCode with the free NRP models in a few minutes, with sa
 
 This is the setup companion to my seminar
 "Best Practices for AI-Assisted Coding: GitHub, Testing, and Continuous Integration"
-(November 6, 2026). It gets you from zero to a working coding agent in your terminal,
+(November 6, 2026), now [available as a video](./2026-11-11-ai-assisted-coding-seminar-video.md). It gets you from zero to a working coding agent in your terminal,
 using the free large language models hosted by the
 [National Research Platform](https://nrp.ai) (NRP). It updates my
 [January post](./2026-01-29-configure-nrp-llm-opencode-crush.md): the model catalog has changed a lot since then.
@@ -238,4 +238,7 @@ The seminar in eight lines, for any agent:
 
 The demo repository used in the seminar, with a tag for each step (`checkpoint-0` to `checkpoint-5`), is at
 [github.com/zonca/weather-agent-demo](https://github.com/zonca/weather-agent-demo).
-Check out any tag to start from that point of the seminar. The recording will be linked here.
+Check out any tag to start from that point of the seminar.
+
+The recording of the seminar, with the five demos, is on YouTube: see
+[Video: best practices for AI-assisted coding with GitHub, tests and CI](./2026-11-11-ai-assisted-coding-seminar-video.md).
