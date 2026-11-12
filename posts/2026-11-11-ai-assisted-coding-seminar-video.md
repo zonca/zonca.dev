@@ -72,5 +72,5 @@ The eight takeaways, as a checklist for any agent, are at the end of the
 Questions and feedback on the demos are welcome as issues in the
 [demo repository](https://github.com/zonca/weather-agent-demo/issues).
 I lead the Scientific Computing Applications group at the San Diego Supercomputer Center: we help research groups
-build software for AI systems and high performance computing, and collaborate on proposals. Write to
-zonca@sdsc.edu.
+build software for AI systems and high performance computing, and collaborate on proposals: see my
+[SDSC page](https://www.sdsc.edu/research/researcher_spotlight/zonca_andrea.html) to get in touch.
