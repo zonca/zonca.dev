@@ -8,15 +8,59 @@ export interface Props {
   title?: string;
   description?: string;
   canonical?: string;
+  /** Keep the page out of the index (client side UIs with no content of their own). */
+  noindex?: boolean;
 }
 
-const { title, description, canonical } = Astro.props;
+const { title, description, canonical, noindex } = Astro.props;
 const pageTitle = title ? `${title} - Andrea Zonca` : 'Andrea Zonca';
 const metaDescription =
   description ?? 'Notes on Python, JupyterHub, Kubernetes and AI for science from the San Diego Supercomputer Center.';
 const path = Astro.url.pathname;
 const isActive = (href: string) =>
   href === '/' ? path === '/' || path === '/index.html' || path.startsWith('/page/') : path.startsWith(href);
+
+// Site level structured data. Deliberately WebSite + Person only: Google's
+// Article/BlogPosting rich result also requires a per post image, which this
+// site does not have, so emitting BlogPosting would create an enhancement
+// report in Search Console without producing any enriched result. The
+// SearchAction target must stay in step with src/pages/search.astro.
+const siteUrl = (Astro.site?.href ?? 'https://www.zonca.dev/').replace(/\/$/, '');
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      url: `${siteUrl}/`,
+      name: 'Andrea Zonca',
+      inLanguage: 'en',
+      author: { '@id': `${siteUrl}/#person` },
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: { '@type': 'EntryPoint', urlTemplate: `${siteUrl}/search?q={search_term_string}` },
+        'query-input': 'required name=search_term_string',
+      },
+    },
+    {
+      '@type': 'Person',
+      '@id': `${siteUrl}/#person`,
+      name: 'Andrea Zonca',
+      url: `${siteUrl}/about`,
+      jobTitle: 'Computational Scientist',
+      worksFor: {
+        '@type': 'Organization',
+        name: 'San Diego Supercomputer Center, UC San Diego',
+        url: 'https://www.sdsc.edu/',
+      },
+      sameAs: [
+        'https://github.com/zonca',
+        'https://mastodon.online/@zonca',
+        'https://twitter.com/andreazonca',
+      ],
+    },
+  ],
+};
 ---
 
 <!doctype html>
@@ -34,6 +78,8 @@ const isActive = (href: string) =>
     {
       canonical && <link rel="canonical" href={new URL(canonical, Astro.site).href} />
     }
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
     <link rel="icon" href="/favicon.ico" />
     <link rel="alternate" type="application/rss+xml" title="Andrea Zonca" href="/rss.xml" />
   </head>

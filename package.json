@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "prepare": "python3 scripts/prepare_notebooks.py && python3 scripts/prepare_pages.py",
-    "build": "python3 scripts/prepare_notebooks.py && python3 scripts/prepare_pages.py && astro build",
+    "build": "python3 scripts/prepare_notebooks.py && python3 scripts/prepare_pages.py && astro build && python3 scripts/generate_redirects.py",
     "dev": "python3 scripts/prepare_notebooks.py && python3 scripts/prepare_pages.py && astro dev",
     "check": "astro check",
     "preview": "astro preview",

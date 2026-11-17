@@ -62,13 +62,8 @@ jobs:
       - name: Install Node dependencies
         run: npm ci
 
-      - name: Generate notebooks, pages and redirects
-        run: |
-          python scripts/prepare_notebooks.py
-          python scripts/prepare_pages.py
-
-      - name: Build static site
-        run: npx astro build
+      - name: Build static site (notebooks, pages, redirects, Astro)
+        run: npm run build
 
       - name: Type check
         run: npx astro check
@@ -196,13 +191,8 @@ jobs:
       - name: Install Node dependencies
         run: npm ci
 
-      - name: Generate notebooks, pages and redirects
-        run: |
-          python scripts/prepare_notebooks.py
-          python scripts/prepare_pages.py
-
-      - name: Build static site
-        run: npx astro build
+      - name: Build static site (notebooks, pages, redirects, Astro)
+        run: npm run build
 
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3

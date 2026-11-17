@@ -17,5 +17,6 @@ site_libs/
 .gemini/
 
 .venv
+__pycache__/
 .env
 .claude/
