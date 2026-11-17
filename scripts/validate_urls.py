@@ -79,8 +79,12 @@ def check_local(allow_drafts: bool = False):
         generated = {r.split()[0] for r in rules if not r.startswith("#")}
         sys.path.insert(0, os.path.join(ROOT, "scripts"))
         from prepare_pages import redirect_rules
+        from generate_redirects import variant_rules
 
         expected_rules = {s: t for s, t, _ in redirect_rules(aliases, manifest)}
+        # The `.html` forms of Astro generated routes (categories, pagination,
+        # /search) are added after the build by generate_redirects.py.
+        expected_rules.update(dict(variant_rules(dist, set(expected_rules))))
         expected = set(expected_rules)
         missing_rules = expected - generated
         extra_rules = generated - expected
@@ -258,6 +262,47 @@ def check_live(base: str, workers: int = 16):
                 report_errors("alias", src, f"{status} -> {final_url}")
                 fail(f"alias {src} -> status {status}, landed at {final_url} (expected {expected})")
     print(f"Alias redirects OK: {alias_ok}/{len(aliases)}")
+
+    # The `.html` form of every public URL must answer a PERMANENT 301. A 307
+    # from Cloudflare's asset handling consolidates nothing and leaves the
+    # duplicate in Google's index (that was the Search Console duplicate
+    # cluster for zonca.dev). The sample is drawn from the live sitemap so it
+    # covers posts, categories and archive pagination alike.
+    def first_status(path: str) -> int:
+        class NoRedirect(urllib.request.HTTPRedirectHandler):
+            def redirect_request(self, *args, **kwargs):
+                return None
+
+        opener = urllib.request.build_opener(NoRedirect)
+        try:
+            resp = opener.open(urllib.request.Request(base + path, headers={"User-Agent": "zonca-validator"}), timeout=15)
+            return resp.status
+        except urllib.error.HTTPError as e:
+            return e.code
+        except Exception:
+            return -1
+
+    try:
+        sitemap = urllib.request.urlopen(
+            urllib.request.Request(base + "/sitemap.xml", headers={"User-Agent": "zonca-validator"}), timeout=20
+        ).read().decode("utf-8", "replace")
+        locs = re.findall(r"<loc>([^<]+)</loc>", sitemap)
+    except Exception as exc:
+        locs = []
+        fail(f"could not read {base}/sitemap.xml: {exc}")
+    if locs:
+        if "<lastmod>" not in sitemap:
+            fail("sitemap.xml carries no <lastmod>; Google then has no recrawl hint")
+        # /search must not be advertised to Google
+        if any(u.rstrip("/").endswith("/search") for u in locs):
+            fail("sitemap.xml still lists /search, which is noindex")
+        variants = [u.replace(base, "") for u in locs if not u.rstrip("/").endswith("/search")]
+        sample = variants[:: max(1, len(variants) // 20)][:20]
+        bad = [(p2, first_status(p2 + ".html")) for p2 in sample if not p2.endswith("/")]
+        for path, status in bad:
+            if status != 301:
+                fail(f"{path}.html answers {status}, expected a permanent 301")
+        print(f".html 301 variants OK: {len(bad) - sum(1 for _, s2 in bad if s2 != 301)}/{len(bad)}")
 
 
 def main() -> int:

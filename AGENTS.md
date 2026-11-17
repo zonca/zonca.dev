@@ -46,8 +46,10 @@ Before committing any blog post, **always** run these checks:
 
 All existing URLs are frozen and verified in CI:
 
-- Post URLs are `/posts/<source-basename>` (with and without `.html`). They are derived from
-  the source basename, **never** from a legacy `slug:` field.
+- Post URLs are `/posts/<source-basename>`. They are derived from the source basename,
+  **never** from a legacy `slug:` field. The old `/posts/<source-basename>.html` form is kept
+  alive as a **permanent 301** to the extensionless URL, because the pre-Astro site published
+  those URLs and Google had them indexed.
 - Never rename, move or delete a post file. If a slug must change, add the old path as an
   `aliases:` entry in the new front matter — `public/_redirects` is generated from the
   baseline manifest (`tests/baseline/aliases.json`), and `scripts/baseline_manifest.py`
@@ -56,10 +58,24 @@ All existing URLs are frozen and verified in CI:
 - `scripts/baseline_manifest.py` also derives the old Fastpages URL `/YYYY/MM/<slug>` from each
   post's `slug:` and `date:` (explicit `aliases:` win), and `scripts/prepare_pages.py` writes every
   alias in three spellings (bare, trailing slash, `.html`) plus `/posts/<name>.ipynb` for notebook
-  posts, because Cloudflare `_redirects` matches paths exactly. It also adds a 301 from every
-  page's `.html` URL to its extensionless URL (Cloudflare `html_handling` would otherwise answer
-  with a temporary 307), and every redirect target is the final extensionless URL, one hop.
-  `validate_urls.py --live` fails on a 307. Keep `_redirects` under 2000 rules.
+  posts, because Cloudflare `_redirects` matches paths exactly. Every redirect target is the final
+  extensionless URL, so a redirect is always one hop.
+- `scripts/prepare_pages.py` runs **before** the build and can only emit rules for the pages it
+  knows from the baseline manifest (posts and root pages). The Astro generated routes
+  (`/categories/<category>`, `/page/<n>`, `/search`) are therefore covered by a second pass,
+  `scripts/generate_redirects.py`, which runs **after** `astro build`, walks `dist/` and appends
+  `<url>.html -> <url> 301` for every built route that has no rule yet. It derives the route list
+  from the real build output instead of re-implementing the sitemap logic in Python, so new route
+  types are covered automatically. Without it those `.html` URLs answered **307** (Cloudflare
+  `html_handling` treats a subdirectory route as a temporary move), which left them in Google's
+  index as duplicates. That was the Search Console duplicate cluster fixed on 2026-11-17.
+- Trailing slash forms (`/about/`, `/posts/<slug>/`) are **not** redirected by a rule: Cloudflare
+  answers them with its own 307 and the URL Inspection API shows Google has never indexed one
+  (`/about/`, `/posts/<slug>/`, `/categories/<c>/` all report "URL is unknown to Google"), so
+  rules for them would spend half of the `_redirects` budget for nothing.
+- `_redirects` budget: Cloudflare allows 2000 static rules. `generate_redirects.py` fails the
+  build above 1900 and tells you to move the legacy aliases to Cloudflare Bulk Redirects instead
+  of silently shipping a truncated file. Current size is printed on every build.
 - CI regenerates and commits the `tests/baseline/` fixture automatically after
   every merge to `main` (the `commit-baseline` job of
   `.github/workflows/astro-deploy.yml`, commit
@@ -84,12 +100,42 @@ All existing URLs are frozen and verified in CI:
 - Build pipeline (`npm run build`): `scripts/prepare_notebooks.py` (converts `.ipynb`
   without executing; front matter read from first raw/markdown cell) →
   `scripts/prepare_pages.py` (copies QMD posts, root pages, assets, generates
-  `public/_redirects` and `llms.txt`/`.well-known`) → `astro build`.
+  `public/_redirects`, `robots.txt`, `llms.txt`/`.well-known`) → `astro build` →
+  `scripts/generate_redirects.py` (appends the `.html` 301 rules for the built routes).
+  CI runs `npm run build`, so local and production builds cannot drift.
 - Validation: `python3 scripts/validate_urls.py` (dist) and `--live https://www.zonca.dev`
   (production; run by CI after every deploy: 427 canonical URLs + 343 aliases).
 - Notebooks: never execute them during builds; stored outputs (text/markdown/HTML/PNG/SVG)
   render as static content. Fix broken notebook output by editing the stored output.
 - The previous Quarto site is preserved in the `quarto-with-2026-10-01` release for rollback.
+
+## Search engine hygiene (Search Console)
+
+One source of truth per detail, so Search Console stops reporting duplicates:
+
+- **Canonical URL of every page is the extensionless one** (`/posts/x`, `/about`,
+  `/categories/python`, `/page/3`), except `/ai/`, which is a directory route and stays with
+  the trailing slash. `<link rel="canonical">`, the sitemap, the internal links and the
+  `.html` rules must agree; `validate_urls.py` enforces the first two on every build.
+- **Sitemap** (`src/pages/sitemap.xml.ts`): every entry carries `<lastmod>` where an honest
+  date exists. Posts use their `date:`, list pages use the date of the newest post they show
+  (so publishing a post refreshes exactly the pages that changed), and static pages carry
+  none, because an invented build date teaches Google to ignore the field. `/search` is
+  deliberately absent.
+- **`/search` is `noindex, follow`** (the `noindex` prop of `Base.astro`). It is a client side
+  UI with no content of its own, so it must stay out of both the index and the sitemap. Do not
+  also disallow it in `robots.txt`: a disallowed URL cannot be recrawled, so Google would never
+  see the `noindex`.
+- **Structured data**: `Base.astro` emits `WebSite` + `Person` JSON-LD on every page (with a
+  `SearchAction` pointing at `/search?q=`). There is no `BlogPosting`, on purpose: Google's
+  Article rich result additionally requires a per post `image`, which posts do not have, so it
+  would create an enhancement report without producing any enriched result. Add `BlogPosting`
+  only together with a real per post image field.
+- Verification: `python3 scripts/validate_urls.py --live https://www.zonca.dev` fails if a
+  `.html` variant answers anything but `301`, if the sitemap has no `<lastmod>`, or if the
+  sitemap still lists `/search`.
+- The audit that produced these rules (numbers per coverage state, the URL Inspection
+  workflow, the GSC project number) is in `project_work/notes/zonca-dev-search-console.md`.
 
 ## Creating a new blog post
 
