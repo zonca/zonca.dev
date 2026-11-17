@@ -104,7 +104,7 @@ All existing URLs are frozen and verified in CI:
   `scripts/generate_redirects.py` (appends the `.html` 301 rules for the built routes).
   CI runs `npm run build`, so local and production builds cannot drift.
 - Validation: `python3 scripts/validate_urls.py` (dist) and `--live https://www.zonca.dev`
-  (production; run by CI after every deploy: 427 canonical URLs + 343 aliases).
+  (production; run by CI after every deploy, over every canonical URL and every alias).
 - Notebooks: never execute them during builds; stored outputs (text/markdown/HTML/PNG/SVG)
   render as static content. Fix broken notebook output by editing the stored output.
 - The previous Quarto site is preserved in the `quarto-with-2026-10-01` release for rollback.
@@ -135,7 +135,10 @@ One source of truth per detail, so Search Console stops reporting duplicates:
   `.html` variant answers anything but `301`, if the sitemap has no `<lastmod>`, or if the
   sitemap still lists `/search`.
 - The audit that produced these rules (numbers per coverage state, the URL Inspection
-  workflow, the GSC project number) is in `project_work/notes/zonca-dev-search-console.md`.
+  workflow, the Search Console project number) is kept in Andrea's private notes, not in
+  this repository. The invariants it produced are re-checked on every deploy by
+  `validate_urls.py --live`, so a regression here fails the pipeline rather than waiting
+  for the next audit.
 
 ## Creating a new blog post
 
