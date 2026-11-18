@@ -185,6 +185,14 @@ layout: post
 - Keep an introductory paragraph right after the front matter that summarizes what the post is about.
 - Use bullet points and numbered lists for step-by-step instructions.
 - Link to relevant resources (GitHub repos, documentation, gists) inline.
+- **Wrap prose under 100 characters per line.** It keeps the Markdown readable in a
+  terminal and in review diffs, and it is how the existing posts read. Do not reflow
+  paragraphs you are not changing: that turns a one line edit into a whole block diff.
+- **Link to another post as `./YYYY-MM-DD-slug.md`**, the relative path to the post source.
+  `src/plugins/internal-links.mjs` rewrites it to the canonical extensionless
+  `/posts/<slug>` at build time and keeps any `#anchor` and query string. It also accepts
+  `foo.md`, `/posts/foo.md`, `/posts/foo.html` and `/posts/foo/`, but the relative source
+  form is the convention: never type the final public URL by hand.
 - For images, use paths relative to the post's directory (e.g., `img/screenshot.png`). Avoid absolute paths like `/img/...`.
 - Use `---` horizontal rules to separate major sections.
 
