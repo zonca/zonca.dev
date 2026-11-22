@@ -5523,6 +5523,20 @@
     "draft": false
   },
   {
+    "source": "posts/2026-11-21-qwen38-pi-adapted-merged-fp16.md",
+    "source_type": "md",
+    "canonical": "/posts/2026-11-21-qwen38-pi-adapted-merged-fp16.html",
+    "title": "Merging a coding-agent LoRA into Qwen 3.8 27B, and why the dtype you save it in matters",
+    "date": "2026-11-21",
+    "categories": [
+      "ai",
+      "llm",
+      "python"
+    ],
+    "aliases": [],
+    "draft": false
+  },
+  {
     "source": "posts/italian-classes-chess-san-diego-2025.md",
     "source_type": "md",
     "canonical": "/posts/italian-classes-chess-san-diego-2025.html",
