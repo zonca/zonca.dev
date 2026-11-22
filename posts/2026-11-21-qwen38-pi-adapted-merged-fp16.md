@@ -91,7 +91,7 @@ Fetching the base was the part that nearly stopped the build. A plain request fo
 the downloader sends a queue of ranges to a pool of twelve curl workers, resumes any range that
 stalls (curl gives up after 25 s below 200 kB/s), checks each finished file against the sha256 the
 Hub reports, and assembles the chunks in order. The whole base takes about half an hour that way.
-That is `hf_get.py`, in the same gist.
+That is `hf_get.py`, one of the scripts in the repository below.
 
 ## Verifying instead of hoping
 
@@ -103,7 +103,10 @@ still describes the files on disk. All 18 shards pass. The per-tensor delta has 
 1.2e-5 and 2.9e-5 and an absolute maximum of 5.8e-4, the size the adapter's own description
 implies.
 
-The scripts are [in this gist](https://gist.github.com/zonca/4095cbb7a05019efc2bf9b8db6a6212b) and
+The scripts are in [zonca/lora-merge-tools](https://github.com/zonca/lora-merge-tools), together
+with the parallel-range downloader, the post-upload check and the audit: streaming
+`merge_lora.py`, the bit-exact `verify_merged.py`, `hf_get.py`, `check_remote.py`,
+`audit_repo.py` and `run_build.sh`, which runs the whole pipeline per shard and is resumable. They
 take any sharded checkpoint and any PEFT LoRA, so they are not specific to Qwen.
 
 ## The published checkpoint
