@@ -59,15 +59,58 @@ evidence, because that is what the head buys:
 
 Prefill is identical, to within the noise of the measurement, which is the important half: the
 prompt-processing path, the chat template and the context window all behave as before. Decode is
-**27% slower**, and that is the one real cost of this build.
+**27% slower**, and rather than leave it at that I decomposed it, because a decode rate is two
+numbers multiplied together:
 
-The MTP head is not the reason. On a fixed prompt with a fixed seed the server reported acceptance
-0.68 to 0.94 on the base model and 0.68 to 0.77 on the merged one, with the same draft depths, so
-the speculative decoder is engaged and accepting at a comparable rate on both. Part of the gap is
-simply size: `ollama create` produced a 21.57 GB artifact from the float16 checkpoint against the
-18.17 GB of the base tag, and a decode step has to read it, so 19% more bytes per token accounts for
-about 15% of the slowdown on its own. I did not isolate the remainder, which is plausibly how the
-conversion quantizes the tensors that the official NVFP4 build handled differently.
+    decode rate = tokens accepted per forward pass x forward passes per second
+
+The server logs both faces of that product (`speculative decode stats` gives iterations, drafts and
+accepted tokens), so three runs per model, alternating order, unloaded before each run, with a fixed
+prompt, a fixed seed and 512 tokens to generate:
+
+| | base | merged | ratio |
+|---|---|---|---|
+| tokens per forward pass | 2.35 | 1.88 | 0.80 |
+| milliseconds per forward pass | 85.3 | 91.8 | 1.08 |
+| decode | 26.9 tok/s | 20.4 tok/s | 0.76 |
+| acceptance | 0.71 | 0.81 | |
+| effective bandwidth | 213 GB/s | 235 GB/s | |
+
+Two thirds of the loss is the first line, not the second: the merged model accepts fewer tokens per
+pass, not because its speculative decoder is worse but because it drafts shallower. The base tag
+settles at 2.0 to 2.3 draft tokens per position with a ceiling of 3 or 4; the merged tag starts at
+1.4 and settles at 1.0 with a ceiling of 2, while its acceptance at that depth goes *up*, to 0.81.
+That is what an untouched draft head looks like next to a changed policy: the multi-token prediction
+head was copied through the merge and never trained against the adapter, so its first guess about
+what this model says next is still good and its second and third are not, and the engine's adaptive
+depth controller notices and stops asking for them.
+
+The remaining third is size, and the size has a specific cause. `-q nvfp4` does not mean four bits
+everywhere. Ollama's create-side policy keeps the quantization-sensitive `v_proj`, `k_proj` and
+`down_proj` at 8 bits (`mxfp8`) in the first and last eighth of the layers and in every third layer
+in between, and it does the same for `lm_head`; everything else gets 4-bit NVFP4. Comparing the two
+manifests tensor by tensor:
+
+| tensors | base | merged | difference |
+|---|---|---|---|
+| 64 `mlp.down_proj` | 3.209 GB | 5.883 GB | +2.674 |
+| `lm_head` | 0.715 GB | 1.311 GB | +0.596 |
+| 16 `k_proj` plus 16 `v_proj` | 0.094 GB | 0.174 GB | +0.079 |
+| 15 `mtp.*` | 0.239 GB | 0.286 GB | +0.047 |
+| `gate_proj`, `up_proj`, `q_proj`, `o_proj`, linear attention, vision, embeddings | 13.9 GB | 13.9 GB | 0.000 |
+
+The 1.83 ratio in that table is exact: 0.5625 bytes per parameter for NVFP4 at a group size of 16,
+1.03125 for `mxfp8` at a group size of 32. The base tag does not pay it because it was not created
+from a float16 checkpoint at all: it was imported from NVIDIA's already-quantized NVFP4 release,
+where those tensors are 4 bits like everything else.
+
+So the slowdown is expected, and both halves of it are consequences of decisions rather than bugs:
+one comes from the adapter training without the draft head, the other from the local conversion
+spending 3.4 GB on precision for the tensors the policy considers fragile. That second choice can be
+undone, by quantizing uniformly to 4 bits with `mlx-lm` and importing the result, and it would buy
+back roughly the 19% of decode time that the extra bytes cost. On a model whose entire point is to
+reproduce an adapter's behaviour, trading precision on its most sensitive projections for 19% of
+decode speed is not obviously a good trade, so I left it alone.
 
 So the answer to the first question is split. Prefill, the path that dominates an agent workload, is
 unaffected. Decode lost 27%, which is real but is paid per generated token, and the tasks below show
@@ -80,8 +123,8 @@ pi, and only pi: the adapter was trained inside pi, so measuring it inside anoth
 mix the adapter with the harness. Three tasks from my own workload, run non-interactively with
 `pi -p --mode json`, each in a fresh empty directory, one run per model:
 
-- **Trello:** read one real card (name, description, all comments) and say what it is about, what the
-  one next action is, and anything stale in it.
+- **Trello:** read one real card (name, description, all comments), say what it is about, name the
+  one next action, and flag anything stale in it.
 - **Email:** read one real Gmail thread of six messages and summarize it, draft the next reply, and
   list any open question the draft leaves unanswered.
 - **Coding:** write a small Python module plus its pytest tests in the current directory, run the
