@@ -189,9 +189,9 @@ thread; 362 s and 262 s on the same Trello card. With two runs per cell, a per-t
 direction, not a measurement. The pooled totals are steadier because the errors partly cancel, and
 the coding result is consistent (slower in three of four comparisons, equal in the fourth).
 
-This is a correction of what I first published. My first pass used three tasks, one run each, and
+This is a correction of my own first pass. It used three tasks, one run each, and
 reported 0.53 on Trello, 0.63 on email and 1.00 on coding. With five tasks, two repetitions and
-interleaved models, Trello moved to 0.83, email held at 0.53, and coding flipped to a loss. The
+interleaved models, Trello moved to 0.83, email to 0.53, and coding flipped to a loss. The
 first numbers were not wrong so much as under-sampled: one run per cell cannot rank two models whose
 own spread is 20 to 50%.
 
