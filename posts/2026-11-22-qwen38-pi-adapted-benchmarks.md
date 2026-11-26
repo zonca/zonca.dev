@@ -3,7 +3,7 @@ title: "A coding-agent adapter on a local 27B model: what it changes on Trello, 
 date: 2026-11-22
 categories: [ai, llm, python]
 layout: post
-description: "Hugging Face's pi-adapted Qwen 3.8 27B claims fewer turns per task. On a Mac mini where prefill runs at 100 tok/s, turns are the cost, so I merged the adapter into the base weights, kept multi-token prediction working, and measured both models on three real tasks."
+description: "Hugging Face's pi-adapted Qwen 3.8 27B claims fewer turns per task. On a Mac mini where prefill runs at 100 tok/s, turns are the cost, so I merged the adapter into the base weights, kept multi-token prediction working, and measured both models on five real tasks."
 ---
 
 Hugging Face published
@@ -23,7 +23,7 @@ parameter or quantization tweak can.
 
 So the question here is narrow and answerable: **with the adapter merged in, does the same model do
 the same real work in fewer turns, and does it still run at the same speed per token?** This post
-answers both, on three tasks from my own workload.
+answers both, on five tasks from my own workload.
 
 ## The two models
 
