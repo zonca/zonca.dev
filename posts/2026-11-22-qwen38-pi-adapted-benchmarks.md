@@ -60,56 +60,49 @@ evidence, because that is what the head buys:
 
 Prefill is identical, to within the noise of the measurement, which is the important half: the
 prompt-processing path, the chat template and the context window all behave as before. Decode is
-slower, and the first measurement said 27%, which is a single number from a single kind of text, so
-I repeated it over four kinds of content before believing it.
+slower, and the first measurement said 27% from one kind of text, so I repeated it over four kinds
+of content, ten runs per cell, models interleaved and unloaded before every run, 400 tokens each:
 
-A decode rate is two numbers multiplied together, and Ollama logs both:
-
-    decode rate = tokens accepted per forward pass x forward passes per second
-
-Four prompts (explanatory prose, code, an enumerative list, and creative writing at temperature 1),
-two repetitions each, models interleaved and unloaded before every run, 400 tokens generated:
-
-| content | model | decode | tokens/pass | ms/pass | acceptance |
+| content | base (min-max) | merged (min-max) | ratio median | ratio range | merged slower |
 |---|---|---|---|---|---|
-| prose | base | 27.2 tok/s | 2.36 | 86.7 | 0.70 |
-| prose | merged | 20.2 tok/s | 1.94 | 96.0 | 0.79 |
-| code | base | 30.9 tok/s | 2.77 | 89.7 | 0.87 |
-| code | merged | 22.7 tok/s | 2.80 | 123.2 | 0.90 |
-| enumeration | base | 26.2 tok/s | 2.31 | 88.3 | 0.66 |
-| enumeration | merged | 19.3 tok/s | 1.78 | 92.0 | 0.73 |
-| creative | base | 23.2 tok/s | 1.83 | 78.8 | 0.60 |
-| creative | merged | 18.4 tok/s | 1.70 | 92.7 | 0.65 |
+| prose | 27.4 tok/s (26.8-27.7) | 20.2 (20.1-20.2) | 0.739 | 0.728-0.754 | 100/100 |
+| code | 31.0 (30.5-31.2) | 22.7 (21.6-22.8) | 0.732 | 0.694-0.747 | 100/100 |
+| enumeration | 26.1 (25.9-26.4) | 19.3 (19.2-19.4) | 0.741 | 0.729-0.747 | 100/100 |
+| creative | 23.6 (23.2-24.2) | 18.6 (18.4-18.7) | 0.788 | 0.758-0.803 | 100/100 |
 
-| content | decode ratio | tokens/pass ratio | ms/pass ratio |
+Across all 400 base-against-merged pairings the median ratio is 0.740, the interquartile range 0.735
+to 0.757, the extremes 0.694 and 0.803, and every single pairing is slower. The machine is steady
+too: within a model, run-to-run spread is 1 to 2%. So the adapted model generates at about three
+quarters of the base model's rate, and that is the one number in this post that two repetitions, ten
+repetitions and four kinds of content all agree on.
+
+The split is a different story. A decode rate is tokens accepted per forward pass multiplied by
+forward passes per second, and the server logs both:
+
+| content | tokens/pass ratio | ms/pass ratio | acceptance, base to merged |
 |---|---|---|---|
-| prose | 0.74 | 0.82 | 1.11 |
-| code | 0.74 | 1.01 | 1.37 |
-| enumeration | 0.74 | 0.77 | 1.04 |
-| creative | 0.79 | 0.93 | 1.18 |
+| prose | 0.802 | 1.085 | 0.71 to 0.80 |
+| code | 1.004 | 1.370 | 0.87 to 0.90 |
+| enumeration | 0.769 | 1.038 | 0.66 to 0.73 |
+| creative | 0.926 | 1.178 | 0.63 to 0.67 |
 
-The decode ratio is the stable number: 0.74, 0.74, 0.74, 0.79. The adapted model is about a quarter
-slower to generate, whatever it is generating. What is not stable is the split, and that is what
-makes the mechanism visible.
+On code the merged model's draft depth is identical to the base model's (1.004 of its tokens per
+pass) and every forward pass is 1.37 times slower on 19% more bytes. That is the weight and kernel
+cost with the drafting effect removed, and it points at the 8-bit tensors not being free: `mxfp8` is
+a different kernel path from the `nvfp4` matvec the engine runs for the rest of the model, and it
+appears to cost more per byte than the format it replaces.
 
-On code the adapted model keeps exactly the base model's draft depth (2.80 against 2.77 tokens per
-pass) and every pass is 1.37 times slower. That is the cleanest measurement of the weight cost: same
-work per pass, 19% more bytes, 37% more time. The extra time beyond the bytes is the second finding
-of this exercise, and it points at the 8-bit tensors not being free: `mxfp8` is a different kernel
-path from the `nvfp4` matvec the engine runs for everything else, and it appears to cost more per
-byte than the format it replaces here.
-
-On enumeration the adapted model drafts shallower (1.78 against 2.31 tokens per pass) and its passes
-are only 1.04 times slower, because a pass that verifies fewer draft tokens does less work. The two
-effects cancel: fewer tokens per pass, cheaper passes, same 0.74 overall. My first explanation, that
-four fifths of the slowdown was drafting and one fifth bytes, was an artifact of measuring one
-content type. The honest version is that the two trade off, with the total landing at 0.75 in every
-case.
+On the other three kinds of content the merged model drafts shallower (0.77 to 0.93 of the base
+model's tokens per pass) and its passes are only 1.04 to 1.18 slower, because a pass that verifies
+fewer draft tokens does less work. The product lands at 0.74 either way. Acceptance is higher on the
+merged model everywhere, so the speculative decoder is not degraded; it drafts fewer tokens because
+the MTP head was copied through the merge and never trained against the adapter, so it predicts the
+base model's continuation and the engine's adaptive depth controller settles lower.
 
 Where the extra bytes come from is unchanged, and the manifests pin it down exactly. `-q nvfp4` does
-not mean four bits everywhere. Ollama's create-side policy keeps the quantization-sensitive `v_proj`,
-`k_proj` and `down_proj` at 8 bits (`mxfp8`) in the first and last eighth of the layers and in every
-third layer in between, and does the same for `lm_head`; everything else gets NVFP4:
+not mean four bits everywhere. Ollama's create-side policy keeps the quantization-sensitive
+`v_proj`, `k_proj` and `down_proj` at 8 bits (`mxfp8`) in the first and last eighth of the layers
+and in every third layer in between, and does the same for `lm_head`; everything else gets NVFP4:
 
 | tensors | base | merged | difference |
 |---|---|---|---|
@@ -134,9 +127,9 @@ behaviour I did not think that was a good trade, so I left it alone.
 ## Then: does it turn fewer times?
 
 pi, and only pi: the adapter was trained inside pi, so measuring it inside another harness would mix
-the adapter with the harness. Five tasks from my own workload, each run twice per model, with the
-models interleaved inside every repetition so that a change in machine state cannot favour one of
-them, and a fresh directory per run:
+the adapter with the harness. Five tasks from my own workload, ten runs per model, with the models
+interleaved inside every repetition so that a change in machine state cannot favour one of them, and
+a fresh directory per run:
 
 - **Trello, two different cards:** read one real card (name, description, all comments), summarize
   it, name the one next action, and flag anything stale.
@@ -147,83 +140,103 @@ them, and a fresh directory per run:
 
 The Trello and email tasks run with only the `bash` and `read` tools, and the prompt says plainly
 not to move, comment on or send anything, so the agent cannot change my board or my inbox while it
-is being measured. The two coding tasks are checked objectively after the agent exits: `pytest` for
-both, plus a sha256 of the test file, so "make the tests pass" cannot quietly become "edit the
-tests".
+is being measured. The coding tasks are checked objectively after the agent exits: `pytest` in the
+directory the agent worked in, plus a sha256 of the test file for the bug fix, so "make the tests
+pass" cannot quietly become "edit the tests".
 
-| task | model | wall, two runs (s) | turns | prompt tok | gen tok | check |
-|---|---|---|---|---|---|---|
-| Trello, long card | base | 362, 262 | 4, 4 | 14369 | 3977 | |
-| Trello, long card | merged | 232, 286 | 5, 4 | 10600 | 2864 | |
-| Trello, short card | base | 143, 134 | 4, 4 | 8540 | 1256 | |
-| Trello, short card | merged | 126, 150 | 4, 4 | 8120 | 1042 | |
-| Email thread | base | 255, 382 | 7, 10 | 15433 | 3642 | |
-| Email thread | merged | 138, 199 | 5, 7 | 8862 | 1458 | |
-| Coding, write it | base | 71, 82 | 3, 3 | 2758 | 1222 | 2/2 |
-| Coding, write it | merged | 110, 83 | 5, 3 | 2984 | 1332 | 2/2 |
-| Coding, fix the bug | base | 53, 57 | 4, 4 | 3292 | 564 | 2/2 |
-| Coding, fix the bug | merged | 92, 59 | 6, 4 | 3422 | 800 | 2/2 |
+| task | base, median (range) | merged, median (range) | ratio | pairings merged wins |
+|---|---|---|---|---|
+| Trello, long card | 238 s (179-322) | 199 s (148-252) | 0.82 | 75/100 |
+| Trello, short card | 190 s (121-288) | 139 s (123-211) | 0.78 | 77 of 100 |
+| Email thread | 227 s (129-1001) | 204 s (127-1013) | 0.92 | 55 of 100 |
+| Coding, write it | 78 s (61-102) | 115 s (80-162) | 1.33 | 15 of 100 |
+| Coding, fix the bug | 56 s (46-68) | 56 s (54-71) | 1.04 | 44 of 100 |
 
-Summing the per-task medians, the merged model spends 737 s against 900 s (0.82 of the time) and
-generates 7494 tokens against 10662 (0.70). That single pair of numbers would make this look like a
-clear win, and the per-task rows say why it is not that simple.
+Ten runs per cell means a hundred ways to pair a base run with a merged run, so each ratio is a
+distribution rather than a point, and the last column is how often the merged model was faster.
+Across all 500 pairings the median ratio is 0.96 with an interquartile range of 0.76 to 1.23, which
+is a fair summary of "it depends on the task".
 
-**The gain is concentrated where the base model rambles.** On the email thread the merged model
-finishes in 53% of the time, on the long Trello card in 83%, and on the short Trello card in 100%.
-Generated tokens follow the same pattern, 0.40, 0.72 and 0.83. Those are the tasks with a lot of
-text to read and a summary to write, which is where the base model spends thousands of tokens
-thinking out loud before it answers.
+Totals over the fifty runs per model:
 
-**On the coding tasks it loses.** 1.27 times the wall clock on writing a module, 1.36 on fixing a
-bug, and there the generated tokens go *up*, not down (1.09 and 1.42). Both models solve both tasks
-in both runs, so this is not a quality difference: it is the merged model taking an extra turn (5
-against 3, 6 against 4) in the slower runs, and on a task that only takes a minute one extra turn
-costs more than terser prose saves.
+| | base | merged | ratio |
+|---|---|---|---|
+| wall clock | 9237 s | 8296 s | 0.90 |
+| prompt tokens processed | 394901 | 396065 | 1.00 |
+| generated tokens | 119980 | 76167 | 0.64 |
+| turns | 269 | 263 | 0.98 |
 
-**Turns never fell.** 4 against 4, 4 against 4, 7 against 5 in the two email runs, 3 against 5, 4
-against 6. The adapter card's headline, fewer than half the turns per solved task, does not
-reproduce on this workload at all, and the mechanism it implies is not the one at work.
+**The generated tokens are where the effect is.** The merged model writes 0.64 of the base model's
+tokens overall, and per task the medians are 0.62, 0.40, 0.66, 1.28 and 0.81: much less on the
+reading tasks, more on the coding-from-specification task. Total prompt tokens are identical,
+though, which surprised me: fewer and shorter answers do not shrink the conversation, because
+reading a card or a thread costs what it costs regardless of how briefly the model replies.
 
-**The variance is large enough to matter.** The base model took 255 s and 382 s on the same email
-thread; 362 s and 262 s on the same Trello card. With two runs per cell, a per-task ratio is a
-direction, not a measurement. The pooled totals are steadier because the errors partly cancel, and
-the coding result is consistent (slower in three of four comparisons, equal in the fourth).
+**The wall clock gain is real but modest, and it depends on the task.** On the two Trello cards the
+merged model is 18% and 22% faster and wins three quarters of the pairings, which is the clearest
+result in the campaign. On the email thread the two medians are 227 s and 204 s with almost complete
+overlap: a tie, not a win. On the coding task it is 33% slower and wins 15 pairings out of 100,
+because it takes nearly twice the turns (median 5.5 against 3) and generates more tokens (1.28) for
+the same result; both models pass the tests in every run. The bug fix is a tie.
 
-This is a correction of my own first pass. It used three tasks, one run each, and
-reported 0.53 on Trello, 0.63 on email and 1.00 on coding. With five tasks, two repetitions and
-interleaved models, Trello moved to 0.83, email to 0.53, and coding flipped to a loss. The
-first numbers were not wrong so much as under-sampled: one run per cell cannot rank two models whose
-own spread is 20 to 50%.
+**Turns fall only where the reading is long.** Median turns: 4 to 3 on the long card, 5 to 4 on the
+short one, 8 to 8.5 on the email thread, 3 to 5.5 on the coding task, 4 to 4 on the bug fix. The
+adapter card claims fewer than half the turns per solved task; here it is a small win on two tasks
+and a clear loss on another.
+
+## Three passes at the same measurement
+
+This section exists because the number moved every time I measured it, and the movement is the most
+useful thing I learned.
+
+| pass | design | Trello, long card | Email | Coding |
+|---|---|---|---|---|
+| first | 3 tasks, 1 run each | 0.53 | 0.63 | 1.00 |
+| second | 5 tasks, 2 runs each | 0.83 | 0.53 | 1.27 |
+| third | 5 tasks, 10 runs each | 0.82 | 0.92 | 1.33 |
+
+The coding result settled quickly and the Trello result settled at about 0.82. The email result went
+from 0.63 to 0.53 to 0.92, which is not the adapter changing but the sample: email runs range from
+129 s to 1001 s for the base model and 127 s to 1013 s for the merged one, because some runs wander
+into an extra reading turn or a compaction. With one run per cell the ratio is whatever those two
+draws happened to be. My first pass drew a 382 s base run against a 138 s merged run and concluded
+"1.6 times faster"; ten runs say the medians are 227 s and 204 s.
+
+So the honest headline is not the one the first pass gave: the adapter makes this model about 10%
+faster overall on my agent workload, closer to 20% on Trello triage, a wash on email and bug fixing,
+and noticeably slower on writing code from a specification. What it reliably does is write less,
+which is worth real time only when the task is dominated by writing.
 
 ## Quality, checked where it can be checked objectively
 
-Wall clock says nothing about whether the work was right, so every task carries its own check where
-one exists.
+Wall clock says nothing about whether the work was right, so every task carries a check where one
+exists.
 
-- **Both coding tasks, both models, every run.** Eight of eight runs pass their own tests when
-  re-run after the agent exits: `pytest` in the directory the agent worked in, plus, for the
-  bug-fix task, a sha256 comparison proving the test file was not touched. Two models, two tasks,
-  two repetitions, no failures, and the merged model's extra turn did not buy it anything
-  measurable in quality.
-- **The two Trello cards.** Both models summarized the state correctly and proposed the same next
-  action, rotating the exposed Hugging Face token. One of them also reported the decode slowdown
-  as 7% where the measurement says 25%, which is the kind of error a pass/fail check does not
-  catch and a reader does.
-- **The email thread.** Both produced the same summary of the decisions and the same list of open
-  questions.
+- **The coding tasks, all forty runs.** Two tasks, two models, ten runs each: every single run
+  passes its own tests when re-run after the agent exits, and the bug-fix task also proves the
+  test file was not touched, by sha256. The merged model's extra turns on the
+  write-from-specification task bought nothing that a test can see.
+- **The two Trello cards.** Across the runs I read, both models produced the same shape of answer:
+  what the card is, what is done, what the next action is (rotate the exposed Hugging Face token,
+  merge the blog post pull request), and that the card is overdue and still in the wrong list. The
+  merged model got there in fewer turns and fewer tokens.
+- **The email thread.** Same decisions, same open questions, in both models. One earlier run of
+  the merged model reported the decode slowdown as 7% where the measurement says 26%, which is the
+  kind of error no check catches and a reader does.
 
 The coding checks are objective. The two reading tasks were read and judged, which is not a
 measurement, so they are reported as an observation.
 
 ## Limitations, stated plainly
 
-- **Two runs per cell.** The base model took 255 s and 382 s on the same email thread, and 362 s
-  and 262 s on the same Trello card. A per-task ratio from two runs is a direction, not a
-  measurement; the pooled totals are steadier because the errors partly cancel, and the coding
-  result is consistent in three of four comparisons.
-- **The Trello cards changed between the two campaigns.** The first pass read the long card before
-  the benchmark comment was added to it, so those numbers are not comparable with these and only
-  the second campaign appears above.
+- **Ten runs per cell, and the tails matter.** The email task ranges from 129 s to 1001 s on the
+  base model and 127 s to 1013 s on the merged one, because some runs wander into an extra reading
+  turn. Its median ratio of 0.92 comes from distributions that almost completely overlap, so it is
+  a tie and not a small win. The coding and Trello results are tighter and deserve more
+  confidence.
+- **The first campaign is not comparable with the others.** It ran before the benchmark comment
+  was added to the long Trello card, so those numbers describe a different task. Campaigns two and
+  three read the same card with the same comments.
 - **Thinking was left on.** The adapter was trained with thinking off, but pi talks to the model
   through Ollama's OpenAI-compatible endpoint and does not send `think: false` there, so both
   models reasoned before answering. That is identical on both sides, so the comparison holds, but
@@ -238,41 +251,43 @@ measurement, so they are reported as an observation.
 ## Reproduce it
 
 The tools are in [zonca/lora-merge-tools](https://github.com/zonca/lora-merge-tools):
-`bench_ollama.py` for the per-token numbers and `bench_pi.py` with `bench_tasks.json` for the agent
-numbers, which also reuses a measured baseline with `--baseline-results` so the second model costs
-only the second set of runs.
+`decode_decompose.py` for the per-token numbers, which splits the rate into tokens per pass and
+passes per second and sweeps four kinds of content, and `bench_pi.py` with `bench_tasks.json` for
+the agent numbers. Both interleave the two models and write their results after every run, so a
+long campaign survives an interruption.
 
 ```bash
 python bench_ollama.py --url http://127.0.0.1:11434 \
-    --models qwen3.8:27b-nvfp4 qwen3.8-pi:27b-nvfp4
+    --models qwen3.8:27b-nvfp4 qwen3.8-pi:27b-nvfp4 --reps 10 --sweep
 
 python bench_pi.py --model-a macmini/qwen3.8:27b-nvfp4 \
                    --model-b macmini/qwen3.8-pi:27b-nvfp4 \
-                   --tasks bench_tasks.json --out results.json
+                   --tasks bench_tasks.json --repeat 10 --out results.json
 ```
 
 ## What I took from it
 
-The adapter is a terseness adapter, not a turn-reduction adapter. Turns per task did not fall
-anywhere in this workload, which is the mechanism its card promotes; what it does is stop the model
-from thinking out loud at length before answering. On a machine where decode is the slow path, that
-buys real time when the task is dominated by generation: on the email thread it finishes in 53% of
-the base model's wall clock, on the long Trello card in 83%. Across the five tasks it is 18% less
-wall clock and 30% fewer generated tokens.
+The adapter is a terseness adapter. It writes 64% of the base model's tokens and makes very nearly
+the same number of turns (269 against 263 over fifty runs each). On a machine where decode is the
+slow path, writing less is worth real time, but only in proportion to how much of the task is
+writing, and that is a smaller fraction than I assumed.
 
-It does not win everywhere. On the short Trello card it is a wash. On the two coding tasks it is
-1.27 and 1.36 times slower, with more generated tokens, because it occasionally takes an extra turn
-and a one-minute task has no room for that. Both models solve both coding tasks in every run, so
-this is speed, not quality.
+The final numbers, from ten runs per cell: 10% less wall clock overall, 18% and 22% on the two
+Trello cards, a tie on the email thread, 4% slower on the bug fix, and 33% slower on writing a
+module from a specification. Decode is 26% slower per token, from the 8-bit tensors that the local
+`nvfp4` conversion keeps and NVIDIA's prequantized release does not, and the artifact is 3.4 GB
+larger.
 
-Against that: decode is about a quarter slower per token, across prose, code, lists and creative
-writing, because the local `nvfp4` conversion keeps 8-bit tensors that NVIDIA's prequantized release
-does not, and the artifact is 3.4 GB larger.
+So the arrangement on the Mac mini is both tags, with a narrower division of labour than I first
+described: `qwen3.8-pi:27b-nvfp4` for reading and summarizing, where it is up to a fifth faster, and
+`qwen3.8:27b-nvfp4` for code, where it is a third slower at the same quality, and for anything whose
+output is long.
 
-So the arrangement I am keeping on the Mac mini is both tags. `qwen3.8-pi:27b-nvfp4` for the
-reading and summarization loops that dominate my agent work, where it is up to twice as fast, and
-`qwen3.8:27b-nvfp4` for coding tasks and anything whose output is long, where the base model is
-faster and the merged one has nothing to add.
+The lesson that outlives the model comparison is about the measurement. Three passes, with one, two
+and ten runs per cell, gave 0.53, 0.83 and 0.82 on Trello and 0.63, 0.53 and 0.92 on email. The
+tasks did not change; the sampling did. If I had stopped at the first pass I would have published
+"1.6 to 1.9 times faster", which is wrong by a factor of two in the direction that flatters the
+thing I built.
 
 The measurement I would do next is not more repetitions of these tasks but a different question:
 whether the shorter answers ever leave something out. Ten Trello cards through both models, read
